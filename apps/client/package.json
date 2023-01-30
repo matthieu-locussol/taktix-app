@@ -3,8 +3,7 @@
    "version": "1.0.0",
    "scripts": {
       "build": "tsc && vite build",
-      "check:eslint": "eslint src",
-      "check:typescript": "tsc --noEmit",
+      "eslint": "eslint src",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
       "dev": "vite"
    },

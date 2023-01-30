@@ -5,8 +5,7 @@
    "types": "dist/index.d.ts",
    "scripts": {
       "build": "tsc",
-      "check:eslint": "eslint src",
-      "check:typescript": "tsc --noEmit",
+      "eslint": "eslint src",
       "test": "vitest --run"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",

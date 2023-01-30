@@ -5,10 +5,10 @@
 newIssueWelcomeComment: >
    Thanks for opening this issue. A repository member should be by to give feedback soon. In the
    meantime, please check out the [contributing
-   guidelines](https://github.com/matthieu-locussol/starter-turborepo-websocket-zod/tree/master/.github/CONTRIBUTING.md).
+   guidelines](https://github.com/matthieu-locussol/taktix-app/tree/master/.github/CONTRIBUTING.md).
 # Configuration for new-pr-welcome - https://github.com/behaviorbot/new-pr-welcome
 # Comment to be posted to on PRs from first time contributors in your repository
 newPRWelcomeComment: >
    Thanks for opening this pull request! A repository member should be by to give feedback soon. In
    the meantime, please check out the [contributing
-   guidelines](https://github.com/matthieu-locussol/starter-turborepo-websocket-zod/tree/master/.github/CONTRIBUTING.md).
+   guidelines](https://github.com/matthieu-locussol/taktix-app/tree/master/.github/CONTRIBUTING.md).

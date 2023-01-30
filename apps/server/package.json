@@ -3,8 +3,7 @@
    "version": "1.0.0",
    "scripts": {
       "build": "tsc",
-      "check:eslint": "eslint src",
-      "check:typescript": "tsc --noEmit",
+      "eslint": "eslint src",
       "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
       "start": "node ./dist/index.js"
    },

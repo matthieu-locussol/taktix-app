@@ -3,16 +3,15 @@
    "pipeline": {
       "build": {
          "outputs": ["dist/**"],
-         "dependsOn": ["^build"]
+         "dependsOn": ["eslint", "^build"]
       },
-      "check:eslint": {},
-      "check:typescript": {},
       "clean": {
          "cache": false
       },
       "dev": {
          "cache": false
       },
+      "eslint": {},
       "start": {
          "outputs": [],
          "dependsOn": ["^build", "^test"]

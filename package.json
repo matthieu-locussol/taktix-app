@@ -1,17 +1,16 @@
 {
-   "name": "starter-turborepo-websocket-zod",
+   "name": "taktix-app",
    "version": "1.0.1",
-   "description": "A full stack typesafe starter for websockets client / server applications.",
-   "repository": "git@github.com:matthieu-locussol/starter-turborepo-websocket-zod.git",
+   "description": "",
+   "repository": "git@github.com:matthieu-locussol/taktix-app.git",
    "scripts": {
       "prepare": "husky install",
       "dev": "turbo run dev --no-cache --parallel --continue",
       "test": "turbo run test",
       "build": "turbo run build --include-dependencies",
       "clean": "turbo run clean && rm -rf node_modules",
-      "check:eslint": "turbo run check:eslint",
-      "check:prettier": "pretty-quick --staged",
-      "check:typescript": "turbo run check:typescript",
+      "eslint": "turbo run eslint",
+      "prettier": "pretty-quick --staged",
       "release": "standard-version -a"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
