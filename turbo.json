@@ -5,10 +5,6 @@
          "outputs": ["dist/**"],
          "dependsOn": ["eslint", "^build"]
       },
-      "build-shared": {
-         "outputs": ["dist/**"],
-         "dependsOn": ["eslint-shared"]
-      },
       "clean": {
          "cache": false
       },
@@ -16,17 +12,8 @@
          "cache": false,
          "persistent": true
       },
-      "eslint": {
-         "dependsOn": ["build-shared"]
-      },
-      "eslint-shared": {},
-      "start": {
-         "outputs": [],
-         "dependsOn": ["test"]
-      },
-      "test": {
-         "outputs": [],
-         "dependsOn": ["build"]
-      }
+      "eslint": {},
+      "start": {},
+      "test": {}
    }
 }
