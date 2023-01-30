@@ -3,11 +3,11 @@
    "pipeline": {
       "build": {
          "outputs": ["dist/**"],
-         "dependsOn": ["eslint", "build-shared", "^build"]
+         "dependsOn": ["eslint", "^build"]
       },
       "build-shared": {
          "outputs": ["dist/**"],
-         "dependsOn": ["eslint"]
+         "dependsOn": ["eslint-shared"]
       },
       "clean": {
          "cache": false
@@ -16,7 +16,10 @@
          "cache": false,
          "persistent": true
       },
-      "eslint": {},
+      "eslint": {
+         "dependsOn": ["build-shared"]
+      },
+      "eslint-shared": {},
       "start": {
          "outputs": [],
          "dependsOn": ["test"]
