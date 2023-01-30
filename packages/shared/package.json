@@ -5,7 +5,7 @@
    "types": "dist/index.d.ts",
    "scripts": {
       "build-shared": "tsc",
-      "eslint": "eslint src",
+      "eslint-shared": "eslint src",
       "test": "vitest --run"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
