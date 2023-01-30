@@ -4,8 +4,8 @@
    "main": "dist/index.js",
    "types": "dist/index.d.ts",
    "scripts": {
-      "build-shared": "tsc",
-      "eslint-shared": "eslint src",
+      "build": "tsc",
+      "eslint": "eslint src",
       "test": "vitest --run"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
