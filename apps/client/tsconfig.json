@@ -1,0 +1,9 @@
+{
+   "extends": "config-typescript/react.json",
+   "compilerOptions": {
+      "module": "CommonJS",
+      "outDir": "./dist",
+      "rootDir": "."
+   },
+   "include": ["src", ".eslintrc.js", "vite.config.ts"]
+}

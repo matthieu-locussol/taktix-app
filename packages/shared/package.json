@@ -1,0 +1,23 @@
+{
+   "name": "shared",
+   "version": "1.0.0",
+   "main": "dist/index.js",
+   "types": "dist/index.d.ts",
+   "scripts": {
+      "build": "tsc",
+      "check:eslint": "eslint src",
+      "check:typescript": "tsc --noEmit",
+      "test": "vitest --run"
+   },
+   "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
+   "license": "MIT",
+   "devDependencies": {
+      "config-eslint": "workspace:^1.0.0",
+      "config-typescript": "workspace:^1.0.0",
+      "typescript": "^4.9.4"
+   },
+   "dependencies": {
+      "vitest": "^0.28.3",
+      "zod": "^3.20.2"
+   }
+}
