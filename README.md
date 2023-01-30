@@ -1,3 +1,3 @@
-# Starter with Turborepo + WebSocket + Zod ✨
+# Taktix ✨
 
 Coming soon...
