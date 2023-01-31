@@ -34,7 +34,7 @@ jobs:
               restore-keys: |
                  ${{ runner.os }}-pnpm-store-
          - run: pnpm install
-         - run: cd packages/shared && pnpm build && cd ../..
+         - run: pnpm build:shared
          - run: pnpm build
          - run: pnpm test
 
