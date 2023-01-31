@@ -9,6 +9,7 @@
       "test": "turbo run test",
       "build:shared": "turbo run build --scope=shared --include-dependencies --no-deps",
       "build": "turbo run build --include-dependencies",
+      "start": "turbo run start",
       "clean": "turbo run clean && rm -rf node_modules",
       "eslint": "turbo run eslint",
       "prettier": "pretty-quick --staged",
