@@ -11,13 +11,15 @@ fastifyInstance.register(async (fastify) => {
    fastify.get('/', { websocket: true }, (connection, req) => {
       console.log(`Connection from ${JSON.stringify(req.socket.address())}!`);
 
-      connection.socket.onerror = (err) => console.error(err.message);
+      connection.socket.onerror = (err) => {
+         console.error(err.message);
+      };
 
       connection.socket.onmessage = (event) => {
          try {
             const data = zClientMessage.parse(JSON.parse(event.data.toString()));
             const response = handleClientMessage(data);
-            connection.socket.send(response);
+            connection.socket.send(JSON.stringify(response));
          } catch (e) {
             console.error(e);
          }

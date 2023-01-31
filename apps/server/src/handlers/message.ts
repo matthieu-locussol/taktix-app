@@ -1,6 +1,10 @@
-import { MessageSchema } from 'shared';
+import { MessageResponseSchema, MessageSchema } from 'shared';
 
-export const messageHandler = ({ data }: MessageSchema): string => {
+export const messageHandler = ({ data }: MessageSchema): MessageResponseSchema => {
    console.log(`Message received: ${data.content}`);
-   return JSON.stringify({ response: `Responding to message: "${data.content}".` });
+
+   return {
+      type: 'messageResponse',
+      data: null,
+   };
 };

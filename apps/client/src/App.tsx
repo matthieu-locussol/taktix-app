@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react';
+import { zServerResponse } from 'shared/src/client/ServerResponse';
+import { handleServerResponse } from './sockets/handleServerResponse';
 import { sendHello, sendMessage, sendSum } from './utils/payload';
 
 export const App = () => {
@@ -9,9 +11,22 @@ export const App = () => {
 
    const socket = useMemo(() => new WebSocket('ws://localhost:3000'), []);
 
-   socket.onopen = () => console.log('Connected to the server!');
-   socket.onmessage = (event) => console.log(event.data);
-   socket.onerror = (error) => console.error(error);
+   socket.onopen = () => {
+      console.log('Connected to the server!');
+   };
+
+   socket.onmessage = (event) => {
+      try {
+         const data = zServerResponse.parse(JSON.parse(event.data.toString()));
+         handleServerResponse(data);
+      } catch (e) {
+         console.error(e);
+      }
+   };
+
+   socket.onerror = (error) => {
+      console.error(error);
+   };
 
    return (
       <div>
