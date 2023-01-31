@@ -1,7 +1,7 @@
 import FastifyWebSocketPlugin from '@fastify/websocket';
 import Fastify from 'fastify';
-import { zSocketSchema } from 'shared';
-import { handleSocketData } from './handleSocketData';
+import { zClientMessage } from 'shared';
+import { handleClientMessage } from './handleClientMessage';
 
 const fastifyInstance = Fastify();
 
@@ -15,8 +15,8 @@ fastifyInstance.register(async (fastify) => {
 
       connection.socket.onmessage = (event) => {
          try {
-            const socketData = zSocketSchema.parse(JSON.parse(event.data.toString()));
-            const response = handleSocketData(socketData);
+            const data = zClientMessage.parse(JSON.parse(event.data.toString()));
+            const response = handleClientMessage(data);
             connection.socket.send(response);
          } catch (e) {
             console.error(e);
