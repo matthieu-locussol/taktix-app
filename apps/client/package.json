@@ -5,7 +5,8 @@
       "build": "tsc && vite build",
       "eslint": "eslint src",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-      "dev": "vite"
+      "dev": "vite",
+      "start": "vite preview"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
