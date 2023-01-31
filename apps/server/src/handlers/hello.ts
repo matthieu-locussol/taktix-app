@@ -1,4 +1,8 @@
-import { HelloSchema } from 'shared';
+import { HelloSchema, HelloSchemaResponse } from 'shared';
 
-export const helloHandler = ({ data }: HelloSchema): string =>
-   JSON.stringify({ response: `Hello, ${data.name}!` });
+export const helloHandler = ({ data }: HelloSchema): HelloSchemaResponse => ({
+   type: 'helloResponse',
+   data: {
+      response: `Hello back, ${data.name}!`,
+   },
+});

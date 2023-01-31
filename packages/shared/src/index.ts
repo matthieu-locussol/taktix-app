@@ -1,3 +1,7 @@
+export * from './client/ServerResponse';
+export * from './client/schemas/HelloResponseSchema';
+export * from './client/schemas/MessageResponseSchema';
+export * from './client/schemas/SumResponseSchema';
 export * from './server/ClientMessage';
 export * from './server/schemas/HelloSchema';
 export * from './server/schemas/MessageSchema';
