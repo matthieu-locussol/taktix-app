@@ -4,10 +4,10 @@ import { handleHelloResponse } from './handlers/handleHelloResponse';
 import { handleMessageResponse } from './handlers/handleMessageResponse';
 import { handleSumResponse } from './handlers/handleSumResponse';
 
-export const handleServerResponse = (data: ServerResponse): void => {
-   console.log(`Received a "${data.type}" request...`);
+export const handleServerResponse = (response: ServerResponse): void => {
+   console.log(`Received a "${response.type}" request...`);
 
-   return match(data)
+   return match(response)
       .with({ type: 'helloResponse' }, handleHelloResponse)
       .with({ type: 'messageResponse' }, handleMessageResponse)
       .with({ type: 'sumResponse' }, handleSumResponse)
