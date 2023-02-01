@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
-import { zServerResponse } from 'shared/src/client/ServerResponse';
+import { ClientPacket } from 'shared';
+import { zServerPacket } from 'shared/src/client/ServerPacket';
+import { handleServerMessage } from './sockets/handleServerMessage';
 import { handleServerResponse } from './sockets/handleServerResponse';
 import { sendHello, sendMessage, sendSum } from './utils/payload';
 
@@ -17,8 +19,25 @@ export const App = () => {
 
    socket.onmessage = (event) => {
       try {
-         const data = zServerResponse.parse(JSON.parse(event.data.toString()));
-         handleServerResponse(data);
+         const { type, packet } = zServerPacket.parse(JSON.parse(event.data.toString()));
+
+         switch (type) {
+            case 'message': {
+               const response = handleServerMessage(packet);
+               const payload: ClientPacket = {
+                  type: 'response',
+                  packet: response,
+               };
+               socket.send(JSON.stringify(payload));
+               break;
+            }
+            case 'response': {
+               handleServerResponse(packet);
+               break;
+            }
+            default:
+               throw new Error(`Unknown ServerPacket type: "${type}"`);
+         }
       } catch (e) {
          console.error(e);
       }
