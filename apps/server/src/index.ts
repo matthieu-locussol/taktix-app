@@ -21,7 +21,7 @@ fastifyInstance.register(async (fastify) => {
                packet: {
                   type: 'ping',
                   data: {
-                     message: 'Ping...',
+                     message: 'PingMessage...',
                   },
                },
             };

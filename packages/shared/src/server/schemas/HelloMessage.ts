@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-export const zHelloSchema = z.object({
+export const zHelloMessage = z.object({
    type: z.literal('hello'),
    data: z.object({
       name: z.string(),
    }),
 });
 
-export type HelloSchema = z.infer<typeof zHelloSchema>;
+export type HelloMessage = z.infer<typeof zHelloMessage>;

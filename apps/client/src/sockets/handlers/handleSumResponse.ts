@@ -1,5 +1,5 @@
-import { SumResponseSchema } from 'shared';
+import { SumResponse } from 'shared';
 
-export const handleSumResponse = ({ data }: SumResponseSchema): void => {
+export const handleSumResponse = ({ data }: SumResponse): void => {
    console.log(data.result);
 };

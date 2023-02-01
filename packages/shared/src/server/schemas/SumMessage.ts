@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const zSumSchema = z.object({
+export const zSumMessage = z.object({
    type: z.literal('sum'),
    data: z.object({
       operand1: z.number(),
@@ -8,4 +8,4 @@ export const zSumSchema = z.object({
    }),
 });
 
-export type SumSchema = z.infer<typeof zSumSchema>;
+export type SumMessage = z.infer<typeof zSumMessage>;

@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-export const zPingSchema = z.object({
+export const zPingMessage = z.object({
    type: z.literal('ping'),
    data: z.object({
       message: z.string(),
    }),
 });
 
-export type PingSchema = z.infer<typeof zPingSchema>;
+export type PingMessage = z.infer<typeof zPingMessage>;

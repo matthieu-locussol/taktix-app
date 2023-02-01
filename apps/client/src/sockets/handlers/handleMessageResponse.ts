@@ -1,5 +1,5 @@
-import { MessageResponseSchema } from 'shared';
+import { MessageResponse } from 'shared';
 
-export const handleMessageResponse = ({ data }: MessageResponseSchema): void => {
+export const handleMessageResponse = ({ data }: MessageResponse): void => {
    console.log(data);
 };
