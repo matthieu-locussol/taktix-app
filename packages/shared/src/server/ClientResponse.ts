@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { zPingResponse } from './schemas/PingResponse';
+import { zPingResponse } from './schemas/responses/PingResponse';
 
 export const zClientResponse = z.discriminatedUnion('type', [zPingResponse]);
 

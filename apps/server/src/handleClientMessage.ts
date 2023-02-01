@@ -1,15 +1,15 @@
 import { ClientMessage, ServerResponse } from 'shared';
 import { match } from 'ts-pattern';
-import { helloHandler } from './handlers/hello';
-import { messageHandler } from './handlers/message';
-import { sumHandler } from './handlers/sum';
+import { handleHelloMessage } from './handlers/messages/handleHelloMessage';
+import { handleMessageMessage } from './handlers/messages/handleMessageMessage';
+import { handleSumMessage } from './handlers/messages/handleSumMessage';
 
 export const handleClientMessage = (data: ClientMessage): ServerResponse => {
-   console.log(`Received a "${data.type}" request...`);
+   console.log(`Received a "${data.type}" message...`);
 
    return match(data)
-      .with({ type: 'hello' }, helloHandler)
-      .with({ type: 'message' }, messageHandler)
-      .with({ type: 'sum' }, sumHandler)
+      .with({ type: 'hello' }, handleHelloMessage)
+      .with({ type: 'message' }, handleMessageMessage)
+      .with({ type: 'sum' }, handleSumMessage)
       .exhaustive();
 };

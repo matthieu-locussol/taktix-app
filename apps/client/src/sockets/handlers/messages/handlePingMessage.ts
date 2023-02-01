@@ -1,6 +1,6 @@
 import { PingMessage, PingResponse } from 'shared';
 
-export const handlePing = ({ data }: PingMessage): PingResponse => {
+export const handlePingMessage = ({ data }: PingMessage): PingResponse => {
    console.log(data.message);
 
    return {

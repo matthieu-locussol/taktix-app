@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { zPingMessage } from './schemas/PingMessage';
+import { zPingMessage } from './schemas/messages/PingMessage';
 
 export const zServerMessage = z.discriminatedUnion('type', [zPingMessage]);
 
