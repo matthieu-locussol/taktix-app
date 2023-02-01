@@ -7,4 +7,4 @@ export const zHelloResponse = z.object({
    }),
 });
 
-export type HelloSchemaResponse = z.infer<typeof zHelloResponse>;
+export type HelloResponse = z.infer<typeof zHelloResponse>;

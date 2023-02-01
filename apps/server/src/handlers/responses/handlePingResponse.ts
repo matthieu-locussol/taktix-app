@@ -1,5 +1,5 @@
 import { PingResponse } from 'shared';
 
-export const pingHandler = ({ data }: PingResponse): void => {
+export const handlePingResponse = ({ data }: PingResponse): void => {
    console.log(data.message);
 };

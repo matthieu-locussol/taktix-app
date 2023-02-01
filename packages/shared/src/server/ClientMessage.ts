@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { zHelloMessage } from './schemas/HelloMessage';
-import { zMessageMessage } from './schemas/MessageMessage';
-import { zSumMessage } from './schemas/SumMessage';
+import { zHelloMessage } from './schemas/messages/HelloMessage';
+import { zMessageMessage } from './schemas/messages/MessageMessage';
+import { zSumMessage } from './schemas/messages/SumMessage';
 
 export const zClientMessage = z.discriminatedUnion('type', [
    zHelloMessage,
