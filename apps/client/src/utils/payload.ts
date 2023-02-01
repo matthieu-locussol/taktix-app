@@ -1,10 +1,13 @@
-import { HelloSchema, MessageSchema, SumSchema } from 'shared';
+import { ClientPacket } from 'shared';
 
 export const sendHello = (socket: WebSocket, name: string) => {
-   const payload: HelloSchema = {
-      type: 'hello',
-      data: {
-         name,
+   const payload: ClientPacket = {
+      type: 'message',
+      packet: {
+         type: 'hello',
+         data: {
+            name,
+         },
       },
    };
 
@@ -12,10 +15,13 @@ export const sendHello = (socket: WebSocket, name: string) => {
 };
 
 export const sendMessage = (socket: WebSocket, content: string) => {
-   const payload: MessageSchema = {
+   const payload: ClientPacket = {
       type: 'message',
-      data: {
-         content,
+      packet: {
+         type: 'message',
+         data: {
+            content,
+         },
       },
    };
 
@@ -23,11 +29,14 @@ export const sendMessage = (socket: WebSocket, content: string) => {
 };
 
 export const sendSum = (socket: WebSocket, operand1: string, operand2: string) => {
-   const payload: SumSchema = {
-      type: 'sum',
-      data: {
-         operand1: Number.parseInt(operand1, 10),
-         operand2: Number.parseInt(operand2, 10),
+   const payload: ClientPacket = {
+      type: 'message',
+      packet: {
+         type: 'sum',
+         data: {
+            operand1: Number.parseInt(operand1, 10),
+            operand2: Number.parseInt(operand2, 10),
+         },
       },
    };
 

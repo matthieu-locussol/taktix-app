@@ -61,7 +61,9 @@ export const App = () => {
          <div>
             <input type="number" value={operand1} onChange={(e) => setOperand1(e.target.value)} />
             <input type="number" value={operand2} onChange={(e) => setOperand2(e.target.value)} />
-            <button onClick={() => sendSum(socket, operand1, operand2)}>Send "Sum" payload</button>
+            <button onClick={() => sendSum(socket, operand1, operand2)}>
+               Send "SumMessage" payload
+            </button>
          </div>
          <div>
             <button onClick={() => socket.close()}>Disconnect</button>

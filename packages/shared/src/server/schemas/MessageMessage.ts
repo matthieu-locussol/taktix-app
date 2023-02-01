@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-export const zMessageSchema = z.object({
+export const zMessageMessage = z.object({
    type: z.literal('message'),
    data: z.object({
       content: z.string(),
    }),
 });
 
-export type MessageSchema = z.infer<typeof zMessageSchema>;
+export type MessageMessage = z.infer<typeof zMessageMessage>;

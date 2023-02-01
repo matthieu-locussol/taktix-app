@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import { zHelloSchema } from './schemas/HelloSchema';
-import { zMessageSchema } from './schemas/MessageSchema';
-import { zSumSchema } from './schemas/SumSchema';
+import { zHelloMessage } from './schemas/HelloMessage';
+import { zMessageMessage } from './schemas/MessageMessage';
+import { zSumMessage } from './schemas/SumMessage';
 
 export const zClientMessage = z.discriminatedUnion('type', [
-   zHelloSchema,
-   zMessageSchema,
-   zSumSchema,
+   zHelloMessage,
+   zMessageMessage,
+   zSumMessage,
 ]);
 
 export type ClientMessage = z.infer<typeof zClientMessage>;

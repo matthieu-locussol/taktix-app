@@ -1,6 +1,6 @@
-import { SumResponseSchema, SumSchema } from 'shared';
+import { SumMessage, SumResponse } from 'shared';
 
-export const sumHandler = ({ data }: SumSchema): SumResponseSchema => ({
+export const sumHandler = ({ data }: SumMessage): SumResponse => ({
    type: 'sumResponse',
    data: {
       result: data.operand1 + data.operand2,
