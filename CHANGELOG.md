@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+### 1.0.2 (2023-02-02)
+
+### Features
+
+-  added handleServerResponse
+   ([02a0898](https://github.com/matthieu-locussol/taktix-app/commit/02a0898bdff3daf19fccb87e846520623d52c0f4))
+-  added Packet abstraction
+   ([cfec468](https://github.com/matthieu-locussol/taktix-app/commit/cfec4680229954c7ce60c70984f08152b9b15ac0))
+-  added tauri files
+   ([f8cb1e5](https://github.com/matthieu-locussol/taktix-app/commit/f8cb1e5e4538655e7a29381afcf0b32e9bc74a9a))
+-  changed title
+   ([0a5257d](https://github.com/matthieu-locussol/taktix-app/commit/0a5257d1c2531820aadadfe246158880bba75ba4))
+
+### Bug Fixes
+
+-  ci
+   ([a64889d](https://github.com/matthieu-locussol/taktix-app/commit/a64889d88f745d4e8868474f2d079d8915b04f53))
+
 ### [1.0.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.0.0...v1.0.1) (2023-01-29)
 
 ## 1.0.0 (2023-01-29)
