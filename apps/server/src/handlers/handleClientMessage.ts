@@ -1,8 +1,8 @@
 import { ClientMessage, ServerResponse } from 'shared';
 import { match } from 'ts-pattern';
-import { handleHelloMessage } from './handlers/messages/handleHelloMessage';
-import { handleMessageMessage } from './handlers/messages/handleMessageMessage';
-import { handleSumMessage } from './handlers/messages/handleSumMessage';
+import { handleHelloMessage } from './messages/handleHelloMessage';
+import { handleMessageMessage } from './messages/handleMessageMessage';
+import { handleSumMessage } from './messages/handleSumMessage';
 
 export const handleClientMessage = (data: ClientMessage): ServerResponse => {
    console.log(`Received a "${data.type}" message...`);
