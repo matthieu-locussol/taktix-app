@@ -52,7 +52,7 @@ export const App = () => {
    return (
       <div>
          <h1>Client</h1>
-         <p>Log: {log}</p>
+         <p>Last log: {log}</p>
          <div>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             <button onClick={() => sendHello(socket, name)}>Send "Hello" payload</button>
