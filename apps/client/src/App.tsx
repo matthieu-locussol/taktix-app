@@ -6,6 +6,8 @@ import { handleServerResponse } from './handlers/handleServerResponse';
 import { sendHello, sendMessage, sendSum } from './utils/payload';
 
 export const App = () => {
+   const [log, setLog] = useState('');
+
    const [name, setName] = useState('John');
    const [content, setContent] = useState('Lorem ipsum dolor sit amet...');
    const [operand1, setOperand1] = useState('1');
@@ -14,7 +16,7 @@ export const App = () => {
    const socket = useMemo(() => new WebSocket('ws://localhost:3000/ws'), []);
 
    socket.onopen = () => {
-      console.log('Connected to the server!');
+      setLog('Connected to the server!');
    };
 
    socket.onmessage = (event) => {
@@ -39,17 +41,18 @@ export const App = () => {
                throw new Error(`Unknown ServerPacket type: "${type}"`);
          }
       } catch (e) {
-         console.error(e);
+         setLog(JSON.stringify(e));
       }
    };
 
    socket.onerror = (error) => {
-      console.error(error);
+      setLog(JSON.stringify(error));
    };
 
    return (
       <div>
          <h1>Client</h1>
+         <p>Log: {log}</p>
          <div>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             <button onClick={() => sendHello(socket, name)}>Send "Hello" payload</button>
