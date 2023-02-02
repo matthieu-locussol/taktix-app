@@ -25,8 +25,13 @@
          "cache": false,
          "persistent": true
       },
+      "dev:website": {
+         "cache": false,
+         "persistent": true
+      },
       "eslint": {},
       "start": {},
+      "start:website": {},
       "test": {}
    }
 }
