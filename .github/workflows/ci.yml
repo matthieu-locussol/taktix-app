@@ -101,6 +101,8 @@ jobs:
          - if: steps.changed-files.outputs.any_changed == 'true'
            run: pnpm install
          - if: steps.changed-files.outputs.any_changed == 'true'
+           run: pnpm build:shared
+         - if: steps.changed-files.outputs.any_changed == 'true'
            run: pnpm build
          - uses: tauri-apps/tauri-action@v0
            if: steps.changed-files.outputs.any_changed == 'true'
