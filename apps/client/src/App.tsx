@@ -13,7 +13,7 @@ export const App = () => {
    const [operand1, setOperand1] = useState('1');
    const [operand2, setOperand2] = useState('2');
 
-   const socket = useMemo(() => new WebSocket('ws://localhost:3000/ws'), []);
+   const socket = useMemo(() => new WebSocket('ws://localhost:4000/ws'), []);
 
    socket.onopen = () => {
       setLog('Connected to the server!');

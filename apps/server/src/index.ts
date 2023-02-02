@@ -12,7 +12,7 @@ fastifyInstance.register(async (fastify) => {
    fastify.get('/status', statusRouter);
 });
 
-fastifyInstance.listen({ port: 3000 }, (error) => {
+fastifyInstance.listen({ port: 4000 }, (error) => {
    if (error) {
       fastifyInstance.log.error(error);
       process.exit(1);
