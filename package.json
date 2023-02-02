@@ -15,7 +15,7 @@
       "eslint": "turbo run eslint",
       "prettier": "pretty-quick --staged",
       "release": "standard-version -a",
-      "postrelease": "tsc packages/scripts/src/version.ts && node packages/scripts/dist/version.js"
+      "postrelease": "turbo run bumpversion"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
