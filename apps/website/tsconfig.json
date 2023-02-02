@@ -1,0 +1,13 @@
+{
+   "extends": "config-typescript/react.json",
+   "compilerOptions": {
+      "module": "CommonJS",
+      "outDir": "./dist",
+      "rootDir": ".",
+      "noEmit": true,
+      "incremental": true,
+      "resolveJsonModule": true,
+      "jsx": "preserve"
+   },
+   "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".eslintrc.js"]
+}
