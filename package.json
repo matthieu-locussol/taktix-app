@@ -1,11 +1,12 @@
 {
    "name": "taktix-app",
    "version": "1.0.1",
-   "description": "",
+   "description": "A small browser game written in TypeScript.",
    "repository": "git@github.com:matthieu-locussol/taktix-app.git",
    "scripts": {
       "prepare": "husky install",
-      "dev": "turbo run dev --no-cache --parallel --continue",
+      "dev": "turbo run dev:client dev:server --no-cache --parallel --continue",
+      "dev:app": "turbo run dev:app dev:server --no-cache --parallel --continue",
       "test": "turbo run test",
       "build:shared": "turbo run build --scope=shared --include-dependencies --no-deps",
       "build": "turbo run build --include-dependencies",

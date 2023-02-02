@@ -5,7 +5,8 @@
       "build": "tsc && vite build",
       "eslint": "eslint src",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-      "dev": "vite",
+      "dev:client": "vite",
+      "dev:app": "tauri dev",
       "start": "vite preview"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
@@ -19,6 +20,7 @@
       "vite": "^4.0.4"
    },
    "devDependencies": {
+      "@tauri-apps/cli": "^1.2.3",
       "@types/react": "^18.0.27",
       "@types/react-dom": "^18.0.10",
       "config-eslint": "workspace:^1.0.0",
