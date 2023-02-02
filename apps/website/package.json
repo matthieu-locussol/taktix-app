@@ -4,8 +4,7 @@
    "scripts": {
       "dev:website": "next dev",
       "build": "next build",
-      "start:website": "next start",
-      "test": "vitest"
+      "start:website": "next start"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
