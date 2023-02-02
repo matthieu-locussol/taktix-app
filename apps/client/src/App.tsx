@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { ClientPacket } from 'shared';
 import { zServerPacket } from 'shared/src/client/ServerPacket';
-import { handleServerMessage } from './sockets/handleServerMessage';
-import { handleServerResponse } from './sockets/handleServerResponse';
+import { handleServerMessage } from './handlers/handleServerMessage';
+import { handleServerResponse } from './handlers/handleServerResponse';
 import { sendHello, sendMessage, sendSum } from './utils/payload';
 
 export const App = () => {
@@ -11,7 +11,7 @@ export const App = () => {
    const [operand1, setOperand1] = useState('1');
    const [operand2, setOperand2] = useState('2');
 
-   const socket = useMemo(() => new WebSocket('ws://localhost:3000'), []);
+   const socket = useMemo(() => new WebSocket('ws://localhost:3000/ws'), []);
 
    socket.onopen = () => {
       console.log('Connected to the server!');
