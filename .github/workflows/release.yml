@@ -4,6 +4,8 @@ on:
    push:
       tags:
          - v*
+         - v1.*
+         - 1.*
 
 jobs:
    release:
