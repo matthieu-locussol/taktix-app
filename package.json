@@ -14,7 +14,8 @@
       "clean": "turbo run clean && rm -rf node_modules",
       "eslint": "turbo run eslint",
       "prettier": "pretty-quick --staged",
-      "release": "standard-version -a"
+      "release": "standard-version -a",
+      "postrelease": "tsc packages/scripts/src/version.ts && node packages/scripts/dist/version.js"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",

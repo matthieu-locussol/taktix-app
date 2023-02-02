@@ -1,0 +1,10 @@
+{
+   "extends": "config-typescript/node.json",
+   "compilerOptions": {
+      "lib": ["ES2015"],
+      "module": "CommonJS",
+      "outDir": "./dist",
+      "rootDir": "./src"
+   },
+   "include": ["src", ".eslintrc.js"]
+}

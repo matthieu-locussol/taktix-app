@@ -1,0 +1,12 @@
+{
+   "name": "scripts",
+   "version": "1.0.0",
+   "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
+   "license": "MIT",
+   "devDependencies": {
+      "@types/node": "^18.11.18",
+      "config-eslint": "workspace:^1.0.0",
+      "config-typescript": "workspace:^1.0.0",
+      "typescript": "^4.9.4"
+   }
+}
