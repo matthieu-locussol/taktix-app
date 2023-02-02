@@ -38,6 +38,63 @@ jobs:
          - run: pnpm build
          - run: pnpm test
 
+   release:
+      name: Release
+      strategy:
+         matrix:
+            os: [ubuntu-latest, macos-latest, windows-latest]
+      runs-on: ${{ matrix.os }}
+      needs: [build]
+      if:
+         ${{ github.ref == 'refs/heads/master' && github.actor != 'dependabot[bot]' &&
+         !contains(github.event.head_commit.message, '/dependabot/npm_and_yarn/') }}
+      steps:
+         - uses: actions/checkout@v3
+         - name: Get specific changed files
+           id: changed-files
+           uses: tj-actions/changed-files@v19
+           with:
+              files_ignore: |
+                 .github/**
+                 .husky/**
+                 apps/client/public/manifest.json
+                 apps/client/public/robots.txt
+                 .commitlintrc.json
+                 .gitignore
+                 .prettierrc.json
+                 CHANGELOG.md
+                 LICENSE
+                 README.md
+                 taktix-app.code-workspace
+         - uses: actions/setup-node@v3
+           if: steps.changed-files.outputs.any_changed == 'true'
+           with:
+              node-version: '18.4.0'
+         - name: install Rust stable
+           if: steps.changed-files.outputs.any_changed == 'true'
+           uses: actions-rs/toolchain@v1
+           with:
+              toolchain: stable
+         - name: install dependencies (ubuntu only)
+           if: matrix.os == 'ubuntu-latest' && steps.changed-files.outputs.any_changed == 'true'
+           run: |
+              sudo apt-get update
+              sudo apt-get install -y webkit2gtk-4.0 libayatana-appindicator3-dev
+         - if: steps.changed-files.outputs.any_changed == 'true'
+           run: yarn install
+         - if: steps.changed-files.outputs.any_changed == 'true'
+           run: yarn build
+         - uses: tauri-apps/tauri-action@v0
+           if: steps.changed-files.outputs.any_changed == 'true'
+           env:
+              GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+           with:
+              tagName: v__VERSION__
+              releaseName: 'v__VERSION__'
+              releaseBody: 'See the assets to download this version and install.'
+              releaseDraft: false
+              prerelease: false
+
    merge_dependabot:
       name: 'Merge (Dependabot)'
       needs: [build]
