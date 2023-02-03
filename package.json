@@ -16,8 +16,7 @@
       "clean": "turbo run clean && rm -rf node_modules",
       "eslint": "turbo run eslint",
       "prettier": "pretty-quick --staged",
-      "release": "standard-version -a",
-      "postrelease": "turbo run bumpversion"
+      "release": "standard-version -a && turbo run bumpversion"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
