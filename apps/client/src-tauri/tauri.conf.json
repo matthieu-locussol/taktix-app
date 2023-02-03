@@ -51,7 +51,10 @@
          "csp": null
       },
       "updater": {
-         "active": false
+         "active": true,
+         "endpoints": ["https://taktix.vercel.app/api/version"],
+         "dialog": true,
+         "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE3NjhGREQ0Rjg0RjhERQpSV1RlK0lSUDNZOTJBVDh6bURQZ0dWckZSbTljcmtWSG1Oc2x1RmNzZzdhZlNCZC8vdllrd3VDRAo="
       },
       "windows": [
          {
