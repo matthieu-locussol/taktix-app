@@ -51,7 +51,7 @@ jobs:
          - run: pnpm build:shared
          - if: matrix.os == 'windows-latest'
            run: set TAURI_PRIVATE_KEY=${{ secrets.TAURI_PRIVATE_KEY }} && pnpm build
-         - if: matrix.os !== 'windows-latest'
+         - if: matrix.os != 'windows-latest'
            run: TAURI_PRIVATE_KEY=${{ secrets.TAURI_PRIVATE_KEY }} pnpm build
          - uses: tauri-apps/tauri-action@v0
            env:
