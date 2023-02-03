@@ -1,11 +1,7 @@
 name: Release
 
 on:
-   push:
-      tags:
-         - v*
-         - v1.*
-         - 1.*
+   push: tags
 
 jobs:
    release:
