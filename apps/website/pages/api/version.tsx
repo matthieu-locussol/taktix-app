@@ -4,6 +4,9 @@ export const config = {
    runtime: 'edge',
 };
 
+const SIGNATURE_PUBLIC_KEY =
+   'dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE3NjhGREQ0Rjg0RjhERQpSV1RlK0lSUDNZOTJBVDh6bURQZ0dWckZSbTljcmtWSG1Oc2x1RmNzZzdhZlNCZC8vdllrd3VDRAo=';
+
 const RELEASE_ENDPOINT =
    'https://api.github.com/repos/matthieu-locussol/taktix-app/releases/latest';
 
@@ -47,7 +50,7 @@ const handler = async (_: NextRequest) => {
                ['.deb', '.dmg', '.msi'].some((extension) => name.endsWith(extension)),
             )
             .map(({ name, browser_download_url }) => ({
-               signature: '',
+               signature: SIGNATURE_PUBLIC_KEY,
                url: browser_download_url,
                extension: ['.deb', '.dmg', '.msi'].find((extension) => name.endsWith(extension)) as
                   | '.deb'
