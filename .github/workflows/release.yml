@@ -49,13 +49,11 @@ jobs:
               sudo apt-get install -y webkit2gtk-4.0 libayatana-appindicator3-dev
          - run: pnpm install
          - run: pnpm build:shared
-         - if: matrix.os == 'windows-latest'
-           run: set TAURI_PRIVATE_KEY=${{ secrets.TAURI_PRIVATE_KEY }} && pnpm build
-         - if: matrix.os != 'windows-latest'
-           run: TAURI_PRIVATE_KEY=${{ secrets.TAURI_PRIVATE_KEY }} pnpm build
+         - run: pnpm build
          - uses: tauri-apps/tauri-action@v0
            env:
               GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+              TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
            with:
               tagName: v__VERSION__
               releaseName: 'v__VERSION__'
