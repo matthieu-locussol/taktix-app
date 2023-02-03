@@ -1,6 +1,14 @@
 import { Box, Button, Container, Link, Typography } from '@mui/material';
+import { GetServerSideProps } from 'next';
+import { Version } from './api/version';
 
-const IndexPage = () => (
+interface IndexPageProps {
+   linuxUrl: string;
+   macOsUrl: string;
+   windowsUrl: string;
+}
+
+const IndexPage = ({ linuxUrl, macOsUrl, windowsUrl }: IndexPageProps) => (
    <Box>
       <Box
          sx={{
@@ -26,26 +34,17 @@ const IndexPage = () => (
                A small browser game written in TypeScript.
             </Typography>
             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gap={4}>
-               <Link
-                  href="https://github.com/matthieu-locussol/taktix-app/releases/download/v1.0.2/taktix_1.0.2_x64_en-US.msi"
-                  sx={{ textDecoration: 'none' }}
-               >
+               <Link href={windowsUrl} sx={{ textDecoration: 'none' }}>
                   <Button variant="contained" size="large" color="secondary">
                      Download for Windows
                   </Button>
                </Link>
-               <Link
-                  href="https://github.com/matthieu-locussol/taktix-app/releases/download/v1.0.2/taktix_1.0.2_amd64.deb"
-                  sx={{ textDecoration: 'none' }}
-               >
+               <Link href={linuxUrl} sx={{ textDecoration: 'none' }}>
                   <Button variant="contained" size="large" color="secondary">
                      Download for Linux
                   </Button>
                </Link>
-               <Link
-                  href="https://github.com/matthieu-locussol/taktix-app/releases/download/v1.0.2/taktix_1.0.2_x64.dmg"
-                  sx={{ textDecoration: 'none' }}
-               >
+               <Link href={macOsUrl} sx={{ textDecoration: 'none' }}>
                   <Button variant="contained" size="large" color="secondary">
                      Download for Mac OS
                   </Button>
@@ -95,3 +94,16 @@ const IndexPage = () => (
 );
 
 export default IndexPage;
+
+export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () => {
+   const data = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/version`);
+   const version: Version = await data.json();
+
+   return {
+      props: {
+         linuxUrl: version.platforms['linux-x86_64'].url,
+         macOsUrl: version.platforms['darwin-x86_64'].url,
+         windowsUrl: version.platforms['windows-x86_64'].url,
+      },
+   };
+};
