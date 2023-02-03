@@ -52,6 +52,7 @@ export function _assertTrue(value: boolean, message?: AssertMessage): asserts va
    if (value === true) {
       return;
    }
+
    throwError(message);
 }
 
