@@ -1,14 +1,22 @@
 import { Box, Button, Container, Link, Typography } from '@mui/material';
 import { GetServerSideProps } from 'next';
+import { ConditionalWrapper } from '../components/ConditionalWrapper';
 import { Version } from './api/version';
 
 interface IndexPageProps {
-   linuxUrl: string;
-   macOsUrl: string;
-   windowsUrl: string;
+   date: string;
+   version: string;
+   platforms: {
+      name: string;
+      url: string;
+      availableText: string;
+      updatingText: string;
+      updating: boolean;
+      extension: string;
+   }[];
 }
 
-const IndexPage = ({ linuxUrl, macOsUrl, windowsUrl }: IndexPageProps) => (
+const IndexPage = ({ version, date, platforms }: IndexPageProps) => (
    <Box>
       <Box
          sx={{
@@ -18,7 +26,7 @@ const IndexPage = ({ linuxUrl, macOsUrl, windowsUrl }: IndexPageProps) => (
          }}
       >
          <Container
-            maxWidth="md"
+            maxWidth="lg"
             sx={{
                display: 'flex',
                flexDirection: 'column',
@@ -27,28 +35,42 @@ const IndexPage = ({ linuxUrl, macOsUrl, windowsUrl }: IndexPageProps) => (
                alignItems: 'center',
             }}
          >
-            <Typography variant="h3" fontWeight="bold" color="white" sx={{ mb: 2 }}>
-               Taktix
-            </Typography>
-            <Typography variant="h6" color="white" sx={{ opacity: 0.7, mb: 4 }}>
+            <Box display="flex">
+               <Typography variant="h3" fontWeight="bold" color="white" sx={{ mb: 2 }}>
+                  Taktix
+               </Typography>
+               <Typography variant="overline" color="white" sx={{ mb: 2, ml: 2, mt: 'auto' }}>
+                  {version}
+               </Typography>
+            </Box>
+            <Typography variant="h6" color="white" sx={{ opacity: 0.7 }}>
                A small browser game written in TypeScript.
             </Typography>
-            <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gap={4}>
-               <Link href={windowsUrl} sx={{ textDecoration: 'none' }}>
-                  <Button variant="contained" size="large" color="secondary">
-                     Download for Windows
-                  </Button>
-               </Link>
-               <Link href={linuxUrl} sx={{ textDecoration: 'none' }}>
-                  <Button variant="contained" size="large" color="secondary">
-                     Download for Linux
-                  </Button>
-               </Link>
-               <Link href={macOsUrl} sx={{ textDecoration: 'none' }}>
-                  <Button variant="contained" size="large" color="secondary">
-                     Download for Mac OS
-                  </Button>
-               </Link>
+            <Typography
+               variant="subtitle1"
+               fontStyle="italic"
+               color="white"
+               sx={{ opacity: 0.7, mb: 4 }}
+            >
+               Last release: {new Date(date).toUTCString()}
+            </Typography>
+            <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gap={4} justifyItems="center">
+               {platforms.map(({ url, updating, availableText, updatingText, extension }) => (
+                  <ConditionalWrapper
+                     condition={!updating}
+                     wrapper={(children) => (
+                        <Link href={url} sx={{ textDecoration: 'none' }}>
+                           {children}
+                        </Link>
+                     )}
+                  >
+                     <Button disabled={updating} variant="contained" size="large" color="secondary">
+                        <Typography fontStyle={updating ? 'italic' : 'normal'}>
+                           {updating ? updatingText : `${availableText} (${extension})`}
+                        </Typography>
+                     </Button>
+                  </ConditionalWrapper>
+               ))}
             </Box>
          </Container>
       </Box>
@@ -101,9 +123,34 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () =
 
    return {
       props: {
-         linuxUrl: version.platforms['linux-x86_64'].url,
-         macOsUrl: version.platforms['darwin-x86_64'].url,
-         windowsUrl: version.platforms['windows-x86_64'].url,
+         date: version?.pub_date || '',
+         version: version?.version || '',
+         platforms: [
+            {
+               name: 'Linux',
+               url: version?.platforms?.['linux-x86_64']?.url || '',
+               availableText: 'Download for Linux',
+               updatingText: 'Updating for Linux...',
+               updating: version?.platforms?.['linux-x86_64']?.url === null,
+               extension: '.AppImage',
+            },
+            {
+               name: 'Mac OS',
+               url: version?.platforms?.['darwin-x86_64']?.url || '',
+               availableText: 'Download for Mac OS',
+               updatingText: 'Updating for Mac OS...',
+               updating: version?.platforms?.['darwin-x86_64']?.url === null,
+               extension: '.app',
+            },
+            {
+               name: 'Windows',
+               url: version?.platforms?.['windows-x86_64']?.url || '',
+               availableText: 'Download for Windows',
+               updatingText: 'Updating for Windows...',
+               updating: version?.platforms?.['windows-x86_64']?.url === null,
+               extension: '.msi',
+            },
+         ],
       },
    };
 };
