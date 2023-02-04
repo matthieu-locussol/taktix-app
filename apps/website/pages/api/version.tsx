@@ -4,9 +4,6 @@ export const config = {
    runtime: 'edge',
 };
 
-const SIGNATURE_PUBLIC_KEY =
-   'dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE3NjhGREQ0Rjg0RjhERQpSV1RlK0lSUDNZOTJBVDh6bURQZ0dWckZSbTljcmtWSG1Oc2x1RmNzZzdhZlNCZC8vdllrd3VDRAo=';
-
 const RELEASE_ENDPOINT =
    'https://api.github.com/repos/matthieu-locussol/taktix-app/releases/latest';
 
@@ -18,9 +15,9 @@ const ARCHITECTURES = [
 ] as const;
 
 const ARCHITECTURES_EXTENSION = {
-   '.dmg': ['darwin-aarch64', 'darwin-x86_64'],
-   '.deb': ['linux-x86_64'],
-   '.msi': ['windows-x86_64'],
+   '.app.tar.gz': ['darwin-aarch64', 'darwin-x86_64'],
+   '.AppImage.tar.gz': ['linux-x86_64'],
+   '.msi.zip': ['windows-x86_64'],
 };
 
 export interface Version {
@@ -40,36 +37,46 @@ const handler = async (_: NextRequest) => {
    const data = await fetch(RELEASE_ENDPOINT);
    const json: GitHubRelease = await data.json();
 
+   const computeSignature = async (url: string) => {
+      const signatureData = await fetch(url);
+      const signatureContent = await signatureData.text();
+      return signatureContent;
+   };
+
    return new Response(
       JSON.stringify({
          version: json.tag_name,
          notes: `Taktix ${json.tag_name}`,
          pub_date: json.published_at,
-         platforms: json.assets
-            .filter(({ name }) =>
-               ['.deb', '.dmg', '.msi'].some((extension) => name.endsWith(extension)),
+         platforms: (
+            await Promise.all(
+               json.assets
+                  .filter(({ name }) =>
+                     ['.AppImage.tar.gz', '.app.tar.gz', '.msi.zip'].some((extension) =>
+                        name.endsWith(extension),
+                     ),
+                  )
+                  .map(async ({ name, browser_download_url }) => ({
+                     signature: await computeSignature(`${browser_download_url}.sig`),
+                     url: browser_download_url,
+                     extension: ['.AppImage.tar.gz', '.app.tar.gz', '.msi.zip'].find((extension) =>
+                        name.endsWith(extension),
+                     ) as '.AppImage.tar.gz' | '.app.tar.gz' | '.msi.zip',
+                  })),
             )
-            .map(({ name, browser_download_url }) => ({
-               signature: SIGNATURE_PUBLIC_KEY,
-               url: browser_download_url,
-               extension: ['.deb', '.dmg', '.msi'].find((extension) => name.endsWith(extension)) as
-                  | '.deb'
-                  | '.dmg'
-                  | '.msi',
-            }))
-            .reduce(
-               (accExtension, { url, signature, extension }) => ({
-                  ...accExtension,
-                  ...ARCHITECTURES_EXTENSION[extension].reduce(
-                     (accArchitectures, architecture) => ({
-                        ...accArchitectures,
-                        [architecture]: { signature, url },
-                     }),
-                     {},
-                  ),
-               }),
-               {},
-            ),
+         ).reduce(
+            (accExtension, { url, signature, extension }) => ({
+               ...accExtension,
+               ...ARCHITECTURES_EXTENSION[extension].reduce(
+                  (accArchitectures, architecture) => ({
+                     ...accArchitectures,
+                     [architecture]: { signature, url },
+                  }),
+                  {},
+               ),
+            }),
+            {},
+         ),
       }),
       {
          status: 200,
