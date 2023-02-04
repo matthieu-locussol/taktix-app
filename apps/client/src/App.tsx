@@ -16,7 +16,7 @@ export const App = () => {
    const socket = useMemo(() => new WebSocket('ws://localhost:4000/ws'), []);
 
    socket.onopen = () => {
-      setLog('Connected to the server!');
+      setLog('Connected to the server! Ent');
    };
 
    socket.onmessage = (event) => {
