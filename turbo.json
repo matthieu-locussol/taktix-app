@@ -9,7 +9,9 @@
          "outputs": ["dist/**"],
          "dependsOn": ["eslint", "^build:app"]
       },
-      "bumpversion": {},
+      "bumpversion": {
+         "cache": false
+      },
       "clean": {
          "cache": false
       },
