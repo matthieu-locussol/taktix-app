@@ -21,6 +21,7 @@ importers:
 
    apps/client:
       specifiers:
+         '@tauri-apps/api': ^1.2.0
          '@tauri-apps/cli': ^1.2.3
          '@types/react': ^18.0.27
          '@types/react-dom': ^18.0.10
@@ -35,6 +36,7 @@ importers:
          typescript: ^4.9.4
          vite: ^4.0.4
       dependencies:
+         '@tauri-apps/api': 1.2.0
          '@vitejs/plugin-react': 3.0.1_vite@4.0.4
          react: 18.2.0
          react-dom: 18.2.0_react@18.2.0
@@ -1737,6 +1739,14 @@ packages:
          }
       dependencies:
          tslib: 2.5.0
+      dev: false
+
+   /@tauri-apps/api/1.2.0:
+      resolution:
+         {
+            integrity: sha512-lsI54KI6HGf7VImuf/T9pnoejfgkNoXveP14pVV7XarrQ46rOejIVJLFqHI9sRReJMGdh2YuCoI3cc/yCWCsrw==,
+         }
+      engines: { node: '>= 14.6.0', npm: '>= 6.6.0', yarn: '>= 1.19.1' }
       dev: false
 
    /@tauri-apps/cli-darwin-arm64/1.2.3:

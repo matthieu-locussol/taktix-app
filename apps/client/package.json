@@ -12,6 +12,7 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "dependencies": {
+      "@tauri-apps/api": "^1.2.0",
       "@vitejs/plugin-react": "^3.0.1",
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
