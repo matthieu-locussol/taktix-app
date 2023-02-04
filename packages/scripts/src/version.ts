@@ -22,10 +22,20 @@ const bumpVersion = () => {
    const newTauriFile = tauriFileBlob.replace(/"version": .*/, `"version": "${version}"`);
    writeFileSync(tauriFilePath, newTauriFile);
 
-   const clientFilePath = resolve(__dirname, '../../../apps/client/package.json');
-   const clientFileBlob = readFileSync(clientFilePath, 'utf8');
-   const newClientFile = clientFileBlob.replace(/"version": .*/, `"version": "${version}"`);
-   writeFileSync(clientFilePath, newClientFile);
+   [
+      '../../../apps/client/package.json',
+      '../../../apps/server/package.json',
+      '../../../apps/website/package.json',
+      '../../config-eslint/package.json',
+      '../../config-typescript/package.json',
+      '../package.json',
+      '../../shared/package.json',
+   ].forEach((path) => {
+      const clientFilePath = resolve(__dirname, path);
+      const clientFileBlob = readFileSync(clientFilePath, 'utf8');
+      const newClientFile = clientFileBlob.replace(/"version": .*/, `"version": "${version}",`);
+      writeFileSync(clientFilePath, newClientFile);
+   });
 };
 
 bumpVersion();
