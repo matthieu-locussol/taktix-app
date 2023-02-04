@@ -16,7 +16,7 @@
       },
       "bundle": {
          "active": true,
-         "category": "DeveloperTool",
+         "category": "RolePlayingGame",
          "copyright": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
          "deb": {
             "depends": []
@@ -30,7 +30,7 @@
             "icons/icon.ico"
          ],
          "identifier": "com.taktix.app",
-         "longDescription": "",
+         "longDescription": "A small browser game written in TypeScript.",
          "macOS": {
             "entitlements": null,
             "exceptionDomain": "",
@@ -39,7 +39,7 @@
             "signingIdentity": null
          },
          "resources": [],
-         "shortDescription": "",
+         "shortDescription": "A small browser game written in TypeScript.",
          "targets": "all",
          "windows": {
             "certificateThumbprint": null,
@@ -47,6 +47,7 @@
             "timestampUrl": ""
          }
       },
+      "macOSPrivateApi": true,
       "security": {
          "csp": null
       },
@@ -58,11 +59,24 @@
       },
       "windows": [
          {
+            "width": 100,
+            "height": 100,
+            "decorations": false,
+            "url": "splashscreen.html",
+            "label": "splashscreen",
+            "transparent": true,
+            "center": true
+         },
+         {
             "fullscreen": false,
             "height": 600,
             "resizable": true,
             "title": "Taktix",
-            "width": 800
+            "width": 800,
+            "visible": false,
+            "url": "index.html",
+            "center": true,
+            "label": "main"
          }
       ]
    }
