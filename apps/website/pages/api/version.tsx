@@ -34,57 +34,71 @@ export interface Version {
 }
 
 const handler = async (_: NextRequest) => {
-   const data = await fetch(RELEASE_ENDPOINT);
-   const json: GitHubRelease = await data.json();
+   try {
+      const data = await fetch(RELEASE_ENDPOINT);
+      const json: GitHubRelease = await data.json();
 
-   const computeSignature = async (url: string) => {
-      const signatureData = await fetch(url);
-      const signatureContent = await signatureData.text();
-      return signatureContent;
-   };
+      const computeSignature = async (url: string) => {
+         const signatureData = await fetch(url);
+         const signatureContent = await signatureData.text();
+         return signatureContent;
+      };
 
-   return new Response(
-      JSON.stringify({
-         version: json.tag_name,
-         notes: `Taktix ${json.tag_name}`,
-         pub_date: json.published_at,
-         platforms: (
-            await Promise.all(
-               json.assets
-                  .filter(({ name }) =>
-                     ['.AppImage.tar.gz', '.app.tar.gz', '.msi.zip'].some((extension) =>
-                        name.endsWith(extension),
-                     ),
-                  )
-                  .map(async ({ name, browser_download_url }) => ({
-                     signature: await computeSignature(`${browser_download_url}.sig`),
-                     url: browser_download_url,
-                     extension: ['.AppImage.tar.gz', '.app.tar.gz', '.msi.zip'].find((extension) =>
-                        name.endsWith(extension),
-                     ) as '.AppImage.tar.gz' | '.app.tar.gz' | '.msi.zip',
-                  })),
-            )
-         ).reduce(
-            (accExtension, { url, signature, extension }) => ({
-               ...accExtension,
-               ...ARCHITECTURES_EXTENSION[extension].reduce(
-                  (accArchitectures, architecture) => ({
-                     ...accArchitectures,
-                     [architecture]: { signature, url },
-                  }),
-                  {},
-               ),
-            }),
-            {},
-         ),
-      }),
-      {
-         status: 200,
-         headers: {
-            'content-type': 'application/json',
+      return new Response(
+         JSON.stringify({
+            version: json.tag_name,
+            notes: `Taktix ${json.tag_name}`,
+            pub_date: json.published_at,
+            platforms: (
+               await Promise.all(
+                  json.assets
+                     .filter(({ name }) =>
+                        ['.AppImage.tar.gz', '.app.tar.gz', '.msi.zip'].some((extension) =>
+                           name.endsWith(extension),
+                        ),
+                     )
+                     .map(async ({ name, browser_download_url }) => ({
+                        signature: await computeSignature(`${browser_download_url}.sig`),
+                        url: browser_download_url,
+                        extension: ['.AppImage.tar.gz', '.app.tar.gz', '.msi.zip'].find(
+                           (extension) => name.endsWith(extension),
+                        ) as '.AppImage.tar.gz' | '.app.tar.gz' | '.msi.zip',
+                     })),
+               )
+            ).reduce(
+               (accExtension, { url, signature, extension }) => ({
+                  ...accExtension,
+                  ...ARCHITECTURES_EXTENSION[extension].reduce(
+                     (accArchitectures, architecture) => ({
+                        ...accArchitectures,
+                        [architecture]: { signature, url },
+                     }),
+                     {},
+                  ),
+               }),
+               {},
+            ),
+         }),
+         {
+            status: 200,
+            headers: {
+               'content-type': 'application/json',
+            },
          },
-      },
-   );
+      );
+   } catch (e) {
+      return new Response(
+         JSON.stringify({
+            updating: true,
+         }),
+         {
+            status: 200,
+            headers: {
+               'content-type': 'application/json',
+            },
+         },
+      );
+   }
 };
 
 export default handler;
