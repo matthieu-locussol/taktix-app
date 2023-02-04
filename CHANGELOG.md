@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.4.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.3.2...v1.4.0) (2023-02-04)
+
+### Features
+
+-  added a splashscreen
+   ([6123647](https://github.com/matthieu-locussol/taktix-app/commit/61236478bf0fb1a4dbe1f0237297428a2c2e262d))
+
+### Bug Fixes
+
+-  updated version script to update all packages versions
+   ([2e8fdef](https://github.com/matthieu-locussol/taktix-app/commit/2e8fdef5fc1e55a802b257c84378726ee05ae164))
+
 ### [1.3.2](https://github.com/matthieu-locussol/taktix-app/compare/v1.3.1...v1.3.2) (2023-02-04)
 
 ### [1.3.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.3.0...v1.3.1) (2023-02-04)
