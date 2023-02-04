@@ -5,6 +5,10 @@
          "outputs": ["dist/**"],
          "dependsOn": ["eslint", "^build"]
       },
+      "build:app": {
+         "outputs": ["dist/**"],
+         "dependsOn": ["eslint", "^build:app"]
+      },
       "bumpversion": {},
       "clean": {
          "cache": false
