@@ -3,7 +3,8 @@
    "compilerOptions": {
       "module": "CommonJS",
       "outDir": "./dist",
-      "rootDir": "."
+      "rootDir": ".",
+      "resolveJsonModule": true
    },
-   "include": ["src", ".eslintrc.js", "vite.config.ts"]
+   "include": ["src", "src-tauri", ".eslintrc.js", "vite.config.ts"]
 }
