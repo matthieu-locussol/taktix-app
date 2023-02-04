@@ -21,6 +21,11 @@ const bumpVersion = () => {
    const tauriFileBlob = readFileSync(tauriFilePath, 'utf8');
    const newTauriFile = tauriFileBlob.replace(/"version": .*/, `"version": "${version}"`);
    writeFileSync(tauriFilePath, newTauriFile);
+
+   const clientFilePath = resolve(__dirname, '../../../apps/client/package.json');
+   const clientFileBlob = readFileSync(clientFilePath, 'utf8');
+   const newClientFile = clientFileBlob.replace(/"version": .*/, `"version": "${version}"`);
+   writeFileSync(clientFilePath, newClientFile);
 };
 
 bumpVersion();

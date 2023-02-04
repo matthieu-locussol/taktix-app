@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ClientPacket } from 'shared';
 import { zServerPacket } from 'shared/src/client/ServerPacket';
+import { version } from '../package.json';
 import { handleServerMessage } from './handlers/handleServerMessage';
 import { handleServerResponse } from './handlers/handleServerResponse';
 import { sendHello, sendMessage, sendSum } from './utils/payload';
@@ -51,7 +52,7 @@ export const App = () => {
 
    return (
       <div>
-         <h1>Client</h1>
+         <h1>Client {version}</h1>
          <p>Last log: {log}</p>
          <div>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
