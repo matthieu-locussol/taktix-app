@@ -1,33 +1,40 @@
-import { MessageMessage, MessageResponse, ServerPacket } from 'shared';
+import { LoginMessage, LoginResponse, ServerPacket } from 'shared';
 import { SOCKETS } from '../../globals';
 
-export const handleMessageMessage = (
-   { data }: MessageMessage,
-   socketId: string,
-): MessageResponse => {
+export const handleLoginMessage = ({ data }: LoginMessage, socketId: string): LoginResponse => {
    const client = SOCKETS.get(socketId);
 
    if (client !== undefined) {
       const packet: ServerPacket = {
          type: 'message',
          packet: {
-            type: 'playerMessage',
+            type: 'playerLoggedIn',
             data: {
                name: data.name,
-               content: data.content,
             },
          },
       };
+
+      SOCKETS.set(socketId, { ...client, name: data.name });
 
       SOCKETS.forEach(({ socket }, currentSocketId) => {
          if (currentSocketId !== socketId) {
             socket.send(JSON.stringify(packet));
          }
       });
+
+      return {
+         type: 'loginResponse',
+         data: {
+            response: 'connected',
+         },
+      };
    }
 
    return {
-      type: 'messageResponse',
-      data: null,
+      type: 'loginResponse',
+      data: {
+         response: 'unknown',
+      },
    };
 };

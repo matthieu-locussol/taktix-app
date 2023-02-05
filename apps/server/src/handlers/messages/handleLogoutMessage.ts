@@ -1,20 +1,16 @@
-import { MessageMessage, MessageResponse, ServerPacket } from 'shared';
+import { LogoutMessage, LogoutResponse, ServerPacket } from 'shared';
 import { SOCKETS } from '../../globals';
 
-export const handleMessageMessage = (
-   { data }: MessageMessage,
-   socketId: string,
-): MessageResponse => {
+export const handleLogoutMessage = ({ data }: LogoutMessage, socketId: string): LogoutResponse => {
    const client = SOCKETS.get(socketId);
 
    if (client !== undefined) {
       const packet: ServerPacket = {
          type: 'message',
          packet: {
-            type: 'playerMessage',
+            type: 'playerLoggedOut',
             data: {
                name: data.name,
-               content: data.content,
             },
          },
       };
@@ -24,10 +20,19 @@ export const handleMessageMessage = (
             socket.send(JSON.stringify(packet));
          }
       });
+
+      return {
+         type: 'logoutResponse',
+         data: {
+            response: 'success',
+         },
+      };
    }
 
    return {
-      type: 'messageResponse',
-      data: null,
+      type: 'logoutResponse',
+      data: {
+         response: 'unknown',
+      },
    };
 };

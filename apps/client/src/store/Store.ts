@@ -4,6 +4,8 @@ import { ChatStore } from './ChatStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
 
 export class Store {
+   socket: WebSocket | null = null;
+
    loadingScreenStore = new LoadingScreenStore();
 
    characterStore = new CharacterStore();

@@ -1,22 +1,37 @@
 import { Box } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { ClientPacket } from 'shared';
 import { zServerPacket } from 'shared/src/client/ServerPacket';
 import { handleServerMessage } from '../handlers/handleServerMessage';
 import { handleServerResponse } from '../handlers/handleServerResponse';
-import { useStore } from '../store';
+import { store, useStore } from '../store';
 import { Chatbox } from './Chatbox';
 
 export const Game = observer(() => {
    const {
+      characterStore: { name },
       loadingScreenStore: { loadingAssets },
    } = useStore();
 
    const socket = useMemo(() => new WebSocket('ws://localhost:4000/ws'), []);
 
+   useEffect(() => {
+      store.socket = socket;
+   }, []);
+
    socket.onopen = () => {
-      console.log('Connected to the server!');
+      const packet: ClientPacket = {
+         type: 'message',
+         packet: {
+            type: 'login',
+            data: {
+               name,
+            },
+         },
+      };
+
+      socket.send(JSON.stringify(packet));
    };
 
    socket.onmessage = (event) => {
@@ -30,6 +45,7 @@ export const Game = observer(() => {
                   type: 'response',
                   packet: response,
                };
+               console.log(`Sending a ${payload.packet.type} response...`);
                socket.send(JSON.stringify(payload));
                break;
             }

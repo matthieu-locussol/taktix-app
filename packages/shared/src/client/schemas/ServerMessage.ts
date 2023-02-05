@@ -1,6 +1,12 @@
 import { z } from 'zod';
-import { zPingMessage } from './messages/PingMessage';
+import { zPlayerLoggedInMessage } from './messages/PlayerLoggedInMessage';
+import { zPlayerLoggedOutMessage } from './messages/PlayerLoggedOutMessage';
+import { zPlayerMessageMessage } from './messages/PlayerMessageMessage';
 
-export const zServerMessage = z.discriminatedUnion('type', [zPingMessage]);
+export const zServerMessage = z.discriminatedUnion('type', [
+   zPlayerLoggedInMessage,
+   zPlayerMessageMessage,
+   zPlayerLoggedOutMessage,
+]);
 
 export type ServerMessage = z.infer<typeof zServerMessage>;
