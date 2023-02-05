@@ -1,0 +1,15 @@
+{
+   "columns": 48,
+   "image": "house_tileset.png",
+   "imageheight": 256,
+   "imagewidth": 768,
+   "margin": 0,
+   "name": "House",
+   "spacing": 0,
+   "tilecount": 768,
+   "tiledversion": "1.8.4",
+   "tileheight": 16,
+   "tilewidth": 16,
+   "type": "tileset",
+   "version": "1.8"
+}

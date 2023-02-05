@@ -1,0 +1,17 @@
+html {
+   margin: 0px;
+   padding: 0px;
+   box-sizing: 'content-box';
+   overflow: hidden;
+}
+
+body {
+   margin: 0px;
+   padding: 0px;
+   overflow: 'hidden';
+   background: '#48C4F8';
+   box-sizing: 'content-box';
+}
+
+#root-game {
+}

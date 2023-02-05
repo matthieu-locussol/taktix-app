@@ -1,0 +1,15 @@
+{
+   "columns": 45,
+   "image": "cloud_tileset.png",
+   "imageheight": 448,
+   "imagewidth": 720,
+   "margin": 0,
+   "name": "Clouds",
+   "spacing": 0,
+   "tilecount": 1260,
+   "tiledversion": "1.8.4",
+   "tileheight": 16,
+   "tilewidth": 16,
+   "type": "tileset",
+   "version": "1.8"
+}
