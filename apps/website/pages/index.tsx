@@ -131,7 +131,7 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () =
                url: version?.platforms?.['linux-x86_64']?.url || '',
                availableText: 'Download for Linux',
                updatingText: 'Updating for Linux...',
-               updating: version?.platforms?.['linux-x86_64']?.url === null,
+               updating: typeof version?.platforms?.['linux-x86_64']?.url !== 'string',
                extension: '.AppImage',
             },
             {
@@ -139,7 +139,7 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () =
                url: version?.platforms?.['darwin-x86_64']?.url || '',
                availableText: 'Download for Mac OS',
                updatingText: 'Updating for Mac OS...',
-               updating: version?.platforms?.['darwin-x86_64']?.url === null,
+               updating: typeof version?.platforms?.['darwin-x86_64']?.url !== 'string',
                extension: '.app',
             },
             {
@@ -147,7 +147,7 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () =
                url: version?.platforms?.['windows-x86_64']?.url || '',
                availableText: 'Download for Windows',
                updatingText: 'Updating for Windows...',
-               updating: version?.platforms?.['windows-x86_64']?.url === null,
+               updating: typeof version?.platforms?.['windows-x86_64']?.url !== 'string',
                extension: '.msi',
             },
          ],
