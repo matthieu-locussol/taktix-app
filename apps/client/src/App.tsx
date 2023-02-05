@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { invoke } from '@tauri-apps/api';
+import { useEffect, useMemo, useState } from 'react';
 import { ClientPacket } from 'shared';
 import { zServerPacket } from 'shared/src/client/ServerPacket';
 import { version } from '../package.json';
@@ -15,6 +16,12 @@ export const App = () => {
    const [operand2, setOperand2] = useState('2');
 
    const socket = useMemo(() => new WebSocket('ws://localhost:4000/ws'), []);
+
+   useEffect(() => {
+      setTimeout(() => {
+         invoke('close_splashscreen');
+      }, 5000);
+   }, []);
 
    socket.onopen = () => {
       setLog('Connected to the server! Ent');
