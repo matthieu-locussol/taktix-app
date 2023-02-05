@@ -2,12 +2,12 @@ import { invoke } from '@tauri-apps/api';
 import { useEffect, useMemo, useState } from 'react';
 import { ClientPacket } from 'shared';
 import { zServerPacket } from 'shared/src/client/ServerPacket';
-import { version } from '../package.json';
-import { handleServerMessage } from './handlers/handleServerMessage';
-import { handleServerResponse } from './handlers/handleServerResponse';
-import { sendHello, sendMessage, sendSum } from './utils/payload';
+import { version } from '../../package.json';
+import { handleServerMessage } from '../handlers/handleServerMessage';
+import { handleServerResponse } from '../handlers/handleServerResponse';
+import { sendHello, sendMessage, sendSum } from '../utils/payload';
 
-export const App = () => {
+export const Game = () => {
    const [log, setLog] = useState('');
 
    const [name, setName] = useState('John');
@@ -18,8 +18,9 @@ export const App = () => {
    const socket = useMemo(() => new WebSocket('ws://localhost:4000/ws'), []);
 
    useEffect(() => {
-      setTimeout(() => {
-         invoke('close_splashscreen');
+      setTimeout(async () => {
+         const a = await invoke('close_splashscreen');
+         console.log(a);
       }, 5000);
    }, []);
 

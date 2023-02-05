@@ -29,20 +29,30 @@ importers:
          config-eslint: workspace:^1.0.0
          config-typescript: workspace:^1.0.0
          eslint: ^8.33.0
+         grid-engine: ^2.25.1
+         mobx: ^6.7.0
+         mobx-react-lite: ^3.4.0
+         phaser: ^3.55.2
          react: ^18.2.0
          react-dom: ^18.2.0
          shared: workspace:^1.0.0
          ts-pattern: ^4.1.3
          typescript: ^4.9.4
          vite: ^4.0.4
+         vitest: ^0.28.3
       dependencies:
          '@tauri-apps/api': 1.2.0
          '@vitejs/plugin-react': 3.0.1_vite@4.0.4
+         grid-engine: 2.25.1_phaser@3.55.2
+         mobx: 6.7.0
+         mobx-react-lite: 3.4.0_jofyzmwkboewm6mjrhi25mngky
+         phaser: 3.55.2
          react: 18.2.0
          react-dom: 18.2.0_react@18.2.0
          shared: link:../../packages/shared
          ts-pattern: 4.1.3
          vite: 4.0.4
+         vitest: 0.28.3
       devDependencies:
          '@tauri-apps/cli': 1.2.3
          '@types/react': 18.0.27
@@ -4185,6 +4195,13 @@ packages:
       engines: { node: '>=6' }
       dev: false
 
+   /eventemitter3/4.0.7:
+      resolution:
+         {
+            integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==,
+         }
+      dev: false
+
    /events/3.3.0:
       resolution:
          {
@@ -4817,6 +4834,18 @@ packages:
          }
       dev: true
 
+   /grid-engine/2.25.1_phaser@3.55.2:
+      resolution:
+         {
+            integrity: sha512-60qrzxAy42tzI+yDWLAzmFFqaRG0tXkRDm6Q2Jig0DQlrMZmaUYP6EMJgMr5+AdkRIuCgonY8GiibuRxJ2Mz+w==,
+         }
+      peerDependencies:
+         phaser: ~3.55.2
+      dependencies:
+         phaser: 3.55.2
+         rxjs: 7.8.0
+      dev: false
+
    /handlebars/4.7.7:
       resolution:
          {
@@ -5008,6 +5037,13 @@ packages:
          once: 1.4.0
          wrappy: 1.0.2
       dev: true
+
+   /inherits/2.0.3:
+      resolution:
+         {
+            integrity: sha512-x00IRNXNy63jwGkJmzPigoySHbaqpNuzKbBOmzK+g2OdZpQ9w+sxCN+VSB3ja7IAge2OP2qpfxTjeNcyjmW1uw==,
+         }
+      dev: false
 
    /inherits/2.0.4:
       resolution:
@@ -5867,6 +5903,34 @@ packages:
          ufo: 1.0.1
       dev: false
 
+   /mobx-react-lite/3.4.0_jofyzmwkboewm6mjrhi25mngky:
+      resolution:
+         {
+            integrity: sha512-bRuZp3C0itgLKHu/VNxi66DN/XVkQG7xtoBVWxpvC5FhAqbOCP21+nPhULjnzEqd7xBMybp6KwytdUpZKEgpIQ==,
+         }
+      peerDependencies:
+         mobx: ^6.1.0
+         react: ^16.8.0 || ^17 || ^18
+         react-dom: '*'
+         react-native: '*'
+      peerDependenciesMeta:
+         react-dom:
+            optional: true
+         react-native:
+            optional: true
+      dependencies:
+         mobx: 6.7.0
+         react: 18.2.0
+         react-dom: 18.2.0_react@18.2.0
+      dev: false
+
+   /mobx/6.7.0:
+      resolution:
+         {
+            integrity: sha512-1kBLBdSNG2bA522HQdbsTvwAwYf9hq9FWxmlhX7wTsJUAI54907J+ozfGW+LoYUo06vjit748g6QH1AAGLNebw==,
+         }
+      dev: false
+
    /modify-values/1.0.1:
       resolution:
          {
@@ -6357,6 +6421,16 @@ packages:
          }
       engines: { node: '>=8' }
 
+   /path/0.12.7:
+      resolution:
+         {
+            integrity: sha512-aXXC6s+1w7otVF9UletFkFcDsJeO7lSZBPUQhtb5O0xJe8LtYhj/GxldoL09bBj9+ZmE2hNoHqQSFMN5fikh4Q==,
+         }
+      dependencies:
+         process: 0.11.10
+         util: 0.10.4
+      dev: false
+
    /pathe/1.1.0:
       resolution:
          {
@@ -6369,6 +6443,16 @@ packages:
          {
             integrity: sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==,
          }
+      dev: false
+
+   /phaser/3.55.2:
+      resolution:
+         {
+            integrity: sha512-amKXsbb2Ht29dGPKvt1edq3yGGYKtq8373GpJYGKPNPnneYY6MtVTOgjHDuZwtmUyK4v86FugkT3hzW/N4tjxQ==,
+         }
+      dependencies:
+         eventemitter3: 4.0.7
+         path: 0.12.7
       dev: false
 
    /picocolors/1.0.0:
@@ -6946,6 +7030,15 @@ packages:
       dependencies:
          queue-microtask: 1.2.3
       dev: true
+
+   /rxjs/7.8.0:
+      resolution:
+         {
+            integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==,
+         }
+      dependencies:
+         tslib: 2.5.0
+      dev: false
 
    /safe-buffer/5.1.2:
       resolution:
@@ -7960,6 +8053,15 @@ packages:
             integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==,
          }
       dev: true
+
+   /util/0.10.4:
+      resolution:
+         {
+            integrity: sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==,
+         }
+      dependencies:
+         inherits: 2.0.3
+      dev: false
 
    /v8-compile-cache-lib/3.0.1:
       resolution:
