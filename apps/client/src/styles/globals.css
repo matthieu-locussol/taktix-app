@@ -3,6 +3,7 @@ html {
    padding: 0px;
    box-sizing: 'content-box';
    overflow: hidden;
+   background-color: black;
 }
 
 body {
@@ -11,7 +12,4 @@ body {
    overflow: 'hidden';
    background: '#48C4F8';
    box-sizing: 'content-box';
-}
-
-#root-game {
 }
