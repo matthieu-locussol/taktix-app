@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import { zHelloMessage } from './messages/HelloMessage';
+import { zLoginMessage } from './messages/LoginMessage';
+import { zLogoutMessage } from './messages/LogoutMessage';
 import { zMessageMessage } from './messages/MessageMessage';
-import { zSumMessage } from './messages/SumMessage';
 
 export const zClientMessage = z.discriminatedUnion('type', [
-   zHelloMessage,
+   zLoginMessage,
    zMessageMessage,
-   zSumMessage,
+   zLogoutMessage,
 ]);
 
 export type ClientMessage = z.infer<typeof zClientMessage>;

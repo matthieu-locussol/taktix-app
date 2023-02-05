@@ -1,8 +1,9 @@
 import { Box, Typography, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
+import { ClientPacket } from 'shared';
 import { game } from '../game/PhaserGame';
-import { useStore } from '../store';
+import { store, useStore } from '../store';
 
 const Root = styled('form')(() => ({
    position: 'absolute',
@@ -54,10 +55,25 @@ export const Chatbox = observer(() => {
          onSubmit={(e) => {
             e.preventDefault();
 
+            const packet: ClientPacket = {
+               type: 'message',
+               packet: {
+                  type: 'message',
+                  data: {
+                     name: characterStore.name,
+                     content: chatStore.input,
+                  },
+               },
+            };
+
             chatStore.addMessage({
                author: characterStore.name,
                message: chatStore.input,
             });
+
+            if (store.socket !== null) {
+               store.socket.send(JSON.stringify(packet));
+            }
          }}
       >
          <Chat ref={chatboxRef}>

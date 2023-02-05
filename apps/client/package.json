@@ -6,7 +6,7 @@
       "build:app": "TAURI_PRIVATE_KEY=~/.tauri/taktix-app.key tauri build",
       "eslint": "eslint src",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-      "dev:client": "vite",
+      "dev:client": "vite --host",
       "dev:app": "tauri dev",
       "start": "vite preview",
       "test": "vitest --run"

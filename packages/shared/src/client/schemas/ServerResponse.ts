@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import { zHelloResponse } from './responses/HelloResponse';
+import { zLoginResponse } from './responses/LoginResponse';
+import { zLogoutResponse } from './responses/LogoutResponse';
 import { zMessageResponse } from './responses/MessageResponse';
-import { zSumResponse } from './responses/SumResponse';
 
 export const zServerResponse = z.discriminatedUnion('type', [
-   zHelloResponse,
+   zLoginResponse,
    zMessageResponse,
-   zSumResponse,
+   zLogoutResponse,
 ]);
 
 export type ServerResponse = z.infer<typeof zServerResponse>;

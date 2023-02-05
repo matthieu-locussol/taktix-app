@@ -1,32 +1,30 @@
 import { SocketStream } from '@fastify/websocket';
 import { FastifyRequest } from 'fastify';
 import { ServerPacket, zClientPacket } from 'shared';
+import { v4 as uuidv4 } from 'uuid';
 import { SOCKETS } from '../globals';
 import { handleClientMessage } from '../handlers/handleClientMessage';
 import { handleClientResponse } from '../handlers/handleClientResponse';
 
 export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
-   console.log(`Connection from ${JSON.stringify(req.socket.address())}!`);
+   const socketId = uuidv4();
 
    if (req.socket.remoteAddress !== undefined) {
-      const timeoutId = setInterval(() => {
-         console.log('fired');
+      console.log(`New connection from ${socketId}!`);
 
-         const payload: ServerPacket = {
-            type: 'message',
-            packet: {
-               type: 'ping',
-               data: {
-                  message: 'PingMessage...',
-               },
-            },
-         };
-
-         connection.socket.send(JSON.stringify(payload));
-      }, 5000);
-
-      SOCKETS.set(req.socket.remoteAddress, timeoutId);
+      SOCKETS.set(socketId, {
+         name: '',
+         socket: connection.socket,
+      });
    }
+
+   connection.socket.onclose = () => {
+      if (req.socket.remoteAddress !== undefined) {
+         console.log(`Disconnected: ${socketId}`);
+
+         SOCKETS.delete(socketId);
+      }
+   };
 
    connection.socket.onerror = (err) => {
       console.error(err.message);
@@ -38,16 +36,17 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
 
          switch (type) {
             case 'message': {
-               const response = handleClientMessage(packet);
+               const response = handleClientMessage(packet, socketId);
                const payload: ServerPacket = {
                   type: 'response',
                   packet: response,
                };
+               console.log(`Sending a ${payload.packet.type} response...`);
                connection.socket.send(JSON.stringify(payload));
                break;
             }
             case 'response': {
-               handleClientResponse(packet);
+               handleClientResponse(packet, socketId);
                break;
             }
             default:
@@ -55,16 +54,6 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
          }
       } catch (e) {
          console.error(e);
-      }
-   };
-
-   connection.socket.onclose = () => {
-      console.log('Connection closed.');
-
-      if (req.socket.remoteAddress !== undefined) {
-         const timeoutId = SOCKETS.get(req.socket.remoteAddress);
-         clearInterval(timeoutId);
-         SOCKETS.delete(req.socket.remoteAddress);
       }
    };
 };
