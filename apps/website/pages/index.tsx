@@ -57,6 +57,7 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => (
             <Box display="grid" gridTemplateColumns="1fr 1fr 1fr" gap={4} justifyItems="center">
                {platforms.map(({ url, updating, availableText, updatingText, extension }) => (
                   <ConditionalWrapper
+                     key={extension}
                      condition={!updating}
                      wrapper={(children) => (
                         <Link href={url} sx={{ textDecoration: 'none' }}>
