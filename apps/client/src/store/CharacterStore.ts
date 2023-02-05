@@ -2,7 +2,7 @@ import type { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
 
 export class CharacterStore {
-   public name: string = '';
+   public name: string = `User${Math.floor(Math.random() * 10000000)}`;
 
    public position: Position = { x: 0, y: 0 };
 

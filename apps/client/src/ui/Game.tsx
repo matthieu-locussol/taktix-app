@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
 import { ClientPacket } from 'shared';
@@ -5,6 +6,7 @@ import { zServerPacket } from 'shared/src/client/ServerPacket';
 import { handleServerMessage } from '../handlers/handleServerMessage';
 import { handleServerResponse } from '../handlers/handleServerResponse';
 import { useStore } from '../store';
+import { Chatbox } from './Chatbox';
 
 export const Game = observer(() => {
    const {
@@ -57,5 +59,10 @@ export const Game = observer(() => {
       );
    }
 
-   return <div id="root-game" />;
+   return (
+      <Box>
+         <Chatbox />
+         <Box id="root-game" />
+      </Box>
+   );
 });
