@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.7.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.6.0...v1.7.0) (2023-02-05)
+
+### Features
+
+-  added a super simple chat system
+   ([bac7cd2](https://github.com/matthieu-locussol/taktix-app/commit/bac7cd2557eef1bf9ffad1e0dfcb587bc9a06ad8))
+-  added mui & a chatbox to the client
+   ([a3f0e96](https://github.com/matthieu-locussol/taktix-app/commit/a3f0e968e87649a8732fe972d80e8edf87477f26))
+-  added phaser base game & removed splashscreen
+   ([6f5b878](https://github.com/matthieu-locussol/taktix-app/commit/6f5b878c76560b3522eebeeb07b29a9baeb2b3b5))
+
+### Bug Fixes
+
+-  console warning
+   ([bb89068](https://github.com/matthieu-locussol/taktix-app/commit/bb8906808b05c5e0bfdd822b7232f53752149f39))
+-  updated website download buttons
+   ([c43447f](https://github.com/matthieu-locussol/taktix-app/commit/c43447ff0abe55b0e46e0fabe4b25fb0f8aecad4))
+
 ## [1.6.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.5.0...v1.6.0) (2023-02-05)
 
 ### Features
