@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.6.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.5.0...v1.6.0) (2023-02-05)
+
+### Features
+
+-  updated icons & README
+   ([fbfc750](https://github.com/matthieu-locussol/taktix-app/commit/fbfc750a2a05dfe986c4acd4455ecf815b22ac52))
+-  updated vite config
+   ([4af1960](https://github.com/matthieu-locussol/taktix-app/commit/4af1960ea259f0eb698baee05c992dad9e3ad834))
+
 ## [1.5.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.4.1...v1.5.0) (2023-02-04)
 
 ### Features
