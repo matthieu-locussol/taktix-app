@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useMemo } from 'react';
 import { ClientPacket } from 'shared';
@@ -14,9 +14,7 @@ export const Game = observer(() => {
       loadingScreenStore: { loadingAssets },
    } = useStore();
 
-   const serverUrl =
-      process.env.NODE_ENV === 'production' ? 'taktix.up.railway.app' : 'localhost:4000';
-   const socket = useMemo(() => new WebSocket(`ws://${serverUrl}/ws`), []);
+   const socket = useMemo(() => new WebSocket(import.meta.env.VITE_SERVER_WEBSOCKET_URL), []);
 
    useEffect(() => {
       store.socket = socket;
@@ -79,6 +77,7 @@ export const Game = observer(() => {
 
    return (
       <Box>
+         <Typography color="red">Server: {import.meta.env.VITE_SERVER_WEBSOCKET_URL}</Typography>
          <Chatbox />
          <Box id="root-game" />
       </Box>

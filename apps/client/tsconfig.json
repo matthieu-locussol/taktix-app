@@ -1,7 +1,7 @@
 {
    "extends": "config-typescript/react.json",
    "compilerOptions": {
-      "module": "CommonJS",
+      "module": "ES2020",
       "outDir": "./dist",
       "rootDir": ".",
       "resolveJsonModule": true
