@@ -14,7 +14,9 @@ export const Game = observer(() => {
       loadingScreenStore: { loadingAssets },
    } = useStore();
 
-   const socket = useMemo(() => new WebSocket('ws://localhost:4000/ws'), []);
+   const serverUrl =
+      process.env.NODE_ENV === 'production' ? 'taktix.up.railway.app' : 'localhost:4000';
+   const socket = useMemo(() => new WebSocket(`ws://${serverUrl}/ws`), []);
 
    useEffect(() => {
       store.socket = socket;
