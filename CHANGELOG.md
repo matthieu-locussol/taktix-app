@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+### [1.7.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.7.0...v1.7.1) (2023-02-06)
+
+### Bug Fixes
+
+-  correctly handles player logged out
+   ([f0f952d](https://github.com/matthieu-locussol/taktix-app/commit/f0f952d8e6d3d5208e2bc49835918de4f3bb6bb8))
+
 ## [1.7.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.6.0...v1.7.0) (2023-02-05)
 
 ### Features
