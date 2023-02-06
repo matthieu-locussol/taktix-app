@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.8.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.7.3...v1.8.0) (2023-02-06)
+
+### Features
+
+-  added vite public env files
+   ([8583c3c](https://github.com/matthieu-locussol/taktix-app/commit/8583c3c98b09507f53f4b3342ab9bc4fd1a325ad))
+
 ### [1.7.3](https://github.com/matthieu-locussol/taktix-app/compare/v1.7.2...v1.7.3) (2023-02-06)
 
 ### Bug Fixes
