@@ -22,7 +22,27 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
       if (req.socket.remoteAddress !== undefined) {
          console.log(`Disconnected: ${socketId}`);
 
-         SOCKETS.delete(socketId);
+         const client = SOCKETS.get(socketId);
+
+         if (client !== undefined) {
+            SOCKETS.forEach(({ socket }, currentSocketId) => {
+               if (currentSocketId !== socketId) {
+                  const packet: ServerPacket = {
+                     type: 'message',
+                     packet: {
+                        type: 'playerLoggedOut',
+                        data: {
+                           name: client.name,
+                        },
+                     },
+                  };
+
+                  socket.send(JSON.stringify(packet));
+               }
+            });
+
+            SOCKETS.delete(socketId);
+         }
       }
    };
 
