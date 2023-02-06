@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+### [1.7.3](https://github.com/matthieu-locussol/taktix-app/compare/v1.7.2...v1.7.3) (2023-02-06)
+
+### Bug Fixes
+
+-  updated server url
+   ([b094d3e](https://github.com/matthieu-locussol/taktix-app/commit/b094d3eba691365608d20fb0a9c85d82ae43f09f))
+
 ### [1.7.2](https://github.com/matthieu-locussol/taktix-app/compare/v1.7.1...v1.7.2) (2023-02-06)
 
 ### Bug Fixes
