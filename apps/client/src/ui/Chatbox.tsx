@@ -77,11 +77,13 @@ export const Chatbox = observer(() => {
          }}
       >
          <Chat ref={chatboxRef}>
-            {chatStore.messages.map(({ author, message }) =>
+            {chatStore.messages.map(({ author, message }, idx) =>
                author === 'Server' ? (
-                  <Typography fontStyle="italic">{message}</Typography>
+                  <Typography key={idx} fontStyle="italic">
+                     {message}
+                  </Typography>
                ) : (
-                  <Typography>
+                  <Typography key={idx}>
                      {author}: {message}
                   </Typography>
                ),

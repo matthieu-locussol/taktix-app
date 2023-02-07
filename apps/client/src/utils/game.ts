@@ -7,7 +7,7 @@ import { store } from '../store';
 export const getCurrentScene = (): Scene => {
    const { scenes } = game.scene;
    const activeScenes = scenes.filter(({ scene }) => game.scene.isActive(scene.key));
-   _assertTrue(activeScenes.length === 1, 'There should be only one active scene at a time.');
+   _assertTrue(activeScenes.length <= 1, 'There should be only one active scene at a time.');
    return activeScenes[0] as Scene;
 };
 

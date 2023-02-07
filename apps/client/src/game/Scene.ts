@@ -59,6 +59,11 @@ export abstract class Scene extends Phaser.Scene {
    public abstract loadAssets(): void;
 
    public create(): void {
+      if (store.loadingScreenStore.firstLoading) {
+         this.cameras.main.fadeIn(3000, 0, 0, 0);
+         store.loadingScreenStore.setFirstLoading(false);
+      }
+
       const tilemap = this.createTilemap();
       const player = this.createPlayer();
 

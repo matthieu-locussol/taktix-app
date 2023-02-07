@@ -1,7 +1,11 @@
 import { LoginMessage, LoginResponse, ServerPacket } from 'shared';
 import { SOCKETS } from '../../globals';
+import { prisma } from '../../utils/prisma';
 
-export const handleLoginMessage = ({ data }: LoginMessage, socketId: string): LoginResponse => {
+export const handleLoginMessage = async (
+   { data }: LoginMessage,
+   socketId: string,
+): Promise<LoginResponse> => {
    const client = SOCKETS.get(socketId);
 
    if (client !== undefined) {
@@ -23,10 +27,32 @@ export const handleLoginMessage = ({ data }: LoginMessage, socketId: string): Lo
          }
       });
 
+      const user = await prisma.testo.findUnique({
+         where: {
+            name: data.name,
+         },
+      });
+
+      if (user === null) {
+         return {
+            type: 'loginResponse',
+            data: {
+               response: {
+                  status: 'unknown',
+               },
+            },
+         };
+      }
+
       return {
          type: 'loginResponse',
          data: {
-            response: 'connected',
+            response: {
+               status: 'connected',
+               map: user.map,
+               posX: user.pos_x,
+               posY: user.pos_y,
+            },
          },
       };
    }
@@ -34,7 +60,9 @@ export const handleLoginMessage = ({ data }: LoginMessage, socketId: string): Lo
    return {
       type: 'loginResponse',
       data: {
-         response: 'unknown',
+         response: {
+            status: 'unknown',
+         },
       },
    };
 };
