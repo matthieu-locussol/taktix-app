@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.9.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.8.0...v1.9.0) (2023-02-07)
+
+### Features
+
+-  added prisma, database & load character position from the database
+   ([31e1b3f](https://github.com/matthieu-locussol/taktix-app/commit/31e1b3fb9580d216f953e3c93ed82a74c9cfd467))
+-  correctly handles player moves
+   ([a99100d](https://github.com/matthieu-locussol/taktix-app/commit/a99100dad7cdc68b315e2974ef82d7b28fec007c))
+
 ## [1.8.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.7.3...v1.8.0) (2023-02-06)
 
 ### Features
