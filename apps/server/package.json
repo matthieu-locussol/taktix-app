@@ -2,6 +2,7 @@
    "name": "server",
    "version": "1.9.0",
    "scripts": {
+      "prebuild": "prisma generate",
       "build": "tsc",
       "eslint": "eslint src",
       "dev:server": "ts-node-dev --respawn --transpile-only src/index.ts",
