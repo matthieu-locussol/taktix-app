@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { SOCKETS } from '../globals';
 import { handleClientMessage } from '../handlers/handleClientMessage';
 import { handleClientResponse } from '../handlers/handleClientResponse';
+import { prisma } from '../utils/prisma';
 
 export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
    const socketId = uuidv4();
@@ -13,12 +14,18 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
       console.log(`New connection from ${socketId}!`);
 
       SOCKETS.set(socketId, {
-         name: '',
+         data: {
+            name: '',
+            position: {
+               x: 0,
+               y: 0,
+            },
+         },
          socket: connection.socket,
       });
    }
 
-   connection.socket.onclose = () => {
+   connection.socket.onclose = async () => {
       if (req.socket.remoteAddress !== undefined) {
          console.log(`Disconnected: ${socketId}`);
 
@@ -32,13 +39,23 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
                      packet: {
                         type: 'playerLoggedOut',
                         data: {
-                           name: client.name,
+                           name: client.data.name,
                         },
                      },
                   };
 
                   socket.send(JSON.stringify(packet));
                }
+            });
+
+            await prisma.testo.update({
+               data: {
+                  pos_x: client.data.position.x,
+                  pos_y: client.data.position.y,
+               },
+               where: {
+                  name: client.data.name,
+               },
             });
 
             SOCKETS.delete(socketId);
