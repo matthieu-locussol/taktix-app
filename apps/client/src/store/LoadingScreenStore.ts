@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx';
 
 export class LoadingScreenStore {
+   public firstLoading: boolean = true;
+
    public loadingAssets: boolean = true;
 
    public progress: number = 0;
@@ -21,5 +23,9 @@ export class LoadingScreenStore {
 
    public setCurrentAssetPath(currentAssetPath: string | null) {
       this.currentAssetPath = currentAssetPath;
+   }
+
+   public setFirstLoading(firstLoading: boolean) {
+      this.firstLoading = firstLoading;
    }
 }

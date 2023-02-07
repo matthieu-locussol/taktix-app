@@ -4,7 +4,10 @@ import { handleLoginMessage } from './messages/handleLoginMessage';
 import { handleLogoutMessage } from './messages/handleLogoutMessage';
 import { handleMessageMessage } from './messages/handleMessageMessage';
 
-export const handleClientMessage = (data: ClientMessage, socketId: string): ServerResponse => {
+export const handleClientMessage = async (
+   data: ClientMessage,
+   socketId: string,
+): Promise<ServerResponse> => {
    console.log(`Received a "${data.type}" message...`);
 
    return match(data)
