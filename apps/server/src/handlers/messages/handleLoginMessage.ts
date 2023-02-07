@@ -19,8 +19,6 @@ export const handleLoginMessage = async (
          },
       };
 
-      SOCKETS.set(socketId, { ...client, name: data.name });
-
       SOCKETS.forEach(({ socket }, currentSocketId) => {
          if (currentSocketId !== socketId) {
             socket.send(JSON.stringify(packet));
@@ -43,6 +41,12 @@ export const handleLoginMessage = async (
             },
          };
       }
+
+      client.data.name = data.name;
+      client.data.position = {
+         x: user.pos_x,
+         y: user.pos_y,
+      };
 
       return {
          type: 'loginResponse',

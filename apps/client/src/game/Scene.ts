@@ -1,4 +1,5 @@
 import { Direction, GridEngine, Position } from 'grid-engine';
+import { ClientPacket } from 'shared';
 import { TELEPORTATION_SPOTS } from '../data/teleportationSpots';
 import { store } from '../store';
 import { teleportPlayer } from '../utils/game';
@@ -81,6 +82,10 @@ export abstract class Scene extends Phaser.Scene {
 
       this.gridEngine.create(tilemap, gridEngineConfig);
       this.gridEngine.turnTowards('player', this.entranceDirection);
+
+      this.gridEngine.movementStopped().subscribe((entity) => {
+         Scene.sendMoveSocket(this.gridEngine.getPosition(entity.charId));
+      });
    }
 
    public createPlayer(): Phaser.GameObjects.Sprite {
@@ -112,6 +117,23 @@ export abstract class Scene extends Phaser.Scene {
          this.gridEngine.move('player', Direction.DOWN);
       } else if (cursors.space.isDown) {
          teleportPlayer({ x: 10, y: 10 });
+      }
+   }
+
+   public static sendMoveSocket(position: Position): void {
+      const packet: ClientPacket = {
+         type: 'message',
+         packet: {
+            type: 'move',
+            data: {
+               posX: position.x,
+               posY: position.y,
+            },
+         },
+      };
+
+      if (store.socket !== null && store.socket.readyState === store.socket.OPEN) {
+         store.socket.send(JSON.stringify(packet));
       }
    }
 
