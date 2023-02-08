@@ -61,9 +61,14 @@ export abstract class Scene extends Phaser.Scene {
 
    public create(): void {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
+      this.cameras.main.fadeIn(1000, 0, 0, 0);
 
       const tilemap = this.createTilemap();
       const player = this.createPlayer();
+
+      const offsetX = (78 - store.characterStore.name.length * 10) / 2;
+      const playerName = this.add.text(offsetX, -8, store.characterStore.name, { align: 'center' });
+      const container = this.add.container(0, 0, [playerName, player]);
 
       const gridEngineConfig = {
          characters: [
@@ -73,16 +78,20 @@ export abstract class Scene extends Phaser.Scene {
                walkingAnimationMapping: 6,
                startPosition: this.entrancePosition,
                charLayer: 'player',
+               container,
             },
          ],
       };
+
+      this.cameras.main.startFollow(container, true);
+      this.cameras.main.setFollowOffset(-container.width, -container.height);
 
       this.gridEngine.create(tilemap, gridEngineConfig);
       this.gridEngine.turnTowards('player', this.entranceDirection);
 
       this.sendChangeMapSocket();
 
-      this.gridEngine.movementStopped().subscribe((entity) => {
+      this.gridEngine.positionChangeFinished().subscribe((entity) => {
          this.sendMoveSocket(entity.charId);
       });
    }
@@ -91,8 +100,6 @@ export abstract class Scene extends Phaser.Scene {
       const playerSprite = this.add.sprite(0, 0, 'player');
       playerSprite.setDepth(3);
       playerSprite.scale = 3;
-      this.cameras.main.startFollow(playerSprite, true);
-      this.cameras.main.setFollowOffset(-playerSprite.width, -playerSprite.height);
       return playerSprite;
    }
 
