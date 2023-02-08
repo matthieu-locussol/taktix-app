@@ -80,8 +80,10 @@ export abstract class Scene extends Phaser.Scene {
       this.gridEngine.create(tilemap, gridEngineConfig);
       this.gridEngine.turnTowards('player', this.entranceDirection);
 
+      this.sendChangeMapSocket();
+
       this.gridEngine.movementStopped().subscribe((entity) => {
-         Scene.sendMoveSocket(this.gridEngine.getPosition(entity.charId));
+         this.sendMoveSocket(entity.charId);
       });
    }
 
@@ -117,7 +119,9 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
-   public static sendMoveSocket(position: Position): void {
+   public sendMoveSocket(entityId: string): void {
+      const position = this.gridEngine.getPosition(entityId);
+
       const packet: ClientPacket = {
          type: 'message',
          packet: {
@@ -125,6 +129,22 @@ export abstract class Scene extends Phaser.Scene {
             data: {
                posX: position.x,
                posY: position.y,
+            },
+         },
+      };
+
+      if (store.socket !== null && store.socket.readyState === store.socket.OPEN) {
+         store.socket.send(JSON.stringify(packet));
+      }
+   }
+
+   public sendChangeMapSocket(): void {
+      const packet: ClientPacket = {
+         type: 'message',
+         packet: {
+            type: 'changeMap',
+            data: {
+               map: this.scene.key,
             },
          },
       };

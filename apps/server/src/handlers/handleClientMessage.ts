@@ -1,5 +1,6 @@
 import { ClientMessage, ServerResponse } from 'shared';
 import { match } from 'ts-pattern';
+import { handleChangeMapMessage } from './messages/handleChangeMapMessage';
 import { handleLoginMessage } from './messages/handleLoginMessage';
 import { handleLogoutMessage } from './messages/handleLogoutMessage';
 import { handleMessageMessage } from './messages/handleMessageMessage';
@@ -16,5 +17,6 @@ export const handleClientMessage = async (
       .with({ type: 'message' }, (params) => handleMessageMessage(params, socketId))
       .with({ type: 'logout' }, (params) => handleLogoutMessage(params, socketId))
       .with({ type: 'move' }, (params) => handleMoveMessage(params, socketId))
+      .with({ type: 'changeMap' }, (params) => handleChangeMapMessage(params, socketId))
       .exhaustive();
 };
