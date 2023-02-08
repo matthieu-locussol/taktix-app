@@ -2,7 +2,7 @@ import type { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
 
 export class CharacterStore {
-   public name: string = 'Jeckhys';
+   public name: string = '';
 
    public position: Position = { x: 0, y: 0 };
 
