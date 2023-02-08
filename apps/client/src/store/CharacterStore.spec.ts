@@ -3,7 +3,7 @@ import { CharacterStore } from './CharacterStore';
 
 test('should have a name', () => {
    const store = new CharacterStore();
-   expect(store.name).toSatisfy((v) => (v as string).startsWith('User'));
+   expect(store.name).toEqual('Jeckhys');
 });
 
 test('should set the name', () => {
