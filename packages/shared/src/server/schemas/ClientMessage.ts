@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { zChangeMapMessage } from './messages/ChangeMapMessage';
 import { zLoginMessage } from './messages/LoginMessage';
 import { zLogoutMessage } from './messages/LogoutMessage';
 import { zMessageMessage } from './messages/MessageMessage';
@@ -9,6 +10,7 @@ export const zClientMessage = z.discriminatedUnion('type', [
    zMessageMessage,
    zLogoutMessage,
    zMoveMessage,
+   zChangeMapMessage,
 ]);
 
 export type ClientMessage = z.infer<typeof zClientMessage>;

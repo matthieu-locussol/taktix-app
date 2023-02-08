@@ -40,6 +40,7 @@ export const handleLoginMessage = async (
       }
 
       client.data.name = data.name;
+      client.data.map = user.map;
       client.data.position = {
          x: user.pos_x,
          y: user.pos_y,

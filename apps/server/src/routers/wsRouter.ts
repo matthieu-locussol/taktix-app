@@ -16,6 +16,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
       SOCKETS.set(socketId, {
          data: {
             name: '',
+            map: '',
             position: {
                x: 0,
                y: 0,
@@ -50,6 +51,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
 
             await prisma.testo.update({
                data: {
+                  map: client.data.map,
                   pos_x: client.data.position.x,
                   pos_y: client.data.position.y,
                },

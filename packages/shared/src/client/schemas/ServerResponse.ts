@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { zChangeMapResponse } from './responses/ChangeMapResponse';
 import { zLoginResponse } from './responses/LoginResponse';
 import { zLogoutResponse } from './responses/LogoutResponse';
 import { zMessageResponse } from './responses/MessageResponse';
@@ -9,6 +10,7 @@ export const zServerResponse = z.discriminatedUnion('type', [
    zMessageResponse,
    zLogoutResponse,
    zMoveResponse,
+   zChangeMapResponse,
 ]);
 
 export type ServerResponse = z.infer<typeof zServerResponse>;
