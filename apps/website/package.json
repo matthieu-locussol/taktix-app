@@ -1,6 +1,6 @@
 {
    "name": "website",
-   "version": "1.9.1",
+   "version": "1.10.0",
    "scripts": {
       "dev:website": "next dev",
       "build": "next build",
