@@ -1,6 +1,6 @@
 {
    "name": "taktix-app",
-   "version": "1.9.1",
+   "version": "1.10.0",
    "description": "A small browser game written in TypeScript.",
    "repository": "git@github.com:matthieu-locussol/taktix-app.git",
    "scripts": {
