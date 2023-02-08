@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+### [1.9.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.9.0...v1.9.1) (2023-02-08)
+
+### Bug Fixes
+
+-  character store specs
+   ([e6d0c05](https://github.com/matthieu-locussol/taktix-app/commit/e6d0c058e9171e2955c2e2521b786bc38a9e57ed))
+
 ## [1.9.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.8.0...v1.9.0) (2023-02-07)
 
 ### Features
