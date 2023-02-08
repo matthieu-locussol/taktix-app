@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.10.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.9.1...v1.10.0) (2023-02-08)
+
+### Features
+
+-  name input & correct loading
+   ([0b34f83](https://github.com/matthieu-locussol/taktix-app/commit/0b34f83a246e67a62c5e4433a6701f5bd87b61c9))
+
+### Bug Fixes
+
+-  scene fade in, chatbox messages input, screen loader
+   ([4c4571b](https://github.com/matthieu-locussol/taktix-app/commit/4c4571ba54b05e5021f56a9ab228c3a7ff69fbea))
+
 ### [1.9.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.9.0...v1.9.1) (2023-02-08)
 
 ### Bug Fixes
