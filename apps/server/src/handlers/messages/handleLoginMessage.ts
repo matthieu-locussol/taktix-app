@@ -25,21 +25,18 @@ export const handleLoginMessage = async (
          }
       });
 
-      const user = await prisma.testo.findUnique({
+      let user = await prisma.testo.findUnique({
          where: {
             name: data.name,
          },
       });
 
       if (user === null) {
-         return {
-            type: 'loginResponse',
+         user = await prisma.testo.create({
             data: {
-               response: {
-                  status: 'unknown',
-               },
+               name: data.name,
             },
-         };
+         });
       }
 
       client.data.name = data.name;
