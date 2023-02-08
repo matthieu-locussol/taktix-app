@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.11.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.10.0...v1.11.0) (2023-02-08)
+
+### Features
+
+-  correctly handles map change
+   ([08a6d78](https://github.com/matthieu-locussol/taktix-app/commit/08a6d78c9edaf391d1d837b936ccde2275871457))
+-  updated position packets & display user name
+   ([47a3c11](https://github.com/matthieu-locussol/taktix-app/commit/47a3c11e01f3dfbb2584a1075ca3623a3b3bc165))
+
 ## [1.10.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.9.1...v1.10.0) (2023-02-08)
 
 ### Features
