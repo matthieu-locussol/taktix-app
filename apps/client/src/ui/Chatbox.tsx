@@ -1,9 +1,10 @@
 import { Box, Typography, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { ClientPacket } from 'shared';
 import { game } from '../game/PhaserGame';
 import { store, useStore } from '../store';
+import { getCurrentScene } from '../utils/game';
 
 const Root = styled('form')(() => ({
    position: 'absolute',
@@ -42,13 +43,21 @@ const ChatInput = styled('input')(() => ({
 export const Chatbox = observer(() => {
    const inputRef = useRef<HTMLInputElement>(null);
    const chatboxRef = useRef<HTMLDivElement>(null);
-   const { chatStore, characterStore } = useStore();
+   const { chatStore, characterStore, loadingScreenStore } = useStore();
 
    useEffect(() => {
       if (chatboxRef.current !== null) {
          chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
       }
    }, [chatStore.messages.length]);
+
+   const isVisible = useMemo(
+      () => getCurrentScene().sys.isVisible(),
+      [loadingScreenStore.sceneVisible],
+   );
+   if (!isVisible) {
+      return null;
+   }
 
    return (
       <Root
@@ -70,6 +79,8 @@ export const Chatbox = observer(() => {
                author: characterStore.name,
                message: chatStore.input,
             });
+
+            chatStore.setInput('');
 
             if (store.socket !== null) {
                store.socket.send(JSON.stringify(packet));

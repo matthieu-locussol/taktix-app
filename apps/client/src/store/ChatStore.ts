@@ -17,7 +17,6 @@ export class ChatStore {
    public addMessage(message: ChatMessage) {
       if (message.message.length > 0) {
          this.messages.push(message);
-         this.input = '';
       }
    }
 

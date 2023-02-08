@@ -59,13 +59,13 @@
       },
       "windows": [
          {
-            "fullscreen": false,
-            "height": 600,
-            "resizable": true,
             "title": "Taktix",
-            "width": 800,
             "url": "/index.html",
-            "center": true
+            "width": 1280,
+            "height": 800,
+            "center": true,
+            "resizable": true,
+            "fullscreen": false
          }
       ]
    }

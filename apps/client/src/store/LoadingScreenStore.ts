@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 export class LoadingScreenStore {
-   public firstLoading: boolean = true;
+   public sceneVisible: boolean = false;
 
    public loadingAssets: boolean = true;
 
@@ -25,7 +25,7 @@ export class LoadingScreenStore {
       this.currentAssetPath = currentAssetPath;
    }
 
-   public setFirstLoading(firstLoading: boolean) {
-      this.firstLoading = firstLoading;
+   public setSceneVisible(sceneVisible: boolean) {
+      this.sceneVisible = sceneVisible;
    }
 }
