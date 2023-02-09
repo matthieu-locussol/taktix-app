@@ -5,6 +5,7 @@ import { handlePlayerLeaveMapMessage } from './messages/handlePlayerLeaveMapMess
 import { handlePlayerLoggedInMessage } from './messages/handlePlayerLoggedInMessage';
 import { handlePlayerLoggedOutMessage } from './messages/handlePlayerLoggedOutMessage';
 import { handlePlayerMessageMessage } from './messages/handlePlayerMessageMessage';
+import { handlePlayerMoveMessage } from './messages/handlePlayerMoveMessage';
 
 export const handleServerMessage = (message: ServerMessage): ClientResponse =>
    match(message)
@@ -13,4 +14,5 @@ export const handleServerMessage = (message: ServerMessage): ClientResponse =>
       .with({ type: 'playerLoggedOut' }, handlePlayerLoggedOutMessage)
       .with({ type: 'playerJoinMap' }, handlePlayerJoinMapMessage)
       .with({ type: 'playerLeaveMap' }, handlePlayerLeaveMapMessage)
+      .with({ type: 'playerMove' }, handlePlayerMoveMessage)
       .exhaustive();

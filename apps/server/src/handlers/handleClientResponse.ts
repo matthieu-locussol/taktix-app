@@ -5,6 +5,7 @@ import { handlePlayerLeaveMapResponse } from './responses/handlePlayerLeaveMapRe
 import { handlePlayerLoggedInResponse } from './responses/handlePlayerLoggedInResponse';
 import { handlePlayerLoggedOutResponse } from './responses/handlePlayerLoggedOutResponse';
 import { handlePlayerMessageResponse } from './responses/handlePlayerMessageResponse';
+import { handlePlayerMoveResponse } from './responses/handlePlayerMoveResponse';
 
 export const handleClientResponse = (data: ClientResponse, _socketId: string): void => {
    console.log(`Received a "${data.type}" response...`);
@@ -15,5 +16,6 @@ export const handleClientResponse = (data: ClientResponse, _socketId: string): v
       .with({ type: 'playerLoggedOutResponse' }, handlePlayerLoggedOutResponse)
       .with({ type: 'playerJoinMapResponse' }, handlePlayerJoinMapResponse)
       .with({ type: 'playerLeaveMapResponse' }, handlePlayerLeaveMapResponse)
+      .with({ type: 'playerMoveResponse' }, handlePlayerMoveResponse)
       .exhaustive();
 };

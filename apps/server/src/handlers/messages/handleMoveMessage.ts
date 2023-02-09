@@ -1,4 +1,4 @@
-import { MoveMessage, MoveResponse } from 'shared';
+import { MoveMessage, MoveResponse, ServerPacket } from 'shared';
 import { SOCKETS } from '../../globals';
 
 export const handleMoveMessage = ({ data }: MoveMessage, socketId: string): MoveResponse => {
@@ -10,22 +10,23 @@ export const handleMoveMessage = ({ data }: MoveMessage, socketId: string): Move
          y: data.posY,
       };
 
-      // const packet: ServerPacket = {
-      //    type: 'message',
-      //    packet: {
-      //       type: '',
-      //       data: {
-      //          name: data.name,
-      //          content: data.content,
-      //       },
-      //    },
-      // };
+      const packet: ServerPacket = {
+         type: 'message',
+         packet: {
+            type: 'playerMove',
+            data: {
+               name: client.data.name,
+               x: data.posX,
+               y: data.posY,
+            },
+         },
+      };
 
-      // SOCKETS.forEach(({ socket }, currentSocketId) => {
-      //    if (currentSocketId !== socketId) {
-      //       socket.send(JSON.stringify(packet));
-      //    }
-      // });
+      SOCKETS.forEach(({ socket, data: { map, name } }) => {
+         if (name !== client.data.name && map === client.data.map) {
+            socket.send(JSON.stringify(packet));
+         }
+      });
    }
 
    return {
