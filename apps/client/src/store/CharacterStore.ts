@@ -6,6 +6,8 @@ export class CharacterStore {
 
    public position: Position = { x: 0, y: 0 };
 
+   public players: { name: string; posX: number; posY: number }[] = [];
+
    constructor() {
       makeAutoObservable(this);
    }
@@ -24,5 +26,9 @@ export class CharacterStore {
 
    public setPositionY(y: number) {
       this.position.y = y;
+   }
+
+   public setPlayers(players: { name: string; posX: number; posY: number }[]) {
+      this.players = players;
    }
 }

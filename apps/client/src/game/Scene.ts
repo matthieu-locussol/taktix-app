@@ -91,10 +91,16 @@ export abstract class Scene extends Phaser.Scene {
       this.gridEngine.create(tilemap, gridEngineConfig);
       this.gridEngine.turnTowards('player', this.entranceDirection);
 
-      this.sendChangeMapSocket();
+      this.sendChangeMapSocket(this.entrancePosition);
 
       this.gridEngine.positionChangeFinished().subscribe((entity) => {
-         this.sendMoveSocket(entity.charId);
+         if (this.sys.isVisible()) {
+            this.sendMoveSocket(entity.charId);
+         }
+      });
+
+      store.characterStore.players.forEach(({ name, posX, posY }) => {
+         this.addExternalPlayer(name, { x: posX, y: posY });
       });
    }
 
@@ -147,13 +153,15 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
-   public sendChangeMapSocket(): void {
+   public sendChangeMapSocket(position: Position): void {
       const packet: ClientPacket = {
          type: 'message',
          packet: {
             type: 'changeMap',
             data: {
                map: this.scene.key,
+               x: position.x,
+               y: position.y,
             },
          },
       };

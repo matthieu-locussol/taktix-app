@@ -1,5 +1,6 @@
 import type { Position } from 'grid-engine';
-import { _assertTrue } from 'shared/src/utils/_assert';
+import { ClientPacket } from 'shared';
+import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { game } from '../game/PhaserGame';
 import type { Scene, SceneData } from '../game/Scene';
 import { store } from '../store';
@@ -26,13 +27,28 @@ export const teleportPlayer = (position: Position) => {
    characterStore.setPosition(position);
 };
 
-export const changeMapPlayer = (map: string, data?: SceneData) => {
+export const changeMapPlayer = (map: string, data: SceneData) => {
    const scene = getCurrentScene();
    const returnedScene = scene.scene.start(map, data).scene;
 
    const { characterStore } = store;
-   if (data !== undefined && data.entrancePosition !== undefined) {
-      characterStore.setPosition(data.entrancePosition);
+   _assert(data.entrancePosition);
+   characterStore.setPosition(data.entrancePosition);
+
+   const packet: ClientPacket = {
+      type: 'message',
+      packet: {
+         type: 'changeMap',
+         data: {
+            map,
+            x: data.entrancePosition.x,
+            y: data.entrancePosition.y,
+         },
+      },
+   };
+
+   if (store.socket !== null) {
+      store.socket.send(JSON.stringify(packet));
    }
 
    return returnedScene as Scene;

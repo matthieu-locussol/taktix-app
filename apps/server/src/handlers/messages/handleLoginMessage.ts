@@ -66,6 +66,28 @@ export const handleLoginMessage = async (
          }
       });
 
+      const players: Extract<
+         LoginResponse['data']['response'],
+         { status: 'connected' }
+      >['players'] = [];
+      SOCKETS.forEach(
+         ({
+            data: {
+               name,
+               position: { x, y },
+               map,
+            },
+         }) => {
+            if (name !== data.name && map === client.data.map) {
+               players.push({
+                  name,
+                  posX: x,
+                  posY: y,
+               });
+            }
+         },
+      );
+
       return {
          type: 'loginResponse',
          data: {
@@ -74,6 +96,7 @@ export const handleLoginMessage = async (
                map: user.map,
                posX: user.pos_x,
                posY: user.pos_y,
+               players,
             },
          },
       };
