@@ -2,6 +2,7 @@ import { Box, CircularProgress, TextField, outlinedInputClasses } from '@mui/mat
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { useStore } from '../store';
+import { getCurrentScene } from '../utils/game';
 import { Chatbox } from './Chatbox';
 import { LoadingScreen } from './LoadingScreen';
 import { SocketDiv } from './SocketDiv';
@@ -67,6 +68,16 @@ export const Game = observer(() => {
          }}
       >
          <Chatbox />
+         <button
+            onClick={() =>
+               getCurrentScene().addExternalPlayer(`User${Math.round(Math.random() * 100000)}`, {
+                  x: 12,
+                  y: 8,
+               })
+            }
+         >
+            Add player
+         </button>
          {!sceneVisible ? <CircularProgress /> : <Box id="root-game" />}
          <SocketDiv />
       </Box>

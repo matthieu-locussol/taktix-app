@@ -12,7 +12,7 @@ const Root = styled('form')(() => ({
    border: '2px solid #000000',
    backgroundColor: '#00000066',
    borderRadius: 6,
-   width: '30vw',
+   width: '40vw',
 }));
 
 const Chat = styled(Box)(() => ({
@@ -36,7 +36,7 @@ const ChatInput = styled('input')(() => ({
    '&:hover': {
       backgroundColor: '#DDDDDD',
    },
-   width: 'calc(30vw - 16px)',
+   width: 'calc(40vw - 16px)',
 }));
 
 export const Chatbox = observer(() => {

@@ -171,4 +171,28 @@ export abstract class Scene extends Phaser.Scene {
          }
       }
    }
+
+   public addExternalPlayer(name: string, position: Position): void {
+      const externalPlayerSprite = this.add.sprite(0, 0, 'player');
+      externalPlayerSprite.setDepth(3);
+      externalPlayerSprite.scale = 3;
+
+      const offsetX = (78 - name.length * 10) / 2;
+      const externalPlayerName = this.add.text(offsetX, -8, name, {
+         align: 'center',
+      });
+      const externalPlayerContainer = this.add.container(0, 0, [
+         externalPlayerName,
+         externalPlayerSprite,
+      ]);
+
+      this.gridEngine.addCharacter({
+         id: name,
+         sprite: externalPlayerSprite,
+         walkingAnimationMapping: 0,
+         startPosition: position,
+         charLayer: 'player',
+         container: externalPlayerContainer,
+      });
+   }
 }
