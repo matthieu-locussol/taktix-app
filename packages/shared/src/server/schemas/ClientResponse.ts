@@ -4,6 +4,7 @@ import { zPlayerLeaveMapResponse } from './responses/PlayerLeaveMapResponse';
 import { zPlayerLoggedInResponse } from './responses/PlayerLoggedInResponse';
 import { zPlayerLoggedOutResponse } from './responses/PlayerLoggedOutResponse';
 import { zPlayerMessageResponse } from './responses/PlayerMessageResponse';
+import { zPlayerMoveResponse } from './responses/PlayerMoveResponse';
 
 export const zClientResponse = z.discriminatedUnion('type', [
    zPlayerLoggedInResponse,
@@ -11,6 +12,7 @@ export const zClientResponse = z.discriminatedUnion('type', [
    zPlayerLoggedOutResponse,
    zPlayerJoinMapResponse,
    zPlayerLeaveMapResponse,
+   zPlayerMoveResponse,
 ]);
 
 export type ClientResponse = z.infer<typeof zClientResponse>;
