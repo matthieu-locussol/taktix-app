@@ -4,6 +4,38 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.12.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.11.0...v1.12.0) (2023-02-09)
+
+### Features
+
+-  added a moveExternalPlayer method
+   ([3a9ac93](https://github.com/matthieu-locussol/taktix-app/commit/3a9ac939f80aad9cf8c90b540a54f19c1cf670f0))
+-  added addExternalPlayer method
+   ([4acbe4c](https://github.com/matthieu-locussol/taktix-app/commit/4acbe4caadfc3fbd25383de8e196b366f4b07741))
+-  added PlayerJoinMap message & response
+   ([731823c](https://github.com/matthieu-locussol/taktix-app/commit/731823c808a85a41b47020417eb06209b569eb11))
+-  added PlayerLeaveMap message & response
+   ([2b032d4](https://github.com/matthieu-locussol/taktix-app/commit/2b032d47a063cf3770e0344f7d9058985464b86d))
+-  added PlayerMove message & response
+   ([c86d35c](https://github.com/matthieu-locussol/taktix-app/commit/c86d35ce83ff8fff01b78d955cd94def21922e3e))
+-  can delete sprite from scene
+   ([088f311](https://github.com/matthieu-locussol/taktix-app/commit/088f311e4fee45bbb5be959f291529f539c25ebe))
+-  client correctly handles PlayerJoinMap messages
+   ([165db7d](https://github.com/matthieu-locussol/taktix-app/commit/165db7dbaf5e37e9ce1ba0e09e1045bafde56933))
+-  players can see other players moving
+   ([318c3cb](https://github.com/matthieu-locussol/taktix-app/commit/318c3cb4bb9e180e9f73204d179dc7b77d1b6196))
+-  users can correctly change map & see other users
+   ([9641d80](https://github.com/matthieu-locussol/taktix-app/commit/9641d803b0dc80e0517d94f2f49bdc9be6dd08a7))
+
+### Bug Fixes
+
+-  handleChangeMapResponse error
+   ([c045cde](https://github.com/matthieu-locussol/taktix-app/commit/c045cdeaf68c90e34202e550fd6831d196ca4945))
+-  musics on Scene
+   ([e3bb368](https://github.com/matthieu-locussol/taktix-app/commit/e3bb3687a78c3f8b5f0770f38864df83c16c7a58))
+-  removed map from joinMapMessage
+   ([9a387f8](https://github.com/matthieu-locussol/taktix-app/commit/9a387f82b4c9c9e73da17f341aa8ae98a6bca38e))
+
 ## [1.11.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.10.0...v1.11.0) (2023-02-08)
 
 ### Features
