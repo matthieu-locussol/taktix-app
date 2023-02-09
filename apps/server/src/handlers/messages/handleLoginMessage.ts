@@ -52,7 +52,6 @@ export const handleLoginMessage = async (
             type: 'playerJoinMap',
             data: {
                name: data.name,
-               map: user.map,
                x: user.pos_x,
                y: user.pos_y,
             },
