@@ -1,5 +1,6 @@
 import { ClientResponse } from 'shared';
 import { match } from 'ts-pattern';
+import { handlePlayerJoinMapResponse } from './responses/handlePlayerJoinMapResponse';
 import { handlePlayerLoggedInResponse } from './responses/handlePlayerLoggedInResponse';
 import { handlePlayerLoggedOutResponse } from './responses/handlePlayerLoggedOutResponse';
 import { handlePlayerMessageResponse } from './responses/handlePlayerMessageResponse';
@@ -11,5 +12,6 @@ export const handleClientResponse = (data: ClientResponse, _socketId: string): v
       .with({ type: 'playerLoggedInResponse' }, handlePlayerLoggedInResponse)
       .with({ type: 'playerMessageResponse' }, handlePlayerMessageResponse)
       .with({ type: 'playerLoggedOutResponse' }, handlePlayerLoggedOutResponse)
+      .with({ type: 'playerJoinMapResponse' }, handlePlayerJoinMapResponse)
       .exhaustive();
 };
