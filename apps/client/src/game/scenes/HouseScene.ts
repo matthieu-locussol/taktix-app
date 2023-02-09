@@ -6,6 +6,7 @@ export class HouseScene extends Scene {
    }
 
    public loadAssets(): void {
+      this.load.audio('house', '/assets/musics/house.mp3');
       this.load.audio('background', '/assets/musics/background.mp3');
       this.load.image('house_tiles', '/assets/tilesets/house_tileset.png');
       this.load.tilemapTiledJSON('house-map', '/assets/maps/house.json');
@@ -16,6 +17,10 @@ export class HouseScene extends Scene {
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
+      this.sound.stopAll();
+      this.sound.play('house', { loop: true, volume: 0.05 });
+      this.sound.pauseOnBlur = false;
+
       const houseTilemap = this.make.tilemap({ key: 'house-map' });
       houseTilemap.addTilesetImage('House', 'house_tiles');
 
