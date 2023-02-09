@@ -1,5 +1,4 @@
-import { PlayerMessageResponse } from 'shared';
-import { PlayerMessageMessage } from 'shared/src/client/schemas/messages/PlayerMessageMessage';
+import { PlayerMessageMessage, PlayerMessageResponse } from 'shared';
 import { store } from '../../store';
 
 export const handlePlayerMessageMessage = ({
