@@ -17,7 +17,9 @@ export class CloudsScene extends Scene {
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
+      this.sound.stopAll();
       this.sound.play('background', { loop: true, volume: 0.05 });
+      this.sound.pauseOnBlur = false;
 
       const cloudCityTilemap = this.make.tilemap({ key: 'cloud-city-map' });
       cloudCityTilemap.addTilesetImage('Cloud City', 'tiles');
