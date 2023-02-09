@@ -44,6 +44,10 @@ export abstract class Scene extends Phaser.Scene {
    public preload(): void {
       const { loadingScreenStore } = store;
 
+      this.load.on('start', () => {
+         loadingScreenStore.setLoadingAssets(true);
+      });
+
       this.load.on('progress', (value: number) => {
          loadingScreenStore.setProgress(value);
       });
@@ -213,7 +217,11 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public deleteExternalPlayer(name: string): void {
-      this.gridEngine.removeCharacter(name);
+      try {
+         this.gridEngine.removeCharacter(name);
+      } catch (e) {
+         console.error(e);
+      }
       const sprite = this.playersSprites.get(name);
       sprite?.destroy();
    }

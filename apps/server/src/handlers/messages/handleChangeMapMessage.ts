@@ -19,8 +19,8 @@ export const handleChangeMapMessage = (
          },
       };
 
-      SOCKETS.forEach(({ socket, data: { map } }, currentSocketId) => {
-         if (currentSocketId !== socketId && map === client.data.map) {
+      SOCKETS.forEach(({ socket, data: { map, name } }) => {
+         if (name !== client.data.name && map === client.data.map) {
             socket.send(JSON.stringify(packetLeave));
          }
       });
@@ -41,8 +41,8 @@ export const handleChangeMapMessage = (
          },
       };
 
-      SOCKETS.forEach(({ socket, data: { map } }, currentSocketId) => {
-         if (currentSocketId !== socketId && map === client.data.map) {
+      SOCKETS.forEach(({ socket, data: { map, name } }) => {
+         if (name !== client.data.name && map === client.data.map) {
             socket.send(JSON.stringify(packet));
          }
       });
