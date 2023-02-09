@@ -34,6 +34,7 @@ export const changeMapPlayer = (map: string, data: SceneData) => {
    const { characterStore } = store;
    _assert(data.entrancePosition);
    characterStore.setPosition(data.entrancePosition);
+   characterStore.setPlayers([]);
 
    const packet: ClientPacket = {
       type: 'message',

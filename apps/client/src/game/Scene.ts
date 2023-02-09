@@ -94,8 +94,8 @@ export abstract class Scene extends Phaser.Scene {
       this.sendChangeMapSocket(this.entrancePosition);
 
       this.gridEngine.positionChangeFinished().subscribe((entity) => {
-         if (this.sys.isVisible()) {
-            this.sendMoveSocket(entity.charId);
+         if (this.sys.isVisible() && entity.charId === 'player') {
+            this.sendMoveSocket();
          }
       });
 
@@ -134,8 +134,8 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
-   public sendMoveSocket(entityId: string): void {
-      const position = this.gridEngine.getPosition(entityId);
+   public sendMoveSocket(): void {
+      const position = this.gridEngine.getPosition('player');
 
       const packet: ClientPacket = {
          type: 'message',
@@ -183,6 +183,10 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public addExternalPlayer(name: string, position: Position): void {
+      if (this.gridEngine.getAllCharacters().find((cha) => cha === name)) {
+         return;
+      }
+
       const externalPlayerSprite = this.add.sprite(0, 0, 'player');
       externalPlayerSprite.setDepth(3);
       externalPlayerSprite.scale = 3;
@@ -216,5 +220,10 @@ export abstract class Scene extends Phaser.Scene {
 
    public moveExternalPlayer(name: string, x: number, y: number): void {
       this.gridEngine.moveTo(name, { x, y });
+   }
+
+   public deleteAllExternalPlayers(): void {
+      const players = this.gridEngine.getAllCharacters().filter((cha) => cha !== 'player');
+      players.forEach((p) => this.deleteExternalPlayer(p));
    }
 }
