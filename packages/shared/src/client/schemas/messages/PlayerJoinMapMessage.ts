@@ -4,6 +4,7 @@ export const zPlayerJoinMapMessage = z.object({
    type: z.literal('playerJoinMap'),
    data: z.object({
       name: z.string(),
+      map: z.string(),
       x: z.number(),
       y: z.number(),
    }),

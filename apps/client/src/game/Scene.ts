@@ -197,8 +197,6 @@ export abstract class Scene extends Phaser.Scene {
          container: externalPlayerContainer,
       });
 
-      this.gridEngine.moveRandomly(name);
-
       this.playersSprites.set(name, externalPlayerContainer);
    }
 
