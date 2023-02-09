@@ -213,4 +213,8 @@ export abstract class Scene extends Phaser.Scene {
       const sprite = this.playersSprites.get(name);
       sprite?.destroy();
    }
+
+   public moveExternalPlayer(name: string, x: number, y: number): void {
+      this.gridEngine.moveTo(name, { x, y });
+   }
 }
