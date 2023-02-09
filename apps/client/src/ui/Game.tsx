@@ -70,13 +70,16 @@ export const Game = observer(() => {
          <Chatbox />
          <button
             onClick={() =>
-               getCurrentScene().addExternalPlayer(`User${Math.round(Math.random() * 100000)}`, {
+               getCurrentScene().addExternalPlayer('User1', {
                   x: 12,
                   y: 8,
                })
             }
          >
             Add player
+         </button>
+         <button onClick={() => getCurrentScene().deleteExternalPlayer('User1')}>
+            Delete player
          </button>
          {!sceneVisible ? <CircularProgress /> : <Box id="root-game" />}
          <SocketDiv />

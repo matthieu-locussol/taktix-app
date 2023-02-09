@@ -20,6 +20,8 @@ export abstract class Scene extends Phaser.Scene {
 
    public entranceDirection: Direction = Direction.DOWN;
 
+   public playersSprites = new Map<string, Phaser.GameObjects.Container>();
+
    constructor(config: string | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
       super(config);
       this.gridEngine = (this as unknown as IScene).gridEngine;
@@ -194,5 +196,15 @@ export abstract class Scene extends Phaser.Scene {
          charLayer: 'player',
          container: externalPlayerContainer,
       });
+
+      this.gridEngine.moveRandomly(name);
+
+      this.playersSprites.set(name, externalPlayerContainer);
+   }
+
+   public deleteExternalPlayer(name: string): void {
+      this.gridEngine.removeCharacter(name);
+      const sprite = this.playersSprites.get(name);
+      sprite?.destroy();
    }
 }
