@@ -1,10 +1,11 @@
 {
    "extends": "config-typescript/node.json",
    "compilerOptions": {
-      "lib": ["ES2015"],
+      "lib": ["ES2020"],
       "module": "CommonJS",
       "outDir": "./dist",
-      "rootDir": "./src"
+      "rootDir": "./src",
+      "downlevelIteration": true
    },
    "include": ["src", ".eslintrc.js"]
 }

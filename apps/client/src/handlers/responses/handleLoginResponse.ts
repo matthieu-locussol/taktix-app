@@ -20,4 +20,6 @@ export const handleLoginResponse = ({ data }: LoginResponse): void => {
 
    characterStore.setPosition({ x: data.response.posX, y: data.response.posY });
    loadingScreenStore.setSceneVisible(true);
+
+   characterStore.setPlayers(data.response.players);
 };

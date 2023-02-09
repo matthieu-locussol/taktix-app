@@ -33,9 +33,9 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
          const client = SOCKETS.get(socketId);
 
          if (client !== undefined) {
-            SOCKETS.forEach(({ socket }, currentSocketId) => {
+            SOCKETS.forEach(({ socket, data: { map } }, currentSocketId) => {
                if (currentSocketId !== socketId) {
-                  const packet: ServerPacket = {
+                  const packetLoggedOut: ServerPacket = {
                      type: 'message',
                      packet: {
                         type: 'playerLoggedOut',
@@ -45,7 +45,21 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
                      },
                   };
 
-                  socket.send(JSON.stringify(packet));
+                  socket.send(JSON.stringify(packetLoggedOut));
+
+                  if (client.data.map === map) {
+                     const packetLeaveMap: ServerPacket = {
+                        type: 'message',
+                        packet: {
+                           type: 'playerLeaveMap',
+                           data: {
+                              name: client.data.name,
+                           },
+                        },
+                     };
+
+                     socket.send(JSON.stringify(packetLeaveMap));
+                  }
                }
             });
 
