@@ -1,7 +1,7 @@
 [package]
 name = "taktix"
 version = "1.13.0"
-description = "A small browser game written in TypeScript."
+description = "The crapiest MMORPG ever."
 authors = ["Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)"]
 license = "MIT"
 repository = "git@github.com:matthieu-locussol/taktix-app.git"

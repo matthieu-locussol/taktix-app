@@ -36,7 +36,7 @@
             "icons/icon.ico"
          ],
          "identifier": "com.taktix.app",
-         "longDescription": "A small browser game written in TypeScript.",
+         "longDescription": "The crapiest MMORPG ever.",
          "macOS": {
             "entitlements": null,
             "exceptionDomain": "",
@@ -45,7 +45,7 @@
             "signingIdentity": null
          },
          "resources": [],
-         "shortDescription": "A small browser game written in TypeScript.",
+         "shortDescription": "The crapiest MMORPG ever.",
          "targets": "all",
          "windows": {
             "certificateThumbprint": null,

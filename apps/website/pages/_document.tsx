@@ -10,6 +10,7 @@ const MyDocument = () => (
             href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap"
             rel="stylesheet"
          />
+         <title>Taktix | The crapiest MMORPG ever.</title>
       </Head>
       <body>
          <Main />
