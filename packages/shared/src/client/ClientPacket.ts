@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { zClientMessage } from './schemas/ClientMessage';
-import { zClientResponse } from './schemas/ClientResponse';
+import { zClientMessage } from './ClientMessage';
+import { zClientResponse } from './ClientResponse';
 
 export const zClientPacket = z.discriminatedUnion('type', [
    z.object({

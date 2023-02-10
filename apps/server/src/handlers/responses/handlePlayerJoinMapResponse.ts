@@ -1,3 +1,3 @@
-import { PlayerJoinMapResponse } from 'shared/src/server/schemas/responses/PlayerJoinMapResponse';
+import { PlayerJoinMapResponse } from 'shared';
 
 export const handlePlayerJoinMapResponse = (_: PlayerJoinMapResponse): void => {};

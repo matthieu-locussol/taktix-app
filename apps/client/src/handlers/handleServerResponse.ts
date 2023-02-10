@@ -1,4 +1,4 @@
-import { ServerResponse } from 'shared/src/client/schemas/ServerResponse';
+import { ServerResponse } from 'shared';
 import { match } from 'ts-pattern';
 import { handleChangeMapResponse } from './responses/handleChangeMapResponse';
 import { handleLoginResponse } from './responses/handleLoginResponse';

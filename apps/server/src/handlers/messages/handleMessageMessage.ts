@@ -1,6 +1,4 @@
-import { ServerPacket } from 'shared/src/client/ServerPacket';
-import { MessageResponse } from 'shared/src/client/schemas/responses/MessageResponse';
-import { MessageMessage } from 'shared/src/server/schemas/messages/MessageMessage';
+import { MessageMessage, MessageResponse, ServerPacket } from 'shared';
 import { SOCKETS } from '../../globals';
 
 export const handleMessageMessage = (

@@ -1,4 +1,4 @@
-import { ChangeMapResponse } from 'shared/src/client/schemas/responses/ChangeMapResponse';
+import { ChangeMapResponse } from 'shared';
 import { getCurrentScene } from '../../utils/game';
 
 export const handleChangeMapResponse = ({ data }: ChangeMapResponse): void => {

@@ -1,3 +1,3 @@
-import { MoveResponse } from 'shared/src/client/schemas/responses/MoveResponse';
+import { MoveResponse } from 'shared';
 
 export const handleMoveResponse = (_: MoveResponse): void => {};

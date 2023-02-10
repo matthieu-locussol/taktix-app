@@ -1,7 +1,7 @@
 import { Box, Typography, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
-import { ClientPacket } from 'shared/src/server/ClientPacket';
+import { ClientPacket } from 'shared';
 import { game } from '../game/PhaserGame';
 import { store, useStore } from '../store';
 

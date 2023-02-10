@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
-import { zServerPacket } from 'shared/src/client/ServerPacket';
-import { ClientPacket } from 'shared/src/server/ClientPacket';
+import { ClientPacket } from 'shared/src/client/ClientPacket';
+import { zServerPacket } from 'shared/src/server/ServerPacket';
 import { handleServerMessage } from '../handlers/handleServerMessage';
 import { handleServerResponse } from '../handlers/handleServerResponse';
 import { CharacterStore } from './CharacterStore';

@@ -1,5 +1,4 @@
-import { PlayerLeaveMapMessage } from 'shared/src/client/schemas/messages/PlayerLeaveMapMessage';
-import { PlayerLeaveMapResponse } from 'shared/src/server/schemas/responses/PlayerLeaveMapResponse';
+import { PlayerLeaveMapMessage, PlayerLeaveMapResponse } from 'shared';
 import { getCurrentScene } from '../../utils/game';
 
 export const handlePlayerLeaveMapMessage = ({

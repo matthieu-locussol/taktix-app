@@ -1,7 +1,6 @@
 import { SocketStream } from '@fastify/websocket';
 import { FastifyRequest } from 'fastify';
-import { ServerPacket } from 'shared/src/client/ServerPacket';
-import { zClientPacket } from 'shared/src/server/ClientPacket';
+import { ServerPacket, zClientPacket } from 'shared';
 import { v4 as uuidv4 } from 'uuid';
 import { SOCKETS } from '../globals';
 import { handleClientMessage } from '../handlers/handleClientMessage';

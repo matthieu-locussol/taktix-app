@@ -1,3 +1,3 @@
-import { PlayerLeaveMapResponse } from 'shared/src/server/schemas/responses/PlayerLeaveMapResponse';
+import { PlayerLeaveMapResponse } from 'shared';
 
 export const handlePlayerLeaveMapResponse = (_: PlayerLeaveMapResponse): void => {};
