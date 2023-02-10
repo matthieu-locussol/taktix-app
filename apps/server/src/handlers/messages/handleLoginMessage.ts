@@ -3,7 +3,7 @@ import { SOCKETS } from '../../globals';
 import { prisma } from '../../utils/prisma';
 
 export const handleLoginMessage = async (
-   { data }: LoginMessage,
+   { name }: LoginMessage,
    socketId: string,
 ): Promise<LoginResponse> => {
    const client = SOCKETS.get(socketId);
@@ -13,9 +13,7 @@ export const handleLoginMessage = async (
          type: 'message',
          packet: {
             type: 'playerLoggedIn',
-            data: {
-               name: data.name,
-            },
+            name,
          },
       };
 
@@ -27,19 +25,19 @@ export const handleLoginMessage = async (
 
       let user = await prisma.testo.findUnique({
          where: {
-            name: data.name,
+            name,
          },
       });
 
       if (user === null) {
          user = await prisma.testo.create({
             data: {
-               name: data.name,
+               name,
             },
          });
       }
 
-      client.data.name = data.name;
+      client.data.name = name;
       client.data.map = user.map;
       client.data.position = {
          x: user.pos_x,
@@ -50,11 +48,9 @@ export const handleLoginMessage = async (
          type: 'message',
          packet: {
             type: 'playerJoinMap',
-            data: {
-               name: data.name,
-               x: user.pos_x,
-               y: user.pos_y,
-            },
+            name,
+            x: user.pos_x,
+            y: user.pos_y,
          },
       };
 
@@ -66,48 +62,33 @@ export const handleLoginMessage = async (
          }
       });
 
-      const players: Extract<
-         LoginResponse['data']['response'],
-         { status: 'connected' }
-      >['players'] = [];
-      SOCKETS.forEach(
-         ({
-            data: {
-               name,
-               position: { x, y },
-               map,
-            },
-         }) => {
-            if (name !== data.name && map === client.data.map) {
-               players.push({
-                  name,
-                  posX: x,
-                  posY: y,
-               });
-            }
-         },
-      );
+      const players: Extract<LoginResponse['response'], { status: 'connected' }>['players'] = [];
+      SOCKETS.forEach(({ data }) => {
+         if (name !== data.name && data.map === client.data.map) {
+            players.push({
+               name: data.name,
+               posX: data.position.x,
+               posY: data.position.y,
+            });
+         }
+      });
 
       return {
          type: 'loginResponse',
-         data: {
-            response: {
-               status: 'connected',
-               map: user.map,
-               posX: user.pos_x,
-               posY: user.pos_y,
-               players,
-            },
+         response: {
+            status: 'connected',
+            map: user.map,
+            posX: user.pos_x,
+            posY: user.pos_y,
+            players,
          },
       };
    }
 
    return {
       type: 'loginResponse',
-      data: {
-         response: {
-            status: 'unknown',
-         },
+      response: {
+         status: 'unknown',
       },
    };
 };

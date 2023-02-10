@@ -145,10 +145,8 @@ export abstract class Scene extends Phaser.Scene {
          type: 'message',
          packet: {
             type: 'move',
-            data: {
-               posX: position.x,
-               posY: position.y,
-            },
+            posX: position.x,
+            posY: position.y,
          },
       };
 
@@ -162,11 +160,9 @@ export abstract class Scene extends Phaser.Scene {
          type: 'message',
          packet: {
             type: 'changeMap',
-            data: {
-               map: this.scene.key,
-               x: position.x,
-               y: position.y,
-            },
+            map: this.scene.key,
+            x: position.x,
+            y: position.y,
          },
       };
 

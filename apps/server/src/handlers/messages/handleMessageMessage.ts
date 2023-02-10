@@ -2,7 +2,7 @@ import { MessageMessage, MessageResponse, ServerPacket } from 'shared';
 import { SOCKETS } from '../../globals';
 
 export const handleMessageMessage = (
-   { data }: MessageMessage,
+   { content, name }: MessageMessage,
    socketId: string,
 ): MessageResponse => {
    const client = SOCKETS.get(socketId);
@@ -12,10 +12,8 @@ export const handleMessageMessage = (
          type: 'message',
          packet: {
             type: 'playerMessage',
-            data: {
-               name: data.name,
-               content: data.content,
-            },
+            name,
+            content,
          },
       };
 
@@ -28,6 +26,5 @@ export const handleMessageMessage = (
 
    return {
       type: 'messageResponse',
-      data: null,
    };
 };

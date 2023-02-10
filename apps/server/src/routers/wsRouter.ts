@@ -39,9 +39,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
                      type: 'message',
                      packet: {
                         type: 'playerLoggedOut',
-                        data: {
-                           name: client.data.name,
-                        },
+                        name: client.data.name,
                      },
                   };
 
@@ -52,9 +50,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
                         type: 'message',
                         packet: {
                            type: 'playerLeaveMap',
-                           data: {
-                              name: client.data.name,
-                           },
+                           name: client.data.name,
                         },
                      };
 

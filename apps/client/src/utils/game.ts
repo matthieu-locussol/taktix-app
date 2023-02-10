@@ -40,11 +40,9 @@ export const changeMapPlayer = (map: string, data: SceneData) => {
       type: 'message',
       packet: {
          type: 'changeMap',
-         data: {
-            map,
-            x: data.entrancePosition.x,
-            y: data.entrancePosition.y,
-         },
+         map,
+         x: data.entrancePosition.x,
+         y: data.entrancePosition.y,
       },
    };
 
