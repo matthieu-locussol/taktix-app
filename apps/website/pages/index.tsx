@@ -44,7 +44,7 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => (
                </Typography>
             </Box>
             <Typography variant="h6" color="white" sx={{ opacity: 0.7 }}>
-               A small browser game written in TypeScript.
+               The crapiest MMORPG ever.
             </Typography>
             <Typography
                variant="subtitle1"
