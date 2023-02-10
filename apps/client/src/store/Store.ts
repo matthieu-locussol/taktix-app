@@ -28,9 +28,7 @@ export class Store {
             type: 'message',
             packet: {
                type: 'login',
-               data: {
-                  name: this.characterStore.name,
-               },
+               name: this.characterStore.name,
             },
          };
 

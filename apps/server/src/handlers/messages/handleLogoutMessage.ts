@@ -1,7 +1,7 @@
 import { LogoutMessage, LogoutResponse, ServerPacket } from 'shared';
 import { SOCKETS } from '../../globals';
 
-export const handleLogoutMessage = ({ data }: LogoutMessage, socketId: string): LogoutResponse => {
+export const handleLogoutMessage = ({ name }: LogoutMessage, socketId: string): LogoutResponse => {
    const client = SOCKETS.get(socketId);
 
    if (client !== undefined) {
@@ -9,9 +9,7 @@ export const handleLogoutMessage = ({ data }: LogoutMessage, socketId: string): 
          type: 'message',
          packet: {
             type: 'playerLoggedOut',
-            data: {
-               name: data.name,
-            },
+            name,
          },
       };
 
@@ -23,16 +21,12 @@ export const handleLogoutMessage = ({ data }: LogoutMessage, socketId: string): 
 
       return {
          type: 'logoutResponse',
-         data: {
-            response: 'success',
-         },
+         response: 'success',
       };
    }
 
    return {
       type: 'logoutResponse',
-      data: {
-         response: 'unknown',
-      },
+      response: 'unknown',
    };
 };

@@ -2,12 +2,11 @@ import { PlayerLeaveMapMessage, PlayerLeaveMapResponse } from 'shared';
 import { getCurrentScene } from '../../utils/game';
 
 export const handlePlayerLeaveMapMessage = ({
-   data,
+   name,
 }: PlayerLeaveMapMessage): PlayerLeaveMapResponse => {
-   getCurrentScene().deleteExternalPlayer(data.name);
+   getCurrentScene().deleteExternalPlayer(name);
 
    return {
       type: 'playerLeaveMapResponse',
-      data: null,
    };
 };
