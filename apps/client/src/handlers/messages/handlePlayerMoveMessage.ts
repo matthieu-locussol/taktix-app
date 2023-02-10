@@ -1,4 +1,5 @@
-import { PlayerMoveMessage, PlayerMoveResponse } from 'shared';
+import { PlayerMoveMessage } from 'shared/src/client/schemas/messages/PlayerMoveMessage';
+import { PlayerMoveResponse } from 'shared/src/server/schemas/responses/PlayerMoveResponse';
 import { getCurrentScene } from '../../utils/game';
 
 export const handlePlayerMoveMessage = ({ data }: PlayerMoveMessage): PlayerMoveResponse => {

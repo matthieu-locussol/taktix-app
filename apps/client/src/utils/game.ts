@@ -1,5 +1,5 @@
 import type { Position } from 'grid-engine';
-import { ClientPacket } from 'shared';
+import { ClientPacket } from 'shared/src/server/ClientPacket';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { game } from '../game/PhaserGame';
 import type { Scene, SceneData } from '../game/Scene';

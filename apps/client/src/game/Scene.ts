@@ -1,5 +1,5 @@
 import { Direction, GridEngine, Position } from 'grid-engine';
-import { ClientPacket } from 'shared';
+import { ClientPacket } from 'shared/src/server/ClientPacket';
 import { TELEPORTATION_SPOTS } from '../data/teleportationSpots';
 import { store } from '../store';
 import { teleportPlayer } from '../utils/game';

@@ -1,4 +1,5 @@
-import { PlayerLoggedOutMessage, PlayerLoggedOutResponse } from 'shared';
+import { PlayerLoggedOutMessage } from 'shared/src/client/schemas/messages/PlayerLoggedOutMessage';
+import { PlayerLoggedOutResponse } from 'shared/src/server/schemas/responses/PlayerLoggedOutResponse';
 import { store } from '../../store';
 
 export const handlePlayerLoggedOutMessage = ({

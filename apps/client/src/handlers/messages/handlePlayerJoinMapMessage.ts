@@ -1,4 +1,5 @@
-import { PlayerJoinMapMessage, PlayerJoinMapResponse } from 'shared';
+import { PlayerJoinMapMessage } from 'shared/src/client/schemas/messages/PlayerJoinMapMessage';
+import { PlayerJoinMapResponse } from 'shared/src/server/schemas/responses/PlayerJoinMapResponse';
 import { getCurrentScene } from '../../utils/game';
 
 export const handlePlayerJoinMapMessage = ({
