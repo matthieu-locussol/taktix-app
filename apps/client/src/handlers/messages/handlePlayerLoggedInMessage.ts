@@ -1,5 +1,4 @@
-import { PlayerLoggedInMessage } from 'shared/src/client/schemas/messages/PlayerLoggedInMessage';
-import { PlayerLoggedInResponse } from 'shared/src/server/schemas/responses/PlayerLoggedInResponse';
+import { PlayerLoggedInMessage, PlayerLoggedInResponse } from 'shared';
 import { store } from '../../store';
 
 export const handlePlayerLoggedInMessage = ({

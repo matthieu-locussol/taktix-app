@@ -1,4 +1,4 @@
-import { LoginResponse } from 'shared/src/client/schemas/responses/LoginResponse';
+import { LoginResponse } from 'shared';
 import { _assertTrue } from 'shared/src/utils/_assert';
 import { store } from '../../store';
 import { changeMapPlayer } from '../../utils/game';

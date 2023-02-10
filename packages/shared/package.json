@@ -1,6 +1,8 @@
 {
    "name": "shared",
    "version": "1.13.0",
+   "main": "./dist/index.js",
+   "types": "./dist/index.d.ts",
    "scripts": {
       "build": "tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",

@@ -1,3 +1,3 @@
-import { MessageResponse } from 'shared/src/client/schemas/responses/MessageResponse';
+import { MessageResponse } from 'shared';
 
 export const handleMessageResponse = (_: MessageResponse): void => {};

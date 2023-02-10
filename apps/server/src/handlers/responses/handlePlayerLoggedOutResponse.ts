@@ -1,3 +1,3 @@
-import { PlayerLoggedOutResponse } from 'shared/src/server/schemas/responses/PlayerLoggedOutResponse';
+import { PlayerLoggedOutResponse } from 'shared';
 
 export const handlePlayerLoggedOutResponse = (_: PlayerLoggedOutResponse): void => {};

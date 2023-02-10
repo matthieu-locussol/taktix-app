@@ -1,3 +1,3 @@
-import { PlayerMoveResponse } from 'shared/src/server/schemas/responses/PlayerMoveResponse';
+import { PlayerMoveResponse } from 'shared';
 
 export const handlePlayerMoveResponse = (_: PlayerMoveResponse): void => {};

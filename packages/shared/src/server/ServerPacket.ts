@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { zServerMessage } from './schemas/ServerMessage';
-import { zServerResponse } from './schemas/ServerResponse';
+import { zServerMessage } from './ServerMessage';
+import { zServerResponse } from './ServerResponse';
 
 export const zServerPacket = z.discriminatedUnion('type', [
    z.object({

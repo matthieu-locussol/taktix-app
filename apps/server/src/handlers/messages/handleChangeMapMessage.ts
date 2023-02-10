@@ -1,6 +1,4 @@
-import { ServerPacket } from 'shared/src/client/ServerPacket';
-import { ChangeMapResponse } from 'shared/src/client/schemas/responses/ChangeMapResponse';
-import { ChangeMapMessage } from 'shared/src/server/schemas/messages/ChangeMapMessage';
+import { ChangeMapMessage, ChangeMapResponse, ServerPacket } from 'shared';
 import { SOCKETS } from '../../globals';
 
 export const handleChangeMapMessage = (

@@ -1,6 +1,4 @@
-import { ServerPacket } from 'shared/src/client/ServerPacket';
-import { LogoutResponse } from 'shared/src/client/schemas/responses/LogoutResponse';
-import { LogoutMessage } from 'shared/src/server/schemas/messages/LogoutMessage';
+import { LogoutMessage, LogoutResponse, ServerPacket } from 'shared';
 import { SOCKETS } from '../../globals';
 
 export const handleLogoutMessage = ({ data }: LogoutMessage, socketId: string): LogoutResponse => {

@@ -1,7 +1,4 @@
-import { ServerPacket } from 'shared/src/client/ServerPacket';
-import { LoginResponse } from 'shared/src/client/schemas/responses/LoginResponse';
-import { LoginMessage } from 'shared/src/server/schemas/messages/LoginMessage';
-import { _assert } from 'shared/src/utils/_assert';
+import { LoginMessage, LoginResponse, ServerPacket, _assert } from 'shared';
 import { SOCKETS } from '../../globals';
 import { prisma } from '../../utils/prisma';
 
