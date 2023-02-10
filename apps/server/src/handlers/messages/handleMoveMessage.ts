@@ -1,4 +1,6 @@
-import { MoveMessage, MoveResponse, ServerPacket } from 'shared';
+import { ServerPacket } from 'shared/src/client/ServerPacket';
+import { MoveResponse } from 'shared/src/client/schemas/responses/MoveResponse';
+import { MoveMessage } from 'shared/src/server/schemas/messages/MoveMessage';
 import { SOCKETS } from '../../globals';
 
 export const handleMoveMessage = ({ data }: MoveMessage, socketId: string): MoveResponse => {

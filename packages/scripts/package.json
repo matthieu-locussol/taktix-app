@@ -4,7 +4,8 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "scripts": {
-      "bumpversion": "tsc src/version.ts && node src/version.js"
+      "bumpversion": "tsc src/version.ts && node src/version.js",
+      "clean": "rm -rf .turbo && rm -rf node_modules"
    },
    "devDependencies": {
       "@types/node": "^18.11.18",

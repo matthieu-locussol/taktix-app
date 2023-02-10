@@ -1,4 +1,5 @@
-import { ClientResponse, ServerMessage } from 'shared';
+import { ServerMessage } from 'shared/src/client/schemas/ServerMessage';
+import { ClientResponse } from 'shared/src/server/schemas/ClientResponse';
 import { match } from 'ts-pattern';
 import { handlePlayerJoinMapMessage } from './messages/handlePlayerJoinMapMessage';
 import { handlePlayerLeaveMapMessage } from './messages/handlePlayerLeaveMapMessage';

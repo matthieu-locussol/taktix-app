@@ -4,6 +4,7 @@
    "scripts": {
       "dev:website": "next dev",
       "build": "next build",
+      "clean": "rm -rf .next && rm -rf .turbo && rm -rf node_modules",
       "start:website": "next start"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
