@@ -10,11 +10,8 @@ export const handleChangeMapMessage = (
 
    if (client !== undefined) {
       const packetLeave: ServerPacket = {
-         type: 'message',
-         packet: {
-            type: 'playerLeaveMap',
-            name: client.data.name,
-         },
+         type: 'playerLeaveMap',
+         name: client.data.name,
       };
 
       SOCKETS.forEach(({ socket, data }) => {
@@ -28,13 +25,10 @@ export const handleChangeMapMessage = (
       client.data.position.y = y;
 
       const packet: ServerPacket = {
-         type: 'message',
-         packet: {
-            type: 'playerJoinMap',
-            name: client.data.name,
-            x,
-            y,
-         },
+         type: 'playerJoinMap',
+         name: client.data.name,
+         x,
+         y,
       };
 
       SOCKETS.forEach(({ socket, data }) => {

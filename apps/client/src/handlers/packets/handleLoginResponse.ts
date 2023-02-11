@@ -3,7 +3,7 @@ import { _assertTrue } from 'shared/src/utils/_assert';
 import { store } from '../../store';
 import { changeMapPlayer } from '../../utils/game';
 
-export const handleLoginResponse = ({ response }: LoginResponse): void => {
+export const handleLoginResponse = ({ response }: LoginResponse) => {
    _assertTrue(response.status === 'connected');
 
    const { characterStore, loadingScreenStore } = store;
@@ -18,4 +18,6 @@ export const handleLoginResponse = ({ response }: LoginResponse): void => {
    loadingScreenStore.setSceneVisible(true);
 
    characterStore.setPlayers(response.players);
+
+   return null;
 };

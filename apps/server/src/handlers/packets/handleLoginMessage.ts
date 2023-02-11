@@ -10,11 +10,8 @@ export const handleLoginMessage = async (
 
    if (client !== undefined) {
       const packetLoggedIn: ServerPacket = {
-         type: 'message',
-         packet: {
-            type: 'playerLoggedIn',
-            name,
-         },
+         type: 'playerLoggedIn',
+         name,
       };
 
       SOCKETS.forEach(({ socket }, currentSocketId) => {
@@ -45,13 +42,10 @@ export const handleLoginMessage = async (
       };
 
       const packetJoinMap: ServerPacket = {
-         type: 'message',
-         packet: {
-            type: 'playerJoinMap',
-            name,
-            x: user.pos_x,
-            y: user.pos_y,
-         },
+         type: 'playerJoinMap',
+         name,
+         x: user.pos_x,
+         y: user.pos_y,
       };
 
       SOCKETS.forEach(({ socket, data: { map } }, currentSocketId) => {

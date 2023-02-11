@@ -1,10 +1,9 @@
 import { SocketStream } from '@fastify/websocket';
 import { FastifyRequest } from 'fastify';
-import { ServerPacket, zClientPacket } from 'shared';
+import { ServerPacket, _assertTrue, isServerPacket, zClientPacket } from 'shared';
 import { v4 as uuidv4 } from 'uuid';
 import { SOCKETS } from '../globals';
-import { handleClientMessage } from '../handlers/handleClientMessage';
-import { handleClientResponse } from '../handlers/handleClientResponse';
+import { handleClientPacket } from '../handlers/handleClientPacket';
 import { prisma } from '../utils/prisma';
 
 export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
@@ -36,22 +35,16 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
             SOCKETS.forEach(({ socket, data: { map } }, currentSocketId) => {
                if (currentSocketId !== socketId) {
                   const packetLoggedOut: ServerPacket = {
-                     type: 'message',
-                     packet: {
-                        type: 'playerLoggedOut',
-                        name: client.data.name,
-                     },
+                     type: 'playerLoggedOut',
+                     name: client.data.name,
                   };
 
                   socket.send(JSON.stringify(packetLoggedOut));
 
                   if (client.data.map === map) {
                      const packetLeaveMap: ServerPacket = {
-                        type: 'message',
-                        packet: {
-                           type: 'playerLeaveMap',
-                           name: client.data.name,
-                        },
+                        type: 'playerLeaveMap',
+                        name: client.data.name,
                      };
 
                      socket.send(JSON.stringify(packetLeaveMap));
@@ -81,25 +74,13 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
 
    connection.socket.onmessage = async (event) => {
       try {
-         const { type, packet } = zClientPacket.parse(JSON.parse(event.data.toString()));
+         const packet = zClientPacket.parse(JSON.parse(event.data.toString()));
+         const response = await handleClientPacket(packet, socketId);
 
-         switch (type) {
-            case 'message': {
-               const response = await handleClientMessage(packet, socketId);
-               const payload: ServerPacket = {
-                  type: 'response',
-                  packet: response,
-               };
-               console.log(`Sending a ${payload.packet.type} response...`);
-               connection.socket.send(JSON.stringify(payload));
-               break;
-            }
-            case 'response': {
-               handleClientResponse(packet, socketId);
-               break;
-            }
-            default:
-               throw new Error(`Unknown ClientPacket type: "${type}"`);
+         if (response !== null) {
+            _assertTrue(isServerPacket(response));
+            console.log(`Sending a ${response.type} packet...`);
+            connection.socket.send(JSON.stringify(response));
          }
       } catch (e) {
          console.error(e);

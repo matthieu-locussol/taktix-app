@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx';
-import { ClientPacket } from 'shared/src/client/ClientPacket';
-import { zServerPacket } from 'shared/src/server/ServerPacket';
-import { handleServerMessage } from '../handlers/handleServerMessage';
-import { handleServerResponse } from '../handlers/handleServerResponse';
+import { ClientPacket, isClientPacket } from 'shared/src/packets/ClientPacket';
+import { zServerPacket } from 'shared/src/packets/ServerPacket';
+import { _assertTrue } from 'shared/src/utils/_assert';
+import { handleServerPacket } from '../handlers/handleServerPacket';
 import { CharacterStore } from './CharacterStore';
 import { ChatStore } from './ChatStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
@@ -25,11 +25,8 @@ export class Store {
 
       socket.onopen = () => {
          const packet: ClientPacket = {
-            type: 'message',
-            packet: {
-               type: 'login',
-               name: this.characterStore.name,
-            },
+            type: 'login',
+            name: this.characterStore.name,
          };
 
          socket.send(JSON.stringify(packet));
@@ -37,25 +34,13 @@ export class Store {
 
       socket.onmessage = (event) => {
          try {
-            const { type, packet } = zServerPacket.parse(JSON.parse(event.data.toString()));
+            const packet = zServerPacket.parse(JSON.parse(event.data.toString()));
+            const response = handleServerPacket(packet);
 
-            switch (type) {
-               case 'message': {
-                  const response = handleServerMessage(packet);
-                  const payload: ClientPacket = {
-                     type: 'response',
-                     packet: response,
-                  };
-                  console.log(`Sending a ${payload.packet.type} response...`);
-                  socket.send(JSON.stringify(payload));
-                  break;
-               }
-               case 'response': {
-                  handleServerResponse(packet);
-                  break;
-               }
-               default:
-                  throw new Error(`Unknown ServerPacket type: "${type}"`);
+            if (response !== null) {
+               _assertTrue(isClientPacket(response));
+               console.log(`Sending a ${response.type} packet...`);
+               socket.send(JSON.stringify(response));
             }
          } catch (e) {
             console.error(e);

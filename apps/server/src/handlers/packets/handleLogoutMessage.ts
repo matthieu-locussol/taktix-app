@@ -6,11 +6,8 @@ export const handleLogoutMessage = ({ name }: LogoutMessage, socketId: string): 
 
    if (client !== undefined) {
       const packet: ServerPacket = {
-         type: 'message',
-         packet: {
-            type: 'playerLoggedOut',
-            name,
-         },
+         type: 'playerLoggedOut',
+         name,
       };
 
       SOCKETS.forEach(({ socket }, currentSocketId) => {
