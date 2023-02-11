@@ -9,12 +9,9 @@ export const handleMessageMessage = (
 
    if (client !== undefined) {
       const packet: ServerPacket = {
-         type: 'message',
-         packet: {
-            type: 'playerMessage',
-            name,
-            content,
-         },
+         type: 'playerMessage',
+         name,
+         content,
       };
 
       SOCKETS.forEach(({ socket }, currentSocketId) => {

@@ -61,11 +61,8 @@ export const Chatbox = observer(() => {
 
             const packet: ClientPacket = {
                type: 'message',
-               packet: {
-                  type: 'message',
-                  name: characterStore.name,
-                  content: chatStore.input,
-               },
+               name: characterStore.name,
+               content: chatStore.input,
             };
 
             chatStore.addMessage({

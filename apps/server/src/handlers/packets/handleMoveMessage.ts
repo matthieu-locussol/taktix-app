@@ -11,13 +11,10 @@ export const handleMoveMessage = ({ posX, posY }: MoveMessage, socketId: string)
       };
 
       const packet: ServerPacket = {
-         type: 'message',
-         packet: {
-            type: 'playerMove',
-            name: client.data.name,
-            x: posX,
-            y: posY,
-         },
+         type: 'playerMove',
+         name: client.data.name,
+         x: posX,
+         y: posY,
       };
 
       SOCKETS.forEach(({ socket, data: { map, name } }) => {

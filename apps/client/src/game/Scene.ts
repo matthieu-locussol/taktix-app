@@ -142,12 +142,9 @@ export abstract class Scene extends Phaser.Scene {
       const position = this.gridEngine.getPosition('player');
 
       const packet: ClientPacket = {
-         type: 'message',
-         packet: {
-            type: 'move',
-            posX: position.x,
-            posY: position.y,
-         },
+         type: 'move',
+         posX: position.x,
+         posY: position.y,
       };
 
       if (store.socket !== null && store.socket.readyState === store.socket.OPEN) {
@@ -157,13 +154,10 @@ export abstract class Scene extends Phaser.Scene {
 
    public sendChangeMapSocket(position: Position): void {
       const packet: ClientPacket = {
-         type: 'message',
-         packet: {
-            type: 'changeMap',
-            map: this.scene.key,
-            x: position.x,
-            y: position.y,
-         },
+         type: 'changeMap',
+         map: this.scene.key,
+         x: position.x,
+         y: position.y,
       };
 
       if (store.socket !== null && store.socket.readyState === store.socket.OPEN) {
