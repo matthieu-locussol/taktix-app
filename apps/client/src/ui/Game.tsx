@@ -29,11 +29,12 @@ export const Game = observer(() => {
    const [shouldUpdate, setShouldUpdate] = useState<boolean>();
    const [manifest, setManifest] = useState<UpdateManifest>();
    const [open, setOpen] = useState(false);
+   const store = useStore();
    const {
       loadingScreenStore: { loadingAssets, sceneVisible },
       chatStore,
       characterStore,
-   } = useStore();
+   } = store;
 
    useEffect(() => {
       chatStore.addMessage({
@@ -87,6 +88,7 @@ export const Game = observer(() => {
             onSubmit={(e) => {
                e.preventDefault();
                characterStore.setName(input);
+               store.initialize(input);
             }}
             sx={{
                display: 'flex',
