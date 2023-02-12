@@ -1,5 +1,5 @@
 import { PlayerLoggedInMessage, PlayerLoggedInResponse } from 'shared';
-import { store } from '../../store';
+import { store } from '../store';
 
 export const handlePlayerLoggedInMessage = ({
    name,

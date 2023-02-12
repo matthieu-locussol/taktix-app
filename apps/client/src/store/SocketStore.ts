@@ -3,17 +3,17 @@ import { ClientPacket, isClientPacket } from 'shared/src/packets/ClientPacket';
 import { ServerPacket, zServerPacket } from 'shared/src/packets/ServerPacket';
 import { _assertTrue } from 'shared/src/utils/_assert';
 import { match } from 'ts-pattern';
-import { handleChangeMapResponse } from '../handlers/packets/handleChangeMapResponse';
-import { handleLoginResponse } from '../handlers/packets/handleLoginResponse';
-import { handleLogoutResponse } from '../handlers/packets/handleLogoutResponse';
-import { handleMessageResponse } from '../handlers/packets/handleMessageResponse';
-import { handleMoveResponse } from '../handlers/packets/handleMoveResponse';
-import { handlePlayerJoinMapMessage } from '../handlers/packets/handlePlayerJoinMapMessage';
-import { handlePlayerLeaveMapMessage } from '../handlers/packets/handlePlayerLeaveMapMessage';
-import { handlePlayerLoggedInMessage } from '../handlers/packets/handlePlayerLoggedInMessage';
-import { handlePlayerLoggedOutMessage } from '../handlers/packets/handlePlayerLoggedOutMessage';
-import { handlePlayerMessageMessage } from '../handlers/packets/handlePlayerMessageMessage';
-import { handlePlayerMoveMessage } from '../handlers/packets/handlePlayerMoveMessage';
+import { handleChangeMapResponse } from '../handlers/handleChangeMapResponse';
+import { handleLoginResponse } from '../handlers/handleLoginResponse';
+import { handleLogoutResponse } from '../handlers/handleLogoutResponse';
+import { handleMessageResponse } from '../handlers/handleMessageResponse';
+import { handleMoveResponse } from '../handlers/handleMoveResponse';
+import { handlePlayerJoinMapMessage } from '../handlers/handlePlayerJoinMapMessage';
+import { handlePlayerLeaveMapMessage } from '../handlers/handlePlayerLeaveMapMessage';
+import { handlePlayerLoggedInMessage } from '../handlers/handlePlayerLoggedInMessage';
+import { handlePlayerLoggedOutMessage } from '../handlers/handlePlayerLoggedOutMessage';
+import { handlePlayerMessageMessage } from '../handlers/handlePlayerMessageMessage';
+import { handlePlayerMoveMessage } from '../handlers/handlePlayerMoveMessage';
 
 export class SocketStore {
    public nickname: string;
@@ -66,17 +66,17 @@ export class SocketStore {
 
    static handleServerPacket(message: ServerPacket): ClientPacket | null {
       return match(message)
-         .with({ type: 'playerLoggedIn' }, (params) => handlePlayerLoggedInMessage(params))
-         .with({ type: 'playerMessage' }, (params) => handlePlayerMessageMessage(params))
-         .with({ type: 'playerLoggedOut' }, (params) => handlePlayerLoggedOutMessage(params))
-         .with({ type: 'playerJoinMap' }, (params) => handlePlayerJoinMapMessage(params))
-         .with({ type: 'playerLeaveMap' }, (params) => handlePlayerLeaveMapMessage(params))
-         .with({ type: 'playerMove' }, (params) => handlePlayerMoveMessage(params))
-         .with({ type: 'loginResponse' }, (params) => handleLoginResponse(params))
-         .with({ type: 'messageResponse' }, (params) => handleMessageResponse(params))
-         .with({ type: 'logoutResponse' }, (params) => handleLogoutResponse(params))
-         .with({ type: 'moveResponse' }, (params) => handleMoveResponse(params))
-         .with({ type: 'changeMapResponse' }, (params) => handleChangeMapResponse(params))
+         .with({ type: 'playerLoggedIn' }, handlePlayerLoggedInMessage)
+         .with({ type: 'playerMessage' }, handlePlayerMessageMessage)
+         .with({ type: 'playerLoggedOut' }, handlePlayerLoggedOutMessage)
+         .with({ type: 'playerJoinMap' }, handlePlayerJoinMapMessage)
+         .with({ type: 'playerLeaveMap' }, handlePlayerLeaveMapMessage)
+         .with({ type: 'playerMove' }, handlePlayerMoveMessage)
+         .with({ type: 'loginResponse' }, handleLoginResponse)
+         .with({ type: 'messageResponse' }, handleMessageResponse)
+         .with({ type: 'logoutResponse' }, handleLogoutResponse)
+         .with({ type: 'moveResponse' }, handleMoveResponse)
+         .with({ type: 'changeMapResponse' }, handleChangeMapResponse)
          .exhaustive();
    }
 }
