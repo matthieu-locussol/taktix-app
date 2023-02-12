@@ -8,9 +8,9 @@
       "clean": "rm -rf .turbo && rm -rf node_modules"
    },
    "devDependencies": {
-      "@types/node": "^18.11.18",
+      "@types/node": "^18.13.0",
       "config-eslint": "workspace:^1.0.0",
       "config-typescript": "workspace:^1.0.0",
-      "typescript": "^4.9.4"
+      "typescript": "^4.9.5"
    }
 }

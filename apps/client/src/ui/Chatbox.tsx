@@ -59,13 +59,13 @@ export const Chatbox = observer(() => {
          message: chatStore.input,
       });
 
-      chatStore.setInput('');
-
       socketStore.send({
          type: 'message',
          name: characterStore.name,
          content: chatStore.input,
       });
+
+      chatStore.setInput('');
    };
 
    return (

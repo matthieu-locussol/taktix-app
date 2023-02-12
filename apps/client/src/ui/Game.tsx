@@ -21,7 +21,6 @@ import { useStore } from '../store';
 import { isTauri } from '../utils/tauri';
 import { Chatbox } from './Chatbox';
 import { LoadingScreen } from './LoadingScreen';
-import { SocketDiv } from './SocketDiv';
 
 export const Game = observer(() => {
    const [input, setInput] = useState('');
@@ -191,7 +190,6 @@ export const Game = observer(() => {
       >
          <Chatbox />
          {!sceneVisible ? <CircularProgress /> : <Box id="root-game" />}
-         <SocketDiv />
       </Box>
    );
 });
