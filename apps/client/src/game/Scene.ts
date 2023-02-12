@@ -70,32 +70,13 @@ export abstract class Scene extends Phaser.Scene {
       this.cameras.main.fadeIn(1000, 0, 0, 0);
 
       const tilemap = this.createTilemap();
-      const player = this.createPlayer();
 
-      const offsetX = (78 - store.characterStore.name.length * 10) / 2;
-      const playerName = this.add.text(offsetX, -8, store.characterStore.name, { align: 'center' });
-      const container = this.add.container(0, 0, [playerName, player]);
+      this.gridEngine.create(tilemap, { characters: [] });
+      this.createPlayer(store.characterStore.name);
 
-      const gridEngineConfig = {
-         characters: [
-            {
-               id: 'player',
-               sprite: player,
-               walkingAnimationMapping: 6,
-               startPosition: this.entrancePosition,
-               charLayer: 'player',
-               container,
-            },
-         ],
-      };
-
-      this.cameras.main.startFollow(container, true);
-      this.cameras.main.setFollowOffset(-container.width, -container.height);
-
-      this.gridEngine.create(tilemap, gridEngineConfig);
-      this.gridEngine.turnTowards('player', this.entranceDirection);
-
-      this.sendChangeMapSocket(this.entrancePosition);
+      if (store.characterStore.map !== this.scene.key) {
+         this.sendChangeMapSocket(this.entrancePosition);
+      }
 
       this.gridEngine.positionChangeFinished().subscribe((entity) => {
          if (this.sys.isVisible() && entity.charId === 'player') {
@@ -108,11 +89,27 @@ export abstract class Scene extends Phaser.Scene {
       });
    }
 
-   public createPlayer(): Phaser.GameObjects.Sprite {
+   public createPlayer(nickname: string): void {
       const playerSprite = this.add.sprite(0, 0, 'player');
       playerSprite.setDepth(3);
       playerSprite.scale = 3;
-      return playerSprite;
+
+      const offsetX = (78 - nickname.length * 10) / 2;
+      const playerName = this.add.text(offsetX, -8, nickname, { align: 'center' });
+      const playerContainer = this.add.container(0, 0, [playerName, playerSprite]);
+
+      this.gridEngine.addCharacter({
+         id: 'player',
+         sprite: playerSprite,
+         walkingAnimationMapping: 6,
+         startPosition: this.entrancePosition,
+         charLayer: 'player',
+         container: playerContainer,
+      });
+
+      this.cameras.main.startFollow(playerContainer, true);
+      this.cameras.main.setFollowOffset(-playerContainer.width, -playerContainer.height);
+      this.gridEngine.turnTowards('player', this.entranceDirection);
    }
 
    public abstract createTilemap(): Phaser.Tilemaps.Tilemap;

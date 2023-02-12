@@ -2,6 +2,8 @@ import type { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
 
 export class CharacterStore {
+   public map: string = '';
+
    public name: string = '';
 
    public position: Position = { x: 0, y: 0 };
@@ -10,6 +12,10 @@ export class CharacterStore {
 
    constructor() {
       makeAutoObservable(this);
+   }
+
+   public setMap(map: string) {
+      this.map = map;
    }
 
    public setName(name: string) {
