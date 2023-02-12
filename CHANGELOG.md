@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.14.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.13.0...v1.14.0) (2023-02-12)
+
+### Features
+
+-  added a SocketStore
+   ([76d9ead](https://github.com/matthieu-locussol/taktix-app/commit/76d9ead21b7b729484fa04b9e47168f5fc8cdf54))
+-  added React StrictMode
+   ([3dc842f](https://github.com/matthieu-locussol/taktix-app/commit/3dc842fd69d8b35a695b9a9e74ee744d6ad0b151))
+-  added send method to SocketStore
+   ([9162caa](https://github.com/matthieu-locussol/taktix-app/commit/9162caad1a396fffe04c781125023174610e0082))
+
 ## [1.13.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.12.0...v1.13.0) (2023-02-09)
 
 ### Features
