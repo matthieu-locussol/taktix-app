@@ -43,8 +43,8 @@ export const changeMapPlayer = (map: string, data: SceneData) => {
       y: data.entrancePosition.y,
    };
 
-   if (store.socket !== null) {
-      store.socket.send(JSON.stringify(packet));
+   if (store.socketStore.socket !== null) {
+      store.socketStore.socket.send(JSON.stringify(packet));
    }
 
    return returnedScene as Scene;

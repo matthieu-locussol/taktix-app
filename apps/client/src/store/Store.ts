@@ -1,54 +1,34 @@
 import { makeAutoObservable } from 'mobx';
-import { ClientPacket, isClientPacket } from 'shared/src/packets/ClientPacket';
-import { zServerPacket } from 'shared/src/packets/ServerPacket';
-import { _assertTrue } from 'shared/src/utils/_assert';
-import { handleServerPacket } from '../handlers/handleServerPacket';
+import { _assert } from 'shared/src/utils/_assert';
 import { CharacterStore } from './CharacterStore';
 import { ChatStore } from './ChatStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
+import { SocketStore } from './SocketStore';
 
 export class Store {
-   socket: WebSocket | null = null;
+   public characterStore: CharacterStore;
 
-   loadingScreenStore = new LoadingScreenStore();
+   public chatStore: ChatStore;
 
-   characterStore = new CharacterStore();
+   public loadingScreenStore: LoadingScreenStore;
 
-   chatStore = new ChatStore();
+   private _socketStore: SocketStore | null;
 
    constructor() {
       makeAutoObservable(this);
+
+      this.characterStore = new CharacterStore();
+      this.chatStore = new ChatStore();
+      this.loadingScreenStore = new LoadingScreenStore();
+      this._socketStore = null;
    }
 
-   setSocket(socket: WebSocket) {
-      this.socket = socket;
+   get socketStore() {
+      _assert(this._socketStore);
+      return this._socketStore;
+   }
 
-      socket.onopen = () => {
-         const packet: ClientPacket = {
-            type: 'login',
-            name: this.characterStore.name,
-         };
-
-         socket.send(JSON.stringify(packet));
-      };
-
-      socket.onmessage = (event) => {
-         try {
-            const packet = zServerPacket.parse(JSON.parse(event.data.toString()));
-            const response = handleServerPacket(packet);
-
-            if (response !== null) {
-               _assertTrue(isClientPacket(response));
-               console.log(`Sending a ${response.type} packet...`);
-               socket.send(JSON.stringify(response));
-            }
-         } catch (e) {
-            console.error(e);
-         }
-      };
-
-      socket.onerror = (error) => {
-         console.error(error);
-      };
+   initialize(nickname: string) {
+      this._socketStore = new SocketStore(nickname);
    }
 }

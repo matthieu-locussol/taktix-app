@@ -74,7 +74,7 @@ export abstract class Scene extends Phaser.Scene {
       this.gridEngine.create(tilemap, { characters: [] });
       this.createPlayer(store.characterStore.name);
 
-      if (store.characterStore.map !== this.scene.key) {
+      if (store.characterStore.map !== '' && store.characterStore.map !== this.scene.key) {
          this.sendChangeMapSocket(this.entrancePosition);
       }
 
@@ -144,8 +144,11 @@ export abstract class Scene extends Phaser.Scene {
          posY: position.y,
       };
 
-      if (store.socket !== null && store.socket.readyState === store.socket.OPEN) {
-         store.socket.send(JSON.stringify(packet));
+      if (
+         store.socketStore.socket !== null &&
+         store.socketStore.socket.readyState === store.socketStore.socket.OPEN
+      ) {
+         store.socketStore.socket.send(JSON.stringify(packet));
       }
    }
 
@@ -157,8 +160,11 @@ export abstract class Scene extends Phaser.Scene {
          y: position.y,
       };
 
-      if (store.socket !== null && store.socket.readyState === store.socket.OPEN) {
-         store.socket.send(JSON.stringify(packet));
+      if (
+         store.socketStore.socket !== null &&
+         store.socketStore.socket.readyState === store.socketStore.socket.OPEN
+      ) {
+         store.socketStore.socket.send(JSON.stringify(packet));
       }
    }
 
