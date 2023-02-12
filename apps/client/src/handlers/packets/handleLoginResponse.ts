@@ -14,6 +14,7 @@ export const handleLoginResponse = ({ response }: LoginResponse) => {
 
    scene.gridEngine.setPosition('player', { x: response.posX, y: response.posY }, 'player');
 
+   characterStore.setMap(response.map);
    characterStore.setPosition({ x: response.posX, y: response.posY });
    loadingScreenStore.setSceneVisible(true);
 
