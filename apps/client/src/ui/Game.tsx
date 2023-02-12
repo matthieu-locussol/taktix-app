@@ -32,16 +32,10 @@ export const Game = observer(() => {
    const store = useStore();
    const {
       loadingScreenStore: { loadingAssets, sceneVisible },
-      chatStore,
       characterStore,
    } = store;
 
    useEffect(() => {
-      chatStore.addMessage({
-         author: 'Server',
-         message: `Connected to server ${import.meta.env.VITE_SERVER_WEBSOCKET_URL}!`,
-      });
-
       if (isTauri()) {
          (async () => {
             const updateResult = await checkUpdate();

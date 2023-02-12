@@ -1,5 +1,4 @@
 import { Direction, GridEngine, Position } from 'grid-engine';
-import { ClientPacket } from 'shared';
 import { TELEPORTATION_SPOTS } from '../data/teleportationSpots';
 import { store } from '../store';
 import { teleportPlayer } from '../utils/game';
@@ -138,34 +137,20 @@ export abstract class Scene extends Phaser.Scene {
    public sendMoveSocket(): void {
       const position = this.gridEngine.getPosition('player');
 
-      const packet: ClientPacket = {
+      store.socketStore.send({
          type: 'move',
          posX: position.x,
          posY: position.y,
-      };
-
-      if (
-         store.socketStore.socket !== null &&
-         store.socketStore.socket.readyState === store.socketStore.socket.OPEN
-      ) {
-         store.socketStore.socket.send(JSON.stringify(packet));
-      }
+      });
    }
 
    public sendChangeMapSocket(position: Position): void {
-      const packet: ClientPacket = {
+      store.socketStore.send({
          type: 'changeMap',
          map: this.scene.key,
          x: position.x,
          y: position.y,
-      };
-
-      if (
-         store.socketStore.socket !== null &&
-         store.socketStore.socket.readyState === store.socketStore.socket.OPEN
-      ) {
-         store.socketStore.socket.send(JSON.stringify(packet));
-      }
+      });
    }
 
    public updateTeleportationSpots(): void {

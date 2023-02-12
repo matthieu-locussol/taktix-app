@@ -1,9 +1,8 @@
 import { Box, Typography, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
-import { ClientPacket } from 'shared';
 import { game } from '../game/PhaserGame';
-import { store, useStore } from '../store';
+import { useStore } from '../store';
 
 const Root = styled('form')(() => ({
    position: 'absolute',
@@ -42,7 +41,7 @@ const ChatInput = styled('input')(() => ({
 export const Chatbox = observer(() => {
    const inputRef = useRef<HTMLInputElement>(null);
    const chatboxRef = useRef<HTMLDivElement>(null);
-   const { chatStore, characterStore, loadingScreenStore } = useStore();
+   const { chatStore, characterStore, loadingScreenStore, socketStore } = useStore();
 
    useEffect(() => {
       if (chatboxRef.current !== null) {
@@ -54,27 +53,26 @@ export const Chatbox = observer(() => {
       return null;
    }
 
+   const sendMessage = () => {
+      chatStore.addMessage({
+         author: characterStore.name,
+         message: chatStore.input,
+      });
+
+      chatStore.setInput('');
+
+      socketStore.send({
+         type: 'message',
+         name: characterStore.name,
+         content: chatStore.input,
+      });
+   };
+
    return (
       <Root
          onSubmit={(e) => {
             e.preventDefault();
-
-            const packet: ClientPacket = {
-               type: 'message',
-               name: characterStore.name,
-               content: chatStore.input,
-            };
-
-            chatStore.addMessage({
-               author: characterStore.name,
-               message: chatStore.input,
-            });
-
-            chatStore.setInput('');
-
-            if (store.socket !== null) {
-               store.socket.send(JSON.stringify(packet));
-            }
+            sendMessage();
          }}
       >
          <Chat ref={chatboxRef}>

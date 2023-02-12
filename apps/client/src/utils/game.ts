@@ -1,5 +1,4 @@
 import type { Position } from 'grid-engine';
-import { ClientPacket } from 'shared';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { game } from '../game/PhaserGame';
 import type { Scene, SceneData } from '../game/Scene';
@@ -36,16 +35,12 @@ export const changeMapPlayer = (map: string, data: SceneData) => {
    characterStore.setPosition(data.entrancePosition);
    characterStore.setPlayers([]);
 
-   const packet: ClientPacket = {
+   store.socketStore.send({
       type: 'changeMap',
       map,
       x: data.entrancePosition.x,
       y: data.entrancePosition.y,
-   };
-
-   if (store.socketStore.socket !== null) {
-      store.socketStore.socket.send(JSON.stringify(packet));
-   }
+   });
 
    return returnedScene as Scene;
 };

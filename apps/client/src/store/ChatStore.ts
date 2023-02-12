@@ -12,6 +12,11 @@ export class ChatStore {
 
    constructor() {
       makeAutoObservable(this);
+
+      this.addMessage({
+         author: 'Server',
+         message: `Connected to server ${import.meta.env.VITE_SERVER_WEBSOCKET_URL}!`,
+      });
    }
 
    public addMessage(message: ChatMessage) {
