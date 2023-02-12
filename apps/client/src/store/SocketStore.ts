@@ -30,12 +30,10 @@ export class SocketStore {
 
    initialize() {
       this.socket.onopen = () => {
-         const packet: ClientPacket = {
+         this.send({
             type: 'login',
             name: this.nickname,
-         };
-
-         this.socket.send(JSON.stringify(packet));
+         });
       };
 
       this.socket.onmessage = (event) => {
@@ -56,6 +54,14 @@ export class SocketStore {
       this.socket.onerror = (error) => {
          console.error(error);
       };
+   }
+
+   send(packet: ClientPacket) {
+      if (this.socket.readyState === this.socket.OPEN) {
+         this.socket.send(JSON.stringify(packet));
+      } else {
+         console.log('Socket was not ready to send messages!');
+      }
    }
 
    static handleServerPacket(message: ServerPacket): ClientPacket | null {
