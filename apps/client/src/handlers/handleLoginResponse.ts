@@ -1,7 +1,7 @@
 import { LoginResponse } from 'shared';
 import { _assertTrue } from 'shared/src/utils/_assert';
-import { store } from '../../store';
-import { changeMapPlayer } from '../../utils/game';
+import { store } from '../store';
+import { changeMapPlayer } from '../utils/game';
 
 export const handleLoginResponse = ({ response }: LoginResponse) => {
    _assertTrue(response.status === 'connected');
