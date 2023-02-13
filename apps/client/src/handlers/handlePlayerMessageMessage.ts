@@ -1,9 +1,10 @@
-import { PlayerMessageMessage, PlayerMessageResponse } from 'shared';
+import { PlayerMessageResponse } from 'shared';
+import { ServerPacket } from 'shared/src/packets/ServerPacket';
 import { store } from '../store';
 import { Store } from '../store/Store';
 
 export const handlePlayerMessageMessage = (
-   { content, name }: PlayerMessageMessage,
+   { content, name }: Extract<ServerPacket, { type: 'playerMessage' }>,
    _store: Store,
 ): PlayerMessageResponse => {
    store.chatStore.addMessage({

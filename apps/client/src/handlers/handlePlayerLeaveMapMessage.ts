@@ -1,8 +1,9 @@
-import { PlayerLeaveMapMessage, PlayerLeaveMapResponse } from 'shared';
+import { PlayerLeaveMapResponse } from 'shared';
+import { ServerPacket } from 'shared/src/packets/ServerPacket';
 import { Store } from '../store/Store';
 
 export const handlePlayerLeaveMapMessage = (
-   { name }: PlayerLeaveMapMessage,
+   { name }: Extract<ServerPacket, { type: 'playerLeaveMap' }>,
    store: Store,
 ): PlayerLeaveMapResponse => {
    store.gameStore.getCurrentScene.deleteExternalPlayer(name);
