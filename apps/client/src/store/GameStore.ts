@@ -1,22 +1,33 @@
 import { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
-import { game } from '../game/PhaserGame';
 import { Scene, SceneData } from '../game/Scene';
 import { Store } from './Store';
 
 export class GameStore {
+   private _game: Phaser.Game | null;
+
    private _store: Store;
 
    constructor(store: Store) {
       makeAutoObservable(this);
 
+      this._game = null;
       this._store = store;
    }
 
+   initialize(game: Phaser.Game) {
+      this._game = game;
+   }
+
+   get game() {
+      _assert(this._game);
+      return this._game;
+   }
+
    get getCurrentScene(): Scene {
-      const { scenes } = game.scene;
-      const activeScenes = scenes.filter(({ scene }) => game.scene.isActive(scene.key));
+      const { scenes } = this.game.scene;
+      const activeScenes = scenes.filter(({ scene }) => this.game.scene.isActive(scene.key));
       _assertTrue(activeScenes.length <= 1, 'There should be only one active scene at a time.');
       return activeScenes[0] as Scene;
    }
