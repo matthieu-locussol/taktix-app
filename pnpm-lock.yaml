@@ -81,6 +81,7 @@ importers:
          config-typescript: workspace:^1.0.0
          eslint: ^8.34.0
          fastify: ^4.13.0
+         mobx: ^6.8.0
          prisma: ^4.10.1
          shared: workspace:^1.0.0
          ts-node-dev: ^2.0.0
@@ -92,6 +93,7 @@ importers:
          '@fastify/websocket': 7.1.2
          '@prisma/client': 4.10.1_prisma@4.10.1
          fastify: 4.13.0
+         mobx: 6.8.0
          prisma: 4.10.1
          shared: link:../../packages/shared
          ts-pattern: 4.1.4

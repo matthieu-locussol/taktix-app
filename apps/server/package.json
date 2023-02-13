@@ -15,6 +15,7 @@
       "@fastify/websocket": "^7.1.2",
       "@prisma/client": "^4.10.1",
       "fastify": "^4.13.0",
+      "mobx": "^6.8.0",
       "prisma": "^4.10.1",
       "shared": "workspace:^1.0.0",
       "ts-pattern": "^4.1.4",

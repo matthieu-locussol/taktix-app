@@ -1,32 +1,25 @@
-import { ClientPacketType, ServerPacket } from 'shared';
+import { ClientPacketType } from 'shared';
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
-import { SOCKETS } from '../../globals';
+import { state } from '../../state';
+import { SocketId } from '../../utils/socketId';
 
 export const handleMoveMessage = (
    { posX, posY }: ClientPacketType<'move'>,
-   socketId: string,
+   socketId: SocketId,
 ): ServerPacketType<'moveResponse'> => {
-   const client = SOCKETS.get(socketId);
+   const client = state.getClient(socketId);
+   client.setPosition(posX, posY);
 
-   if (client !== undefined) {
-      client.data.position = {
-         x: posX,
-         y: posY,
-      };
-
-      const packet: ServerPacket = {
-         type: 'playerMove',
-         name: client.data.name,
-         x: posX,
-         y: posY,
-      };
-
-      SOCKETS.forEach(({ socket, data: { map, name } }) => {
-         if (name !== client.data.name && map === client.data.map) {
-            socket.send(JSON.stringify(packet));
-         }
-      });
-   }
+   state.clients.forEach(({ socket, data: { map, name } }) => {
+      if (name !== client.data.name && map === client.data.map) {
+         socket.send({
+            type: 'playerMove',
+            name: client.data.name,
+            x: posX,
+            y: posY,
+         });
+      }
+   });
 
    return {
       type: 'moveResponse',
