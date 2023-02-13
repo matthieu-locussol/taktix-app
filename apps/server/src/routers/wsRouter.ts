@@ -1,71 +1,49 @@
 import { SocketStream } from '@fastify/websocket';
 import { FastifyRequest } from 'fastify';
-import { ServerPacket, _assertTrue, isServerPacket, zClientPacket } from 'shared';
-import { v4 as uuidv4 } from 'uuid';
-import { SOCKETS } from '../globals';
+import { _assertTrue, isServerPacket, zClientPacket } from 'shared';
 import { handleClientPacket } from '../handlers/handleClientPacket';
+import { state } from '../state';
 import { prisma } from '../utils/prisma';
+import { makeSocketId } from '../utils/socketId';
 
 export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
-   const socketId = uuidv4();
+   const socketId = makeSocketId();
 
    if (req.socket.remoteAddress !== undefined) {
       console.log(`New connection from ${socketId}!`);
-
-      SOCKETS.set(socketId, {
-         data: {
-            name: '',
-            map: '',
-            position: {
-               x: 0,
-               y: 0,
-            },
-         },
-         socket: connection.socket,
-      });
+      state.initializeNewClient(socketId, connection.socket);
    }
 
    connection.socket.onclose = async () => {
-      if (req.socket.remoteAddress !== undefined) {
-         console.log(`Disconnected: ${socketId}`);
+      console.log(`Disconnected: ${socketId}`);
+      const client = state.getClient(socketId);
 
-         const client = SOCKETS.get(socketId);
+      state.getOtherClients(socketId).forEach(({ socket, data: { map } }) => {
+         socket.send({
+            type: 'playerLoggedOut',
+            name: client.data.name,
+         });
 
-         if (client !== undefined) {
-            SOCKETS.forEach(({ socket, data: { map } }, currentSocketId) => {
-               if (currentSocketId !== socketId) {
-                  const packetLoggedOut: ServerPacket = {
-                     type: 'playerLoggedOut',
-                     name: client.data.name,
-                  };
-
-                  socket.send(JSON.stringify(packetLoggedOut));
-
-                  if (client.data.map === map) {
-                     const packetLeaveMap: ServerPacket = {
-                        type: 'playerLeaveMap',
-                        name: client.data.name,
-                     };
-
-                     socket.send(JSON.stringify(packetLeaveMap));
-                  }
-               }
+         if (client.data.map === map) {
+            socket.send({
+               type: 'playerLeaveMap',
+               name: client.data.name,
             });
-
-            await prisma.testo.update({
-               data: {
-                  map: client.data.map,
-                  pos_x: client.data.position.x,
-                  pos_y: client.data.position.y,
-               },
-               where: {
-                  name: client.data.name,
-               },
-            });
-
-            SOCKETS.delete(socketId);
          }
-      }
+      });
+
+      await prisma.testo.update({
+         data: {
+            map: client.data.map,
+            pos_x: client.data.position.x,
+            pos_y: client.data.position.y,
+         },
+         where: {
+            name: client.data.name,
+         },
+      });
+
+      state.clients.delete(socketId);
    };
 
    connection.socket.onerror = (err) => {

@@ -1,5 +1,6 @@
 import { ClientPacket, ServerPacket } from 'shared';
 import { match } from 'ts-pattern';
+import { SocketId } from '../utils/socketId';
 import { handleChangeMapMessage } from './packets/handleChangeMapMessage';
 import { handleLoginMessage } from './packets/handleLoginMessage';
 import { handleLogoutMessage } from './packets/handleLogoutMessage';
@@ -14,7 +15,7 @@ import { handlePlayerMoveResponse } from './packets/handlePlayerMoveResponse';
 
 export const handleClientPacket = async (
    data: ClientPacket,
-   socketId: string,
+   socketId: SocketId,
 ): Promise<ServerPacket | null> => {
    console.log(`Received a "${data.type}" message...`);
 

@@ -1,33 +1,21 @@
-import { ClientPacketType, ServerPacket } from 'shared';
+import { ClientPacketType } from 'shared';
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
-import { SOCKETS } from '../../globals';
+import { state } from '../../state';
+import { SocketId } from '../../utils/socketId';
 
 export const handleLogoutMessage = (
    { name }: ClientPacketType<'logout'>,
-   socketId: string,
+   socketId: SocketId,
 ): ServerPacketType<'logoutResponse'> => {
-   const client = SOCKETS.get(socketId);
-
-   if (client !== undefined) {
-      const packet: ServerPacket = {
+   state.getOtherClients(socketId).forEach(({ socket }) => {
+      socket.send({
          type: 'playerLoggedOut',
          name,
-      };
-
-      SOCKETS.forEach(({ socket }, currentSocketId) => {
-         if (currentSocketId !== socketId) {
-            socket.send(JSON.stringify(packet));
-         }
       });
-
-      return {
-         type: 'logoutResponse',
-         response: 'success',
-      };
-   }
+   });
 
    return {
       type: 'logoutResponse',
-      response: 'unknown',
+      response: 'success',
    };
 };
