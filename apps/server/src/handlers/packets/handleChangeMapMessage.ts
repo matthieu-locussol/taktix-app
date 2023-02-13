@@ -1,12 +1,13 @@
-import { ChangeMapMessage, ChangeMapResponse, ServerPacket } from 'shared';
+import { ChangeMapMessage, ServerPacket } from 'shared';
+import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { SOCKETS } from '../../globals';
 
 export const handleChangeMapMessage = (
    { map, x, y }: ChangeMapMessage,
    socketId: string,
-): ChangeMapResponse => {
+): ServerPacketType<'changeMapResponse'> => {
    const client = SOCKETS.get(socketId);
-   const players: ChangeMapResponse['players'] = [];
+   const players: ServerPacketType<'changeMapResponse'>['players'] = [];
 
    if (client !== undefined) {
       const packetLeave: ServerPacket = {
@@ -40,9 +41,9 @@ export const handleChangeMapMessage = (
       SOCKETS.forEach(({ data }, currentSocketId) => {
          if (socketId !== currentSocketId && data.map === client.data.map) {
             players.push({
-               name: data.name,
-               posX: data.position.x,
-               posY: data.position.y,
+               nickname: data.name,
+               x: data.position.x,
+               y: data.position.y,
             });
          }
       });
