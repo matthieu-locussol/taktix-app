@@ -5,22 +5,16 @@ export const zPlayerLoggedInMessage = z.object({
    name: z.string(),
 });
 
-export type PlayerLoggedInMessage = z.infer<typeof zPlayerLoggedInMessage>;
-
 export const zPlayerMessageMessage = z.object({
    type: z.literal('playerMessage'),
    name: z.string(),
    content: z.string(),
 });
 
-export type PlayerMessageMessage = z.infer<typeof zPlayerMessageMessage>;
-
 export const zPlayerLoggedOutMessage = z.object({
    type: z.literal('playerLoggedOut'),
    name: z.string(),
 });
-
-export type PlayerLoggedOutMessage = z.infer<typeof zPlayerLoggedOutMessage>;
 
 export const zPlayerJoinMapMessage = z.object({
    type: z.literal('playerJoinMap'),
@@ -29,14 +23,10 @@ export const zPlayerJoinMapMessage = z.object({
    y: z.number(),
 });
 
-export type PlayerJoinMapMessage = z.infer<typeof zPlayerJoinMapMessage>;
-
 export const zPlayerLeaveMapMessage = z.object({
    type: z.literal('playerLeaveMap'),
    name: z.string(),
 });
-
-export type PlayerLeaveMapMessage = z.infer<typeof zPlayerLeaveMapMessage>;
 
 export const zPlayerMoveMessage = z.object({
    type: z.literal('playerMove'),
@@ -44,8 +34,6 @@ export const zPlayerMoveMessage = z.object({
    x: z.number(),
    y: z.number(),
 });
-
-export type PlayerMoveMessage = z.infer<typeof zPlayerMoveMessage>;
 
 export const zLoginResponse = z.object({
    type: z.literal('loginResponse'),
@@ -69,26 +57,18 @@ export const zLoginResponse = z.object({
    ]),
 });
 
-export type LoginResponse = z.infer<typeof zLoginResponse>;
-
 export const zMessageResponse = z.object({
    type: z.literal('messageResponse'),
 });
-
-export type MessageResponse = z.infer<typeof zMessageResponse>;
 
 export const zLogoutResponse = z.object({
    type: z.literal('logoutResponse'),
    response: z.union([z.literal('success'), z.literal('unknown')]),
 });
 
-export type LogoutResponse = z.infer<typeof zLogoutResponse>;
-
 export const zMoveResponse = z.object({
    type: z.literal('moveResponse'),
 });
-
-export type MoveResponse = z.infer<typeof zMoveResponse>;
 
 export const zChangeMapResponse = z.object({
    type: z.literal('changeMapResponse'),
@@ -100,8 +80,6 @@ export const zChangeMapResponse = z.object({
       }),
    ),
 });
-
-export type ChangeMapResponse = z.infer<typeof zChangeMapResponse>;
 
 export const zServerPacket = z.discriminatedUnion('type', [
    zPlayerLoggedInMessage,

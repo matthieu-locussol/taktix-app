@@ -1,8 +1,11 @@
-import { LoginResponse } from 'shared';
+import { ServerPacket } from 'shared/src/packets/ServerPacket';
 import { _assertTrue } from 'shared/src/utils/_assert';
 import { Store } from '../store/Store';
 
-export const handleLoginResponse = ({ response }: LoginResponse, store: Store) => {
+export const handleLoginResponse = (
+   { response }: Extract<ServerPacket, { type: 'loginResponse' }>,
+   store: Store,
+) => {
    _assertTrue(response.status === 'connected');
 
    const { characterStore, loadingScreenStore } = store;
