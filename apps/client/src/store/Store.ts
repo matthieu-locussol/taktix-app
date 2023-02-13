@@ -24,7 +24,7 @@ export class Store {
    }
 
    get socketStore() {
-      _assert(this._socketStore);
+      _assert(this._socketStore, 'SocketStore has not been initialized yet!');
       return this._socketStore;
    }
 
