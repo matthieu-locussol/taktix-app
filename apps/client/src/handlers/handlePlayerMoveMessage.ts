@@ -1,8 +1,11 @@
 import { PlayerMoveMessage, PlayerMoveResponse } from 'shared';
-import { getCurrentScene } from '../utils/game';
+import { Store } from '../store/Store';
 
-export const handlePlayerMoveMessage = ({ name, x, y }: PlayerMoveMessage): PlayerMoveResponse => {
-   getCurrentScene().moveExternalPlayer(name, x, y);
+export const handlePlayerMoveMessage = (
+   { name, x, y }: PlayerMoveMessage,
+   store: Store,
+): PlayerMoveResponse => {
+   store.gameStore.getCurrentScene.moveExternalPlayer(name, x, y);
 
    return {
       type: 'playerMoveResponse',

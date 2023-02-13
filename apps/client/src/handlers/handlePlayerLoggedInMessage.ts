@@ -1,9 +1,10 @@
 import { PlayerLoggedInMessage, PlayerLoggedInResponse } from 'shared';
-import { store } from '../store';
+import { Store } from '../store/Store';
 
-export const handlePlayerLoggedInMessage = ({
-   name,
-}: PlayerLoggedInMessage): PlayerLoggedInResponse => {
+export const handlePlayerLoggedInMessage = (
+   { name }: PlayerLoggedInMessage,
+   store: Store,
+): PlayerLoggedInResponse => {
    store.chatStore.addMessage({
       author: 'Server',
       message: `${name} logged in!`,

@@ -1,12 +1,11 @@
 import { PlayerJoinMapMessage, PlayerJoinMapResponse } from 'shared';
-import { getCurrentScene } from '../utils/game';
+import { Store } from '../store/Store';
 
-export const handlePlayerJoinMapMessage = ({
-   name,
-   x,
-   y,
-}: PlayerJoinMapMessage): PlayerJoinMapResponse => {
-   getCurrentScene().addExternalPlayer(name, { x, y });
+export const handlePlayerJoinMapMessage = (
+   { name, x, y }: PlayerJoinMapMessage,
+   store: Store,
+): PlayerJoinMapResponse => {
+   store.gameStore.getCurrentScene.addExternalPlayer(name, { x, y });
 
    return {
       type: 'playerJoinMapResponse',
