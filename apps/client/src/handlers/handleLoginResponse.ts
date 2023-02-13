@@ -17,7 +17,12 @@ export const handleLoginResponse = ({ response }: LoginResponse, store: Store) =
    characterStore.setPosition({ x: response.posX, y: response.posY });
    loadingScreenStore.setSceneVisible(true);
 
-   characterStore.setPlayers(response.players);
+   characterStore.setPlayers(
+      response.players.map((p) => ({
+         nickname: p.name,
+         position: { x: p.posX, y: p.posY },
+      })),
+   );
 
    return null;
 };

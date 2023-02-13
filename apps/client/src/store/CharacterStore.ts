@@ -1,6 +1,11 @@
 import type { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
 
+interface Player {
+   nickname: string;
+   position: Position;
+}
+
 export class CharacterStore {
    public map: string = '';
 
@@ -8,7 +13,7 @@ export class CharacterStore {
 
    public position: Position = { x: 0, y: 0 };
 
-   public players: { name: string; posX: number; posY: number }[] = [];
+   public players: Player[] = [];
 
    constructor() {
       makeAutoObservable(this);
@@ -34,7 +39,7 @@ export class CharacterStore {
       this.position.y = y;
    }
 
-   public setPlayers(players: { name: string; posX: number; posY: number }[]) {
+   public setPlayers(players: Player[]) {
       this.players = players;
    }
 }
