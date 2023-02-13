@@ -1,11 +1,11 @@
-import { LoginMessage, ServerPacket, _assert } from 'shared';
+import { ClientPacketType, ServerPacket, _assert } from 'shared';
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { Player } from 'shared/src/types';
 import { SOCKETS } from '../../globals';
 import { prisma } from '../../utils/prisma';
 
 export const handleLoginMessage = async (
-   { name }: LoginMessage,
+   { name }: ClientPacketType<'login'>,
    socketId: string,
 ): Promise<ServerPacketType<'loginResponse'>> => {
    const client = SOCKETS.get(socketId);

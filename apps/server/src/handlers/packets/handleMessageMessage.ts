@@ -1,9 +1,9 @@
-import { MessageMessage, ServerPacket } from 'shared';
+import { ClientPacketType, ServerPacket } from 'shared';
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { SOCKETS } from '../../globals';
 
 export const handleMessageMessage = (
-   { content, name }: MessageMessage,
+   { content, name }: ClientPacketType<'message'>,
    socketId: string,
 ): ServerPacketType<'messageResponse'> => {
    const client = SOCKETS.get(socketId);

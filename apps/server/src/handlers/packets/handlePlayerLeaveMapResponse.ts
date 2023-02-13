@@ -1,3 +1,3 @@
-import { PlayerLeaveMapResponse } from 'shared';
+import { ClientPacketType } from 'shared';
 
-export const handlePlayerLeaveMapResponse = (_: PlayerLeaveMapResponse) => null;
+export const handlePlayerLeaveMapResponse = (_: ClientPacketType<'playerLeaveMapResponse'>) => null;

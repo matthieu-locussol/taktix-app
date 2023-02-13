@@ -1,9 +1,9 @@
-import { ChangeMapMessage, ServerPacket } from 'shared';
+import { ClientPacketType, ServerPacket } from 'shared';
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { SOCKETS } from '../../globals';
 
 export const handleChangeMapMessage = (
-   { map, x, y }: ChangeMapMessage,
+   { map, x, y }: ClientPacketType<'changeMap'>,
    socketId: string,
 ): ServerPacketType<'changeMapResponse'> => {
    const client = SOCKETS.get(socketId);
