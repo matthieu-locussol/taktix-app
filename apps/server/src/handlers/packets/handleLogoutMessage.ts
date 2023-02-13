@@ -1,7 +1,11 @@
-import { LogoutMessage, LogoutResponse, ServerPacket } from 'shared';
+import { LogoutMessage, ServerPacket } from 'shared';
+import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { SOCKETS } from '../../globals';
 
-export const handleLogoutMessage = ({ name }: LogoutMessage, socketId: string): LogoutResponse => {
+export const handleLogoutMessage = (
+   { name }: LogoutMessage,
+   socketId: string,
+): ServerPacketType<'logoutResponse'> => {
    const client = SOCKETS.get(socketId);
 
    if (client !== undefined) {

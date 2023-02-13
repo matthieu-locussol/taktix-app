@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { zPlayer } from '../types';
 
 export const zPlayerLoggedInMessage = z.object({
    type: z.literal('playerLoggedIn'),
@@ -43,13 +44,7 @@ export const zLoginResponse = z.object({
          map: z.string(),
          posX: z.number(),
          posY: z.number(),
-         players: z.array(
-            z.object({
-               name: z.string(),
-               posX: z.number(),
-               posY: z.number(),
-            }),
-         ),
+         players: z.array(zPlayer),
       }),
       z.object({
          status: z.literal('unknown'),
@@ -72,13 +67,7 @@ export const zMoveResponse = z.object({
 
 export const zChangeMapResponse = z.object({
    type: z.literal('changeMapResponse'),
-   players: z.array(
-      z.object({
-         name: z.string(),
-         posX: z.number(),
-         posY: z.number(),
-      }),
-   ),
+   players: z.array(zPlayer),
 });
 
 export const zServerPacket = z.discriminatedUnion('type', [
@@ -96,6 +85,7 @@ export const zServerPacket = z.discriminatedUnion('type', [
 ]);
 
 export type ServerPacket = z.infer<typeof zServerPacket>;
+export type ServerPacketType<T extends ServerPacket['type']> = Extract<ServerPacket, { type: T }>;
 
 export const isServerPacket = (value: unknown): value is ServerPacket =>
    zServerPacket.safeParse(value).success;

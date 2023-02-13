@@ -1,7 +1,11 @@
-import { MoveMessage, MoveResponse, ServerPacket } from 'shared';
+import { MoveMessage, ServerPacket } from 'shared';
+import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { SOCKETS } from '../../globals';
 
-export const handleMoveMessage = ({ posX, posY }: MoveMessage, socketId: string): MoveResponse => {
+export const handleMoveMessage = (
+   { posX, posY }: MoveMessage,
+   socketId: string,
+): ServerPacketType<'moveResponse'> => {
    const client = SOCKETS.get(socketId);
 
    if (client !== undefined) {

@@ -1,11 +1,13 @@
-import { LoginMessage, LoginResponse, ServerPacket, _assert } from 'shared';
+import { LoginMessage, ServerPacket, _assert } from 'shared';
+import { ServerPacketType } from 'shared/src/packets/ServerPacket';
+import { Player } from 'shared/src/types';
 import { SOCKETS } from '../../globals';
 import { prisma } from '../../utils/prisma';
 
 export const handleLoginMessage = async (
    { name }: LoginMessage,
    socketId: string,
-): Promise<LoginResponse> => {
+): Promise<ServerPacketType<'loginResponse'>> => {
    const client = SOCKETS.get(socketId);
 
    if (client !== undefined) {
@@ -56,16 +58,13 @@ export const handleLoginMessage = async (
          }
       });
 
-      const players: Extract<LoginResponse['response'], { status: 'connected' }>['players'] = [];
-      SOCKETS.forEach(({ data }) => {
-         if (name !== data.name && data.map === client.data.map) {
-            players.push({
-               name: data.name,
-               posX: data.position.x,
-               posY: data.position.y,
-            });
-         }
-      });
+      const players: Player[] = [...SOCKETS.values()]
+         .filter(({ data }) => name !== data.name && data.map === client.data.map)
+         .map(({ data }) => ({
+            nickname: data.name,
+            x: data.position.x,
+            y: data.position.y,
+         }));
 
       return {
          type: 'loginResponse',

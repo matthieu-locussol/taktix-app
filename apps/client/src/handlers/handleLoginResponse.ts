@@ -1,9 +1,9 @@
-import { ServerPacket } from 'shared/src/packets/ServerPacket';
+import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { _assertTrue } from 'shared/src/utils/_assert';
 import { Store } from '../store/Store';
 
 export const handleLoginResponse = (
-   { response }: Extract<ServerPacket, { type: 'loginResponse' }>,
+   { response }: ServerPacketType<'loginResponse'>,
    store: Store,
 ) => {
    _assertTrue(response.status === 'connected');
@@ -19,13 +19,7 @@ export const handleLoginResponse = (
    characterStore.setMap(response.map);
    characterStore.setPosition({ x: response.posX, y: response.posY });
    loadingScreenStore.setSceneVisible(true);
-
-   characterStore.setPlayers(
-      response.players.map((p) => ({
-         nickname: p.name,
-         position: { x: p.posX, y: p.posY },
-      })),
-   );
+   characterStore.setPlayers(response.players);
 
    return null;
 };

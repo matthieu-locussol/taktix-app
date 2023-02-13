@@ -82,8 +82,8 @@ export abstract class Scene extends Phaser.Scene {
          }
       });
 
-      store.characterStore.players.forEach(({ nickname, position }) => {
-         this.addExternalPlayer(nickname, position);
+      store.characterStore.players.forEach(({ nickname, x, y }) => {
+         this.addExternalPlayer(nickname, { x, y });
       });
    }
 

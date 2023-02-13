@@ -1,14 +1,14 @@
-import { ServerPacket } from 'shared/src/packets/ServerPacket';
+import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { Store } from '../store/Store';
 
 export const handleChangeMapResponse = (
-   { players }: Extract<ServerPacket, { type: 'changeMapResponse' }>,
+   { players }: ServerPacketType<'changeMapResponse'>,
    store: Store,
 ) => {
    store.gameStore.getCurrentScene?.deleteAllExternalPlayers();
 
-   players.forEach(({ name, posX, posY }) => {
-      store.gameStore.getCurrentScene?.addExternalPlayer(name, { x: posX, y: posY });
+   players.forEach(({ nickname, x, y }) => {
+      store.gameStore.getCurrentScene?.addExternalPlayer(nickname, { x, y });
    });
 
    return null;

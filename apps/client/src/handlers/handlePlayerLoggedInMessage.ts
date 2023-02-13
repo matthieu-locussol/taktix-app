@@ -1,9 +1,9 @@
 import { PlayerLoggedInResponse } from 'shared';
-import { ServerPacket } from 'shared/src/packets/ServerPacket';
+import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { Store } from '../store/Store';
 
 export const handlePlayerLoggedInMessage = (
-   { name }: Extract<ServerPacket, { type: 'playerLoggedIn' }>,
+   { name }: ServerPacketType<'playerLoggedIn'>,
    store: Store,
 ): PlayerLoggedInResponse => {
    store.chatStore.addMessage({
