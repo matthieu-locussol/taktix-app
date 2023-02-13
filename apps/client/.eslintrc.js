@@ -5,6 +5,7 @@ module.exports = {
       tsconfigRootDir: __dirname,
    },
    rules: {
+      'class-methods-use-this': 'off',
       'import/no-cycle': 'off',
    },
 };

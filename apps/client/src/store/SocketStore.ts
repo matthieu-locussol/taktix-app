@@ -20,13 +20,14 @@ import { Store } from './Store';
 export class SocketStore {
    public socket: WebSocket;
 
-   public store: Store;
+   private _store: Store;
 
    constructor(store: Store, nickname: string) {
       makeAutoObservable(this);
 
       this.socket = new WebSocket(import.meta.env.VITE_SERVER_WEBSOCKET_URL);
-      this.store = store;
+      this._store = store;
+
       this.initialize(nickname);
    }
 
@@ -71,27 +72,27 @@ export class SocketStore {
    handleServerPacket(message: ServerPacket): ClientPacket | null {
       return match(message)
          .with({ type: 'playerLoggedIn' }, (params) =>
-            handlePlayerLoggedInMessage(params, this.store),
+            handlePlayerLoggedInMessage(params, this._store),
          )
          .with({ type: 'playerMessage' }, (params) =>
-            handlePlayerMessageMessage(params, this.store),
+            handlePlayerMessageMessage(params, this._store),
          )
          .with({ type: 'playerLoggedOut' }, (params) =>
-            handlePlayerLoggedOutMessage(params, this.store),
+            handlePlayerLoggedOutMessage(params, this._store),
          )
          .with({ type: 'playerJoinMap' }, (params) =>
-            handlePlayerJoinMapMessage(params, this.store),
+            handlePlayerJoinMapMessage(params, this._store),
          )
          .with({ type: 'playerLeaveMap' }, (params) =>
-            handlePlayerLeaveMapMessage(params, this.store),
+            handlePlayerLeaveMapMessage(params, this._store),
          )
-         .with({ type: 'playerMove' }, (params) => handlePlayerMoveMessage(params, this.store))
-         .with({ type: 'loginResponse' }, (params) => handleLoginResponse(params, this.store))
-         .with({ type: 'messageResponse' }, (params) => handleMessageResponse(params, this.store))
-         .with({ type: 'logoutResponse' }, (params) => handleLogoutResponse(params, this.store))
-         .with({ type: 'moveResponse' }, (params) => handleMoveResponse(params, this.store))
+         .with({ type: 'playerMove' }, (params) => handlePlayerMoveMessage(params, this._store))
+         .with({ type: 'loginResponse' }, (params) => handleLoginResponse(params, this._store))
+         .with({ type: 'messageResponse' }, (params) => handleMessageResponse(params, this._store))
+         .with({ type: 'logoutResponse' }, (params) => handleLogoutResponse(params, this._store))
+         .with({ type: 'moveResponse' }, (params) => handleMoveResponse(params, this._store))
          .with({ type: 'changeMapResponse' }, (params) =>
-            handleChangeMapResponse(params, this.store),
+            handleChangeMapResponse(params, this._store),
          )
          .exhaustive();
    }
