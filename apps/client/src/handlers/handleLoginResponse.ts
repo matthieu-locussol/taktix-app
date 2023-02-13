@@ -1,14 +1,13 @@
 import { LoginResponse } from 'shared';
 import { _assertTrue } from 'shared/src/utils/_assert';
-import { store } from '../store';
-import { changeMapPlayer } from '../utils/game';
+import { Store } from '../store/Store';
 
-export const handleLoginResponse = ({ response }: LoginResponse) => {
+export const handleLoginResponse = ({ response }: LoginResponse, store: Store) => {
    _assertTrue(response.status === 'connected');
 
    const { characterStore, loadingScreenStore } = store;
 
-   const scene = changeMapPlayer(response.map, {
+   const scene = store.gameStore.changeMapPlayer(response.map, {
       entrancePosition: { x: response.posX, y: response.posY },
    });
 

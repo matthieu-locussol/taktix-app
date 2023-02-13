@@ -1,7 +1,6 @@
 import { Direction, GridEngine, Position } from 'grid-engine';
 import { TELEPORTATION_SPOTS } from '../data/teleportationSpots';
 import { store } from '../store';
-import { teleportPlayer } from '../utils/game';
 
 export interface SceneData {
    entrancePosition?: Position;
@@ -73,7 +72,7 @@ export abstract class Scene extends Phaser.Scene {
       this.gridEngine.create(tilemap, { characters: [] });
       this.createPlayer(store.characterStore.name);
 
-      if (store.characterStore.map !== '' && store.characterStore.map !== this.scene.key) {
+      if (store.characterStore.map !== '') {
          this.sendChangeMapSocket(this.entrancePosition);
       }
 
@@ -129,8 +128,6 @@ export abstract class Scene extends Phaser.Scene {
          this.gridEngine.move('player', Direction.UP);
       } else if (cursors.down.isDown) {
          this.gridEngine.move('player', Direction.DOWN);
-      } else if (cursors.space.isDown) {
-         teleportPlayer({ x: 10, y: 10 });
       }
    }
 

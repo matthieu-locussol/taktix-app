@@ -1,11 +1,11 @@
 import { ChangeMapResponse } from 'shared';
-import { getCurrentScene } from '../utils/game';
+import { Store } from '../store/Store';
 
-export const handleChangeMapResponse = ({ players }: ChangeMapResponse) => {
-   getCurrentScene()?.deleteAllExternalPlayers();
+export const handleChangeMapResponse = ({ players }: ChangeMapResponse, store: Store) => {
+   store.gameStore.getCurrentScene?.deleteAllExternalPlayers();
 
    players.forEach(({ name, posX, posY }) => {
-      getCurrentScene().addExternalPlayer(name, { x: posX, y: posY });
+      store.gameStore.getCurrentScene?.addExternalPlayer(name, { x: posX, y: posY });
    });
 
    return null;

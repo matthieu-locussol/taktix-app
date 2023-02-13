@@ -14,14 +14,19 @@ import { handlePlayerLoggedInMessage } from '../handlers/handlePlayerLoggedInMes
 import { handlePlayerLoggedOutMessage } from '../handlers/handlePlayerLoggedOutMessage';
 import { handlePlayerMessageMessage } from '../handlers/handlePlayerMessageMessage';
 import { handlePlayerMoveMessage } from '../handlers/handlePlayerMoveMessage';
+import { log } from '../utils/log';
+import { Store } from './Store';
 
 export class SocketStore {
    public socket: WebSocket;
 
-   constructor(nickname: string) {
+   public store: Store;
+
+   constructor(store: Store, nickname: string) {
       makeAutoObservable(this);
 
       this.socket = new WebSocket(import.meta.env.VITE_SERVER_WEBSOCKET_URL);
+      this.store = store;
       this.initialize(nickname);
    }
 
@@ -36,11 +41,12 @@ export class SocketStore {
       this.socket.onmessage = (event) => {
          try {
             const packet = zServerPacket.parse(JSON.parse(event.data.toString()));
-            const response = SocketStore.handleServerPacket(packet);
+            log(`Received a ${packet.type} packet`);
+            const response = this.handleServerPacket(packet);
 
             if (response !== null) {
                _assertTrue(isClientPacket(response));
-               console.log(`Sending a ${response.type} packet...`);
+               log(`Sending a ${response.type} packet...`);
                this.socket.send(JSON.stringify(response));
             }
          } catch (e) {
@@ -55,25 +61,38 @@ export class SocketStore {
 
    send(packet: ClientPacket) {
       if (this.socket.readyState === this.socket.OPEN) {
+         log(`Sending a ${packet.type} packet...`);
          this.socket.send(JSON.stringify(packet));
       } else {
-         console.log('Socket was not ready to send messages!');
+         log('Socket was not ready to send messages!');
       }
    }
 
-   static handleServerPacket(message: ServerPacket): ClientPacket | null {
+   handleServerPacket(message: ServerPacket): ClientPacket | null {
       return match(message)
-         .with({ type: 'playerLoggedIn' }, handlePlayerLoggedInMessage)
-         .with({ type: 'playerMessage' }, handlePlayerMessageMessage)
-         .with({ type: 'playerLoggedOut' }, handlePlayerLoggedOutMessage)
-         .with({ type: 'playerJoinMap' }, handlePlayerJoinMapMessage)
-         .with({ type: 'playerLeaveMap' }, handlePlayerLeaveMapMessage)
-         .with({ type: 'playerMove' }, handlePlayerMoveMessage)
-         .with({ type: 'loginResponse' }, handleLoginResponse)
-         .with({ type: 'messageResponse' }, handleMessageResponse)
-         .with({ type: 'logoutResponse' }, handleLogoutResponse)
-         .with({ type: 'moveResponse' }, handleMoveResponse)
-         .with({ type: 'changeMapResponse' }, handleChangeMapResponse)
+         .with({ type: 'playerLoggedIn' }, (params) =>
+            handlePlayerLoggedInMessage(params, this.store),
+         )
+         .with({ type: 'playerMessage' }, (params) =>
+            handlePlayerMessageMessage(params, this.store),
+         )
+         .with({ type: 'playerLoggedOut' }, (params) =>
+            handlePlayerLoggedOutMessage(params, this.store),
+         )
+         .with({ type: 'playerJoinMap' }, (params) =>
+            handlePlayerJoinMapMessage(params, this.store),
+         )
+         .with({ type: 'playerLeaveMap' }, (params) =>
+            handlePlayerLeaveMapMessage(params, this.store),
+         )
+         .with({ type: 'playerMove' }, (params) => handlePlayerMoveMessage(params, this.store))
+         .with({ type: 'loginResponse' }, (params) => handleLoginResponse(params, this.store))
+         .with({ type: 'messageResponse' }, (params) => handleMessageResponse(params, this.store))
+         .with({ type: 'logoutResponse' }, (params) => handleLogoutResponse(params, this.store))
+         .with({ type: 'moveResponse' }, (params) => handleMoveResponse(params, this.store))
+         .with({ type: 'changeMapResponse' }, (params) =>
+            handleChangeMapResponse(params, this.store),
+         )
          .exhaustive();
    }
 }

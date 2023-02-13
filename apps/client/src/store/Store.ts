@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { _assert } from 'shared/src/utils/_assert';
 import { CharacterStore } from './CharacterStore';
 import { ChatStore } from './ChatStore';
+import { GameStore } from './GameStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
 import { SocketStore } from './SocketStore';
 
@@ -9,6 +10,8 @@ export class Store {
    public characterStore: CharacterStore;
 
    public chatStore: ChatStore;
+
+   public gameStore: GameStore;
 
    public loadingScreenStore: LoadingScreenStore;
 
@@ -19,6 +22,7 @@ export class Store {
 
       this.characterStore = new CharacterStore();
       this.chatStore = new ChatStore();
+      this.gameStore = new GameStore(this);
       this.loadingScreenStore = new LoadingScreenStore();
       this._socketStore = null;
    }
@@ -29,6 +33,6 @@ export class Store {
    }
 
    initialize(nickname: string) {
-      this._socketStore = new SocketStore(nickname);
+      this._socketStore = new SocketStore(this, nickname);
    }
 }
