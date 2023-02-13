@@ -1,5 +1,6 @@
 import { GridEngine } from 'grid-engine';
 import Phaser from 'phaser';
+import { store } from '../store';
 import { CloudsScene } from './scenes/CloudsScene';
 import { HouseScene } from './scenes/HouseScene';
 
@@ -22,6 +23,10 @@ export const config: Phaser.Types.Core.GameConfig = {
             mapping: 'gridEngine',
          },
       ],
+   },
+   callbacks: {
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      postBoot: () => store.gameStore.initialize(game),
    },
 };
 
