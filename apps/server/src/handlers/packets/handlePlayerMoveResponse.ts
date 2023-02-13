@@ -1,3 +1,3 @@
-import { PlayerMoveResponse } from 'shared';
+import { ClientPacketType } from 'shared';
 
-export const handlePlayerMoveResponse = (_: PlayerMoveResponse) => null;
+export const handlePlayerMoveResponse = (_: ClientPacketType<'playerMoveResponse'>) => null;

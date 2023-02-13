@@ -1,9 +1,9 @@
-import { LogoutMessage, ServerPacket } from 'shared';
+import { ClientPacketType, ServerPacket } from 'shared';
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { SOCKETS } from '../../globals';
 
 export const handleLogoutMessage = (
-   { name }: LogoutMessage,
+   { name }: ClientPacketType<'logout'>,
    socketId: string,
 ): ServerPacketType<'logoutResponse'> => {
    const client = SOCKETS.get(socketId);

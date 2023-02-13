@@ -1,3 +1,3 @@
-import { PlayerMessageResponse } from 'shared';
+import { ClientPacketType } from 'shared';
 
-export const handlePlayerMessageResponse = (_: PlayerMessageResponse) => null;
+export const handlePlayerMessageResponse = (_: ClientPacketType<'playerMessageResponse'>) => null;
