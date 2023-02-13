@@ -16,23 +16,20 @@ import { handlePlayerMessageMessage } from '../handlers/handlePlayerMessageMessa
 import { handlePlayerMoveMessage } from '../handlers/handlePlayerMoveMessage';
 
 export class SocketStore {
-   public nickname: string;
-
    public socket: WebSocket;
 
    constructor(nickname: string) {
       makeAutoObservable(this);
 
-      this.nickname = nickname;
       this.socket = new WebSocket(import.meta.env.VITE_SERVER_WEBSOCKET_URL);
-      this.initialize();
+      this.initialize(nickname);
    }
 
-   initialize() {
+   initialize(nickname: string) {
       this.socket.onopen = () => {
          this.send({
             type: 'login',
-            name: this.nickname,
+            name: nickname,
          });
       };
 
