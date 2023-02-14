@@ -3,7 +3,7 @@ import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { state } from '../../state';
 import { SocketId } from '../../utils/socketId';
 
-export const handleMoveMessage = (
+export const handleMove = (
    { posX, posY }: ClientPacketType<'move'>,
    socketId: SocketId,
 ): ServerPacketType<'moveResponse'> => {

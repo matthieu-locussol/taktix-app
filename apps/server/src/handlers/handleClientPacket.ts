@@ -1,11 +1,11 @@
 import { ClientPacket, ServerPacket } from 'shared';
 import { match } from 'ts-pattern';
 import { SocketId } from '../utils/socketId';
-import { handleChangeMapMessage } from './packets/handleChangeMapMessage';
-import { handleLoginMessage } from './packets/handleLoginMessage';
-import { handleLogoutMessage } from './packets/handleLogoutMessage';
-import { handleMessageMessage } from './packets/handleMessageMessage';
-import { handleMoveMessage } from './packets/handleMoveMessage';
+import { handleChangeMap } from './packets/handleChangeMap';
+import { handleLogin } from './packets/handleLogin';
+import { handleLogout } from './packets/handleLogout';
+import { handleMessage } from './packets/handleMessage';
+import { handleMove } from './packets/handleMove';
 
 export const handleClientPacket = async (
    data: ClientPacket,
@@ -14,10 +14,10 @@ export const handleClientPacket = async (
    console.log(`Received a "${data.type}" message...`);
 
    return match(data)
-      .with({ type: 'login' }, (params) => handleLoginMessage(params, socketId))
-      .with({ type: 'message' }, (params) => handleMessageMessage(params, socketId))
-      .with({ type: 'logout' }, (params) => handleLogoutMessage(params, socketId))
-      .with({ type: 'move' }, (params) => handleMoveMessage(params, socketId))
-      .with({ type: 'changeMap' }, (params) => handleChangeMapMessage(params, socketId))
+      .with({ type: 'login' }, (params) => handleLogin(params, socketId))
+      .with({ type: 'message' }, (params) => handleMessage(params, socketId))
+      .with({ type: 'logout' }, (params) => handleLogout(params, socketId))
+      .with({ type: 'move' }, (params) => handleMove(params, socketId))
+      .with({ type: 'changeMap' }, (params) => handleChangeMap(params, socketId))
       .exhaustive();
 };
