@@ -21,9 +21,23 @@ export class State {
       return client;
    }
 
-   getOtherClients(socketId: SocketId) {
+   getOtherPlayers(socketId: SocketId) {
       const entries = [...this.clients.entries()];
       const filteredEntries = entries.filter(([currentSocketId]) => socketId !== currentSocketId);
+
+      const clients = filteredEntries.map(([_, client]) => client);
+      return clients;
+   }
+
+   getOtherPlayersSameMap(socketId: SocketId) {
+      const { map } = this.getClient(socketId);
+
+      const entries = [...this.clients.entries()];
+      const filteredEntries = entries.filter(
+         ([currentSocketId, currentClient]) =>
+            socketId !== currentSocketId && currentClient.map === map,
+      );
+
       const clients = filteredEntries.map(([_, client]) => client);
       return clients;
    }

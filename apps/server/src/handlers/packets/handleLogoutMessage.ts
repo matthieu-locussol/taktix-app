@@ -7,7 +7,7 @@ export const handleLogoutMessage = (
    { name }: ClientPacketType<'logout'>,
    socketId: SocketId,
 ): ServerPacketType<'logoutResponse'> => {
-   state.getOtherClients(socketId).forEach(({ socket }) => {
+   state.getOtherPlayers(socketId).forEach(({ socket }) => {
       socket.send({
          type: 'playerLoggedOut',
          name,

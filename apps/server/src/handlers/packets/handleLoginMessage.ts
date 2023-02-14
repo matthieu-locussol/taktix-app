@@ -11,7 +11,7 @@ export const handleLoginMessage = async (
 ): Promise<ServerPacketType<'loginResponse'>> => {
    const client = state.getClient(socketId);
 
-   state.getOtherClients(socketId).forEach(({ socket }) => {
+   state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
       socket.send({
          type: 'playerLoggedIn',
          name,
@@ -19,13 +19,9 @@ export const handleLoginMessage = async (
    });
 
    const user = await prisma.testo.upsert({
-      where: {
-         name,
-      },
+      where: { name },
+      create: { name },
       update: {},
-      create: {
-         name,
-      },
    });
 
    client.name = name;
@@ -35,24 +31,20 @@ export const handleLoginMessage = async (
       y: user.pos_y,
    };
 
-   state.clients.forEach(({ socket, map }, currentSocketId) => {
-      if (currentSocketId !== socketId && map === user.map) {
-         socket.send({
-            type: 'playerJoinMap',
-            name,
-            x: user.pos_x,
-            y: user.pos_y,
-         });
-      }
+   state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
+      socket.send({
+         type: 'playerJoinMap',
+         name,
+         x: user.pos_x,
+         y: user.pos_y,
+      });
    });
 
-   const players: Player[] = [...state.clients.values()]
-      .filter((currentClient) => name !== currentClient.name && currentClient.map === client.map)
-      .map((currentClient) => ({
-         nickname: currentClient.name,
-         x: currentClient.position.x,
-         y: currentClient.position.y,
-      }));
+   const players: Player[] = state.getOtherPlayersSameMap(socketId).map((player) => ({
+      nickname: player.name,
+      x: player.position.x,
+      y: player.position.y,
+   }));
 
    return {
       type: 'loginResponse',
