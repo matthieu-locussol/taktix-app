@@ -1,7 +1,7 @@
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { Store } from '../store/Store';
 
-export const handlePlayerMoveMessage = (
+export const handlePlayerMove = (
    { name, x, y }: ServerPacketType<'playerMove'>,
    store: Store,
 ): null => {
