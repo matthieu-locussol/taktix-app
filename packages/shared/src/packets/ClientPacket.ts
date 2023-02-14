@@ -29,42 +29,12 @@ export const zChangeMapMessage = z.object({
    y: z.number(),
 });
 
-export const zPlayerLoggedInResponse = z.object({
-   type: z.literal('playerLoggedInResponse'),
-});
-
-export const zPlayerMessageResponse = z.object({
-   type: z.literal('playerMessageResponse'),
-});
-
-export const zPlayerLoggedOutResponse = z.object({
-   type: z.literal('playerLoggedOutResponse'),
-});
-
-export const zPlayerJoinMapResponse = z.object({
-   type: z.literal('playerJoinMapResponse'),
-});
-
-export const zPlayerLeaveMapResponse = z.object({
-   type: z.literal('playerLeaveMapResponse'),
-});
-
-export const zPlayerMoveResponse = z.object({
-   type: z.literal('playerMoveResponse'),
-});
-
 export const zClientPacket = z.discriminatedUnion('type', [
    zLoginMessage,
    zMessageMessage,
    zLogoutMessage,
    zMoveMessage,
    zChangeMapMessage,
-   zPlayerLoggedInResponse,
-   zPlayerMessageResponse,
-   zPlayerLoggedOutResponse,
-   zPlayerJoinMapResponse,
-   zPlayerLeaveMapResponse,
-   zPlayerMoveResponse,
 ]);
 
 export type ClientPacket = z.infer<typeof zClientPacket>;
