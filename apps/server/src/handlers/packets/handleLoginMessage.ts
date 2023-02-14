@@ -28,14 +28,14 @@ export const handleLoginMessage = async (
       },
    });
 
-   client.data.name = name;
-   client.data.map = user.map;
-   client.data.position = {
+   client.name = name;
+   client.map = user.map;
+   client.position = {
       x: user.pos_x,
       y: user.pos_y,
    };
 
-   state.clients.forEach(({ socket, data: { map } }, currentSocketId) => {
+   state.clients.forEach(({ socket, map }, currentSocketId) => {
       if (currentSocketId !== socketId && map === user.map) {
          socket.send({
             type: 'playerJoinMap',
@@ -47,11 +47,11 @@ export const handleLoginMessage = async (
    });
 
    const players: Player[] = [...state.clients.values()]
-      .filter(({ data }) => name !== data.name && data.map === client.data.map)
-      .map(({ data }) => ({
-         nickname: data.name,
-         x: data.position.x,
-         y: data.position.y,
+      .filter((currentClient) => name !== currentClient.name && currentClient.map === client.map)
+      .map((currentClient) => ({
+         nickname: currentClient.name,
+         x: currentClient.position.x,
+         y: currentClient.position.y,
       }));
 
    return {

@@ -18,28 +18,28 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
       console.log(`Disconnected: ${socketId}`);
       const client = state.getClient(socketId);
 
-      state.getOtherClients(socketId).forEach(({ socket, data: { map } }) => {
+      state.getOtherClients(socketId).forEach(({ socket, map }) => {
          socket.send({
             type: 'playerLoggedOut',
-            name: client.data.name,
+            name: client.name,
          });
 
-         if (client.data.map === map) {
+         if (client.map === map) {
             socket.send({
                type: 'playerLeaveMap',
-               name: client.data.name,
+               name: client.name,
             });
          }
       });
 
       await prisma.testo.update({
          data: {
-            map: client.data.map,
-            pos_x: client.data.position.x,
-            pos_y: client.data.position.y,
+            map: client.map,
+            pos_x: client.position.x,
+            pos_y: client.position.y,
          },
          where: {
-            name: client.data.name,
+            name: client.name,
          },
       });
 

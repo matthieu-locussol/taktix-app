@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { ServerPacket } from 'shared/src/packets/ServerPacket';
 import { WebSocket } from 'ws';
 
-export class SocketWrapper {
+export class ClientSocket {
    public socket: WebSocket;
 
    constructor(socket: WebSocket) {

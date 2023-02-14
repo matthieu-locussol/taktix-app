@@ -1,34 +1,40 @@
 import { makeAutoObservable } from 'mobx';
 import { WebSocket } from 'ws';
-import { SocketWrapper } from './SocketWrapper';
+import { ClientSocket } from './ClientSocket';
 
 export class Client {
-   socket: SocketWrapper;
+   socket: ClientSocket;
 
-   data: {
-      map: string;
-      name: string;
-      position: {
-         x: number;
-         y: number;
-      };
+   map: string;
+
+   name: string;
+
+   position: {
+      x: number;
+      y: number;
    };
 
    constructor(socket: WebSocket) {
       makeAutoObservable(this);
 
-      this.socket = new SocketWrapper(socket);
-      this.data = {
-         map: '',
-         name: '',
-         position: {
-            x: 0,
-            y: 0,
-         },
+      this.socket = new ClientSocket(socket);
+      this.map = '';
+      this.name = '';
+      this.position = {
+         x: 0,
+         y: 0,
       };
    }
 
+   setMap(map: string) {
+      this.map = map;
+   }
+
+   setName(name: string) {
+      this.name = name;
+   }
+
    setPosition(x: number, y: number) {
-      this.data.position = { x, y };
+      this.position = { x, y };
    }
 }
