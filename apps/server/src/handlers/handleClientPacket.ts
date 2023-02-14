@@ -7,7 +7,7 @@ import { handleLogout } from './packets/handleLogout';
 import { handleMessage } from './packets/handleMessage';
 import { handleMove } from './packets/handleMove';
 
-export const handleClientPacket = async (data: ClientPacket, socketId: SocketId): Promise<null> => {
+export const handleClientPacket = async (data: ClientPacket, socketId: SocketId): Promise<void> => {
    console.log(`Received a "${data.type}" message...`);
 
    return match(data)

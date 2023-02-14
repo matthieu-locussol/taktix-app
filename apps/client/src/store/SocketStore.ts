@@ -38,11 +38,11 @@ export class SocketStore {
          });
       };
 
-      this.socket.onmessage = (event) => {
+      this.socket.onmessage = async (event) => {
          try {
             const packet = zServerPacket.parse(JSON.parse(event.data.toString()));
             log(`Received a ${packet.type} packet`);
-            this.handleServerPacket(packet);
+            await this.handleServerPacket(packet);
          } catch (e) {
             console.error(e);
          }
@@ -62,7 +62,7 @@ export class SocketStore {
       }
    }
 
-   handleServerPacket(message: ServerPacket): null {
+   async handleServerPacket(message: ServerPacket): Promise<void> {
       return match(message)
          .with({ type: 'playerLoggedIn' }, (params) => handlePlayerLoggedIn(params, this._store))
          .with({ type: 'playerMessage' }, (params) => handlePlayerMessage(params, this._store))

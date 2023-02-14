@@ -10,6 +10,4 @@ export const handleChangeMapResponse = (
    players.forEach(({ nickname, x, y }) => {
       store.gameStore.getCurrentScene?.addExternalPlayer(nickname, { x, y });
    });
-
-   return null;
 };

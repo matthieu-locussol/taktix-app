@@ -53,6 +53,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
    connection.socket.onmessage = async (event) => {
       try {
          const packet = zClientPacket.parse(JSON.parse(event.data.toString()));
+         console.log(`Received a ${packet.type} packet`);
          await handleClientPacket(packet, socketId);
       } catch (e) {
          console.error(e);

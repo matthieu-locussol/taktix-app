@@ -7,5 +7,4 @@ export const handleLogoutResponse = (
    _store: Store,
 ) => {
    _assertTrue(response === 'success');
-   return null;
 };

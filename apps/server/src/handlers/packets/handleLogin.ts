@@ -4,10 +4,7 @@ import { state } from '../../state';
 import { prisma } from '../../utils/prisma';
 import { SocketId } from '../../utils/socketId';
 
-export const handleLogin = async (
-   { name }: ClientPacketType<'login'>,
-   socketId: SocketId,
-): Promise<null> => {
+export const handleLogin = async ({ name }: ClientPacketType<'login'>, socketId: SocketId) => {
    const client = state.getClient(socketId);
 
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
@@ -55,6 +52,4 @@ export const handleLogin = async (
          players,
       },
    });
-
-   return null;
 };
