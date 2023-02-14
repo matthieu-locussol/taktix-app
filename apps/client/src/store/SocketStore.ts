@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { ClientPacket } from 'shared/src/packets/ClientPacket';
 import { ServerPacket, zServerPacket } from 'shared/src/packets/ServerPacket';
+import { log } from 'shared/src/utils/log';
 import { match } from 'ts-pattern';
 import { handleChangeMapResponse } from '../handlers/handleChangeMapResponse';
 import { handleLoginResponse } from '../handlers/handleLoginResponse';
@@ -13,7 +14,6 @@ import { handlePlayerLoggedIn } from '../handlers/handlePlayerLoggedIn';
 import { handlePlayerLoggedOut } from '../handlers/handlePlayerLoggedOut';
 import { handlePlayerMessage } from '../handlers/handlePlayerMessage';
 import { handlePlayerMove } from '../handlers/handlePlayerMove';
-import { log } from '../utils/log';
 import { Store } from './Store';
 
 export class SocketStore {

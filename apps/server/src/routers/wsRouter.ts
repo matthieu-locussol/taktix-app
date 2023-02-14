@@ -1,6 +1,6 @@
 import { SocketStream } from '@fastify/websocket';
 import { FastifyRequest } from 'fastify';
-import { zClientPacket } from 'shared';
+import { log, zClientPacket } from 'shared';
 import { handleClientPacket } from '../handlers/handleClientPacket';
 import { state } from '../state';
 import { prisma } from '../utils/prisma';
@@ -10,12 +10,12 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
    const socketId = makeSocketId();
 
    if (req.socket.remoteAddress !== undefined) {
-      console.log(`New connection from ${socketId}!`);
+      log(`New connection from ${socketId}!`);
       state.initializeNewClient(socketId, connection.socket);
    }
 
    connection.socket.onclose = async () => {
-      console.log(`Disconnected: ${socketId}`);
+      log(`Disconnected: ${socketId}`);
       const client = state.getClient(socketId);
 
       state.getOtherPlayers(socketId).forEach(({ socket }) => {
@@ -53,7 +53,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
    connection.socket.onmessage = async (event) => {
       try {
          const packet = zClientPacket.parse(JSON.parse(event.data.toString()));
-         console.log(`Received a ${packet.type} packet`);
+         log(`Received a ${packet.type} packet`);
          await handleClientPacket(packet, socketId);
       } catch (e) {
          console.error(e);
