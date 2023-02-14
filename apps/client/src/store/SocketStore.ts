@@ -7,12 +7,12 @@ import { handleLoginResponse } from '../handlers/handleLoginResponse';
 import { handleLogoutResponse } from '../handlers/handleLogoutResponse';
 import { handleMessageResponse } from '../handlers/handleMessageResponse';
 import { handleMoveResponse } from '../handlers/handleMoveResponse';
-import { handlePlayerJoinMapMessage } from '../handlers/handlePlayerJoinMapMessage';
-import { handlePlayerLeaveMapMessage } from '../handlers/handlePlayerLeaveMapMessage';
-import { handlePlayerLoggedInMessage } from '../handlers/handlePlayerLoggedInMessage';
-import { handlePlayerLoggedOutMessage } from '../handlers/handlePlayerLoggedOutMessage';
-import { handlePlayerMessageMessage } from '../handlers/handlePlayerMessageMessage';
-import { handlePlayerMoveMessage } from '../handlers/handlePlayerMoveMessage';
+import { handlePlayerJoinMap } from '../handlers/handlePlayerJoinMap';
+import { handlePlayerLeaveMap } from '../handlers/handlePlayerLeaveMap';
+import { handlePlayerLoggedIn } from '../handlers/handlePlayerLoggedIn';
+import { handlePlayerLoggedOut } from '../handlers/handlePlayerLoggedOut';
+import { handlePlayerMessage } from '../handlers/handlePlayerMessage';
+import { handlePlayerMove } from '../handlers/handlePlayerMove';
 import { log } from '../utils/log';
 import { Store } from './Store';
 
@@ -64,22 +64,12 @@ export class SocketStore {
 
    handleServerPacket(message: ServerPacket): null {
       return match(message)
-         .with({ type: 'playerLoggedIn' }, (params) =>
-            handlePlayerLoggedInMessage(params, this._store),
-         )
-         .with({ type: 'playerMessage' }, (params) =>
-            handlePlayerMessageMessage(params, this._store),
-         )
-         .with({ type: 'playerLoggedOut' }, (params) =>
-            handlePlayerLoggedOutMessage(params, this._store),
-         )
-         .with({ type: 'playerJoinMap' }, (params) =>
-            handlePlayerJoinMapMessage(params, this._store),
-         )
-         .with({ type: 'playerLeaveMap' }, (params) =>
-            handlePlayerLeaveMapMessage(params, this._store),
-         )
-         .with({ type: 'playerMove' }, (params) => handlePlayerMoveMessage(params, this._store))
+         .with({ type: 'playerLoggedIn' }, (params) => handlePlayerLoggedIn(params, this._store))
+         .with({ type: 'playerMessage' }, (params) => handlePlayerMessage(params, this._store))
+         .with({ type: 'playerLoggedOut' }, (params) => handlePlayerLoggedOut(params, this._store))
+         .with({ type: 'playerJoinMap' }, (params) => handlePlayerJoinMap(params, this._store))
+         .with({ type: 'playerLeaveMap' }, (params) => handlePlayerLeaveMap(params, this._store))
+         .with({ type: 'playerMove' }, (params) => handlePlayerMove(params, this._store))
          .with({ type: 'loginResponse' }, (params) => handleLoginResponse(params, this._store))
          .with({ type: 'messageResponse' }, (params) => handleMessageResponse(params, this._store))
          .with({ type: 'logoutResponse' }, (params) => handleLogoutResponse(params, this._store))
