@@ -18,7 +18,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
       console.log(`Disconnected: ${socketId}`);
       const client = state.getClient(socketId);
 
-      state.getOtherClients(socketId).forEach(({ socket, map }) => {
+      state.getOtherPlayers(socketId).forEach(({ socket, map }) => {
          socket.send({
             type: 'playerLoggedOut',
             name: client.name,

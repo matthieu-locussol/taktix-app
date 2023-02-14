@@ -7,7 +7,7 @@ export const handleMessageMessage = (
    { content, name }: ClientPacketType<'message'>,
    socketId: SocketId,
 ): ServerPacketType<'messageResponse'> => {
-   state.getOtherClients(socketId).forEach(({ socket }) => {
+   state.getOtherPlayers(socketId).forEach(({ socket }) => {
       socket.send({
          type: 'playerMessage',
          name,
