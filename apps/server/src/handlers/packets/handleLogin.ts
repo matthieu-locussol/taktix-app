@@ -5,7 +5,7 @@ import { state } from '../../state';
 import { prisma } from '../../utils/prisma';
 import { SocketId } from '../../utils/socketId';
 
-export const handleLoginMessage = async (
+export const handleLogin = async (
    { name }: ClientPacketType<'login'>,
    socketId: SocketId,
 ): Promise<ServerPacketType<'loginResponse'>> => {

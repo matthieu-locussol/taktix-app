@@ -4,7 +4,7 @@ import { Player } from 'shared/src/types';
 import { state } from '../../state';
 import { SocketId } from '../../utils/socketId';
 
-export const handleChangeMapMessage = (
+export const handleChangeMap = (
    { map, x, y }: ClientPacketType<'changeMap'>,
    socketId: SocketId,
 ): ServerPacketType<'changeMapResponse'> => {

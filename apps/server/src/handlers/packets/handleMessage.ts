@@ -3,19 +3,19 @@ import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { state } from '../../state';
 import { SocketId } from '../../utils/socketId';
 
-export const handleLogoutMessage = (
-   { name }: ClientPacketType<'logout'>,
+export const handleMessage = (
+   { content, name }: ClientPacketType<'message'>,
    socketId: SocketId,
-): ServerPacketType<'logoutResponse'> => {
+): ServerPacketType<'messageResponse'> => {
    state.getOtherPlayers(socketId).forEach(({ socket }) => {
       socket.send({
-         type: 'playerLoggedOut',
+         type: 'playerMessage',
          name,
+         content,
       });
    });
 
    return {
-      type: 'logoutResponse',
-      response: 'success',
+      type: 'messageResponse',
    };
 };
