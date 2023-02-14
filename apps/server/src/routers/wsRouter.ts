@@ -1,6 +1,6 @@
 import { SocketStream } from '@fastify/websocket';
 import { FastifyRequest } from 'fastify';
-import { _assertTrue, isServerPacket, zClientPacket } from 'shared';
+import { zClientPacket } from 'shared';
 import { handleClientPacket } from '../handlers/handleClientPacket';
 import { state } from '../state';
 import { prisma } from '../utils/prisma';
@@ -18,18 +18,18 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
       console.log(`Disconnected: ${socketId}`);
       const client = state.getClient(socketId);
 
-      state.getOtherPlayers(socketId).forEach(({ socket, map }) => {
+      state.getOtherPlayers(socketId).forEach(({ socket }) => {
          socket.send({
             type: 'playerLoggedOut',
             name: client.name,
          });
+      });
 
-         if (client.map === map) {
-            socket.send({
-               type: 'playerLeaveMap',
-               name: client.name,
-            });
-         }
+      state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
+         socket.send({
+            type: 'playerLeaveMap',
+            name: client.name,
+         });
       });
 
       await prisma.testo.update({
@@ -53,13 +53,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
    connection.socket.onmessage = async (event) => {
       try {
          const packet = zClientPacket.parse(JSON.parse(event.data.toString()));
-         const response = await handleClientPacket(packet, socketId);
-
-         if (response !== null) {
-            _assertTrue(isServerPacket(response));
-            console.log(`Sending a ${response.type} packet...`);
-            connection.socket.send(JSON.stringify(response));
-         }
+         await handleClientPacket(packet, socketId);
       } catch (e) {
          console.error(e);
       }
