@@ -11,33 +11,32 @@ export const handleChangeMapMessage = (
    const client = state.getClient(socketId);
    const players: Player[] = [];
 
-   state.clients.forEach(({ socket, data }) => {
-      if (data.name !== client.data.name && data.map === client.data.map) {
-         socket.send({
+   state.clients.forEach((currentClient) => {
+      if (currentClient.name !== client.name && currentClient.map === client.map) {
+         currentClient.socket.send({
             type: 'playerLeaveMap',
-            name: client.data.name,
+            name: client.name,
          });
       }
    });
 
-   client.data.map = map;
-   client.data.position.x = x;
-   client.data.position.y = y;
+   client.setMap(map);
+   client.setPosition(x, y);
 
-   state.clients.forEach(({ socket, data }) => {
-      if (data.name !== client.data.name && data.map === client.data.map) {
-         socket.send({
+   state.clients.forEach((currentClient) => {
+      if (currentClient.name !== client.name && currentClient.map === client.map) {
+         currentClient.socket.send({
             type: 'playerJoinMap',
-            name: client.data.name,
+            name: client.name,
             x,
             y,
          });
       }
    });
 
-   state.clients.forEach(({ data }, currentSocketId) => {
-      if (socketId !== currentSocketId && data.map === client.data.map) {
-         players.push({ nickname: data.name, ...data.position });
+   state.clients.forEach((currentClient, currentSocketId) => {
+      if (socketId !== currentSocketId && currentClient.map === client.map) {
+         players.push({ nickname: currentClient.name, ...currentClient.position });
       }
    });
 

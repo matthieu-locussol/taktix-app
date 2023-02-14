@@ -10,11 +10,11 @@ export const handleMoveMessage = (
    const client = state.getClient(socketId);
    client.setPosition(posX, posY);
 
-   state.clients.forEach(({ socket, data: { map, name } }) => {
-      if (name !== client.data.name && map === client.data.map) {
+   state.clients.forEach(({ socket, map, name }) => {
+      if (name !== client.name && map === client.map) {
          socket.send({
             type: 'playerMove',
-            name: client.data.name,
+            name: client.name,
             x: posX,
             y: posY,
          });
