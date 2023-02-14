@@ -5,7 +5,7 @@ import { SocketId } from '../../utils/socketId';
 export const handleMessage = (
    { content, name }: ClientPacketType<'message'>,
    socketId: SocketId,
-): null => {
+) => {
    const client = state.getClient(socketId);
 
    state.getOtherPlayers(socketId).forEach(({ socket }) => {
@@ -19,6 +19,4 @@ export const handleMessage = (
    client.socket.send({
       type: 'messageResponse',
    });
-
-   return null;
 };

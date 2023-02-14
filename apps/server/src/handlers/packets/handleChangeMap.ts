@@ -6,7 +6,7 @@ import { SocketId } from '../../utils/socketId';
 export const handleChangeMap = (
    { map, x, y }: ClientPacketType<'changeMap'>,
    socketId: SocketId,
-): null => {
+) => {
    const client = state.getClient(socketId);
    const players: Player[] = [];
 
@@ -37,6 +37,4 @@ export const handleChangeMap = (
       type: 'changeMapResponse',
       players,
    });
-
-   return null;
 };

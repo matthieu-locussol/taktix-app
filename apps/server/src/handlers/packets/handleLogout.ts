@@ -2,7 +2,7 @@ import { ClientPacketType } from 'shared';
 import { state } from '../../state';
 import { SocketId } from '../../utils/socketId';
 
-export const handleLogout = ({ name }: ClientPacketType<'logout'>, socketId: SocketId): null => {
+export const handleLogout = ({ name }: ClientPacketType<'logout'>, socketId: SocketId) => {
    const client = state.getClient(socketId);
 
    state.getOtherPlayers(socketId).forEach(({ socket }) => {
@@ -16,6 +16,4 @@ export const handleLogout = ({ name }: ClientPacketType<'logout'>, socketId: Soc
       type: 'logoutResponse',
       response: 'success',
    });
-
-   return null;
 };
