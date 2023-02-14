@@ -1,12 +1,8 @@
 import { ClientPacketType } from 'shared';
-import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { state } from '../../state';
 import { SocketId } from '../../utils/socketId';
 
-export const handleMove = (
-   { posX, posY }: ClientPacketType<'move'>,
-   socketId: SocketId,
-): ServerPacketType<'moveResponse'> => {
+export const handleMove = ({ posX, posY }: ClientPacketType<'move'>, socketId: SocketId): null => {
    const client = state.getClient(socketId);
    client.setPosition(posX, posY);
 
@@ -19,7 +15,9 @@ export const handleMove = (
       });
    });
 
-   return {
+   client.socket.send({
       type: 'moveResponse',
-   };
+   });
+
+   return null;
 };

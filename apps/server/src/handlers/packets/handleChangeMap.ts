@@ -1,5 +1,4 @@
 import { ClientPacketType } from 'shared';
-import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { Player } from 'shared/src/types';
 import { state } from '../../state';
 import { SocketId } from '../../utils/socketId';
@@ -7,7 +6,7 @@ import { SocketId } from '../../utils/socketId';
 export const handleChangeMap = (
    { map, x, y }: ClientPacketType<'changeMap'>,
    socketId: SocketId,
-): ServerPacketType<'changeMapResponse'> => {
+): null => {
    const client = state.getClient(socketId);
    const players: Player[] = [];
 
@@ -34,8 +33,10 @@ export const handleChangeMap = (
       players.push({ nickname: name, ...position });
    });
 
-   return {
+   client.socket.send({
       type: 'changeMapResponse',
       players,
-   };
+   });
+
+   return null;
 };

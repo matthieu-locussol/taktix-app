@@ -1,5 +1,4 @@
 import { ClientPacketType } from 'shared';
-import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { Player } from 'shared/src/types';
 import { state } from '../../state';
 import { prisma } from '../../utils/prisma';
@@ -8,7 +7,7 @@ import { SocketId } from '../../utils/socketId';
 export const handleLogin = async (
    { name }: ClientPacketType<'login'>,
    socketId: SocketId,
-): Promise<ServerPacketType<'loginResponse'>> => {
+): Promise<null> => {
    const client = state.getClient(socketId);
 
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
@@ -46,7 +45,7 @@ export const handleLogin = async (
       y: player.position.y,
    }));
 
-   return {
+   client.socket.send({
       type: 'loginResponse',
       response: {
          status: 'connected',
@@ -55,5 +54,7 @@ export const handleLogin = async (
          posY: user.pos_y,
          players,
       },
-   };
+   });
+
+   return null;
 };
