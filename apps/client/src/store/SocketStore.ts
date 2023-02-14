@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx';
-import { ClientPacket, isClientPacket } from 'shared/src/packets/ClientPacket';
+import { ClientPacket } from 'shared/src/packets/ClientPacket';
 import { ServerPacket, zServerPacket } from 'shared/src/packets/ServerPacket';
-import { _assertTrue } from 'shared/src/utils/_assert';
 import { match } from 'ts-pattern';
 import { handleChangeMapResponse } from '../handlers/handleChangeMapResponse';
 import { handleLoginResponse } from '../handlers/handleLoginResponse';
@@ -43,13 +42,7 @@ export class SocketStore {
          try {
             const packet = zServerPacket.parse(JSON.parse(event.data.toString()));
             log(`Received a ${packet.type} packet`);
-            const response = this.handleServerPacket(packet);
-
-            if (response !== null) {
-               _assertTrue(isClientPacket(response));
-               log(`Sending a ${response.type} packet...`);
-               this.socket.send(JSON.stringify(response));
-            }
+            this.handleServerPacket(packet);
          } catch (e) {
             console.error(e);
          }
@@ -69,7 +62,7 @@ export class SocketStore {
       }
    }
 
-   handleServerPacket(message: ServerPacket): ClientPacket | null {
+   handleServerPacket(message: ServerPacket): null {
       return match(message)
          .with({ type: 'playerLoggedIn' }, (params) =>
             handlePlayerLoggedInMessage(params, this._store),
