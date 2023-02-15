@@ -5,9 +5,6 @@ import { log } from 'shared/src/utils/log';
 import { match } from 'ts-pattern';
 import { handleChangeMapResponse } from '../handlers/handleChangeMapResponse';
 import { handleLoginResponse } from '../handlers/handleLoginResponse';
-import { handleLogoutResponse } from '../handlers/handleLogoutResponse';
-import { handleMessageResponse } from '../handlers/handleMessageResponse';
-import { handleMoveResponse } from '../handlers/handleMoveResponse';
 import { handlePlayerJoinMap } from '../handlers/handlePlayerJoinMap';
 import { handlePlayerLeaveMap } from '../handlers/handlePlayerLeaveMap';
 import { handlePlayerLoggedIn } from '../handlers/handlePlayerLoggedIn';
@@ -71,9 +68,6 @@ export class SocketStore {
          .with({ type: 'playerLeaveMap' }, (params) => handlePlayerLeaveMap(params, this._store))
          .with({ type: 'playerMove' }, (params) => handlePlayerMove(params, this._store))
          .with({ type: 'loginResponse' }, (params) => handleLoginResponse(params, this._store))
-         .with({ type: 'messageResponse' }, (params) => handleMessageResponse(params, this._store))
-         .with({ type: 'logoutResponse' }, (params) => handleLogoutResponse(params, this._store))
-         .with({ type: 'moveResponse' }, (params) => handleMoveResponse(params, this._store))
          .with({ type: 'changeMapResponse' }, (params) =>
             handleChangeMapResponse(params, this._store),
          )

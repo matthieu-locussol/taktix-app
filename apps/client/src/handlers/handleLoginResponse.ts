@@ -9,7 +9,6 @@ export const handleLoginResponse = (
    _assertTrue(response.status === 'connected');
 
    const { characterStore, loadingScreenStore } = store;
-
    const scene = store.gameStore.changeMapPlayer(response.map, {
       entrancePosition: { x: response.posX, y: response.posY },
    });
@@ -18,6 +17,7 @@ export const handleLoginResponse = (
 
    characterStore.setMap(response.map);
    characterStore.setPosition({ x: response.posX, y: response.posY });
-   loadingScreenStore.setSceneVisible(true);
    characterStore.setPlayers(response.players);
+
+   loadingScreenStore.setSceneVisible(true);
 };

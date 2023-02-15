@@ -52,19 +52,6 @@ export const zLoginResponse = z.object({
    ]),
 });
 
-export const zMessageResponse = z.object({
-   type: z.literal('messageResponse'),
-});
-
-export const zLogoutResponse = z.object({
-   type: z.literal('logoutResponse'),
-   response: z.union([z.literal('success'), z.literal('unknown')]),
-});
-
-export const zMoveResponse = z.object({
-   type: z.literal('moveResponse'),
-});
-
 export const zChangeMapResponse = z.object({
    type: z.literal('changeMapResponse'),
    players: z.array(zPlayer),
@@ -78,9 +65,6 @@ export const zServerPacket = z.discriminatedUnion('type', [
    zPlayerLeaveMapMessage,
    zPlayerMoveMessage,
    zLoginResponse,
-   zMessageResponse,
-   zLogoutResponse,
-   zMoveResponse,
    zChangeMapResponse,
 ]);
 
