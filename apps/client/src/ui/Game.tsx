@@ -17,6 +17,7 @@ import { UpdateManifest, checkUpdate, installUpdate } from '@tauri-apps/api/upda
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { version } from '../../package.json';
+import { INTERNAL_PLAYER_NAME } from '../game/Scene';
 import { useStore } from '../store';
 import { isTauri } from '../utils/tauri';
 import { Chatbox } from './Chatbox';
@@ -80,8 +81,11 @@ export const Game = observer(() => {
             component="form"
             onSubmit={(e) => {
                e.preventDefault();
-               characterStore.setName(input);
-               store.initialize(input);
+
+               if (input !== INTERNAL_PLAYER_NAME) {
+                  characterStore.setName(input);
+                  store.initialize(input);
+               }
             }}
             sx={{
                display: 'flex',
