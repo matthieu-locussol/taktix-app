@@ -1,5 +1,6 @@
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { _assertTrue } from 'shared/src/utils/_assert';
+import { INTERNAL_PLAYER_NAME } from '../game/Scene';
 import { Store } from '../store/Store';
 
 export const handleLoginResponse = (
@@ -13,7 +14,11 @@ export const handleLoginResponse = (
       entrancePosition: { x: response.posX, y: response.posY },
    });
 
-   scene.gridEngine.setPosition('player', { x: response.posX, y: response.posY }, 'player');
+   scene.gridEngine.setPosition(
+      INTERNAL_PLAYER_NAME,
+      { x: response.posX, y: response.posY },
+      'player',
+   );
 
    characterStore.setMap(response.map);
    characterStore.setPosition({ x: response.posX, y: response.posY });

@@ -1,7 +1,7 @@
 import { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
-import { Scene, SceneData } from '../game/Scene';
+import { INTERNAL_PLAYER_NAME, Scene, SceneData } from '../game/Scene';
 import { Store } from './Store';
 
 export class GameStore {
@@ -34,7 +34,7 @@ export class GameStore {
 
    teleportPlayer(position: Position) {
       const scene = this.getCurrentScene;
-      scene.gridEngine.setPosition('player', position, 'player');
+      scene.gridEngine.setPosition(INTERNAL_PLAYER_NAME, position, 'player');
 
       const { characterStore } = this._store;
       characterStore.setPosition(position);

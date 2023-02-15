@@ -11,6 +11,8 @@ interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
 }
 
+export const INTERNAL_PLAYER_NAME = 'cd8bbb6c-a16d-49ae-b671-868bfc8acace';
+
 export abstract class Scene extends Phaser.Scene {
    public gridEngine: GridEngine;
 
@@ -77,7 +79,7 @@ export abstract class Scene extends Phaser.Scene {
       }
 
       this.gridEngine.positionChangeFinished().subscribe((entity) => {
-         if (this.sys.isVisible() && entity.charId === 'player') {
+         if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
             this.sendMoveSocket();
          }
       });
@@ -97,7 +99,7 @@ export abstract class Scene extends Phaser.Scene {
       const playerContainer = this.add.container(0, 0, [playerName, playerSprite]);
 
       this.gridEngine.addCharacter({
-         id: 'player',
+         id: INTERNAL_PLAYER_NAME,
          sprite: playerSprite,
          walkingAnimationMapping: 6,
          startPosition: this.entrancePosition,
@@ -107,7 +109,7 @@ export abstract class Scene extends Phaser.Scene {
 
       this.cameras.main.startFollow(playerContainer, true);
       this.cameras.main.setFollowOffset(-playerContainer.width, -playerContainer.height);
-      this.gridEngine.turnTowards('player', this.entranceDirection);
+      this.gridEngine.turnTowards(INTERNAL_PLAYER_NAME, this.entranceDirection);
    }
 
    public abstract createTilemap(): Phaser.Tilemaps.Tilemap;
@@ -121,18 +123,18 @@ export abstract class Scene extends Phaser.Scene {
       const cursors = this.input.keyboard.createCursorKeys();
 
       if (cursors.left.isDown) {
-         this.gridEngine.move('player', Direction.LEFT);
+         this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.LEFT);
       } else if (cursors.right.isDown) {
-         this.gridEngine.move('player', Direction.RIGHT);
+         this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.RIGHT);
       } else if (cursors.up.isDown) {
-         this.gridEngine.move('player', Direction.UP);
+         this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.UP);
       } else if (cursors.down.isDown) {
-         this.gridEngine.move('player', Direction.DOWN);
+         this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.DOWN);
       }
    }
 
    public sendMoveSocket(): void {
-      const position = this.gridEngine.getPosition('player');
+      const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
 
       store.socketStore.send({
          type: 'move',
@@ -151,7 +153,7 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public updateTeleportationSpots(): void {
-      const playerPosition = this.gridEngine.getPosition('player');
+      const playerPosition = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
       const teleportationSpots = TELEPORTATION_SPOTS[this.scene.key];
 
       for (const { x, y, destinationMapName, destinationMapData } of teleportationSpots) {
@@ -206,7 +208,9 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public deleteAllExternalPlayers(): void {
-      const players = this.gridEngine.getAllCharacters().filter((cha) => cha !== 'player');
+      const players = this.gridEngine
+         .getAllCharacters()
+         .filter((name) => name !== INTERNAL_PLAYER_NAME);
       players.forEach((p) => this.deleteExternalPlayer(p));
    }
 }
