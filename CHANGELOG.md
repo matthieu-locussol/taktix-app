@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.15.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.14.0...v1.15.0) (2023-02-15)
+
+### Features
+
+-  added a global State to server
+   ([c7e1dd9](https://github.com/matthieu-locussol/taktix-app/commit/c7e1dd9cc02ae5c3d6b5ea7e030e0cb3a680948a))
+-  added getOtherPlayers to State
+   ([b020de1](https://github.com/matthieu-locussol/taktix-app/commit/b020de12e80f98859c2fdce2a2ada48a0930881d))
+
 ## [1.14.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.13.0...v1.14.0) (2023-02-12)
 
 ### Features
