@@ -14,8 +14,4 @@ export const handleMove = ({ posX, posY }: ClientPacketType<'move'>, socketId: S
          y: posY,
       });
    });
-
-   client.socket.send({
-      type: 'moveResponse',
-   });
 };

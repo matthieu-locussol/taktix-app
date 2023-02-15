@@ -5,9 +5,12 @@ export const handleChangeMapResponse = (
    { players }: ServerPacketType<'changeMapResponse'>,
    store: Store,
 ) => {
-   store.gameStore.getCurrentScene?.deleteAllExternalPlayers();
+   const currentScene = store.gameStore.getCurrentScene;
+   if (currentScene) {
+      currentScene.deleteAllExternalPlayers();
 
-   players.forEach(({ nickname, x, y }) => {
-      store.gameStore.getCurrentScene?.addExternalPlayer(nickname, { x, y });
-   });
+      players.forEach(({ nickname, x, y }) => {
+         currentScene.addExternalPlayer(nickname, { x, y });
+      });
+   }
 };
