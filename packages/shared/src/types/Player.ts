@@ -1,4 +1,3 @@
-import { Direction, Position } from 'grid-engine';
 import { z } from 'zod';
 
 export const zPlayer = z.object({
@@ -9,7 +8,4 @@ export const zPlayer = z.object({
 
 export type Player = z.infer<typeof zPlayer>;
 
-export interface SceneData {
-   entrancePosition?: Position;
-   entranceDirection?: Direction;
-}
+export const INTERNAL_PLAYER_NAME = 'cd8bbb6c-a16d-49ae-b671-868bfc8acace';

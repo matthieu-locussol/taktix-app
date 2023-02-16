@@ -1,13 +1,12 @@
 import { Direction, GridEngine, Position } from 'grid-engine';
 import { TELEPORTATION_SPOTS } from 'shared/src/data/teleportationSpots';
-import { SceneData } from 'shared/src/types';
+import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
+import { SceneData } from 'shared/src/types/SceneData';
 import { store } from '../store';
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
 }
-
-export const INTERNAL_PLAYER_NAME = 'cd8bbb6c-a16d-49ae-b671-868bfc8acace';
 
 export abstract class Scene extends Phaser.Scene {
    public gridEngine: GridEngine;

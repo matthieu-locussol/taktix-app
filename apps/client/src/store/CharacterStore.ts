@@ -1,6 +1,6 @@
 import type { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
-import { Player } from 'shared/src/types';
+import { Player } from 'shared/src/types/Player';
 
 export class CharacterStore {
    public map: string = '';

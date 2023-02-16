@@ -1,5 +1,5 @@
 import { ClientPacketType } from 'shared';
-import { Player } from 'shared/src/types';
+import { Player } from 'shared/src/types/Player';
 import { state } from '../../state';
 import { SocketId } from '../../utils/socketId';
 
