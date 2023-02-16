@@ -1,15 +1,19 @@
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { _assertTrue } from 'shared/src/utils/_assert';
 import { Store } from '../store/Store';
 
 export const handleLoginResponse = (
    { response }: ServerPacketType<'loginResponse'>,
    store: Store,
 ) => {
-   _assertTrue(response.status === 'connected');
+   const { characterStore, loadingScreenStore, loginStore } = store;
 
-   const { characterStore, loadingScreenStore } = store;
+   if (response.status === 'already_exist') {
+      loginStore.setErrorMessage(`User "${loginStore.input}" already exist!`);
+      loginStore.setInput('');
+      return;
+   }
+
    const scene = store.gameStore.changeMapPlayer(response.map, {
       entrancePosition: { x: response.posX, y: response.posY },
    });
