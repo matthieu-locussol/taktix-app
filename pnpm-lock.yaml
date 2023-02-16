@@ -191,10 +191,12 @@ importers:
       specifiers:
          config-eslint: workspace:^1.0.0
          config-typescript: workspace:^1.0.0
+         grid-engine: ^2.25.1
          typescript: ^4.9.5
          vitest: ^0.28.4
          zod: ^3.20.6
       dependencies:
+         grid-engine: 2.25.1
          vitest: 0.28.4
          zod: 3.20.6
       devDependencies:
@@ -4891,6 +4893,17 @@ packages:
             integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==,
          }
       dev: true
+
+   /grid-engine/2.25.1:
+      resolution:
+         {
+            integrity: sha512-60qrzxAy42tzI+yDWLAzmFFqaRG0tXkRDm6Q2Jig0DQlrMZmaUYP6EMJgMr5+AdkRIuCgonY8GiibuRxJ2Mz+w==,
+         }
+      peerDependencies:
+         phaser: ~3.55.2
+      dependencies:
+         rxjs: 7.8.0
+      dev: false
 
    /grid-engine/2.25.1_phaser@3.55.2:
       resolution:
