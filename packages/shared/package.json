@@ -12,13 +12,12 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "devDependencies": {
-      "config-eslint": "workspace:^1.0.0",
-      "config-typescript": "workspace:^1.0.0",
+      "config-eslint": "workspace:latest",
+      "config-typescript": "workspace:latest",
       "typescript": "^4.9.5"
    },
    "dependencies": {
-      "grid-engine": "^2.25.1",
-      "vitest": "^0.28.4",
+      "vitest": "^0.28.5",
       "zod": "^3.20.6"
    }
 }

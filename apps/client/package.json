@@ -16,7 +16,7 @@
    "dependencies": {
       "@emotion/react": "^11.10.5",
       "@emotion/styled": "^11.10.5",
-      "@mui/material": "^5.11.8",
+      "@mui/material": "^5.11.9",
       "@tauri-apps/api": "^1.2.0",
       "@vitejs/plugin-react": "^3.1.0",
       "grid-engine": "^2.25.1",
@@ -25,18 +25,18 @@
       "phaser": "^3.55.2",
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
-      "shared": "workspace:^1.0.0",
+      "shared": "workspace:latest",
       "ts-pattern": "^4.1.4",
       "vite": "^4.1.1",
-      "vitest": "^0.28.4"
+      "vitest": "^0.28.5"
    },
    "devDependencies": {
       "@babel/core": "^7.20.12",
       "@tauri-apps/cli": "^1.2.3",
       "@types/react": "^18.0.28",
-      "@types/react-dom": "^18.0.10",
-      "config-eslint": "workspace:^1.0.0",
-      "config-typescript": "workspace:^1.0.0",
+      "@types/react-dom": "^18.0.11",
+      "config-eslint": "workspace:latest",
+      "config-typescript": "workspace:latest",
       "eslint": "^8.34.0",
       "happy-dom": "^8.4.2",
       "typescript": "^4.9.5"

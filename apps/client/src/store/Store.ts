@@ -4,6 +4,7 @@ import { CharacterStore } from './CharacterStore';
 import { ChatStore } from './ChatStore';
 import { GameStore } from './GameStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
+import { LoginStore } from './LoginStore';
 import { SocketStore } from './SocketStore';
 import { UpdaterStore } from './UpdaterStore';
 
@@ -16,6 +17,8 @@ export class Store {
 
    public loadingScreenStore: LoadingScreenStore;
 
+   public loginStore: LoginStore;
+
    public updaterStore: UpdaterStore;
 
    private _socketStore: SocketStore | null;
@@ -27,6 +30,7 @@ export class Store {
       this.chatStore = new ChatStore();
       this.gameStore = new GameStore(this);
       this.loadingScreenStore = new LoadingScreenStore();
+      this.loginStore = new LoginStore();
       this.updaterStore = new UpdaterStore();
 
       this._socketStore = null;

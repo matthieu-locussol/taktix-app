@@ -13,18 +13,17 @@ import {
    outlinedInputClasses,
 } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useState } from 'react';
-import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
+import { useEffect } from 'react';
 import { version } from '../../package.json';
 import { useStore } from '../store';
 import { Chatbox } from './Chatbox';
 import { LoadingScreen } from './LoadingScreen';
 
 export const Game = observer(() => {
-   const [input, setInput] = useState('');
    const store = useStore();
    const {
       loadingScreenStore: { loadingAssets, sceneVisible },
+      loginStore,
       characterStore,
       updaterStore,
    } = store;
@@ -43,11 +42,8 @@ export const Game = observer(() => {
             component="form"
             onSubmit={(e) => {
                e.preventDefault();
-
-               if (input !== INTERNAL_PLAYER_NAME) {
-                  characterStore.setName(input);
-                  store.initialize(input);
-               }
+               characterStore.setName(loginStore.input);
+               store.initialize(loginStore.input);
             }}
             sx={{
                display: 'flex',
@@ -97,8 +93,8 @@ export const Game = observer(() => {
                      <TextField
                         size="small"
                         placeholder="Enter your name"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        value={loginStore.input}
+                        onChange={(e) => loginStore.setInput(e.target.value)}
                         sx={{
                            [`.${outlinedInputClasses.root}`]: {
                               backgroundColor: 'white',
@@ -107,7 +103,7 @@ export const Game = observer(() => {
                         }}
                      />
                      <Button
-                        disabled={input === '' || updaterStore.shouldUpdate}
+                        disabled={loginStore.input === '' || updaterStore.shouldUpdate}
                         variant="contained"
                         type="submit"
                         sx={{ ml: 2, height: '100%' }}

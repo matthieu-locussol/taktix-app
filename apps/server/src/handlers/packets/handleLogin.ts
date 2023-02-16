@@ -1,11 +1,20 @@
 import { ClientPacketType } from 'shared';
-import { Player } from 'shared/src/types/Player';
+import { INTERNAL_PLAYER_NAME, Player } from 'shared/src/types/Player';
 import { state } from '../../state';
 import { prisma } from '../../utils/prisma';
 import { SocketId } from '../../utils/socketId';
 
 export const handleLogin = async ({ name }: ClientPacketType<'login'>, socketId: SocketId) => {
    const client = state.getClient(socketId);
+
+   if (name === INTERNAL_PLAYER_NAME) {
+      client.socket.send({
+         type: 'loginResponse',
+         response: {
+            status: 'already_exist',
+         },
+      });
+   }
 
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
       socket.send({
