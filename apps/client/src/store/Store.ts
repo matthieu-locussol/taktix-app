@@ -5,6 +5,7 @@ import { ChatStore } from './ChatStore';
 import { GameStore } from './GameStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
 import { SocketStore } from './SocketStore';
+import { UpdaterStore } from './UpdaterStore';
 
 export class Store {
    public characterStore: CharacterStore;
@@ -15,6 +16,8 @@ export class Store {
 
    public loadingScreenStore: LoadingScreenStore;
 
+   public updaterStore: UpdaterStore;
+
    private _socketStore: SocketStore | null;
 
    constructor() {
@@ -24,6 +27,8 @@ export class Store {
       this.chatStore = new ChatStore();
       this.gameStore = new GameStore(this);
       this.loadingScreenStore = new LoadingScreenStore();
+      this.updaterStore = new UpdaterStore();
+
       this._socketStore = null;
    }
 
