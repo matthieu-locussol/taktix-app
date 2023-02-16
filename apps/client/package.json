@@ -38,6 +38,7 @@
       "config-eslint": "workspace:^1.0.0",
       "config-typescript": "workspace:^1.0.0",
       "eslint": "^8.34.0",
+      "happy-dom": "^8.4.2",
       "typescript": "^4.9.5"
    }
 }
