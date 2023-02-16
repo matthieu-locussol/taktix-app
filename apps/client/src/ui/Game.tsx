@@ -12,68 +12,30 @@ import {
    Typography,
    outlinedInputClasses,
 } from '@mui/material';
-import { relaunch } from '@tauri-apps/api/process';
-import { UpdateManifest, checkUpdate, installUpdate } from '@tauri-apps/api/updater';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { version } from '../../package.json';
 import { useStore } from '../store';
-import { isTauri } from '../utils/tauri';
 import { Chatbox } from './Chatbox';
 import { LoadingScreen } from './LoadingScreen';
 
 export const Game = observer(() => {
    const [input, setInput] = useState('');
-   const [updating, setUpdating] = useState(false);
-   const [shouldUpdate, setShouldUpdate] = useState<boolean>();
-   const [manifest, setManifest] = useState<UpdateManifest>();
-   const [open, setOpen] = useState(false);
    const store = useStore();
    const {
       loadingScreenStore: { loadingAssets, sceneVisible },
       characterStore,
+      updaterStore,
    } = store;
 
    useEffect(() => {
-      if (isTauri()) {
-         (async () => {
-            const updateResult = await checkUpdate();
-            setShouldUpdate(updateResult.shouldUpdate);
-            setManifest(updateResult.manifest);
-         })();
-      } else {
-         setShouldUpdate(false);
-      }
+      updaterStore.checkUpdate();
    }, []);
 
    if (loadingAssets) {
       return <LoadingScreen />;
    }
-
-   const update = async () => {
-      try {
-         setUpdating(true);
-         await installUpdate();
-         setUpdating(false);
-         setOpen(true);
-      } catch (e) {
-         // eslint-disable-next-line no-alert
-         alert(
-            'Sorry, an error occurred while updating Taktix. If it happens again, try reinstalling the game.',
-         );
-      }
-   };
-
-   const restart = () => {
-      try {
-         relaunch();
-         setOpen(false);
-      } catch (e) {
-         // eslint-disable-next-line no-alert
-         alert('Sorry, an error occurred while restarting Taktix. Try restarting it by yourself.');
-      }
-   };
 
    if (characterStore.name === '') {
       return (
@@ -116,20 +78,21 @@ export const Game = observer(() => {
                   v{version}
                </Typography>
             </Box>
-            {/* eslint-disable-next-line no-nested-ternary */}
-            {shouldUpdate === undefined ? (
+            {updaterStore.shouldUpdate === undefined && (
                <LinearProgress sx={{ width: '250px', mb: 4, height: 8, mt: 1 }} />
-            ) : shouldUpdate ? (
+            )}
+            {updaterStore.shouldUpdate === true && (
                <Typography color="orangered" fontWeight="bold" sx={{ mb: 3 }}>
-                  A new update is available: {manifest?.version}
+                  A new update is available: {updaterStore.updateManifest?.version}
                </Typography>
-            ) : (
+            )}
+            {updaterStore.shouldUpdate === false && (
                <Typography color="green" fontWeight="bold" sx={{ mb: 3 }}>
                   Your version is up to date!
                </Typography>
             )}
             <Box>
-               {shouldUpdate === false && (
+               {updaterStore.shouldUpdate === false && (
                   <>
                      <TextField
                         size="small"
@@ -144,7 +107,7 @@ export const Game = observer(() => {
                         }}
                      />
                      <Button
-                        disabled={input === '' || shouldUpdate}
+                        disabled={input === '' || updaterStore.shouldUpdate}
                         variant="contained"
                         type="submit"
                         sx={{ ml: 2, height: '100%' }}
@@ -153,19 +116,23 @@ export const Game = observer(() => {
                      </Button>
                   </>
                )}
-               {shouldUpdate && (
+               {updaterStore.shouldUpdate && (
                   <Button
-                     disabled={updating}
+                     disabled={updaterStore.updating}
                      variant="contained"
                      type="submit"
-                     onClick={() => update()}
+                     onClick={() => updaterStore.update()}
                      sx={{ ml: 2, height: '100%' }}
                   >
-                     {updating ? <CircularProgress color="inherit" size={24} /> : 'Update'}
+                     {updaterStore.updating ? (
+                        <CircularProgress color="inherit" size={24} />
+                     ) : (
+                        'Update'
+                     )}
                   </Button>
                )}
             </Box>
-            <Dialog open={open}>
+            <Dialog open={updaterStore.openUpdateModal}>
                <DialogTitle>Game restart needed</DialogTitle>
                <DialogContent>
                   <DialogContentText>
@@ -173,7 +140,7 @@ export const Game = observer(() => {
                   </DialogContentText>
                </DialogContent>
                <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
-                  <Button variant="contained" onClick={() => restart()} autoFocus>
+                  <Button variant="contained" onClick={() => updaterStore.restart()} autoFocus>
                      Restart
                   </Button>
                </DialogActions>
