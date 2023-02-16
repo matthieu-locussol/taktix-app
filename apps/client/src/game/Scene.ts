@@ -1,11 +1,7 @@
 import { Direction, GridEngine, Position } from 'grid-engine';
-import { TELEPORTATION_SPOTS } from '../data/teleportationSpots';
+import { TELEPORTATION_SPOTS } from 'shared/src/data/teleportationSpots';
+import { SceneData } from 'shared/src/types';
 import { store } from '../store';
-
-export interface SceneData {
-   entrancePosition?: Position;
-   entranceDirection?: Direction;
-}
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
