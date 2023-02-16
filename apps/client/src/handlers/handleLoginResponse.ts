@@ -1,6 +1,6 @@
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
+import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { _assertTrue } from 'shared/src/utils/_assert';
-import { INTERNAL_PLAYER_NAME } from '../game/Scene';
 import { Store } from '../store/Store';
 
 export const handleLoginResponse = (

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { zPlayer } from '../types';
+import { zPlayer } from '../types/Player';
 
 export const zPlayerLoggedInMessage = z.object({
    type: z.literal('playerLoggedIn'),

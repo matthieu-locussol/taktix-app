@@ -1,5 +1,5 @@
 import { Direction } from 'grid-engine';
-import { SceneData } from '../types';
+import { SceneData } from '../types/SceneData';
 
 export interface TeleportationSpot {
    x: number;

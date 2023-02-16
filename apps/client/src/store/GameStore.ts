@@ -1,8 +1,9 @@
 import { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
-import { SceneData } from 'shared/src/types';
+import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
+import { SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
-import { INTERNAL_PLAYER_NAME, Scene } from '../game/Scene';
+import { Scene } from '../game/Scene';
 import { Store } from './Store';
 
 export class GameStore {
