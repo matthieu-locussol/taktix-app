@@ -1,8 +1,32 @@
 {
    "folders": [
       {
-         "name": "Taktix ✨",
-         "path": "."
+         "name": "Client ✨",
+         "path": "./apps/client"
+      },
+      {
+         "name": "Server ✨",
+         "path": "./apps/server"
+      },
+      {
+         "name": "Website ✨",
+         "path": "./apps/website"
+      },
+      {
+         "name": "Config ESlint ✨",
+         "path": "./packages/config-eslint"
+      },
+      {
+         "name": "Config TypeScript ✨",
+         "path": "./packages/config-typescript"
+      },
+      {
+         "name": "Scripts ✨",
+         "path": "./packages/scripts"
+      },
+      {
+         "name": "Shared ✨",
+         "path": "./packages/shared"
       }
    ],
    "settings": {
@@ -13,7 +37,8 @@
       "editor.codeActionsOnSave": {
          "source.fixAll": true,
          "source.organizeImports": true
-      }
+      },
+      "vitest.commandLine": "pnpm exec vitest"
    },
    "extensions": {
       "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "eamodio.gitlens"]
