@@ -1,10 +1,67 @@
 import { Box, Typography, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
-import { game } from '../game/PhaserGame';
-import { useStore } from '../store';
+import { useStore } from '../../store';
 
-const Root = styled('form')(() => ({
+export const Chatbox = observer(() => {
+   const inputRef = useRef<HTMLInputElement>(null);
+   const chatboxRef = useRef<HTMLDivElement>(null);
+   const { chatStore, characterStore, gameStore, loadingScreenStore, socketStore } = useStore();
+
+   useEffect(() => {
+      if (chatboxRef.current !== null) {
+         chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
+      }
+   }, [chatStore.messages.length]);
+
+   const sendMessage = (event: React.FormEvent<HTMLDivElement>) => {
+      event.preventDefault();
+
+      chatStore.addMessage({
+         author: characterStore.name,
+         message: chatStore.input,
+      });
+
+      socketStore.send({
+         type: 'message',
+         name: characterStore.name,
+         content: chatStore.input,
+      });
+
+      chatStore.setInput('');
+   };
+
+   if (!loadingScreenStore.sceneVisible) {
+      return null;
+   }
+
+   return (
+      <Root component="form" onSubmit={sendMessage}>
+         <Chat ref={chatboxRef}>
+            {chatStore.messages.map(({ author, message }, idx) =>
+               author === 'Server' ? (
+                  <Typography key={idx} fontStyle="italic">
+                     {message}
+                  </Typography>
+               ) : (
+                  <Typography key={idx}>
+                     {author}: {message}
+                  </Typography>
+               ),
+            )}
+         </Chat>
+         <ChatInput
+            ref={inputRef}
+            value={chatStore.input}
+            onFocus={() => gameStore.enableKeyboard(false)}
+            onBlur={() => gameStore.enableKeyboard(true)}
+            onChange={(e) => chatStore.setInput(e.target.value)}
+         />
+      </Root>
+   );
+});
+
+const Root = styled(Box)(() => ({
    position: 'absolute',
    left: 12,
    bottom: 8,
@@ -37,68 +94,3 @@ const ChatInput = styled('input')(() => ({
    },
    width: 'calc(40vw - 16px)',
 }));
-
-export const Chatbox = observer(() => {
-   const inputRef = useRef<HTMLInputElement>(null);
-   const chatboxRef = useRef<HTMLDivElement>(null);
-   const { chatStore, characterStore, loadingScreenStore, socketStore } = useStore();
-
-   useEffect(() => {
-      if (chatboxRef.current !== null) {
-         chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
-      }
-   }, [chatStore.messages.length]);
-
-   if (!loadingScreenStore.sceneVisible) {
-      return null;
-   }
-
-   const sendMessage = () => {
-      chatStore.addMessage({
-         author: characterStore.name,
-         message: chatStore.input,
-      });
-
-      socketStore.send({
-         type: 'message',
-         name: characterStore.name,
-         content: chatStore.input,
-      });
-
-      chatStore.setInput('');
-   };
-
-   return (
-      <Root
-         onSubmit={(e) => {
-            e.preventDefault();
-            sendMessage();
-         }}
-      >
-         <Chat ref={chatboxRef}>
-            {chatStore.messages.map(({ author, message }, idx) =>
-               author === 'Server' ? (
-                  <Typography key={idx} fontStyle="italic">
-                     {message}
-                  </Typography>
-               ) : (
-                  <Typography key={idx}>
-                     {author}: {message}
-                  </Typography>
-               ),
-            )}
-         </Chat>
-         <ChatInput
-            ref={inputRef}
-            value={chatStore.input}
-            onFocus={() => {
-               game.input.keyboard.enabled = false;
-            }}
-            onBlur={() => {
-               game.input.keyboard.enabled = true;
-            }}
-            onChange={(e) => chatStore.setInput(e.target.value)}
-         />
-      </Root>
-   );
-});

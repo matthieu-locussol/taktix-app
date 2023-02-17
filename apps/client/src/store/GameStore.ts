@@ -60,4 +60,8 @@ export class GameStore {
 
       return returnedScene as Scene;
    }
+
+   enableKeyboard(enable: boolean) {
+      this.game.input.keyboard.enabled = enable;
+   }
 }
