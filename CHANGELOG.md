@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.16.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.15.0...v1.16.0) (2023-02-17)
+
+### Features
+
+-  added a LoginStore & updated packages
+   ([4deb03e](https://github.com/matthieu-locussol/taktix-app/commit/4deb03ea42993025a9fd5bff74318b3659e662b5))
+-  added an UpdaterStore
+   ([71f06a2](https://github.com/matthieu-locussol/taktix-app/commit/71f06a2305352d4b83466eb3b66b80e6db03c4e8))
+-  added Client & State specs
+   ([1879dbc](https://github.com/matthieu-locussol/taktix-app/commit/1879dbc581b87d54465d7f3d9076a8028f91bee3))
+-  handle login & username check on the backend
+   ([98305f7](https://github.com/matthieu-locussol/taktix-app/commit/98305f71b73f2a944f95a8a355fd84c10a81a538))
+-  reserved INTERNAL_PLAYER_NAME
+   ([b936531](https://github.com/matthieu-locussol/taktix-app/commit/b936531fc545bed1eef639f09a419f7c62c8e0a1))
+
 ## [1.15.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.14.0...v1.15.0) (2023-02-15)
 
 ### Features
