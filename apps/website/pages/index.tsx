@@ -129,7 +129,7 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () =
          platforms: [
             {
                name: 'Linux',
-               url: version?.platforms?.['linux-x86_64']?.url || '',
+               url: version?.platforms?.['linux-x86_64']?.url.replace('.tar.gz', '') || '',
                availableText: 'Download for Linux',
                updatingText: 'Updating for Linux...',
                updating: typeof version?.platforms?.['linux-x86_64']?.url !== 'string',
@@ -137,7 +137,9 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () =
             },
             {
                name: 'Mac OS',
-               url: version?.platforms?.['darwin-x86_64']?.url || '',
+               url:
+                  version?.platforms?.['windows-x86_64']?.url.replace('_en-US.msi.zip', '.dmg') ||
+                  '',
                availableText: 'Download for Mac OS',
                updatingText: 'Updating for Mac OS...',
                updating: typeof version?.platforms?.['darwin-x86_64']?.url !== 'string',
@@ -145,7 +147,7 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () =
             },
             {
                name: 'Windows',
-               url: version?.platforms?.['windows-x86_64']?.url || '',
+               url: version?.platforms?.['windows-x86_64']?.url.replace('.zip', '') || '',
                availableText: 'Download for Windows',
                updatingText: 'Updating for Windows...',
                updating: typeof version?.platforms?.['windows-x86_64']?.url !== 'string',
