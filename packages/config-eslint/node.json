@@ -44,6 +44,7 @@
             "argsIgnorePattern": "^_"
          }
       ],
+      "@typescript-eslint/no-use-before-define": "off",
       "react/jsx-filename-extension": "off",
       "react/jsx-props-no-spreading": "off"
    },
