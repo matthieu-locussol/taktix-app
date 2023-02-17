@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { _assert } from 'shared/src/utils/_assert';
+import { _assert } from 'shared/dist/utils/_assert';
 import { WebSocket } from 'ws';
 import { SocketId } from '../utils/socketId';
 import { Client } from './Client';

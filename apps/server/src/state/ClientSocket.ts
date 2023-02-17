@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { ServerPacket } from 'shared/src/packets/ServerPacket';
+import { ServerPacket } from 'shared/dist/packets/ServerPacket';
 import { WebSocket } from 'ws';
 
 export class ClientSocket {

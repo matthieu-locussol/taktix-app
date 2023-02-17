@@ -1,5 +1,5 @@
 import { ClientPacketType } from 'shared';
-import { INTERNAL_PLAYER_NAME, Player } from 'shared/src/types/Player';
+import { INTERNAL_PLAYER_NAME, Player } from 'shared/dist/types/Player';
 import { state } from '../../state';
 import { prisma } from '../../utils/prisma';
 import { SocketId } from '../../utils/socketId';
