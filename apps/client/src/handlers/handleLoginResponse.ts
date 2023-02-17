@@ -8,9 +8,10 @@ export const handleLoginResponse = (
 ) => {
    const { characterStore, loadingScreenStore, loginStore } = store;
 
-   if (response.status === 'already_exist') {
+   if (response.status === 'user_already_exist') {
       loginStore.setErrorMessage(`User "${loginStore.input}" already exist!`);
       loginStore.setInput('');
+      characterStore.setName('');
       return;
    }
 
