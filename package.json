@@ -1,6 +1,6 @@
 {
    "name": "taktix-app",
-   "version": "1.16.0",
+   "version": "1.17.0",
    "description": "The crapiest MMORPG ever.",
    "repository": "git@github.com:matthieu-locussol/taktix-app.git",
    "scripts": {
