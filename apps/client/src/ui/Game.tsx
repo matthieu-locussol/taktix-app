@@ -87,6 +87,7 @@ export const Game = observer(() => {
                   Your version is up to date!
                </Typography>
             )}
+            <Typography color="red">{loginStore.errorMessage}</Typography>
             <Box>
                {updaterStore.shouldUpdate === false && (
                   <>

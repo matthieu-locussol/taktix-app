@@ -11,9 +11,10 @@ export const handleLogin = async ({ name }: ClientPacketType<'login'>, socketId:
       client.socket.send({
          type: 'loginResponse',
          response: {
-            status: 'already_exist',
+            status: 'user_already_exist',
          },
       });
+      return;
    }
 
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
