@@ -56,6 +56,7 @@ export const Chatbox = observer(() => {
             onFocus={() => gameStore.enableKeyboard(false)}
             onBlur={() => gameStore.enableKeyboard(true)}
             onChange={(e) => chatStore.setInput(e.target.value)}
+            maxLength={160}
          />
       </Root>
    );
@@ -75,9 +76,24 @@ const Chat = styled(Box)(() => ({
    padding: 8,
    height: '15vh',
    maxHeight: '15vh',
-   overflow: 'scroll',
+   overflowX: 'hidden',
+   overflowY: 'scroll',
    color: 'white',
+   wordWrap: 'break-word',
    textShadow: '1px 1px 2px #000000',
+   '::-webkit-scrollbar': {
+      width: '8px',
+   },
+   '::-webkit-scrollbar-track': {
+      backgroundColor: 'transparent',
+   },
+   '::-webkit-scrollbar-thumb': {
+      backgroundColor: '#00000066',
+      borderRadius: '4px',
+   },
+   '::-webkit-scrollbar-thumb:hover': {
+      backgroundColor: '#00000099',
+   },
 }));
 
 const ChatInput = styled('input')(() => ({
