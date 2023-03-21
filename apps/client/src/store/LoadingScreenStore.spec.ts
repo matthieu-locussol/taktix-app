@@ -15,3 +15,9 @@ it('should have a currentAssetPath', () => {
    const store = new LoadingScreenStore();
    expect(store.currentAssetPath).toBe(null);
 });
+
+it('should set progress', () => {
+   const store = new LoadingScreenStore();
+   store.setProgress(0.45);
+   expect(store.progress).toBe(45);
+});
