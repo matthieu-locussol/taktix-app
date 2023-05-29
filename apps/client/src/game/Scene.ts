@@ -199,6 +199,7 @@ export abstract class Scene extends Phaser.Scene {
 
       const externalPlayerSprite = this.add.sprite(0, 0, 'player');
       externalPlayerSprite.setDepth(3);
+      externalPlayerSprite.setPipeline('Light2D');
       externalPlayerSprite.scale = SCALE_FACTOR;
 
       const offsetX = (78 - name.length * 10) / 2;
