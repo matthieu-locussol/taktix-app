@@ -62,12 +62,6 @@ export const makeLight = (scene: Scene, object: Phaser.Types.Tilemaps.TiledObjec
            )
            .setVisible(true);
 
-   console.log(light);
-
-   // const light = scene.lights
-   //    .addLight(x * TILE_WIDTH + WIDTH_OFFSET, y * TILE_HEIGHT + HEIGHT_OFFSET, 64, 0xf59e0b, 0.5)
-   //    .setVisible(true);
-
    if (lightObject.properties.blinking) {
       scene.tweens.add({
          targets: light,
