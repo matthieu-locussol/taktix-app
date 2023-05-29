@@ -3,12 +3,17 @@ import { TELEPORTATION_SPOTS } from 'shared/src/data/teleportationSpots';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { SceneData } from 'shared/src/types/SceneData';
 import { store } from '../store';
+import { makeLight } from './lights/makeLight';
+
+export const SCALE_FACTOR = 3;
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
 }
 
 export abstract class Scene extends Phaser.Scene {
+   public tilemap: Phaser.Tilemaps.Tilemap | null = null;
+
    public gridEngine: GridEngine;
 
    public entrancePosition: Position = { x: 0, y: 0 };
@@ -65,7 +70,6 @@ export abstract class Scene extends Phaser.Scene {
       this.cameras.main.fadeIn(1000, 0, 0, 0);
 
       const tilemap = this.createTilemap();
-
       this.gridEngine.create(tilemap, { characters: [] });
       this.createPlayer(store.characterStore.name);
 
@@ -82,12 +86,17 @@ export abstract class Scene extends Phaser.Scene {
       store.characterStore.players.forEach(({ nickname, x, y }) => {
          this.addExternalPlayer(nickname, { x, y });
       });
+
+      this.lights.enable();
+      this.lights.setAmbientColor(0x637681);
+      this.lights.addLight(0, 0, 12800).setColor(0xffffff).setIntensity(1.0);
    }
 
    public createPlayer(nickname: string): void {
       const playerSprite = this.add.sprite(0, 0, 'player');
       playerSprite.setDepth(3);
-      playerSprite.scale = 3;
+      playerSprite.scale = SCALE_FACTOR;
+      playerSprite.setPipeline('Light2D');
 
       const offsetX = (78 - nickname.length * 10) / 2;
       const playerName = this.add.text(offsetX, -8, nickname, { align: 'center' });
@@ -108,6 +117,26 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public abstract createTilemap(): Phaser.Tilemaps.Tilemap;
+
+   public initializeTilemap(tileset: string) {
+      if (this.tilemap === null) {
+         return;
+      }
+
+      for (let i = 0; i < this.tilemap.layers.length; i += 1) {
+         const layer = this.tilemap.createLayer(i, tileset, 0, 0);
+         layer.setDepth(i);
+         layer.scale = SCALE_FACTOR;
+         layer.setPipeline('Light2D');
+      }
+
+      const lightsLayer = this.tilemap.getObjectLayer('Lights');
+      if (lightsLayer !== null) {
+         for (const object of lightsLayer.objects) {
+            makeLight(this, object);
+         }
+      }
+   }
 
    public override update(): void {
       this.updateMoves();
@@ -165,7 +194,7 @@ export abstract class Scene extends Phaser.Scene {
 
       const externalPlayerSprite = this.add.sprite(0, 0, 'player');
       externalPlayerSprite.setDepth(3);
-      externalPlayerSprite.scale = 3;
+      externalPlayerSprite.scale = SCALE_FACTOR;
 
       const offsetX = (78 - name.length * 10) / 2;
       const externalPlayerName = this.add.text(offsetX, -8, name, {

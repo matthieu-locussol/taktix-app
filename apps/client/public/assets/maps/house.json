@@ -68,18 +68,17 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 669, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 144, 0, 0, 0, 0, 0, 0, 0, 0, 519, 0, 0, 0, 0, 230, 231, 232, 0, 0, 0, 192, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 278, 279, 280, 370, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 326, 327, 328, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 615, 0, 0, 0, 0, 0, 0, 230,
-            231, 232, 0, 0, 0, 0, 0, 0, 0, 233, 0, 0, 663, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 144, 0, 0, 0, 0, 0, 0, 0, 0, 519, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 192, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 278, 279, 280, 370, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 326, 327, 328, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 615, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 233, 0, 0, 663, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
          ],
          "height": 20,
          "id": 10,
@@ -125,20 +124,20 @@
             0, 0, 0, 14, 14, 14, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 14,
             14, 0, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 14, 14, 14, 14,
             14, 14, 14, 14, 14, 14, 14, 0, 0, 14, 14, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 14,
-            0, 14, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 0, 0, 14, 0, 0,
-            14, 14, 14, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 14, 14, 0, 0, 14, 14, 14, 14, 14, 14, 14, 0,
-            0, 14, 14, 14, 14, 14, 14, 14, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 14, 14, 0, 0, 0,
+            0, 14, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 0, 0, 14, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 14, 14, 0, 0, 14, 14, 14, 14, 14, 14, 14, 0, 0, 14,
+            14, 14, 14, 14, 14, 14, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 14, 14, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0
          ],
          "height": 20,
          "id": 12,
-         "name": "Collisions",
+         "name": "Player",
          "opacity": 1,
          "properties": [
             {
@@ -152,10 +151,408 @@
          "width": 20,
          "x": 0,
          "y": 0
+      },
+      {
+         "data": [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 230, 231, 232, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 230, 231, 232, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+         ],
+         "height": 20,
+         "id": 15,
+         "name": "Objects 4",
+         "opacity": 1,
+         "type": "tilelayer",
+         "visible": true,
+         "width": 20,
+         "x": 0,
+         "y": 0
+      },
+      {
+         "draworder": "topdown",
+         "id": 17,
+         "name": "Lights",
+         "objects": [
+            {
+               "height": 0,
+               "id": 5,
+               "name": "",
+               "point": true,
+               "properties": [
+                  {
+                     "name": "attenuation",
+                     "type": "float",
+                     "value": 0.05
+                  },
+                  {
+                     "name": "blinking",
+                     "type": "bool",
+                     "value": true
+                  },
+                  {
+                     "name": "blinkingDuration",
+                     "type": "int",
+                     "value": 1000
+                  },
+                  {
+                     "name": "blinkingMaxIntensity",
+                     "type": "float",
+                     "value": 0.45
+                  },
+                  {
+                     "name": "blinkingMinIntensity",
+                     "type": "float",
+                     "value": 0.3
+                  },
+                  {
+                     "name": "blinkingSteps",
+                     "type": "int",
+                     "value": 3
+                  },
+                  {
+                     "name": "color",
+                     "type": "color",
+                     "value": "#ffff2600"
+                  },
+                  {
+                     "name": "intensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "point",
+                     "type": "bool",
+                     "value": true
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 64
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 0,
+               "x": 248.5,
+               "y": 95
+            },
+            {
+               "id": 10,
+               "properties": [
+                  {
+                     "name": "attenuation",
+                     "type": "float",
+                     "value": 0.06
+                  },
+                  {
+                     "name": "blinking",
+                     "type": "bool",
+                     "value": false
+                  },
+                  {
+                     "name": "blinkingDuration",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMaxIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMinIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingSteps",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "color",
+                     "type": "color",
+                     "value": "#ffff9300"
+                  },
+                  {
+                     "name": "intensity",
+                     "type": "float",
+                     "value": 0.4
+                  },
+                  {
+                     "name": "point",
+                     "type": "bool",
+                     "value": true
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 48
+                  }
+               ],
+               "template": "templates/lightObject.tx",
+               "visible": true,
+               "x": 104,
+               "y": 48
+            },
+            {
+               "id": 11,
+               "properties": [
+                  {
+                     "name": "attenuation",
+                     "type": "float",
+                     "value": 0.06
+                  },
+                  {
+                     "name": "blinking",
+                     "type": "bool",
+                     "value": false
+                  },
+                  {
+                     "name": "blinkingDuration",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMaxIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMinIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingSteps",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "color",
+                     "type": "color",
+                     "value": "#ffff9300"
+                  },
+                  {
+                     "name": "intensity",
+                     "type": "float",
+                     "value": 0.4
+                  },
+                  {
+                     "name": "point",
+                     "type": "bool",
+                     "value": true
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 48
+                  }
+               ],
+               "template": "templates/lightObject.tx",
+               "visible": true,
+               "x": 56,
+               "y": 48
+            },
+            {
+               "id": 12,
+               "properties": [
+                  {
+                     "name": "attenuation",
+                     "type": "float",
+                     "value": 0.07
+                  },
+                  {
+                     "name": "blinking",
+                     "type": "bool",
+                     "value": false
+                  },
+                  {
+                     "name": "blinkingDuration",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMaxIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMinIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingSteps",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "color",
+                     "type": "color",
+                     "value": "#ff559b3c"
+                  },
+                  {
+                     "name": "intensity",
+                     "type": "float",
+                     "value": 1
+                  },
+                  {
+                     "name": "point",
+                     "type": "bool",
+                     "value": false
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 256
+                  }
+               ],
+               "template": "templates/lightObject.tx",
+               "visible": true,
+               "x": 203,
+               "y": 29
+            },
+            {
+               "id": 13,
+               "properties": [
+                  {
+                     "name": "attenuation",
+                     "type": "float",
+                     "value": 0.07
+                  },
+                  {
+                     "name": "blinking",
+                     "type": "bool",
+                     "value": false
+                  },
+                  {
+                     "name": "blinkingDuration",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMaxIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMinIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingSteps",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "color",
+                     "type": "color",
+                     "value": "#ffedb522"
+                  },
+                  {
+                     "name": "intensity",
+                     "type": "float",
+                     "value": 1
+                  },
+                  {
+                     "name": "point",
+                     "type": "bool",
+                     "value": false
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 256
+                  }
+               ],
+               "template": "templates/lightObject.tx",
+               "visible": true,
+               "x": 36,
+               "y": 140
+            },
+            {
+               "id": 14,
+               "properties": [
+                  {
+                     "name": "attenuation",
+                     "type": "float",
+                     "value": 0.07
+                  },
+                  {
+                     "name": "blinking",
+                     "type": "bool",
+                     "value": false
+                  },
+                  {
+                     "name": "blinkingDuration",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMaxIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingMinIntensity",
+                     "type": "float",
+                     "value": 0
+                  },
+                  {
+                     "name": "blinkingSteps",
+                     "type": "int",
+                     "value": 0
+                  },
+                  {
+                     "name": "color",
+                     "type": "color",
+                     "value": "#ffedb522"
+                  },
+                  {
+                     "name": "intensity",
+                     "type": "float",
+                     "value": 1
+                  },
+                  {
+                     "name": "point",
+                     "type": "bool",
+                     "value": false
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 256
+                  }
+               ],
+               "template": "templates/lightObject.tx",
+               "visible": true,
+               "x": 283,
+               "y": 140
+            }
+         ],
+         "opacity": 1,
+         "type": "objectgroup",
+         "visible": true,
+         "x": 0,
+         "y": 0
       }
    ],
-   "nextlayerid": 13,
-   "nextobjectid": 1,
+   "nextlayerid": 18,
+   "nextobjectid": 15,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.8.4",
@@ -536,6 +933,19 @@
          "name": "House",
          "spacing": 0,
          "tilecount": 768,
+         "tileheight": 16,
+         "tilewidth": 16
+      },
+      {
+         "columns": 45,
+         "firstgid": 794,
+         "image": "../tilesets/cloud_tileset.png",
+         "imageheight": 448,
+         "imagewidth": 720,
+         "margin": 0,
+         "name": "Clouds",
+         "spacing": 0,
+         "tilecount": 1260,
          "tileheight": 16,
          "tilewidth": 16
       }

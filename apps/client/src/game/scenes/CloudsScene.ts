@@ -21,15 +21,10 @@ export class CloudsScene extends Scene {
       this.sound.play('background', { loop: true, volume: 0.05 });
       this.sound.pauseOnBlur = false;
 
-      const cloudCityTilemap = this.make.tilemap({ key: 'cloud-city-map' });
-      cloudCityTilemap.addTilesetImage('Cloud City', 'tiles');
+      this.tilemap = this.make.tilemap({ key: 'cloud-city-map' });
+      this.tilemap.addTilesetImage('Cloud City', 'tiles');
+      this.initializeTilemap('Cloud City');
 
-      for (let i = 0; i < cloudCityTilemap.layers.length; i += 1) {
-         const layer = cloudCityTilemap.createLayer(i, 'Cloud City', 0, 0);
-         layer.setDepth(i);
-         layer.scale = 3;
-      }
-
-      return cloudCityTilemap;
+      return this.tilemap;
    }
 }
