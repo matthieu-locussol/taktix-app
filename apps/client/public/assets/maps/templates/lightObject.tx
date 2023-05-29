@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object>
+  <properties>
+   <property name="blinking" type="bool" value="false"/>
+   <property name="blinkingDuration" type="int" value="0"/>
+   <property name="blinkingMaxIntensity" type="float" value="0"/>
+   <property name="blinkingMinIntensity" type="float" value="0"/>
+   <property name="blinkingSteps" type="int" value="0"/>
+   <property name="color" type="color" value=""/>
+   <property name="intensity" type="float" value="0"/>
+   <property name="radius" type="int" value="0"/>
+  </properties>
+  <point/>
+ </object>
+</template>

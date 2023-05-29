@@ -21,15 +21,10 @@ export class HouseScene extends Scene {
       this.sound.play('house', { loop: true, volume: 0.05 });
       this.sound.pauseOnBlur = false;
 
-      const houseTilemap = this.make.tilemap({ key: 'house-map' });
-      houseTilemap.addTilesetImage('House', 'house_tiles');
+      this.tilemap = this.make.tilemap({ key: 'house-map' });
+      this.tilemap.addTilesetImage('House', 'house_tiles');
+      this.initializeTilemap('House');
 
-      for (let i = 0; i < houseTilemap.layers.length; i += 1) {
-         const layer = houseTilemap.createLayer(i, 'House', 0, 0);
-         layer.setDepth(i);
-         layer.scale = 3;
-      }
-
-      return houseTilemap;
+      return this.tilemap;
    }
 }
