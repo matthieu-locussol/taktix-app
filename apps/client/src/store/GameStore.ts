@@ -62,6 +62,8 @@ export class GameStore {
    }
 
    enableKeyboard(enable: boolean) {
-      this.game.input.keyboard.enabled = enable;
+      if (this.game.input.keyboard !== null) {
+         this.game.input.keyboard.enabled = enable;
+      }
    }
 }

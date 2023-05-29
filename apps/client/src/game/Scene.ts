@@ -125,9 +125,12 @@ export abstract class Scene extends Phaser.Scene {
 
       for (let i = 0; i < this.tilemap.layers.length; i += 1) {
          const layer = this.tilemap.createLayer(i, tileset, 0, 0);
-         layer.setDepth(i);
-         layer.scale = SCALE_FACTOR;
-         layer.setPipeline('Light2D');
+
+         if (layer !== null) {
+            layer.setDepth(i);
+            layer.scale = SCALE_FACTOR;
+            layer.setPipeline('Light2D');
+         }
       }
 
       const lightsLayer = this.tilemap.getObjectLayer('Lights');
@@ -144,16 +147,18 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public updateMoves(): void {
-      const cursors = this.input.keyboard.createCursorKeys();
+      if (this.input.keyboard !== null) {
+         const cursors = this.input.keyboard.createCursorKeys();
 
-      if (cursors.left.isDown) {
-         this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.LEFT);
-      } else if (cursors.right.isDown) {
-         this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.RIGHT);
-      } else if (cursors.up.isDown) {
-         this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.UP);
-      } else if (cursors.down.isDown) {
-         this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.DOWN);
+         if (cursors.left.isDown) {
+            this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.LEFT);
+         } else if (cursors.right.isDown) {
+            this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.RIGHT);
+         } else if (cursors.up.isDown) {
+            this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.UP);
+         } else if (cursors.down.isDown) {
+            this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.DOWN);
+         }
       }
    }
 
