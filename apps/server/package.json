@@ -21,7 +21,7 @@
       "shared": "workspace:latest",
       "ts-pattern": "^4.3.0",
       "uuid": "^9.0.0",
-      "vitest": "^0.31.1",
+      "vitest": "^0.32.0",
       "ws": "^8.13.0"
    },
    "devDependencies": {
