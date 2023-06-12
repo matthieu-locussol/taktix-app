@@ -20,7 +20,7 @@
       "shared": "workspace:latest"
    },
    "devDependencies": {
-      "@babel/core": "^7.22.1",
+      "@babel/core": "^7.22.5",
       "@types/react": "^18.2.7",
       "@types/react-dom": "^18.2.4",
       "config-eslint": "workspace:latest",
