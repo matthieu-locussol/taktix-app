@@ -26,6 +26,6 @@
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
       "eslint": "^8.41.0",
-      "typescript": "^5.0.4"
+      "typescript": "^5.1.3"
    }
 }
