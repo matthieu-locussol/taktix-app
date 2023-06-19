@@ -30,7 +30,7 @@
       "@types/ws": "^8.5.4",
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
-      "eslint": "^8.41.0",
+      "eslint": "^8.43.0",
       "ts-node-dev": "^2.0.0",
       "typescript": "^5.0.4"
    }
