@@ -47,6 +47,9 @@ export const zLoginResponse = z.object({
          players: z.array(zPlayer),
       }),
       z.object({
+         status: z.literal('user_not_found'),
+      }),
+      z.object({
          status: z.literal('user_already_exist'),
       }),
    ]),

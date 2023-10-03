@@ -1,21 +1,38 @@
-import { Box, Typography } from '@mui/material';
+import {
+   Box,
+   Button,
+   Card,
+   CircularProgress,
+   Dialog,
+   DialogActions,
+   DialogContent,
+   DialogContentText,
+   DialogTitle,
+   Divider,
+   Link,
+   TextField,
+   Typography,
+   styled,
+} from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { version } from '../../../package.json';
 import { useStore } from '../../store';
-import { Updater } from '../updater/Updater';
+import { GameBackground } from '../GameBackground';
 
 export const LoginScreen = observer(() => {
    const store = useStore();
-   const { loginStore, characterStore } = store;
+   const { loginStore, characterStore, updaterStore } = store;
+
+   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      characterStore.setName(loginStore.username);
+      store.initialize(loginStore.username, loginStore.password);
+   };
 
    return (
       <Box
          component="form"
-         onSubmit={(e) => {
-            e.preventDefault();
-            characterStore.setName(loginStore.input);
-            store.initialize(loginStore.input);
-         }}
+         onSubmit={onSubmit}
          sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -23,30 +40,128 @@ export const LoginScreen = observer(() => {
             alignItems: 'center',
             width: '100vw',
             height: '100vh',
+            '& > *': {
+               zIndex: 1,
+            },
          }}
       >
-         <Box sx={{ display: 'flex', alignItems: 'baseline', mb: 2, mr: 2 }}>
-            <img
-               src="/android-chrome-192x192.png"
-               alt=""
-               width={48}
-               height={48}
-               style={{ margin: 'auto', marginRight: 16 }}
-            />
-            <Typography color="white" variant="h3">
-               Taktix
-            </Typography>
-            <Typography
-               color="white"
-               fontWeight="bold"
-               variant="overline"
-               sx={{ mt: 'auto', ml: 1 }}
-            >
-               v{version}
-            </Typography>
-         </Box>
-         <Typography color="red">{loginStore.errorMessage}</Typography>
-         <Updater />
+         <GameBackground />
+         <Card variant="outlined" sx={{ display: 'flex' }}>
+            <CardContent>
+               <Box
+                  sx={{ display: 'flex', alignItems: 'baseline', mb: 4, justifyContent: 'center' }}
+               >
+                  <Typography variant="h1" fontFamily="Orbitron">
+                     Taktix
+                  </Typography>
+                  <Typography
+                     color="white"
+                     fontWeight="bold"
+                     fontFamily="Orbitron"
+                     variant="overline"
+                     sx={{ mt: 'auto', mb: -0.5, ml: 1 }}
+                  >
+                     v{version}
+                  </Typography>
+               </Box>
+               <Typography variant="body1" color="textSecondary">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+               </Typography>
+            </CardContent>
+            <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
+            {updaterStore.shouldUpdate === undefined && (
+               <CardContent>
+                  <Typography variant="h1" fontFamily="Orbitron" align="center">
+                     Access the universe
+                  </Typography>
+                  <CircularProgress />
+               </CardContent>
+            )}
+            {updaterStore.shouldUpdate === false && (
+               <CardContent>
+                  <Typography variant="h1" fontFamily="Orbitron" align="center" gutterBottom>
+                     Access the universe
+                  </Typography>
+                  {loginStore.errorMessage && (
+                     <Typography variant="body1" align="left" color="error">
+                        {loginStore.errorMessage}
+                     </Typography>
+                  )}
+                  <TextField
+                     type="username"
+                     placeholder="Username"
+                     value={loginStore.username}
+                     onChange={(e) => loginStore.setUsername(e.target.value)}
+                     sx={{ mt: 2 }}
+                  />
+                  <TextField
+                     type="password"
+                     placeholder="Password"
+                     value={loginStore.password}
+                     onChange={(e) => loginStore.setPassword(e.target.value)}
+                     sx={{ mt: 2 }}
+                  />
+                  <Button
+                     disabled={!loginStore.canLogin}
+                     type="submit"
+                     variant="contained"
+                     color="primary"
+                     sx={{ mt: 2 }}
+                  >
+                     Log In
+                  </Button>
+                  <Link sx={{ mt: 2 }}>Register</Link>
+               </CardContent>
+            )}
+            {updaterStore.shouldUpdate && (
+               <CardContent>
+                  <Typography variant="h1" fontFamily="Orbitron" align="center">
+                     Access the universe
+                  </Typography>
+                  <Typography>
+                     A new update is available: {updaterStore.updateManifest?.version}
+                  </Typography>
+                  <Typography>Please update to continue</Typography>
+                  <Button
+                     disabled={updaterStore.updating}
+                     variant="contained"
+                     color="primary"
+                     onClick={() => updaterStore.update()}
+                     sx={{ mt: 2 }}
+                  >
+                     {updaterStore.updating ? (
+                        <CircularProgress color="inherit" size={24} />
+                     ) : (
+                        'Update'
+                     )}
+                  </Button>
+               </CardContent>
+            )}
+            <Dialog open={updaterStore.openUpdateModal}>
+               <DialogTitle>Game restart needed</DialogTitle>
+               <DialogContent>
+                  <DialogContentText>
+                     In order to finish the update, the game will need to restart!
+                  </DialogContentText>
+               </DialogContent>
+               <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
+                  <Button variant="contained" onClick={() => updaterStore.restart()} autoFocus>
+                     Restart
+                  </Button>
+               </DialogActions>
+            </Dialog>
+         </Card>
       </Box>
    );
 });
+
+const CardContent = styled(Box)(({ theme }) =>
+   theme.unstable_sx({
+      p: 8,
+      display: 'flex',
+      flexDirection: 'column',
+      width: theme.spacing(46),
+   }),
+);

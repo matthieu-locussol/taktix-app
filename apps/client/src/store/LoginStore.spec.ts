@@ -3,7 +3,7 @@ import { LoginStore } from './LoginStore';
 
 it('should have an input', () => {
    const store = new LoginStore();
-   expect(store.input).toBe('');
+   expect(store.username).toBe('');
 });
 
 it('should have an error message', () => {

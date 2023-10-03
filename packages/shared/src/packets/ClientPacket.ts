@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 export const zLoginMessage = z.object({
    type: z.literal('login'),
-   name: z.string(),
+   username: z.string(),
+   password: z.string(),
 });
 
 export const zMessageMessage = z.object({

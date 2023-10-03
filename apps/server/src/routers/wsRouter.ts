@@ -36,7 +36,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
          });
       });
 
-      await prisma.testo.update({
+      await prisma.character.update({
          data: {
             map: client.map,
             pos_x: client.position.x,

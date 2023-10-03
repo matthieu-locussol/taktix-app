@@ -41,7 +41,7 @@ export class Store {
       return this._socketStore;
    }
 
-   initialize(nickname: string) {
-      this._socketStore = new SocketStore(this, nickname);
+   initialize(username: string, password: string) {
+      this._socketStore = new SocketStore(this, username, password);
    }
 }

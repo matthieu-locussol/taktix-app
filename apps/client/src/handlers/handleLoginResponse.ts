@@ -9,8 +9,17 @@ export const handleLoginResponse = (
    const { characterStore, loadingScreenStore, loginStore } = store;
 
    if (response.status === 'user_already_exist') {
-      loginStore.setErrorMessage(`User "${loginStore.input}" already exist!`);
-      loginStore.setInput('');
+      loginStore.setErrorMessage(`User "${loginStore.username}" already exist!`);
+      loginStore.setUsername('');
+      loginStore.setPassword('');
+      characterStore.setName('');
+      return;
+   }
+
+   if (response.status === 'user_not_found') {
+      loginStore.setErrorMessage(`User "${loginStore.username}" not found!`);
+      loginStore.setUsername('');
+      loginStore.setPassword('');
       characterStore.setName('');
       return;
    }

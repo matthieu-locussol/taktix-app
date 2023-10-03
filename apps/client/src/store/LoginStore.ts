@@ -1,7 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 
 export class LoginStore {
-   public input: string = '';
+   public username: string = '';
+
+   public password: string = '';
 
    public errorMessage: string = '';
 
@@ -9,11 +11,19 @@ export class LoginStore {
       makeAutoObservable(this);
    }
 
-   setInput(input: string) {
-      this.input = input;
+   setUsername(username: string) {
+      this.username = username;
+   }
+
+   setPassword(password: string) {
+      this.password = password;
    }
 
    setErrorMessage(errorMessage: string) {
-      this.input = errorMessage;
+      this.errorMessage = errorMessage;
+   }
+
+   get canLogin() {
+      return this.username !== '' && this.password !== '';
    }
 }

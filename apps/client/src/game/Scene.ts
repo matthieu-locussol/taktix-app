@@ -67,7 +67,7 @@ export abstract class Scene extends Phaser.Scene {
 
    public create(): void {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
-      this.cameras.main.fadeIn(1000, 0, 0, 0);
+      this.cameras.main.fadeIn(1000, 31, 41, 55);
 
       const tilemap = this.createTilemap();
       this.gridEngine.create(tilemap, { characters: [] });
@@ -89,7 +89,7 @@ export abstract class Scene extends Phaser.Scene {
 
       this.lights.enable();
       this.lights.setAmbientColor(0x637681);
-      this.lights.addLight(0, 0, 12800).setColor(0xffffff).setIntensity(1.0);
+      this.lights.addLight(0, 0, 128).setColor(0xffffff).setIntensity(1.0);
    }
 
    public createPlayer(nickname: string): void {
