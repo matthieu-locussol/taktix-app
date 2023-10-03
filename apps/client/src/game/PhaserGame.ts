@@ -6,7 +6,7 @@ import { HouseScene } from './scenes/HouseScene';
 
 export const config: Phaser.Types.Core.GameConfig = {
    type: Phaser.AUTO,
-   backgroundColor: '#48C4F8',
+   backgroundColor: '#1f2937',
    parent: 'root-game',
    scene: [CloudsScene, HouseScene],
    pixelArt: true,

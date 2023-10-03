@@ -1,48 +1,74 @@
-import { ClientPacketType } from 'shared';
-import { INTERNAL_PLAYER_NAME, Player } from 'shared/dist/types/Player';
+import crypto from 'crypto';
+import { ClientPacketType, _assertTrue } from 'shared';
+import { Player } from 'shared/dist/types/Player';
 import { state } from '../../state';
 import { prisma } from '../../utils/prisma';
 import { SocketId } from '../../utils/socketId';
 
-export const handleLogin = async ({ name }: ClientPacketType<'login'>, socketId: SocketId) => {
+export const handleLogin = async (
+   { username, password }: ClientPacketType<'login'>,
+   socketId: SocketId,
+) => {
    const client = state.getClient(socketId);
 
-   if (name === INTERNAL_PLAYER_NAME) {
+   // TODO: Should be checked in "handleRegister"
+
+   // if (name === INTERNAL_PLAYER_NAME) {
+   //    client.socket.send({
+   //       type: 'loginResponse',
+   //       response: {
+   //          status: 'user_already_exist',
+   //       },
+   //    });
+   //    return;
+   // }
+
+   // Hash password using bcrypt with the new JS Crypto API
+   const digestPassword = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(password));
+   const hashedPassword = Array.from(new Uint8Array(digestPassword))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+
+   const users = await prisma.user.findMany({
+      where: { username, password: hashedPassword },
+      include: { characters: true },
+   });
+   _assertTrue(users.length <= 1, 'More than one user found!');
+   const user = users[0];
+
+   if (!user) {
       client.socket.send({
          type: 'loginResponse',
          response: {
-            status: 'user_already_exist',
+            status: 'user_not_found',
          },
       });
       return;
    }
 
+   _assertTrue(user.characters.length > 0, 'User has no characters!');
+   const character = user.characters[0];
+
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
       socket.send({
          type: 'playerLoggedIn',
-         name,
+         name: character.name,
       });
    });
 
-   const user = await prisma.testo.upsert({
-      where: { name },
-      create: { name },
-      update: {},
-   });
-
-   client.name = name;
-   client.map = user.map;
+   client.name = character.name;
+   client.map = character.map;
    client.position = {
-      x: user.pos_x,
-      y: user.pos_y,
+      x: character.pos_x,
+      y: character.pos_y,
    };
 
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
       socket.send({
          type: 'playerJoinMap',
-         name,
-         x: user.pos_x,
-         y: user.pos_y,
+         name: character.name,
+         x: character.pos_x,
+         y: character.pos_y,
       });
    });
 
@@ -56,9 +82,9 @@ export const handleLogin = async ({ name }: ClientPacketType<'login'>, socketId:
       type: 'loginResponse',
       response: {
          status: 'connected',
-         map: user.map,
-         posX: user.pos_x,
-         posY: user.pos_y,
+         map: character.map,
+         posX: character.pos_x,
+         posY: character.pos_y,
          players,
       },
    });

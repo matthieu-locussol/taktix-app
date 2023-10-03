@@ -18,20 +18,21 @@ export class SocketStore {
 
    private _store: Store;
 
-   constructor(store: Store, nickname: string) {
+   constructor(store: Store, username: string, password: string) {
       makeAutoObservable(this);
 
       this.socket = new WebSocket(import.meta.env.VITE_SERVER_WEBSOCKET_URL);
       this._store = store;
 
-      this.initialize(nickname);
+      this.initialize(username, password);
    }
 
-   initialize(nickname: string) {
+   initialize(username: string, password: string) {
       this.socket.onopen = () => {
          this.send({
             type: 'login',
-            name: nickname,
+            username,
+            password,
          });
       };
 
