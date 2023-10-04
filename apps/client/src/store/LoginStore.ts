@@ -7,6 +7,8 @@ export class LoginStore {
 
    public errorMessage: string = '';
 
+   public serverOnline: boolean = false;
+
    constructor() {
       makeAutoObservable(this);
    }
@@ -21,6 +23,10 @@ export class LoginStore {
 
    setErrorMessage(errorMessage: string) {
       this.errorMessage = errorMessage;
+   }
+
+   setServerOnline(serverOnline: boolean) {
+      this.serverOnline = serverOnline;
    }
 
    get canLogin() {

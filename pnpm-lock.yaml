@@ -76,6 +76,7 @@ importers:
 
    apps/server:
       specifiers:
+         '@fastify/cors': ^8.4.0
          '@fastify/websocket': ^8.1.0
          '@prisma/client': ^4.14.1
          '@types/node': ^20.2.5
@@ -95,6 +96,7 @@ importers:
          vitest: ^0.31.1
          ws: ^8.13.0
       dependencies:
+         '@fastify/cors': 8.4.0
          '@fastify/websocket': 8.1.0
          '@prisma/client': 4.14.1_prisma@4.14.1
          fastify: 4.17.0
@@ -1205,6 +1207,16 @@ packages:
          ajv: 8.12.0
          ajv-formats: 2.1.1
          fast-uri: 2.2.0
+      dev: false
+
+   /@fastify/cors/8.4.0:
+      resolution:
+         {
+            integrity: sha512-MlVvMTenltToByTpLwlWtO+7dQ3l2J+1OpmGrx9JpSNWo1d+dhfNCOi23zHhxdFhtpDzfwGwCsKu9DTeG7k7nQ==,
+         }
+      dependencies:
+         fastify-plugin: 4.5.0
+         mnemonist: 0.39.5
       dev: false
 
    /@fastify/deepmerge/1.3.0:
@@ -6081,6 +6093,15 @@ packages:
          ufo: 1.1.2
       dev: false
 
+   /mnemonist/0.39.5:
+      resolution:
+         {
+            integrity: sha512-FPUtkhtJ0efmEFGpU14x7jGbTB+s18LrzRL2KgoWz9YvcY3cPomz8tih01GbHwnGk/OmkOKfqd/RAQoc8Lm7DQ==,
+         }
+      dependencies:
+         obliterator: 2.0.4
+      dev: false
+
    /mobx-react-lite/3.4.3_lrdhi4fih7ii4kmeak7ov4c3ha:
       resolution:
          {
@@ -6377,6 +6398,13 @@ packages:
          define-properties: 1.2.0
          es-abstract: 1.21.2
       dev: true
+
+   /obliterator/2.0.4:
+      resolution:
+         {
+            integrity: sha512-lgHwxlxV1qIg1Eap7LgIeoBWIMFibOjbrYPIPJZcI1mmGAI2m3lNYpK12Y+GBdPQ0U1hRwSord7GIaawz962qQ==,
+         }
+      dev: false
 
    /on-exit-leak-free/2.1.0:
       resolution:

@@ -13,6 +13,7 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "dependencies": {
+      "@fastify/cors": "^8.4.0",
       "@fastify/websocket": "^8.1.0",
       "@prisma/client": "^4.14.1",
       "fastify": "^4.17.0",
