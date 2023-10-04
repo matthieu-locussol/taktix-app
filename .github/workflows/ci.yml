@@ -48,8 +48,8 @@ jobs:
          - run: chmod 600 key.pem
          - run:
               ssh -i key.pem ${{ secrets.USER }}@${{ secrets.HOST }} -o ConnectTimeout=1200 -o
-              StrictHostKeyChecking=no "cd ${{ secrets.DIR }} && git pull origin master && ${{
-              secrets.INSTALL_COMMAND }} && ${{ secrets.BUILD_COMMAND }} && ${{
+              StrictHostKeyChecking=no "cd ${{ secrets.DIR }} && git checkout . && git pull origin
+              master && ${{ secrets.INSTALL_COMMAND }} && ${{ secrets.BUILD_COMMAND }} && ${{
               secrets.RESTART_COMMAND }}"
 
    release:
