@@ -2,7 +2,7 @@
    "apps": [
       {
          "name": "Taktix - Server",
-         "script": "cd apps/server && pnpm start",
+         "script": "pnpm start:server",
          "env": {
             "NODE_ENV": "production"
          }
