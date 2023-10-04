@@ -49,6 +49,9 @@
       "start:website": {
          "dependsOn": ["build:website"]
       },
+      "studio": {
+         "dependsOn": ["build:server"]
+      },
       "test": {}
    }
 }

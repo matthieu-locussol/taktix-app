@@ -9,7 +9,11 @@ const fastifyInstance = Fastify({
 });
 
 fastifyInstance.register(FastifyWebSocketPlugin);
-fastifyInstance.register(FastifyCorsPlugin);
+fastifyInstance.register(FastifyCorsPlugin, {
+   origin: '*',
+   methods: ['GET'],
+   credentials: true,
+});
 
 fastifyInstance.register(async (fastify) => {
    fastify.get('/ws', { websocket: true }, wsRouter);

@@ -2,13 +2,14 @@
    "name": "server",
    "version": "1.19.0",
    "scripts": {
-      "postinstall": "pnpm dlx prisma generate",
+      "postinstall": "prisma generate",
       "build": "tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
       "eslint": "eslint src",
       "dev:server": "ts-node-dev --respawn --transpile-only src/index.ts",
       "start:server": "node ./dist/index.js",
-      "test": "vitest --run"
+      "test": "vitest --run",
+      "studio": "prisma studio"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
