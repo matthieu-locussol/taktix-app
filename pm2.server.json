@@ -1,0 +1,11 @@
+{
+   "apps": [
+      {
+         "name": "Taktix - Server",
+         "script": "cd apps/server && pnpm start",
+         "env": {
+            "NODE_ENV": "production"
+         }
+      }
+   ]
+}
