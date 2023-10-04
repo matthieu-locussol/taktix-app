@@ -54,7 +54,7 @@ jobs:
 
    release:
       name: Release
-      needs: [build]
+      needs: [deploy]
       if: github.ref == 'refs/heads/master'
       strategy:
          matrix:
