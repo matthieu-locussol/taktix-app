@@ -38,8 +38,28 @@ jobs:
          - run: pnpm build
          - run: pnpm test
 
+   deploy:
+      name: Deploy
+      runs-on: ubuntu-latest
+      needs: [build]
+      if: github.ref == 'refs/heads/master'
+      steps:
+         - uses: appleboy/ssh-action@master
+           with:
+              host: ${{ secrets.HOST }}
+              username: ${{ secrets.USERNAME }}
+              key: ${{ secrets.SSHKEY }}
+              port: ${{ secrets.PORT }}
+              script: |
+                 cd ~/${{ secrets.DIR }}
+                 /usr/bin/git pull origin master
+                 ${{ secrets.INSTALL_COMMAND }}
+                 ${{ secrets.BUILD_COMMAND }}
+                 ${{ secrets.RESTART_COMMAND }}
+
    release:
       name: Release
+      needs: [deploy]
       if: github.ref == 'refs/heads/master'
       strategy:
          matrix:
@@ -88,20 +108,6 @@ jobs:
               releaseBody: 'See the assets to download this version and install it.'
               releaseDraft: false
               prerelease: false
-
-   deploy:
-      name: Deploy
-      runs-on: ubuntu-latest
-      needs: [build]
-      if: github.ref == 'refs/heads/master'
-      steps:
-         - run: echo "${{ secrets.SSHKEY }}" > key.pem
-         - run: chmod 600 key.pem
-         - run:
-              ssh -i key.pem ${{ secrets.USER }}@${{ secrets.HOST }} -o ConnectTimeout=1200 -o
-              StrictHostKeyChecking=no "cd ${{ secrets.DIR }} && git pull origin master && ${{
-              secrets.INSTALL_COMMAND }} && ${{ secrets.BUILD_COMMAND }} && ${{
-              secrets.RESTART_COMMAND }}"
 
    merge_dependabot:
       name: 'Merge (Dependabot)'
