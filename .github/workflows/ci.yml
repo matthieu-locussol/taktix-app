@@ -46,7 +46,6 @@ jobs:
       steps:
          - run: echo "${{ secrets.SSHKEY }}" > key.pem
          - run: chmod 600 key.pem
-         - run: ${{ secrets.ALIAS_COMMAND }}
          - run:
               ssh -i key.pem ${{ secrets.USER }}@${{ secrets.HOST }} -o ConnectTimeout=1200 -o
               StrictHostKeyChecking=no "cd ${{ secrets.DIR }} && git pull origin master && ${{
