@@ -9,6 +9,10 @@
          "outputs": ["dist/**"],
          "dependsOn": ["eslint", "^build:app"]
       },
+      "build:server": {
+         "outputs": ["dist/**"],
+         "dependsOn": ["eslint", "^build:server"]
+      },
       "bumpversion": {
          "cache": false
       },
@@ -36,8 +40,15 @@
          "persistent": true
       },
       "eslint": {},
-      "start": {},
-      "start:website": {},
+      "start": {
+         "dependsOn": ["build"]
+      },
+      "start:server": {
+         "dependsOn": ["build:server"]
+      },
+      "start:website": {
+         "dependsOn": ["build:website"]
+      },
       "test": {}
    }
 }

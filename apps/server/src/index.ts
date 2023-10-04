@@ -4,7 +4,9 @@ import Fastify from 'fastify';
 import { statusRouter } from './routers/statusRouter';
 import { wsRouter } from './routers/wsRouter';
 
-const fastifyInstance = Fastify();
+const fastifyInstance = Fastify({
+   logger: process.env.NODE_ENV !== 'production',
+});
 
 fastifyInstance.register(FastifyWebSocketPlugin);
 fastifyInstance.register(FastifyCorsPlugin);

@@ -1,6 +1,10 @@
 {
    "folders": [
       {
+         "name": "Root ✨",
+         "path": "."
+      },
+      {
          "name": "Client ✨",
          "path": "./apps/client"
       },
@@ -37,8 +41,7 @@
       "editor.codeActionsOnSave": {
          "source.fixAll": true,
          "source.organizeImports": true
-      },
-      "vitest.commandLine": "pnpm exec vitest"
+      }
    },
    "extensions": {
       "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "eamodio.gitlens"]
