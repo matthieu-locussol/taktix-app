@@ -18,6 +18,7 @@ import { observer } from 'mobx-react-lite';
 import { version } from '../../../package.json';
 import { useStore } from '../../store';
 import { GameBackground } from '../GameBackground';
+import { ServerStatus } from '../hud/ServerStatus';
 
 export const LoginScreen = observer(() => {
    const store = useStore();
@@ -67,8 +68,9 @@ export const LoginScreen = observer(() => {
                <Typography variant="body1" color="textSecondary">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                   incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  exercitation ullamco laboris nisi ut aliquip ex ea commodo.
                </Typography>
+               <ServerStatus sx={{ mt: 'auto' }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
             {updaterStore.shouldUpdate === undefined && (
