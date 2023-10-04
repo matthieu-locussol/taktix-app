@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file. See
 [standard-version](https://github.com/conventional-changelog/standard-version) for commit
 guidelines.
 
+## [1.20.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.19.0...v1.20.0) (2023-10-04)
+
+### Features
+
+-  fix cors issues
+   ([5c18c6d](https://github.com/matthieu-locussol/taktix-app/commit/5c18c6d833f2c413b435606e7104a356084413fb))
+-  updated server build commands
+   ([253ab7f](https://github.com/matthieu-locussol/taktix-app/commit/253ab7fe401013b0b31236fb4f835335fcb4cec5))
+
 ## [1.19.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.18.4...v1.19.0) (2023-10-04)
 
 ### Features
