@@ -54,8 +54,7 @@
       },
       "macOSPrivateApi": true,
       "security": {
-         "csp": null,
-         "dangerousUseHttpScheme": true
+         "csp": null
       },
       "updater": {
          "active": true,
