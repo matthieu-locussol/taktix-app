@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.20.1...v1.21.0) (2023-10-05)
+
+
+### Features
+
+* better loading login screen & handle login server-side ([fd23f50](https://github.com/matthieu-locussol/taktix-app/commit/fd23f50f544b5205bb78a077e65a12472393d9d1))
+
+
+### Bug Fixes
+
+* better loading on login screen ([7dab860](https://github.com/matthieu-locussol/taktix-app/commit/7dab860b05c45497742a5c192760320089b2fbfb))
+* removed useless fontFamily attributes ([1f1751f](https://github.com/matthieu-locussol/taktix-app/commit/1f1751f041a64ca66f5b94ececca05f4f4ae1ba3))
+* updated production server url ([7ca6e63](https://github.com/matthieu-locussol/taktix-app/commit/7ca6e63db9569165ba4c608d30f68d7bacace9f9))
+
 ### [1.20.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.20.0...v1.20.1) (2023-10-05)
 
 ## [1.20.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.19.0...v1.20.0) (2023-10-04)
