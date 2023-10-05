@@ -20,11 +20,10 @@ import { ServerStatus } from '../hud/ServerStatus';
 
 export const LoginScreen = observer(() => {
    const store = useStore();
-   const { loginStore, characterStore, updaterStore } = store;
+   const { loginStore, updaterStore } = store;
 
    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      characterStore.setName(loginStore.username);
       store.initialize(loginStore.username, loginStore.password);
    };
 
@@ -110,7 +109,7 @@ export const LoginScreen = observer(() => {
                      color="primary"
                      sx={{ mt: 2 }}
                   >
-                     {!loginStore.loggedIn && characterStore.name !== '' ? (
+                     {loginStore.loading ? (
                         <CircularProgress size={24} color="inherit" />
                      ) : (
                         'Log In'

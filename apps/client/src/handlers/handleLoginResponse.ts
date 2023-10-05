@@ -12,6 +12,7 @@ export const handleLoginResponse = (
       loginStore.setErrorMessage(`User "${loginStore.username}" already exist!`);
       loginStore.setUsername('');
       loginStore.setPassword('');
+      loginStore.setLoading(false);
       characterStore.setName('');
       return;
    }
@@ -20,11 +21,13 @@ export const handleLoginResponse = (
       loginStore.setErrorMessage(`User "${loginStore.username}" not found!`);
       loginStore.setUsername('');
       loginStore.setPassword('');
+      loginStore.setLoading(false);
       characterStore.setName('');
       return;
    }
 
    loginStore.setLoggedIn(true);
+   loginStore.setLoading(false);
 
    const scene = store.gameStore.changeMapPlayer(response.map, {
       entrancePosition: { x: response.posX, y: response.posY },
@@ -36,6 +39,7 @@ export const handleLoginResponse = (
       'player',
    );
 
+   characterStore.setName(response.name);
    characterStore.setMap(response.map);
    characterStore.setPosition({ x: response.posX, y: response.posY });
    characterStore.setPlayers(response.players);

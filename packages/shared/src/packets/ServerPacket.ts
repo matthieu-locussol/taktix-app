@@ -40,6 +40,7 @@ export const zLoginResponse = z.object({
    type: z.literal('loginResponse'),
    response: z.union([
       z.object({
+         name: z.string(),
          status: z.literal('connected'),
          map: z.string(),
          posX: z.number(),

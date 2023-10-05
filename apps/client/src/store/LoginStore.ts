@@ -11,6 +11,8 @@ export class LoginStore {
 
    public loggedIn: boolean = false;
 
+   public loading: boolean = false;
+
    constructor() {
       makeAutoObservable(this);
    }
@@ -33,6 +35,10 @@ export class LoginStore {
 
    setLoggedIn(loggedIn: boolean) {
       this.loggedIn = loggedIn;
+   }
+
+   setLoading(loading: boolean) {
+      this.loading = loading;
    }
 
    get canLogin() {
