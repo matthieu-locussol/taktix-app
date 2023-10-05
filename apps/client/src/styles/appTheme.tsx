@@ -35,8 +35,19 @@ export const appTheme = createTheme({
    }),
    components: {
       MuiButton: {
+         defaultProps: {
+            centerRipple: false,
+         },
          styleOverrides: {
             root: ({ theme }) => ({
+               textTransform: 'none',
+               boxShadow: 'none',
+               ':hover': {
+                  boxShadow: 'none',
+               },
+               ':active': {
+                  boxShadow: 'none',
+               },
                [`&.${buttonClasses.disabled}`]: {
                   backgroundColor: `${theme.palette.primary.main}`,
                   color: theme.palette.text.secondary,
