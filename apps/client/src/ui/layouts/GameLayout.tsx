@@ -1,4 +1,5 @@
-import { Box, BoxProps } from '@mui/material';
+import { BoxProps } from '@mui/material';
+import Box from '@mui/material/Box';
 import { Chatbox } from '../hud/Chatbox';
 
 export const GameLayout = ({ children, ...rest }: BoxProps) => (

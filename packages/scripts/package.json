@@ -1,6 +1,6 @@
 {
    "name": "scripts",
-   "version": "1.20.0",
+   "version": "1.20.1",
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "scripts": {
@@ -8,9 +8,9 @@
       "clean": "rm -rf .turbo && rm -rf node_modules"
    },
    "devDependencies": {
-      "@types/node": "^20.2.5",
+      "@types/node": "^20.8.2",
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
-      "typescript": "^5.0.4"
+      "typescript": "^5.2.2"
    }
 }

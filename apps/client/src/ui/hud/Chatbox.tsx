@@ -1,4 +1,6 @@
-import { Box, Typography, styled } from '@mui/material';
+import { styled } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 import { useStore } from '../../store';

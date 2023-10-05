@@ -1,6 +1,6 @@
 {
    "name": "server",
-   "version": "1.20.0",
+   "version": "1.20.1",
    "scripts": {
       "postinstall": "prisma generate",
       "build": "tsc",
@@ -15,25 +15,25 @@
    "license": "MIT",
    "dependencies": {
       "@fastify/cors": "^8.4.0",
-      "@fastify/websocket": "^8.1.0",
-      "@prisma/client": "^4.14.1",
-      "fastify": "^4.17.0",
-      "mobx": "^6.9.0",
-      "prisma": "^4.14.1",
+      "@fastify/websocket": "^8.2.0",
+      "@prisma/client": "^5.4.1",
+      "fastify": "^4.23.2",
+      "mobx": "^6.10.2",
+      "prisma": "^5.4.1",
       "shared": "workspace:latest",
-      "ts-pattern": "^4.3.0",
-      "uuid": "^9.0.0",
-      "vitest": "^0.31.1",
-      "ws": "^8.13.0"
+      "ts-pattern": "^5.0.5",
+      "uuid": "^9.0.1",
+      "vitest": "^0.34.6",
+      "ws": "^8.14.2"
    },
    "devDependencies": {
-      "@types/node": "^20.2.5",
-      "@types/uuid": "^9.0.1",
-      "@types/ws": "^8.5.4",
+      "@types/node": "^20.8.2",
+      "@types/uuid": "^9.0.4",
+      "@types/ws": "^8.5.6",
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
-      "eslint": "^8.41.0",
+      "eslint": "^8.50.0",
       "ts-node-dev": "^2.0.0",
-      "typescript": "^5.0.4"
+      "typescript": "^5.2.2"
    }
 }

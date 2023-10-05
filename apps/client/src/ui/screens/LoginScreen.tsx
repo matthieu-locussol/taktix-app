@@ -1,19 +1,17 @@
-import {
-   Box,
-   Button,
-   Card,
-   CircularProgress,
-   Dialog,
-   DialogActions,
-   DialogContent,
-   DialogContentText,
-   DialogTitle,
-   Divider,
-   Link,
-   TextField,
-   Typography,
-   styled,
-} from '@mui/material';
+import { styled } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CircularProgress from '@mui/material/CircularProgress';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { version } from '../../../package.json';
 import { useStore } from '../../store';

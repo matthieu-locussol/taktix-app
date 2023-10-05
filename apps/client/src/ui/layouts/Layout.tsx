@@ -1,4 +1,5 @@
-import { Box, BoxProps, styled } from '@mui/material';
+import { BoxProps, styled } from '@mui/material';
+import Box from '@mui/material/Box';
 
 export const Layout = ({ children }: BoxProps) => <Root>{children}</Root>;
 
