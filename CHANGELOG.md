@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.21.3](https://github.com/matthieu-locussol/taktix-app/compare/v1.21.2...v1.21.3) (2023-10-05)
+
+
+### Bug Fixes
+
+* attempt to use dangerous http scheme ([27542c3](https://github.com/matthieu-locussol/taktix-app/commit/27542c3f26cda0f8692e4bec63ee20b91b4894bc))
+
 ### [1.21.2](https://github.com/matthieu-locussol/taktix-app/compare/v1.21.1...v1.21.2) (2023-10-05)
 
 ### [1.21.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.21.0...v1.21.1) (2023-10-05)
