@@ -13,8 +13,17 @@ export const appTheme = createTheme({
          main: '#EF4444',
       },
       text: {
-         primary: '#D1D5DB',
-         secondary: '#F3F4F6',
+         primary: '#F3F4F6',
+         secondary: '#D1D5DB',
+      },
+      link: {
+         normal: '#F3F4F6',
+         hover: '#14B8A6',
+      },
+      paper: {
+         transparent: '#111827E6',
+         background: '#111827',
+         border: '#374151',
       },
       mode: 'light',
    },
@@ -56,17 +65,20 @@ export const appTheme = createTheme({
             }),
          },
       },
-      MuiCard: {
-         variants: [
-            {
-               props: { variant: 'outlined' },
-               style: ({ theme }) =>
-                  theme.unstable_sx({
-                     border: '1px solid rgb(55, 65, 81)',
-                     background: 'rgba(17, 24, 39, 0.9)',
-                  }),
-            },
-         ],
+      MuiDialog: {
+         styleOverrides: {
+            paper: ({ theme }) => ({
+               border: `1px solid ${theme.palette.paper.border}`,
+               background: theme.palette.paper.background,
+            }),
+         },
+      },
+      MuiDialogTitle: {
+         styleOverrides: {
+            root: ({ theme }) => ({
+               color: theme.palette.text.primary,
+            }),
+         },
       },
       MuiInputBase: {
          styleOverrides: {
@@ -81,13 +93,13 @@ export const appTheme = createTheme({
             underline: 'none',
          },
          styleOverrides: {
-            root: () => ({
-               color: '#FFFFFF',
+            root: ({ theme }) => ({
+               color: theme.palette.link.normal,
                fontWeight: 500,
                transition:
                   'color 0.15s, textDecoration 0.15s, background-color 0.3s, border-color 0.3s, box-shadow 0.3s',
                '&:hover': {
-                  color: '#14B8A6',
+                  color: theme.palette.link.hover,
                   cursor: 'pointer',
                },
             }),
@@ -95,9 +107,9 @@ export const appTheme = createTheme({
       },
       MuiOutlinedInput: {
          styleOverrides: {
-            root: () => ({
+            root: ({ theme }) => ({
                [`& fieldset`]: {
-                  borderColor: 'rgb(55, 65, 81)',
+                  borderColor: theme.palette.paper.border,
                   transition: 'background-color 0.3s, border-color 0.3s, box-shadow 0.3s',
                },
                [`&:hover fieldset`]: {
@@ -108,6 +120,14 @@ export const appTheme = createTheme({
                   border: '1px solid red',
                   transition: 'background-color 0.3s, border-color 0.3s, box-shadow 0.3s',
                },
+            }),
+         },
+      },
+      MuiPaper: {
+         styleOverrides: {
+            outlined: ({ theme }) => ({
+               border: `1px solid ${theme.palette.paper.border}`,
+               background: theme.palette.paper.transparent,
             }),
          },
       },
