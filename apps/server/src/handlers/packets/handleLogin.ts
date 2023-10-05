@@ -49,19 +49,19 @@ export const handleLogin = async (
    _assertTrue(user.characters.length > 0, 'User has no characters!');
    const character = user.characters[0];
 
-   state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
-      socket.send({
-         type: 'playerLoggedIn',
-         name: character.name,
-      });
-   });
-
    client.name = character.name;
    client.map = character.map;
    client.position = {
       x: character.pos_x,
       y: character.pos_y,
    };
+
+   state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
+      socket.send({
+         type: 'playerLoggedIn',
+         name: character.name,
+      });
+   });
 
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
       socket.send({
@@ -81,6 +81,7 @@ export const handleLogin = async (
    client.socket.send({
       type: 'loginResponse',
       response: {
+         name: character.name,
          status: 'connected',
          map: character.map,
          posX: character.pos_x,

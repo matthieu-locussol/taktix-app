@@ -1,21 +1,21 @@
 import { SocketStream } from '@fastify/websocket';
 import { FastifyRequest } from 'fastify';
-import { log, zClientPacket } from 'shared';
+import { zClientPacket } from 'shared';
 import { handleClientPacket } from '../handlers/handleClientPacket';
 import { state } from '../state';
 import { prisma } from '../utils/prisma';
 import { makeSocketId } from '../utils/socketId';
 
-export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
+export const wsRouter = (connection: SocketStream, request: FastifyRequest) => {
    const socketId = makeSocketId();
 
-   if (req.socket.remoteAddress !== undefined) {
-      log(`New connection from ${socketId}!`);
+   if (request.socket.remoteAddress !== undefined) {
+      request.log.info(`New connection from ${socketId}!`);
       state.initializeNewClient(socketId, connection.socket);
    }
 
    connection.socket.onclose = async () => {
-      log(`Disconnected: ${socketId}`);
+      request.log.info(`Disconnected: ${socketId}`);
       const client = state.getClient(socketId);
 
       if (client.name === '') {
@@ -57,7 +57,7 @@ export const wsRouter = (connection: SocketStream, req: FastifyRequest) => {
    connection.socket.onmessage = async (event) => {
       try {
          const packet = zClientPacket.parse(JSON.parse(event.data.toString()));
-         log(`Received a ${packet.type} packet`);
+         request.log.info(`Received a ${packet.type} packet`);
          await handleClientPacket(packet, socketId);
       } catch (e) {
          console.error(e);
