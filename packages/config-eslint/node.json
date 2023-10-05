@@ -1,5 +1,5 @@
 {
-   "plugins": ["@typescript-eslint", "import"],
+   "plugins": ["@typescript-eslint", "import", "mui-path-imports"],
    "extends": [
       "airbnb-base",
       "airbnb-typescript/base",
@@ -46,7 +46,8 @@
       ],
       "@typescript-eslint/no-use-before-define": "off",
       "react/jsx-filename-extension": "off",
-      "react/jsx-props-no-spreading": "off"
+      "react/jsx-props-no-spreading": "off",
+      "mui-path-imports/mui-path-imports": "error"
    },
    "settings": {
       "react": {

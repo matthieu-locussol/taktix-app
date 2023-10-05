@@ -1,4 +1,8 @@
-import { Box, CircularProgress, Stack, Typography, styled } from '@mui/material';
+import { styled } from '@mui/material';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
 
