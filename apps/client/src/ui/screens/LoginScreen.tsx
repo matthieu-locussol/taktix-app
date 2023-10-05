@@ -84,7 +84,7 @@ export const LoginScreen = observer(() => {
                      Access the universe
                   </Typography>
                   {loginStore.errorMessage && (
-                     <Typography variant="body1" align="left" color="error">
+                     <Typography variant="body1" align="center" color="error">
                         {loginStore.errorMessage}
                      </Typography>
                   )}
@@ -150,7 +150,7 @@ export const LoginScreen = observer(() => {
                   </DialogContentText>
                </DialogContent>
                <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
-                  <Button variant="contained" onClick={() => updaterStore.restart()} autoFocus>
+                  <Button variant="contained" onClick={() => updaterStore.restart()}>
                      Restart
                   </Button>
                </DialogActions>
