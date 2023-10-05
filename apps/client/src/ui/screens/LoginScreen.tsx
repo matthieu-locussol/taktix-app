@@ -49,9 +49,7 @@ export const LoginScreen = observer(() => {
                <Box
                   sx={{ display: 'flex', alignItems: 'baseline', mb: 4, justifyContent: 'center' }}
                >
-                  <Typography variant="h1" fontFamily="Orbitron">
-                     Taktix
-                  </Typography>
+                  <Typography variant="h1">Taktix</Typography>
                   <Typography
                      color="white"
                      fontWeight="bold"
@@ -72,7 +70,7 @@ export const LoginScreen = observer(() => {
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
             {updaterStore.shouldUpdate === undefined && (
                <CardContent>
-                  <Typography variant="h1" fontFamily="Orbitron" align="center">
+                  <Typography variant="h1" align="center">
                      Access the universe
                   </Typography>
                   <CircularProgress />
@@ -80,7 +78,7 @@ export const LoginScreen = observer(() => {
             )}
             {updaterStore.shouldUpdate === false && (
                <CardContent>
-                  <Typography variant="h1" fontFamily="Orbitron" align="center" gutterBottom>
+                  <Typography variant="h1" align="center" gutterBottom>
                      Access the universe
                   </Typography>
                   {loginStore.errorMessage && (
@@ -120,7 +118,7 @@ export const LoginScreen = observer(() => {
             )}
             {updaterStore.shouldUpdate && (
                <CardContent>
-                  <Typography variant="h1" fontFamily="Orbitron" align="center">
+                  <Typography variant="h1" align="center">
                      Access the universe
                   </Typography>
                   <Typography>
