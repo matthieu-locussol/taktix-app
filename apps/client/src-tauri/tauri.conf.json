@@ -8,7 +8,7 @@
    },
    "package": {
       "productName": "taktix",
-      "version": "1.21.0"
+      "version": "1.21.1"
    },
    "tauri": {
       "allowlist": {
@@ -49,8 +49,7 @@
          "targets": "all",
          "windows": {
             "certificateThumbprint": null,
-            "digestAlgorithm": "sha256",
-            "timestampUrl": ""
+            "digestAlgorithm": "sha256"
          }
       },
       "macOSPrivateApi": true,
