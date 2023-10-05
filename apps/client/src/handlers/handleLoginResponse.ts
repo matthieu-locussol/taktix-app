@@ -24,6 +24,8 @@ export const handleLoginResponse = (
       return;
    }
 
+   loginStore.setLoggedIn(true);
+
    const scene = store.gameStore.changeMapPlayer(response.map, {
       entrancePosition: { x: response.posX, y: response.posY },
    });

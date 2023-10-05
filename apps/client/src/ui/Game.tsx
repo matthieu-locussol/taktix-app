@@ -10,8 +10,8 @@ import { LoginScreen } from './screens/LoginScreen';
 export const Game = observer(() => {
    const {
       loadingScreenStore: { loadingAssets, sceneVisible },
-      characterStore,
       updaterStore,
+      loginStore,
    } = useStore();
 
    useEffect(() => {
@@ -22,7 +22,7 @@ export const Game = observer(() => {
       return <LoadingAssetsScreen />;
    }
 
-   if (characterStore.name === '') {
+   if (!loginStore.loggedIn) {
       return <LoginScreen />;
    }
 

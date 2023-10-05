@@ -9,6 +9,8 @@ export class LoginStore {
 
    public serverOnline: boolean = false;
 
+   public loggedIn: boolean = false;
+
    constructor() {
       makeAutoObservable(this);
    }
@@ -27,6 +29,10 @@ export class LoginStore {
 
    setServerOnline(serverOnline: boolean) {
       this.serverOnline = serverOnline;
+   }
+
+   setLoggedIn(loggedIn: boolean) {
+      this.loggedIn = loggedIn;
    }
 
    get canLogin() {

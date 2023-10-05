@@ -110,7 +110,11 @@ export const LoginScreen = observer(() => {
                      color="primary"
                      sx={{ mt: 2 }}
                   >
-                     Log In
+                     {!loginStore.loggedIn && characterStore.name !== '' ? (
+                        <CircularProgress size={24} color="inherit" />
+                     ) : (
+                        'Log In'
+                     )}
                   </Button>
                   <Link sx={{ mt: 2 }}>Register</Link>
                </CardContent>
