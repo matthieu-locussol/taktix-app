@@ -7,18 +7,22 @@
       },
       "build:app": {
          "outputs": ["dist/**"],
-         "dependsOn": ["eslint", "^build:app"]
+         "dependsOn": ["eslint", "build:shared", "^build:app"]
       },
       "build:server": {
          "outputs": ["dist/**"],
-         "dependsOn": ["eslint", "^build:server"]
+         "dependsOn": ["eslint", "build:shared", "^build:server"]
       },
-      "bumpversion": {
-         "cache": false
+      "build:shared": {
+         "outputs": ["dist/**"],
+         "dependsOn": ["eslint:shared", "^build:shared"]
       },
-      "clean": {
-         "cache": false
+      "build:website": {
+         "outputs": ["dist/**"],
+         "dependsOn": ["eslint", "build:shared"]
       },
+      "bumpversion": {},
+      "clean": {},
       "dev": {
          "cache": false,
          "persistent": true
@@ -39,7 +43,10 @@
          "cache": false,
          "persistent": true
       },
-      "eslint": {},
+      "eslint": {
+         "dependsOn": ["build:shared", "^eslint"]
+      },
+      "eslint:shared": {},
       "start": {
          "dependsOn": ["build"]
       },
