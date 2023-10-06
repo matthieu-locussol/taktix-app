@@ -10,8 +10,7 @@ export const handleLoginResponse = (
 
    if (response.status === 'user_already_exist') {
       loginStore.setErrorMessage(`User "${loginStore.username}" already exist!`);
-      loginStore.setUsername('');
-      loginStore.setPassword('');
+      loginStore.resetFields();
       loginStore.setLoading(false);
       characterStore.setName('');
       return;
@@ -19,8 +18,7 @@ export const handleLoginResponse = (
 
    if (response.status === 'user_not_found') {
       loginStore.setErrorMessage(`User "${loginStore.username}" not found!`);
-      loginStore.setUsername('');
-      loginStore.setPassword('');
+      loginStore.resetFields();
       loginStore.setLoading(false);
       characterStore.setName('');
       return;

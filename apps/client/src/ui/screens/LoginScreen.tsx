@@ -22,15 +22,36 @@ export const LoginScreen = observer(() => {
    const store = useStore();
    const { loginStore, updaterStore } = store;
 
-   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      store.initialize(loginStore.username, loginStore.password);
+
+      if (loginStore.mode === 'login') {
+         store.initialize(loginStore.username, loginStore.password);
+      } else {
+         const results = await fetch(`${import.meta.env.VITE_SERVER_URL}/register`, {
+            method: 'POST',
+            body: JSON.stringify({
+               username: loginStore.username,
+               password: loginStore.password,
+               email: loginStore.email,
+            }),
+         });
+         const json = await results.json();
+
+         if (json.error) {
+            loginStore.setErrorMessage(json.error);
+         } else {
+            loginStore.setSuccessMessage('Account created! You can now login.');
+            loginStore.switchPage();
+         }
+      }
    };
 
    return (
       <Box
          component="form"
          onSubmit={onSubmit}
+         noValidate
          sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -86,6 +107,24 @@ export const LoginScreen = observer(() => {
                         {loginStore.errorMessage}
                      </Typography>
                   )}
+                  {loginStore.successMessage && (
+                     <Typography
+                        variant="body1"
+                        align="center"
+                        sx={(theme) => ({ color: theme.palette.success.main })}
+                     >
+                        {loginStore.successMessage}
+                     </Typography>
+                  )}
+                  {loginStore.mode === 'register' && (
+                     <TextField
+                        type="email"
+                        placeholder="Email address"
+                        value={loginStore.email}
+                        onChange={(e) => loginStore.setEmail(e.target.value)}
+                        sx={{ mt: 2 }}
+                     />
+                  )}
                   <TextField
                      type="username"
                      placeholder="Username"
@@ -105,15 +144,17 @@ export const LoginScreen = observer(() => {
                      type="submit"
                      variant="contained"
                      color="primary"
-                     sx={{ mt: 2 }}
+                     sx={{ my: 2 }}
                   >
                      {loginStore.loading ? (
                         <CircularProgress size={24} color="inherit" />
                      ) : (
-                        'Log In'
+                        loginStore.currentPage
                      )}
                   </Button>
-                  <Link sx={{ mt: 2 }}>Register</Link>
+                  <Link onClick={() => loginStore.switchPage()} sx={{ mt: 'auto', mr: 'auto' }}>
+                     {loginStore.otherPage}
+                  </Link>
                </CardContent>
             )}
             {updaterStore.shouldUpdate && (
