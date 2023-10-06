@@ -72,8 +72,8 @@
             "center": true,
             "resizable": true,
             "fullscreen": false,
-            "minWidth": 1064,
-            "minHeight": 480
+            "minWidth": 1028,
+            "minHeight": 540
          }
       ]
    }
