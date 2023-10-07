@@ -42,7 +42,6 @@ export class Store {
    }
 
    initialize(username: string, password: string) {
-      this.loginStore.setLoading(true);
       this._socketStore = new SocketStore(this, username, password);
    }
 }

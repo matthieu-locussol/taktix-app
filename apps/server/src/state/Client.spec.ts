@@ -7,7 +7,7 @@ it('should have default values', () => {
    const store = new Client(socket);
 
    expect(store.map).toEqual('');
-   expect(store.name).toEqual('');
+   expect(store.characterName).toEqual('');
    expect(store.position).toEqual({ x: 0, y: 0 });
 });
 
@@ -23,8 +23,8 @@ it('should set the name', () => {
    const socket = new WebSocket(null);
    const store = new Client(socket);
 
-   store.setName('John');
-   expect(store.name).toBe('John');
+   store.setCharacterName('John');
+   expect(store.characterName).toBe('John');
 });
 
 it('should set the position', () => {

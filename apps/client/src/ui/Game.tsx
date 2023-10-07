@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { useStore } from '../store';
 import { GameLayout } from './layouts/GameLayout';
+import { CharacterSelectionScreen } from './screens/CharacterSelectionScreen';
 import { LoadingAssetsScreen } from './screens/LoadingAssetsScreen';
 import { LoginScreen } from './screens/LoginScreen';
 
@@ -22,8 +23,12 @@ export const Game = observer(() => {
       return <LoadingAssetsScreen />;
    }
 
-   if (!loginStore.loggedIn) {
+   if (!loginStore.loggedIn && loginStore.mode !== 'characterSelection') {
       return <LoginScreen />;
+   }
+
+   if (!loginStore.loggedIn && loginStore.mode === 'characterSelection') {
+      return <CharacterSelectionScreen />;
    }
 
    return <GameLayout>{!sceneVisible ? <CircularProgress /> : <Box id="root-game" />}</GameLayout>;

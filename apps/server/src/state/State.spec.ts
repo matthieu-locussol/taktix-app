@@ -18,7 +18,7 @@ it('should initialize a new client', () => {
 
    const client = state.getClient(socketId);
    expect(client.map).toEqual('');
-   expect(client.name).toEqual('');
+   expect(client.characterName).toEqual('');
    expect(client.position).toStrictEqual({ x: 0, y: 0 });
 });
 
@@ -30,13 +30,15 @@ it('should get other clients', () => {
    state.initializeNewClient(socketIds[1], new WebSocket(null));
    state.initializeNewClient(socketIds[2], new WebSocket(null));
 
-   state.getClient(socketIds[0]).setName('A');
-   state.getClient(socketIds[1]).setName('B');
-   state.getClient(socketIds[2]).setName('C');
+   state.getClient(socketIds[0]).setCharacterName('A');
+   state.getClient(socketIds[1]).setCharacterName('B');
+   state.getClient(socketIds[2]).setCharacterName('C');
 
    expect(state.clients.size).toEqual(3);
 
-   const otherPlayersNames = state.getOtherPlayers(socketIds[0]).map(({ name }) => name);
+   const otherPlayersNames = state
+      .getOtherPlayers(socketIds[0])
+      .map(({ characterName: name }) => name);
    expect(otherPlayersNames).toEqual(['B', 'C']);
 });
 
@@ -48,9 +50,9 @@ it('should get other clients on the same map', () => {
    state.initializeNewClient(socketIds[1], new WebSocket(null));
    state.initializeNewClient(socketIds[2], new WebSocket(null));
 
-   state.getClient(socketIds[0]).setName('A');
-   state.getClient(socketIds[1]).setName('B');
-   state.getClient(socketIds[2]).setName('C');
+   state.getClient(socketIds[0]).setCharacterName('A');
+   state.getClient(socketIds[1]).setCharacterName('B');
+   state.getClient(socketIds[2]).setCharacterName('C');
 
    state.getClient(socketIds[0]).setMap('1');
    state.getClient(socketIds[1]).setMap('2');
@@ -58,6 +60,8 @@ it('should get other clients on the same map', () => {
 
    expect(state.clients.size).toEqual(3);
 
-   const otherPlayersNames = state.getOtherPlayersSameMap(socketIds[0]).map(({ name }) => name);
+   const otherPlayersNames = state
+      .getOtherPlayersSameMap(socketIds[0])
+      .map(({ characterName: name }) => name);
    expect(otherPlayersNames).toEqual(['C']);
 });

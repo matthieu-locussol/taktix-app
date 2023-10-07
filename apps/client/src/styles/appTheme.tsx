@@ -1,5 +1,5 @@
 import { buttonClasses } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, darken } from '@mui/material/styles';
 
 export const appTheme = createTheme({
    palette: {
@@ -24,6 +24,11 @@ export const appTheme = createTheme({
          transparent: '#111827E6',
          background: '#111827',
          border: '#374151',
+      },
+      shadows: {
+         xs: '0 5px 10px 0 rgba(20, 184, 166, 0.06)',
+         sm: '0 5px 10px 0 rgba(20, 184, 166, 0.12)',
+         md: '0 1px 2px 0 rgba(20, 184, 166, 0.16)',
       },
       mode: 'light',
    },
@@ -64,6 +69,32 @@ export const appTheme = createTheme({
                },
             }),
          },
+      },
+      MuiCard: {
+         variants: [
+            {
+               props: { variant: 'clickable' },
+               style: ({ theme }) =>
+                  theme.unstable_sx({
+                     cursor: 'pointer',
+                     border: `1px solid ${theme.palette.paper.border}`,
+                     background: darken(theme.palette.paper.transparent, 0.15),
+                     padding: theme.spacing(2),
+                     transition:
+                        'background-color 0.3s, border-color 0.15s, box-shadow 0.3s, margin 0.15s',
+                     ':hover': {
+                        cursor: 'pointer',
+                        boxShadow: theme.palette.shadows.xs,
+                        borderColor: theme.palette.primary.light,
+                     },
+                     ':active': {
+                        boxShadow: theme.palette.shadows.md,
+                        mt: 0.25,
+                        mb: -0.25,
+                     },
+                  }),
+            },
+         ],
       },
       MuiDialog: {
          styleOverrides: {

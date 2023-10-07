@@ -26,6 +26,7 @@ export const LoginScreen = observer(() => {
       e.preventDefault();
 
       if (loginStore.mode === 'login') {
+         loginStore.setLoading(true);
          store.initialize(loginStore.username, loginStore.password);
       } else {
          const results = await fetch(`${import.meta.env.VITE_SERVER_URL}/register`, {
@@ -38,11 +39,13 @@ export const LoginScreen = observer(() => {
          });
          const json = await results.json();
 
+         loginStore.reset();
+
          if (json.error) {
             loginStore.setErrorMessage(json.error);
          } else {
             loginStore.setSuccessMessage('Account created! You can now login.');
-            loginStore.switchPage();
+            loginStore.setMode('login');
          }
       }
    };
@@ -152,7 +155,12 @@ export const LoginScreen = observer(() => {
                         loginStore.currentPage
                      )}
                   </Button>
-                  <Link onClick={() => loginStore.switchPage()} sx={{ mt: 'auto', mr: 'auto' }}>
+                  <Link
+                     onClick={() =>
+                        loginStore.setMode(loginStore.mode === 'login' ? 'register' : 'login')
+                     }
+                     sx={{ mt: 'auto', mr: 'auto' }}
+                  >
                      {loginStore.otherPage}
                   </Link>
                </CardContent>

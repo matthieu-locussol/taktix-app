@@ -9,7 +9,7 @@ export const handleMove = ({ posX, posY }: ClientPacketType<'move'>, socketId: S
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
       socket.send({
          type: 'playerMove',
-         name: client.name,
+         name: client.characterName,
          x: posX,
          y: posY,
       });
