@@ -40,7 +40,7 @@
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
       "eslint": "^8.50.0",
-      "happy-dom": "^12.8.0",
+      "happy-dom": "^12.9.0",
       "typescript": "^5.2.2"
    }
 }
