@@ -33,6 +33,6 @@
       "lint-staged": "^14.0.1",
       "prettier": "^3.0.3",
       "standard-version": "^9.5.0",
-      "turbo": "^1.10.14"
+      "turbo": "^1.10.15"
    }
 }
