@@ -78,6 +78,8 @@ jobs:
               key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
               restore-keys: |
                  ${{ runner.os }}-pnpm-store-
+         - run: pnpm install
+         - run: pnpm build
          - name: install Rust stable
            uses: dtolnay/rust-toolchain@stable
          - name: install dependencies (ubuntu only)
@@ -85,8 +87,6 @@ jobs:
            run: |
               sudo apt-get update
               sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
-         - run: pnpm install
-         - run: pnpm build
          - uses: tauri-apps/tauri-action@v0
            env:
               GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
