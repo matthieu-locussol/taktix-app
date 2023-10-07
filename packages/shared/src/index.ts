@@ -1,3 +1,4 @@
+export * from './config';
 export * from './data/teleportationSpots';
 export * from './packets/ClientPacket';
 export * from './packets/ServerPacket';

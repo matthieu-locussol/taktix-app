@@ -129,7 +129,7 @@ export const LoginScreen = observer(() => {
                      />
                   )}
                   <TextField
-                     type="username"
+                     type="text"
                      placeholder="Username"
                      value={loginStore.username}
                      onChange={(e) => loginStore.setUsername(e.target.value)}

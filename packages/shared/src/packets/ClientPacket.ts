@@ -11,6 +11,11 @@ export const zSelectCharacterMessage = z.object({
    name: z.string(),
 });
 
+export const zCreateCharacterMessage = z.object({
+   type: z.literal('createCharacter'),
+   name: z.string(),
+});
+
 export const zMessageMessage = z.object({
    type: z.literal('message'),
    name: z.string(),
@@ -38,6 +43,7 @@ export const zChangeMapMessage = z.object({
 export const zClientPacket = z.discriminatedUnion('type', [
    zLoginMessage,
    zSelectCharacterMessage,
+   zCreateCharacterMessage,
    zMessageMessage,
    zLogoutMessage,
    zMoveMessage,
