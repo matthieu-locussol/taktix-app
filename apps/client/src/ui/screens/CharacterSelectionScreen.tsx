@@ -6,6 +6,7 @@ import Card from '@mui/material/Card';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import { MAX_CHARACTERS_PER_ACCOUNT } from 'shared/src/config';
 import { useStore } from '../../store';
 import { GameBackground } from '../GameBackground';
 
@@ -103,18 +104,21 @@ export const CharacterSelectionScreen = observer(() => {
                         </Typography>
                      </Card>
                   )}
-                  <Card
-                     variant="clickable"
-                     sx={{
-                        display: 'flex',
-                        borderStyle: 'dashed',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                     }}
-                  >
-                     <Typography>Create a new character</Typography>
-                     <AddIcon fontSize="small" />
-                  </Card>
+                  {loginStore.characters.length < MAX_CHARACTERS_PER_ACCOUNT && (
+                     <Card
+                        variant="clickable"
+                        onClick={() => loginStore.setMode('characterCreation')}
+                        sx={{
+                           display: 'flex',
+                           borderStyle: 'dashed',
+                           alignItems: 'center',
+                           justifyContent: 'space-between',
+                        }}
+                     >
+                        <Typography>Create a new character</Typography>
+                        <AddIcon fontSize="small" />
+                     </Card>
+                  )}
                </Box>
                {loginStore.characters.length !== 0 && (
                   <Button

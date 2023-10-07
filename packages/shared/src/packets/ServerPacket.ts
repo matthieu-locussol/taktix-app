@@ -76,6 +76,20 @@ export const zSelectCharacterResponse = z.object({
    ]),
 });
 
+export const zCreateCharacterResponse = z.object({
+   type: z.literal('createCharacterResponse'),
+   response: z.union([
+      z.object({
+         status: z.literal('character_created'),
+         characters: z.array(z.object({ name: z.string() })),
+      }),
+      z.object({
+         status: z.literal('error'),
+         errorMessage: z.string(),
+      }),
+   ]),
+});
+
 export const zChangeMapResponse = z.object({
    type: z.literal('changeMapResponse'),
    players: z.array(zPlayer),
@@ -90,6 +104,7 @@ export const zServerPacket = z.discriminatedUnion('type', [
    zPlayerMoveMessage,
    zLoginResponse,
    zSelectCharacterResponse,
+   zCreateCharacterResponse,
    zChangeMapResponse,
 ]);
 

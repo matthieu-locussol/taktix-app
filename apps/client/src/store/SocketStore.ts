@@ -4,6 +4,7 @@ import { ServerPacket, zServerPacket } from 'shared/src/packets/ServerPacket';
 import { log } from 'shared/src/utils/log';
 import { match } from 'ts-pattern';
 import { handleChangeMapResponse } from '../handlers/handleChangeMapResponse';
+import { handleCreateCharacterResponse } from '../handlers/handleCreateCharacterResponse';
 import { handleLoginResponse } from '../handlers/handleLoginResponse';
 import { handlePlayerJoinMap } from '../handlers/handlePlayerJoinMap';
 import { handlePlayerLeaveMap } from '../handlers/handlePlayerLeaveMap';
@@ -72,6 +73,9 @@ export class SocketStore {
          .with({ type: 'loginResponse' }, (params) => handleLoginResponse(params, this._store))
          .with({ type: 'selectCharacterResponse' }, (params) =>
             handleSelectCharacterResponse(params, this._store),
+         )
+         .with({ type: 'createCharacterResponse' }, (params) =>
+            handleCreateCharacterResponse(params, this._store),
          )
          .with({ type: 'changeMapResponse' }, (params) =>
             handleChangeMapResponse(params, this._store),
