@@ -40,18 +40,38 @@ export const zLoginResponse = z.object({
    type: z.literal('loginResponse'),
    response: z.union([
       z.object({
-         name: z.string(),
+         status: z.literal('user_not_found'),
+      }),
+      z.object({
+         status: z.literal('user_already_exist'),
+      }),
+      z.object({
+         status: z.literal('user_found'),
+         characters: z.array(
+            z.object({
+               name: z.string(),
+            }),
+         ),
+      }),
+   ]),
+});
+
+export const zSelectCharacterResponse = z.object({
+   type: z.literal('selectCharacterResponse'),
+   response: z.union([
+      z.object({
          status: z.literal('connected'),
+         name: z.string(),
          map: z.string(),
          posX: z.number(),
          posY: z.number(),
          players: z.array(zPlayer),
       }),
       z.object({
-         status: z.literal('user_not_found'),
+         status: z.literal('character_not_found'),
       }),
       z.object({
-         status: z.literal('user_already_exist'),
+         status: z.literal('wrong_user'),
       }),
    ]),
 });
@@ -69,6 +89,7 @@ export const zServerPacket = z.discriminatedUnion('type', [
    zPlayerLeaveMapMessage,
    zPlayerMoveMessage,
    zLoginResponse,
+   zSelectCharacterResponse,
    zChangeMapResponse,
 ]);
 

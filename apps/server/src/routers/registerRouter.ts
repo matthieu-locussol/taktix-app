@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { zRegisterSchema } from 'shared';
+import { hashPassword } from '../utils/hashPassword';
 import { prisma } from '../utils/prisma';
 
 export const registerRouter = async (req: FastifyRequest, res: FastifyReply) => {
@@ -29,11 +30,13 @@ export const registerRouter = async (req: FastifyRequest, res: FastifyReply) => 
       return;
    }
 
+   const hashedPassword = await hashPassword(password);
+
    await prisma.user.create({
       data: {
          email,
          username,
-         password,
+         password: hashedPassword,
       },
    });
 

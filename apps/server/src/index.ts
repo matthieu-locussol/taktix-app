@@ -16,6 +16,18 @@ fastifyInstance.register(FastifyCorsPlugin, {
    credentials: true,
 });
 
+// TODO: Should be checked in "handleCreateCharacter"
+
+// if (name === INTERNAL_PLAYER_NAME) {
+//    client.socket.send({
+//       type: 'loginResponse',
+//       response: {
+//          status: 'user_already_exist',
+//       },
+//    });
+//    return;
+// }
+
 fastifyInstance.register(async (fastify) => {
    fastify.get('/ws', { websocket: true }, wsRouter);
    fastify.get('/status', statusRouter);

@@ -11,6 +11,7 @@ import { handlePlayerLoggedIn } from '../handlers/handlePlayerLoggedIn';
 import { handlePlayerLoggedOut } from '../handlers/handlePlayerLoggedOut';
 import { handlePlayerMessage } from '../handlers/handlePlayerMessage';
 import { handlePlayerMove } from '../handlers/handlePlayerMove';
+import { handleSelectCharacterResponse } from '../handlers/handleSelectCharacterResponse';
 import { Store } from './Store';
 
 export class SocketStore {
@@ -69,6 +70,9 @@ export class SocketStore {
          .with({ type: 'playerLeaveMap' }, (params) => handlePlayerLeaveMap(params, this._store))
          .with({ type: 'playerMove' }, (params) => handlePlayerMove(params, this._store))
          .with({ type: 'loginResponse' }, (params) => handleLoginResponse(params, this._store))
+         .with({ type: 'selectCharacterResponse' }, (params) =>
+            handleSelectCharacterResponse(params, this._store),
+         )
          .with({ type: 'changeMapResponse' }, (params) =>
             handleChangeMapResponse(params, this._store),
          )

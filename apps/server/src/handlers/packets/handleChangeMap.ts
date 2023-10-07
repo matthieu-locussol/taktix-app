@@ -13,7 +13,7 @@ export const handleChangeMap = (
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
       socket.send({
          type: 'playerLeaveMap',
-         name: client.name,
+         name: client.characterName,
       });
    });
 
@@ -23,13 +23,13 @@ export const handleChangeMap = (
    state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
       socket.send({
          type: 'playerJoinMap',
-         name: client.name,
+         name: client.characterName,
          x,
          y,
       });
    });
 
-   state.getOtherPlayersSameMap(socketId).forEach(({ name, position }) => {
+   state.getOtherPlayersSameMap(socketId).forEach(({ characterName: name, position }) => {
       players.push({ nickname: name, ...position });
    });
 

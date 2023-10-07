@@ -7,7 +7,9 @@ export class Client {
 
    map: string;
 
-   name: string;
+   username: string;
+
+   characterName: string;
 
    position: {
       x: number;
@@ -19,7 +21,8 @@ export class Client {
 
       this.socket = new ClientSocket(socket);
       this.map = '';
-      this.name = '';
+      this.username = '';
+      this.characterName = '';
       this.position = {
          x: 0,
          y: 0,
@@ -30,8 +33,12 @@ export class Client {
       this.map = map;
    }
 
-   setName(name: string) {
-      this.name = name;
+   setUsername(username: string) {
+      this.username = username;
+   }
+
+   setCharacterName(characterName: string) {
+      this.characterName = characterName;
    }
 
    setPosition(x: number, y: number) {

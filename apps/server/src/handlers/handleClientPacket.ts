@@ -6,10 +6,12 @@ import { handleLogin } from './packets/handleLogin';
 import { handleLogout } from './packets/handleLogout';
 import { handleMessage } from './packets/handleMessage';
 import { handleMove } from './packets/handleMove';
+import { handleSelectCharacter } from './packets/handleSelectCharacter';
 
 export const handleClientPacket = async (data: ClientPacket, socketId: SocketId): Promise<void> =>
    match(data)
       .with({ type: 'login' }, (params) => handleLogin(params, socketId))
+      .with({ type: 'selectCharacter' }, (params) => handleSelectCharacter(params, socketId))
       .with({ type: 'message' }, (params) => handleMessage(params, socketId))
       .with({ type: 'logout' }, (params) => handleLogout(params, socketId))
       .with({ type: 'move' }, (params) => handleMove(params, socketId))

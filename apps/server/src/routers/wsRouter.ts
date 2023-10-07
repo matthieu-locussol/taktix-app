@@ -18,21 +18,21 @@ export const wsRouter = (connection: SocketStream, request: FastifyRequest) => {
       request.log.info(`Disconnected: ${socketId}`);
       const client = state.getClient(socketId);
 
-      if (client.name === '') {
+      if (client.characterName === '') {
          return;
       }
 
       state.getOtherPlayers(socketId).forEach(({ socket }) => {
          socket.send({
             type: 'playerLoggedOut',
-            name: client.name,
+            name: client.characterName,
          });
       });
 
       state.getOtherPlayersSameMap(socketId).forEach(({ socket }) => {
          socket.send({
             type: 'playerLeaveMap',
-            name: client.name,
+            name: client.characterName,
          });
       });
 
@@ -43,7 +43,7 @@ export const wsRouter = (connection: SocketStream, request: FastifyRequest) => {
             pos_y: client.position.y,
          },
          where: {
-            name: client.name,
+            name: client.characterName,
          },
       });
 

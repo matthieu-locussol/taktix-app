@@ -6,6 +6,11 @@ export const zLoginMessage = z.object({
    password: z.string(),
 });
 
+export const zSelectCharacterMessage = z.object({
+   type: z.literal('selectCharacter'),
+   name: z.string(),
+});
+
 export const zMessageMessage = z.object({
    type: z.literal('message'),
    name: z.string(),
@@ -32,6 +37,7 @@ export const zChangeMapMessage = z.object({
 
 export const zClientPacket = z.discriminatedUnion('type', [
    zLoginMessage,
+   zSelectCharacterMessage,
    zMessageMessage,
    zLogoutMessage,
    zMoveMessage,
