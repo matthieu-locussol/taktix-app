@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.22.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.21.3...v1.22.0) (2023-10-07)
+
+
+### Features
+
+* added character selection screen & selectCharacter packets ([34651f1](https://github.com/matthieu-locussol/taktix-app/commit/34651f170baa6549ae45286304ddf645d74462ff))
+* added register endpoint ([d1d72b0](https://github.com/matthieu-locussol/taktix-app/commit/d1d72b01cc06cf85ad67c71b382ab83b2eb4700c))
+* it is possible to create characters ([bbcfb6b](https://github.com/matthieu-locussol/taktix-app/commit/bbcfb6b20a1bee74061fb121b5e0c193e576ab54))
+
 ### [1.21.3](https://github.com/matthieu-locussol/taktix-app/compare/v1.21.2...v1.21.3) (2023-10-05)
 
 
