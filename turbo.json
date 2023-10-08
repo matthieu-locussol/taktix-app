@@ -18,7 +18,7 @@
          "dependsOn": ["eslint:shared", "^build:shared"]
       },
       "build:website": {
-         "outputs": ["dist/**"],
+         "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
          "dependsOn": ["eslint", "build:shared"]
       },
       "bumpversion": {},
