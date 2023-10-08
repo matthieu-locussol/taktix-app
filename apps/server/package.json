@@ -3,7 +3,7 @@
    "version": "1.22.0",
    "scripts": {
       "postinstall": "prisma generate",
-      "build": "tsc",
+      "build": "prisma generate && tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
       "eslint": "eslint src",
       "dev": "ts-node-dev --respawn --transpile-only src/index.ts",

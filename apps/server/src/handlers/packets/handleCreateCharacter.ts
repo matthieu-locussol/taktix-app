@@ -27,9 +27,14 @@ export const handleCreateCharacter = async (
       return;
    }
 
-   const characters = await prisma.character.findMany({
-      where: { user: { username: client.username } },
-   });
+   const [characters, userCharacters] = await Promise.all([
+      prisma.character.findMany({
+         where: { name },
+      }),
+      prisma.character.findMany({
+         where: { user: { username: client.username } },
+      }),
+   ]);
 
    if (characters.some((entry) => entry.name === name)) {
       client.socket.send({
@@ -42,7 +47,7 @@ export const handleCreateCharacter = async (
       return;
    }
 
-   if (characters.length >= MAX_CHARACTERS_PER_ACCOUNT) {
+   if (userCharacters.length >= MAX_CHARACTERS_PER_ACCOUNT) {
       client.socket.send({
          type: 'createCharacterResponse',
          response: {
@@ -71,7 +76,7 @@ export const handleCreateCharacter = async (
       type: 'createCharacterResponse',
       response: {
          status: 'character_created',
-         characters: [...characters.map((entry) => ({ name: entry.name })), { name }],
+         characters: [...userCharacters.map((entry) => ({ name: entry.name })), { name }],
       },
    });
 };
