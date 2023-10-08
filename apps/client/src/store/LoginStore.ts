@@ -87,7 +87,6 @@ export class LoginStore {
       this.setPassword('');
       this.setErrorMessage('');
       this.setSuccessMessage('');
-      this.setCharacters([]);
       this.setLoading(false);
    }
 
