@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.22.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.22.0...v1.22.1) (2023-10-08)
+
+
+### Bug Fixes
+
+* character creation bugs ([eefdf2d](https://github.com/matthieu-locussol/taktix-app/commit/eefdf2d763f9c5eae9d2040118032dd2047a8d2a))
+
 ## [1.22.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.21.3...v1.22.0) (2023-10-07)
 
 
