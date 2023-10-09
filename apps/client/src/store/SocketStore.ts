@@ -5,6 +5,7 @@ import { log } from 'shared/src/utils/log';
 import { match } from 'ts-pattern';
 import { handleChangeMapResponse } from '../handlers/handleChangeMapResponse';
 import { handleCreateCharacterResponse } from '../handlers/handleCreateCharacterResponse';
+import { handleDeleteCharacterResponse } from '../handlers/handleDeleteCharacterResponse';
 import { handleLoginResponse } from '../handlers/handleLoginResponse';
 import { handlePlayerJoinMap } from '../handlers/handlePlayerJoinMap';
 import { handlePlayerLeaveMap } from '../handlers/handlePlayerLeaveMap';
@@ -76,6 +77,9 @@ export class SocketStore {
          )
          .with({ type: 'createCharacterResponse' }, (params) =>
             handleCreateCharacterResponse(params, this._store),
+         )
+         .with({ type: 'deleteCharacterResponse' }, (params) =>
+            handleDeleteCharacterResponse(params, this._store),
          )
          .with({ type: 'changeMapResponse' }, (params) =>
             handleChangeMapResponse(params, this._store),

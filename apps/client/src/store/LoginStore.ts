@@ -27,6 +27,8 @@ export class LoginStore {
 
    public characterName: string = '';
 
+   public openDeleteDialog: boolean = false;
+
    constructor() {
       makeAutoObservable(this);
    }
@@ -87,7 +89,18 @@ export class LoginStore {
       this.setPassword('');
       this.setErrorMessage('');
       this.setSuccessMessage('');
+      this.closeDeleteCharacterDialog();
       this.setLoading(false);
+   }
+
+   openDeleteCharacterDialog(characterName: string) {
+      this.setSelectedCharacter(characterName);
+      this.openDeleteDialog = true;
+   }
+
+   closeDeleteCharacterDialog() {
+      this.setSelectedCharacter('');
+      this.openDeleteDialog = false;
    }
 
    get canLogin() {
