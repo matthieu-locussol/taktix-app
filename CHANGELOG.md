@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.23.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.22.1...v1.23.0) (2023-10-09)
+
+
+### Features
+
+* it is now possible to delete a character ([69fbf93](https://github.com/matthieu-locussol/taktix-app/commit/69fbf93fddc36f4e4ab4a88e38b0b59ccde472e8))
+
+
+### Bug Fixes
+
+* updated turbo config ([f69196f](https://github.com/matthieu-locussol/taktix-app/commit/f69196f3eded0f04405a56c41c2b17d3294643f7))
+
 ### [1.22.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.22.0...v1.22.1) (2023-10-08)
 
 
