@@ -16,6 +16,12 @@ export const zCreateCharacterMessage = z.object({
    name: z.string(),
 });
 
+export const zDeleteCharacterMessage = z.object({
+   type: z.literal('deleteCharacter'),
+   name: z.string(),
+   password: z.string(),
+});
+
 export const zMessageMessage = z.object({
    type: z.literal('message'),
    name: z.string(),
@@ -44,6 +50,7 @@ export const zClientPacket = z.discriminatedUnion('type', [
    zLoginMessage,
    zSelectCharacterMessage,
    zCreateCharacterMessage,
+   zDeleteCharacterMessage,
    zMessageMessage,
    zLogoutMessage,
    zMoveMessage,

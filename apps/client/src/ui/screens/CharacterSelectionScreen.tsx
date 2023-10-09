@@ -1,11 +1,20 @@
 import AddIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import DeleteIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CircularProgress from '@mui/material/CircularProgress';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import React from 'react';
 import { MAX_CHARACTERS_PER_ACCOUNT } from 'shared/src/config';
 import { useStore } from '../../store';
 import { GameBackground } from '../GameBackground';
@@ -20,6 +29,15 @@ export const CharacterSelectionScreen = observer(() => {
       socketStore.send({
          type: 'selectCharacter',
          name: loginStore.selectedCharacter,
+      });
+   };
+
+   const deleteCharacter = async () => {
+      loginStore.setLoading(true);
+      socketStore.send({
+         type: 'deleteCharacter',
+         name: loginStore.selectedCharacter,
+         password: loginStore.password,
       });
    };
 
@@ -62,40 +80,49 @@ export const CharacterSelectionScreen = observer(() => {
                )}
                <Box display="grid" gap={2}>
                   {loginStore.characters.map(({ name }) => (
-                     <Card
-                        key={name}
-                        variant="clickable"
-                        onClick={() => loginStore.setSelectedCharacter(name)}
-                        sx={(theme) => ({
-                           display: 'flex',
-                           alignItems: 'center',
-                           opacity: 0.8,
-                           ...(loginStore.selectedCharacter === name && {
-                              border: `1px solid ${theme.palette.primary.light}}`,
-                              opacity: 1,
-                           }),
-                        })}
-                     >
-                        <img
-                           src="/assets/characters/face.png"
-                           alt=""
-                           width={32}
-                           height={32}
-                           style={{
-                              imageRendering: 'pixelated',
-                              marginRight: 12,
-                           }}
-                        />
-                        <Typography
-                           fontWeight={loginStore.selectedCharacter === name ? 'bold' : 'normal'}
-                           variant="body1"
+                     <Box key={name} display="flex">
+                        <Card
+                           variant="clickable"
+                           onClick={() => loginStore.setSelectedCharacter(name)}
+                           sx={(theme) => ({
+                              width: '100%',
+                              display: 'flex',
+                              alignItems: 'center',
+                              opacity: 0.8,
+                              ...(loginStore.selectedCharacter === name && {
+                                 border: `1px solid ${theme.palette.primary.light}}`,
+                                 opacity: 1,
+                              }),
+                           })}
                         >
-                           {name}
-                        </Typography>
-                        <Typography variant="body1" sx={{ ml: 'auto' }}>
-                           Level 1
-                        </Typography>
-                     </Card>
+                           <img
+                              src="/assets/characters/face.png"
+                              alt=""
+                              width={32}
+                              height={32}
+                              style={{
+                                 imageRendering: 'pixelated',
+                                 marginRight: 12,
+                              }}
+                           />
+                           <Typography
+                              fontWeight={loginStore.selectedCharacter === name ? 'bold' : 'normal'}
+                              variant="body1"
+                           >
+                              {name}
+                           </Typography>
+                           <Typography variant="body1" sx={{ ml: 'auto' }}>
+                              Level 1
+                           </Typography>
+                        </Card>
+                        <IconButton
+                           onClick={() => loginStore.openDeleteCharacterDialog(name)}
+                           color="error"
+                           sx={{ mx: 1, my: 'auto' }}
+                        >
+                           <DeleteIcon fontSize="small" color="error" />
+                        </IconButton>
+                     </Box>
                   ))}
                   {loginStore.characters.length === 0 && (
                      <Card variant="outlined">
@@ -132,6 +159,44 @@ export const CharacterSelectionScreen = observer(() => {
                   </Button>
                )}
             </CardContent>
+            <Dialog
+               fullWidth
+               maxWidth="sm"
+               open={loginStore.openDeleteDialog}
+               onClose={() => loginStore.closeDeleteCharacterDialog()}
+            >
+               <DialogTitle>Delete character</DialogTitle>
+               <DialogContent>
+                  <DialogContentText>
+                     <Typography color="error" gutterBottom>
+                        Are you sure you want to delete <b>{loginStore.selectedCharacter}</b>? This
+                        action cannot be undone and you will lose all your progress and items.
+                     </Typography>
+                     <Typography>Please confirm your password to proceed.</Typography>
+                     <TextField
+                        fullWidth
+                        type="password"
+                        placeholder="Password"
+                        value={loginStore.password}
+                        onChange={(e) => loginStore.setPassword(e.target.value)}
+                        sx={{ mt: 2 }}
+                     />
+                  </DialogContentText>
+               </DialogContent>
+               <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
+                  <Button
+                     disabled={loginStore.password === ''}
+                     variant="contained"
+                     onClick={() => deleteCharacter()}
+                  >
+                     {loginStore.loading ? (
+                        <CircularProgress size={24} color="inherit" />
+                     ) : (
+                        'Delete'
+                     )}
+                  </Button>
+               </DialogActions>
+            </Dialog>
          </Card>
       </Box>
    );
