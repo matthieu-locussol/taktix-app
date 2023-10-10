@@ -3,6 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { useStore } from '../store';
+import { GameBackground } from './GameBackground';
 import { GameLayout } from './layouts/GameLayout';
 import { CharacterSelectionScreen } from './screens/CharacterSelectionScreen';
 import { CreateCharacterScreen } from './screens/CreateCharacterScreen';
@@ -25,17 +26,19 @@ export const Game = observer(() => {
    }
 
    if (!loginStore.loggedIn) {
-      if (loginStore.mode === 'login' || loginStore.mode === 'register') {
-         return <LoginScreen />;
-      }
-
-      if (loginStore.mode === 'characterSelection') {
-         return <CharacterSelectionScreen />;
-      }
-
-      if (loginStore.mode === 'characterCreation') {
-         return <CreateCharacterScreen />;
-      }
+      return (
+         <>
+            <GameBackground />
+            {
+               {
+                  login: <LoginScreen />,
+                  register: <LoginScreen />,
+                  characterSelection: <CharacterSelectionScreen />,
+                  characterCreation: <CreateCharacterScreen />,
+               }[loginStore.mode]
+            }
+         </>
+      );
    }
 
    return <GameLayout>{!sceneVisible ? <CircularProgress /> : <Box id="root-game" />}</GameLayout>;
