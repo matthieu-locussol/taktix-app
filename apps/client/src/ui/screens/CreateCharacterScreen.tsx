@@ -8,7 +8,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
-import { GameBackground } from '../GameBackground';
 
 export const CreateCharacterScreen = observer(() => {
    const store = useStore();
@@ -41,7 +40,6 @@ export const CreateCharacterScreen = observer(() => {
             },
          }}
       >
-         <GameBackground />
          <Card variant="outlined" sx={{ display: 'flex' }}>
             <CardContent>
                <Typography variant="h1" align="center" gutterBottom sx={{ mb: 2 }}>

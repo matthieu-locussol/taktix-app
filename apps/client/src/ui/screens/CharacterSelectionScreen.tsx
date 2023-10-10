@@ -17,7 +17,6 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { MAX_CHARACTERS_PER_ACCOUNT } from 'shared/src/config';
 import { useStore } from '../../store';
-import { GameBackground } from '../GameBackground';
 
 export const CharacterSelectionScreen = observer(() => {
    const store = useStore();
@@ -58,7 +57,6 @@ export const CharacterSelectionScreen = observer(() => {
             },
          }}
       >
-         <GameBackground />
          <Card variant="outlined" sx={{ display: 'flex' }}>
             <CardContent>
                <Typography variant="h1" align="center" gutterBottom sx={{ mb: 2 }}>

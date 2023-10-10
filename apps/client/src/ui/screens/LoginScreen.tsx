@@ -15,7 +15,6 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { version } from '../../../package.json';
 import { useStore } from '../../store';
-import { GameBackground } from '../GameBackground';
 import { ServerStatus } from '../components/ServerStatus';
 
 export const LoginScreen = observer(() => {
@@ -67,7 +66,6 @@ export const LoginScreen = observer(() => {
             },
          }}
       >
-         <GameBackground />
          <Card variant="outlined" sx={{ display: 'flex' }}>
             <CardContent>
                <Box
