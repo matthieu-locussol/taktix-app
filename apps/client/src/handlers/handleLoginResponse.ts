@@ -7,15 +7,13 @@ export const handleLoginResponse = (
    store: Store,
 ) => {
    const { characterSelectionStore, loginStore, screenStore } = store;
-   const { username } = loginStore;
-
    loginStore.reset();
 
    match(response)
-      .with({ status: 'user_not_found' }, () => {
-         loginStore.setErrorMessage(`Incorrect credentials for user "${username}"!`);
+      .with({ status: 'error' }, ({ errorMessage }) => {
+         loginStore.setErrorMessage(errorMessage);
       })
-      .with({ status: 'user_found' }, ({ characters }) => {
+      .with({ status: 'success' }, ({ characters }) => {
          characterSelectionStore.setCharacters(characters);
          screenStore.setScreen('characterSelection');
       })

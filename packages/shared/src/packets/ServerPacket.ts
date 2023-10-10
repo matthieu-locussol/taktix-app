@@ -40,15 +40,16 @@ export const zLoginResponse = z.object({
    type: z.literal('loginResponse'),
    response: z.union([
       z.object({
-         status: z.literal('user_not_found'),
-      }),
-      z.object({
-         status: z.literal('user_found'),
+         status: z.literal('success'),
          characters: z.array(
             z.object({
                name: z.string(),
             }),
          ),
+      }),
+      z.object({
+         status: z.literal('error'),
+         errorMessage: z.string(),
       }),
    ]),
 });
@@ -57,7 +58,7 @@ export const zSelectCharacterResponse = z.object({
    type: z.literal('selectCharacterResponse'),
    response: z.union([
       z.object({
-         status: z.literal('connected'),
+         status: z.literal('success'),
          name: z.string(),
          map: z.string(),
          posX: z.number(),
