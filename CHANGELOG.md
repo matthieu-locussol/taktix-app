@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.24.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.23.0...v1.24.0) (2023-10-10)
+
+
+### Features
+
+* added a NewsStore & moved server online logic to it ([03166cd](https://github.com/matthieu-locussol/taktix-app/commit/03166cd80c2a84a0b30c1e14bcd585ae2887bb95))
+* added a ScreenStore & moved mode logic from LoginStore to ScreenStore ([031091f](https://github.com/matthieu-locussol/taktix-app/commit/031091f17ce4e97202662852b2f6f8747f793798))
+* disconnect user if already connected ([8f816cf](https://github.com/matthieu-locussol/taktix-app/commit/8f816cff937d774941a9408de08a27461813e0d3))
+* GameBackground stays coherent between screens ([e8cc46b](https://github.com/matthieu-locussol/taktix-app/commit/e8cc46bce40a1d9d5a8a6cca4f32b377e4869d8e))
+
 ## [1.23.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.22.1...v1.23.0) (2023-10-09)
 
 
