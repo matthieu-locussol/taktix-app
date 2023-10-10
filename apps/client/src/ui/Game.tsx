@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useStore } from '../store';
 import { GameBackground } from './GameBackground';
 import { GameLayout } from './layouts/GameLayout';
@@ -12,6 +12,7 @@ import { LoginScreen } from './screens/LoginScreen';
 
 export const Game = observer(() => {
    const {
+      screenStore,
       loadingScreenStore: { loadingAssets, sceneVisible },
       updaterStore,
       loginStore,
@@ -27,7 +28,7 @@ export const Game = observer(() => {
 
    if (!loginStore.loggedIn) {
       return (
-         <>
+         <React.Fragment>
             <GameBackground />
             {
                {
@@ -35,9 +36,9 @@ export const Game = observer(() => {
                   register: <LoginScreen />,
                   characterSelection: <CharacterSelectionScreen />,
                   characterCreation: <CreateCharacterScreen />,
-               }[loginStore.mode]
+               }[screenStore.screen]
             }
-         </>
+         </React.Fragment>
       );
    }
 

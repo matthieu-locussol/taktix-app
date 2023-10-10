@@ -11,7 +11,7 @@ import { useStore } from '../../store';
 
 export const CreateCharacterScreen = observer(() => {
    const store = useStore();
-   const { loginStore, socketStore } = store;
+   const { loginStore, screenStore, socketStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -78,7 +78,7 @@ export const CreateCharacterScreen = observer(() => {
                   {loginStore.loading ? <CircularProgress size={24} color="inherit" /> : 'Create'}
                </Button>
                <Link
-                  onClick={() => loginStore.setMode('characterSelection')}
+                  onClick={() => screenStore.setScreen('characterSelection')}
                   sx={{ mt: 2, mr: 'auto' }}
                >
                   Back

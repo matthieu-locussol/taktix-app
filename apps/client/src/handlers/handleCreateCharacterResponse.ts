@@ -6,7 +6,7 @@ export const handleCreateCharacterResponse = (
    { response }: ServerPacketType<'createCharacterResponse'>,
    store: Store,
 ) => {
-   const { loginStore } = store;
+   const { loginStore, screenStore } = store;
 
    if (response.status === 'error') {
       loginStore.reset();
@@ -17,7 +17,8 @@ export const handleCreateCharacterResponse = (
    _assertTrue(response.status === 'character_created', 'Unknown status');
 
    loginStore.reset();
-   loginStore.setMode('characterSelection');
    loginStore.setCharacters(response.characters);
    loginStore.setSuccessMessage('Character created!');
+
+   screenStore.setScreen('characterSelection');
 };
