@@ -65,10 +65,8 @@ export const zSelectCharacterResponse = z.object({
          players: z.array(zPlayer),
       }),
       z.object({
-         status: z.literal('character_not_found'),
-      }),
-      z.object({
-         status: z.literal('wrong_user'),
+         status: z.literal('error'),
+         errorMessage: z.string(),
       }),
    ]),
 });
@@ -77,7 +75,7 @@ export const zCreateCharacterResponse = z.object({
    type: z.literal('createCharacterResponse'),
    response: z.union([
       z.object({
-         status: z.literal('character_created'),
+         status: z.literal('success'),
          characters: z.array(z.object({ name: z.string() })),
       }),
       z.object({
@@ -91,7 +89,7 @@ export const zDeleteCharacterResponse = z.object({
    type: z.literal('deleteCharacterResponse'),
    response: z.union([
       z.object({
-         status: z.literal('character_deleted'),
+         status: z.literal('success'),
          characters: z.array(z.object({ name: z.string() })),
       }),
       z.object({

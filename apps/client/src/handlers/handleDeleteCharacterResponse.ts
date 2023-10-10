@@ -13,7 +13,7 @@ export const handleDeleteCharacterResponse = (
       .with({ status: 'error' }, ({ errorMessage }) => {
          characterSelectionStore.setErrorMessage(errorMessage);
       })
-      .with({ status: 'character_deleted' }, ({ characters }) => {
+      .with({ status: 'success' }, ({ characters }) => {
          characterSelectionStore.setCharacters(characters);
          characterSelectionStore.setSuccessMessage('Character deleted');
       })

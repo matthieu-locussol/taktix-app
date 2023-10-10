@@ -7,20 +7,12 @@ export const handleSelectCharacterResponse = (
    { response }: ServerPacketType<'selectCharacterResponse'>,
    store: Store,
 ) => {
-   const { characterSelectionStore, characterStore, loadingScreenStore, loginStore, screenStore } =
-      store;
+   const { characterSelectionStore, characterStore, loadingScreenStore, screenStore } = store;
    characterSelectionStore.reset();
 
    match(response)
-      .with({ status: 'character_not_found' }, () => {
-         characterSelectionStore.setErrorMessage(
-            `Character "${characterSelectionStore.selectedCharacter}" does not exist!`,
-         );
-      })
-      .with({ status: 'wrong_user' }, () => {
-         characterSelectionStore.setErrorMessage(
-            `Character "${characterSelectionStore.selectedCharacter}" does not belong to user "${loginStore.username}"!`,
-         );
+      .with({ status: 'error' }, ({ errorMessage }) => {
+         characterSelectionStore.setErrorMessage(errorMessage);
       })
       .with({ status: 'connected' }, ({ map, posX, posY, players }) => {
          screenStore.setLoggedIn(true);

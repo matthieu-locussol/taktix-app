@@ -48,7 +48,7 @@ export const handleDeleteCharacter = async (
    client.socket.send({
       type: 'deleteCharacterResponse',
       response: {
-         status: 'character_deleted',
+         status: 'success',
          characters: user.characters
             .filter((entry) => entry.name !== name)
             .map((entry) => ({ name: entry.name })),
