@@ -19,12 +19,12 @@ import { ServerStatus } from '../components/ServerStatus';
 
 export const LoginScreen = observer(() => {
    const store = useStore();
-   const { loginStore, updaterStore } = store;
+   const { loginStore, screenStore, updaterStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      if (loginStore.mode === 'login') {
+      if (screenStore.screen === 'login') {
          loginStore.setLoading(true);
          store.initialize(loginStore.username, loginStore.password);
       } else {
@@ -44,7 +44,7 @@ export const LoginScreen = observer(() => {
             loginStore.setErrorMessage(json.error);
          } else {
             loginStore.setSuccessMessage('Account created! You can now login.');
-            loginStore.setMode('login');
+            screenStore.setScreen('login');
          }
       }
    };
@@ -117,7 +117,7 @@ export const LoginScreen = observer(() => {
                         {loginStore.successMessage}
                      </Typography>
                   )}
-                  {loginStore.mode === 'register' && (
+                  {screenStore.screen === 'register' && (
                      <TextField
                         type="email"
                         placeholder="Email address"
@@ -150,16 +150,14 @@ export const LoginScreen = observer(() => {
                      {loginStore.loading ? (
                         <CircularProgress size={24} color="inherit" />
                      ) : (
-                        loginStore.currentPage
+                        screenStore.screenName
                      )}
                   </Button>
                   <Link
-                     onClick={() =>
-                        loginStore.setMode(loginStore.mode === 'login' ? 'register' : 'login')
-                     }
+                     onClick={() => screenStore.switchBetweenLoginAndRegister()}
                      sx={{ mt: 'auto', mr: 'auto' }}
                   >
-                     {loginStore.otherPage}
+                     {screenStore.loginOrRegisterOppositeName}
                   </Link>
                </CardContent>
             )}

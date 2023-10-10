@@ -20,7 +20,7 @@ import { useStore } from '../../store';
 
 export const CharacterSelectionScreen = observer(() => {
    const store = useStore();
-   const { loginStore, socketStore } = store;
+   const { loginStore, screenStore, socketStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -132,7 +132,7 @@ export const CharacterSelectionScreen = observer(() => {
                   {loginStore.characters.length < MAX_CHARACTERS_PER_ACCOUNT && (
                      <Card
                         variant="clickable"
-                        onClick={() => loginStore.setMode('characterCreation')}
+                        onClick={() => screenStore.setScreen('characterCreation')}
                         sx={{
                            display: 'flex',
                            borderStyle: 'dashed',

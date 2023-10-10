@@ -6,7 +6,7 @@ export const handleLoginResponse = (
    { response }: ServerPacketType<'loginResponse'>,
    store: Store,
 ) => {
-   const { loginStore } = store;
+   const { loginStore, screenStore } = store;
 
    if (response.status === 'user_already_exist') {
       loginStore.reset();
@@ -23,6 +23,7 @@ export const handleLoginResponse = (
    _assertTrue(response.status === 'user_found', 'Unknown status');
 
    loginStore.reset();
-   loginStore.setMode('characterSelection');
    loginStore.setCharacters(response.characters);
+
+   screenStore.setScreen('characterSelection');
 };

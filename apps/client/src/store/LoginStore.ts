@@ -1,7 +1,5 @@
 import { makeAutoObservable } from 'mobx';
 
-export type Mode = 'login' | 'register' | 'characterSelection' | 'characterCreation';
-
 export class LoginStore {
    public email: string = '';
 
@@ -18,8 +16,6 @@ export class LoginStore {
    public loggedIn: boolean = false;
 
    public loading: boolean = false;
-
-   public mode: Mode = 'login';
 
    public characters: { name: string }[] = [];
 
@@ -67,10 +63,6 @@ export class LoginStore {
       this.loading = loading;
    }
 
-   setMode(mode: Mode) {
-      this.mode = mode;
-   }
-
    setCharacters(characters: { name: string }[]) {
       this.characters = characters;
    }
@@ -113,13 +105,5 @@ export class LoginStore {
 
    get canCreateCharacter() {
       return this.characterName !== '';
-   }
-
-   get currentPage() {
-      return this.mode === 'login' ? 'Log In' : 'Register';
-   }
-
-   get otherPage() {
-      return this.mode === 'login' ? 'Register' : 'Log In';
    }
 }
