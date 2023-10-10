@@ -69,7 +69,7 @@ export const handleSelectCharacter = async (
    client.socket.send({
       type: 'selectCharacterResponse',
       response: {
-         status: 'connected',
+         status: 'success',
          name: character.name,
          map: character.map,
          posX: character.pos_x,

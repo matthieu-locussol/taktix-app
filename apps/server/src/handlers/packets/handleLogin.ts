@@ -20,7 +20,8 @@ export const handleLogin = async (
       client.socket.send({
          type: 'loginResponse',
          response: {
-            status: 'user_not_found',
+            status: 'error',
+            errorMessage: `Incorrect credentials for user "${username}"!`,
          },
       });
       return;
@@ -35,7 +36,7 @@ export const handleLogin = async (
    client.socket.send({
       type: 'loginResponse',
       response: {
-         status: 'user_found',
+         status: 'success',
          characters: user.characters.map(({ name }) => ({ name })),
       },
    });

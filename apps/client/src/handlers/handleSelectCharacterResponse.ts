@@ -14,7 +14,7 @@ export const handleSelectCharacterResponse = (
       .with({ status: 'error' }, ({ errorMessage }) => {
          characterSelectionStore.setErrorMessage(errorMessage);
       })
-      .with({ status: 'connected' }, ({ map, posX, posY, players }) => {
+      .with({ status: 'success' }, ({ map, posX, posY, players }) => {
          screenStore.setLoggedIn(true);
 
          const scene = store.gameStore.changeMapPlayer(map, {
