@@ -5,6 +5,7 @@ import { ChatStore } from './ChatStore';
 import { GameStore } from './GameStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
 import { LoginStore } from './LoginStore';
+import { NewsStore } from './NewsStore';
 import { ScreenStore } from './ScreenStore';
 import { SocketStore } from './SocketStore';
 import { UpdaterStore } from './UpdaterStore';
@@ -20,6 +21,8 @@ export class Store {
 
    public loginStore: LoginStore;
 
+   public newsStore: NewsStore;
+
    public screenStore: ScreenStore;
 
    public updaterStore: UpdaterStore;
@@ -34,6 +37,7 @@ export class Store {
       this.gameStore = new GameStore(this);
       this.loadingScreenStore = new LoadingScreenStore();
       this.loginStore = new LoginStore();
+      this.newsStore = new NewsStore();
       this.screenStore = new ScreenStore();
       this.updaterStore = new UpdaterStore();
 
