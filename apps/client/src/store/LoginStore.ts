@@ -11,8 +11,6 @@ export class LoginStore {
 
    public successMessage: string = '';
 
-   public serverOnline: boolean = false;
-
    public loggedIn: boolean = false;
 
    public loading: boolean = false;
@@ -49,10 +47,6 @@ export class LoginStore {
    setSuccessMessage(successMessage: string) {
       this.errorMessage = '';
       this.successMessage = successMessage;
-   }
-
-   setServerOnline(serverOnline: boolean) {
-      this.serverOnline = serverOnline;
    }
 
    setLoggedIn(loggedIn: boolean) {

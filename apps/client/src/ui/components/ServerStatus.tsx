@@ -9,7 +9,7 @@ const REFRESH_INTERVAL = 30_000;
 
 export const ServerStatus = observer((props: BoxProps) => {
    const store = useStore();
-   const { loginStore } = store;
+   const { newsStore } = store;
 
    useEffect(() => {
       const fetchStatus = async () => {
@@ -18,9 +18,9 @@ export const ServerStatus = observer((props: BoxProps) => {
                method: 'GET',
             });
             const json: { status: string } = await results.json();
-            loginStore.setServerOnline(json.status === 'ok');
+            newsStore.setServerOnline(json.status === 'ok');
          } catch (e) {
-            loginStore.setServerOnline(false);
+            newsStore.setServerOnline(false);
          }
       };
 
@@ -38,9 +38,9 @@ export const ServerStatus = observer((props: BoxProps) => {
    return (
       <StyledBox {...props}>
          <Typography sx={{ m: 0 }}>
-            <b>Server status:</b> {loginStore.serverOnline ? 'online' : 'offline'}
+            <b>Server status:</b> {newsStore.status}
          </Typography>
-         <BadgeIcon online={loginStore.serverOnline} />
+         <BadgeIcon online={newsStore.serverOnline} />
       </StyledBox>
    );
 });
