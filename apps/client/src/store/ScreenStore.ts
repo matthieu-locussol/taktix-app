@@ -5,12 +5,18 @@ export type Screen = 'login' | 'register' | 'characterSelection' | 'characterCre
 export class ScreenStore {
    public screen: Screen = 'login';
 
+   public loggedIn: boolean = false;
+
    constructor() {
       makeAutoObservable(this);
    }
 
    public setScreen(screen: Screen) {
       this.screen = screen;
+   }
+
+   public setLoggedIn(loggedIn: boolean) {
+      this.loggedIn = loggedIn;
    }
 
    public switchBetweenLoginAndRegister() {

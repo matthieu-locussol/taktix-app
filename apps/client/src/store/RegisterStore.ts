@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx';
 
-export class LoginStore {
+export class RegisterStore {
+   public email: string = '';
+
    public username: string = '';
 
    public password: string = '';
@@ -13,6 +15,10 @@ export class LoginStore {
 
    constructor() {
       makeAutoObservable(this);
+   }
+
+   setEmail(email: string) {
+      this.email = email;
    }
 
    setUsername(username: string) {
@@ -38,14 +44,15 @@ export class LoginStore {
    }
 
    reset() {
-      this.setUsername('');
-      this.setPassword('');
-      this.setErrorMessage('');
-      this.setSuccessMessage('');
-      this.setLoading(false);
+      this.email = '';
+      this.username = '';
+      this.password = '';
+      this.errorMessage = '';
+      this.successMessage = '';
+      this.loading = false;
    }
 
    get canSubmit() {
-      return this.username !== '' && this.password !== '' && !this.loading;
+      return this.email !== '' && this.username !== '' && this.password !== '' && !this.loading;
    }
 }

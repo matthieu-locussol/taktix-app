@@ -5,17 +5,17 @@ import React, { useEffect } from 'react';
 import { useStore } from '../store';
 import { GameBackground } from './GameBackground';
 import { GameLayout } from './layouts/GameLayout';
+import { CharacterCreationScreen } from './screens/CharacterCreationScreen';
 import { CharacterSelectionScreen } from './screens/CharacterSelectionScreen';
-import { CreateCharacterScreen } from './screens/CreateCharacterScreen';
 import { LoadingAssetsScreen } from './screens/LoadingAssetsScreen';
 import { LoginScreen } from './screens/LoginScreen';
+import { RegisterScreen } from './screens/RegisterScreen';
 
 export const Game = observer(() => {
    const {
       screenStore,
       loadingScreenStore: { loadingAssets, sceneVisible },
       updaterStore,
-      loginStore,
    } = useStore();
 
    useEffect(() => {
@@ -26,16 +26,16 @@ export const Game = observer(() => {
       return <LoadingAssetsScreen />;
    }
 
-   if (!loginStore.loggedIn) {
+   if (!screenStore.loggedIn) {
       return (
          <React.Fragment>
             <GameBackground />
             {
                {
                   login: <LoginScreen />,
-                  register: <LoginScreen />,
+                  register: <RegisterScreen />,
                   characterSelection: <CharacterSelectionScreen />,
-                  characterCreation: <CreateCharacterScreen />,
+                  characterCreation: <CharacterCreationScreen />,
                }[screenStore.screen]
             }
          </React.Fragment>

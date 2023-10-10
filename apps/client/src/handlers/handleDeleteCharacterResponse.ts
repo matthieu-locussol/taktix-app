@@ -1,22 +1,21 @@
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
-import { _assertTrue } from 'shared/src/utils/_assert';
+import { match } from 'ts-pattern';
 import { Store } from '../store/Store';
 
 export const handleDeleteCharacterResponse = (
    { response }: ServerPacketType<'deleteCharacterResponse'>,
    store: Store,
 ) => {
-   const { loginStore } = store;
+   const { characterSelectionStore } = store;
+   characterSelectionStore.reset();
 
-   if (response.status === 'error') {
-      loginStore.reset();
-      loginStore.setErrorMessage(response.errorMessage);
-      return;
-   }
-
-   _assertTrue(response.status === 'character_deleted', 'Unknown status');
-
-   loginStore.reset();
-   loginStore.setCharacters(response.characters);
-   loginStore.setSuccessMessage('Character deleted');
+   match(response)
+      .with({ status: 'error' }, ({ errorMessage }) => {
+         characterSelectionStore.setErrorMessage(errorMessage);
+      })
+      .with({ status: 'character_deleted' }, ({ characters }) => {
+         characterSelectionStore.setCharacters(characters);
+         characterSelectionStore.setSuccessMessage('Character deleted');
+      })
+      .exhaustive();
 };

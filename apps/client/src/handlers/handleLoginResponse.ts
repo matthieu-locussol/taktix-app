@@ -1,29 +1,23 @@
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
-import { _assertTrue } from 'shared/src/utils/_assert';
+import { match } from 'ts-pattern';
 import { Store } from '../store/Store';
 
 export const handleLoginResponse = (
    { response }: ServerPacketType<'loginResponse'>,
    store: Store,
 ) => {
-   const { loginStore, screenStore } = store;
-
-   if (response.status === 'user_already_exist') {
-      loginStore.reset();
-      loginStore.setErrorMessage(`User "${loginStore.username}" already exist!`);
-      return;
-   }
-
-   if (response.status === 'user_not_found') {
-      loginStore.reset();
-      loginStore.setErrorMessage(`User "${loginStore.username}" not found!`);
-      return;
-   }
-
-   _assertTrue(response.status === 'user_found', 'Unknown status');
+   const { characterSelectionStore, loginStore, screenStore } = store;
+   const { username } = loginStore;
 
    loginStore.reset();
-   loginStore.setCharacters(response.characters);
 
-   screenStore.setScreen('characterSelection');
+   match(response)
+      .with({ status: 'user_not_found' }, () => {
+         loginStore.setErrorMessage(`Incorrect credentials for user "${username}"!`);
+      })
+      .with({ status: 'user_found' }, ({ characters }) => {
+         characterSelectionStore.setCharacters(characters);
+         screenStore.setScreen('characterSelection');
+      })
+      .exhaustive();
 };

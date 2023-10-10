@@ -17,15 +17,33 @@ import { version } from '../../../package.json';
 import { useStore } from '../../store';
 import { ServerStatus } from '../components/ServerStatus';
 
-export const LoginScreen = observer(() => {
+export const RegisterScreen = observer(() => {
    const store = useStore();
-   const { loginStore, screenStore, updaterStore } = store;
+   const { loginStore, registerStore, screenStore, updaterStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      loginStore.setLoading(true);
-      store.initialize(loginStore.username, loginStore.password);
+      registerStore.setLoading(true);
+
+      const results = await fetch(`${import.meta.env.VITE_SERVER_URL}/register`, {
+         method: 'POST',
+         body: JSON.stringify({
+            username: registerStore.username,
+            password: registerStore.password,
+            email: registerStore.email,
+         }),
+      });
+      const json = await results.json();
+
+      if (json.error) {
+         registerStore.setLoading(false);
+         registerStore.setErrorMessage(json.error);
+      } else {
+         registerStore.reset();
+         loginStore.setSuccessMessage('Account created! You can now login.');
+         screenStore.setScreen('login');
+      }
    };
 
    return (
@@ -82,42 +100,49 @@ export const LoginScreen = observer(() => {
                   <Typography variant="h1" align="center" gutterBottom>
                      Access the universe
                   </Typography>
-                  {loginStore.errorMessage && (
+                  {registerStore.errorMessage && (
                      <Typography variant="body1" align="center" color="error">
-                        {loginStore.errorMessage}
+                        {registerStore.errorMessage}
                      </Typography>
                   )}
-                  {loginStore.successMessage && (
+                  {registerStore.successMessage && (
                      <Typography
                         variant="body1"
                         align="center"
                         sx={(theme) => ({ color: theme.palette.success.main })}
                      >
-                        {loginStore.successMessage}
+                        {registerStore.successMessage}
                      </Typography>
                   )}
                   <TextField
+                     type="email"
+                     placeholder="Email address"
+                     value={registerStore.email}
+                     onChange={(e) => registerStore.setEmail(e.target.value)}
+                     sx={{ mt: 2 }}
+                  />
+                  <TextField
                      type="text"
                      placeholder="Username"
-                     value={loginStore.username}
-                     onChange={(e) => loginStore.setUsername(e.target.value)}
+                     value={registerStore.username}
+                     onChange={(e) => registerStore.setUsername(e.target.value)}
                      sx={{ mt: 2 }}
                   />
                   <TextField
                      type="password"
                      placeholder="Password"
-                     value={loginStore.password}
-                     onChange={(e) => loginStore.setPassword(e.target.value)}
+                     value={registerStore.password}
+                     onChange={(e) => registerStore.setPassword(e.target.value)}
                      sx={{ mt: 2 }}
                   />
                   <Button
-                     disabled={!loginStore.canSubmit}
+                     disabled={!registerStore.canSubmit}
                      type="submit"
                      variant="contained"
                      color="primary"
                      sx={{ my: 2 }}
                   >
-                     {loginStore.loading ? (
+                     {registerStore.loading ? (
                         <CircularProgress size={24} color="inherit" />
                      ) : (
                         screenStore.screenName

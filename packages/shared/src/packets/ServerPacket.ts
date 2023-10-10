@@ -43,9 +43,6 @@ export const zLoginResponse = z.object({
          status: z.literal('user_not_found'),
       }),
       z.object({
-         status: z.literal('user_already_exist'),
-      }),
-      z.object({
          status: z.literal('user_found'),
          characters: z.array(
             z.object({
