@@ -9,17 +9,17 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
 
-export const CreateCharacterScreen = observer(() => {
+export const CharacterCreationScreen = observer(() => {
    const store = useStore();
-   const { loginStore, screenStore, socketStore } = store;
+   const { characterCreationStore, screenStore, socketStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      loginStore.setLoading(true);
+      characterCreationStore.setLoading(true);
       socketStore.send({
          type: 'createCharacter',
-         name: loginStore.characterName,
+         name: characterCreationStore.name,
       });
    };
 
@@ -45,37 +45,41 @@ export const CreateCharacterScreen = observer(() => {
                <Typography variant="h1" align="center" gutterBottom sx={{ mb: 2 }}>
                   Create a new character
                </Typography>
-               {loginStore.errorMessage && (
+               {characterCreationStore.errorMessage && (
                   <Typography variant="body1" align="center" color="error" sx={{ mb: 2 }}>
-                     {loginStore.errorMessage}
+                     {characterCreationStore.errorMessage}
                   </Typography>
                )}
-               {loginStore.successMessage && (
+               {characterCreationStore.successMessage && (
                   <Typography
                      variant="body1"
                      align="center"
                      sx={(theme) => ({ color: theme.palette.success.main, mb: 2 })}
                   >
-                     {loginStore.successMessage}
+                     {characterCreationStore.successMessage}
                   </Typography>
                )}
                <Box display="grid" gap={2}>
                   <TextField
                      type="text"
                      placeholder="Character name"
-                     value={loginStore.characterName}
-                     onChange={(e) => loginStore.setCharacterName(e.target.value)}
+                     value={characterCreationStore.name}
+                     onChange={(e) => characterCreationStore.setName(e.target.value)}
                      sx={{ mt: 2 }}
                   />
                </Box>
                <Button
-                  disabled={loginStore.characterName === ''}
+                  disabled={!characterCreationStore.canSubmit}
                   type="submit"
                   variant="contained"
                   color="primary"
                   sx={{ mt: 2 }}
                >
-                  {loginStore.loading ? <CircularProgress size={24} color="inherit" /> : 'Create'}
+                  {characterCreationStore.loading ? (
+                     <CircularProgress size={24} color="inherit" />
+                  ) : (
+                     'Create'
+                  )}
                </Button>
                <Link
                   onClick={() => screenStore.setScreen('characterSelection')}

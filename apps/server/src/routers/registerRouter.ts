@@ -21,12 +21,12 @@ export const registerRouter = async (req: FastifyRequest, res: FastifyReply) => 
    ]);
 
    if (userByEmail) {
-      res.status(400).send({ error: 'Email already in use.' });
+      res.status(400).send({ error: 'Email already in use!' });
       return;
    }
 
    if (userByUsername) {
-      res.status(400).send({ error: 'Username already in use.' });
+      res.status(400).send({ error: 'Username already in use!' });
       return;
    }
 

@@ -20,23 +20,23 @@ import { useStore } from '../../store';
 
 export const CharacterSelectionScreen = observer(() => {
    const store = useStore();
-   const { loginStore, screenStore, socketStore } = store;
+   const { characterSelectionStore, screenStore, socketStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      loginStore.setLoading(true);
+      characterSelectionStore.setLoading(true);
       socketStore.send({
          type: 'selectCharacter',
-         name: loginStore.selectedCharacter,
+         name: characterSelectionStore.selectedCharacter,
       });
    };
 
    const deleteCharacter = async () => {
-      loginStore.setLoading(true);
+      characterSelectionStore.setLoadingDeleteCharacter(true);
       socketStore.send({
          type: 'deleteCharacter',
-         name: loginStore.selectedCharacter,
-         password: loginStore.password,
+         name: characterSelectionStore.characterToDelete,
+         password: characterSelectionStore.password,
       });
    };
 
@@ -62,32 +62,32 @@ export const CharacterSelectionScreen = observer(() => {
                <Typography variant="h1" align="center" gutterBottom sx={{ mb: 2 }}>
                   Character Selection
                </Typography>
-               {loginStore.errorMessage && (
+               {characterSelectionStore.errorMessage && (
                   <Typography variant="body1" align="center" color="error" sx={{ mb: 2 }}>
-                     {loginStore.errorMessage}
+                     {characterSelectionStore.errorMessage}
                   </Typography>
                )}
-               {loginStore.successMessage && (
+               {characterSelectionStore.successMessage && (
                   <Typography
                      variant="body1"
                      align="center"
                      sx={(theme) => ({ color: theme.palette.success.main, mb: 2 })}
                   >
-                     {loginStore.successMessage}
+                     {characterSelectionStore.successMessage}
                   </Typography>
                )}
                <Box display="grid" gap={2}>
-                  {loginStore.characters.map(({ name }) => (
+                  {characterSelectionStore.characters.map(({ name }) => (
                      <Box key={name} display="flex">
                         <Card
                            variant="clickable"
-                           onClick={() => loginStore.setSelectedCharacter(name)}
+                           onClick={() => characterSelectionStore.setSelectedCharacter(name)}
                            sx={(theme) => ({
                               width: '100%',
                               display: 'flex',
                               alignItems: 'center',
                               opacity: 0.8,
-                              ...(loginStore.selectedCharacter === name && {
+                              ...(characterSelectionStore.isSelectedCharacter(name) && {
                                  border: `1px solid ${theme.palette.primary.light}}`,
                                  opacity: 1,
                               }),
@@ -104,7 +104,11 @@ export const CharacterSelectionScreen = observer(() => {
                               }}
                            />
                            <Typography
-                              fontWeight={loginStore.selectedCharacter === name ? 'bold' : 'normal'}
+                              fontWeight={
+                                 characterSelectionStore.isSelectedCharacter(name)
+                                    ? 'bold'
+                                    : 'normal'
+                              }
                               variant="body1"
                            >
                               {name}
@@ -114,7 +118,7 @@ export const CharacterSelectionScreen = observer(() => {
                            </Typography>
                         </Card>
                         <IconButton
-                           onClick={() => loginStore.openDeleteCharacterDialog(name)}
+                           onClick={() => characterSelectionStore.openDeleteCharacterDialog(name)}
                            color="error"
                            sx={{ mx: 1, my: 'auto' }}
                         >
@@ -122,14 +126,14 @@ export const CharacterSelectionScreen = observer(() => {
                         </IconButton>
                      </Box>
                   ))}
-                  {loginStore.characters.length === 0 && (
+                  {characterSelectionStore.characters.length === 0 && (
                      <Card variant="outlined">
                         <Typography variant="body1" align="center" sx={{ py: 2 }}>
                            You don't have any characters yet.
                         </Typography>
                      </Card>
                   )}
-                  {loginStore.characters.length < MAX_CHARACTERS_PER_ACCOUNT && (
+                  {characterSelectionStore.characters.length < MAX_CHARACTERS_PER_ACCOUNT && (
                      <Card
                         variant="clickable"
                         onClick={() => screenStore.setScreen('characterCreation')}
@@ -145,49 +149,54 @@ export const CharacterSelectionScreen = observer(() => {
                      </Card>
                   )}
                </Box>
-               {loginStore.characters.length !== 0 && (
+               {characterSelectionStore.characters.length !== 0 && (
                   <Button
-                     disabled={loginStore.selectedCharacter === ''}
+                     disabled={!characterSelectionStore.canSubmit}
                      type="submit"
                      variant="contained"
                      color="primary"
                      sx={{ mt: 2 }}
                   >
-                     {loginStore.loading ? <CircularProgress size={24} color="inherit" /> : 'Play'}
+                     {characterSelectionStore.loading ? (
+                        <CircularProgress size={24} color="inherit" />
+                     ) : (
+                        'Play'
+                     )}
                   </Button>
                )}
             </CardContent>
             <Dialog
                fullWidth
                maxWidth="sm"
-               open={loginStore.openDeleteDialog}
-               onClose={() => loginStore.closeDeleteCharacterDialog()}
+               open={characterSelectionStore.openDeleteDialog}
+               onClose={() => characterSelectionStore.closeDeleteCharacterDialog()}
             >
                <DialogTitle>Delete character</DialogTitle>
                <DialogContent>
                   <DialogContentText>
                      <Typography color="error" gutterBottom>
-                        Are you sure you want to delete <b>{loginStore.selectedCharacter}</b>? This
-                        action cannot be undone and you will lose all your progress and items.
+                        Are you sure you want to delete{' '}
+                        <b>{characterSelectionStore.characterToDelete}</b>? This action cannot be
+                        undone and you will lose all your progress and items.
                      </Typography>
                      <Typography>Please confirm your password to proceed.</Typography>
                      <TextField
                         fullWidth
                         type="password"
                         placeholder="Password"
-                        value={loginStore.password}
-                        onChange={(e) => loginStore.setPassword(e.target.value)}
+                        value={characterSelectionStore.password}
+                        onChange={(e) => characterSelectionStore.setPassword(e.target.value)}
                         sx={{ mt: 2 }}
                      />
                   </DialogContentText>
                </DialogContent>
                <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
                   <Button
-                     disabled={loginStore.password === ''}
+                     disabled={!characterSelectionStore.canDeleteCharacter}
                      variant="contained"
                      onClick={() => deleteCharacter()}
                   >
-                     {loginStore.loading ? (
+                     {characterSelectionStore.loadingDeleteCharacter ? (
                         <CircularProgress size={24} color="inherit" />
                      ) : (
                         'Delete'

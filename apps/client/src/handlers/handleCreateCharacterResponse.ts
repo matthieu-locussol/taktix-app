@@ -1,24 +1,24 @@
 import { ServerPacketType } from 'shared/src/packets/ServerPacket';
-import { _assertTrue } from 'shared/src/utils/_assert';
+import { match } from 'ts-pattern';
 import { Store } from '../store/Store';
 
 export const handleCreateCharacterResponse = (
    { response }: ServerPacketType<'createCharacterResponse'>,
    store: Store,
 ) => {
-   const { loginStore, screenStore } = store;
+   const { characterCreationStore, characterSelectionStore, screenStore } = store;
+   characterCreationStore.reset();
 
-   if (response.status === 'error') {
-      loginStore.reset();
-      loginStore.setErrorMessage(response.errorMessage);
-      return;
-   }
+   match(response)
+      .with({ status: 'error' }, ({ errorMessage }) => {
+         characterCreationStore.setErrorMessage(errorMessage);
+      })
+      .with({ status: 'character_created' }, ({ characters }) => {
+         characterCreationStore.reset();
+         characterSelectionStore.setCharacters(characters);
+         characterSelectionStore.setSuccessMessage('Character created!');
 
-   _assertTrue(response.status === 'character_created', 'Unknown status');
-
-   loginStore.reset();
-   loginStore.setCharacters(response.characters);
-   loginStore.setSuccessMessage('Character created!');
-
-   screenStore.setScreen('characterSelection');
+         screenStore.setScreen('characterSelection');
+      })
+      .exhaustive();
 };
