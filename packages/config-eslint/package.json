@@ -1,6 +1,6 @@
 {
    "name": "config-eslint",
-   "version": "1.23.0",
+   "version": "1.24.0",
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "scripts": {
