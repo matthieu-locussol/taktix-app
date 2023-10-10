@@ -13,7 +13,7 @@ export const handleCreateCharacterResponse = (
       .with({ status: 'error' }, ({ errorMessage }) => {
          characterCreationStore.setErrorMessage(errorMessage);
       })
-      .with({ status: 'character_created' }, ({ characters }) => {
+      .with({ status: 'success' }, ({ characters }) => {
          characterCreationStore.reset();
          characterSelectionStore.setCharacters(characters);
          characterSelectionStore.setSuccessMessage('Character created!');

@@ -19,7 +19,8 @@ export const handleSelectCharacter = async (
       client.socket.send({
          type: 'selectCharacterResponse',
          response: {
-            status: 'character_not_found',
+            status: 'error',
+            errorMessage: `Character "${name}" does not exist!`,
          },
       });
       return;
@@ -29,7 +30,8 @@ export const handleSelectCharacter = async (
       client.socket.send({
          type: 'selectCharacterResponse',
          response: {
-            status: 'wrong_user',
+            status: 'error',
+            errorMessage: `Character "${name}" does not belong to user "${client.username}"!`,
          },
       });
       return;

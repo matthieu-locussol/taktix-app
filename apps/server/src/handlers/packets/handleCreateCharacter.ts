@@ -75,7 +75,7 @@ export const handleCreateCharacter = async (
    client.socket.send({
       type: 'createCharacterResponse',
       response: {
-         status: 'character_created',
+         status: 'success',
          characters: [...userCharacters.map((entry) => ({ name: entry.name })), { name }],
       },
    });
