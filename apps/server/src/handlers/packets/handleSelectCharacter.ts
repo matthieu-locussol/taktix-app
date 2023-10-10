@@ -35,8 +35,8 @@ export const handleSelectCharacter = async (
       return;
    }
 
-   client.characterName = character.name;
    client.map = character.map;
+   client.characterName = character.name;
    client.position = {
       x: character.pos_x,
       y: character.pos_y,

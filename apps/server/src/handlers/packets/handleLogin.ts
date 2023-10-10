@@ -1,4 +1,4 @@
-import { ClientPacketType, _assertTrue } from 'shared';
+import { ClientPacketType } from 'shared';
 import { state } from '../../state';
 import { hashPassword } from '../../utils/hashPassword';
 import { prisma } from '../../utils/prisma';
@@ -11,12 +11,10 @@ export const handleLogin = async (
    const client = state.getClient(socketId);
    const hashedPassword = await hashPassword(password);
 
-   const users = await prisma.user.findMany({
+   const user = await prisma.user.findUnique({
       where: { username, password: hashedPassword },
       include: { characters: true },
    });
-   _assertTrue(users.length <= 1, 'More than one user found!');
-   const user = users[0];
 
    if (!user) {
       client.socket.send({
@@ -26,6 +24,12 @@ export const handleLogin = async (
          },
       });
       return;
+   }
+
+   const existingClient = state.getClientFromUsername(username);
+   if (existingClient) {
+      const [existingSocketId] = existingClient;
+      state.disconnectClient(existingSocketId);
    }
 
    client.socket.send({

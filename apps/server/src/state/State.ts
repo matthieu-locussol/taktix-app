@@ -15,6 +15,16 @@ export class State {
       this.clients.set(socketId, new Client(socket));
    }
 
+   disconnectClient(socketId: SocketId) {
+      this.getClient(socketId).socket.socket.close();
+   }
+
+   getClientFromUsername(username: string) {
+      const entries = [...this.clients.entries()];
+      const client = entries.reverse().find(([, entry]) => entry.username === username);
+      return client;
+   }
+
    getClient(socketId: SocketId) {
       const client = this.clients.get(socketId);
       _assert(client);
