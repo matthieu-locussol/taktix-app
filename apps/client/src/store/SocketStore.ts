@@ -52,6 +52,13 @@ export class SocketStore {
       this.socket.onerror = (error) => {
          console.error(error);
       };
+
+      this.socket.onclose = () => {
+         this._store.loginStore.reset();
+         this._store.loginStore.setErrorMessage('Disconnected from server!');
+         this._store.screenStore.setScreen('login');
+         this._store.screenStore.setLoggedIn(false);
+      };
    }
 
    send(packet: ClientPacket) {
