@@ -39,9 +39,10 @@
       "editor.bracketPairColorization.enabled": true,
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.codeActionsOnSave": {
-         "source.fixAll": true,
-         "source.organizeImports": true
-      }
+         "source.fixAll": "explicit",
+         "source.organizeImports": "explicit"
+      },
+      "typescript.tsdk": "Client ✨/node_modules/typescript/lib"
    },
    "extensions": {
       "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "eamodio.gitlens"]

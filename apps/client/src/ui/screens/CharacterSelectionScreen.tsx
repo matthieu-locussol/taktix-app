@@ -8,7 +8,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
@@ -20,24 +19,20 @@ import { useStore } from '../../store';
 
 export const CharacterSelectionScreen = observer(() => {
    const store = useStore();
-   const { characterSelectionStore, screenStore, socketStore } = store;
+   const { characterSelectionStore, colyseusStore, screenStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       characterSelectionStore.setLoading(true);
-      socketStore.send({
-         type: 'selectCharacter',
-         name: characterSelectionStore.selectedCharacter,
-      });
+      colyseusStore.selectCharacter(characterSelectionStore.selectedCharacter);
    };
 
    const deleteCharacter = async () => {
       characterSelectionStore.setLoadingDeleteCharacter(true);
-      socketStore.send({
-         type: 'deleteCharacter',
-         name: characterSelectionStore.characterToDelete,
-         password: characterSelectionStore.password,
-      });
+      colyseusStore.deleteCharacter(
+         characterSelectionStore.characterToDelete,
+         characterSelectionStore.password,
+      );
    };
 
    return (
@@ -77,7 +72,7 @@ export const CharacterSelectionScreen = observer(() => {
                   </Typography>
                )}
                <Box display="grid" gap={2}>
-                  {characterSelectionStore.characters.map(({ name }) => (
+                  {characterSelectionStore.characters.map((name) => (
                      <Box key={name} display="flex">
                         <Card
                            variant="clickable"
@@ -173,22 +168,20 @@ export const CharacterSelectionScreen = observer(() => {
             >
                <DialogTitle>Delete character</DialogTitle>
                <DialogContent>
-                  <DialogContentText>
-                     <Typography color="error" gutterBottom>
-                        Are you sure you want to delete{' '}
-                        <b>{characterSelectionStore.characterToDelete}</b>? This action cannot be
-                        undone and you will lose all your progress and items.
-                     </Typography>
-                     <Typography>Please confirm your password to proceed.</Typography>
-                     <TextField
-                        fullWidth
-                        type="password"
-                        placeholder="Password"
-                        value={characterSelectionStore.password}
-                        onChange={(e) => characterSelectionStore.setPassword(e.target.value)}
-                        sx={{ mt: 2 }}
-                     />
-                  </DialogContentText>
+                  <Typography color="error" gutterBottom>
+                     Are you sure you want to delete{' '}
+                     <b>{characterSelectionStore.characterToDelete}</b>? This action cannot be
+                     undone and you will lose all your progress and items.
+                  </Typography>
+                  <Typography>Please confirm your password to proceed.</Typography>
+                  <TextField
+                     fullWidth
+                     type="password"
+                     placeholder="Password"
+                     value={characterSelectionStore.password}
+                     onChange={(e) => characterSelectionStore.setPassword(e.target.value)}
+                     sx={{ mt: 2 }}
+                  />
                </DialogContent>
                <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
                   <Button

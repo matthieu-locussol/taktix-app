@@ -1,5 +1,5 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { RequestHandler } from 'express';
 
-export const statusRouter = (_: FastifyRequest, res: FastifyReply) => {
+export const statusRouter: RequestHandler = (_, res) => {
    res.send({ status: 'ok' });
 };

@@ -7,7 +7,7 @@ export const handleChangeMapResponse = (
 ) => {
    const currentScene = store.gameStore.getCurrentScene;
    if (currentScene) {
-      currentScene.deleteAllExternalPlayers();
+      // currentScene.deleteAllExternalPlayers();
 
       players.forEach(({ nickname, x, y }) => {
          currentScene.addExternalPlayer(nickname, { x, y });

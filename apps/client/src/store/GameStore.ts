@@ -51,13 +51,6 @@ export class GameStore {
       characterStore.setPosition(data.entrancePosition);
       characterStore.setPlayers([]);
 
-      this._store.socketStore.send({
-         type: 'changeMap',
-         map,
-         x: data.entrancePosition.x,
-         y: data.entrancePosition.y,
-      });
-
       return returnedScene as Scene;
    }
 

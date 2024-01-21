@@ -25,7 +25,6 @@ export const config: Phaser.Types.Core.GameConfig = {
       ],
    },
    callbacks: {
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       postBoot: () => store.gameStore.initialize(game),
    },
 };

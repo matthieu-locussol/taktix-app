@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import { AuthRoomUserData } from 'shared';
 
 export class CharacterSelectionStore {
    public password: string = '';
@@ -11,7 +12,7 @@ export class CharacterSelectionStore {
 
    public loadingDeleteCharacter: boolean = false;
 
-   public characters: { name: string }[] = [];
+   public characters: AuthRoomUserData['characters'] = [];
 
    public selectedCharacter: string = '';
 
@@ -45,7 +46,7 @@ export class CharacterSelectionStore {
       this.loadingDeleteCharacter = loadingDeleteCharacter;
    }
 
-   setCharacters(characters: { name: string }[]) {
+   setCharacters(characters: AuthRoomUserData['characters']) {
       this.characters = characters;
    }
 

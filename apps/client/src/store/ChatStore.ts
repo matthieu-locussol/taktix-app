@@ -2,7 +2,8 @@ import { makeAutoObservable } from 'mobx';
 
 interface ChatMessage {
    author: string;
-   message: string;
+   channel: number;
+   content: string;
 }
 
 export class ChatStore {
@@ -15,12 +16,13 @@ export class ChatStore {
 
       this.addMessage({
          author: 'Server',
-         message: `Connected to server ${import.meta.env.VITE_SERVER_WEBSOCKET_URL}!`,
+         channel: 1,
+         content: `Connected to server ${import.meta.env.VITE_SERVER_WEBSOCKET_URL}!`,
       });
    }
 
    public addMessage(message: ChatMessage) {
-      if (message.message.length > 0) {
+      if (message.content.length > 0) {
          this.messages.push(message);
       }
    }

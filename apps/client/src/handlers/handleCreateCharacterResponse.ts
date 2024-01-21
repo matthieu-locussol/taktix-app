@@ -15,7 +15,7 @@ export const handleCreateCharacterResponse = (
       })
       .with({ status: 'success' }, ({ characters }) => {
          characterCreationStore.reset();
-         characterSelectionStore.setCharacters(characters);
+         characterSelectionStore.setCharacters(characters.map(({ name }) => name));
          characterSelectionStore.setSuccessMessage('Character created!');
 
          screenStore.setScreen('characterSelection');

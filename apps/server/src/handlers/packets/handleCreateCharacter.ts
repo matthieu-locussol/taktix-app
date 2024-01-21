@@ -28,6 +28,7 @@ export const handleCreateCharacter = async (
    }
 
    const [characters, userCharacters] = await Promise.all([
+      prisma.character.findMany(),
       prisma.character.findMany({
          where: { name },
       }),
