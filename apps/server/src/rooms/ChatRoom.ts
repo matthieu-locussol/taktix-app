@@ -79,6 +79,17 @@ export class ChatRoom extends Room {
       };
 
       this.broadcast(packet.type, packet.message, { except: client });
+
+      const clientPacket: ChatRoomResponse = {
+         type: 'message',
+         message: {
+            author: 'Server',
+            channel: 1,
+            content: `Connected to server {{SERVER_URL}}!`,
+         },
+      };
+
+      client.send(clientPacket.type, clientPacket.message);
    }
 
    onLeave(client: Client, _consented: boolean) {
