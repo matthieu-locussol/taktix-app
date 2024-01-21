@@ -59,9 +59,16 @@ export class MapRoom extends Room<MapState> {
       _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
       const { characterName } = userInfos;
 
-      logger.info(
-         `[MapRoom][${this.name}] Client '${client.sessionId}' (${characterName}) joined the room at (${position?.x}, ${position?.y})`,
-      );
+      if (position !== undefined) {
+         const { x, y } = position;
+         logger.info(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${characterName}) joined the room at (${x}, ${y})`,
+         );
+      } else {
+         logger.info(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${characterName}) joined the room`,
+         );
+      }
 
       const characterInfos = await prisma.character.findUnique({
          where: { name: characterName },
