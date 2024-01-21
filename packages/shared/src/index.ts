@@ -1,7 +1,5 @@
 export * from './config';
 export * from './data/teleportationSpots';
-export * from './packets/ClientPacket';
-export * from './packets/ServerPacket';
 export * from './rooms/AuthRoom';
 export * from './rooms/ChatRoom';
 export * from './rooms/MapRoom';
