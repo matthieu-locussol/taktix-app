@@ -7,7 +7,6 @@ export class HouseScene extends Scene {
 
    public loadAssets(): void {
       this.load.audio('house', '/assets/musics/house.mp3');
-      this.load.audio('background', '/assets/musics/background.mp3');
       this.load.image('house_tiles', '/assets/tilesets/house_tileset.png');
       this.load.tilemapTiledJSON('house-map', '/assets/maps/house.json');
       this.load.spritesheet('player', '/assets/characters/characters.png', {
