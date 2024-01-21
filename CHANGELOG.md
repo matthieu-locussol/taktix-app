@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.24.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.0...v1.24.1) (2024-01-21)
+
+
+### Bug Fixes
+
+* eslint issues ([82af451](https://github.com/matthieu-locussol/taktix-app/commit/82af451a9f6f835e8dd63dec439b59d23ceebcef))
+
 ## [1.24.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.23.0...v1.24.0) (2023-10-10)
 
 
