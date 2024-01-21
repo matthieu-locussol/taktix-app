@@ -1,36 +1,50 @@
-import FastifyCorsPlugin from '@fastify/cors';
-import FastifyWebSocketPlugin from '@fastify/websocket';
-import Fastify from 'fastify';
+import { Server } from '@colyseus/core';
+import { monitor } from '@colyseus/monitor';
+import { playground } from '@colyseus/playground';
+import { WebSocketTransport } from '@colyseus/ws-transport';
+import cors from 'cors';
+import express, { json } from 'express';
+import basicAuth from 'express-basic-auth';
+import { createServer } from 'http';
+import { AuthRoom } from './rooms/AuthRoom';
+import { ChatRoom } from './rooms/ChatRoom';
+import { CloudsRoom } from './rooms/maps/CloudsRoom';
+import { HouseRoom } from './rooms/maps/HouseRoom';
 import { registerRouter } from './routers/registerRouter';
 import { statusRouter } from './routers/statusRouter';
-import { wsRouter } from './routers/wsRouter';
 
-const fastifyInstance = Fastify({
-   logger: process.env.NODE_ENV !== 'production',
+const app = express();
+const auth = basicAuth({
+   challenge: true,
+   users: { [process.env.MONITORING_USERNAME]: process.env.MONITORING_PASSWORD },
 });
 
-fastifyInstance.register(FastifyWebSocketPlugin);
-fastifyInstance.register(FastifyCorsPlugin, {
-   origin: '*',
-   methods: ['GET'],
-   credentials: true,
+app.use(cors());
+app.use(json());
+app.use('/monitor', auth, monitor());
+app.use('/playground', auth, playground);
+
+app.get('/status', statusRouter);
+app.post('/register', registerRouter);
+
+const gameServer = new Server({
+   transport: new WebSocketTransport({
+      pingInterval: 6000,
+      pingMaxRetries: 4,
+      server: createServer(app),
+   }),
+   greet: false,
 });
 
-fastifyInstance.register(async (fastify) => {
-   fastify.get('/ws', { websocket: true }, wsRouter);
-   fastify.get('/status', statusRouter);
-   fastify.post('/register', registerRouter);
+gameServer.listen(4000, undefined, undefined, () => {
+   console.log(`Listening on ws://localhost:4000...`);
 });
 
-fastifyInstance.listen(
-   {
-      host: '0.0.0.0',
-      port: Number.parseInt(process.env.PORT || '4000', 10),
-   },
-   (error) => {
-      if (error) {
-         fastifyInstance.log.error(error);
-         process.exit(1);
-      }
-   },
-);
+if (process.env.NODE_ENV !== 'production') {
+   gameServer.simulateLatency(300);
+}
+
+gameServer.define('AuthRoom', AuthRoom);
+gameServer.define('ChatRoom', ChatRoom);
+gameServer.define('CloudsRoom', CloudsRoom);
+gameServer.define('HouseRoom', HouseRoom);

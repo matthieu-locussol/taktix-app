@@ -1,5 +1,4 @@
 import { Direction, GridEngine, Position } from 'grid-engine';
-import { TELEPORTATION_SPOTS } from 'shared/src/data/teleportationSpots';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { SceneData } from 'shared/src/types/SceneData';
 import { store } from '../store';
@@ -31,13 +30,21 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
+   public setEntrancePosition(position: Position): void {
+      this.entrancePosition = position;
+   }
+
+   public setEntranceDirection(direction: Direction): void {
+      this.entranceDirection = direction;
+   }
+
    public init({ entrancePosition, entranceDirection }: SceneData): void {
       if (entrancePosition !== undefined) {
-         this.entrancePosition = entrancePosition;
+         this.setEntrancePosition(entrancePosition);
       }
 
       if (entranceDirection !== undefined) {
-         this.entranceDirection = entranceDirection;
+         this.setEntranceDirection(entranceDirection);
       }
    }
 
@@ -73,18 +80,10 @@ export abstract class Scene extends Phaser.Scene {
       this.gridEngine.create(tilemap, { characters: [] });
       this.createPlayer(store.characterStore.name);
 
-      if (store.characterStore.map !== '') {
-         this.sendChangeMapSocket(this.entrancePosition);
-      }
-
       this.gridEngine.positionChangeFinished().subscribe((entity) => {
          if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
             this.sendMoveSocket();
          }
-      });
-
-      store.characterStore.players.forEach(({ nickname, x, y }) => {
-         this.addExternalPlayer(nickname, { x, y });
       });
 
       this.lights.enable();
@@ -143,7 +142,6 @@ export abstract class Scene extends Phaser.Scene {
 
    public override update(): void {
       this.updateMoves();
-      this.updateTeleportationSpots();
    }
 
    public updateMoves(): void {
@@ -164,32 +162,7 @@ export abstract class Scene extends Phaser.Scene {
 
    public sendMoveSocket(): void {
       const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
-
-      store.socketStore.send({
-         type: 'move',
-         posX: position.x,
-         posY: position.y,
-      });
-   }
-
-   public sendChangeMapSocket(position: Position): void {
-      store.socketStore.send({
-         type: 'changeMap',
-         map: this.scene.key,
-         x: position.x,
-         y: position.y,
-      });
-   }
-
-   public updateTeleportationSpots(): void {
-      const playerPosition = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
-      const teleportationSpots = TELEPORTATION_SPOTS[this.scene.key];
-
-      for (const { x, y, destinationMapName, destinationMapData } of teleportationSpots) {
-         if (playerPosition.x === x && playerPosition.y === y) {
-            this.scene.start(destinationMapName, destinationMapData);
-         }
-      }
+      store.colyseusStore.movePlayer(position.x, position.y);
    }
 
    public addExternalPlayer(name: string, position: Position): void {
@@ -233,14 +206,17 @@ export abstract class Scene extends Phaser.Scene {
       sprite?.destroy();
    }
 
-   public moveExternalPlayer(name: string, x: number, y: number): void {
+   public moveExternalPlayerX(name: string, x: number): void {
+      const { y } = this.gridEngine.getPosition(name);
       this.gridEngine.moveTo(name, { x, y });
    }
 
-   public deleteAllExternalPlayers(): void {
-      const players = this.gridEngine
-         .getAllCharacters()
-         .filter((name) => name !== INTERNAL_PLAYER_NAME);
-      players.forEach((p) => this.deleteExternalPlayer(p));
+   public moveExternalPlayerY(name: string, y: number): void {
+      const { x } = this.gridEngine.getPosition(name);
+      this.gridEngine.moveTo(name, { x, y });
+   }
+
+   public fadeOut(callback: (_: unknown, progress: number) => void): void {
+      this.cameras.main.fade(500, 31, 41, 55, false, callback);
    }
 }

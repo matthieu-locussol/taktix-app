@@ -8,22 +8,22 @@ export interface TeleportationSpot {
 }
 
 export const TELEPORTATION_SPOTS: Record<string, TeleportationSpot[]> = {
-   clouds: [
+   CloudsRoom: [
       {
          x: 12,
          y: 6,
-         destinationMapName: 'house',
+         destinationMapName: 'HouseRoom',
          destinationMapData: {
             entrancePosition: { x: 8, y: 8 },
             entranceDirection: Direction.UP,
          },
       },
    ],
-   house: [
+   HouseRoom: [
       {
          x: 8,
          y: 9,
-         destinationMapName: 'clouds',
+         destinationMapName: 'CloudsRoom',
          destinationMapData: {
             entrancePosition: { x: 12, y: 7 },
             entranceDirection: Direction.DOWN,
@@ -32,7 +32,7 @@ export const TELEPORTATION_SPOTS: Record<string, TeleportationSpot[]> = {
       {
          x: 9,
          y: 9,
-         destinationMapName: 'clouds',
+         destinationMapName: 'CloudsRoom',
          destinationMapData: {
             entrancePosition: { x: 12, y: 7 },
             entranceDirection: Direction.DOWN,

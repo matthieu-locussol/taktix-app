@@ -28,6 +28,9 @@ export const RegisterScreen = observer(() => {
 
       const results = await fetch(`${import.meta.env.VITE_SERVER_URL}/register`, {
          method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+         },
          body: JSON.stringify({
             username: registerStore.username,
             password: registerStore.password,
@@ -117,6 +120,7 @@ export const RegisterScreen = observer(() => {
                   <TextField
                      type="email"
                      placeholder="Email address"
+                     autoComplete="email"
                      value={registerStore.email}
                      onChange={(e) => registerStore.setEmail(e.target.value)}
                      sx={{ mt: 2 }}
@@ -124,6 +128,7 @@ export const RegisterScreen = observer(() => {
                   <TextField
                      type="text"
                      placeholder="Username"
+                     autoComplete="username"
                      value={registerStore.username}
                      onChange={(e) => registerStore.setUsername(e.target.value)}
                      sx={{ mt: 2 }}
@@ -131,6 +136,7 @@ export const RegisterScreen = observer(() => {
                   <TextField
                      type="password"
                      placeholder="Password"
+                     autoComplete="new-password"
                      value={registerStore.password}
                      onChange={(e) => registerStore.setPassword(e.target.value)}
                      sx={{ mt: 2 }}

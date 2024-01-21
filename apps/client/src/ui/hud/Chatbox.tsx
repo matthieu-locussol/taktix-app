@@ -8,7 +8,7 @@ import { useStore } from '../../store';
 export const Chatbox = observer(() => {
    const inputRef = useRef<HTMLInputElement>(null);
    const chatboxRef = useRef<HTMLDivElement>(null);
-   const { chatStore, characterStore, gameStore, loadingScreenStore, socketStore } = useStore();
+   const { chatStore, colyseusStore, gameStore, loadingScreenStore } = useStore();
 
    useEffect(() => {
       if (chatboxRef.current !== null) {
@@ -19,17 +19,7 @@ export const Chatbox = observer(() => {
    const sendMessage = (event: React.FormEvent<HTMLDivElement>) => {
       event.preventDefault();
 
-      chatStore.addMessage({
-         author: characterStore.name,
-         message: chatStore.input,
-      });
-
-      socketStore.send({
-         type: 'message',
-         name: characterStore.name,
-         content: chatStore.input,
-      });
-
+      colyseusStore.sendMessage(1, chatStore.input);
       chatStore.setInput('');
    };
 
@@ -40,14 +30,14 @@ export const Chatbox = observer(() => {
    return (
       <Root component="form" onSubmit={sendMessage}>
          <Chat ref={chatboxRef}>
-            {chatStore.messages.map(({ author, message }, idx) =>
+            {chatStore.messages.map(({ author, content }, idx) =>
                author === 'Server' ? (
                   <Typography key={idx} fontStyle="italic">
-                     {message}
+                     {content}
                   </Typography>
                ) : (
                   <Typography key={idx}>
-                     {author}: {message}
+                     {author}: {content}
                   </Typography>
                ),
             )}

@@ -1,9 +1,8 @@
-import { Direction } from 'grid-engine';
 import { Scene } from '../Scene';
 
 export class CloudsScene extends Scene {
    constructor() {
-      super('clouds', { entrancePosition: { x: 12, y: 7 }, entranceDirection: Direction.DOWN });
+      super('CloudsRoom');
    }
 
    public loadAssets() {

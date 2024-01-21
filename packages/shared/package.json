@@ -6,7 +6,7 @@
    "scripts": {
       "build": "tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-      "eslint": "eslint src",
+      "eslint": "eslint src --report-unused-disable-directives",
       "test": "vitest --run"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
@@ -17,6 +17,8 @@
       "typescript": "^5.2.2"
    },
    "dependencies": {
+      "@colyseus/core": "^0.15.8",
+      "@colyseus/schema": "^2.0.18",
       "vitest": "^0.34.6",
       "zod": "^3.22.4"
    }

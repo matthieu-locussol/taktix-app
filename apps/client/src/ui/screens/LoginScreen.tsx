@@ -13,19 +13,35 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import { AuthRoomUserData } from 'shared';
 import { version } from '../../../package.json';
 import { useStore } from '../../store';
 import { ServerStatus } from '../components/ServerStatus';
 
 export const LoginScreen = observer(() => {
    const store = useStore();
-   const { loginStore, screenStore, updaterStore } = store;
+   const { characterSelectionStore, colyseusStore, loginStore, screenStore, updaterStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
+      const { username, password } = loginStore;
       loginStore.setLoading(true);
-      store.initialize(loginStore.username, loginStore.password);
+
+      colyseusStore
+         .login(username, password)
+         .then((room) => {
+            room.onMessage('userData', ({ characters }: AuthRoomUserData) => {
+               colyseusStore.setAuthRoom(room);
+               characterSelectionStore.setCharacters(characters);
+               screenStore.setScreen('characterSelection');
+               loginStore.setLoading(false);
+            });
+         })
+         .catch(() => {
+            loginStore.setErrorMessage(`Incorrect credentials for user "${username}"!`);
+            loginStore.setLoading(false);
+         });
    };
 
    return (
@@ -99,6 +115,7 @@ export const LoginScreen = observer(() => {
                   <TextField
                      type="text"
                      placeholder="Username"
+                     autoComplete="username"
                      value={loginStore.username}
                      onChange={(e) => loginStore.setUsername(e.target.value)}
                      sx={{ mt: 2 }}
@@ -106,6 +123,7 @@ export const LoginScreen = observer(() => {
                   <TextField
                      type="password"
                      placeholder="Password"
+                     autoComplete="current-password"
                      value={loginStore.password}
                      onChange={(e) => loginStore.setPassword(e.target.value)}
                      sx={{ mt: 2 }}

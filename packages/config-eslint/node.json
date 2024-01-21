@@ -47,7 +47,8 @@
       "@typescript-eslint/no-use-before-define": "off",
       "react/jsx-filename-extension": "off",
       "react/jsx-props-no-spreading": "off",
-      "mui-path-imports/mui-path-imports": "error"
+      "mui-path-imports/mui-path-imports": "error",
+      "class-methods-use-this": "off"
    },
    "settings": {
       "react": {

@@ -2,7 +2,8 @@ import { makeAutoObservable } from 'mobx';
 
 interface ChatMessage {
    author: string;
-   message: string;
+   channel: number;
+   content: string;
 }
 
 export class ChatStore {
@@ -12,17 +13,25 @@ export class ChatStore {
 
    constructor() {
       makeAutoObservable(this);
-
-      this.addMessage({
-         author: 'Server',
-         message: `Connected to server ${import.meta.env.VITE_SERVER_WEBSOCKET_URL}!`,
-      });
    }
 
    public addMessage(message: ChatMessage) {
-      if (message.message.length > 0) {
-         this.messages.push(message);
+      if (message.content.length > 0) {
+         this.messages.push(this.formatMessage(message));
       }
+   }
+
+   private formatMessage(message: ChatMessage): ChatMessage {
+      const { content } = message;
+      const formattedContent = content.replace(
+         /{{SERVER_URL}}/g,
+         import.meta.env.VITE_SERVER_WEBSOCKET_URL,
+      );
+
+      return {
+         ...message,
+         content: formattedContent,
+      };
    }
 
    public setInput(input: string) {

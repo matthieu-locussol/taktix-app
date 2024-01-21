@@ -12,19 +12,15 @@ it('should set the input', () => {
    expect(store.input).toBe('John');
 });
 
-it('should have the initial server message', () => {
+it('should have no initial message', () => {
    const store = new ChatStore();
-   expect(store.messages).toHaveLength(1);
-   expect(store.messages[0]).toEqual({
-      author: 'Server',
-      message: `Connected to server ${import.meta.env.VITE_SERVER_WEBSOCKET_URL}!`,
-   });
+   expect(store.messages).toHaveLength(0);
 });
 
 it('should add a new message', () => {
    const store = new ChatStore();
-   expect(store.messages).toHaveLength(1);
+   expect(store.messages).toHaveLength(0);
 
-   store.addMessage({ author: 'player1', message: 'content' });
-   expect(store.messages).toHaveLength(2);
+   store.addMessage({ author: 'player1', channel: 1, content: 'content' });
+   expect(store.messages).toHaveLength(1);
 });
