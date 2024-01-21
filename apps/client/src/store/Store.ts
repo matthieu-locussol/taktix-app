@@ -1,5 +1,4 @@
 import { makeAutoObservable } from 'mobx';
-import { _assert } from 'shared/src/utils/_assert';
 import { CharacterCreationStore } from './CharacterCreationStore';
 import { CharacterSelectionStore } from './CharacterSelectionStore';
 import { CharacterStore } from './CharacterStore';
@@ -11,7 +10,6 @@ import { LoginStore } from './LoginStore';
 import { NewsStore } from './NewsStore';
 import { RegisterStore } from './RegisterStore';
 import { ScreenStore } from './ScreenStore';
-import { SocketStore } from './SocketStore';
 import { UpdaterStore } from './UpdaterStore';
 
 export class Store {
@@ -39,8 +37,6 @@ export class Store {
 
    public updaterStore: UpdaterStore;
 
-   private _socketStore: SocketStore | null;
-
    constructor() {
       makeAutoObservable(this);
 
@@ -56,16 +52,5 @@ export class Store {
       this.registerStore = new RegisterStore();
       this.screenStore = new ScreenStore();
       this.updaterStore = new UpdaterStore();
-
-      this._socketStore = null;
-   }
-
-   get socketStore() {
-      _assert(this._socketStore, 'SocketStore has not been initialized yet!');
-      return this._socketStore;
-   }
-
-   initialize(username: string, password: string) {
-      this._socketStore = new SocketStore(this, username, password);
    }
 }
