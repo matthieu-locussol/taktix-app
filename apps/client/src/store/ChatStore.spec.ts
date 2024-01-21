@@ -25,6 +25,6 @@ it('should add a new message', () => {
    const store = new ChatStore();
    expect(store.messages).toHaveLength(1);
 
-   store.addMessage({ author: 'player1', message: 'content' });
+   store.addMessage({ author: 'player1', channel: 1, content: 'content' });
    expect(store.messages).toHaveLength(2);
 });
