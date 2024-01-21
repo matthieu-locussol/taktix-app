@@ -14,7 +14,7 @@ export const handleLoginResponse = (
          loginStore.setErrorMessage(errorMessage);
       })
       .with({ status: 'success' }, ({ characters }) => {
-         characterSelectionStore.setCharacters(characters);
+         characterSelectionStore.setCharacters(characters.map(({ name }) => name));
          screenStore.setScreen('characterSelection');
       })
       .exhaustive();

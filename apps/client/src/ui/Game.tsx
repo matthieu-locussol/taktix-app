@@ -13,6 +13,7 @@ import { RegisterScreen } from './screens/RegisterScreen';
 
 export const Game = observer(() => {
    const {
+      colyseusStore,
       screenStore,
       loadingScreenStore: { loadingAssets, sceneVisible },
       updaterStore,
@@ -21,6 +22,10 @@ export const Game = observer(() => {
    useEffect(() => {
       updaterStore.checkUpdate();
    }, []);
+
+   if (colyseusStore.changingMap) {
+      return null;
+   }
 
    if (loadingAssets) {
       return <LoadingAssetsScreen />;

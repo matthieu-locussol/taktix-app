@@ -2,7 +2,7 @@ import { Scene } from '../Scene';
 
 export class HouseScene extends Scene {
    constructor() {
-      super('house');
+      super('HouseRoom');
    }
 
    public loadAssets(): void {

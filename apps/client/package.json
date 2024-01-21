@@ -4,7 +4,7 @@
    "scripts": {
       "build": "tsc && vite build",
       "build:app": "TAURI_PRIVATE_KEY=~/.tauri/taktix-app.key tauri build",
-      "eslint": "eslint src",
+      "eslint": "eslint src --report-unused-disable-directives",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
       "dev:client": "vite --host",
       "dev:app": "tauri dev",
@@ -20,6 +20,7 @@
       "@mui/material": "^5.14.12",
       "@tauri-apps/api": "^1.5.0",
       "@vitejs/plugin-react": "^4.1.0",
+      "colyseus.js": "^0.15.14",
       "grid-engine": "^2.37.0",
       "mobx": "^6.10.2",
       "mobx-react-lite": "^4.0.5",

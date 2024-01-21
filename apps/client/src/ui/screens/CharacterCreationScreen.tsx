@@ -11,16 +11,12 @@ import { useStore } from '../../store';
 
 export const CharacterCreationScreen = observer(() => {
    const store = useStore();
-   const { characterCreationStore, screenStore, socketStore } = store;
+   const { characterCreationStore, colyseusStore, screenStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
       characterCreationStore.setLoading(true);
-      socketStore.send({
-         type: 'createCharacter',
-         name: characterCreationStore.name,
-      });
+      colyseusStore.createCharacter(characterCreationStore.name);
    };
 
    return (

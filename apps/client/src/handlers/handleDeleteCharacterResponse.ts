@@ -14,7 +14,7 @@ export const handleDeleteCharacterResponse = (
          characterSelectionStore.setErrorMessage(errorMessage);
       })
       .with({ status: 'success' }, ({ characters }) => {
-         characterSelectionStore.setCharacters(characters);
+         characterSelectionStore.setCharacters(characters.map(({ name }) => name));
          characterSelectionStore.setSuccessMessage('Character deleted');
       })
       .exhaustive();
