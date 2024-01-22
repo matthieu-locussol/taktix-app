@@ -140,25 +140,7 @@ export class ColyseusStore {
 
    private initializeAuthRoom() {
       this.authRoom.onLeave((code) => {
-         if (code !== WS_CLOSED_CONSENTED) {
-            if (this._authRoom !== null) {
-               this._authRoom.leave();
-            }
-
-            if (this._chatRoom !== null) {
-               this._chatRoom.leave();
-            }
-
-            if (this._gameRoom !== null) {
-               this._gameRoom.leave();
-            }
-
-            this._store.screenStore.setLoggedIn(false);
-            this._store.screenStore.setScreen('login');
-            this._store.loginStore.setErrorMessage(
-               `[${code}] You have been disconnected from the server`,
-            );
-         }
+         this.onWebSocketClosed(code);
       });
 
       this.authRoom.onMessage('*', (type: unknown, message: unknown) => {
@@ -275,25 +257,7 @@ export class ColyseusStore {
 
    private initializeGameRoom() {
       this.gameRoom.onLeave((code) => {
-         if (code !== WS_CLOSED_CONSENTED) {
-            if (this._authRoom !== null) {
-               this._authRoom.leave();
-            }
-
-            if (this._chatRoom !== null) {
-               this._chatRoom.leave();
-            }
-
-            if (this._gameRoom !== null) {
-               this._gameRoom.leave();
-            }
-
-            this._store.screenStore.setLoggedIn(false);
-            this._store.screenStore.setScreen('login');
-            this._store.loginStore.setErrorMessage(
-               `[${code}] You have been disconnected from the server`,
-            );
-         }
+         this.onWebSocketClosed(code);
       });
 
       this.gameRoom.onMessage('*', (type: unknown, message: unknown) => {
@@ -358,5 +322,17 @@ export class ColyseusStore {
 
       this.setChangingMap(false);
       this._store.gameStore.enableKeyboard(true);
+   }
+
+   private async onWebSocketClosed(code: number) {
+      if (code !== WS_CLOSED_CONSENTED) {
+         this._store.screenStore.setLoggedIn(false);
+         this._store.screenStore.setScreen('login');
+         this._store.loginStore.setErrorMessage(
+            `[${code}] You have been disconnected from the server`,
+         );
+
+         this._client = new Client(import.meta.env.VITE_SERVER_WEBSOCKET_URL);
+      }
    }
 }
