@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.24.5](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.4...v1.24.5) (2024-01-22)
+
+
+### Bug Fixes
+
+* automatically disconnect the client when the websocket closes ([6fa280e](https://github.com/matthieu-locussol/taktix-app/commit/6fa280e972e9b4ac3573329c8396934ad1921544))
+* don't disconnect clients when the WS has been closed in a consented way ([0d9d929](https://github.com/matthieu-locussol/taktix-app/commit/0d9d9290c2c8731f9ede2102e150005243dd780b))
+* removed deleted files from shared index ([be07285](https://github.com/matthieu-locussol/taktix-app/commit/be072853bb46ae0d386f210fe687d586e57251ba))
+
 ### [1.24.4](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.3...v1.24.4) (2024-01-21)
 
 ### [1.24.3](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.0...v1.24.3) (2024-01-21)
