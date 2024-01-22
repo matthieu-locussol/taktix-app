@@ -138,23 +138,25 @@ export class ColyseusStore {
 
    private initializeAuthRoom() {
       this.authRoom.onLeave((code) => {
-         if (this._authRoom !== null) {
-            this._authRoom.leave();
-         }
+         if (code !== 4000) {
+            if (this._authRoom !== null) {
+               this._authRoom.leave();
+            }
 
-         if (this._chatRoom !== null) {
-            this._chatRoom.leave();
-         }
+            if (this._chatRoom !== null) {
+               this._chatRoom.leave();
+            }
 
-         if (this._gameRoom !== null) {
-            this._gameRoom.leave();
-         }
+            if (this._gameRoom !== null) {
+               this._gameRoom.leave();
+            }
 
-         this._store.screenStore.setLoggedIn(false);
-         this._store.screenStore.setScreen('login');
-         this._store.loginStore.setErrorMessage(
-            `[${code}] You have been disconnected from the server`,
-         );
+            this._store.screenStore.setLoggedIn(false);
+            this._store.screenStore.setScreen('login');
+            this._store.loginStore.setErrorMessage(
+               `[${code}] You have been disconnected from the server`,
+            );
+         }
       });
 
       this.authRoom.onMessage('*', (type: unknown, message: unknown) => {
@@ -271,23 +273,25 @@ export class ColyseusStore {
 
    private initializeGameRoom() {
       this.gameRoom.onLeave((code) => {
-         if (this._authRoom !== null) {
-            this._authRoom.leave();
-         }
+         if (code !== 4000) {
+            if (this._authRoom !== null) {
+               this._authRoom.leave();
+            }
 
-         if (this._chatRoom !== null) {
-            this._chatRoom.leave();
-         }
+            if (this._chatRoom !== null) {
+               this._chatRoom.leave();
+            }
 
-         if (this._gameRoom !== null) {
-            this._gameRoom.leave();
-         }
+            if (this._gameRoom !== null) {
+               this._gameRoom.leave();
+            }
 
-         this._store.screenStore.setLoggedIn(false);
-         this._store.screenStore.setScreen('login');
-         this._store.loginStore.setErrorMessage(
-            `[${code}] You have been disconnected from the server`,
-         );
+            this._store.screenStore.setLoggedIn(false);
+            this._store.screenStore.setScreen('login');
+            this._store.loginStore.setErrorMessage(
+               `[${code}] You have been disconnected from the server`,
+            );
+         }
       });
 
       this.gameRoom.onMessage('*', (type: unknown, message: unknown) => {
