@@ -10,5 +10,3 @@ export * from './states/PlayerState';
 export * from './types/Player';
 export * from './types/SceneData';
 export * from './utils/_assert';
-export * from './utils/log';
-export * from './utils/wait';
