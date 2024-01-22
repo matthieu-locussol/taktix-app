@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { LoginStore } from './LoginStore';
+import { RegisterStore } from './RegisterStore';
 
-describe('LoginStore', () => {
+describe('RegisterStore', () => {
    it('should be initialized', () => {
-      const store = new LoginStore();
+      const store = new RegisterStore();
 
       expect(store).toBeDefined();
+      expect(store.email).toBe('');
       expect(store.username).toBe('');
       expect(store.password).toBe('');
       expect(store.errorMessage).toBe('');
@@ -13,39 +14,46 @@ describe('LoginStore', () => {
       expect(store.loading).toBe(false);
    });
 
+   it('should set the email', () => {
+      const store = new RegisterStore();
+      store.setEmail('email');
+      expect(store.email).toBe('email');
+   });
+
    it('should set the username', () => {
-      const store = new LoginStore();
+      const store = new RegisterStore();
       store.setUsername('username');
       expect(store.username).toBe('username');
    });
 
    it('should set the password', () => {
-      const store = new LoginStore();
+      const store = new RegisterStore();
       store.setPassword('password');
       expect(store.password).toBe('password');
    });
 
    it('should set the error message', () => {
-      const store = new LoginStore();
+      const store = new RegisterStore();
       store.setErrorMessage('error');
       expect(store.errorMessage).toBe('error');
    });
 
    it('should set the success message', () => {
-      const store = new LoginStore();
+      const store = new RegisterStore();
       store.setSuccessMessage('success');
       expect(store.successMessage).toBe('success');
    });
 
    it('should set the loading', () => {
-      const store = new LoginStore();
+      const store = new RegisterStore();
       store.setLoading(true);
       expect(store.loading).toBe(true);
    });
 
    it('should reset the store', () => {
-      const store = new LoginStore();
+      const store = new RegisterStore();
 
+      store.setEmail('email');
       store.setUsername('username');
       store.setPassword('password');
       store.setErrorMessage('error');
@@ -54,6 +62,7 @@ describe('LoginStore', () => {
 
       store.reset();
 
+      expect(store.email).toBe('');
       expect(store.username).toBe('');
       expect(store.password).toBe('');
       expect(store.errorMessage).toBe('');
@@ -61,13 +70,21 @@ describe('LoginStore', () => {
       expect(store.loading).toBe(false);
    });
 
-   it('should return true if can submit', () => {
-      const store = new LoginStore();
+   it('should return if it can submit', () => {
+      const store = new RegisterStore();
+
+      expect(store.canSubmit).toBe(false);
+
+      store.setEmail('email');
+      expect(store.canSubmit).toBe(false);
 
       store.setUsername('username');
-      store.setPassword('password');
-      store.setLoading(false);
+      expect(store.canSubmit).toBe(false);
 
+      store.setPassword('password');
       expect(store.canSubmit).toBe(true);
+
+      store.setLoading(true);
+      expect(store.canSubmit).toBe(false);
    });
 });
