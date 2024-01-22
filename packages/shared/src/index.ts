@@ -8,6 +8,5 @@ export * from './schemas/RegisterSchema';
 export * from './states/MapState';
 export * from './states/PlayerState';
 export * from './types/Player';
-export * from './types/Protocol';
 export * from './types/SceneData';
 export * from './utils/_assert';
