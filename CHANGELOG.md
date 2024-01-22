@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.24.6](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.5...v1.24.6) (2024-01-22)
+
+
+### Bug Fixes
+
+* a disconnected user can reconnect correctly ([260cac0](https://github.com/matthieu-locussol/taktix-app/commit/260cac02781583d596265ff82dec347a54b32afc))
+* removed import from Protocol ([48a8a25](https://github.com/matthieu-locussol/taktix-app/commit/48a8a253bdc2dd60a028abd4bb884bd194682f2c))
+
 ### [1.24.5](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.4...v1.24.5) (2024-01-22)
 
 
