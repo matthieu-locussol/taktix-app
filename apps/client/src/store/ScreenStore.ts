@@ -39,7 +39,7 @@ export class ScreenStore {
       return ScreenStore.SCREENS_NAMES[this.screen];
    }
 
-   static get SCREENS_NAMES() {
+   static get SCREENS_NAMES(): Record<Screen, string> {
       return {
          login: 'Log In',
          register: 'Register',

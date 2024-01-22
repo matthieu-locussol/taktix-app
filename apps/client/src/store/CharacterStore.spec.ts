@@ -1,31 +1,44 @@
-import { expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { CharacterStore } from './CharacterStore';
 
-it('should have a name', () => {
-   const store = new CharacterStore();
-   expect(store.name).toEqual('');
-});
+describe('CharacterStore', () => {
+   it('should be initialized', () => {
+      const store = new CharacterStore();
 
-it('should set the name', () => {
-   const store = new CharacterStore();
-   store.setName('John');
-   expect(store.name).toBe('John');
-});
+      expect(store).toBeDefined();
+      expect(store.map).toEqual('');
+      expect(store.name).toEqual('');
+      expect(store.position).toEqual({ x: 0, y: 0 });
+      expect(store.players).toHaveLength(0);
+   });
 
-it('should set the position', () => {
-   const store = new CharacterStore();
-   store.setPosition({ x: 1, y: 2 });
-   expect(store.position).toEqual({ x: 1, y: 2 });
-});
+   it('should set the map', () => {
+      const store = new CharacterStore();
+      store.setMap('map1');
+      expect(store.map).toBe('map1');
+   });
 
-it('should set the position x', () => {
-   const store = new CharacterStore();
-   store.setPositionX(1);
-   expect(store.position).toEqual({ x: 1, y: 0 });
-});
+   it('should set the name', () => {
+      const store = new CharacterStore();
+      store.setName('John');
+      expect(store.name).toBe('John');
+   });
 
-it('should set the position y', () => {
-   const store = new CharacterStore();
-   store.setPositionY(2);
-   expect(store.position).toEqual({ x: 0, y: 2 });
+   it('should set the position', () => {
+      const store = new CharacterStore();
+      store.setPosition({ x: 1, y: 2 });
+      expect(store.position).toEqual({ x: 1, y: 2 });
+   });
+
+   it('should set the position x', () => {
+      const store = new CharacterStore();
+      store.setPositionX(1);
+      expect(store.position).toEqual({ x: 1, y: 0 });
+   });
+
+   it('should set the position y', () => {
+      const store = new CharacterStore();
+      store.setPositionY(2);
+      expect(store.position).toEqual({ x: 0, y: 2 });
+   });
 });
