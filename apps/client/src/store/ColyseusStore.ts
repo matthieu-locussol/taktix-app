@@ -5,6 +5,7 @@ import { ChatRoomResponse, isChatRoomResponse } from 'shared/src/rooms/ChatRoom'
 import { MapRoomResponse, isMapRoomResponse } from 'shared/src/rooms/MapRoom';
 import { MapState } from 'shared/src/states/MapState';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
+import { Protocol } from 'shared/src/types/Protocol';
 import { Position, SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { match } from 'ts-pattern';
@@ -138,7 +139,7 @@ export class ColyseusStore {
 
    private initializeAuthRoom() {
       this.authRoom.onLeave((code) => {
-         if (code !== 4000) {
+         if (code !== Protocol.WS_CLOSE_CONSENTED) {
             if (this._authRoom !== null) {
                this._authRoom.leave();
             }
@@ -273,7 +274,7 @@ export class ColyseusStore {
 
    private initializeGameRoom() {
       this.gameRoom.onLeave((code) => {
-         if (code !== 4000) {
+         if (code !== Protocol.WS_CLOSE_CONSENTED) {
             if (this._authRoom !== null) {
                this._authRoom.leave();
             }
