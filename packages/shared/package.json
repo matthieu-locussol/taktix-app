@@ -14,12 +14,12 @@
    "devDependencies": {
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
-      "typescript": "^5.2.2"
+      "typescript": "^5.3.3"
    },
    "dependencies": {
-      "@colyseus/core": "^0.15.8",
-      "@colyseus/schema": "^2.0.18",
-      "vitest": "^0.34.6",
+      "@colyseus/core": "^0.15.23",
+      "@colyseus/schema": "^2.0.26",
+      "vitest": "^1.2.1",
       "zod": "^3.22.4"
    }
 }

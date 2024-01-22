@@ -10,22 +10,22 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "dependencies": {
-      "@emotion/react": "^11.11.1",
+      "@emotion/react": "^11.11.3",
       "@emotion/styled": "^11.11.0",
-      "@mui/icons-material": "^5.14.12",
-      "@mui/material": "^5.14.12",
-      "next": "^13.5.4",
+      "@mui/icons-material": "^5.15.5",
+      "@mui/material": "^5.15.5",
+      "next": "^14.1.0",
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
       "shared": "workspace:latest"
    },
    "devDependencies": {
-      "@babel/core": "^7.23.0",
-      "@types/react": "^18.2.25",
-      "@types/react-dom": "^18.2.10",
+      "@babel/core": "^7.23.7",
+      "@types/react": "^18.2.48",
+      "@types/react-dom": "^18.2.18",
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
-      "eslint": "^8.50.0",
-      "typescript": "^5.2.2"
+      "eslint": "^8.56.0",
+      "typescript": "^5.3.3"
    }
 }
