@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.24.8](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.7...v1.24.8) (2024-01-23)
+
+
+### Bug Fixes
+
+* added exceptionDomain to tauri conf ([bfdc978](https://github.com/matthieu-locussol/taktix-app/commit/bfdc978a053dc57bf6d77254c0daababbc7d9ab1))
+
 ### [1.24.7](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.6...v1.24.7) (2024-01-23)
 
 ### [1.24.6](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.5...v1.24.6) (2024-01-22)
