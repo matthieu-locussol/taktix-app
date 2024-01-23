@@ -50,8 +50,7 @@
          "windows": {
             "certificateThumbprint": null,
             "digestAlgorithm": "sha256"
-         },
-         "publisher": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)"
+         }
       },
       "macOSPrivateApi": true,
       "security": {
