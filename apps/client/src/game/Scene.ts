@@ -87,7 +87,8 @@ export abstract class Scene extends Phaser.Scene {
       });
 
       this.lights.enable();
-      this.lights.setAmbientColor(0x637681);
+      // this.lights.setAmbientColor(0x637681);
+      this.lights.setAmbientColor(0xd8d8d8);
       this.lights.addLight(0, 0, 128).setColor(0xffffff).setIntensity(1.0);
    }
 
@@ -117,13 +118,13 @@ export abstract class Scene extends Phaser.Scene {
 
    public abstract createTilemap(): Phaser.Tilemaps.Tilemap;
 
-   public initializeTilemap(tileset: string) {
+   public initializeTilemap(tilesets: string[]) {
       if (this.tilemap === null) {
          return;
       }
 
       for (let i = 0; i < this.tilemap.layers.length; i += 1) {
-         const layer = this.tilemap.createLayer(i, tileset, 0, 0);
+         const layer = this.tilemap.createLayer(i, tilesets, 0, 0);
 
          if (layer !== null) {
             layer.setDepth(i);

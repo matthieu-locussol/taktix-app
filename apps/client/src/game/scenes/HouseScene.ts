@@ -22,7 +22,7 @@ export class HouseScene extends Scene {
 
       this.tilemap = this.make.tilemap({ key: 'house-map' });
       this.tilemap.addTilesetImage('House', 'house_tiles');
-      this.initializeTilemap('House');
+      this.initializeTilemap(['House']);
 
       return this.tilemap;
    }

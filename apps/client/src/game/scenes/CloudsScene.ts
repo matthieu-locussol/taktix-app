@@ -22,7 +22,7 @@ export class CloudsScene extends Scene {
 
       this.tilemap = this.make.tilemap({ key: 'cloud-city-map' });
       this.tilemap.addTilesetImage('Cloud City', 'tiles');
-      this.initializeTilemap('Cloud City');
+      this.initializeTilemap(['Cloud City']);
 
       return this.tilemap;
    }
