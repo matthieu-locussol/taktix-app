@@ -39,7 +39,7 @@
          "longDescription": "The crapiest MMORPG ever.",
          "macOS": {
             "entitlements": null,
-            "exceptionDomain": "",
+            "exceptionDomain": "ec2-15-188-238-160.eu-west-3.compute.amazonaws.com",
             "frameworks": [],
             "providerShortName": null,
             "signingIdentity": null
@@ -50,7 +50,8 @@
          "windows": {
             "certificateThumbprint": null,
             "digestAlgorithm": "sha256"
-         }
+         },
+         "publisher": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)"
       },
       "macOSPrivateApi": true,
       "security": {
