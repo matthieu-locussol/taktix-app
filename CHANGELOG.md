@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.25.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.25.0...v1.25.1) (2024-01-23)
+
+
+### Bug Fixes
+
+* removed publisher prop ([f8a8788](https://github.com/matthieu-locussol/taktix-app/commit/f8a8788b71475d6f0fcee4066b43ff2e34ff3c1e))
+
 ## [1.25.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.8...v1.25.0) (2024-01-23)
 
 
