@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.25.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.8...v1.25.0) (2024-01-23)
+
+
+### Features
+
+* added new map ([3a4047a](https://github.com/matthieu-locussol/taktix-app/commit/3a4047ac59fcd68aad7925fa0b8bc4fb920ffe72))
+
 ### [1.24.8](https://github.com/matthieu-locussol/taktix-app/compare/v1.24.7...v1.24.8) (2024-01-23)
 
 
