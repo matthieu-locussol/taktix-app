@@ -6,6 +6,7 @@ import {
    MapRoomOptions as Options,
    PlayerState,
    TELEPORTATION_SPOTS,
+   Room as TRoom,
    MapRoomUserData as UserData,
    _assert,
    isMapRoomMessage,
@@ -17,9 +18,9 @@ import { usersMap } from './utils/usersMap';
 type Client = ColyseusClient<UserData, unknown>;
 
 export class MapRoom extends Room<MapState> {
-   name: string;
+   name: TRoom;
 
-   constructor(name: string) {
+   constructor(name: TRoom) {
       super();
 
       this.name = name;
