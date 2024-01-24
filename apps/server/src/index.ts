@@ -47,6 +47,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 gameServer.define('AuthRoom', AuthRoom);
 gameServer.define('ChatRoom', ChatRoom);
+
 gameServer.define('CloudsRoom', CloudsRoom);
 gameServer.define('HouseRoom', HouseRoom);
 gameServer.define('DungeonRoom', DungeonRoom);
