@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.27.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.26.0...v1.27.0) (2024-01-24)
+
+
+### Features
+
+* added tristram OST to Dungeon map ([df35a81](https://github.com/matthieu-locussol/taktix-app/commit/df35a8163e47ed290ed22df55d0429b917129085))
+
 ## [1.26.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.25.1...v1.26.0) (2024-01-24)
 
 
