@@ -1,0 +1,15 @@
+{
+   "columns": 25,
+   "image": "dungeon_indoor.png",
+   "imageheight": 400,
+   "imagewidth": 400,
+   "margin": 0,
+   "name": "Dungeon Indoor",
+   "spacing": 0,
+   "tilecount": 625,
+   "tiledversion": "1.8.4",
+   "tileheight": 16,
+   "tilewidth": 16,
+   "type": "tileset",
+   "version": "1.8"
+}
