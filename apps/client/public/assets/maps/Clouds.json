@@ -176,6 +176,84 @@
       },
       {
          "draworder": "topdown",
+         "id": 11,
+         "name": "TeleportationSpots",
+         "objects": [
+            {
+               "height": 16,
+               "id": 4,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "destinationMapName",
+                     "type": "string",
+                     "value": "HouseRoom"
+                  },
+                  {
+                     "name": "entranceDirection",
+                     "type": "string",
+                     "value": "up"
+                  },
+                  {
+                     "name": "entrancePositionX",
+                     "type": "int",
+                     "value": 8
+                  },
+                  {
+                     "name": "entrancePositionY",
+                     "type": "int",
+                     "value": 8
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 192,
+               "y": 96
+            },
+            {
+               "height": 16,
+               "id": 6,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "destinationMapName",
+                     "type": "string",
+                     "value": "DungeonRoom"
+                  },
+                  {
+                     "name": "entranceDirection",
+                     "type": "string",
+                     "value": "down"
+                  },
+                  {
+                     "name": "entrancePositionX",
+                     "type": "int",
+                     "value": 23
+                  },
+                  {
+                     "name": "entrancePositionY",
+                     "type": "int",
+                     "value": 3
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 112,
+               "y": 48
+            }
+         ],
+         "opacity": 1,
+         "type": "objectgroup",
+         "visible": true,
+         "x": 0,
+         "y": 0
+      },
+      {
+         "draworder": "topdown",
          "id": 10,
          "name": "Lights",
          "objects": [
@@ -364,8 +442,8 @@
          "y": 0
       }
    ],
-   "nextlayerid": 11,
-   "nextobjectid": 4,
+   "nextlayerid": 12,
+   "nextobjectid": 7,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.8.4",

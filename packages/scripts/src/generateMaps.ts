@@ -1,9 +1,27 @@
 import { existsSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
+import { Direction, Room, TeleportationSpot, _assert } from 'shared';
 
 interface TiledMapJson {
    name: string;
-   tilesets: { name: string; image: string }[];
+   layers: {
+      name: string;
+      objects: {
+         properties: {
+            name: string;
+            type: string;
+            value: string;
+         }[];
+         width: number;
+         height: number;
+         x: number;
+         y: number;
+      }[];
+   }[];
+   tilesets: {
+      name: string;
+      image: string;
+   }[];
 }
 
 // TODO: handle teleportation spots
@@ -17,6 +35,7 @@ const generateMaps = () => {
    regenerateSharedRoom(maps);
    generateServerMapsRooms(maps);
    generateClientMapsScenes(maps);
+   generateTeleportationSpots(maps);
 };
 
 const regenerateSharedRoom = (maps: string[]) => {
@@ -141,6 +160,75 @@ export const mapsScenes: Phaser.Types.Scenes.SceneType[] = [${maps.map((map) => 
 
    writeFileSync(mapsScenesFilePath, mapsScenesBlob, { flag: 'w' });
    console.log('[Client] ✅  Regenerated mapsScenes.ts');
+};
+
+const generateTeleportationSpots = (maps: string[]) => {
+   const teleportationSpots: Record<Room, TeleportationSpot[]> = {} as Record<
+      Room,
+      TeleportationSpot[]
+   >;
+
+   for (const map of maps) {
+      const tiledMapPath = resolve(
+         __dirname,
+         `../../../apps/client/public/assets/maps/${map}.json`,
+      );
+      const tiledMapBlob = readFileSync(tiledMapPath, { encoding: 'utf-8' });
+      const tiledMap: TiledMapJson = JSON.parse(tiledMapBlob);
+
+      const teleportationSpotsLayer = tiledMap.layers.find(
+         ({ name }) => name === 'TeleportationSpots',
+      );
+      _assert(teleportationSpotsLayer, `TeleportationSpots layer not found in ${map}.json`);
+
+      const roomName = `${map}Room` as Room;
+      teleportationSpots[roomName] = [];
+
+      teleportationSpotsLayer.objects.forEach(({ properties, x, y, width, height }) => {
+         const destinationMapName = properties.find(({ name }) => name === 'destinationMapName');
+         const entranceDirection = properties.find(({ name }) => name === 'entranceDirection');
+         const entrancePositionX = properties.find(({ name }) => name === 'entrancePositionX');
+         const entrancePositionY = properties.find(({ name }) => name === 'entrancePositionY');
+
+         _assert(destinationMapName, `destinationMapName property not found in ${map}.json`);
+         _assert(entranceDirection, `entranceDirection property not found in ${map}.json`);
+         _assert(entrancePositionX, `entrancePositionX property not found in ${map}.json`);
+         _assert(entrancePositionY, `entrancePositionY property not found in ${map}.json`);
+
+         teleportationSpots[roomName].push({
+            x: x / width,
+            y: y / height,
+            destinationMapName: destinationMapName.value as Room,
+            destinationMapData: {
+               entranceDirection: entranceDirection.value.toLocaleUpperCase() as Direction,
+               entrancePosition: {
+                  x: Number(entrancePositionX.value),
+                  y: Number(entrancePositionY.value),
+               },
+            },
+         });
+      });
+   }
+
+   const teleportationSpotsPath = resolve(__dirname, '../../shared/src/data/teleportationSpots.ts');
+   const teleportationSpotsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
+import type { Room } from '../types/Room';
+import { Direction } from '../types/SceneData';
+import type { TeleportationSpot } from '../types/TeleportationSpot';
+
+export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = ${JSON.stringify(
+      teleportationSpots,
+      null,
+      3,
+   )
+      .replace(/"UP"/g, 'Direction.UP')
+      .replace(/"DOWN"/g, 'Direction.DOWN')
+      .replace(/"LEFT"/g, 'Direction.LEFT')
+      .replace(/"RIGHT"/g, 'Direction.RIGHT')};
+`;
+
+   writeFileSync(teleportationSpotsPath, teleportationSpotsBlob, { flag: 'w' });
+   console.log('[Shared] ✅  Regenerated teleportationSpots.ts');
 };
 
 generateMaps();

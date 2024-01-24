@@ -1,12 +1,8 @@
-import { Room } from '../types/Room';
-import { Direction, SceneData } from '../types/SceneData';
+// This file has been automatically generated. DO NOT edit it manually.
 
-export interface TeleportationSpot {
-   x: number;
-   y: number;
-   destinationMapName: Room;
-   destinationMapData: SceneData;
-}
+import type { Room } from '../types/Room';
+import { Direction } from '../types/SceneData';
+import type { TeleportationSpot } from '../types/TeleportationSpot';
 
 export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
    CloudsRoom: [
@@ -15,8 +11,11 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
          y: 6,
          destinationMapName: 'HouseRoom',
          destinationMapData: {
-            entrancePosition: { x: 8, y: 8 },
             entranceDirection: Direction.UP,
+            entrancePosition: {
+               x: 8,
+               y: 8,
+            },
          },
       },
       {
@@ -24,28 +23,11 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
          y: 3,
          destinationMapName: 'DungeonRoom',
          destinationMapData: {
-            entrancePosition: { x: 23, y: 3 },
-            entranceDirection: Direction.UP,
-         },
-      },
-   ],
-   HouseRoom: [
-      {
-         x: 8,
-         y: 9,
-         destinationMapName: 'CloudsRoom',
-         destinationMapData: {
-            entrancePosition: { x: 12, y: 7 },
             entranceDirection: Direction.DOWN,
-         },
-      },
-      {
-         x: 9,
-         y: 9,
-         destinationMapName: 'CloudsRoom',
-         destinationMapData: {
-            entrancePosition: { x: 12, y: 7 },
-            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 23,
+               y: 3,
+            },
          },
       },
    ],
@@ -55,8 +37,11 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
          y: 2,
          destinationMapName: 'CloudsRoom',
          destinationMapData: {
-            entrancePosition: { x: 7, y: 4 },
             entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 7,
+               y: 4,
+            },
          },
       },
       {
@@ -64,8 +49,37 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
          y: 2,
          destinationMapName: 'CloudsRoom',
          destinationMapData: {
-            entrancePosition: { x: 7, y: 4 },
             entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 7,
+               y: 4,
+            },
+         },
+      },
+   ],
+   HouseRoom: [
+      {
+         x: 8,
+         y: 9,
+         destinationMapName: 'CloudsRoom',
+         destinationMapData: {
+            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 12,
+               y: 7,
+            },
+         },
+      },
+      {
+         x: 9,
+         y: 9,
+         destinationMapName: 'CloudsRoom',
+         destinationMapData: {
+            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 12,
+               y: 7,
+            },
          },
       },
    ],

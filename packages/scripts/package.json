@@ -8,6 +8,9 @@
       "generate_maps": "tsc src/generateMaps.ts && node src/generateMaps.js",
       "clean": "rm -rf .turbo && rm -rf node_modules"
    },
+   "dependencies": {
+      "shared": "workspace:latest"
+   },
    "devDependencies": {
       "@types/node": "^20.11.5",
       "config-eslint": "workspace:latest",
