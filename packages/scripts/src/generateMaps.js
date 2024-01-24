@@ -26,7 +26,7 @@ var regenerateSharedRoom = function (maps) {
                return "'".concat(map, "Room'");
             })
             .join(' | '),
-         ';',
+         ';\n',
       );
    (0, fs_1.writeFileSync)(roomDefinitionPath, roomDefinitionBlob, { flag: 'w' });
    console.log('[Shared] ✅  Regenerated Room.ts');
