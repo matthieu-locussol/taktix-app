@@ -302,6 +302,10 @@ importers:
    packages/config-typescript: {}
 
    packages/scripts:
+      dependencies:
+         shared:
+            specifier: workspace:latest
+            version: link:../shared
       devDependencies:
          '@types/node':
             specifier: ^20.11.5

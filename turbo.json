@@ -47,7 +47,9 @@
          "dependsOn": ["build:shared", "^eslint"]
       },
       "eslint:shared": {},
-      "generate_maps": {},
+      "generate_maps": {
+         "cache": false
+      },
       "start": {
          "dependsOn": ["build"]
       },

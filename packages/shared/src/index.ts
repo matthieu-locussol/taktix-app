@@ -10,4 +10,5 @@ export * from './states/PlayerState';
 export * from './types/Player';
 export * from './types/Room';
 export * from './types/SceneData';
+export * from './types/TeleportationSpot';
 export * from './utils/_assert';
