@@ -8,7 +8,7 @@ export class CloudsScene extends Scene {
    public loadAssets() {
       this.load.audio('background', '/assets/musics/background.mp3');
       this.load.image('tiles', '/assets/tilesets/cloud_tileset.png');
-      this.load.tilemapTiledJSON('cloud-city-map', '/assets/maps/clouds.json');
+      this.load.tilemapTiledJSON('cloud-city-map', '/assets/maps/Clouds.json');
       this.load.spritesheet('player', '/assets/characters/characters.png', {
          frameWidth: 26,
          frameHeight: 36,

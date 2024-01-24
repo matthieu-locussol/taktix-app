@@ -10,7 +10,7 @@ export class DungeonScene extends Scene {
       this.load.image('dungeon_indoor', '/assets/tilesets/dungeon_indoor.png');
       this.load.image('dungeon_outdoor', '/assets/tilesets/dungeon_outdoor.png');
       this.load.image('dungeon_outdoor_2', '/assets/tilesets/dungeon_outdoor_2.png');
-      this.load.tilemapTiledJSON('dungeon-map', '/assets/maps/dungeon.json');
+      this.load.tilemapTiledJSON('dungeon-map', '/assets/maps/Dungeon.json');
       this.load.spritesheet('player', '/assets/characters/characters.png', {
          frameWidth: 26,
          frameHeight: 36,
