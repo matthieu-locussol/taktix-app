@@ -16,7 +16,7 @@ import { match } from 'ts-pattern';
 import { v4 as uuidv4 } from 'uuid';
 import { hashPassword } from '../utils/hashPassword';
 import { prisma } from '../utils/prisma';
-import { usersMap } from './usersMap';
+import { usersMap } from './utils/usersMap';
 
 type Client = ColyseusClient<UserData, unknown>;
 

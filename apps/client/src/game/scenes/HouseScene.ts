@@ -6,9 +6,10 @@ export class HouseScene extends Scene {
    }
 
    public loadAssets(): void {
-      this.load.audio('house', '/assets/musics/house.mp3');
-      this.load.image('house_tiles', '/assets/tilesets/house_tileset.png');
-      this.load.tilemapTiledJSON('house-map', '/assets/maps/House.json');
+      this.load.audio('House_music', '/assets/musics/House.mp3');
+      this.load.image('House_tileset', '/assets/tilesets/house_tileset.png');
+      this.load.image('Clouds_tileset', '/assets/tilesets/cloud_tileset.png');
+      this.load.tilemapTiledJSON('House_tiledmap', '/assets/maps/House.json');
       this.load.spritesheet('player', '/assets/characters/characters.png', {
          frameWidth: 26,
          frameHeight: 36,
@@ -17,12 +18,13 @@ export class HouseScene extends Scene {
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
-      this.sound.play('house', { loop: true, volume: 0.05 });
+      this.sound.play('House_music', { loop: true, volume: 0.05 });
       this.sound.pauseOnBlur = false;
 
-      this.tilemap = this.make.tilemap({ key: 'house-map' });
-      this.tilemap.addTilesetImage('House', 'house_tiles');
-      this.initializeTilemap(['House']);
+      this.tilemap = this.make.tilemap({ key: 'House_tiledmap' });
+      this.tilemap.addTilesetImage('House', 'House_tileset');
+      this.tilemap.addTilesetImage('Clouds', 'Clouds_tileset');
+      this.initializeTilemap(['House', 'Clouds']);
 
       return this.tilemap;
    }

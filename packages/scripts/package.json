@@ -5,6 +5,7 @@
    "license": "MIT",
    "scripts": {
       "bumpversion": "tsc src/version.ts && node src/version.js",
+      "generate_maps": "tsc src/generateMaps.ts && node src/generateMaps.js",
       "clean": "rm -rf .turbo && rm -rf node_modules"
    },
    "devDependencies": {
