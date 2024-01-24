@@ -54,7 +54,7 @@ export const TELEPORTATION_SPOTS: Record<string, TeleportationSpot[]> = {
          y: 2,
          destinationMapName: 'CloudsRoom',
          destinationMapData: {
-            entrancePosition: { x: 7, y: 3 },
+            entrancePosition: { x: 7, y: 4 },
             entranceDirection: Direction.DOWN,
          },
       },
@@ -63,7 +63,7 @@ export const TELEPORTATION_SPOTS: Record<string, TeleportationSpot[]> = {
          y: 2,
          destinationMapName: 'CloudsRoom',
          destinationMapData: {
-            entrancePosition: { x: 7, y: 3 },
+            entrancePosition: { x: 7, y: 4 },
             entranceDirection: Direction.DOWN,
          },
       },

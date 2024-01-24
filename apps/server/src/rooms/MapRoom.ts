@@ -12,7 +12,7 @@ import {
 } from 'shared';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
-import { usersMap } from './usersMap';
+import { usersMap } from './utils/usersMap';
 
 type Client = ColyseusClient<UserData, unknown>;
 

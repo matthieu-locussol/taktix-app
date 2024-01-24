@@ -8,9 +8,7 @@ import basicAuth from 'express-basic-auth';
 import { createServer } from 'http';
 import { AuthRoom } from './rooms/AuthRoom';
 import { ChatRoom } from './rooms/ChatRoom';
-import { CloudsRoom } from './rooms/maps/CloudsRoom';
-import { DungeonRoom } from './rooms/maps/DungeonRoom';
-import { HouseRoom } from './rooms/maps/HouseRoom';
+import { defineMapsRooms } from './rooms/utils/defineMapsRooms';
 import { registerRouter } from './routers/registerRouter';
 import { statusRouter } from './routers/statusRouter';
 
@@ -48,6 +46,4 @@ if (process.env.NODE_ENV !== 'production') {
 gameServer.define('AuthRoom', AuthRoom);
 gameServer.define('ChatRoom', ChatRoom);
 
-gameServer.define('CloudsRoom', CloudsRoom);
-gameServer.define('HouseRoom', HouseRoom);
-gameServer.define('DungeonRoom', DungeonRoom);
+defineMapsRooms(gameServer);

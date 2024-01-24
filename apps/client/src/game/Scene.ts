@@ -1,5 +1,6 @@
 import { Direction, GridEngine, Position } from 'grid-engine';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
+import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
 import { store } from '../store';
 import { makeLight } from './lights/makeLight';
@@ -21,7 +22,7 @@ export abstract class Scene extends Phaser.Scene {
 
    public playersSprites = new Map<string, Phaser.GameObjects.Container>();
 
-   constructor(config: string | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
+   constructor(config: Room | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
       super(config);
       this.gridEngine = (this as unknown as IScene).gridEngine;
 
