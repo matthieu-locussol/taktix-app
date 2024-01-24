@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.26.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.25.1...v1.26.0) (2024-01-24)
+
+
+### Features
+
+* added a generate_maps script to generate all maps boilerplate ([0c28f7f](https://github.com/matthieu-locussol/taktix-app/commit/0c28f7f31fbf21d9b0f30bfa0d6db9af2336a87c))
+* added TeleportationSpots layer to maps ([fde12ff](https://github.com/matthieu-locussol/taktix-app/commit/fde12ff2dde45f293708ff3ad380275a82dd7a75))
+
+
+### Bug Fixes
+
+* reduced the size of Dungeon map ; updated teleportationSpots & regenerated DungeonScene ([65e26ef](https://github.com/matthieu-locussol/taktix-app/commit/65e26ef51bb155a73bb22049a49fa61ce74f27a9))
+* removed generateMaps.js from git ([3f4bfa1](https://github.com/matthieu-locussol/taktix-app/commit/3f4bfa1c9373e7a2b6dd7ebdb53b0d8cb329b27c))
+* uses Room type in MapRoom ([538d0ad](https://github.com/matthieu-locussol/taktix-app/commit/538d0ad2f4958fa45d12226fd75d4c83ad76ea49))
+
 ### [1.25.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.25.0...v1.25.1) (2024-01-23)
 
 
