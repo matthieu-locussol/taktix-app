@@ -22,7 +22,8 @@ const generateMaps = () => {
 const regenerateSharedRoom = (maps: string[]) => {
    const roomDefinitionPath = resolve(__dirname, '../../shared/src/types/Room.ts');
    const roomDefinitionBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-export type Room = ${maps.map((map) => `'${map}Room'`).join(' | ')};`;
+export type Room = ${maps.map((map) => `'${map}Room'`).join(' | ')};
+`;
    writeFileSync(roomDefinitionPath, roomDefinitionBlob, { flag: 'w' });
    console.log('[Shared] ✅  Regenerated Room.ts');
 };

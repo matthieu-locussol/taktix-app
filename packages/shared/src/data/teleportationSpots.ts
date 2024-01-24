@@ -1,13 +1,14 @@
+import { Room } from '../types/Room';
 import { Direction, SceneData } from '../types/SceneData';
 
 export interface TeleportationSpot {
    x: number;
    y: number;
-   destinationMapName: string;
+   destinationMapName: Room;
    destinationMapData: SceneData;
 }
 
-export const TELEPORTATION_SPOTS: Record<string, TeleportationSpot[]> = {
+export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
    CloudsRoom: [
       {
          x: 12,
