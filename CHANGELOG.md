@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.30.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.29.1...v1.30.0) (2024-01-25)
+
+
+### Features
+
+* added a changelog ([044303d](https://github.com/matthieu-locussol/taktix-app/commit/044303d769e6f20f3c0314a9ca91acc18ef935ab))
+* added Forest map poggers ([b9210d1](https://github.com/matthieu-locussol/taktix-app/commit/b9210d160d616e799c503a0488226c6832281e45))
+
 ### [1.29.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.29.0...v1.29.1) (2024-01-25)
 
 
