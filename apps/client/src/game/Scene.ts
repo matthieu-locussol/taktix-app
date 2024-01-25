@@ -1,6 +1,7 @@
 import {
    Direction,
    GridEngine,
+   MoveToResult,
    NoPathFoundStrategy,
    PathBlockedStrategy,
    Position,
@@ -14,6 +15,7 @@ import { makeLight } from './lights/makeLight';
 export const TILE_SIZE = 16;
 export const SCALE_FACTOR = 3;
 export const PLAYER_LAYER = 'player';
+export const PLAYER_SPEED = 2;
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
@@ -30,13 +32,7 @@ export abstract class Scene extends Phaser.Scene {
 
    public playersSprites = new Map<string, Phaser.GameObjects.Container>();
 
-   public movingX = false;
-
-   public nextMovesX: { name: string; x: number }[] = [];
-
-   public movingY = false;
-
-   public nextMovesY: { name: string; y: number }[] = [];
+   public nextPositions = new Map<string, Position>();
 
    constructor(config: Room | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
       super(config);
@@ -115,11 +111,17 @@ export abstract class Scene extends Phaser.Scene {
          y: Math.floor(pointerPosition.y / (TILE_SIZE * SCALE_FACTOR)),
       };
 
-      this.gridEngine.moveTo(INTERNAL_PLAYER_NAME, pointerWorldPosition, {
-         algorithm: 'A_STAR',
-         noPathFoundStrategy: NoPathFoundStrategy.STOP,
-         pathBlockedStrategy: PathBlockedStrategy.STOP,
-      });
+      this.gridEngine
+         .moveTo(INTERNAL_PLAYER_NAME, pointerWorldPosition, {
+            algorithm: 'A_STAR',
+            noPathFoundStrategy: NoPathFoundStrategy.STOP,
+            pathBlockedStrategy: PathBlockedStrategy.STOP,
+         })
+         .subscribe(({ result }) => {
+            if (result === MoveToResult.NO_PATH_FOUND) {
+               console.error('No path found');
+            }
+         });
 
       if (this.sys.isVisible()) {
          store.colyseusStore.movePlayer(pointerWorldPosition.x, pointerWorldPosition.y);
@@ -143,11 +145,13 @@ export abstract class Scene extends Phaser.Scene {
          startPosition: this.entrancePosition,
          charLayer: PLAYER_LAYER,
          container: playerContainer,
+         speed: PLAYER_SPEED,
       });
 
       this.cameras.main.startFollow(playerContainer, true);
       this.cameras.main.setFollowOffset(-playerContainer.width, -playerContainer.height);
       this.gridEngine.turnTowards(INTERNAL_PLAYER_NAME, this.entranceDirection);
+      this.nextPositions.set(INTERNAL_PLAYER_NAME, this.entrancePosition);
    }
 
    public abstract createTilemap(): Phaser.Tilemaps.Tilemap;
@@ -205,9 +209,11 @@ export abstract class Scene extends Phaser.Scene {
          startPosition: position,
          charLayer: PLAYER_LAYER,
          container: externalPlayerContainer,
+         speed: PLAYER_SPEED,
       });
 
       this.playersSprites.set(name, externalPlayerContainer);
+      this.nextPositions.set(name, position);
    }
 
    public deleteExternalPlayer(name: string): void {
@@ -220,39 +226,42 @@ export abstract class Scene extends Phaser.Scene {
       sprite?.destroy();
    }
 
-   public moveExternalPlayerX(name: string, x: number): void {
-      const { y } = this.gridEngine.getPosition(name);
+   public setNextX(name: string, x: number): void {
+      const currentNextPosition = this.nextPositions.get(name);
 
-      if (!this.movingX) {
-         this.movingX = true;
-         this.gridEngine.moveTo(name, { x, y }).subscribe((_) => {
-            this.movingX = false;
-
-            if (this.nextMovesX.length > 0) {
-               const nextMove = this.nextMovesX.shift()!;
-               this.moveExternalPlayerX(nextMove.name, nextMove.x);
-            }
-         });
-      } else {
-         this.nextMovesX.push({ name, x });
+      if (currentNextPosition !== undefined) {
+         this.nextPositions.set(name, { ...currentNextPosition, x });
+         this.moveIfNeeded(name);
       }
    }
 
-   public moveExternalPlayerY(name: string, y: number): void {
-      const { x } = this.gridEngine.getPosition(name);
+   public setNextY(name: string, y: number): void {
+      const currentNextPosition = this.nextPositions.get(name);
 
-      if (!this.movingY) {
-         this.movingY = true;
-         this.gridEngine.moveTo(name, { x, y }).subscribe((_) => {
-            this.movingY = false;
+      if (currentNextPosition !== undefined) {
+         this.nextPositions.set(name, { ...currentNextPosition, y });
+         this.moveIfNeeded(name);
+      }
+   }
 
-            if (this.nextMovesY.length > 0) {
-               const nextMove = this.nextMovesY.shift()!;
-               this.moveExternalPlayerY(nextMove.name, nextMove.y);
+   public moveIfNeeded(name: string) {
+      const { x, y } = this.gridEngine.getPosition(name);
+      const newPosition = this.nextPositions.get(name);
+
+      if (newPosition !== undefined) {
+         if (x !== newPosition.x || y !== newPosition.y) {
+            if (this.gridEngine.isMoving(name)) {
+               setTimeout(() => {
+                  this.moveIfNeeded(name);
+               }, 100);
+            } else {
+               this.gridEngine.moveTo(name, newPosition, {
+                  algorithm: 'A_STAR',
+                  noPathFoundStrategy: NoPathFoundStrategy.STOP,
+                  pathBlockedStrategy: PathBlockedStrategy.STOP,
+               });
             }
-         });
-      } else {
-         this.nextMovesY.push({ name, y });
+         }
       }
    }
 

@@ -266,7 +266,18 @@ export class ColyseusStore {
          if (isMapRoomResponse(payload)) {
             match(payload)
                .with({ type: 'changeMap' }, ({ message: payloadMessage }) => {
-                  this.onChangeMap(payloadMessage);
+                  const { gridEngine, sys } = this._store.gameStore.getCurrentScene;
+
+                  if (!gridEngine.isMoving(INTERNAL_PLAYER_NAME)) {
+                     this.onChangeMap(payloadMessage);
+                  } else {
+                     const subscription = gridEngine.movementStopped().subscribe((entity) => {
+                        if (sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
+                           this.onChangeMap(payloadMessage);
+                           subscription.unsubscribe();
+                        }
+                     });
+                  }
                })
                .exhaustive();
          }
@@ -280,11 +291,11 @@ export class ColyseusStore {
             this._store.gameStore.getCurrentScene.addExternalPlayer(name, { x, y });
 
             player.listen('x', (newX) => {
-               this._store.gameStore.getCurrentScene.moveExternalPlayerX(name, newX);
+               this._store.gameStore.getCurrentScene.setNextX(name, newX);
             });
 
             player.listen('y', (newY) => {
-               this._store.gameStore.getCurrentScene.moveExternalPlayerY(name, newY);
+               this._store.gameStore.getCurrentScene.setNextY(name, newY);
             });
          }
       });
