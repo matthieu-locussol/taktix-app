@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.30.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.30.0...v1.30.1) (2024-01-25)
+
+
+### Bug Fixes
+
+* Forest map teleportation spots ([90e8c69](https://github.com/matthieu-locussol/taktix-app/commit/90e8c691ca08ebea05ecfadff03cbdfd997e083d))
+
 ## [1.30.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.29.1...v1.30.0) (2024-01-25)
 
 
