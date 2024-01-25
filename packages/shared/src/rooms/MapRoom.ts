@@ -16,6 +16,10 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
          y: z.number(),
       }),
    }),
+   z.object({
+      type: z.literal('stopMoving'),
+      message: z.object({}),
+   }),
 ]);
 
 export type MapRoomMessage = z.infer<typeof zMapRoomMessage>;
