@@ -110,6 +110,7 @@ export abstract class Scene extends Phaser.Scene {
       this.marker = this.add.graphics();
       this.marker.lineStyle(4, 0x115e59, 0.4);
       this.marker.strokeRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
+      this.marker.setDepth(Number.MAX_SAFE_INTEGER);
       this.marker.setVisible(false);
    }
 
@@ -162,7 +163,9 @@ export abstract class Scene extends Phaser.Scene {
 
    private highlightTile({ x, y }: Position, highlight: boolean): void {
       _assert(this.tilemap, 'tilemap should be defined');
-      const tile = this.tilemap.getTileAt(x, y, undefined, 'Ground');
+      const tile = this.tilemap.layers.some((layer) =>
+         this.tilemap?.getTileAt(x, y, undefined, layer.name),
+      );
 
       if (tile !== null) {
          _assert(this.marker, 'marker should be defined');
