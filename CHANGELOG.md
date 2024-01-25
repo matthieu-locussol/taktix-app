@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.29.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.28.0...v1.29.0) (2024-01-25)
+
+
+### Features
+
+* added devtools to tauri window ([7fc5f6c](https://github.com/matthieu-locussol/taktix-app/commit/7fc5f6c00b85a72bad064a9e8660a03238997e56))
+
 ## [1.28.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.27.0...v1.28.0) (2024-01-25)
 
 
