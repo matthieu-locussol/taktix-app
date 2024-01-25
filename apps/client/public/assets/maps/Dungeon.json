@@ -610,9 +610,7 @@
          "name": "Lights",
          "objects": [
             {
-               "height": 0,
                "id": 1,
-               "name": "",
                "point": true,
                "properties": [
                   {
@@ -667,16 +665,13 @@
                   }
                ],
                "rotation": 0,
-               "type": "",
+               "template": "templates/lightObject.tx",
                "visible": true,
-               "width": 0,
                "x": 344,
                "y": 45
             },
             {
-               "height": 0,
                "id": 2,
-               "name": "",
                "point": true,
                "properties": [
                   {
@@ -731,16 +726,13 @@
                   }
                ],
                "rotation": 0,
-               "type": "",
+               "template": "templates/lightObject.tx",
                "visible": true,
-               "width": 0,
                "x": 424,
                "y": 44.9565
             },
             {
-               "height": 0,
                "id": 3,
-               "name": "",
                "point": true,
                "properties": [
                   {
@@ -795,9 +787,8 @@
                   }
                ],
                "rotation": 0,
-               "type": "",
+               "template": "templates/lightObject.tx",
                "visible": true,
-               "width": 0,
                "x": 312.06,
                "y": 301.063
             }
@@ -810,10 +801,10 @@
       }
    ],
    "nextlayerid": 10,
-   "nextobjectid": 10,
+   "nextobjectid": 13,
    "orientation": "orthogonal",
    "renderorder": "right-down",
-   "tiledversion": "1.8.4",
+   "tiledversion": "1.10.2",
    "tileheight": 16,
    "tilesets": [
       {
@@ -1210,6 +1201,6 @@
    ],
    "tilewidth": 16,
    "type": "map",
-   "version": "1.8",
+   "version": "1.10",
    "width": 34
 }
