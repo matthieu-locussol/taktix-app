@@ -14,7 +14,7 @@ export const config: Phaser.Types.Core.GameConfig = {
       autoCenter: Phaser.Scale.Center.CENTER_BOTH,
    },
    audio: {
-      // noAudio: process.env.NODE_ENV === 'development',
+      noAudio: process.env.NODE_ENV === 'development',
    },
    disableContextMenu: true,
    plugins: {
