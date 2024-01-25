@@ -18,6 +18,8 @@ import { version } from '../../../package.json';
 import { useStore } from '../../store';
 import { ServerStatus } from '../components/ServerStatus';
 
+const NEWS_HEIGHT = 282;
+
 export const LoginScreen = observer(() => {
    const store = useStore();
    const {
@@ -69,9 +71,14 @@ export const LoginScreen = observer(() => {
          }}
       >
          <Card variant="outlined" sx={{ display: 'flex' }}>
-            <CardContent>
+            <CardContent sx={{ height: NEWS_HEIGHT }}>
                <Box
-                  sx={{ display: 'flex', alignItems: 'baseline', mb: 4, justifyContent: 'center' }}
+                  sx={{
+                     display: 'flex',
+                     alignItems: 'baseline',
+                     mb: 4,
+                     justifyContent: 'center',
+                  }}
                >
                   <Typography variant="h1">Taktix</Typography>
                   <Typography
@@ -90,16 +97,19 @@ export const LoginScreen = observer(() => {
                   dangerouslySetInnerHTML={{
                      __html: newsStore.changelog,
                   }}
+                  sx={{
+                     overflowY: 'auto',
+                  }}
                />
-               <ServerStatus sx={{ mt: 'auto' }} />
+               <ServerStatus sx={{ mt: 4 }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
             {updaterStore.shouldUpdate === undefined && (
-               <CardContent>
+               <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography variant="h1" align="center">
                      Access the universe
                   </Typography>
-                  <CircularProgress />
+                  <CircularProgress size={64} sx={{ mt: 8 }} />
                </CardContent>
             )}
             {updaterStore.shouldUpdate === false && (
