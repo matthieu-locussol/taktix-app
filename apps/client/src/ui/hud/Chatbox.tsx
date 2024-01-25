@@ -19,7 +19,7 @@ export const Chatbox = observer(() => {
    const sendMessage = (event: React.FormEvent<HTMLDivElement>) => {
       event.preventDefault();
 
-      colyseusStore.sendMessage(1, chatStore.input);
+      colyseusStore.sendMessage(chatStore.currentChannel, chatStore.input);
       chatStore.setInput('');
    };
 
@@ -30,13 +30,17 @@ export const Chatbox = observer(() => {
    return (
       <Root component="form" onSubmit={sendMessage}>
          <Chat ref={chatboxRef}>
-            {chatStore.messages.map(({ author, content }, idx) =>
-               author === 'Server' ? (
-                  <Typography key={idx} fontStyle="italic">
+            {chatStore.messages.map(({ author, content, channel }, idx) =>
+               chatStore.isSystemChannel(channel) ? (
+                  <Typography
+                     key={idx}
+                     fontStyle="italic"
+                     color={chatStore.getChannelColor(channel)}
+                  >
                      {content}
                   </Typography>
                ) : (
-                  <Typography key={idx}>
+                  <Typography key={idx} color={chatStore.getChannelColor(channel)}>
                      {author}: {content}
                   </Typography>
                ),

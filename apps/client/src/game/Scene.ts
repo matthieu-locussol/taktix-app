@@ -6,6 +6,7 @@ import {
    PathBlockedStrategy,
    Position,
 } from 'grid-engine';
+import { Channel } from 'shared/src/types/Channel';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
@@ -14,9 +15,9 @@ import { store } from '../store';
 import { makeLight } from './lights/makeLight';
 
 export const TILE_SIZE = 16;
-export const SCALE_FACTOR = 3;
+export const SCALE_FACTOR = 2.5;
 export const PLAYER_LAYER = 'player';
-export const PLAYER_SPEED = 2;
+export const PLAYER_SPEED = 2.5;
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
@@ -131,8 +132,8 @@ export abstract class Scene extends Phaser.Scene {
             if (result === MoveToResult.NO_PATH_FOUND) {
                store.chatStore.addMessage({
                   author: 'Server',
-                  content: 'No path found',
-                  channel: 1,
+                  content: 'This cell is not accessible!',
+                  channel: Channel.ERROR,
                });
             }
          });

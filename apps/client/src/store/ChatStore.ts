@@ -1,8 +1,9 @@
 import { makeAutoObservable } from 'mobx';
+import { Channel } from 'shared/src/types/Channel';
 
 interface ChatMessage {
    author: string;
-   channel: number;
+   channel: Channel;
    content: string;
 }
 
@@ -10,6 +11,8 @@ export class ChatStore {
    public input: string = '';
 
    public messages: ChatMessage[] = [];
+
+   public currentChannel: Channel = Channel.GENERAL;
 
    constructor() {
       makeAutoObservable(this);
@@ -36,5 +39,21 @@ export class ChatStore {
 
    public setInput(input: string) {
       this.input = input;
+   }
+
+   public isSystemChannel(channel: Channel): boolean {
+      return channel === Channel.SERVER || channel === Channel.ERROR;
+   }
+
+   public getChannelColor(channel: Channel): string {
+      if (channel === Channel.ERROR) {
+         return 'red';
+      }
+
+      if (channel === Channel.SERVER) {
+         return 'green';
+      }
+
+      return 'white';
    }
 }

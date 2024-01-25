@@ -1,3 +1,4 @@
+import { Channel } from 'shared/src/types/Channel';
 import { describe, expect, it } from 'vitest';
 import { ChatStore } from './ChatStore';
 
@@ -18,7 +19,7 @@ describe('ChatStore', () => {
 
    it('should add a new message', () => {
       const store = new ChatStore();
-      store.addMessage({ author: 'player1', channel: 1, content: 'content' });
+      store.addMessage({ author: 'player1', channel: Channel.GENERAL, content: 'content' });
       expect(store.messages).toHaveLength(1);
    });
 });

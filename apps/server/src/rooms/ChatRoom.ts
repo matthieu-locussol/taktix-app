@@ -1,5 +1,6 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import {
+   Channel,
    ChatRoomMessage,
    ChatRoomResponse,
    ChatRoomOptions as Options,
@@ -73,7 +74,7 @@ export class ChatRoom extends Room {
          type: 'message',
          message: {
             author: 'Server',
-            channel: 0,
+            channel: Channel.SERVER,
             content: `${characterName} logged in!`,
          },
       };
@@ -84,7 +85,7 @@ export class ChatRoom extends Room {
          type: 'message',
          message: {
             author: 'Server',
-            channel: 1,
+            channel: Channel.SERVER,
             content: `Connected to server {{SERVER_URL}}!`,
          },
       };
@@ -104,7 +105,7 @@ export class ChatRoom extends Room {
          type: 'message',
          message: {
             author: 'Server',
-            channel: 0,
+            channel: Channel.SERVER,
             content: `${character} logged out :'(`,
          },
       };
