@@ -19,7 +19,7 @@ import { ServerStatus } from '../components/ServerStatus';
 
 export const RegisterScreen = observer(() => {
    const store = useStore();
-   const { loginStore, registerStore, screenStore, updaterStore } = store;
+   const { loginStore, newsStore, registerStore, screenStore, updaterStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -82,11 +82,13 @@ export const RegisterScreen = observer(() => {
                      v{version}
                   </Typography>
                </Box>
-               <Typography variant="body1" color="textSecondary">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                  exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-               </Typography>
+               <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  dangerouslySetInnerHTML={{
+                     __html: newsStore.changelog,
+                  }}
+               />
                <ServerStatus sx={{ mt: 'auto' }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
