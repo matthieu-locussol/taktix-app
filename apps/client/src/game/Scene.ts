@@ -109,6 +109,7 @@ export abstract class Scene extends Phaser.Scene {
       this.marker = this.add.graphics();
       this.marker.lineStyle(4, 0x115e59, 0.4);
       this.marker.strokeRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
+      this.marker.setVisible(false);
    }
 
    public handlePointerDown(pointer: Phaser.Input.Pointer): void {
