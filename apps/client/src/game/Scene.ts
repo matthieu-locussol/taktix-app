@@ -22,6 +22,14 @@ export abstract class Scene extends Phaser.Scene {
 
    public playersSprites = new Map<string, Phaser.GameObjects.Container>();
 
+   public movingX = false;
+
+   public nextMovesX: { name: string; x: number }[] = [];
+
+   public movingY = false;
+
+   public nextMovesY: { name: string; y: number }[] = [];
+
    constructor(config: Room | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
       super(config);
       this.gridEngine = (this as unknown as IScene).gridEngine;
@@ -210,12 +218,38 @@ export abstract class Scene extends Phaser.Scene {
 
    public moveExternalPlayerX(name: string, x: number): void {
       const { y } = this.gridEngine.getPosition(name);
-      this.gridEngine.moveTo(name, { x, y });
+
+      if (!this.movingX) {
+         this.movingX = true;
+         this.gridEngine.moveTo(name, { x, y }).subscribe((_) => {
+            this.movingX = false;
+
+            if (this.nextMovesX.length > 0) {
+               const nextMove = this.nextMovesX.shift()!;
+               this.moveExternalPlayerX(nextMove.name, nextMove.x);
+            }
+         });
+      } else {
+         this.nextMovesX.push({ name, x });
+      }
    }
 
    public moveExternalPlayerY(name: string, y: number): void {
       const { x } = this.gridEngine.getPosition(name);
-      this.gridEngine.moveTo(name, { x, y });
+
+      if (!this.movingY) {
+         this.movingY = true;
+         this.gridEngine.moveTo(name, { x, y }).subscribe((_) => {
+            this.movingY = false;
+
+            if (this.nextMovesY.length > 0) {
+               const nextMove = this.nextMovesY.shift()!;
+               this.moveExternalPlayerY(nextMove.name, nextMove.y);
+            }
+         });
+      } else {
+         this.nextMovesY.push({ name, y });
+      }
    }
 
    public fadeOut(callback: (_: unknown, progress: number) => void): void {
