@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.28.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.27.0...v1.28.0) (2024-01-25)
+
+
+### Features
+
+* added chat channels colors ([3dbd86f](https://github.com/matthieu-locussol/taktix-app/commit/3dbd86fce69db4cd47b07d0728fb7dcf30ef9e0c))
+* better synchronized character movement ([0e13d77](https://github.com/matthieu-locussol/taktix-app/commit/0e13d777cd3dd564d0bd4290062e5c298e8c5aa8))
+* movement is done through mouse, not keyboard anymore ([792c416](https://github.com/matthieu-locussol/taktix-app/commit/792c41664cd25d0059b46c07ad304a8bfe6b499f))
+
+
+### Bug Fixes
+
+* added a isMoving attribute to PlayerState ([3703e2d](https://github.com/matthieu-locussol/taktix-app/commit/3703e2df01b159868c0c571d0908b3747dcff307))
+* added movements queues to make sure players positions are consistent between clients ([d37eb20](https://github.com/matthieu-locussol/taktix-app/commit/d37eb20ee1d5ef475160958c75224f4a27b762e7))
+* marker is always shown no matter the layer ([7e48e99](https://github.com/matthieu-locussol/taktix-app/commit/7e48e99a11d3238cb036b6c51af209ede6e42325))
+* marker is not initially visible ([a4e183a](https://github.com/matthieu-locussol/taktix-app/commit/a4e183a858894749cb4e291499d93dfd42723e65))
+* only accept a client-side move on the server if it is valid ([bf07025](https://github.com/matthieu-locussol/taktix-app/commit/bf0702500fa8cceb257e9fb7dab6c3b5be4089a1))
+* updated maps ([03a02bd](https://github.com/matthieu-locussol/taktix-app/commit/03a02bd2d5611db33ff06633e193d337ec1b5880))
+
 ## [1.27.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.26.0...v1.27.0) (2024-01-24)
 
 
