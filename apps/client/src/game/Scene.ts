@@ -15,9 +15,9 @@ import { store } from '../store';
 import { makeLight } from './lights/makeLight';
 
 export const TILE_SIZE = 16;
-export const SCALE_FACTOR = 2.5;
+export const SCALE_FACTOR = 2;
 export const PLAYER_LAYER = 'player';
-export const PLAYER_SPEED = 2.5;
+export const PLAYER_SPEED = 3;
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;

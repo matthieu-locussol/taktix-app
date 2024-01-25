@@ -2,6 +2,12 @@
 
 import { CloudsScene } from './scenes/CloudsScene';
 import { DungeonScene } from './scenes/DungeonScene';
+import { ForestScene } from './scenes/ForestScene';
 import { HouseScene } from './scenes/HouseScene';
 
-export const mapsScenes: Phaser.Types.Scenes.SceneType[] = [CloudsScene, DungeonScene, HouseScene];
+export const mapsScenes: Phaser.Types.Scenes.SceneType[] = [
+   CloudsScene,
+   DungeonScene,
+   ForestScene,
+   HouseScene,
+];

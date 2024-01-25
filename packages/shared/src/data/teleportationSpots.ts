@@ -56,6 +56,56 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
             },
          },
       },
+      {
+         x: 6,
+         y: 20,
+         destinationMapName: 'ForestRoom',
+         destinationMapData: {
+            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 29,
+               y: 5,
+            },
+         },
+      },
+      {
+         x: 7,
+         y: 20,
+         destinationMapName: 'ForestRoom',
+         destinationMapData: {
+            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 30,
+               y: 5,
+            },
+         },
+      },
+   ],
+   ForestRoom: [
+      {
+         x: 28.999755859375,
+         y: 4.999755859375,
+         destinationMapName: 'DungeonRoom',
+         destinationMapData: {
+            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 6,
+               y: 20,
+            },
+         },
+      },
+      {
+         x: 30.000244140625,
+         y: 4.999755859375,
+         destinationMapName: 'DungeonRoom',
+         destinationMapData: {
+            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 7,
+               y: 20,
+            },
+         },
+      },
    ],
    HouseRoom: [
       {
