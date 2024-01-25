@@ -2841,7 +2841,7 @@ dependencies = [
 
 [[package]]
 name = "taktix"
-version = "1.29.0"
+version = "1.29.1"
 dependencies = [
  "serde",
  "serde_json",
