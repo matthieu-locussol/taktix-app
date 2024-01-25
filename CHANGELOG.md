@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.29.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.29.0...v1.29.1) (2024-01-25)
+
+
+### Bug Fixes
+
+* disabled devtools from tauri app ([ff5d50a](https://github.com/matthieu-locussol/taktix-app/commit/ff5d50a6784957e3a7431cb36dbabc76fc097466))
+* renamed mp3 file to be case-sensitive ([bf50dd2](https://github.com/matthieu-locussol/taktix-app/commit/bf50dd2092f8e6e6ac4fe0a11afe11d882644cd6))
+
 ## [1.29.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.28.0...v1.29.0) (2024-01-25)
 
 
