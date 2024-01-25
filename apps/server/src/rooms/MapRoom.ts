@@ -107,6 +107,7 @@ export class MapRoom extends Room<MapState> {
       );
 
       this.checkTeleportationSpots(client, player);
+      player.stopMoving();
    }
 
    checkTeleportationSpots(client: Client, player: PlayerState) {
