@@ -44,8 +44,9 @@ export class MapRoom extends Room<MapState> {
          };
 
          if (isMapRoomMessage(packet)) {
-            match(packet.type)
-               .with('move', () => this.onMove(client, packet))
+            match(packet)
+               .with({ type: 'move' }, (payload) => this.onMove(client, payload))
+               .with({ type: 'stopMoving' }, (payload) => this.onStopMoving(client, payload))
                .exhaustive();
          } else {
             logger.error(
@@ -95,6 +96,16 @@ export class MapRoom extends Room<MapState> {
       );
 
       this.state.movePlayer(client.sessionId, x, y);
+   }
+
+   onStopMoving(client: Client, _payload: Extract<MapRoomMessage, { type: 'stopMoving' }>) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      logger.info(
+         `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) stopped moving`,
+      );
+
       this.checkTeleportationSpots(client, player);
    }
 

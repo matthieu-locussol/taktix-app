@@ -148,6 +148,12 @@ export abstract class Scene extends Phaser.Scene {
          speed: PLAYER_SPEED,
       });
 
+      this.gridEngine.movementStopped().subscribe((entity) => {
+         if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
+            store.colyseusStore.stopMoving();
+         }
+      });
+
       this.cameras.main.startFollow(playerContainer, true);
       this.cameras.main.setFollowOffset(-playerContainer.width, -playerContainer.height);
       this.gridEngine.turnTowards(INTERNAL_PLAYER_NAME, this.entranceDirection);

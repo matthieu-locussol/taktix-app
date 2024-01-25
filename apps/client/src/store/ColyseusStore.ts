@@ -266,18 +266,7 @@ export class ColyseusStore {
          if (isMapRoomResponse(payload)) {
             match(payload)
                .with({ type: 'changeMap' }, ({ message: payloadMessage }) => {
-                  const { gridEngine, sys } = this._store.gameStore.getCurrentScene;
-
-                  if (!gridEngine.isMoving(INTERNAL_PLAYER_NAME)) {
-                     this.onChangeMap(payloadMessage);
-                  } else {
-                     const subscription = gridEngine.movementStopped().subscribe((entity) => {
-                        if (sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
-                           this.onChangeMap(payloadMessage);
-                           subscription.unsubscribe();
-                        }
-                     });
-                  }
+                  this.onChangeMap(payloadMessage);
                })
                .exhaustive();
          }
@@ -312,6 +301,10 @@ export class ColyseusStore {
 
    movePlayer(x: number, y: number) {
       this.gameRoom.send('move', { x, y });
+   }
+
+   stopMoving() {
+      this.gameRoom.send('stopMoving', {});
    }
 
    async onChangeMap({ map, x, y }: Extract<MapRoomResponse, { type: 'changeMap' }>['message']) {
