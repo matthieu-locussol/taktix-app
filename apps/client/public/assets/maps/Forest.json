@@ -1146,15 +1146,15 @@
                   {
                      "name": "entrancePositionY",
                      "type": "int",
-                     "value": 20
+                     "value": 21
                   }
                ],
                "rotation": 0,
                "type": "",
                "visible": true,
                "width": 16,
-               "x": 463.99609375,
-               "y": 79.99609375
+               "x": 464,
+               "y": 80
             },
             {
                "height": 16,
@@ -1179,15 +1179,15 @@
                   {
                      "name": "entrancePositionY",
                      "type": "int",
-                     "value": 20
+                     "value": 21
                   }
                ],
                "rotation": 0,
                "type": "",
                "visible": true,
                "width": 16,
-               "x": 480.00390625,
-               "y": 79.99609375
+               "x": 480,
+               "y": 80
             }
          ],
          "opacity": 1,

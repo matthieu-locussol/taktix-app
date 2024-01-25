@@ -83,26 +83,26 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
    ],
    ForestRoom: [
       {
-         x: 28.999755859375,
-         y: 4.999755859375,
+         x: 29,
+         y: 5,
          destinationMapName: 'DungeonRoom',
          destinationMapData: {
             entranceDirection: Direction.DOWN,
             entrancePosition: {
                x: 6,
-               y: 20,
+               y: 21,
             },
          },
       },
       {
-         x: 30.000244140625,
-         y: 4.999755859375,
+         x: 30,
+         y: 5,
          destinationMapName: 'DungeonRoom',
          destinationMapData: {
             entranceDirection: Direction.DOWN,
             entrancePosition: {
                x: 7,
-               y: 20,
+               y: 21,
             },
          },
       },
