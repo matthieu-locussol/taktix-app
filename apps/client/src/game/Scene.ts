@@ -1,11 +1,19 @@
-import { Direction, GridEngine, Position } from 'grid-engine';
+import {
+   Direction,
+   GridEngine,
+   NoPathFoundStrategy,
+   PathBlockedStrategy,
+   Position,
+} from 'grid-engine';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
 import { store } from '../store';
 import { makeLight } from './lights/makeLight';
 
+export const TILE_SIZE = 16;
 export const SCALE_FACTOR = 3;
+export const PLAYER_LAYER = 'player';
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
@@ -89,20 +97,37 @@ export abstract class Scene extends Phaser.Scene {
       this.gridEngine.create(tilemap, { characters: [] });
       this.createPlayer(store.characterStore.name);
 
-      this.gridEngine.positionChangeFinished().subscribe((entity) => {
-         if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
-            this.sendMoveSocket();
-         }
-      });
-
       this.lights.enable();
-      // this.lights.setAmbientColor(0x637681);
       this.lights.setAmbientColor(0xd8d8d8);
       this.lights.addLight(0, 0, 128).setColor(0xffffff).setIntensity(1.0);
+
+      this.input.on(Phaser.Input.Events.POINTER_DOWN, (pointer: Phaser.Input.Pointer) => {
+         if (pointer.leftButtonReleased()) {
+            this.handlePointerDown(pointer);
+         }
+      });
+   }
+
+   public handlePointerDown(pointer: Phaser.Input.Pointer): void {
+      const pointerPosition = pointer.positionToCamera(this.cameras.main) as Phaser.Math.Vector2;
+      const pointerWorldPosition: Position = {
+         x: Math.floor(pointerPosition.x / (TILE_SIZE * SCALE_FACTOR)),
+         y: Math.floor(pointerPosition.y / (TILE_SIZE * SCALE_FACTOR)),
+      };
+
+      this.gridEngine.moveTo(INTERNAL_PLAYER_NAME, pointerWorldPosition, {
+         algorithm: 'A_STAR',
+         noPathFoundStrategy: NoPathFoundStrategy.STOP,
+         pathBlockedStrategy: PathBlockedStrategy.STOP,
+      });
+
+      if (this.sys.isVisible()) {
+         store.colyseusStore.movePlayer(pointerWorldPosition.x, pointerWorldPosition.y);
+      }
    }
 
    public createPlayer(nickname: string): void {
-      const playerSprite = this.add.sprite(0, 0, 'player');
+      const playerSprite = this.add.sprite(0, 0, PLAYER_LAYER);
       playerSprite.setDepth(3);
       playerSprite.scale = SCALE_FACTOR;
       playerSprite.setPipeline('Light2D');
@@ -116,7 +141,7 @@ export abstract class Scene extends Phaser.Scene {
          sprite: playerSprite,
          walkingAnimationMapping: 6,
          startPosition: this.entrancePosition,
-         charLayer: 'player',
+         charLayer: PLAYER_LAYER,
          container: playerContainer,
       });
 
@@ -150,37 +175,16 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
-   public override update(): void {
-      this.updateMoves();
-   }
-
-   public updateMoves(): void {
-      if (this.input.keyboard !== null) {
-         const cursors = this.input.keyboard.createCursorKeys();
-
-         if (cursors.left.isDown) {
-            this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.LEFT);
-         } else if (cursors.right.isDown) {
-            this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.RIGHT);
-         } else if (cursors.up.isDown) {
-            this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.UP);
-         } else if (cursors.down.isDown) {
-            this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.DOWN);
-         }
-      }
-   }
-
-   public sendMoveSocket(): void {
-      const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
-      store.colyseusStore.movePlayer(position.x, position.y);
+   public override update(time: number, delta: number): void {
+      this.gridEngine.update(time, delta);
    }
 
    public addExternalPlayer(name: string, position: Position): void {
-      if (this.gridEngine.getAllCharacters().find((cha) => cha === name)) {
+      if (this.gridEngine.getAllCharacters().find((playerName) => playerName === name)) {
          return;
       }
 
-      const externalPlayerSprite = this.add.sprite(0, 0, 'player');
+      const externalPlayerSprite = this.add.sprite(0, 0, PLAYER_LAYER);
       externalPlayerSprite.setDepth(3);
       externalPlayerSprite.setPipeline('Light2D');
       externalPlayerSprite.scale = SCALE_FACTOR;
@@ -199,7 +203,7 @@ export abstract class Scene extends Phaser.Scene {
          sprite: externalPlayerSprite,
          walkingAnimationMapping: 0,
          startPosition: position,
-         charLayer: 'player',
+         charLayer: PLAYER_LAYER,
          container: externalPlayerContainer,
       });
 
