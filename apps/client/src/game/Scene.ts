@@ -9,6 +9,7 @@ import {
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
+import { _assert } from 'shared/src/utils/_assert';
 import { store } from '../store';
 import { makeLight } from './lights/makeLight';
 
@@ -33,6 +34,8 @@ export abstract class Scene extends Phaser.Scene {
    public playersSprites = new Map<string, Phaser.GameObjects.Container>();
 
    public nextPositions = new Map<string, Position>();
+
+   public marker: Phaser.GameObjects.Graphics | null = null;
 
    constructor(config: Room | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
       super(config);
@@ -102,6 +105,10 @@ export abstract class Scene extends Phaser.Scene {
             this.handlePointerDown(pointer);
          }
       });
+
+      this.marker = this.add.graphics();
+      this.marker.lineStyle(4, 0x115e59, 0.4);
+      this.marker.strokeRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
    }
 
    public handlePointerDown(pointer: Phaser.Input.Pointer): void {
@@ -118,13 +125,51 @@ export abstract class Scene extends Phaser.Scene {
             pathBlockedStrategy: PathBlockedStrategy.STOP,
          })
          .subscribe(({ result }) => {
+            this.highlightTile(pointerWorldPosition, false);
+
             if (result === MoveToResult.NO_PATH_FOUND) {
-               console.error('No path found');
+               store.chatStore.addMessage({
+                  author: 'Server',
+                  content: 'No path found',
+                  channel: 1,
+               });
             }
          });
 
-      if (this.sys.isVisible()) {
+      this.highlightTile(pointerWorldPosition, true);
+
+      if (this.sys.isVisible() && !this.isPositionBlocked(pointerWorldPosition)) {
          store.colyseusStore.movePlayer(pointerWorldPosition.x, pointerWorldPosition.y);
+      }
+   }
+
+   private isPositionBlocked(position: Position): boolean {
+      const shortestPath = this.gridEngine.findShortestPath(
+         {
+            position: this.gridEngine.getPosition(INTERNAL_PLAYER_NAME),
+            charLayer: PLAYER_LAYER,
+         },
+         {
+            position,
+            charLayer: PLAYER_LAYER,
+         },
+      );
+
+      return shortestPath.path.length === 0;
+   }
+
+   private highlightTile({ x, y }: Position, highlight: boolean): void {
+      _assert(this.tilemap, 'tilemap should be defined');
+      const tile = this.tilemap.getTileAt(x, y, undefined, 'Ground');
+
+      if (tile !== null) {
+         _assert(this.marker, 'marker should be defined');
+         if (highlight) {
+            this.marker.setPosition(x * TILE_SIZE * SCALE_FACTOR, y * TILE_SIZE * SCALE_FACTOR);
+            this.marker.setVisible(true);
+         } else {
+            this.marker.setVisible(false);
+         }
       }
    }
 
