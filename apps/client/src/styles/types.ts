@@ -1,4 +1,5 @@
 import '@mui/material/styles';
+import { Channel } from 'shared/src/types/Channel';
 
 interface CustomPalette {
    link: {
@@ -14,6 +15,11 @@ interface CustomPalette {
       xs: string;
       sm: string;
       md: string;
+   };
+   channels: {
+      [Channel.SERVER]: string;
+      [Channel.ERROR]: string;
+      [Channel.GENERAL]: string;
    };
 }
 

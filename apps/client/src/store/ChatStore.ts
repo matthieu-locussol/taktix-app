@@ -44,16 +44,4 @@ export class ChatStore {
    public isSystemChannel(channel: Channel): boolean {
       return channel === Channel.SERVER || channel === Channel.ERROR;
    }
-
-   public getChannelColor(channel: Channel): string {
-      if (channel === Channel.ERROR) {
-         return 'red';
-      }
-
-      if (channel === Channel.SERVER) {
-         return 'green';
-      }
-
-      return 'white';
-   }
 }
