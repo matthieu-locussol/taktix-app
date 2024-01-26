@@ -16,7 +16,7 @@ export class NewsStore {
    }
 
    get changelog() {
-      return `<b>January, 25th 2021</b><br />
+      return `<b>January, 25th 2024</b><br />
          - Reworked the movement system to be click-based instead of keyboard-based<br />
          - Added colors to the chat<br />
          - Added a minimalist changelog 👀
