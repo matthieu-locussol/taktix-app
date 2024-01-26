@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { styled, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import { useStore } from '../../store';
 
 export const Chatbox = observer(() => {
+   const theme = useTheme();
    const inputRef = useRef<HTMLInputElement>(null);
    const chatboxRef = useRef<HTMLDivElement>(null);
    const { chatStore, colyseusStore, gameStore, loadingScreenStore } = useStore();
@@ -32,15 +33,11 @@ export const Chatbox = observer(() => {
          <Chat ref={chatboxRef}>
             {chatStore.messages.map(({ author, content, channel }, idx) =>
                chatStore.isSystemChannel(channel) ? (
-                  <Typography
-                     key={idx}
-                     fontStyle="italic"
-                     color={chatStore.getChannelColor(channel)}
-                  >
+                  <Typography key={idx} fontStyle="italic" color={theme.palette.channels[channel]}>
                      {content}
                   </Typography>
                ) : (
-                  <Typography key={idx} color={chatStore.getChannelColor(channel)}>
+                  <Typography key={idx} color={theme.palette.channels[channel]}>
                      {author}: {content}
                   </Typography>
                ),

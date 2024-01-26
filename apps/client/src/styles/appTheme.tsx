@@ -1,5 +1,6 @@
 import { buttonClasses } from '@mui/material';
 import { createTheme, darken } from '@mui/material/styles';
+import { Channel } from 'shared/src/types/Channel';
 
 export const appTheme = createTheme({
    palette: {
@@ -29,6 +30,11 @@ export const appTheme = createTheme({
          xs: '0 5px 10px 0 rgba(20, 184, 166, 0.06)',
          sm: '0 5px 10px 0 rgba(20, 184, 166, 0.12)',
          md: '0 1px 2px 0 rgba(20, 184, 166, 0.16)',
+      },
+      channels: {
+         [Channel.SERVER]: '#16a34a',
+         [Channel.GENERAL]: '#f5f5f5',
+         [Channel.ERROR]: '#dc2626',
       },
       mode: 'light',
    },
