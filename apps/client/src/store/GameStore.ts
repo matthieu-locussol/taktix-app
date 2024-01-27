@@ -3,8 +3,12 @@ import { makeAutoObservable } from 'mobx';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
-import { Scene } from '../game/Scene';
+import { TimeMgt } from 'shared/src/utils/timeMgt';
+import { PLAYER_LAYER, Scene } from '../game/Scene';
 import { Store } from './Store';
+
+const CHECK_INTERVAL = 100;
+const MAX_CHECK_ATTEMPTS = 10;
 
 export class GameStore {
    private _game: Phaser.Game | null;
@@ -27,23 +31,37 @@ export class GameStore {
       return this._game;
    }
 
-   get getCurrentScene(): Scene {
-      const { scenes } = this.game.scene;
-      const activeScenes = scenes.filter(({ scene }) => this.game.scene.isActive(scene.key));
-      _assertTrue(activeScenes.length <= 1, 'There should be only one active scene at a time.');
-      return activeScenes[0] as Scene;
+   async getCurrentScene() {
+      let attempts = 0;
+
+      while (attempts < MAX_CHECK_ATTEMPTS) {
+         attempts += 1;
+
+         const { scenes } = this.game.scene;
+         const activeScenes = scenes.filter(({ scene }) => this.game.scene.isActive(scene.key));
+         _assertTrue(activeScenes.length <= 1, 'There should be only one active scene at a time.');
+
+         if (activeScenes.length === 1) {
+            return activeScenes[0] as Scene;
+         }
+
+         // eslint-disable-next-line no-await-in-loop
+         await TimeMgt.wait(CHECK_INTERVAL);
+      }
+
+      throw new Error('Could not find the current scene.');
    }
 
-   teleportPlayer(position: Position) {
-      const scene = this.getCurrentScene;
-      scene.gridEngine.setPosition(INTERNAL_PLAYER_NAME, position, 'player');
+   async teleportPlayer(position: Position) {
+      const scene = await this.getCurrentScene();
+      scene.gridEngine.setPosition(INTERNAL_PLAYER_NAME, position, PLAYER_LAYER);
 
       const { characterStore } = this._store;
       characterStore.setPosition(position);
    }
 
-   changeMapPlayer(map: string, data: SceneData) {
-      const scene = this.getCurrentScene;
+   async changeMapPlayer(map: string, data: SceneData) {
+      const scene = await this.getCurrentScene();
       const returnedScene = scene.scene.start(map, data).scene;
 
       const { characterStore } = this._store;

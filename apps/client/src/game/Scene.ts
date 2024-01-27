@@ -25,7 +25,7 @@ export const ZOOM_MIN = 1.5;
 export const ZOOM_MAX = 3;
 export const ZOOM_STEP = 0.1;
 export const FADE_IN_DURATION = 1000;
-export const FADE_OUT_DURATION = 500;
+export const FADE_OUT_DURATION = 300;
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
@@ -236,6 +236,7 @@ export abstract class Scene extends Phaser.Scene {
          charLayer: PLAYER_LAYER,
          container: playerContainer,
          speed: PLAYER_SPEED,
+         collides: true,
       });
 
       this.gridEngine.movementStopped().subscribe((entity) => {
@@ -289,9 +290,10 @@ export abstract class Scene extends Phaser.Scene {
       externalPlayerSprite.setPipeline('Light2D');
       externalPlayerSprite.scale = SCALE_FACTOR;
 
-      const offsetX = (78 - name.length * 10) / 2;
+      const offsetX = (CHARACTER_WIDTH * SCALE_FACTOR - name.length * CHARACTER_LETTER_WIDTH) / 2;
       const externalPlayerName = this.add.text(offsetX, -8, name, {
          align: 'center',
+         fontSize: 10,
       });
       const externalPlayerContainer = this.add.container(0, 0, [
          externalPlayerName,
@@ -306,6 +308,7 @@ export abstract class Scene extends Phaser.Scene {
          charLayer: PLAYER_LAYER,
          container: externalPlayerContainer,
          speed: PLAYER_SPEED,
+         collides: false,
       });
 
       this.playersSprites.set(name, externalPlayerContainer);

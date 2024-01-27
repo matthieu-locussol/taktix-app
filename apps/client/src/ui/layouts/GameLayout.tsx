@@ -23,19 +23,18 @@ export const GameLayout = observer(({ gameStore, children, ...rest }: GameLayout
             height: '100vh',
          }}
          id="game-layout"
-         onClick={(event) => {
+         onClick={async (event) => {
             if (event.target === gameLayoutRef.current) {
-               gameStore.getCurrentScene.input.emit(
-                  Phaser.Input.Events.POINTER_DOWN,
-                  gameStore.getCurrentScene.input.activePointer,
-               );
+               const scene = await gameStore.getCurrentScene();
+               scene.input.emit(Phaser.Input.Events.POINTER_DOWN, scene.input.activePointer);
             }
          }}
-         onWheel={(event) => {
+         onWheel={async (event) => {
             if (event.target === gameLayoutRef.current) {
-               gameStore.getCurrentScene.input.emit(
+               const scene = await gameStore.getCurrentScene();
+               scene.input.emit(
                   Phaser.Input.Events.POINTER_WHEEL,
-                  gameStore.getCurrentScene.input.activePointer,
+                  scene.input.activePointer,
                   [],
                   event.deltaX,
                   event.deltaY,

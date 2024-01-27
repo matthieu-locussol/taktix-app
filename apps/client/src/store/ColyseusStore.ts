@@ -180,7 +180,7 @@ export class ColyseusStore {
             this._store.characterSelectionStore.setLoading(false);
             this._store.screenStore.setLoggedIn(true);
 
-            const scene = this._store.gameStore.changeMapPlayer(map, {
+            const scene = await this._store.gameStore.changeMapPlayer(map, {
                entrancePosition: { x: posX, y: posY },
             });
 
@@ -272,29 +272,31 @@ export class ColyseusStore {
          }
       });
 
-      this.gameRoom.state.players.onAdd((player) => {
+      this.gameRoom.state.players.onAdd(async (player) => {
          const { name, x, y } = player;
          const isPlayer = name === this._store.characterStore.name;
 
          if (!isPlayer) {
-            this._store.gameStore.getCurrentScene.addExternalPlayer(name, { x, y });
+            const scene = await this._store.gameStore.getCurrentScene();
+            scene.addExternalPlayer(name, { x, y });
 
             player.listen('x', (newX) => {
-               this._store.gameStore.getCurrentScene.setNextX(name, newX);
+               scene.setNextX(name, newX);
             });
 
             player.listen('y', (newY) => {
-               this._store.gameStore.getCurrentScene.setNextY(name, newY);
+               scene.setNextY(name, newY);
             });
          }
       });
 
-      this.gameRoom.state.players.onRemove((player) => {
+      this.gameRoom.state.players.onRemove(async (player) => {
          const { name } = player;
          const isPlayer = name === this._store.characterStore.name;
 
          if (!isPlayer) {
-            this._store.gameStore.getCurrentScene.deleteExternalPlayer(name);
+            const scene = await this._store.gameStore.getCurrentScene();
+            scene.deleteExternalPlayer(name);
          }
       });
    }
@@ -310,7 +312,7 @@ export class ColyseusStore {
    async onChangeMap({ map, x, y }: Extract<MapRoomResponse, { type: 'changeMap' }>['message']) {
       this._store.gameStore.enableKeyboard(false);
 
-      const scene = this._store.gameStore.getCurrentScene;
+      const scene = await this._store.gameStore.getCurrentScene();
       scene.fadeOut((_, progress) => {
          if (progress === 1) {
             this.setChangingMap(true);
