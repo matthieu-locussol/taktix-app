@@ -11,13 +11,19 @@ import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
 import { _assert } from 'shared/src/utils/_assert';
+import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { store } from '../store';
 import { makeLight } from './lights/makeLight';
 
 export const TILE_SIZE = 16;
-export const SCALE_FACTOR = 2;
+export const SCALE_FACTOR = 1;
 export const PLAYER_LAYER = 'player';
-export const PLAYER_SPEED = 3;
+export const PLAYER_SPEED = 2.5;
+export const CHARACTER_WIDTH = 26;
+export const CHARACTER_LETTER_WIDTH = 6;
+export const ZOOM_MIN = 1.5;
+export const ZOOM_MAX = 3;
+export const ZOOM_STEP = 0.1;
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
@@ -91,30 +97,54 @@ export abstract class Scene extends Phaser.Scene {
 
    public create(): void {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
+      this.cameras.main.setZoom(ZOOM_MIN);
       this.cameras.main.fadeIn(1000, 31, 41, 55);
 
       const tilemap = this.createTilemap();
       this.gridEngine.create(tilemap, { characters: [] });
       this.createPlayer(store.characterStore.name);
 
+      this.initializeLights();
+      this.initializeHandlers();
+      this.initializeMarker();
+   }
+
+   private initializeLights(): void {
       this.lights.enable();
       this.lights.setAmbientColor(0xd8d8d8);
       this.lights.addLight(0, 0, 128).setColor(0xffffff).setIntensity(1.0);
+   }
 
+   private initializeHandlers(): void {
       this.input.on(Phaser.Input.Events.POINTER_DOWN, (pointer: Phaser.Input.Pointer) => {
          if (pointer.leftButtonReleased()) {
             this.handlePointerDown(pointer);
          }
       });
 
+      this.input.on(
+         Phaser.Input.Events.POINTER_WHEEL,
+         (
+            _pointer: Phaser.Input.Pointer,
+            _gameObjects: unknown,
+            _deltaX: number,
+            deltaY: number,
+            _deltaZ: number,
+         ) => {
+            this.handlePointerWheel(deltaY);
+         },
+      );
+   }
+
+   private initializeMarker(): void {
       this.marker = this.add.graphics();
-      this.marker.lineStyle(4, 0x115e59, 0.4);
+      this.marker.lineStyle(2, 0x115e59, 0.4);
       this.marker.strokeRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
       this.marker.setDepth(Number.MAX_SAFE_INTEGER);
       this.marker.setVisible(false);
    }
 
-   public handlePointerDown(pointer: Phaser.Input.Pointer): void {
+   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
       const pointerPosition = pointer.positionToCamera(this.cameras.main) as Phaser.Math.Vector2;
       const pointerWorldPosition: Position = {
          x: Math.floor(pointerPosition.x / (TILE_SIZE * SCALE_FACTOR)),
@@ -144,6 +174,12 @@ export abstract class Scene extends Phaser.Scene {
       if (this.sys.isVisible() && !this.isPositionBlocked(pointerWorldPosition)) {
          store.colyseusStore.movePlayer(pointerWorldPosition.x, pointerWorldPosition.y);
       }
+   }
+
+   private handlePointerWheel(deltaY: number): void {
+      const currentZoom = this.cameras.main.zoom;
+      const newZoom = NumberMgt.clamp(currentZoom + deltaY * ZOOM_STEP, ZOOM_MIN, ZOOM_MAX);
+      this.cameras.main.zoomTo(newZoom, 100);
    }
 
    private isPositionBlocked(position: Position): boolean {
@@ -184,8 +220,10 @@ export abstract class Scene extends Phaser.Scene {
       playerSprite.scale = SCALE_FACTOR;
       playerSprite.setPipeline('Light2D');
 
-      const offsetX = (78 - nickname.length * 10) / 2;
-      const playerName = this.add.text(offsetX, -8, nickname, { align: 'center' });
+      const offsetX =
+         (CHARACTER_WIDTH * SCALE_FACTOR - nickname.length * CHARACTER_LETTER_WIDTH) / 2;
+      const playerName = this.add.text(offsetX, -8, nickname, { align: 'center', fontSize: 10 });
+      playerName.scale = SCALE_FACTOR;
       const playerContainer = this.add.container(0, 0, [playerName, playerSprite]);
 
       this.gridEngine.addCharacter({
@@ -275,9 +313,11 @@ export abstract class Scene extends Phaser.Scene {
    public deleteExternalPlayer(name: string): void {
       try {
          this.gridEngine.removeCharacter(name);
+         this.nextPositions.delete(name);
       } catch (e) {
          console.error(e);
       }
+
       const sprite = this.playersSprites.get(name);
       sprite?.destroy();
    }
