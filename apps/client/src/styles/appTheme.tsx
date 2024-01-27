@@ -10,6 +10,12 @@ export const appTheme = createTheme({
       secondary: {
          main: '#333333',
       },
+      chalk: {
+         main: '#F3F4F6',
+         light: '#F9FAFB',
+         dark: '#E5E7EB',
+         contrastText: '#1F2937',
+      },
       error: {
          main: '#EF4444',
       },

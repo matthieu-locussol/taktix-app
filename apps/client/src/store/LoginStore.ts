@@ -11,8 +11,28 @@ export class LoginStore {
 
    public loading: boolean = false;
 
+   public memorizeCredentials: boolean = false;
+
+   public openMemorizeCredentials: boolean = false;
+
    constructor() {
       makeAutoObservable(this);
+
+      this.loadCredentials();
+   }
+
+   private loadCredentials() {
+      const saveCredentials = localStorage.getItem('saveCredentials');
+
+      if (saveCredentials) {
+         this.memorizeCredentials = true;
+
+         const username = localStorage.getItem('username') ?? '';
+         const password = localStorage.getItem('password') ?? '';
+
+         this.setUsername(username);
+         this.setPassword(password);
+      }
    }
 
    setUsername(username: string) {
@@ -35,6 +55,33 @@ export class LoginStore {
 
    setLoading(loading: boolean) {
       this.loading = loading;
+   }
+
+   setMemorizeCredentials(memorizeCredentials: boolean) {
+      this.memorizeCredentials = memorizeCredentials;
+
+      if (memorizeCredentials) {
+         this.setOpenMemorizeCredentials(true);
+      } else {
+         localStorage.removeItem('saveCredentials');
+         localStorage.removeItem('username');
+         localStorage.removeItem('password');
+      }
+   }
+
+   setOpenMemorizeCredentials(openMemorizeCredentials: boolean) {
+      this.openMemorizeCredentials = openMemorizeCredentials;
+   }
+
+   saveCredentials() {
+      this.setOpenMemorizeCredentials(false);
+      localStorage.setItem('saveCredentials', 'true');
+   }
+
+   cancelSaveCredentials() {
+      this.setMemorizeCredentials(false);
+      this.setOpenMemorizeCredentials(false);
+      localStorage.removeItem('saveCredentials');
    }
 
    reset() {

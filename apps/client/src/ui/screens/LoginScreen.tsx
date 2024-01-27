@@ -2,6 +2,7 @@ import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
+import Checkbox from '@mui/material/Checkbox';
 import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,6 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -40,6 +42,11 @@ export const LoginScreen = observer(() => {
       colyseusStore
          .login(username, password)
          .then((room) => {
+            if (loginStore.memorizeCredentials) {
+               localStorage.setItem('username', loginStore.username);
+               localStorage.setItem('password', loginStore.password);
+            }
+
             room.onMessage('userData', ({ characters }: AuthRoomUserData) => {
                colyseusStore.setAuthRoom(room);
                characterSelectionStore.setCharacters(characters);
@@ -147,6 +154,15 @@ export const LoginScreen = observer(() => {
                      onChange={(e) => loginStore.setPassword(e.target.value)}
                      sx={{ mt: 2 }}
                   />
+                  <FormControlLabel
+                     control={
+                        <Checkbox
+                           checked={loginStore.memorizeCredentials}
+                           onChange={(e) => loginStore.setMemorizeCredentials(e.target.checked)}
+                        />
+                     }
+                     label="Memorize credentials"
+                  />
                   <Button
                      disabled={!loginStore.canSubmit}
                      type="submit"
@@ -202,6 +218,24 @@ export const LoginScreen = observer(() => {
                <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
                   <Button variant="contained" onClick={() => updaterStore.restart()}>
                      Restart
+                  </Button>
+               </DialogActions>
+            </Dialog>
+            <Dialog open={loginStore.openMemorizeCredentials}>
+               <DialogTitle>Saving credentials</DialogTitle>
+               <DialogContent>
+                  <DialogContentText>
+                     If you memorize your credentials, they will be stored in your browser. It might
+                     expose you to a risk of being hacked if someone gets access to your computer.
+                     Are you sure you want to continue?
+                  </DialogContentText>
+               </DialogContent>
+               <DialogActions>
+                  <Button color="chalk" onClick={() => loginStore.cancelSaveCredentials()}>
+                     Cancel
+                  </Button>
+                  <Button variant="contained" onClick={() => loginStore.saveCredentials()}>
+                     Memorize
                   </Button>
                </DialogActions>
             </Dialog>
