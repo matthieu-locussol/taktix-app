@@ -24,6 +24,8 @@ export const CHARACTER_LETTER_WIDTH = 6;
 export const ZOOM_MIN = 1.5;
 export const ZOOM_MAX = 3;
 export const ZOOM_STEP = 0.1;
+export const FADE_IN_DURATION = 1000;
+export const FADE_OUT_DURATION = 500;
 
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
@@ -98,7 +100,7 @@ export abstract class Scene extends Phaser.Scene {
    public create(): void {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
       this.cameras.main.setZoom(ZOOM_MIN);
-      this.cameras.main.fadeIn(1000, 31, 41, 55);
+      this.cameras.main.fadeIn(FADE_IN_DURATION, 31, 41, 55);
 
       const tilemap = this.createTilemap();
       this.gridEngine.create(tilemap, { characters: [] });
@@ -362,6 +364,6 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public fadeOut(callback: (_: unknown, progress: number) => void): void {
-      this.cameras.main.fade(500, 31, 41, 55, false, callback);
+      this.cameras.main.fade(FADE_OUT_DURATION, 31, 41, 55, false, callback);
    }
 }
