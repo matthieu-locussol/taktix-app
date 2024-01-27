@@ -1,7 +1,8 @@
-import '@mui/material/styles';
+import { PaletteColorOptions } from '@mui/material/styles';
 import { Channel } from 'shared/src/types/Channel';
 
 interface CustomPalette {
+   chalk?: PaletteColorOptions;
    link: {
       normal: string;
       hover: string;
@@ -26,6 +27,12 @@ interface CustomPalette {
 declare module '@mui/material/styles' {
    interface Palette extends CustomPalette {}
    interface PaletteOptions extends CustomPalette {}
+}
+
+declare module '@mui/material/Button' {
+   interface ButtonPropsColorOverrides {
+      chalk: true;
+   }
 }
 
 declare module '@mui/material/Paper' {
