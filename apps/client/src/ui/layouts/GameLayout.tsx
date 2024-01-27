@@ -31,6 +31,18 @@ export const GameLayout = observer(({ gameStore, children, ...rest }: GameLayout
                );
             }
          }}
+         onWheel={(event) => {
+            if (event.target === gameLayoutRef.current) {
+               gameStore.getCurrentScene.input.emit(
+                  Phaser.Input.Events.POINTER_WHEEL,
+                  gameStore.getCurrentScene.input.activePointer,
+                  [],
+                  event.deltaX,
+                  event.deltaY,
+                  event.deltaZ,
+               );
+            }
+         }}
          {...rest}
       >
          <Chatbox />

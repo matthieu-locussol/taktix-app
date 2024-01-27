@@ -20,7 +20,7 @@ import { version } from '../../../package.json';
 import { useStore } from '../../store';
 import { ServerStatus } from '../components/ServerStatus';
 
-const NEWS_HEIGHT = 282;
+const NEWS_HEIGHT = 324;
 
 export const LoginScreen = observer(() => {
    const store = useStore();
@@ -108,7 +108,7 @@ export const LoginScreen = observer(() => {
                      overflowY: 'auto',
                   }}
                />
-               <ServerStatus sx={{ mt: 4 }} />
+               <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
             {updaterStore.shouldUpdate === undefined && (
@@ -162,6 +162,7 @@ export const LoginScreen = observer(() => {
                         />
                      }
                      label="Memorize credentials"
+                     sx={{ mt: 2 }}
                   />
                   <Button
                      disabled={!loginStore.canSubmit}
