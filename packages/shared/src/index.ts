@@ -13,3 +13,4 @@ export * from './types/Room';
 export * from './types/SceneData';
 export * from './types/TeleportationSpot';
 export * from './utils/_assert';
+export * from './utils/numberMgt';
