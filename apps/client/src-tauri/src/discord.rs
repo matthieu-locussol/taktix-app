@@ -23,9 +23,12 @@ pub struct DiscordState {
 
 impl DiscordState {
    pub fn new() -> Self {
-      let client = DiscordIpcClient::new(DISCORD_CLIENT_ID).expect(
+      let mut client = DiscordIpcClient::new(DISCORD_CLIENT_ID).expect(
          "Failed to create Discord IPC client"
       );
+
+      client.connect().expect("Failed to connect to Discord");
+
       DiscordState {
          client: Mutex::new(client),
       }
@@ -39,8 +42,6 @@ pub fn set_discord_rich_presence(
 ) -> Result<(), String> {
    let mut client = discord_state.client.lock().unwrap();
    let mut assets = activity::Assets::new();
-
-   client.connect().map_err(|e| e.to_string())?;
 
    if
       let (Some(small_image), Some(small_text)) = (
