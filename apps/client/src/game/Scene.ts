@@ -108,7 +108,10 @@ export abstract class Scene extends Phaser.Scene {
       this.minimap = makeMinimap(this);
 
       const tilemap = this.createTilemap();
-      this.gridEngine.create(tilemap, { characters: [], cacheTileCollisions: true });
+      this.gridEngine.create(tilemap, {
+         characters: [],
+         cacheTileCollisions: true,
+      });
       this.createPlayer(store.characterStore.name);
 
       this.initializeLights();
@@ -370,7 +373,7 @@ export abstract class Scene extends Phaser.Scene {
          charLayer: PLAYER_LAYER,
          container: externalPlayerContainer,
          speed: PLAYER_SPEED,
-         collides: false,
+         collides: true,
       });
 
       this.playersSprites.set(name, externalPlayerContainer);
