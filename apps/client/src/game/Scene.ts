@@ -102,7 +102,7 @@ export abstract class Scene extends Phaser.Scene {
 
    public create(): void {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
-      this.cameras.main.setZoom(ZOOM_MIN);
+      this.cameras.main.setZoom(store.gameStore.zoom);
       this.cameras.main.fadeIn(FADE_IN_DURATION, 31, 41, 55);
 
       this.minimap = makeMinimap(this);
@@ -187,6 +187,7 @@ export abstract class Scene extends Phaser.Scene {
       const currentZoom = this.cameras.main.zoom;
       const newZoom = NumberMgt.clamp(currentZoom + deltaY * ZOOM_STEP, ZOOM_MIN, ZOOM_MAX);
       this.cameras.main.zoomTo(newZoom, 100);
+      store.gameStore.setZoom(newZoom);
    }
 
    private isPositionBlocked(position: Position): boolean {
