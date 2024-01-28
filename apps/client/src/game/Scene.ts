@@ -16,13 +16,13 @@ import { store } from '../store';
 import { makeLight } from './lights/makeLight';
 
 export const TILE_SIZE = 16;
-export const SCALE_FACTOR = 1;
+export const SCALE_FACTOR = 2;
 export const PLAYER_LAYER = 'player';
 export const PLAYER_SPEED = 2.5;
 export const CHARACTER_WIDTH = 26;
-export const CHARACTER_LETTER_WIDTH = 6;
-export const ZOOM_MIN = 1.5;
-export const ZOOM_MAX = 3;
+export const CHARACTER_LETTER_WIDTH = 8;
+export const ZOOM_MIN = 1;
+export const ZOOM_MAX = 2;
 export const ZOOM_STEP = 0.1;
 export const FADE_IN_DURATION = 1000;
 export const FADE_OUT_DURATION = 300;
@@ -114,7 +114,7 @@ export abstract class Scene extends Phaser.Scene {
    private initializeLights(): void {
       this.lights.enable();
       this.lights.setAmbientColor(0xd8d8d8);
-      this.lights.addLight(0, 0, 128).setColor(0xffffff).setIntensity(1.0);
+      this.lights.addLight(-100, -100, 12800).setColor(0xffffff).setIntensity(1.0);
    }
 
    private initializeHandlers(): void {
@@ -224,7 +224,12 @@ export abstract class Scene extends Phaser.Scene {
 
       const offsetX =
          (CHARACTER_WIDTH * SCALE_FACTOR - nickname.length * CHARACTER_LETTER_WIDTH) / 2;
-      const playerName = this.add.text(offsetX, -8, nickname, { align: 'center', fontSize: 10 });
+      const playerName = this.add.text(offsetX, -8, nickname, {
+         align: 'center',
+         fontSize: 6,
+         fontFamily: 'Orbitron',
+         resolution: 2,
+      });
       playerName.scale = SCALE_FACTOR;
       const playerContainer = this.add.container(0, 0, [playerName, playerSprite]);
 
@@ -293,8 +298,11 @@ export abstract class Scene extends Phaser.Scene {
       const offsetX = (CHARACTER_WIDTH * SCALE_FACTOR - name.length * CHARACTER_LETTER_WIDTH) / 2;
       const externalPlayerName = this.add.text(offsetX, -8, name, {
          align: 'center',
-         fontSize: 10,
+         fontSize: 6,
+         fontFamily: 'Orbitron',
+         resolution: 2,
       });
+      externalPlayerName.scale = SCALE_FACTOR;
       const externalPlayerContainer = this.add.container(0, 0, [
          externalPlayerName,
          externalPlayerSprite,
