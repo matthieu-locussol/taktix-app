@@ -153,9 +153,13 @@ export class ${map}Scene extends Scene {
 
    const mapsScenesFilePath = resolve(__dirname, '../../../apps/client/src/game/mapsScenes.ts');
    const mapsScenesBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
+import { AAA_InitialScene } from './scenes/AAA_InitialScene';
 ${maps.map((map) => `import { ${map}Scene } from './scenes/${map}Scene';`).join('\n')}
 
-export const mapsScenes: Phaser.Types.Scenes.SceneType[] = [${maps.map((map) => `${map}Scene`).join(', ')}];
+export const mapsScenes: Phaser.Types.Scenes.SceneType[] = [
+   AAA_InitialScene,
+${maps.map((map) => `   ${map}Scene`).join(',\n')}
+];
 `;
 
    writeFileSync(mapsScenesFilePath, mapsScenesBlob, { flag: 'w' });

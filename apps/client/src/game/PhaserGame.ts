@@ -18,7 +18,7 @@ export const config: Phaser.Types.Core.GameConfig = {
       smoothStep: true,
    },
    scale: {
-      mode: Phaser.Scale.ScaleModes.ENVELOP,
+      mode: Phaser.Scale.ScaleModes.HEIGHT_CONTROLS_WIDTH,
       autoCenter: Phaser.Scale.Center.CENTER_BOTH,
    },
    audio: {
@@ -37,6 +37,7 @@ export const config: Phaser.Types.Core.GameConfig = {
    callbacks: {
       postBoot: () => store.gameStore.initialize(game),
    },
+   canvasStyle: `border: 2px solid #374151;`,
 };
 
 export const game = new Phaser.Game(config);
