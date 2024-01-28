@@ -17,6 +17,9 @@ export class NewsStore {
 
    get changelog() {
       return `
+         <b>January, 28th 2024</b><br />
+         - Different music in the menus<br />
+         <br />
          <b>January, 27th 2024</b><br />
          - Updated logo<br />
          - Optional credentials memorization<br />
