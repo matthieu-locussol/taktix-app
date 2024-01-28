@@ -16,6 +16,7 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
 import { getVersion } from '../../utils/version';
 import { ServerStatus } from '../components/ServerStatus';
+import { NEWS_HEIGHT } from './LoginScreen';
 
 export const RegisterScreen = observer(() => {
    const store = useStore();
@@ -67,7 +68,7 @@ export const RegisterScreen = observer(() => {
          }}
       >
          <Card variant="outlined" sx={{ display: 'flex' }}>
-            <CardContent>
+            <CardContent sx={{ height: NEWS_HEIGHT }}>
                <Box
                   sx={{ display: 'flex', alignItems: 'baseline', mb: 4, justifyContent: 'center' }}
                >
@@ -88,8 +89,11 @@ export const RegisterScreen = observer(() => {
                   dangerouslySetInnerHTML={{
                      __html: newsStore.changelog,
                   }}
+                  sx={{
+                     overflowY: 'auto',
+                  }}
                />
-               <ServerStatus sx={{ mt: 'auto' }} />
+               <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
             {updaterStore.shouldUpdate === undefined && (
