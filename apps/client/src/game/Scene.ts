@@ -283,6 +283,46 @@ export abstract class Scene extends Phaser.Scene {
 
    public override update(time: number, delta: number): void {
       this.gridEngine.update(time, delta);
+      this.updateMoves();
+   }
+
+   public updateMoves(): void {
+      if (this.input.keyboard !== null) {
+         const cursors = this.input.keyboard.createCursorKeys();
+         const playerPosition = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
+
+         if (!this.gridEngine.isMoving(INTERNAL_PLAYER_NAME)) {
+            if (cursors.left.isDown) {
+               this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.LEFT);
+               const newPosition = { x: playerPosition.x - 1, y: playerPosition.y };
+
+               if (!this.isPositionBlocked(newPosition)) {
+                  store.colyseusStore.movePlayer(newPosition.x, newPosition.y);
+               }
+            } else if (cursors.right.isDown) {
+               this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.RIGHT);
+               const newPosition = { x: playerPosition.x + 1, y: playerPosition.y };
+
+               if (!this.isPositionBlocked(newPosition)) {
+                  store.colyseusStore.movePlayer(newPosition.x, newPosition.y);
+               }
+            } else if (cursors.up.isDown) {
+               this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.UP);
+               const newPosition = { x: playerPosition.x, y: playerPosition.y - 1 };
+
+               if (!this.isPositionBlocked(newPosition)) {
+                  store.colyseusStore.movePlayer(newPosition.x, newPosition.y);
+               }
+            } else if (cursors.down.isDown) {
+               this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.DOWN);
+               const newPosition = { x: playerPosition.x, y: playerPosition.y + 1 };
+
+               if (!this.isPositionBlocked(newPosition)) {
+                  store.colyseusStore.movePlayer(newPosition.x, newPosition.y);
+               }
+            }
+         }
+      }
    }
 
    public addExternalPlayer(name: string, position: Position): void {
