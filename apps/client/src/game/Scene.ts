@@ -103,7 +103,7 @@ export abstract class Scene extends Phaser.Scene {
       this.cameras.main.fadeIn(FADE_IN_DURATION, 31, 41, 55);
 
       const tilemap = this.createTilemap();
-      this.gridEngine.create(tilemap, { characters: [] });
+      this.gridEngine.create(tilemap, { characters: [], cacheTileCollisions: true });
       this.createPlayer(store.characterStore.name);
 
       this.initializeLights();
