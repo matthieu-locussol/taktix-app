@@ -14,6 +14,7 @@ import { RegisterScreen } from './screens/RegisterScreen';
 export const Game = observer(() => {
    const {
       colyseusStore,
+      discordStore,
       screenStore,
       loadingScreenStore: { loadingAssets, sceneVisible },
       updaterStore,
@@ -22,6 +23,7 @@ export const Game = observer(() => {
 
    useEffect(() => {
       updaterStore.checkUpdate();
+      discordStore.updateDiscordRichPresence();
    }, []);
 
    if (colyseusStore.changingMap) {
