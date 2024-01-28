@@ -13,8 +13,8 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
-import { version } from '../../../package.json';
 import { useStore } from '../../store';
+import { getVersion } from '../../utils/version';
 import { ServerStatus } from '../components/ServerStatus';
 
 export const RegisterScreen = observer(() => {
@@ -79,7 +79,7 @@ export const RegisterScreen = observer(() => {
                      variant="overline"
                      sx={{ mt: 'auto', mb: -0.5, ml: 1 }}
                   >
-                     v{version}
+                     {getVersion()}
                   </Typography>
                </Box>
                <Typography

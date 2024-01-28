@@ -194,6 +194,7 @@ export class ColyseusStore {
             this._store.characterStore.setPlayers([]);
 
             this._store.loadingScreenStore.setSceneVisible(true);
+            this._store.discordStore.updateDiscordRichPresence();
          })
          .exhaustive();
    }
@@ -327,7 +328,10 @@ export class ColyseusStore {
       await this.joinRoom(map, { x, y });
 
       this.setChangingMap(false);
+
+      this._store.characterStore.setMap(map);
       this._store.gameStore.enableKeyboard(true);
+      this._store.discordStore.updateDiscordRichPresence();
    }
 
    private async onWebSocketClosed(code: number) {

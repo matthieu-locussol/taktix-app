@@ -16,8 +16,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { AuthRoomUserData } from 'shared';
-import { version } from '../../../package.json';
 import { useStore } from '../../store';
+import { getVersion } from '../../utils/version';
 import { ServerStatus } from '../components/ServerStatus';
 
 const NEWS_HEIGHT = 324;
@@ -95,7 +95,7 @@ export const LoginScreen = observer(() => {
                      variant="overline"
                      sx={{ mt: 'auto', mb: -0.5, ml: 1 }}
                   >
-                     v{version}
+                     {getVersion()}
                   </Typography>
                </Box>
                <Typography

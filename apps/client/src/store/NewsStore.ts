@@ -16,16 +16,18 @@ export class NewsStore {
    }
 
    get changelog() {
-      return `<b>January, 27th 2024</b><br />
-      - Updated logo<br />
-      - Optional credentials memorization<br />
-      - Added a zoom system<br />
-      - Fixed multiplier synchronization issues<br />
-      <br />
-      <b>January, 25th 2024</b><br />
-      - Reworked the movement system to be click-based instead of keyboard-based<br />
-      - Added colors to the chat<br />
-      - Added a minimalist changelog 👀
+      return `
+         <b>January, 27th 2024</b><br />
+         - Updated logo<br />
+         - Optional credentials memorization<br />
+         - Added a zoom system<br />
+         - Fixed multiplayer synchronization issues<br />
+         - Added Discord Rich Presence support<br />
+         <br />
+         <b>January, 25th 2024</b><br />
+         - Reworked the movement system to be click-based instead of keyboard-based<br />
+         - Added colors to the chat<br />
+         - Added a minimalist changelog 👀
       `;
    }
 }
