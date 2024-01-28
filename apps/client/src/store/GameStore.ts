@@ -3,8 +3,9 @@ import { makeAutoObservable } from 'mobx';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
+import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
-import { PLAYER_LAYER, Scene } from '../game/Scene';
+import { PLAYER_LAYER, Scene, ZOOM_MAX, ZOOM_MIN } from '../game/Scene';
 import { Store } from './Store';
 
 const CHECK_INTERVAL = 100;
@@ -14,6 +15,8 @@ export class GameStore {
    private _game: Phaser.Game | null;
 
    private _store: Store;
+
+   public zoom: number = ZOOM_MIN;
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -76,5 +79,9 @@ export class GameStore {
       if (this.game.input.keyboard !== null) {
          this.game.input.keyboard.enabled = enable;
       }
+   }
+
+   setZoom(zoom: number) {
+      this.zoom = NumberMgt.clamp(zoom, ZOOM_MIN, ZOOM_MAX);
    }
 }

@@ -19,6 +19,7 @@ export class NewsStore {
       return `
          <b>January, 28th 2024</b><br />
          - Different music in the menus<br />
+         - Added a minimap<br />
          <br />
          <b>January, 27th 2024</b><br />
          - Updated logo<br />
