@@ -20,7 +20,7 @@ import { useStore } from '../../store';
 import { getVersion } from '../../utils/version';
 import { ServerStatus } from '../components/ServerStatus';
 
-const NEWS_HEIGHT = 324;
+export const NEWS_HEIGHT = 324;
 
 export const LoginScreen = observer(() => {
    const store = useStore();
