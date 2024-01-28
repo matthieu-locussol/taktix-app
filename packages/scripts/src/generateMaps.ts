@@ -35,13 +35,13 @@ const generateMaps = () => {
    regenerateSharedRoom(maps);
    generateServerMapsRooms(maps);
    generateClientMapsScenes(maps);
-   generateTeleportationSpots(maps);
+   regenerateTeleportationSpots(maps);
 };
 
 const regenerateSharedRoom = (maps: string[]) => {
    const roomDefinitionPath = resolve(__dirname, '../../shared/src/types/Room.ts');
    const roomDefinitionBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-export type Room = ${maps.map((map) => `'${map}Room'`).join(' | ')};
+export type Room = 'AAA_InitialRoom' | ${maps.map((map) => `'${map}Room'`).join(' | ')};
 `;
    writeFileSync(roomDefinitionPath, roomDefinitionBlob, { flag: 'w' });
    console.log('[Shared] ✅  Regenerated Room.ts');
@@ -162,11 +162,13 @@ export const mapsScenes: Phaser.Types.Scenes.SceneType[] = [${maps.map((map) => 
    console.log('[Client] ✅  Regenerated mapsScenes.ts');
 };
 
-const generateTeleportationSpots = (maps: string[]) => {
+const regenerateTeleportationSpots = (maps: string[]) => {
    const teleportationSpots: Record<Room, TeleportationSpot[]> = {} as Record<
       Room,
       TeleportationSpot[]
    >;
+
+   teleportationSpots.AAA_InitialRoom = [];
 
    for (const map of maps) {
       const tiledMapPath = resolve(
