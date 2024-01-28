@@ -5,6 +5,7 @@ import { Direction } from '../types/SceneData';
 import type { TeleportationSpot } from '../types/TeleportationSpot';
 
 export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
+   AAA_InitialRoom: [],
    CloudsRoom: [
       {
          x: 12,
