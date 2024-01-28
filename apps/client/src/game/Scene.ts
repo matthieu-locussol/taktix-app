@@ -13,6 +13,7 @@ import { SceneData } from 'shared/src/types/SceneData';
 import { _assert } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { store } from '../store';
+import { makeMinimap } from './cameras/makeMinimap';
 import { makeLight } from './lights/makeLight';
 
 export const TILE_SIZE = 16;
@@ -45,6 +46,8 @@ export abstract class Scene extends Phaser.Scene {
    public nextPositions = new Map<string, Position>();
 
    public marker: Phaser.GameObjects.Graphics | null = null;
+
+   public minimap: Phaser.Cameras.Scene2D.Camera | null = null;
 
    constructor(config: Room | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
       super(config);
@@ -101,6 +104,8 @@ export abstract class Scene extends Phaser.Scene {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
       this.cameras.main.setZoom(ZOOM_MIN);
       this.cameras.main.fadeIn(FADE_IN_DURATION, 31, 41, 55);
+
+      this.minimap = makeMinimap(this);
 
       const tilemap = this.createTilemap();
       this.gridEngine.create(tilemap, { characters: [], cacheTileCollisions: true });
@@ -217,7 +222,7 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public createPlayer(nickname: string): void {
-      const playerSprite = this.add.sprite(0, 0, PLAYER_LAYER);
+      const playerSprite = this.add.sprite(0, 0, 'player');
       playerSprite.setDepth(3);
       playerSprite.scale = SCALE_FACTOR;
       playerSprite.setPipeline('Light2D');
@@ -232,6 +237,8 @@ export abstract class Scene extends Phaser.Scene {
       });
       playerName.scale = SCALE_FACTOR;
       const playerContainer = this.add.container(0, 0, [playerName, playerSprite]);
+
+      this.minimap?.ignore(playerContainer);
 
       this.gridEngine.addCharacter({
          id: INTERNAL_PLAYER_NAME,
@@ -252,6 +259,10 @@ export abstract class Scene extends Phaser.Scene {
 
       this.cameras.main.startFollow(playerContainer, true);
       this.cameras.main.setFollowOffset(-playerContainer.width, -playerContainer.height);
+
+      this.minimap?.startFollow(playerContainer, false);
+      this.minimap?.setFollowOffset(-playerContainer.width, -playerContainer.height);
+
       this.gridEngine.turnTowards(INTERNAL_PLAYER_NAME, this.entranceDirection);
       this.nextPositions.set(INTERNAL_PLAYER_NAME, this.entrancePosition);
    }
@@ -330,7 +341,7 @@ export abstract class Scene extends Phaser.Scene {
          return;
       }
 
-      const externalPlayerSprite = this.add.sprite(0, 0, PLAYER_LAYER);
+      const externalPlayerSprite = this.add.sprite(0, 0, 'player');
       externalPlayerSprite.setDepth(3);
       externalPlayerSprite.setPipeline('Light2D');
       externalPlayerSprite.scale = SCALE_FACTOR;
@@ -347,6 +358,8 @@ export abstract class Scene extends Phaser.Scene {
          externalPlayerName,
          externalPlayerSprite,
       ]);
+
+      this.minimap?.ignore(externalPlayerContainer);
 
       this.gridEngine.addCharacter({
          id: name,
