@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.31.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.30.1...v1.31.0) (2024-01-28)
+
+
+### Features
+
+* added a zoom feature to the scenes ([9fe370e](https://github.com/matthieu-locussol/taktix-app/commit/9fe370edc190c3932b9744940d719b6c43b47706))
+* added clamp to NumberMgt ([ffccb43](https://github.com/matthieu-locussol/taktix-app/commit/ffccb432498a3c4323785094b9e72cf07f6534bf))
+* added credentials save ([49fa56f](https://github.com/matthieu-locussol/taktix-app/commit/49fa56fb0263d90cba9d9244b80503ddd72ee25c))
+* added Discord Rich Presence support ([2aa691d](https://github.com/matthieu-locussol/taktix-app/commit/2aa691db14249b33ad4c11a3d5ac82aec34fd2bb))
+* added TimeMgt ([f183805](https://github.com/matthieu-locussol/taktix-app/commit/f1838059b8054e93df7b9dccdaf619088a71f593))
+* correctly retrieves current scene & removed characters collisions ([8014a26](https://github.com/matthieu-locussol/taktix-app/commit/8014a26ee71b8b1ba830bd8c28238d7aa6bc134a))
+* updated changelog ([6d0985a](https://github.com/matthieu-locussol/taktix-app/commit/6d0985a4d6fe55333075a952f818143d9b31b8cd))
+* updated logo ([697cc4b](https://github.com/matthieu-locussol/taktix-app/commit/697cc4bb663928048c34145a639ec8e2d05f0d65))
+* updated tauri logo ([271d452](https://github.com/matthieu-locussol/taktix-app/commit/271d4523ec0936a743c8563ab1e60a59463828b8))
+
+
+### Bug Fixes
+
+* changelog date ([a941b9d](https://github.com/matthieu-locussol/taktix-app/commit/a941b9d0163a639210eb5e47e976f441c366f820))
+
 ### [1.30.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.30.0...v1.30.1) (2024-01-25)
 
 
