@@ -161,20 +161,22 @@ export abstract class Scene extends Phaser.Scene {
          y: Math.floor(pointerPosition.y / (TILE_SIZE * SCALE_FACTOR)),
       };
 
-      this.gridEngine
-         .moveTo(INTERNAL_PLAYER_NAME, pointerWorldPosition, {
-            algorithm: 'A_STAR',
-            noPathFoundStrategy: NoPathFoundStrategy.CLOSEST_REACHABLE,
-            pathBlockedStrategy: PathBlockedStrategy.STOP,
-         })
-         .subscribe(() => {
-            this.highlightTile(pointerWorldPosition, false);
-         });
+      if (this.isPositionClickable(pointerWorldPosition)) {
+         this.gridEngine
+            .moveTo(INTERNAL_PLAYER_NAME, pointerWorldPosition, {
+               algorithm: 'A_STAR',
+               noPathFoundStrategy: NoPathFoundStrategy.CLOSEST_REACHABLE,
+               pathBlockedStrategy: PathBlockedStrategy.STOP,
+            })
+            .subscribe(() => {
+               this.highlightTile(pointerWorldPosition, false);
+            });
 
-      this.highlightTile(pointerWorldPosition, true);
+         this.highlightTile(pointerWorldPosition, true);
 
-      if (this.sys.isVisible() && !this.isPositionBlocked(pointerWorldPosition)) {
-         store.colyseusStore.movePlayer(pointerWorldPosition.x, pointerWorldPosition.y);
+         if (this.sys.isVisible()) {
+            store.colyseusStore.movePlayer(pointerWorldPosition.x, pointerWorldPosition.y);
+         }
       }
    }
 
@@ -185,19 +187,14 @@ export abstract class Scene extends Phaser.Scene {
       store.gameStore.setZoom(newZoom);
    }
 
-   private isPositionBlocked(position: Position): boolean {
-      const shortestPath = this.gridEngine.findShortestPath(
-         {
-            position: this.gridEngine.getPosition(INTERNAL_PLAYER_NAME),
-            charLayer: PLAYER_LAYER,
-         },
-         {
-            position,
-            charLayer: PLAYER_LAYER,
-         },
-      );
+   private isPositionClickable(position: Position): boolean {
+      _assert(this.tilemap, 'tilemap should be defined');
 
-      return shortestPath.path.length === 0;
+      return this.tilemap.layers.some((layer) => {
+         _assert(this.tilemap, 'tilemap should be defined');
+         const tile = this.tilemap.getTileAt(position.x, position.y, undefined, layer.name);
+         return tile !== null;
+      });
    }
 
    private highlightTile({ x, y }: Position, highlight: boolean): void {
@@ -316,28 +313,28 @@ export abstract class Scene extends Phaser.Scene {
                this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.LEFT);
                const newPosition = { x: playerPosition.x - 1, y: playerPosition.y };
 
-               if (!this.isPositionBlocked(newPosition)) {
+               if (!this.isPositionClickable(newPosition)) {
                   store.colyseusStore.movePlayer(newPosition.x, newPosition.y);
                }
             } else if (cursors.right.isDown) {
                this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.RIGHT);
                const newPosition = { x: playerPosition.x + 1, y: playerPosition.y };
 
-               if (!this.isPositionBlocked(newPosition)) {
+               if (!this.isPositionClickable(newPosition)) {
                   store.colyseusStore.movePlayer(newPosition.x, newPosition.y);
                }
             } else if (cursors.up.isDown) {
                this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.UP);
                const newPosition = { x: playerPosition.x, y: playerPosition.y - 1 };
 
-               if (!this.isPositionBlocked(newPosition)) {
+               if (!this.isPositionClickable(newPosition)) {
                   store.colyseusStore.movePlayer(newPosition.x, newPosition.y);
                }
             } else if (cursors.down.isDown) {
                this.gridEngine.move(INTERNAL_PLAYER_NAME, Direction.DOWN);
                const newPosition = { x: playerPosition.x, y: playerPosition.y + 1 };
 
-               if (!this.isPositionBlocked(newPosition)) {
+               if (!this.isPositionClickable(newPosition)) {
                   store.colyseusStore.movePlayer(newPosition.x, newPosition.y);
                }
             }
