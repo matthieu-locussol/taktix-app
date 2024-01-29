@@ -150,6 +150,8 @@ export abstract class Scene extends Phaser.Scene {
       this.marker.strokeRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
       this.marker.setDepth(Number.MAX_SAFE_INTEGER);
       this.marker.setVisible(false);
+
+      this.minimap?.ignore(this.marker);
    }
 
    private handlePointerDown(pointer: Phaser.Input.Pointer): void {
@@ -252,11 +254,23 @@ export abstract class Scene extends Phaser.Scene {
          }
       });
 
-      this.cameras.main.startFollow(playerContainer, true);
-      this.cameras.main.setFollowOffset(-playerContainer.width, -playerContainer.height);
+      this.cameras.main.startFollow(
+         playerContainer,
+         true,
+         1,
+         1,
+         -playerSprite.width,
+         -playerSprite.height,
+      );
 
-      this.minimap?.startFollow(playerContainer, false);
-      this.minimap?.setFollowOffset(-playerContainer.width, -playerContainer.height);
+      this.minimap?.startFollow(
+         playerContainer,
+         true,
+         1,
+         1,
+         -playerSprite.width,
+         -playerSprite.height,
+      );
 
       this.gridEngine.turnTowards(INTERNAL_PLAYER_NAME, this.entranceDirection);
       this.nextPositions.set(INTERNAL_PLAYER_NAME, this.entrancePosition);
