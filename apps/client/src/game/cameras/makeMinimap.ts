@@ -1,7 +1,7 @@
 import type { Scene } from '../Scene';
 
 export const MINIMAP_SIZE = 200;
-export const MINIMAP_ZOOM = 0.1;
+export const MINIMAP_ZOOM = 0.15;
 export const MINIMAP_OFFSET = 8;
 
 export const makeMinimap = (scene: Scene) => {
@@ -21,6 +21,8 @@ export const makeMinimap = (scene: Scene) => {
             .createGeometryMask(),
       )
       .setRoundPixels(true);
+
+   minimap.postFX.addGlow(0x374151, 2, 1);
 
    return minimap;
 };
