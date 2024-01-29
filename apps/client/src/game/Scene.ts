@@ -188,7 +188,7 @@ export abstract class Scene extends Phaser.Scene {
 
    private handlePointerWheel(deltaY: number): void {
       const currentZoom = this.cameras.main.zoom;
-      const newZoom = NumberMgt.clamp(currentZoom + deltaY * ZOOM_STEP, ZOOM_MIN, ZOOM_MAX);
+      const newZoom = NumberMgt.clamp(currentZoom - deltaY * ZOOM_STEP, ZOOM_MIN, ZOOM_MAX);
       this.cameras.main.zoomTo(newZoom, 100);
       store.gameStore.setZoom(newZoom);
    }
