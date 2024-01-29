@@ -1,4 +1,4 @@
-import { styled, useTheme } from '@mui/material';
+import { darken, styled, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
@@ -9,7 +9,7 @@ export const Chatbox = observer(() => {
    const theme = useTheme();
    const inputRef = useRef<HTMLInputElement>(null);
    const chatboxRef = useRef<HTMLDivElement>(null);
-   const { chatStore, colyseusStore, gameStore, loadingScreenStore } = useStore();
+   const { chatStore, colyseusStore, gameStore, hudStore, loadingScreenStore } = useStore();
 
    useEffect(() => {
       if (chatboxRef.current !== null) {
@@ -29,8 +29,8 @@ export const Chatbox = observer(() => {
    }
 
    return (
-      <Root component="form" onSubmit={sendMessage}>
-         <Chat ref={chatboxRef}>
+      <Root component="form" onSubmit={sendMessage} widthPercent={hudStore.chatboxWidth}>
+         <Chat ref={chatboxRef} heightPercent={hudStore.chatboxHeight}>
             {chatStore.messages.map(({ author, content, channel }, idx) =>
                chatStore.isSystemChannel(channel) ? (
                   <Typography key={idx} fontStyle="italic" color={theme.palette.channels[channel]}>
@@ -50,25 +50,37 @@ export const Chatbox = observer(() => {
             onBlur={() => gameStore.enableKeyboard(true)}
             onChange={(e) => chatStore.setInput(e.target.value)}
             maxLength={160}
+            widthPercent={hudStore.chatboxWidth}
          />
       </Root>
    );
 });
 
-const Root = styled(Box)(() => ({
-   position: 'absolute',
-   left: 12,
-   bottom: 8,
-   border: '2px solid #000000',
-   backgroundColor: '#00000066',
-   borderRadius: 6,
-   width: '40vw',
-}));
+interface StyleProps {
+   widthPercent: number;
+}
 
-const Chat = styled(Box)(() => ({
+interface ChatStyleProps {
+   heightPercent: number;
+}
+
+const Root = styled(Box, { shouldForwardProp: (prop) => prop !== 'widthPercent' })<StyleProps>(
+   ({ theme, widthPercent }) => ({
+      position: 'absolute',
+      left: 0,
+      bottom: 0,
+      border: `1px solid ${theme.palette.paper.border}`,
+      background: darken(`${theme.palette.paper.background}C6`, 0.15),
+      width: `${widthPercent}vw`,
+   }),
+);
+
+const Chat = styled(Box, {
+   shouldForwardProp: (prop) => prop !== 'heightPercent',
+})<ChatStyleProps>(({ heightPercent }) => ({
    padding: 8,
-   height: '15vh',
-   maxHeight: '15vh',
+   height: `${heightPercent}vh`,
+   maxHeight: `${heightPercent}vh`,
    overflowX: 'hidden',
    overflowY: 'scroll',
    color: 'white',
@@ -89,17 +101,17 @@ const Chat = styled(Box)(() => ({
    },
 }));
 
-const ChatInput = styled('input')(() => ({
+const ChatInput = styled('input', {
+   shouldForwardProp: (prop) => prop !== 'widthPercent',
+})<StyleProps>(({ widthPercent }) => ({
    padding: 8,
    fontSize: 16,
    border: 'none',
    borderTop: '2px solid #000000',
    outline: 'none',
    backgroundColor: 'white',
-   borderBottomLeftRadius: 4,
-   borderBottomRightRadius: 4,
    '&:hover': {
       backgroundColor: '#DDDDDD',
    },
-   width: 'calc(40vw - 16px)',
+   width: `calc(${widthPercent}vw - 16px)`,
 }));

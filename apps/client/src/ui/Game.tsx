@@ -18,7 +18,6 @@ export const Game = observer(() => {
       screenStore,
       loadingScreenStore: { loadingAssets, sceneVisible },
       updaterStore,
-      gameStore,
    } = useStore();
 
    useEffect(() => {
@@ -50,13 +49,5 @@ export const Game = observer(() => {
       );
    }
 
-   return (
-      <GameLayout gameStore={gameStore}>
-         {!sceneVisible ? (
-            <CircularProgress />
-         ) : (
-            <Box id="root-game" sx={{ background: 'red', zIndex: 999999999 }} />
-         )}
-      </GameLayout>
-   );
+   return <GameLayout>{!sceneVisible ? <CircularProgress /> : <Box id="root-game" />}</GameLayout>;
 });

@@ -2,15 +2,14 @@ import { BoxProps } from '@mui/material';
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
-import { GameStore } from '../../store/GameStore';
+import { useStore } from '../../store';
 import { Chatbox } from '../hud/Chatbox';
 
-interface GameLayoutProps extends BoxProps {
-   gameStore: GameStore;
-}
+interface GameLayoutProps extends BoxProps {}
 
-export const GameLayout = observer(({ gameStore, children, ...rest }: GameLayoutProps) => {
+export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
    const gameLayoutRef = useRef<HTMLDivElement>(null);
+   const { gameStore, hudStore } = useStore();
 
    return (
       <Box
@@ -44,7 +43,7 @@ export const GameLayout = observer(({ gameStore, children, ...rest }: GameLayout
          }}
          {...rest}
       >
-         <Chatbox />
+         {hudStore.isChatboxVisible && <Chatbox />}
          {children}
       </Box>
    );
