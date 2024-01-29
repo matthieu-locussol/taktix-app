@@ -6,6 +6,23 @@
    src: url('/assets/fonts/Orbitron.woff2') format('woff2');
 }
 
+*::-webkit-scrollbar {
+   width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+   background-color: 'transparent';
+}
+
+*::-webkit-scrollbar-thumb {
+   background-color: #00000066;
+   border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+   background-color: #00000099;
+}
+
 html {
    margin: 0px;
    padding: 0px;
