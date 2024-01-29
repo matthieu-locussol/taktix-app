@@ -268,18 +268,18 @@ export abstract class Scene extends Phaser.Scene {
 
       this.cameras.main.startFollow(
          playerContainer,
-         true,
-         1,
-         1,
+         false,
+         0.3,
+         0.3,
          -playerSprite.width,
          -playerSprite.height,
       );
 
       this.minimap?.startFollow(
          playerContainer,
-         true,
-         1,
-         1,
+         false,
+         0.3,
+         0.3,
          -playerSprite.width,
          -playerSprite.height,
       );
