@@ -312,8 +312,8 @@ export class ColyseusStore {
       this.gameRoom.send('move', { x, y });
    }
 
-   stopMoving(direction: Direction) {
-      this.gameRoom.send('stopMoving', { direction });
+   stopMoving(direction: Direction, { x, y }: Position) {
+      this.gameRoom.send('stopMoving', { direction, x, y });
    }
 
    async onChangeMap({

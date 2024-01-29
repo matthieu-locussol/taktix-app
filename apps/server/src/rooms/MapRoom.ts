@@ -102,7 +102,7 @@ export class MapRoom extends Room<MapState> {
 
    onStopMoving(
       client: Client,
-      { message: { direction } }: Extract<MapRoomMessage, { type: 'stopMoving' }>,
+      { message: { direction, x, y } }: Extract<MapRoomMessage, { type: 'stopMoving' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
@@ -112,7 +112,7 @@ export class MapRoom extends Room<MapState> {
       );
 
       this.checkTeleportationSpots(client, player);
-      player.stopMoving(direction);
+      player.stopMoving(direction, x, y);
    }
 
    checkTeleportationSpots(client: Client, player: PlayerState) {

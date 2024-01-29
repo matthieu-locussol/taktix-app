@@ -31,8 +31,10 @@ export class PlayerState extends Schema {
       this.isMoving = true;
    }
 
-   stopMoving(direction: string) {
-      this.isMoving = false;
+   stopMoving(direction: string, x: number, y: number) {
+      this.x = x;
+      this.y = y;
       this.direction = direction;
+      this.isMoving = false;
    }
 }

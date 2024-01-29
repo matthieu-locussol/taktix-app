@@ -1,12 +1,10 @@
 import {
    Direction,
    GridEngine,
-   MoveToResult,
    NoPathFoundStrategy,
    PathBlockedStrategy,
    Position,
 } from 'grid-engine';
-import { Channel } from 'shared/src/types/Channel';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
@@ -164,19 +162,11 @@ export abstract class Scene extends Phaser.Scene {
       this.gridEngine
          .moveTo(INTERNAL_PLAYER_NAME, pointerWorldPosition, {
             algorithm: 'A_STAR',
-            noPathFoundStrategy: NoPathFoundStrategy.STOP,
+            noPathFoundStrategy: NoPathFoundStrategy.CLOSEST_REACHABLE,
             pathBlockedStrategy: PathBlockedStrategy.STOP,
          })
-         .subscribe(({ result }) => {
+         .subscribe(() => {
             this.highlightTile(pointerWorldPosition, false);
-
-            if (result === MoveToResult.NO_PATH_FOUND) {
-               store.chatStore.addMessage({
-                  author: 'Server',
-                  content: 'This cell is not accessible!',
-                  channel: Channel.ERROR,
-               });
-            }
          });
 
       this.highlightTile(pointerWorldPosition, true);
@@ -257,7 +247,8 @@ export abstract class Scene extends Phaser.Scene {
 
       this.gridEngine.movementStopped().subscribe((entity) => {
          if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
-            store.colyseusStore.stopMoving(entity.direction);
+            const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
+            store.colyseusStore.stopMoving(entity.direction, position);
          }
       });
 
@@ -424,7 +415,7 @@ export abstract class Scene extends Phaser.Scene {
             } else {
                this.gridEngine.moveTo(name, newPosition, {
                   algorithm: 'A_STAR',
-                  noPathFoundStrategy: NoPathFoundStrategy.STOP,
+                  noPathFoundStrategy: NoPathFoundStrategy.CLOSEST_REACHABLE,
                   pathBlockedStrategy: PathBlockedStrategy.STOP,
                });
             }
