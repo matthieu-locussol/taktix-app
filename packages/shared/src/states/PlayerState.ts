@@ -10,15 +10,19 @@ export class PlayerState extends Schema {
    @type('number')
    y: number;
 
+   @type('string')
+   direction: string;
+
    @type('boolean')
    isMoving = false;
 
-   constructor(name: string, x: number, y: number) {
+   constructor(name: string, x: number, y: number, direction: string) {
       super();
 
       this.name = name;
       this.x = x;
       this.y = y;
+      this.direction = direction;
    }
 
    move(x: number, y: number) {
@@ -27,7 +31,8 @@ export class PlayerState extends Schema {
       this.isMoving = true;
    }
 
-   stopMoving() {
+   stopMoving(direction: string) {
       this.isMoving = false;
+      this.direction = direction;
    }
 }

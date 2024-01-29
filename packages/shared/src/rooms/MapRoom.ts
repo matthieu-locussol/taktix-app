@@ -1,9 +1,10 @@
 import { z } from 'zod';
-import { Position } from '../types/SceneData';
+import { Direction, Position } from '../types/SceneData';
 
 export interface MapRoomOptions {
    uuid: string;
    position?: Position;
+   direction?: Direction;
 }
 
 export interface MapRoomUserData {}
@@ -18,7 +19,9 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
    }),
    z.object({
       type: z.literal('stopMoving'),
-      message: z.object({}),
+      message: z.object({
+         direction: z.string(),
+      }),
    }),
 ]);
 
@@ -34,6 +37,7 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
          map: z.string(),
          x: z.number(),
          y: z.number(),
+         direction: z.string(),
       }),
    }),
 ]);

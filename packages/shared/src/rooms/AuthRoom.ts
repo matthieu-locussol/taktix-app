@@ -50,6 +50,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
             map: z.string(),
             posX: z.number(),
             posY: z.number(),
+            direction: z.string(),
          }),
       ]),
    }),
