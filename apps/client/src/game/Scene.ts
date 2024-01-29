@@ -257,7 +257,7 @@ export abstract class Scene extends Phaser.Scene {
 
       this.gridEngine.movementStopped().subscribe((entity) => {
          if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
-            store.colyseusStore.stopMoving();
+            store.colyseusStore.stopMoving(entity.direction);
          }
       });
 
@@ -340,7 +340,7 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
-   public addExternalPlayer(name: string, position: Position): void {
+   public addExternalPlayer(name: string, position: Position, direction: Direction): void {
       if (this.gridEngine.getAllCharacters().find((playerName) => playerName === name)) {
          return;
       }
@@ -374,6 +374,7 @@ export abstract class Scene extends Phaser.Scene {
          container: externalPlayerContainer,
          speed: PLAYER_SPEED,
          collides: true,
+         facingDirection: direction,
       });
 
       this.playersSprites.set(name, externalPlayerContainer);
@@ -429,6 +430,10 @@ export abstract class Scene extends Phaser.Scene {
             }
          }
       }
+   }
+
+   public setPlayerDirection(name: string, direction: Direction): void {
+      this.gridEngine.turnTowards(name, direction);
    }
 
    public fadeOut(callback: (_: unknown, progress: number) => void): void {

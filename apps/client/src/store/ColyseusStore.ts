@@ -5,7 +5,7 @@ import { ChatRoomResponse, isChatRoomResponse } from 'shared/src/rooms/ChatRoom'
 import { MapRoomResponse, isMapRoomResponse } from 'shared/src/rooms/MapRoom';
 import { MapState } from 'shared/src/states/MapState';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { Position, SceneData } from 'shared/src/types/SceneData';
+import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { match } from 'ts-pattern';
 import { Store } from './Store';
@@ -114,7 +114,7 @@ export class ColyseusStore {
       this.authRoom.send('deleteCharacter', { characterName, password });
    }
 
-   private async joinRoom(roomName: string, position?: Position) {
+   private async joinRoom(roomName: string, position?: Position, direction?: Direction) {
       if (this._authRoom !== null) {
          await this.leaveAuthRoom();
       } else if (this._gameRoom !== null) {
@@ -124,6 +124,7 @@ export class ColyseusStore {
       const room = await this._client.joinOrCreate<MapState>(roomName, {
          uuid: this.uuid,
          position,
+         direction,
       });
 
       this.setGameRoom(room);
@@ -173,7 +174,7 @@ export class ColyseusStore {
             this._store.characterSelectionStore.setErrorMessage(errorMessage);
             this._store.characterSelectionStore.setLoading(false);
          })
-         .with({ status: 'success' }, async ({ map, posX, posY, uuid }) => {
+         .with({ status: 'success' }, async ({ map, posX, posY, direction, uuid }) => {
             this.setUuid(uuid);
             await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
 
@@ -182,6 +183,7 @@ export class ColyseusStore {
 
             const scene = await this._store.gameStore.changeMapPlayer(map, {
                entrancePosition: { x: posX, y: posY },
+               entranceDirection: direction as Direction,
             });
 
             scene.gridEngine.setPosition(INTERNAL_PLAYER_NAME, { x: posX, y: posY }, 'player');
@@ -274,12 +276,12 @@ export class ColyseusStore {
       });
 
       this.gameRoom.state.players.onAdd(async (player) => {
-         const { name, x, y } = player;
+         const { name, x, y, direction } = player;
          const isPlayer = name === this._store.characterStore.name;
 
          if (!isPlayer) {
             const scene = await this._store.gameStore.getCurrentScene();
-            scene.addExternalPlayer(name, { x, y });
+            scene.addExternalPlayer(name, { x, y }, direction as Direction);
 
             player.listen('x', (newX) => {
                scene.setNextX(name, newX);
@@ -287,6 +289,10 @@ export class ColyseusStore {
 
             player.listen('y', (newY) => {
                scene.setNextY(name, newY);
+            });
+
+            player.listen('direction', (newDirection) => {
+               scene.setPlayerDirection(name, newDirection as Direction);
             });
          }
       });
@@ -306,11 +312,16 @@ export class ColyseusStore {
       this.gameRoom.send('move', { x, y });
    }
 
-   stopMoving() {
-      this.gameRoom.send('stopMoving', {});
+   stopMoving(direction: Direction) {
+      this.gameRoom.send('stopMoving', { direction });
    }
 
-   async onChangeMap({ map, x, y }: Extract<MapRoomResponse, { type: 'changeMap' }>['message']) {
+   async onChangeMap({
+      map,
+      x,
+      y,
+      direction,
+   }: Extract<MapRoomResponse, { type: 'changeMap' }>['message']) {
       this._store.gameStore.enableKeyboard(false);
 
       const scene = await this._store.gameStore.getCurrentScene();
@@ -320,6 +331,7 @@ export class ColyseusStore {
 
             const sceneData: SceneData = {
                entrancePosition: { x, y },
+               entranceDirection: direction as Direction,
             };
             scene.scene.start(map, sceneData);
          }

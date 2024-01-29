@@ -1,6 +1,7 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import {
    AuthRoomMessage,
+   DEFAULT_DIRECTION,
    DEFAULT_MAP,
    DEFAULT_X,
    DEFAULT_Y,
@@ -122,6 +123,7 @@ export class AuthRoom extends Room {
             map: character.map,
             posX: character.pos_x,
             posY: character.pos_y,
+            direction: character.direction,
          };
 
          usersMap.set(uuid, {
@@ -181,6 +183,7 @@ export class AuthRoom extends Room {
                name: characterName,
                pos_x: DEFAULT_X,
                pos_y: DEFAULT_Y,
+               direction: DEFAULT_DIRECTION,
                map: DEFAULT_MAP,
                user: {
                   connect: {

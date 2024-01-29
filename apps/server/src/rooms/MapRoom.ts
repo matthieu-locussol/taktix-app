@@ -56,7 +56,7 @@ export class MapRoom extends Room<MapState> {
       });
    }
 
-   async onJoin(client: Client, { uuid, position }: Options) {
+   async onJoin(client: Client, { uuid, position, direction }: Options) {
       const userInfos = usersMap.get(uuid);
       _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
       const { characterName } = userInfos;
@@ -64,7 +64,7 @@ export class MapRoom extends Room<MapState> {
       if (position !== undefined) {
          const { x, y } = position;
          logger.info(
-            `[MapRoom][${this.name}] Client '${client.sessionId}' (${characterName}) joined the room at (${x}, ${y})`,
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${characterName}) joined the room at (${x}, ${y}) - ${direction}`,
          );
       } else {
          logger.info(
@@ -76,14 +76,16 @@ export class MapRoom extends Room<MapState> {
          where: { name: characterName },
       });
       _assert(characterInfos, `Character infos for name '${characterName}' should be defined`);
-      const { pos_x, pos_y } = characterInfos;
+      const { pos_x, pos_y, direction: savedDirection } = characterInfos;
       const characterPosition = position ?? { x: pos_x, y: pos_y };
+      const characterDirection = direction ?? savedDirection;
 
       this.state.createPlayer(
          client.sessionId,
          characterName,
          characterPosition.x,
          characterPosition.y,
+         characterDirection,
       );
    }
 
@@ -98,7 +100,10 @@ export class MapRoom extends Room<MapState> {
       this.state.movePlayer(client.sessionId, x, y);
    }
 
-   onStopMoving(client: Client, _payload: Extract<MapRoomMessage, { type: 'stopMoving' }>) {
+   onStopMoving(
+      client: Client,
+      { message: { direction } }: Extract<MapRoomMessage, { type: 'stopMoving' }>,
+   ) {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
@@ -107,7 +112,7 @@ export class MapRoom extends Room<MapState> {
       );
 
       this.checkTeleportationSpots(client, player);
-      player.stopMoving();
+      player.stopMoving(direction);
    }
 
    checkTeleportationSpots(client: Client, player: PlayerState) {
@@ -115,8 +120,9 @@ export class MapRoom extends Room<MapState> {
 
       for (const { x, y, destinationMapName, destinationMapData } of teleportationSpots) {
          if (player.x === x && player.y === y) {
-            const { entrancePosition } = destinationMapData;
+            const { entrancePosition, entranceDirection } = destinationMapData;
             _assert(entrancePosition);
+            _assert(entranceDirection);
 
             const packet: Extract<MapRoomResponse, { type: 'changeMap' }> = {
                type: 'changeMap',
@@ -124,6 +130,7 @@ export class MapRoom extends Room<MapState> {
                   map: destinationMapName,
                   x: entrancePosition.x,
                   y: entrancePosition.y,
+                  direction: entranceDirection,
                },
             };
 
@@ -152,6 +159,7 @@ export class MapRoom extends Room<MapState> {
             map: this.name,
             pos_x: player.x,
             pos_y: player.y,
+            direction: player.direction,
          },
       });
 
