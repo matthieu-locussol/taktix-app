@@ -60,7 +60,7 @@ const Root = styled(Box, {
    bottom: 8,
    border: `1px solid ${theme.palette.paper.border}`,
    background: darken(`${theme.palette.paper.background}C6`, 0.15),
-   width: `calc(${widthPercent}vw - 18px)`,
+   width: `calc(${widthPercent}vw - 2px)`,
    height: `calc(${heightPercent}vh - 18px)`,
    borderRadius: 8,
 }));
