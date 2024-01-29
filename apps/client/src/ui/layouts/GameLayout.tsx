@@ -1,8 +1,9 @@
-import { BoxProps } from '@mui/material';
+import { BoxProps, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import { useStore } from '../../store';
+import { Character } from '../hud/Character';
 import { Chatbox } from '../hud/Chatbox';
 
 interface GameLayoutProps extends BoxProps {}
@@ -43,8 +44,21 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          }}
          {...rest}
       >
-         {hudStore.isChatboxVisible && <Chatbox />}
+         <StyledBox height={`${hudStore.chatboxHeight}vh`}>
+            {hudStore.isChatboxVisible && <Chatbox />}
+            {hudStore.isCharacterVisible && <Character />}
+         </StyledBox>
          {children}
       </Box>
    );
 });
+
+const StyledBox = styled(Box)(({ theme }) => ({
+   position: 'absolute',
+   bottom: 0,
+   width: '100%',
+   border: `1px solid ${theme.palette.paper.border}`,
+   background: `${theme.palette.paper.background}88`,
+   overflow: 'hidden',
+   height: '20vh',
+}));

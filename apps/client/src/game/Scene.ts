@@ -148,7 +148,7 @@ export abstract class Scene extends Phaser.Scene {
       this.marker = this.add.graphics();
       this.marker.lineStyle(2, 0x115e59, 0.4);
       this.marker.strokeRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
-      this.marker.setDepth(Number.MAX_SAFE_INTEGER);
+      this.marker.setDepth(3);
       this.marker.setVisible(false);
 
       this.minimap?.ignore(this.marker);
@@ -226,7 +226,15 @@ export abstract class Scene extends Phaser.Scene {
          align: 'center',
          fontSize: 6,
          fontFamily: 'Orbitron',
-         resolution: 2,
+         resolution: 4,
+         shadow: {
+            offsetX: 0,
+            offsetY: 0,
+            color: '#000000',
+            blur: 2,
+            stroke: true,
+            fill: true,
+         },
       });
       playerName.scale = SCALE_FACTOR;
       const playerContainer = this.add.container(0, 0, [playerName, playerSprite]);
@@ -242,6 +250,13 @@ export abstract class Scene extends Phaser.Scene {
          container: playerContainer,
          speed: PLAYER_SPEED,
          collides: true,
+      });
+
+      this.gridEngine.positionChangeStarted().subscribe((entity) => {
+         if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
+            const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
+            store.characterStore.setPosition(position);
+         }
       });
 
       this.gridEngine.movementStopped().subscribe((entity) => {
@@ -357,7 +372,15 @@ export abstract class Scene extends Phaser.Scene {
          align: 'center',
          fontSize: 6,
          fontFamily: 'Orbitron',
-         resolution: 2,
+         resolution: 4,
+         shadow: {
+            offsetX: 0,
+            offsetY: 0,
+            color: '#000000',
+            blur: 2,
+            stroke: true,
+            fill: true,
+         },
       });
       externalPlayerName.scale = SCALE_FACTOR;
       const externalPlayerContainer = this.add.container(0, 0, [

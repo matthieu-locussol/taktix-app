@@ -30,14 +30,29 @@ export const Chatbox = observer(() => {
 
    return (
       <Root component="form" onSubmit={sendMessage} widthPercent={hudStore.chatboxWidth}>
-         <Chat ref={chatboxRef} heightPercent={hudStore.chatboxHeight}>
+         <Chat
+            ref={chatboxRef}
+            heightPercent={hudStore.chatboxHeight}
+            inputHeight={hudStore.chatboxInputHeight}
+         >
             {chatStore.messages.map(({ author, content, channel }, idx) =>
                chatStore.isSystemChannel(channel) ? (
-                  <Typography key={idx} fontStyle="italic" color={theme.palette.channels[channel]}>
+                  <Typography
+                     key={idx}
+                     fontStyle="italic"
+                     fontSize="1vw"
+                     lineHeight="2.5vh"
+                     color={theme.palette.channels[channel]}
+                  >
                      {content}
                   </Typography>
                ) : (
-                  <Typography key={idx} color={theme.palette.channels[channel]}>
+                  <Typography
+                     key={idx}
+                     fontSize="1vw"
+                     lineHeight="2.5vh"
+                     color={theme.palette.channels[channel]}
+                  >
                      {author}: {content}
                   </Typography>
                ),
@@ -51,6 +66,7 @@ export const Chatbox = observer(() => {
             onChange={(e) => chatStore.setInput(e.target.value)}
             maxLength={160}
             widthPercent={hudStore.chatboxWidth}
+            inputHeight={hudStore.chatboxInputHeight}
          />
       </Root>
    );
@@ -58,29 +74,33 @@ export const Chatbox = observer(() => {
 
 interface StyleProps {
    widthPercent: number;
+   inputHeight?: number;
 }
 
 interface ChatStyleProps {
    heightPercent: number;
+   inputHeight: number;
 }
 
 const Root = styled(Box, { shouldForwardProp: (prop) => prop !== 'widthPercent' })<StyleProps>(
    ({ theme, widthPercent }) => ({
       position: 'absolute',
-      left: 0,
-      bottom: 0,
+      left: 8,
+      bottom: 8,
       border: `1px solid ${theme.palette.paper.border}`,
       background: darken(`${theme.palette.paper.background}C6`, 0.15),
-      width: `${widthPercent}vw`,
+      width: `calc(${widthPercent}vw - 16px)`,
+      boxSizing: 'border-box',
+      borderRadius: 8,
    }),
 );
 
 const Chat = styled(Box, {
-   shouldForwardProp: (prop) => prop !== 'heightPercent',
-})<ChatStyleProps>(({ heightPercent }) => ({
+   shouldForwardProp: (prop) => prop !== 'heightPercent' && prop !== 'inputHeight',
+})<ChatStyleProps>(({ heightPercent, inputHeight }) => ({
    padding: 8,
-   height: `${heightPercent}vh`,
-   maxHeight: `${heightPercent}vh`,
+   height: `calc(${heightPercent}vh - ${inputHeight}px - 36px - 2vh)`,
+   maxHeight: `calc(${heightPercent}vh - ${inputHeight}px - 36px - 2vh)`,
    overflowX: 'hidden',
    overflowY: 'scroll',
    color: 'white',
@@ -89,16 +109,19 @@ const Chat = styled(Box, {
 }));
 
 const ChatInput = styled('input', {
-   shouldForwardProp: (prop) => prop !== 'widthPercent',
-})<StyleProps>(({ widthPercent }) => ({
-   padding: 8,
-   fontSize: 16,
+   shouldForwardProp: (prop) => prop !== 'widthPercent' && prop !== 'inputHeight',
+})<StyleProps>(({ theme, widthPercent, inputHeight }) => ({
+   padding: '1vh 1vw 1vh 1vw',
+   fontSize: '1vw',
    border: 'none',
-   borderTop: '2px solid #000000',
+   borderTop: `2px solid ${theme.palette.paper.border}`,
    outline: 'none',
-   backgroundColor: 'white',
+   backgroundColor: '#E8E8E8',
    '&:hover': {
       backgroundColor: '#DDDDDD',
    },
-   width: `calc(${widthPercent}vw - 16px)`,
+   borderBottomLeftRadius: 8,
+   borderBottomRightRadius: 8,
+   width: `calc(${widthPercent}vw - 2vw - 18px)`,
+   height: `${inputHeight}px`,
 }));
