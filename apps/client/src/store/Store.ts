@@ -6,6 +6,7 @@ import { ChatStore } from './ChatStore';
 import { ColyseusStore } from './ColyseusStore';
 import { DiscordStore } from './DiscordStore';
 import { GameStore } from './GameStore';
+import { HudStore } from './HudStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
 import { LoginStore } from './LoginStore';
 import { NewsStore } from './NewsStore';
@@ -27,6 +28,8 @@ export class Store {
    public discordStore: DiscordStore;
 
    public gameStore: GameStore;
+
+   public hudStore: HudStore;
 
    public loadingScreenStore: LoadingScreenStore;
 
@@ -50,6 +53,7 @@ export class Store {
       this.colyseusStore = new ColyseusStore(this);
       this.discordStore = new DiscordStore(this);
       this.gameStore = new GameStore(this);
+      this.hudStore = new HudStore();
       this.loadingScreenStore = new LoadingScreenStore();
       this.loginStore = new LoginStore();
       this.newsStore = new NewsStore();
