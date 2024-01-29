@@ -20,6 +20,8 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
    z.object({
       type: z.literal('stopMoving'),
       message: z.object({
+         x: z.number(),
+         y: z.number(),
          direction: z.string(),
       }),
    }),
