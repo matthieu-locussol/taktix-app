@@ -67,8 +67,8 @@
          {
             "title": "Taktix",
             "url": "/index.html",
-            "width": 1280,
-            "height": 800,
+            "width": 1080,
+            "height": 836,
             "center": true,
             "resizable": true,
             "fullscreen": false,
