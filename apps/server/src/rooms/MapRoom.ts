@@ -111,8 +111,8 @@ export class MapRoom extends Room<MapState> {
          `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) stopped moving`,
       );
 
-      this.checkTeleportationSpots(client, player);
       player.stopMoving(direction, x, y);
+      this.checkTeleportationSpots(client, player);
    }
 
    checkTeleportationSpots(client: Client, player: PlayerState) {
