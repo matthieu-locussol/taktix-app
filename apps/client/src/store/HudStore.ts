@@ -43,11 +43,7 @@ export class HudStore {
 
    public async toggleMinimap(): Promise<void> {
       this.isMinimapVisible = !this.isMinimapVisible;
-      const scene = await this._store.gameStore.getCurrentScene();
-
-      if (scene.minimap !== null) {
-         scene.minimap.setVisible(this.isMinimapVisible);
-      }
+      this._store.gameStore.setMinimapVisible(this.isMinimapVisible);
    }
 
    public toggleTransparency(): void {

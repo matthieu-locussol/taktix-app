@@ -84,4 +84,12 @@ export class GameStore {
    setZoom(zoom: number) {
       this.zoom = NumberMgt.clamp(zoom, ZOOM_MIN, ZOOM_MAX);
    }
+
+   async setMinimapVisible(minimapVisible: boolean) {
+      const scene = await this._store.gameStore.getCurrentScene();
+
+      if (scene.minimap !== null) {
+         scene.minimap.setVisible(minimapVisible);
+      }
+   }
 }
