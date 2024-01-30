@@ -17,6 +17,11 @@ export class NewsStore {
 
    get changelog() {
       return `
+         <b>January, 30th 2024</b><br />
+         - Improved HUD<br />
+         - Added a minimap toggle<br />
+         - Added a transparency toggle<br />
+         <br />
          <b>January, 29th 2024</b><br />
          - Improved pathfinding<br />
          <br />
