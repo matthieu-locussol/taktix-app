@@ -16,7 +16,7 @@ export class GameStore {
 
    private _store: Store;
 
-   public zoom: number = (ZOOM_MIN + ZOOM_MAX) / 2;
+   public zoom: number = ZOOM_MIN;
 
    constructor(store: Store) {
       makeAutoObservable(this);
