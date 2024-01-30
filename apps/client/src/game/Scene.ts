@@ -146,10 +146,12 @@ export abstract class Scene extends Phaser.Scene {
 
    private initializeMarker(): void {
       this.marker = this.add.graphics();
-      this.marker.lineStyle(2, 0x115e59, 0.4);
-      this.marker.strokeRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR);
+      this.marker.lineStyle(2, 0xffffff, 0.8);
+      this.marker.strokeRoundedRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR, 4);
       this.marker.setDepth(3);
       this.marker.setVisible(false);
+      this.marker.postFX.addGlow(0xffffff, 2, 0, false, 1, 5);
+      this.marker.postFX.addBloom(0xffffff);
 
       this.minimap?.ignore(this.marker);
    }
@@ -161,7 +163,10 @@ export abstract class Scene extends Phaser.Scene {
          y: Math.floor(pointerPosition.y / (TILE_SIZE * SCALE_FACTOR)),
       };
 
-      if (this.isPositionClickable(pointerWorldPosition)) {
+      if (
+         this.isPositionClickable(pointerWorldPosition) &&
+         this.isPositionVisible(pointerPosition)
+      ) {
          this.gridEngine
             .moveTo(INTERNAL_PLAYER_NAME, pointerWorldPosition, {
                algorithm: 'A_STAR',
@@ -195,6 +200,10 @@ export abstract class Scene extends Phaser.Scene {
          const tile = this.tilemap.getTileAt(position.x, position.y, undefined, layer.name);
          return tile !== null;
       });
+   }
+
+   private isPositionVisible(position: Position): boolean {
+      return this.cameras.main.worldView.contains(position.x, position.y);
    }
 
    private highlightTile({ x, y }: Position, highlight: boolean): void {

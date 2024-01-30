@@ -18,7 +18,7 @@ export const config: Phaser.Types.Core.GameConfig = {
       smoothStep: true,
    },
    scale: {
-      mode: Phaser.Scale.ScaleModes.RESIZE,
+      mode: Phaser.Scale.ScaleModes.FIT,
       autoCenter: Phaser.Scale.Center.CENTER_BOTH,
    },
    audio: {
