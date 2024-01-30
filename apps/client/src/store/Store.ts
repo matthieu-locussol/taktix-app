@@ -53,7 +53,7 @@ export class Store {
       this.colyseusStore = new ColyseusStore(this);
       this.discordStore = new DiscordStore(this);
       this.gameStore = new GameStore(this);
-      this.hudStore = new HudStore();
+      this.hudStore = new HudStore(this);
       this.loadingScreenStore = new LoadingScreenStore();
       this.loginStore = new LoginStore();
       this.newsStore = new NewsStore();
