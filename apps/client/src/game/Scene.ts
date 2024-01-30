@@ -150,7 +150,7 @@ export abstract class Scene extends Phaser.Scene {
       this.marker.strokeRoundedRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR, 4);
       this.marker.setDepth(3);
       this.marker.setVisible(false);
-      this.marker.postFX.addGlow(0xffffff, 2, 0, false, 1, 5);
+      this.marker.postFX.addGlow(0xffffff, 1, 0, false, 1, 2);
       this.marker.postFX.addBloom(0xffffff);
 
       this.minimap?.ignore(this.marker);
