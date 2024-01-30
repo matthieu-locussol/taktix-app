@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.32.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.31.0...v1.32.0) (2024-01-30)
+
+
+### Features
+
+* A* finds the nearest path if cell is blocked ([2306712](https://github.com/matthieu-locussol/taktix-app/commit/2306712ec8ead37acd4e9bec68bba4b3cc7882a5))
+* added a HudStore ([a2db1b0](https://github.com/matthieu-locussol/taktix-app/commit/a2db1b0e32866af7b3b4adb26a4f26668460451f))
+* added a menu & shortcut icons ([a70dbde](https://github.com/matthieu-locussol/taktix-app/commit/a70dbde100578a6d6b19b74bc2ba1f599290ee05))
+* added a minimap ([2100378](https://github.com/matthieu-locussol/taktix-app/commit/2100378e3905b488d66a3324fbbce8106d6efd06))
+* added a transparency mode ([d15c5c2](https://github.com/matthieu-locussol/taktix-app/commit/d15c5c2c62663e7ceea113282a2a3ac3c10357fb))
+* added AAA_InitialRoom as default room for the main menu ([c836d6a](https://github.com/matthieu-locussol/taktix-app/commit/c836d6a9412f23932b473dd6040bd45f1ee07866))
+* added back directional arrows movement ([7e5f35f](https://github.com/matthieu-locussol/taktix-app/commit/7e5f35f7afc5372fbbad0de291b86e513b13bd87))
+* enables grid-engine collisions cache ([562e0e3](https://github.com/matthieu-locussol/taktix-app/commit/562e0e3bd0429bad60202f66ea78b0059023b931))
+* Forest maps has better borders ([2536689](https://github.com/matthieu-locussol/taktix-app/commit/25366894a22a2f9597640ebd241b02fcb942df09))
+* game canvas is in fit mode ([b8e69be](https://github.com/matthieu-locussol/taktix-app/commit/b8e69be4532d1f22f6b48b8076b824c34f3c447c))
+* improved HUD ([ab5e39f](https://github.com/matthieu-locussol/taktix-app/commit/ab5e39f2323fe7ec587eb8ccb88d9b2eaf77f2c5))
+* set fps limit to 60fps ([3a48f76](https://github.com/matthieu-locussol/taktix-app/commit/3a48f76f6e9547483fd66d02e5d71282a21a98ff))
+* take character's direction into account ([c4548fb](https://github.com/matthieu-locussol/taktix-app/commit/c4548fb30be46fa1fa21fc52964f30314615aa93))
+* updated changelog ([f4b553a](https://github.com/matthieu-locussol/taktix-app/commit/f4b553a8f22f30997b0606648ee75dea22868c64))
+* updated news ([8ea55b0](https://github.com/matthieu-locussol/taktix-app/commit/8ea55b062bd97144594dfa5e3e615238e528d854))
+* zoom is stored in GameStore ([41b015b](https://github.com/matthieu-locussol/taktix-app/commit/41b015b0f31dfffb8e11e159abac277ae0bde131))
+
+
+### Bug Fixes
+
+* AAA_InitialScene is set in mapsScenes too ([67f2ac9](https://github.com/matthieu-locussol/taktix-app/commit/67f2ac9de86c869d97df73d303f0c12ca768ef69))
+* camera is centered on the player ([41ecfcf](https://github.com/matthieu-locussol/taktix-app/commit/41ecfcf790bb389437ce0d398c14799bc549da1b))
+* can only click on map's tiles ([b2b804a](https://github.com/matthieu-locussol/taktix-app/commit/b2b804a68dfdcf059ea867ed0ddd241b52ee624b))
+* characters collide again to avoid wrong client-side pathfinding ([6d3c5c8](https://github.com/matthieu-locussol/taktix-app/commit/6d3c5c896ada2d12b2e63524f1767be4826b25b6))
+* check teleportation spots after user stopped moving ([327a4c6](https://github.com/matthieu-locussol/taktix-app/commit/327a4c67284da9bccd9cb36ae958f4f303bc382d))
+* connect client only once in DiscordState instanciation ([4469d32](https://github.com/matthieu-locussol/taktix-app/commit/4469d3232238152acbd422e1a814dc96669033b9))
+* game scaling ([c730ffd](https://github.com/matthieu-locussol/taktix-app/commit/c730ffddf9534bc1a379fa578feb2d00498062d6))
+* initial window size ([7ccaf84](https://github.com/matthieu-locussol/taktix-app/commit/7ccaf84c19870e2947c848ed3883b75e2ffd337b))
+* initial zoom is at the minimum ([c5da778](https://github.com/matthieu-locussol/taktix-app/commit/c5da778411756d39fbd66774d5423e71c1db83ea))
+* initial zoom is between the range ([07b55f8](https://github.com/matthieu-locussol/taktix-app/commit/07b55f8ba90c8798d474bb3aa94f81cfca9c96ef))
+* inverted zoom ([e9c6370](https://github.com/matthieu-locussol/taktix-app/commit/e9c63707bf53d9bf2976081299ce256d8bdf92c1))
+
 ## [1.31.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.30.1...v1.31.0) (2024-01-28)
 
 
