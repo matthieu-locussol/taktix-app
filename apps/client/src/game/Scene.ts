@@ -16,7 +16,8 @@ import { makeLight } from './lights/makeLight';
 
 export const TILE_SIZE = 16;
 export const SCALE_FACTOR = 2;
-export const PLAYER_LAYER = 'player';
+export const PLAYER_LAYER = 'Player';
+export const PLAYER_GE_LAYER = 'player';
 export const PLAYER_SPEED = 2.5;
 export const CHARACTER_WIDTH = 26;
 export const CHARACTER_LETTER_WIDTH = 8;
@@ -255,7 +256,7 @@ export abstract class Scene extends Phaser.Scene {
          sprite: playerSprite,
          walkingAnimationMapping: 6,
          startPosition: this.entrancePosition,
-         charLayer: PLAYER_LAYER,
+         charLayer: PLAYER_GE_LAYER,
          container: playerContainer,
          speed: PLAYER_SPEED,
          collides: true,
@@ -404,7 +405,7 @@ export abstract class Scene extends Phaser.Scene {
          sprite: externalPlayerSprite,
          walkingAnimationMapping: 0,
          startPosition: position,
-         charLayer: PLAYER_LAYER,
+         charLayer: PLAYER_GE_LAYER,
          container: externalPlayerContainer,
          speed: PLAYER_SPEED,
          collides: true,

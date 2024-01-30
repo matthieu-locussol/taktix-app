@@ -48,6 +48,7 @@ export class HudStore {
 
    public toggleTransparency(): void {
       this.isTransparencyEnabled = !this.isTransparencyEnabled;
+      this._store.gameStore.setTransparency(this.isTransparencyEnabled);
    }
 
    public setChatboxWidth(width: number): void {
