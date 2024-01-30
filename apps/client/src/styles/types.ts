@@ -1,8 +1,8 @@
-import { PaletteColorOptions } from '@mui/material/styles';
+import { PaletteColor } from '@mui/material/styles';
 import { Channel } from 'shared/src/types/Channel';
 
 interface CustomPalette {
-   chalk?: PaletteColorOptions;
+   chalk: PaletteColor;
    link: {
       normal: string;
       hover: string;
