@@ -1,6 +1,13 @@
 import { makeAutoObservable } from 'mobx';
+import { Store } from './Store';
 
 export class HudStore {
+   private _store: Store;
+
+   public isMinimapVisible: boolean = true;
+
+   public isTransparencyEnabled: boolean = false;
+
    /** Width in vw */
    public chatboxWidth: number = 40;
 
@@ -20,8 +27,31 @@ export class HudStore {
 
    public isCharacterVisible: boolean = true;
 
-   constructor() {
+   /** Width in vw */
+   public menuWidth: number = 40;
+
+   /** Height in vh */
+   public menuHeight: number = 20;
+
+   public isMenuVisible: boolean = true;
+
+   constructor(store: Store) {
       makeAutoObservable(this);
+
+      this._store = store;
+   }
+
+   public async toggleMinimap(): Promise<void> {
+      this.isMinimapVisible = !this.isMinimapVisible;
+      const scene = await this._store.gameStore.getCurrentScene();
+
+      if (scene.minimap !== null) {
+         scene.minimap.setVisible(this.isMinimapVisible);
+      }
+   }
+
+   public toggleTransparency(): void {
+      this.isTransparencyEnabled = !this.isTransparencyEnabled;
    }
 
    public setChatboxWidth(width: number): void {
@@ -50,5 +80,17 @@ export class HudStore {
 
    public toggleCharacter(): void {
       this.isCharacterVisible = !this.isCharacterVisible;
+   }
+
+   public setMenuWidth(width: number): void {
+      this.menuWidth = width;
+   }
+
+   public setMenuHeight(height: number): void {
+      this.menuHeight = height;
+   }
+
+   public toggleMenu(): void {
+      this.isMenuVisible = !this.isMenuVisible;
    }
 }
