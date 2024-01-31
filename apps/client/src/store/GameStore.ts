@@ -5,12 +5,11 @@ import { SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
-import { PLAYER_GE_LAYER, PLAYER_LAYER, Scene, ZOOM_MAX, ZOOM_MIN } from '../game/Scene';
+import { PLAYER_GE_LAYER, Scene, ZOOM_MAX, ZOOM_MIN } from '../game/Scene';
 import { Store } from './Store';
 
 const CHECK_INTERVAL = 100;
 const MAX_CHECK_ATTEMPTS = 10;
-const TRANSPARENCY_FACTOR = 0.75;
 
 export class GameStore {
    private _game: Phaser.Game | null;
@@ -84,30 +83,5 @@ export class GameStore {
 
    setZoom(zoom: number) {
       this.zoom = NumberMgt.clamp(zoom, ZOOM_MIN, ZOOM_MAX);
-   }
-
-   async setMinimapVisible(minimapVisible: boolean) {
-      const scene = await this._store.gameStore.getCurrentScene();
-
-      if (scene.minimap !== null) {
-         scene.minimap.setVisible(minimapVisible);
-      }
-   }
-
-   async setTransparency(transparency: boolean) {
-      const scene = await this._store.gameStore.getCurrentScene();
-
-      if (scene.tilemap !== null) {
-         const playerLayer = scene.tilemap.getLayer(PLAYER_LAYER);
-         _assert(playerLayer, 'Player layer should exist!');
-
-         for (const layer of scene.tilemap.layers) {
-            layer.tilemapLayer.setAlpha(
-               transparency
-                  ? layer.tilemapLayer.alpha * TRANSPARENCY_FACTOR
-                  : layer.tilemapLayer.alpha / TRANSPARENCY_FACTOR,
-            );
-         }
-      }
    }
 }

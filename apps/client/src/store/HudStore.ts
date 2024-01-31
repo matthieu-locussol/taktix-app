@@ -43,12 +43,16 @@ export class HudStore {
 
    public async toggleMinimap(): Promise<void> {
       this.isMinimapVisible = !this.isMinimapVisible;
-      this._store.gameStore.setMinimapVisible(this.isMinimapVisible);
+
+      const scene = await this._store.gameStore.getCurrentScene();
+      scene.setMinimapVisibility(this.isMinimapVisible);
    }
 
-   public toggleTransparency(): void {
+   public async toggleTransparency(): Promise<void> {
       this.isTransparencyEnabled = !this.isTransparencyEnabled;
-      this._store.gameStore.setTransparency(this.isTransparencyEnabled);
+
+      const scene = await this._store.gameStore.getCurrentScene();
+      scene.setTransparency(this.isTransparencyEnabled);
    }
 
    public setChatboxWidth(width: number): void {
