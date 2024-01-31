@@ -19,6 +19,9 @@ export class NewsStore {
       return `
          <b>January, 31th 2024</b><br />
          - Animated tiles<br />
+         - Players indicators on minimap<br />
+         - Players names always visible<br />
+         <br />
          <b>January, 30th 2024</b><br />
          - Improved HUD<br />
          - Added a minimap toggle<br />
