@@ -10,6 +10,7 @@ import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
 import { _assert } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
+import { AnimatedTiles } from '../plugins/AnimatedTiles';
 import { store } from '../store';
 import { makeMinimap } from './cameras/makeMinimap';
 import { makeLight } from './lights/makeLight';
@@ -96,6 +97,7 @@ export abstract class Scene extends Phaser.Scene {
       });
 
       this.loadAssets();
+      this.load.scenePlugin('animatedTiles', AnimatedTiles, 'animatedTiles', 'animatedTiles');
    }
 
    public abstract loadAssets(): void;
@@ -118,6 +120,8 @@ export abstract class Scene extends Phaser.Scene {
       this.initializeHandlers();
       this.initializeMarker();
       this.initializeSceneState();
+
+      this.sys.animatedTiles.init(tilemap);
    }
 
    private initializeLights(): void {
