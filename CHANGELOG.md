@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.33.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.32.0...v1.33.0) (2024-01-31)
+
+
+### Features
+
+* added players squares on the minimap ([6a90d4f](https://github.com/matthieu-locussol/taktix-app/commit/6a90d4f0bd42d885b0fe69c16e324bd7868b4142))
+* handles animated tiles correctly ([cfe9889](https://github.com/matthieu-locussol/taktix-app/commit/cfe988914bddd03aabcd740c4657025f9771db79))
+* updated changelog ([955f963](https://github.com/matthieu-locussol/taktix-app/commit/955f96376dde128198a1a8a29e1fa76e36c804dc))
+* updated generateMaps script ([95fc125](https://github.com/matthieu-locussol/taktix-app/commit/95fc12571df9d76701459ea47d6523c793f5f544))
+
+
+### Bug Fixes
+
+* keep transparency & minimap setting between maps ([2c10257](https://github.com/matthieu-locussol/taktix-app/commit/2c10257fc89755f4eb41cf1870296f374b73828c))
+* set marker depth to 3 ([dc88626](https://github.com/matthieu-locussol/taktix-app/commit/dc88626f80fdeade72f778e9c1e1061048783250))
+* stop setting depth manually ([369deff](https://github.com/matthieu-locussol/taktix-app/commit/369deffb035a5cb6659d8f99f0e58b6240ab006b))
+
 ## [1.32.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.31.0...v1.32.0) (2024-01-30)
 
 
