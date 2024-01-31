@@ -31,6 +31,11 @@ export const FADE_IN_DURATION = 1000;
 export const FADE_OUT_DURATION = 300;
 export const TRANSPARENCY_FACTOR = 0.75;
 
+interface PlayerWrappers {
+   square: Phaser.GameObjects.Rectangle;
+   name: Phaser.GameObjects.Text;
+}
+
 interface IScene extends Phaser.Scene {
    gridEngine: GridEngine;
 }
@@ -44,7 +49,9 @@ export abstract class Scene extends Phaser.Scene {
 
    public entranceDirection: Direction = Direction.DOWN;
 
-   public playersSprites = new Map<string, Phaser.GameObjects.Container>();
+   public playersSprites = new Map<string, Phaser.GameObjects.Sprite>();
+
+   public playersWrappers = new Map<string, PlayerWrappers>();
 
    public nextPositions = new Map<string, Position>();
 
@@ -262,7 +269,8 @@ export abstract class Scene extends Phaser.Scene {
       const character = makeCharacter(this, nickname, true);
 
       if (character !== null) {
-         const { sprite, container } = character;
+         const { sprite, wrapper } = character;
+         this.playersWrappers.set(INTERNAL_PLAYER_NAME, wrapper);
 
          this.gridEngine.addCharacter({
             id: INTERNAL_PLAYER_NAME,
@@ -270,7 +278,6 @@ export abstract class Scene extends Phaser.Scene {
             walkingAnimationMapping: 6,
             startPosition: this.entrancePosition,
             charLayer: PLAYER_GE_LAYER,
-            container,
             speed: PLAYER_SPEED,
             collides: true,
          });
@@ -289,10 +296,10 @@ export abstract class Scene extends Phaser.Scene {
             }
          });
 
-         this.cameras.main.startFollow(container, false, 0.3, 0.3, -sprite.width, -sprite.height);
+         this.cameras.main.startFollow(sprite, false, 0.3, 0.3, -sprite.width, -sprite.height);
 
          if (this.minimap !== null) {
-            this.minimap.startFollow(container, false, 0.3, 0.3, -sprite.width, -sprite.height);
+            this.minimap.startFollow(sprite, false, 0.3, 0.3, -sprite.width, -sprite.height);
          }
 
          this.gridEngine.turnTowards(INTERNAL_PLAYER_NAME, this.entranceDirection);
@@ -327,6 +334,27 @@ export abstract class Scene extends Phaser.Scene {
    public override update(time: number, delta: number): void {
       this.gridEngine.update(time, delta);
       this.updateMoves();
+      this.updatePlayersWrappers();
+   }
+
+   public updatePlayersWrappers(): void {
+      for (const [name, wrapper] of this.playersWrappers) {
+         const realName = name === INTERNAL_PLAYER_NAME ? store.characterStore.name : name;
+         const characterSprite = this.gridEngine.getSprite(name);
+
+         if (characterSprite !== undefined) {
+            const { name: characterName, square } = wrapper;
+
+            Phaser.Display.Align.To.TopCenter(
+               characterName,
+               characterSprite,
+               (CHARACTER_WIDTH * SCALE_FACTOR - realName.length * CHARACTER_LETTER_WIDTH) / 4,
+               0,
+            );
+
+            Phaser.Display.Align.To.BottomCenter(square, characterSprite, CHARACTER_WIDTH / 2);
+         }
+      }
    }
 
    public updateMoves(): void {
@@ -372,7 +400,8 @@ export abstract class Scene extends Phaser.Scene {
       const character = makeCharacter(this, name, false);
 
       if (character !== null) {
-         const { sprite, container } = character;
+         const { sprite, wrapper } = character;
+         this.playersWrappers.set(name, wrapper);
 
          this.gridEngine.addCharacter({
             id: name,
@@ -380,13 +409,12 @@ export abstract class Scene extends Phaser.Scene {
             walkingAnimationMapping: 0,
             startPosition: position,
             charLayer: PLAYER_GE_LAYER,
-            container,
             speed: PLAYER_SPEED,
             collides: true,
             facingDirection: direction,
          });
 
-         this.playersSprites.set(name, container);
+         this.playersSprites.set(name, sprite);
          this.nextPositions.set(name, position);
       }
    }
@@ -400,9 +428,16 @@ export abstract class Scene extends Phaser.Scene {
       }
 
       const sprite = this.playersSprites.get(name);
-
       if (sprite !== undefined) {
          sprite.destroy();
+         this.playersSprites.delete(name);
+      }
+
+      const wrapper = this.playersWrappers.get(name);
+      if (wrapper !== undefined) {
+         wrapper.name.destroy();
+         wrapper.square.destroy();
+         this.playersWrappers.delete(name);
       }
    }
 
