@@ -158,7 +158,7 @@ ${maps.map((map) => `import { ${map}Scene } from './scenes/${map}Scene';`).join(
 
 export const mapsScenes: Phaser.Types.Scenes.SceneType[] = [
    AAA_InitialScene,
-${maps.map((map) => `   ${map}Scene`).join(',\n')}
+${maps.map((map) => `   ${map}Scene`).join(',\n')},
 ];
 `;
 
