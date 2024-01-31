@@ -12,6 +12,8 @@ import { _assert } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { AnimatedTiles } from '../plugins/AnimatedTiles';
 import { store } from '../store';
+import { makeCharacter } from './cameras/makeCharacter';
+import { makeMarker } from './cameras/makeMarker';
 import { makeMinimap } from './cameras/makeMinimap';
 import { makeLight } from './lights/makeLight';
 
@@ -47,6 +49,8 @@ export abstract class Scene extends Phaser.Scene {
    public nextPositions = new Map<string, Position>();
 
    public marker: Phaser.GameObjects.Graphics | null = null;
+
+   public camera: Phaser.Cameras.Scene2D.Camera | null = null;
 
    public minimap: Phaser.Cameras.Scene2D.Camera | null = null;
 
@@ -109,19 +113,21 @@ export abstract class Scene extends Phaser.Scene {
 
       this.minimap = makeMinimap(this);
 
-      const tilemap = this.createTilemap();
-      this.gridEngine.create(tilemap, {
-         characters: [],
-         cacheTileCollisions: true,
-      });
+      this.createTilemap();
+      this.initializePlugins();
       this.createPlayer(store.characterStore.name);
 
       this.initializeLights();
       this.initializeHandlers();
       this.initializeMarker();
       this.initializeSceneState();
+   }
 
-      this.sys.animatedTiles.init(tilemap);
+   private initializePlugins() {
+      _assert(this.tilemap, 'tilemap should be defined');
+
+      this.gridEngine.create(this.tilemap, { characters: [], cacheTileCollisions: true });
+      this.sys.animatedTiles.init(this.tilemap);
    }
 
    private initializeLights(): void {
@@ -152,15 +158,7 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    private initializeMarker(): void {
-      this.marker = this.add.graphics();
-      this.marker.lineStyle(2, 0xffffff, 0.8);
-      this.marker.strokeRoundedRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR, 4);
-      this.marker.setDepth(3);
-      this.marker.setVisible(false);
-      this.marker.postFX.addGlow(0xffffff, 1, 0, false, 1, 2);
-      this.marker.postFX.addBloom(0xffffff);
-
-      this.minimap?.ignore(this.marker);
+      this.marker = makeMarker(this);
    }
 
    public initializeSceneState(): void {
@@ -244,12 +242,15 @@ export abstract class Scene extends Phaser.Scene {
 
    private highlightTile({ x, y }: Position, highlight: boolean): void {
       _assert(this.tilemap, 'tilemap should be defined');
-      const tile = this.tilemap.layers.some((layer) =>
-         this.tilemap?.getTileAt(x, y, undefined, layer.name),
-      );
+
+      const tile = this.tilemap.layers.some((layer) => {
+         _assert(this.tilemap, 'tilemap should be defined');
+         return this.tilemap.getTileAt(x, y, undefined, layer.name);
+      });
 
       if (tile !== null) {
          _assert(this.marker, 'marker should be defined');
+
          if (highlight) {
             this.marker.setPosition(x * TILE_SIZE * SCALE_FACTOR, y * TILE_SIZE * SCALE_FACTOR);
             this.marker.setVisible(true);
@@ -260,76 +261,45 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public createPlayer(nickname: string): void {
-      const playerSprite = this.add.sprite(0, 0, 'player');
-      playerSprite.scale = SCALE_FACTOR;
-      playerSprite.setPipeline('Light2D');
+      const character = makeCharacter(this, nickname);
 
-      const offsetX =
-         (CHARACTER_WIDTH * SCALE_FACTOR - nickname.length * CHARACTER_LETTER_WIDTH) / 2;
-      const playerName = this.add.text(offsetX, -8, nickname, {
-         align: 'center',
-         fontSize: 6,
-         fontFamily: 'Orbitron',
-         resolution: 4,
-         shadow: {
-            offsetX: 0,
-            offsetY: 0,
-            color: '#000000',
-            blur: 2,
-            stroke: true,
-            fill: true,
-         },
-      });
-      playerName.scale = SCALE_FACTOR;
-      const playerContainer = this.add.container(0, 0, [playerName, playerSprite]);
+      if (character !== null) {
+         const { sprite, container } = character;
 
-      this.minimap?.ignore(playerContainer);
+         this.gridEngine.addCharacter({
+            id: INTERNAL_PLAYER_NAME,
+            sprite,
+            walkingAnimationMapping: 6,
+            startPosition: this.entrancePosition,
+            charLayer: PLAYER_GE_LAYER,
+            container,
+            speed: PLAYER_SPEED,
+            collides: true,
+         });
 
-      this.gridEngine.addCharacter({
-         id: INTERNAL_PLAYER_NAME,
-         sprite: playerSprite,
-         walkingAnimationMapping: 6,
-         startPosition: this.entrancePosition,
-         charLayer: PLAYER_GE_LAYER,
-         container: playerContainer,
-         speed: PLAYER_SPEED,
-         collides: true,
-      });
+         this.gridEngine.positionChangeStarted().subscribe((entity) => {
+            if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
+               const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
+               store.characterStore.setPosition(position);
+            }
+         });
 
-      this.gridEngine.positionChangeStarted().subscribe((entity) => {
-         if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
-            const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
-            store.characterStore.setPosition(position);
+         this.gridEngine.movementStopped().subscribe((entity) => {
+            if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
+               const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
+               store.colyseusStore.stopMoving(entity.direction, position);
+            }
+         });
+
+         this.cameras.main.startFollow(container, false, 0.3, 0.3, -sprite.width, -sprite.height);
+
+         if (this.minimap !== null) {
+            this.minimap.startFollow(container, false, 0.3, 0.3, -sprite.width, -sprite.height);
          }
-      });
 
-      this.gridEngine.movementStopped().subscribe((entity) => {
-         if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
-            const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
-            store.colyseusStore.stopMoving(entity.direction, position);
-         }
-      });
-
-      this.cameras.main.startFollow(
-         playerContainer,
-         false,
-         0.3,
-         0.3,
-         -playerSprite.width,
-         -playerSprite.height,
-      );
-
-      this.minimap?.startFollow(
-         playerContainer,
-         false,
-         0.3,
-         0.3,
-         -playerSprite.width,
-         -playerSprite.height,
-      );
-
-      this.gridEngine.turnTowards(INTERNAL_PLAYER_NAME, this.entranceDirection);
-      this.nextPositions.set(INTERNAL_PLAYER_NAME, this.entrancePosition);
+         this.gridEngine.turnTowards(INTERNAL_PLAYER_NAME, this.entranceDirection);
+         this.nextPositions.set(INTERNAL_PLAYER_NAME, this.entrancePosition);
+      }
    }
 
    public abstract createTilemap(): Phaser.Tilemaps.Tilemap;
@@ -401,51 +371,26 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public addExternalPlayer(name: string, position: Position, direction: Direction): void {
-      if (this.gridEngine.getAllCharacters().find((playerName) => playerName === name)) {
-         return;
+      const character = makeCharacter(this, name);
+
+      if (character !== null) {
+         const { sprite, container } = character;
+
+         this.gridEngine.addCharacter({
+            id: name,
+            sprite,
+            walkingAnimationMapping: 0,
+            startPosition: position,
+            charLayer: PLAYER_GE_LAYER,
+            container,
+            speed: PLAYER_SPEED,
+            collides: true,
+            facingDirection: direction,
+         });
+
+         this.playersSprites.set(name, container);
+         this.nextPositions.set(name, position);
       }
-
-      const externalPlayerSprite = this.add.sprite(0, 0, 'player');
-      externalPlayerSprite.setPipeline('Light2D');
-      externalPlayerSprite.scale = SCALE_FACTOR;
-
-      const offsetX = (CHARACTER_WIDTH * SCALE_FACTOR - name.length * CHARACTER_LETTER_WIDTH) / 2;
-      const externalPlayerName = this.add.text(offsetX, -8, name, {
-         align: 'center',
-         fontSize: 6,
-         fontFamily: 'Orbitron',
-         resolution: 4,
-         shadow: {
-            offsetX: 0,
-            offsetY: 0,
-            color: '#000000',
-            blur: 2,
-            stroke: true,
-            fill: true,
-         },
-      });
-      externalPlayerName.scale = SCALE_FACTOR;
-      const externalPlayerContainer = this.add.container(0, 0, [
-         externalPlayerName,
-         externalPlayerSprite,
-      ]);
-
-      this.minimap?.ignore(externalPlayerContainer);
-
-      this.gridEngine.addCharacter({
-         id: name,
-         sprite: externalPlayerSprite,
-         walkingAnimationMapping: 0,
-         startPosition: position,
-         charLayer: PLAYER_GE_LAYER,
-         container: externalPlayerContainer,
-         speed: PLAYER_SPEED,
-         collides: true,
-         facingDirection: direction,
-      });
-
-      this.playersSprites.set(name, externalPlayerContainer);
-      this.nextPositions.set(name, position);
    }
 
    public deleteExternalPlayer(name: string): void {
@@ -457,7 +402,10 @@ export abstract class Scene extends Phaser.Scene {
       }
 
       const sprite = this.playersSprites.get(name);
-      sprite?.destroy();
+
+      if (sprite !== undefined) {
+         sprite.destroy();
+      }
    }
 
    public setNextX(name: string, x: number): void {

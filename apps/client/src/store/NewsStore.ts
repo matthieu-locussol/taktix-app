@@ -17,6 +17,8 @@ export class NewsStore {
 
    get changelog() {
       return `
+         <b>January, 31th 2024</b><br />
+         - Animated tiles<br />
          <b>January, 30th 2024</b><br />
          - Improved HUD<br />
          - Added a minimap toggle<br />
