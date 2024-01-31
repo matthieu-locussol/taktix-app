@@ -50,8 +50,6 @@ export abstract class Scene extends Phaser.Scene {
 
    public marker: Phaser.GameObjects.Graphics | null = null;
 
-   public camera: Phaser.Cameras.Scene2D.Camera | null = null;
-
    public minimap: Phaser.Cameras.Scene2D.Camera | null = null;
 
    constructor(config: Room | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
@@ -261,7 +259,7 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public createPlayer(nickname: string): void {
-      const character = makeCharacter(this, nickname);
+      const character = makeCharacter(this, nickname, true);
 
       if (character !== null) {
          const { sprite, container } = character;
@@ -371,7 +369,7 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public addExternalPlayer(name: string, position: Position, direction: Direction): void {
-      const character = makeCharacter(this, name);
+      const character = makeCharacter(this, name, false);
 
       if (character !== null) {
          const { sprite, container } = character;

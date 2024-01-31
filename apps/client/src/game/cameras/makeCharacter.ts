@@ -1,16 +1,22 @@
-import { CHARACTER_LETTER_WIDTH, CHARACTER_WIDTH, SCALE_FACTOR, type Scene } from '../Scene';
+import {
+   CHARACTER_LETTER_WIDTH,
+   CHARACTER_WIDTH,
+   SCALE_FACTOR,
+   TILE_SIZE,
+   type Scene,
+} from '../Scene';
 
-export const makeCharacter = (scene: Scene, name: string) => {
+export const makeCharacter = (scene: Scene, name: string, isPlayer: boolean) => {
    if (scene.gridEngine.getAllCharacters().find((playerName) => playerName === name)) {
       return null;
    }
 
-   const externalPlayerSprite = scene.add.sprite(0, 0, 'player');
-   externalPlayerSprite.setPipeline('Light2D');
-   externalPlayerSprite.scale = SCALE_FACTOR;
+   const characterSprite = scene.add.sprite(0, 0, 'player');
+   characterSprite.setPipeline('Light2D');
+   characterSprite.scale = SCALE_FACTOR;
 
    const offsetX = (CHARACTER_WIDTH * SCALE_FACTOR - name.length * CHARACTER_LETTER_WIDTH) / 2;
-   const externalPlayerName = scene.add.text(offsetX, -CHARACTER_LETTER_WIDTH, name, {
+   const characterName = scene.add.text(offsetX, -CHARACTER_LETTER_WIDTH, name, {
       align: 'center',
       fontSize: 6,
       fontFamily: 'Orbitron',
@@ -24,16 +30,27 @@ export const makeCharacter = (scene: Scene, name: string) => {
          fill: true,
       },
    });
-   externalPlayerName.scale = SCALE_FACTOR;
+   characterName.scale = SCALE_FACTOR;
+
+   const characterSquare = scene.add
+      .graphics({
+         fillStyle: { color: isPlayer ? 0xff0000 : 0x00ff00 },
+      })
+      .fillRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR)
+      .setDepth(999);
 
    const externalPlayerContainer = scene.add.container(0, 0, [
-      externalPlayerName,
-      externalPlayerSprite,
+      characterName,
+      characterSprite,
+      characterSquare,
    ]);
 
    if (scene.minimap !== null) {
-      scene.minimap.ignore(externalPlayerContainer);
+      scene.minimap.ignore(characterName);
+      scene.minimap.ignore(characterSprite);
    }
 
-   return { sprite: externalPlayerSprite, container: externalPlayerContainer };
+   scene.cameras.main.ignore(characterSquare);
+
+   return { sprite: characterSprite, container: externalPlayerContainer };
 };
