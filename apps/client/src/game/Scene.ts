@@ -151,7 +151,6 @@ export abstract class Scene extends Phaser.Scene {
       this.marker = this.add.graphics();
       this.marker.lineStyle(2, 0xffffff, 0.8);
       this.marker.strokeRoundedRect(0, 0, TILE_SIZE * SCALE_FACTOR, TILE_SIZE * SCALE_FACTOR, 4);
-      this.marker.setDepth(3);
       this.marker.setVisible(false);
       this.marker.postFX.addGlow(0xffffff, 1, 0, false, 1, 2);
       this.marker.postFX.addBloom(0xffffff);
@@ -257,7 +256,6 @@ export abstract class Scene extends Phaser.Scene {
 
    public createPlayer(nickname: string): void {
       const playerSprite = this.add.sprite(0, 0, 'player');
-      playerSprite.setDepth(3);
       playerSprite.scale = SCALE_FACTOR;
       playerSprite.setPipeline('Light2D');
 
@@ -340,7 +338,6 @@ export abstract class Scene extends Phaser.Scene {
          const layer = this.tilemap.createLayer(i, tilesets, 0, 0);
 
          if (layer !== null) {
-            layer.setDepth(i);
             layer.scale = SCALE_FACTOR;
             layer.setPipeline('Light2D');
          }
@@ -404,7 +401,6 @@ export abstract class Scene extends Phaser.Scene {
       }
 
       const externalPlayerSprite = this.add.sprite(0, 0, 'player');
-      externalPlayerSprite.setDepth(3);
       externalPlayerSprite.setPipeline('Light2D');
       externalPlayerSprite.scale = SCALE_FACTOR;
 
