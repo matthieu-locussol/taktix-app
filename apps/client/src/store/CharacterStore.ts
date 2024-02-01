@@ -1,9 +1,10 @@
 import type { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
+import { roomsNames } from 'shared/src/data/roomsNames';
 import { Player } from 'shared/src/types/Player';
 
 export class CharacterStore {
-   public map: string = '';
+   private _map: string = '';
 
    public name: string = '';
 
@@ -16,7 +17,7 @@ export class CharacterStore {
    }
 
    public setMap(map: string) {
-      this.map = map;
+      this._map = map;
    }
 
    public setName(name: string) {
@@ -37,5 +38,9 @@ export class CharacterStore {
 
    public setPlayers(players: Player[]) {
       this.players = players;
+   }
+
+   get map() {
+      return roomsNames[this._map as keyof typeof roomsNames];
    }
 }
