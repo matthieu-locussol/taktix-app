@@ -12,10 +12,10 @@ import { _assert } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { AnimatedTiles } from '../plugins/AnimatedTiles';
 import { store } from '../store';
-import { makeCharacter } from './cameras/makeCharacter';
-import { makeMarker } from './cameras/makeMarker';
-import { makeMinimap } from './cameras/makeMinimap';
-import { makeLight } from './lights/makeLight';
+import { makeCharacter } from './utils/makeCharacter';
+import { makeLight } from './utils/makeLight';
+import { makeMarker } from './utils/makeMarker';
+import { makeMinimap } from './utils/makeMinimap';
 
 export const TILE_SIZE = 16;
 export const SCALE_FACTOR = 2;
