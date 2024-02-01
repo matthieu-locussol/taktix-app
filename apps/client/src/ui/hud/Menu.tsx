@@ -2,10 +2,12 @@ import SkillsIcon from '@mui/icons-material/AutoFixHighTwoTone';
 import AuctionHouseIcon from '@mui/icons-material/BalanceTwoTone';
 import InventoryIcon from '@mui/icons-material/BusinessCenterTwoTone';
 import FriendsIcon from '@mui/icons-material/Diversity1TwoTone';
+import MinimapOffIcon from '@mui/icons-material/ExploreOffTwoTone';
 import MinimapIcon from '@mui/icons-material/ExploreTwoTone';
 import StatsIcon from '@mui/icons-material/FaceRetouchingNaturalTwoTone';
 import ForgeIcon from '@mui/icons-material/GavelTwoTone';
-import TransparentIcon from '@mui/icons-material/OpacityTwoTone';
+import TransparentOffIcon from '@mui/icons-material/InvertColorsOffTwoTone';
+import TransparentIcon from '@mui/icons-material/InvertColorsTwoTone';
 import MapIcon from '@mui/icons-material/PublicTwoTone';
 import SettingsIcon from '@mui/icons-material/SettingsTwoTone';
 import { darken, styled } from '@mui/material';
@@ -31,12 +33,12 @@ export const Menu = observer(() => {
          {/* Bottom line */}
          <ShortcutIcon
             active={hudStore.isMinimapVisible}
-            icon={<MinimapIcon />}
+            icon={hudStore.isMinimapVisible ? <MinimapOffIcon /> : <MinimapIcon />}
             onClick={() => hudStore.toggleMinimap()}
          />
          <ShortcutIcon
             active={hudStore.isTransparencyEnabled}
-            icon={<TransparentIcon />}
+            icon={hudStore.isTransparencyEnabled ? <TransparentOffIcon /> : <TransparentIcon />}
             onClick={() => hudStore.toggleTransparency()}
          />
       </Root>
