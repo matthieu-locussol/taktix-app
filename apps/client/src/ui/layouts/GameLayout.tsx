@@ -62,5 +62,5 @@ const StyledBox = styled(Box)(({ theme }) => ({
    border: `1px solid ${theme.palette.paper.border}`,
    background: `${theme.palette.paper.background}88`,
    overflow: 'hidden',
-   height: '20vh',
+   height: '15vh',
 }));

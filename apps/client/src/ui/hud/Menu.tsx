@@ -1,6 +1,13 @@
-import FaceIcon from '@mui/icons-material/Face';
+import SkillsIcon from '@mui/icons-material/AutoFixHighTwoTone';
+import AuctionHouseIcon from '@mui/icons-material/BalanceTwoTone';
+import InventoryIcon from '@mui/icons-material/BusinessCenterTwoTone';
+import FriendsIcon from '@mui/icons-material/Diversity1TwoTone';
+import MinimapIcon from '@mui/icons-material/ExploreTwoTone';
+import StatsIcon from '@mui/icons-material/FaceRetouchingNaturalTwoTone';
+import ForgeIcon from '@mui/icons-material/GavelTwoTone';
 import TransparentIcon from '@mui/icons-material/OpacityTwoTone';
 import MapIcon from '@mui/icons-material/PublicTwoTone';
+import SettingsIcon from '@mui/icons-material/SettingsTwoTone';
 import { darken, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
@@ -13,18 +20,18 @@ export const Menu = observer(() => {
    return (
       <Root widthPercent={hudStore.menuWidth} heightPercent={hudStore.menuHeight}>
          {/* Top line */}
-         <ShortcutIcon icon={<FaceIcon />} />
-         <ShortcutIcon icon={<FaceIcon />} />
-         <ShortcutIcon icon={<FaceIcon />} />
-         <ShortcutIcon icon={<FaceIcon />} />
-         <ShortcutIcon icon={<FaceIcon />} />
-         <ShortcutIcon icon={<FaceIcon />} />
-         <ShortcutIcon icon={<FaceIcon />} />
-         <ShortcutIcon icon={<FaceIcon />} />
+         <ShortcutIcon icon={<StatsIcon />} />
+         <ShortcutIcon icon={<SkillsIcon />} />
+         <ShortcutIcon icon={<InventoryIcon />} />
+         <ShortcutIcon icon={<MapIcon />} />
+         <ShortcutIcon icon={<ForgeIcon />} />
+         <ShortcutIcon icon={<AuctionHouseIcon />} />
+         <ShortcutIcon icon={<FriendsIcon />} />
+         <ShortcutIcon icon={<SettingsIcon />} />
          {/* Bottom line */}
          <ShortcutIcon
             active={hudStore.isMinimapVisible}
-            icon={<MapIcon />}
+            icon={<MinimapIcon />}
             onClick={() => hudStore.toggleMinimap()}
          />
          <ShortcutIcon
