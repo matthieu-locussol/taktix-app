@@ -22,7 +22,6 @@ export const Character = observer(() => {
                variant="body2"
                fontSize="1vw"
                lineHeight="2.5vh"
-               gutterBottom
             >
                <b>{characterStore.name}</b> - Level 1
             </Typography>
