@@ -25,7 +25,7 @@ export const ShortcutIcon = forwardRef<HTMLButtonElement, ShortcutIconProps>(
                },
                [`& .${svgIconClasses.root}`]: {
                   color: active ? palette.primary.light : palette.chalk.main,
-                  fontSize: '2vw',
+                  fontSize: '1.75vw',
                },
             })}
             {...rest}

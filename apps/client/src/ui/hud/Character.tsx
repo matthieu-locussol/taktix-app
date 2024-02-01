@@ -24,9 +24,7 @@ export const Character = observer(() => {
                lineHeight="2.5vh"
                gutterBottom
             >
-               <b>Jeckhys</b>
-               <br />
-               Warrior - Level 1
+               <b>{characterStore.name}</b> - Level 1
             </Typography>
             <Typography
                align="right"
@@ -35,8 +33,7 @@ export const Character = observer(() => {
                fontSize="1vw"
                lineHeight="2.5vh"
             >
-               {characterStore.map}
-               <br />[{characterStore.position.x}, {characterStore.position.y}]
+               [{characterStore.position.x}, {characterStore.position.y}] - {characterStore.map}
             </Typography>
          </Informations>
          <LifeProgressBar variant="determinate" value={35} />
@@ -78,8 +75,8 @@ const Image = styled('img')(({ theme }) => ({
    top: 8,
    left: 8,
    borderRadius: 8,
-   width: 'min(4.5vw, 8vh)',
-   height: 'min(4.5vw, 8vh)',
+   width: 'min(2.5vw, 5.5vh)',
+   height: 'min(2.5vw, 5.5vh)',
 }));
 
 const Informations = styled(Box)(() => ({

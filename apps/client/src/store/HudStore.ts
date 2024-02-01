@@ -12,10 +12,10 @@ export class HudStore {
    public chatboxWidth: number = 40;
 
    /** Height in vh */
-   public chatboxHeight: number = 20;
+   public chatboxHeight: number = 15;
 
    /** Height in pixels */
-   public chatboxInputHeight: number = 20;
+   public chatboxInputHeight: number = 15;
 
    public isChatboxVisible: boolean = true;
 
@@ -23,7 +23,7 @@ export class HudStore {
    public characterWidth: number = 20;
 
    /** Height in vh */
-   public characterHeight: number = 20;
+   public characterHeight: number = 15;
 
    public isCharacterVisible: boolean = true;
 
@@ -31,7 +31,7 @@ export class HudStore {
    public menuWidth: number = 40;
 
    /** Height in vh */
-   public menuHeight: number = 20;
+   public menuHeight: number = 15;
 
    public isMenuVisible: boolean = true;
 
