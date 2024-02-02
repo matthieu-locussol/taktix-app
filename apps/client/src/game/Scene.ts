@@ -13,6 +13,7 @@ import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { AnimatedTiles } from '../plugins/AnimatedTiles';
 import { store } from '../store';
 import { makeCharacter } from './utils/makeCharacter';
+import { makeGrid } from './utils/makeGrid';
 import { makeLight } from './utils/makeLight';
 import { makeMarker } from './utils/makeMarker';
 import { makeMinimap } from './utils/makeMinimap';
@@ -54,6 +55,8 @@ export abstract class Scene extends Phaser.Scene {
    public playersWrappers = new Map<string, PlayerWrappers>();
 
    public nextPositions = new Map<string, Position>();
+
+   public grid: Phaser.GameObjects.Grid | null = null;
 
    public marker: Phaser.GameObjects.Graphics | null = null;
 
@@ -124,6 +127,7 @@ export abstract class Scene extends Phaser.Scene {
 
       this.initializeLights();
       this.initializeHandlers();
+      this.initializeGrid();
       this.initializeMarker();
       this.initializeSceneState();
    }
@@ -162,6 +166,10 @@ export abstract class Scene extends Phaser.Scene {
       );
    }
 
+   private initializeGrid(): void {
+      this.grid = makeGrid(this);
+   }
+
    private initializeMarker(): void {
       this.marker = makeMarker(this);
    }
@@ -169,8 +177,15 @@ export abstract class Scene extends Phaser.Scene {
    public initializeSceneState(): void {
       const { hudStore } = store;
 
+      this.setGridVisibility(hudStore.isGridVisible);
       this.setMinimapVisibility(hudStore.isMinimapVisible);
       this.setTransparency(hudStore.isTransparencyEnabled);
+   }
+
+   public setGridVisibility(isVisible: boolean): void {
+      if (this.grid !== null) {
+         this.grid.setVisible(isVisible);
+      }
    }
 
    public setMinimapVisibility(isVisible: boolean): void {
@@ -296,7 +311,7 @@ export abstract class Scene extends Phaser.Scene {
             }
          });
 
-         this.cameras.main.startFollow(sprite, false, 0.3, 0.3, -sprite.width, -sprite.height);
+         this.cameras.main.startFollow(sprite, true, 0.3, 0.3, -sprite.width, -sprite.height);
 
          if (this.minimap !== null) {
             this.minimap.startFollow(sprite, false, 0.3, 0.3, -sprite.width, -sprite.height);

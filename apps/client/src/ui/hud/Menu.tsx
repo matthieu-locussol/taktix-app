@@ -6,6 +6,8 @@ import MinimapOffIcon from '@mui/icons-material/ExploreOffTwoTone';
 import MinimapIcon from '@mui/icons-material/ExploreTwoTone';
 import StatsIcon from '@mui/icons-material/FaceRetouchingNaturalTwoTone';
 import ForgeIcon from '@mui/icons-material/GavelTwoTone';
+import GridOffIcon from '@mui/icons-material/GridOffTwoTone';
+import GridIcon from '@mui/icons-material/GridOnTwoTone';
 import TransparentOffIcon from '@mui/icons-material/InvertColorsOffTwoTone';
 import TransparentIcon from '@mui/icons-material/InvertColorsTwoTone';
 import MapIcon from '@mui/icons-material/PublicTwoTone';
@@ -40,6 +42,11 @@ export const Menu = observer(() => {
             active={hudStore.isTransparencyEnabled}
             icon={hudStore.isTransparencyEnabled ? <TransparentOffIcon /> : <TransparentIcon />}
             onClick={() => hudStore.toggleTransparency()}
+         />
+         <ShortcutIcon
+            active={hudStore.isGridVisible}
+            icon={hudStore.isGridVisible ? <GridOffIcon /> : <GridIcon />}
+            onClick={() => hudStore.toggleGrid()}
          />
       </Root>
    );

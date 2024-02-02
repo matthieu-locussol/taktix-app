@@ -20,9 +20,9 @@ export const makeMinimap = (scene: Scene) => {
             )
             .createGeometryMask(),
       )
-      .setRoundPixels(true);
+      .setRoundPixels(false);
 
-   minimap.postFX.addGlow(0x374151, 2, 1);
+   minimap.postFX.addGlow(0x374151, 1, 1);
 
    return minimap;
 };
