@@ -31,3 +31,15 @@ model Character {
 
   @@index([userId], name: "userId")
 }
+
+model Changelog {
+  id   Int      @id @default(autoincrement())
+  date DateTime @default(now())
+  text String
+}
+
+model Maintenance {
+  id   Int      @id @default(autoincrement())
+  date DateTime @default(now())
+  done Boolean  @default(false)
+}

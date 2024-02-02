@@ -9,6 +9,7 @@ import { createServer } from 'http';
 import { AuthRoom } from './rooms/AuthRoom';
 import { ChatRoom } from './rooms/ChatRoom';
 import { defineMapsRooms } from './rooms/utils/defineMapsRooms';
+import { changelogRouter } from './routers/changelogRouter';
 import { registerRouter } from './routers/registerRouter';
 import { statusRouter } from './routers/statusRouter';
 
@@ -23,6 +24,7 @@ app.use(json());
 app.use('/monitor', auth, monitor());
 app.use('/playground', auth, playground);
 
+app.get('/changelog', changelogRouter);
 app.get('/status', statusRouter);
 app.post('/register', registerRouter);
 
