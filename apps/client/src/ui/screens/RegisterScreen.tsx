@@ -16,11 +16,12 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
 import { getVersion } from '../../utils/version';
 import { ServerStatus } from '../components/ServerStatus';
+import { Changelog } from '../hud/components/Changelog';
 import { NEWS_HEIGHT } from './LoginScreen';
 
 export const RegisterScreen = observer(() => {
    const store = useStore();
-   const { loginStore, newsStore, registerStore, screenStore, updaterStore } = store;
+   const { loginStore, registerStore, screenStore, updaterStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -83,16 +84,7 @@ export const RegisterScreen = observer(() => {
                      {getVersion()}
                   </Typography>
                </Box>
-               <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  dangerouslySetInnerHTML={{
-                     __html: newsStore.changelog,
-                  }}
-                  sx={{
-                     overflowY: 'auto',
-                  }}
-               />
+               <Changelog />
                <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />

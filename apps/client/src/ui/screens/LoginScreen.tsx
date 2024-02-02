@@ -19,19 +19,13 @@ import { AuthRoomUserData } from 'shared';
 import { useStore } from '../../store';
 import { getVersion } from '../../utils/version';
 import { ServerStatus } from '../components/ServerStatus';
+import { Changelog } from '../hud/components/Changelog';
 
 export const NEWS_HEIGHT = 324;
 
 export const LoginScreen = observer(() => {
    const store = useStore();
-   const {
-      characterSelectionStore,
-      colyseusStore,
-      loginStore,
-      newsStore,
-      screenStore,
-      updaterStore,
-   } = store;
+   const { characterSelectionStore, colyseusStore, loginStore, screenStore, updaterStore } = store;
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -98,16 +92,7 @@ export const LoginScreen = observer(() => {
                      {getVersion()}
                   </Typography>
                </Box>
-               <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  dangerouslySetInnerHTML={{
-                     __html: newsStore.changelog,
-                  }}
-                  sx={{
-                     overflowY: 'auto',
-                  }}
-               />
+               <Changelog />
                <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />

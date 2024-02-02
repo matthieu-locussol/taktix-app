@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
+import { StatusResults } from 'shared/src/routers/StatusResults';
 import { useStore } from '../../store';
 
 const REFRESH_INTERVAL = 30_000;
@@ -17,7 +18,7 @@ export const ServerStatus = observer((props: BoxProps) => {
             const results = await fetch(`${import.meta.env.VITE_SERVER_URL}/status`, {
                method: 'GET',
             });
-            const json: { status: string } = await results.json();
+            const json: StatusResults = await results.json();
             newsStore.setServerOnline(json.status === 'ok');
          } catch (e) {
             newsStore.setServerOnline(false);
