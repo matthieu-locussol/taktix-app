@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
+import { channelsNames } from 'shared/src/data/channelsNames';
 import { useStore } from '../../store';
 import { SmallButton } from './components/SmallButton';
 
@@ -49,7 +50,7 @@ export const Chatbox = observer(() => {
                         lineHeight="2vh"
                         color={theme.palette.channels[channel]}
                      >
-                        {content}
+                        [{channelsNames[channel]}] {content}
                      </Typography>
                   ) : (
                      <Typography
@@ -58,7 +59,7 @@ export const Chatbox = observer(() => {
                         lineHeight="2vh"
                         color={theme.palette.channels[channel]}
                      >
-                        {author}: {content}
+                        [{channelsNames[channel]}] <b>{author}</b>: {content}
                      </Typography>
                   ),
                )}

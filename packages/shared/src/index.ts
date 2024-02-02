@@ -1,4 +1,5 @@
 export * from './config';
+export * from './data/channelsNames';
 export * from './data/roomsNames';
 export * from './data/teleportationSpots';
 export * from './rooms/AuthRoom';
