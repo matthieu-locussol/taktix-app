@@ -22,4 +22,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
    '&:hover': {
       background: darken(`${theme.palette.paper.background}C6`, 0.8),
    },
+   ':disabled': {
+      background: darken(`${theme.palette.paper.background}C6`, 0.2),
+      color: theme.palette.primary.light,
+   },
 }));
