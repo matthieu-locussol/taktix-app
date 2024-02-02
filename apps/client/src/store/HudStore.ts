@@ -4,6 +4,8 @@ import { Store } from './Store';
 export class HudStore {
    private _store: Store;
 
+   public isGridVisible: boolean = false;
+
    public isMinimapVisible: boolean = true;
 
    public isTransparencyEnabled: boolean = false;
@@ -39,6 +41,13 @@ export class HudStore {
       makeAutoObservable(this);
 
       this._store = store;
+   }
+
+   public async toggleGrid(): Promise<void> {
+      this.isGridVisible = !this.isGridVisible;
+
+      const scene = await this._store.gameStore.getCurrentScene();
+      scene.setGridVisibility(this.isGridVisible);
    }
 
    public async toggleMinimap(): Promise<void> {
