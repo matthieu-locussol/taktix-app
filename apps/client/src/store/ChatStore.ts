@@ -14,6 +14,15 @@ export class ChatStore {
 
    public currentChannel: Channel = Channel.GENERAL;
 
+   public displayedChannels: Channel[] = [
+      Channel.GENERAL,
+      Channel.LOCAL,
+      Channel.SERVER,
+      Channel.ERROR,
+   ];
+
+   public isChannelSelectorOpened: boolean = false;
+
    constructor() {
       makeAutoObservable(this);
    }
@@ -43,5 +52,33 @@ export class ChatStore {
 
    public isSystemChannel(channel: Channel): boolean {
       return channel === Channel.SERVER || channel === Channel.ERROR;
+   }
+
+   public isChannelDisplayed(channel: Channel): boolean {
+      return this.displayedChannels.includes(channel);
+   }
+
+   public toggleChannelDisplay(channel: Channel) {
+      if (this.isSystemChannel(channel)) {
+         return;
+      }
+
+      if (this.isChannelDisplayed(channel)) {
+         this.displayedChannels = this.displayedChannels.filter((c) => c !== channel);
+      } else {
+         this.displayedChannels.push(channel);
+      }
+   }
+
+   public openChannelSelectorModal() {
+      this.isChannelSelectorOpened = true;
+   }
+
+   public closeChannelSelectorModal() {
+      this.isChannelSelectorOpened = false;
+   }
+
+   public get filteredMessages(): ChatMessage[] {
+      return this.messages.filter((message) => this.displayedChannels.includes(message.channel));
    }
 }
