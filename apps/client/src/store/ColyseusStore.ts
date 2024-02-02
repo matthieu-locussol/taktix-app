@@ -5,6 +5,7 @@ import { ChatRoomResponse, isChatRoomResponse } from 'shared/src/rooms/ChatRoom'
 import { MapRoomResponse, isMapRoomResponse } from 'shared/src/rooms/MapRoom';
 import { MapState } from 'shared/src/states/MapState';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
+import { Room as TRoom } from 'shared/src/types/Room';
 import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { match } from 'ts-pattern';
@@ -191,7 +192,7 @@ export class ColyseusStore {
             this._store.characterStore.setName(
                this._store.characterSelectionStore.selectedCharacter,
             );
-            this._store.characterStore.setMap(map);
+            this._store.characterStore.setMap(map as TRoom);
             this._store.characterStore.setPosition({ x: posX, y: posY });
             this._store.characterStore.setPlayers([]);
 
@@ -341,7 +342,7 @@ export class ColyseusStore {
 
       this.setChangingMap(false);
 
-      this._store.characterStore.setMap(map);
+      this._store.characterStore.setMap(map as TRoom);
       this._store.gameStore.enableKeyboard(true);
       this._store.discordStore.updateDiscordRichPresence();
    }

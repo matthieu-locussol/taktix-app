@@ -1,4 +1,5 @@
 import PlusIcon from '@mui/icons-material/AddRounded';
+import DotIcon from '@mui/icons-material/FiberManualRecord';
 import MinusIcon from '@mui/icons-material/RemoveRounded';
 import ChannelIcon from '@mui/icons-material/SettingsRounded';
 import { darken, styled, useTheme } from '@mui/material';
@@ -7,8 +8,10 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 import { channelsNames } from 'shared/src/data/channelsNames';
+import { Channel } from 'shared/src/types/Channel';
 import { useStore } from '../../store';
 import { ChannelSelector } from './components/ChannelSelector';
+import { ChannelsSelector } from './components/ChannelsSelector';
 import { SmallButton } from './components/SmallButton';
 
 export const Chatbox = observer(() => {
@@ -17,6 +20,7 @@ export const Chatbox = observer(() => {
    const chatboxRef = useRef<HTMLDivElement>(null);
    const { chatStore, colyseusStore, gameStore, hudStore, loadingScreenStore } = useStore();
    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+   const [anchorElChannel, setAnchorElChannel] = useState<null | SVGSVGElement>(null);
 
    useEffect(() => {
       if (chatboxRef.current !== null) {
@@ -66,16 +70,41 @@ export const Chatbox = observer(() => {
                   ),
                )}
             </Chat>
-            <ChatInput
-               ref={inputRef}
-               value={chatStore.input}
-               onFocus={() => gameStore.enableKeyboard(false)}
-               onBlur={() => gameStore.enableKeyboard(true)}
-               onChange={(e) => chatStore.setInput(e.target.value)}
-               maxLength={160}
-               widthPercent={hudStore.chatboxWidth}
-               inputHeight={hudStore.chatboxInputHeight}
-            />
+            <Box>
+               <ChatInput
+                  ref={inputRef}
+                  value={chatStore.input}
+                  onFocus={() => gameStore.enableKeyboard(false)}
+                  onBlur={() => gameStore.enableKeyboard(true)}
+                  onChange={(e) => chatStore.setInput(e.target.value)}
+                  maxLength={160}
+                  widthPercent={hudStore.chatboxWidth}
+                  inputHeight={hudStore.chatboxInputHeight}
+                  sx={{ paddingLeft: '1.5vw' }}
+               />
+               <ChannelSelectorButton
+                  currentChannel={chatStore.currentChannel}
+                  chatboxInputHeight={hudStore.chatboxInputHeight}
+                  id="open-channel-selector"
+                  aria-controls={
+                     chatStore.isChannelSelectorOpened ? 'open-channel-selector' : undefined
+                  }
+                  aria-haspopup="true"
+                  aria-expanded={chatStore.isChannelSelectorOpened ? 'true' : undefined}
+                  onClick={(e) => {
+                     setAnchorElChannel(e.currentTarget);
+                     chatStore.openChannelSelectorModal();
+                  }}
+               />
+               <ChannelSelector
+                  anchorEl={anchorElChannel}
+                  open={chatStore.isChannelSelectorOpened}
+                  handleClose={() => {
+                     setAnchorElChannel(null);
+                     chatStore.closeChannelSelectorModal();
+                  }}
+               />
+            </Box>
          </Wrapper>
          <ChatSettings heightPercent={hudStore.chatboxHeight}>
             <SmallButton
@@ -91,25 +120,25 @@ export const Chatbox = observer(() => {
                <MinusIcon fontSize="inherit" />
             </SmallButton>
             <SmallButton
-               id="open-channel-selector"
+               id="open-channels-selector"
                aria-controls={
-                  chatStore.isChannelSelectorOpened ? 'demo-customized-menu' : undefined
+                  chatStore.isChannelsSelectorOpened ? 'open-channels-selector' : undefined
                }
                aria-haspopup="true"
-               aria-expanded={chatStore.isChannelSelectorOpened ? 'true' : undefined}
+               aria-expanded={chatStore.isChannelsSelectorOpened ? 'true' : undefined}
                onClick={(e) => {
                   setAnchorEl(e.currentTarget);
-                  chatStore.openChannelSelectorModal();
+                  chatStore.openChannelsSelectorModal();
                }}
             >
                <ChannelIcon fontSize="inherit" />
             </SmallButton>
-            <ChannelSelector
+            <ChannelsSelector
                anchorEl={anchorEl}
-               open={chatStore.isChannelSelectorOpened}
+               open={chatStore.isChannelsSelectorOpened}
                handleClose={() => {
                   setAnchorEl(null);
-                  chatStore.closeChannelSelectorModal();
+                  chatStore.closeChannelsSelectorModal();
                }}
             />
          </ChatSettings>
@@ -175,19 +204,15 @@ const ChatInput = styled('input', {
    borderTop: `2px solid ${theme.palette.paper.border}`,
    outline: 'none',
    backgroundColor: `${theme.palette.chalk.main}C6`,
-   '&:hover': {
-      backgroundColor: theme.palette.chalk.main,
-   },
-   '&:focus': {
-      backgroundColor: theme.palette.chalk.main,
-   },
    borderBottomLeftRadius: 8,
    borderBottomRightRadius: 8,
-   width: `calc(${widthPercent}vw - 1vw - 18px - min(1.8vw, 3vh) - 0.5vw)`,
+   width: `calc(${widthPercent}vw - 1vw - 18px - min(1.8vw, 3vh) - 0.5vw - 1vw)`,
    height: `${inputHeight}px`,
 }));
 
-const ChatSettings = styled(Box)<ChatSettingsProps>(({ heightPercent }) => ({
+const ChatSettings = styled(Box, {
+   shouldForwardProp: (prop) => prop !== 'heightPercent',
+})<ChatSettingsProps>(({ heightPercent }) => ({
    position: 'absolute',
    top: 0,
    right: 0,
@@ -198,4 +223,23 @@ const ChatSettings = styled(Box)<ChatSettingsProps>(({ heightPercent }) => ({
    flexGrow: 1,
    maxHeight: heightPercent ? `calc(15vh - 9px - 0.875vh)` : 'calc(15vh - 8px)',
    marginTop: 'auto',
+}));
+
+interface ChannelSelectorButtonProps {
+   currentChannel: Channel;
+   chatboxInputHeight: number;
+}
+
+const ChannelSelectorButton = styled(DotIcon, {
+   shouldForwardProp: (prop) => prop !== 'currentChannel' && prop !== 'chatboxInputHeight',
+})<ChannelSelectorButtonProps>(({ chatboxInputHeight, currentChannel, theme }) => ({
+   color: `${theme.palette.channels[currentChannel]} !important`,
+   position: 'absolute',
+   left: '0.25vw',
+   bottom: '0.25vw',
+   cursor: 'pointer',
+   fontSize: `calc(min(0.5vw, 0.75vh) + ${chatboxInputHeight}px)`,
+   '&:hover': {
+      color: `${theme.palette.channels[currentChannel]}C6 !important`,
+   },
 }));

@@ -21,7 +21,7 @@ interface CustomPalette {
       [Channel.SERVER]: string;
       [Channel.ERROR]: string;
       [Channel.GENERAL]: string;
-      [Channel.LOCAL]: string;
+      [Channel.TRADE]: string;
    };
 }
 
