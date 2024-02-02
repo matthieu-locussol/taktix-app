@@ -19,7 +19,7 @@ export const Chatbox = observer(() => {
       if (chatboxRef.current !== null) {
          chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
       }
-   }, [chatStore.messages.length]);
+   }, [chatStore.messages.length, hudStore.chatboxHeight]);
 
    const sendMessage = (event: React.FormEvent<HTMLDivElement>) => {
       event.preventDefault();
@@ -74,11 +74,17 @@ export const Chatbox = observer(() => {
                inputHeight={hudStore.chatboxInputHeight}
             />
          </Wrapper>
-         <ChatSettings>
-            <SmallButton>
+         <ChatSettings heightPercent={hudStore.chatboxHeight}>
+            <SmallButton
+               disabled={!hudStore.canIncreaseChatboxHeight}
+               onClick={() => hudStore.increaseChatboxHeight()}
+            >
                <PlusIcon fontSize="inherit" />
             </SmallButton>
-            <SmallButton>
+            <SmallButton
+               disabled={!hudStore.canDecreaseChatboxHeight}
+               onClick={() => hudStore.decreaseChatboxHeight()}
+            >
                <MinusIcon fontSize="inherit" />
             </SmallButton>
             <SmallButton>
@@ -99,10 +105,13 @@ interface ChatStyleProps {
    inputHeight: number;
 }
 
+interface ChatSettingsProps {
+   heightPercent: number;
+}
+
 const Root = styled(Box, { shouldForwardProp: (prop) => prop !== 'widthPercent' })<StyleProps>(
    ({ widthPercent }) => ({
-      position: 'absolute',
-      top: 8,
+      position: 'fixed',
       left: 8,
       bottom: 8,
       width: `calc(${widthPercent}vw - 16px)`,
@@ -156,7 +165,7 @@ const ChatInput = styled('input', {
    height: `${inputHeight}px`,
 }));
 
-const ChatSettings = styled(Box)({
+const ChatSettings = styled(Box)<ChatSettingsProps>(({ heightPercent }) => ({
    position: 'absolute',
    top: 0,
    right: 0,
@@ -165,4 +174,6 @@ const ChatSettings = styled(Box)({
    flexDirection: 'column',
    justifyContent: 'space-between',
    flexGrow: 1,
-});
+   maxHeight: heightPercent ? `calc(15vh - 9px - 0.875vh)` : 'calc(15vh - 8px)',
+   marginTop: 'auto',
+}));

@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx';
 import { Store } from './Store';
 
+const CHATBOX_HEIGHT_STEPS = [15, 30, 100];
+
 export class HudStore {
    private _store: Store;
 
@@ -14,7 +16,7 @@ export class HudStore {
    public chatboxWidth: number = 40;
 
    /** Height in vh */
-   public chatboxHeight: number = 15;
+   public chatboxHeight: number = CHATBOX_HEIGHT_STEPS[0];
 
    /** Height in pixels */
    public chatboxInputHeight: number = 12;
@@ -70,6 +72,30 @@ export class HudStore {
 
    public setChatboxHeight(height: number): void {
       this.chatboxHeight = height;
+   }
+
+   public get canIncreaseChatboxHeight(): boolean {
+      return CHATBOX_HEIGHT_STEPS.indexOf(this.chatboxHeight) < CHATBOX_HEIGHT_STEPS.length - 1;
+   }
+
+   public increaseChatboxHeight(): void {
+      if (this.canIncreaseChatboxHeight) {
+         this.setChatboxHeight(
+            CHATBOX_HEIGHT_STEPS[CHATBOX_HEIGHT_STEPS.indexOf(this.chatboxHeight) + 1],
+         );
+      }
+   }
+
+   public get canDecreaseChatboxHeight(): boolean {
+      return CHATBOX_HEIGHT_STEPS.indexOf(this.chatboxHeight) > 0;
+   }
+
+   public decreaseChatboxHeight(): void {
+      if (this.canDecreaseChatboxHeight) {
+         this.setChatboxHeight(
+            CHATBOX_HEIGHT_STEPS[CHATBOX_HEIGHT_STEPS.indexOf(this.chatboxHeight) - 1],
+         );
+      }
    }
 
    public setChatboxInputHeight(height: number): void {
