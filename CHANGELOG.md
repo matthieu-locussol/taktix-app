@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.34.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.33.0...v1.34.0) (2024-02-02)
+
+
+### Features
+
+* added a channel selector & added a local channel ([c86c8b3](https://github.com/matthieu-locussol/taktix-app/commit/c86c8b30a91896df42cb71d18e342cb0c9fb44bc))
+* added a grid system ([a4b8b22](https://github.com/matthieu-locussol/taktix-app/commit/a4b8b2217bbe82e2e31b026a6cf21161f3b35773))
+* added another channel & the current channel selector ([2905980](https://github.com/matthieu-locussol/taktix-app/commit/2905980ecff8d4163a5c9383bffa3db13d176999))
+* added ChatSettings buttons ([8b1c728](https://github.com/matthieu-locussol/taktix-app/commit/8b1c7284b46e8d4cbccb9a53b2bbb6a49997b5e3))
+* changelogs are stored in database ([4578690](https://github.com/matthieu-locussol/taktix-app/commit/45786904575a95daa3f7b7a1cd9609d0f282e4e6))
+* channels names are displayed ([9a6080b](https://github.com/matthieu-locussol/taktix-app/commit/9a6080b00f9e81d2208092bbd107978c82fc1443))
+* custom map names ([ec7edc1](https://github.com/matthieu-locussol/taktix-app/commit/ec7edc1f3cd8a4e01adc4324f5e77d71a4a5b4aa))
+* extensible ChatBox height ([2e60bca](https://github.com/matthieu-locussol/taktix-app/commit/2e60bca7d384a676f61c35f544b3ab25c409307a))
+* updated menu icons & HUD height ([4156b41](https://github.com/matthieu-locussol/taktix-app/commit/4156b41f60f5c6dfc1676223e843b555f5253c78))
+
+
+### Bug Fixes
+
+* spacing text ([6643594](https://github.com/matthieu-locussol/taktix-app/commit/6643594af9c8f7bf610e08ed2e13ab84b0718d70))
+
 ## [1.33.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.32.0...v1.33.0) (2024-01-31)
 
 
