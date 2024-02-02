@@ -31,11 +31,11 @@ export class DiscordStore {
             timestamp: this.startTimestamp,
          });
       } else {
-         const { map, name /* level */ } = this._store.characterStore;
+         const { mapName, name /* level */ } = this._store.characterStore;
          const level = 1;
 
          setDiscordRichPresence({
-            details: `In: ${map}`,
+            details: `In: ${mapName}`,
             state: 'Playing',
             large_image: 'default',
             large_text: `Taktix - ${getVersion()}`,

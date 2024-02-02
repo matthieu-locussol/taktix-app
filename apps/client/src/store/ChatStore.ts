@@ -12,16 +12,18 @@ export class ChatStore {
 
    public messages: ChatMessage[] = [];
 
-   public currentChannel: Channel = Channel.GENERAL;
+   public currentChannel: Channel = Channel.TRADE;
 
    public displayedChannels: Channel[] = [
       Channel.GENERAL,
-      Channel.LOCAL,
+      Channel.TRADE,
       Channel.SERVER,
       Channel.ERROR,
    ];
 
    public isChannelSelectorOpened: boolean = false;
+
+   public isChannelsSelectorOpened: boolean = false;
 
    constructor() {
       makeAutoObservable(this);
@@ -78,7 +80,19 @@ export class ChatStore {
       this.isChannelSelectorOpened = false;
    }
 
+   public openChannelsSelectorModal() {
+      this.isChannelsSelectorOpened = true;
+   }
+
+   public closeChannelsSelectorModal() {
+      this.isChannelsSelectorOpened = false;
+   }
+
    public get filteredMessages(): ChatMessage[] {
       return this.messages.filter((message) => this.displayedChannels.includes(message.channel));
+   }
+
+   public setCurrentChannel(channel: Channel) {
+      this.currentChannel = channel;
    }
 }

@@ -41,7 +41,7 @@ export const appTheme = createTheme({
          [Channel.SERVER]: '#16a34a',
          [Channel.GENERAL]: '#f5f5f5',
          [Channel.ERROR]: '#dc2626',
-         [Channel.LOCAL]: '#0ea5e9',
+         [Channel.TRADE]: '#a16207',
       },
       mode: 'light',
    },

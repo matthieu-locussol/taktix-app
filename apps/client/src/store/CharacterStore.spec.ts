@@ -14,8 +14,8 @@ describe('CharacterStore', () => {
 
    it('should set the map', () => {
       const store = new CharacterStore();
-      store.setMap('map1');
-      expect(store.map).toBe('map1');
+      store.setMap('CloudsRoom');
+      expect(store.map).toBe('CloudsRoom');
    });
 
    it('should set the name', () => {

@@ -32,7 +32,7 @@ export const Character = observer(() => {
                fontSize="1vw"
                lineHeight="2.5vh"
             >
-               [{characterStore.position.x}, {characterStore.position.y}] - {characterStore.map}
+               [{characterStore.position.x}, {characterStore.position.y}] - {characterStore.mapName}
             </Typography>
          </Informations>
          <LifeProgressBar variant="determinate" value={35} />
