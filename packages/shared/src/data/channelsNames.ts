@@ -4,4 +4,5 @@ export const channelsNames = {
    [Channel.SERVER]: 'Server',
    [Channel.ERROR]: 'Error',
    [Channel.GENERAL]: 'Global',
+   [Channel.LOCAL]: 'Local',
 };

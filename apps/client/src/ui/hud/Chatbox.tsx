@@ -5,9 +5,10 @@ import { darken, styled, useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { channelsNames } from 'shared/src/data/channelsNames';
 import { useStore } from '../../store';
+import { ChannelSelector } from './components/ChannelSelector';
 import { SmallButton } from './components/SmallButton';
 
 export const Chatbox = observer(() => {
@@ -15,12 +16,13 @@ export const Chatbox = observer(() => {
    const inputRef = useRef<HTMLInputElement>(null);
    const chatboxRef = useRef<HTMLDivElement>(null);
    const { chatStore, colyseusStore, gameStore, hudStore, loadingScreenStore } = useStore();
+   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
    useEffect(() => {
       if (chatboxRef.current !== null) {
          chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
       }
-   }, [chatStore.messages.length, hudStore.chatboxHeight]);
+   }, [chatStore.messages.length, chatStore.displayedChannels.length, hudStore.chatboxHeight]);
 
    const sendMessage = (event: React.FormEvent<HTMLDivElement>) => {
       event.preventDefault();
@@ -41,7 +43,7 @@ export const Chatbox = observer(() => {
                heightPercent={hudStore.chatboxHeight}
                inputHeight={hudStore.chatboxInputHeight}
             >
-               {chatStore.messages.map(({ author, content, channel }, idx) =>
+               {chatStore.filteredMessages.map(({ author, content, channel }, idx) =>
                   chatStore.isSystemChannel(channel) ? (
                      <Typography
                         key={idx}
@@ -88,9 +90,28 @@ export const Chatbox = observer(() => {
             >
                <MinusIcon fontSize="inherit" />
             </SmallButton>
-            <SmallButton>
+            <SmallButton
+               id="open-channel-selector"
+               aria-controls={
+                  chatStore.isChannelSelectorOpened ? 'demo-customized-menu' : undefined
+               }
+               aria-haspopup="true"
+               aria-expanded={chatStore.isChannelSelectorOpened ? 'true' : undefined}
+               onClick={(e) => {
+                  setAnchorEl(e.currentTarget);
+                  chatStore.openChannelSelectorModal();
+               }}
+            >
                <ChannelIcon fontSize="inherit" />
             </SmallButton>
+            <ChannelSelector
+               anchorEl={anchorEl}
+               open={chatStore.isChannelSelectorOpened}
+               handleClose={() => {
+                  setAnchorEl(null);
+                  chatStore.closeChannelSelectorModal();
+               }}
+            />
          </ChatSettings>
       </Root>
    );
@@ -173,7 +194,7 @@ const ChatSettings = styled(Box)<ChatSettingsProps>(({ heightPercent }) => ({
    bottom: 0,
    display: 'flex',
    flexDirection: 'column',
-   justifyContent: 'space-between',
+   justifyContent: 'space-evenly',
    flexGrow: 1,
    maxHeight: heightPercent ? `calc(15vh - 9px - 0.875vh)` : 'calc(15vh - 8px)',
    marginTop: 'auto',
