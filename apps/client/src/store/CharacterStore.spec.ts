@@ -6,7 +6,7 @@ describe('CharacterStore', () => {
       const store = new CharacterStore();
 
       expect(store).toBeDefined();
-      expect(store.map).toEqual('');
+      expect(store.map).toEqual('AAA_InitialRoom');
       expect(store.name).toEqual('');
       expect(store.position).toEqual({ x: 0, y: 0 });
       expect(store.players).toHaveLength(0);
