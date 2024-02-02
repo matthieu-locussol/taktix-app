@@ -17,7 +17,7 @@ export class HudStore {
    public chatboxHeight: number = 15;
 
    /** Height in pixels */
-   public chatboxInputHeight: number = 15;
+   public chatboxInputHeight: number = 12;
 
    public isChatboxVisible: boolean = true;
 
