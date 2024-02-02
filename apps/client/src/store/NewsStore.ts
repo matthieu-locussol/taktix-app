@@ -10,11 +10,9 @@ export class NewsStore {
 
    constructor() {
       makeAutoObservable(this);
-
-      this.fetchChangelogs();
    }
 
-   private async fetchChangelogs() {
+   public async fetchChangelogs() {
       runInAction(() => {
          this.loading = true;
       });

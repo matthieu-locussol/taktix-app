@@ -15,6 +15,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
 import { AuthRoomUserData } from 'shared';
 import { useStore } from '../../store';
 import { getVersion } from '../../utils/version';
@@ -25,7 +26,18 @@ export const NEWS_HEIGHT = 324;
 
 export const LoginScreen = observer(() => {
    const store = useStore();
-   const { characterSelectionStore, colyseusStore, loginStore, screenStore, updaterStore } = store;
+   const {
+      characterSelectionStore,
+      colyseusStore,
+      loginStore,
+      newsStore,
+      screenStore,
+      updaterStore,
+   } = store;
+
+   useEffect(() => {
+      newsStore.fetchChangelogs();
+   }, []);
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
