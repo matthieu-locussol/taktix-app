@@ -1,4 +1,4 @@
-import { useTheme } from '@mui/material';
+import { svgIconClasses, useTheme } from '@mui/material';
 import Checkbox, { checkboxClasses } from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Menu, { MenuProps } from '@mui/material/Menu';
@@ -20,6 +20,7 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
       <Menu
          id="open-channels-selector"
          slotProps={{
+            root: {},
             paper: {
                variant: 'outlined',
             },
@@ -27,6 +28,7 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
          MenuListProps={{
             'aria-labelledby': 'open-channels-selector',
             dense: true,
+            sx: { padding: 0 },
          }}
          onClose={handleClose}
          anchorOrigin={{
@@ -51,9 +53,13 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
                            checked={chatStore.isChannelDisplayed(channelId)}
                            onChange={() => chatStore.toggleChannelDisplay(channelId)}
                            sx={{
+                              p: 'min(0.5vw, 0.75vh)',
                               color: theme.palette.channels[channelId],
                               [`&.${checkboxClasses.checked}`]: {
                                  color: theme.palette.channels[channelId],
+                              },
+                              [`& .${svgIconClasses.root}`]: {
+                                 fontSize: 'min(1.5vw, 2.25vh)',
                               },
                            }}
                         />
@@ -63,6 +69,7 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
                         typography: {
                            color: theme.palette.channels[channelId],
                            lineHeight: '1vh',
+                           fontSize: 'min(1vw, 1.5vh)',
                         },
                      }}
                   />
