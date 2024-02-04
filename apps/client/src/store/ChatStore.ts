@@ -21,7 +21,7 @@ export class ChatStore {
       Channel.ERROR,
    ];
 
-   public isChannelSelectorOpened: boolean = false;
+   public isCurrentChannelSelectorOpened: boolean = false;
 
    public isChannelsSelectorOpened: boolean = false;
 
@@ -72,12 +72,12 @@ export class ChatStore {
       }
    }
 
-   public openChannelSelectorModal() {
-      this.isChannelSelectorOpened = true;
+   public openCurrentChannelSelectorModal() {
+      this.isCurrentChannelSelectorOpened = true;
    }
 
-   public closeChannelSelectorModal() {
-      this.isChannelSelectorOpened = false;
+   public closeCurrentChannelSelectorModal() {
+      this.isCurrentChannelSelectorOpened = false;
    }
 
    public openChannelsSelectorModal() {

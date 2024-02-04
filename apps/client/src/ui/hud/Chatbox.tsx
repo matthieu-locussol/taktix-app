@@ -10,8 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 import { channelsNames } from 'shared/src/data/channelsNames';
 import { Channel } from 'shared/src/types/Channel';
 import { useStore } from '../../store';
-import { ChannelSelector } from './components/ChannelSelector';
 import { ChannelsSelector } from './components/ChannelsSelector';
+import { CurrentChannelSelector } from './components/CurrentChannelSelector';
 import { SmallButton } from './components/SmallButton';
 
 export const Chatbox = observer(() => {
@@ -19,8 +19,8 @@ export const Chatbox = observer(() => {
    const inputRef = useRef<HTMLInputElement>(null);
    const chatboxRef = useRef<HTMLDivElement>(null);
    const { chatStore, colyseusStore, gameStore, hudStore, loadingScreenStore } = useStore();
-   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-   const [anchorElChannel, setAnchorElChannel] = useState<null | SVGSVGElement>(null);
+   const [channelSelectorAnchor, setChannelSelectorAnchor] = useState<null | HTMLElement>(null);
+   const [currentChannelAnchor, setCurrentChannelAnchor] = useState<null | SVGSVGElement>(null);
 
    useEffect(() => {
       if (chatboxRef.current !== null) {
@@ -80,28 +80,27 @@ export const Chatbox = observer(() => {
                   maxLength={160}
                   widthPercent={hudStore.chatboxWidth}
                   inputHeight={hudStore.chatboxInputHeight}
-                  sx={{ paddingLeft: '1.5vw' }}
                />
                <ChannelSelectorButton
                   currentChannel={chatStore.currentChannel}
                   chatboxInputHeight={hudStore.chatboxInputHeight}
                   id="open-channel-selector"
                   aria-controls={
-                     chatStore.isChannelSelectorOpened ? 'open-channel-selector' : undefined
+                     chatStore.isCurrentChannelSelectorOpened ? 'open-channel-selector' : undefined
                   }
                   aria-haspopup="true"
-                  aria-expanded={chatStore.isChannelSelectorOpened ? 'true' : undefined}
+                  aria-expanded={chatStore.isCurrentChannelSelectorOpened ? 'true' : undefined}
                   onClick={(e) => {
-                     setAnchorElChannel(e.currentTarget);
-                     chatStore.openChannelSelectorModal();
+                     setCurrentChannelAnchor(e.currentTarget);
+                     chatStore.openCurrentChannelSelectorModal();
                   }}
                />
-               <ChannelSelector
-                  anchorEl={anchorElChannel}
-                  open={chatStore.isChannelSelectorOpened}
+               <CurrentChannelSelector
+                  anchorEl={currentChannelAnchor}
+                  open={chatStore.isCurrentChannelSelectorOpened}
                   handleClose={() => {
-                     setAnchorElChannel(null);
-                     chatStore.closeChannelSelectorModal();
+                     setCurrentChannelAnchor(null);
+                     chatStore.closeCurrentChannelSelectorModal();
                   }}
                />
             </Box>
@@ -127,17 +126,17 @@ export const Chatbox = observer(() => {
                aria-haspopup="true"
                aria-expanded={chatStore.isChannelsSelectorOpened ? 'true' : undefined}
                onClick={(e) => {
-                  setAnchorEl(e.currentTarget);
+                  setChannelSelectorAnchor(e.currentTarget);
                   chatStore.openChannelsSelectorModal();
                }}
             >
                <ChannelIcon fontSize="inherit" />
             </SmallButton>
             <ChannelsSelector
-               anchorEl={anchorEl}
+               anchorEl={channelSelectorAnchor}
                open={chatStore.isChannelsSelectorOpened}
                handleClose={() => {
-                  setAnchorEl(null);
+                  setChannelSelectorAnchor(null);
                   chatStore.closeChannelsSelectorModal();
                }}
             />
@@ -199,6 +198,7 @@ const ChatInput = styled('input', {
    shouldForwardProp: (prop) => prop !== 'widthPercent' && prop !== 'inputHeight',
 })<StyleProps>(({ theme, widthPercent, inputHeight }) => ({
    padding: '0.75vh 0.5vw 0.75vh 0.5vw',
+   paddingLeft: `calc(min(0.5vw, 0.75vh) * 2 + ${inputHeight}px)`,
    fontSize: 'min(1vw, 1.5vh)',
    border: 'none',
    borderTop: `2px solid ${theme.palette.paper.border}`,
@@ -206,7 +206,7 @@ const ChatInput = styled('input', {
    backgroundColor: `${theme.palette.chalk.main}C6`,
    borderBottomLeftRadius: 8,
    borderBottomRightRadius: 8,
-   width: `calc(${widthPercent}vw - 1vw - 18px - min(1.8vw, 3vh) - 0.5vw - 1vw)`,
+   width: `calc(${widthPercent}vw - 1vw - 18px - min(1.8vw, 3vh) - (min(0.5vw, 0.75vh) * 2 + ${inputHeight}px))`,
    height: `${inputHeight}px`,
 }));
 
