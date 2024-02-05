@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.35.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.34.0...v1.35.0) (2024-02-05)
+
+
+### Features
+
+* added a permissions system to user model ([974f60e](https://github.com/matthieu-locussol/taktix-app/commit/974f60e5ea10b6b5a131a4859e594caf049adccc))
+* added private messages system ([1888dd9](https://github.com/matthieu-locussol/taktix-app/commit/1888dd9ae6ed815fd380bfbea979bf12d13226a0))
+* checker on character names ([3a1e484](https://github.com/matthieu-locussol/taktix-app/commit/3a1e484b741f6f22c05c70e02fa02a4b8492608f))
+* takes channels shortcut into account ([70a9d6a](https://github.com/matthieu-locussol/taktix-app/commit/70a9d6a3f4425fa9df348c5b9df78648dbe9ff43))
+
+
+### Bug Fixes
+
+* can't select the private channel in the selector ([6014d55](https://github.com/matthieu-locussol/taktix-app/commit/6014d55e42410e2acc93adc0a0b3b8a9fdb50770))
+
 ## [1.34.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.33.0...v1.34.0) (2024-02-02)
 
 
