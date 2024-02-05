@@ -25,6 +25,7 @@ export const CurrentChannelSelector = observer(
             slotProps={{
                paper: {
                   variant: 'outlined',
+                  elevation: 0,
                },
             }}
             MenuListProps={{

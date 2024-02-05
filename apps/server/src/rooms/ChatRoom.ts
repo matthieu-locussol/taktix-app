@@ -15,7 +15,9 @@ import { usersMap } from './utils/usersMap';
 type Client = ColyseusClient<UserData, unknown>;
 
 export class ChatRoom extends Room {
-   characters = new Map<string, string>();
+   characterByClientId = new Map<string, string>();
+
+   clientIdByCharacter = new Map<string, Client>();
 
    onCreate(_options: Options) {
       logger.info('[ChatRoom] Room created');
@@ -48,19 +50,55 @@ export class ChatRoom extends Room {
       client: Client,
       message: Extract<ChatRoomMessage, { type: 'message' }>['message'],
    ) {
-      const character = this.characters.get(client.id);
+      const character = this.characterByClientId.get(client.id);
       _assert(character, 'character should be defined');
       const { channel, content } = message;
 
+      if (ChannelMgt.isPrivateMessage(content)) {
+         this.onPrivateMessage(client, content);
+      } else {
+         const packet: ChatRoomResponse = {
+            type: 'message',
+            message: {
+               ...ChannelMgt.getPrefixedChannelNameAndContent(content, channel),
+               author: character,
+            },
+         };
+
+         this.broadcast(packet.type, packet.message);
+      }
+   }
+
+   onPrivateMessage(client: Client, message: string) {
+      const character = this.characterByClientId.get(client.id);
+      _assert(character, 'character should be defined');
+      const { target, content } = ChannelMgt.extractPrivateMessage(message);
+
       const packet: ChatRoomResponse = {
-         type: 'message',
+         type: 'privateMessage',
          message: {
-            ...ChannelMgt.getPrefixedChannelNameAndContent(content, channel),
             author: character,
+            target,
+            content,
          },
       };
 
-      this.broadcast(packet.type, packet.message);
+      const targetClient = this.clientIdByCharacter.get(target);
+      if (targetClient !== undefined) {
+         this.send(client, packet.type, packet.message);
+         this.send(targetClient, packet.type, packet.message);
+      } else {
+         const errorPacket: ChatRoomResponse = {
+            type: 'message',
+            message: {
+               author: 'Server',
+               channel: Channel.ERROR,
+               content: `User '${target}' does not exist or is not connected!`,
+            },
+         };
+
+         this.send(client, errorPacket.type, errorPacket.message);
+      }
    }
 
    onJoin(client: Client, { uuid }: Options) {
@@ -70,7 +108,8 @@ export class ChatRoom extends Room {
       _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
       const { characterName } = userInfos;
 
-      this.characters.set(client.id, characterName);
+      this.characterByClientId.set(client.id, characterName);
+      this.clientIdByCharacter.set(characterName, client);
 
       const packet: ChatRoomResponse = {
          type: 'message',
@@ -98,10 +137,13 @@ export class ChatRoom extends Room {
    onLeave(client: Client, _consented: boolean) {
       logger.info(`[AuthRoom] Client '${client.sessionId}' left the room`);
 
-      const character = this.characters.get(client.id);
+      const character = this.characterByClientId.get(client.id);
       _assert(character, 'character should be defined');
+      this.characterByClientId.delete(client.id);
 
-      this.characters.delete(client.id);
+      const clientEntry = this.clientIdByCharacter.get(character);
+      _assert(clientEntry, 'clientId should be defined');
+      this.clientIdByCharacter.delete(character);
 
       const packet: ChatRoomResponse = {
          type: 'message',

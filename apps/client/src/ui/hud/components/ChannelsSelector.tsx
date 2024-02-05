@@ -23,6 +23,7 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
             root: {},
             paper: {
                variant: 'outlined',
+               elevation: 0,
             },
          }}
          MenuListProps={{

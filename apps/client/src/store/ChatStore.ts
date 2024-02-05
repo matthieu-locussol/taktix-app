@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { Channel } from 'shared/src/types/Channel';
+import { Store } from './Store';
 
 interface ChatMessage {
    author: string;
@@ -7,16 +8,25 @@ interface ChatMessage {
    content: string;
 }
 
+interface PrivateMessage {
+   author: string;
+   target: string;
+   content: string;
+}
+
 export class ChatStore {
+   private _store: Store;
+
    public input: string = '';
 
    public messages: ChatMessage[] = [];
 
-   public currentChannel: Channel = Channel.TRADE;
+   public currentChannel: Channel = Channel.GENERAL;
 
    public displayedChannels: Channel[] = [
       Channel.GENERAL,
       Channel.TRADE,
+      Channel.PRIVATE,
       Channel.SERVER,
       Channel.ERROR,
    ];
@@ -25,13 +35,28 @@ export class ChatStore {
 
    public isChannelsSelectorOpened: boolean = false;
 
-   constructor() {
+   constructor(store: Store) {
       makeAutoObservable(this);
+
+      this._store = store;
    }
 
    public addMessage(message: ChatMessage) {
       if (message.content.length > 0) {
          this.messages.push(this.formatMessage(message));
+      }
+   }
+
+   public addPrivateMessage({ author, content, target }: PrivateMessage) {
+      if (content.length > 0) {
+         this.messages.push(
+            this.formatMessage({
+               author:
+                  author === this._store.characterStore.name ? `To ${target}` : `From ${author}`,
+               content,
+               channel: Channel.PRIVATE,
+            }),
+         );
       }
    }
 

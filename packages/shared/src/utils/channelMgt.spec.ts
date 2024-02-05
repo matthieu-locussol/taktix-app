@@ -13,9 +13,7 @@ describe('ChannelMgt', () => {
             content: message,
          });
       });
-   });
 
-   describe('getPrefixedChannelName', () => {
       it('should return message channel if it exists', () => {
          const message = '/t foo';
          const currentChannel = Channel.GENERAL;
@@ -23,6 +21,31 @@ describe('ChannelMgt', () => {
          expect(result).toEqual({
             channel: Channel.TRADE,
             content: 'foo',
+         });
+      });
+   });
+
+   describe('isPrivateMessage', () => {
+      it('should return true if message is private', () => {
+         const message = '/p foo bar';
+         const result = ChannelMgt.isPrivateMessage(message);
+         expect(result).toEqual(true);
+      });
+
+      it('should return false if message is not private', () => {
+         const message = '/t foo bar';
+         const result = ChannelMgt.isPrivateMessage(message);
+         expect(result).toEqual(false);
+      });
+   });
+
+   describe('extractPrivateMessage', () => {
+      it('should return target and content', () => {
+         const message = '/w foo bar';
+         const result = ChannelMgt.extractPrivateMessage(message);
+         expect(result).toEqual({
+            target: 'foo',
+            content: 'bar',
          });
       });
    });

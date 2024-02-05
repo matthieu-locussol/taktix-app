@@ -62,6 +62,7 @@ export const Chatbox = observer(() => {
                      <Typography
                         key={idx}
                         fontSize="min(1vw, 1.5vh)"
+                        fontStyle={channel === Channel.PRIVATE ? 'italic' : 'normal'}
                         lineHeight="2vh"
                         color={theme.palette.channels[channel]}
                      >

@@ -3,4 +3,5 @@ export enum Channel {
    ERROR,
    GENERAL,
    TRADE,
+   PRIVATE,
 }

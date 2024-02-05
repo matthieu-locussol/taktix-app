@@ -49,7 +49,7 @@ export class Store {
       this.characterStore = new CharacterStore();
       this.characterCreationStore = new CharacterCreationStore();
       this.characterSelectionStore = new CharacterSelectionStore();
-      this.chatStore = new ChatStore();
+      this.chatStore = new ChatStore(this);
       this.colyseusStore = new ColyseusStore(this);
       this.discordStore = new DiscordStore(this);
       this.gameStore = new GameStore(this);

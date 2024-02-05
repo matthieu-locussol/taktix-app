@@ -20,4 +20,12 @@ export namespace ChannelMgt {
          content: message,
       };
    };
+
+   export const isPrivateMessage = (message: string) =>
+      message.startsWith(channelsInformations[Channel.PRIVATE].shortcut);
+
+   export const extractPrivateMessage = (message: string) => ({
+      target: message.split(' ')[1],
+      content: message.split(' ').slice(2).join(' '),
+   });
 }

@@ -22,6 +22,7 @@ interface CustomPalette {
       [Channel.ERROR]: string;
       [Channel.GENERAL]: string;
       [Channel.TRADE]: string;
+      [Channel.PRIVATE]: string;
    };
 }
 
