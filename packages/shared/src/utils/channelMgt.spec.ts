@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { Channel } from '../types/Channel';
+import { Role } from '../types/Role';
 import { ChannelMgt } from './channelMgt';
 
 describe('ChannelMgt', () => {
@@ -47,6 +48,20 @@ describe('ChannelMgt', () => {
             target: 'foo',
             content: 'bar',
          });
+      });
+   });
+
+   describe('hasPermission', () => {
+      it('should return true if role has permission', () => {
+         const channel = Channel.SERVER;
+         const result = ChannelMgt.hasPermission(Role.ADMIN, channel);
+         expect(result).toEqual(true);
+      });
+
+      it('should return false if role does not have permission', () => {
+         const channel = Channel.SERVER;
+         const result = ChannelMgt.hasPermission(Role.PLAYER, channel);
+         expect(result).toEqual(false);
       });
    });
 });

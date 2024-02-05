@@ -1,5 +1,8 @@
 import { channelsInformations } from '../data/channelsInformations';
+import { rolesInformations } from '../data/rolesInformations';
 import { Channel } from '../types/Channel';
+import type { Role } from '../types/Role';
+import { PermissionMgt } from './permissionMgt';
 
 export namespace ChannelMgt {
    export const getPrefixedChannelNameAndContent = (message: string, currentChannel: Channel) => {
@@ -28,4 +31,11 @@ export namespace ChannelMgt {
       target: message.split(' ')[1],
       content: message.split(' ').slice(2).join(' '),
    });
+
+   export const hasPermission = (role: Role, channel: Channel) => {
+      const { permissions } = rolesInformations[role];
+      const permissionsWanted = channelsInformations[channel].permissions;
+
+      return PermissionMgt.hasPermissions(permissions, permissionsWanted);
+   };
 }
