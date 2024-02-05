@@ -24,6 +24,6 @@ export const channelsInformations: Record<Channel, ChannelInformations> = {
    },
    [Channel.PRIVATE]: {
       name: 'Private',
-      shortcut: '/p',
+      shortcut: '/w',
    },
 };

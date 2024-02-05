@@ -27,7 +27,7 @@ describe('ChannelMgt', () => {
 
    describe('isPrivateMessage', () => {
       it('should return true if message is private', () => {
-         const message = '/p foo bar';
+         const message = '/w foo bar';
          const result = ChannelMgt.isPrivateMessage(message);
          expect(result).toEqual(true);
       });
