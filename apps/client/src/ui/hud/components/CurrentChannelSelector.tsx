@@ -48,6 +48,7 @@ export const CurrentChannelSelector = observer(
                {Object.keys(channelsInformations)
                   .map((channelIdStr) => parseInt(channelIdStr, 10) as Channel)
                   .filter((channelId) => !chatStore.isSystemChannel(channelId))
+                  .filter((channelId) => channelId !== Channel.PRIVATE)
                   .map((channelId) => (
                      <MenuItem disableRipple key={channelId}>
                         <FormControlLabel
