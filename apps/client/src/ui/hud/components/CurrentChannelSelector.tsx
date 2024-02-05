@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { observer } from 'mobx-react-lite';
-import { channelsNames } from 'shared/src/data/channelsNames';
+import { channelsInformations } from 'shared/src/data/channelsInformations';
 import { Channel } from 'shared/src/types/Channel';
 import { useStore } from '../../../store';
 
@@ -44,7 +44,7 @@ export const CurrentChannelSelector = observer(
             {...rest}
          >
             <RadioGroup value={chatStore.currentChannel}>
-               {Object.keys(channelsNames)
+               {Object.keys(channelsInformations)
                   .map((channelIdStr) => parseInt(channelIdStr, 10) as Channel)
                   .filter((channelId) => !chatStore.isSystemChannel(channelId))
                   .map((channelId) => (
@@ -70,7 +70,7 @@ export const CurrentChannelSelector = observer(
                                  }}
                               />
                            }
-                           label={channelsNames[channelId]}
+                           label={`${channelsInformations[channelId].name} (${channelsInformations[channelId].shortcut})`}
                            slotProps={{
                               typography: {
                                  color: theme.palette.channels[channelId],

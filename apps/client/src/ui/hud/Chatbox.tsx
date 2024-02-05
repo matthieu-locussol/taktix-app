@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
-import { channelsNames } from 'shared/src/data/channelsNames';
+import { channelsInformations } from 'shared/src/data/channelsInformations';
 import { Channel } from 'shared/src/types/Channel';
 import { useStore } from '../../store';
 import { ChannelsSelector } from './components/ChannelsSelector';
@@ -56,7 +56,7 @@ export const Chatbox = observer(() => {
                         lineHeight="2vh"
                         color={theme.palette.channels[channel]}
                      >
-                        [{channelsNames[channel]}] {content}
+                        [{channelsInformations[channel].name}] {content}
                      </Typography>
                   ) : (
                      <Typography
@@ -65,7 +65,7 @@ export const Chatbox = observer(() => {
                         lineHeight="2vh"
                         color={theme.palette.channels[channel]}
                      >
-                        [{channelsNames[channel]}] <b>{author}</b>: {content}
+                        [{channelsInformations[channel].name}] <b>{author}</b>: {content}
                      </Typography>
                   ),
                )}

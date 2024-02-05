@@ -1,6 +1,7 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import {
    Channel,
+   ChannelMgt,
    ChatRoomMessage,
    ChatRoomResponse,
    ChatRoomOptions as Options,
@@ -53,8 +54,8 @@ export class ChatRoom extends Room {
       const packet: ChatRoomResponse = {
          type: 'message',
          message: {
+            ...ChannelMgt.getPrefixedChannelNameAndContent(message.content, message.channel),
             author: character,
-            ...message,
          },
       };
 
