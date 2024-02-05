@@ -22,4 +22,5 @@ export * from './utils/_assert';
 export * from './utils/channelMgt';
 export * from './utils/numberMgt';
 export * from './utils/permissionMgt';
+export * from './utils/stringMgt';
 export * from './utils/timeMgt';

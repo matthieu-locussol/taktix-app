@@ -8,6 +8,7 @@ import {
    INTERNAL_PLAYER_NAME,
    MAX_CHARACTERS_PER_ACCOUNT,
    AuthRoomOptions as Options,
+   StringMgt,
    AuthRoomUserData as UserData,
    _assert,
    isAuthRoomMessage,
@@ -177,6 +178,12 @@ export class AuthRoom extends Room {
          message = {
             status: 'error',
             errorMessage: `Maximum number of characters reached!`,
+         };
+      } else if (!StringMgt.isCharacterNameValid(characterName)) {
+         message = {
+            status: 'error',
+            errorMessage:
+               'Invalid name: only letters, numbers, underscore and hyphens are allowed. Must be between 3 and 15 characters. No spaces allowed. Should not start with an underscore or hyphen.',
          };
       } else {
          await prisma.character.create({
