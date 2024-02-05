@@ -50,11 +50,12 @@ export class ChatRoom extends Room {
    ) {
       const character = this.characters.get(client.id);
       _assert(character, 'character should be defined');
+      const { channel, content } = message;
 
       const packet: ChatRoomResponse = {
          type: 'message',
          message: {
-            ...ChannelMgt.getPrefixedChannelNameAndContent(message.content, message.channel),
+            ...ChannelMgt.getPrefixedChannelNameAndContent(content, channel),
             author: character,
          },
       };
