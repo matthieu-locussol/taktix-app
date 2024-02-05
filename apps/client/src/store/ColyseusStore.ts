@@ -246,6 +246,9 @@ export class ColyseusStore {
                .with({ type: 'message' }, ({ message: payloadMessage }) => {
                   this.onMessage(payloadMessage);
                })
+               .with({ type: 'privateMessage' }, ({ message: payloadMessage }) => {
+                  this.onPrivateMessage(payloadMessage);
+               })
                .exhaustive();
          }
       });
@@ -253,6 +256,10 @@ export class ColyseusStore {
 
    onMessage(message: Extract<ChatRoomResponse, { type: 'message' }>['message']) {
       this._store.chatStore.addMessage(message);
+   }
+
+   onPrivateMessage(message: Extract<ChatRoomResponse, { type: 'privateMessage' }>['message']) {
+      this._store.chatStore.addPrivateMessage(message);
    }
 
    sendMessage(channel: number, content: string) {

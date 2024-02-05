@@ -30,6 +30,14 @@ export const zChatRoomResponse = z.discriminatedUnion('type', [
          content: z.string(),
       }),
    }),
+   z.object({
+      type: z.literal('privateMessage'),
+      message: z.object({
+         author: z.string(),
+         target: z.string(),
+         content: z.string(),
+      }),
+   }),
 ]);
 
 export type ChatRoomResponse = z.infer<typeof zChatRoomResponse>;

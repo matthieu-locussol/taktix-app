@@ -22,4 +22,8 @@ export const channelsInformations: Record<Channel, ChannelInformations> = {
       name: 'Trade',
       shortcut: '/t',
    },
+   [Channel.PRIVATE]: {
+      name: 'Private',
+      shortcut: '/p',
+   },
 };
