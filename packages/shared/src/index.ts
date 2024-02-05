@@ -1,5 +1,5 @@
 export * from './config';
-export * from './data/channelsNames';
+export * from './data/channelsInformations';
 export * from './data/roomsNames';
 export * from './data/teleportationSpots';
 export * from './rooms/AuthRoom';
@@ -17,5 +17,6 @@ export * from './types/Room';
 export * from './types/SceneData';
 export * from './types/TeleportationSpot';
 export * from './utils/_assert';
+export * from './utils/channelMgt';
 export * from './utils/numberMgt';
 export * from './utils/timeMgt';

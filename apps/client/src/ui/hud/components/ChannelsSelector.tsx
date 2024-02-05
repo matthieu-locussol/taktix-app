@@ -4,7 +4,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { observer } from 'mobx-react-lite';
-import { channelsNames } from 'shared/src/data/channelsNames';
+import { channelsInformations } from 'shared/src/data/channelsInformations';
 import { Channel } from 'shared/src/types/Channel';
 import { useStore } from '../../../store';
 
@@ -41,7 +41,7 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
          }}
          {...rest}
       >
-         {Object.keys(channelsNames)
+         {Object.keys(channelsInformations)
             .map((channelIdStr) => parseInt(channelIdStr, 10) as Channel)
             .filter((channelId) => !chatStore.isSystemChannel(channelId))
             .map((channelId) => (
@@ -64,7 +64,7 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
                            }}
                         />
                      }
-                     label={channelsNames[channelId]}
+                     label={`${channelsInformations[channelId].name} (${channelsInformations[channelId].shortcut})`}
                      slotProps={{
                         typography: {
                            color: theme.palette.channels[channelId],
