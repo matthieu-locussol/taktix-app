@@ -129,6 +129,7 @@ export class AuthRoom extends Room {
          usersMap.set(uuid, {
             username,
             characterName: character.name,
+            role: character.user.role,
          });
       }
 
