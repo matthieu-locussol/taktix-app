@@ -11,7 +11,7 @@ export const makeCharacter = (scene: Scene, name: string, isPlayer: boolean) => 
       return null;
    }
 
-   const characterSprite = scene.add.sprite(0, 0, 'player');
+   const characterSprite = scene.add.sprite(0, 0, 'PlayerSpritesheet');
    characterSprite.setPipeline('Light2D');
    characterSprite.scale = SCALE_FACTOR;
 

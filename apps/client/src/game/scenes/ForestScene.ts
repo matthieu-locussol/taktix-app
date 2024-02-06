@@ -12,10 +12,18 @@ export class ForestScene extends Scene {
       this.load.image('forest_ground_tileset', '/assets/tilesets/forest_ground.png');
       this.load.image('forest_props_tileset', '/assets/tilesets/forest_props.png');
       this.load.tilemapTiledJSON('Forest_tiledmap', '/assets/maps/Forest.json');
-      this.load.spritesheet('player', '/assets/characters/characters.png', {
-         frameWidth: 26,
-         frameHeight: 36,
-      });
+   }
+
+   public unloadAssets(): void {
+      this.sound.removeByKey('Forest_music');
+      this.textures.remove('Cloud City_tileset');
+      this.textures.remove('forest_trees_tileset');
+      this.textures.remove('forest_ground_tileset');
+      this.textures.remove('forest_props_tileset');
+
+      if (this.tilemap !== null) {
+         this.tilemap.destroy();
+      }
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

@@ -19,6 +19,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { AuthRoomUserData } from 'shared';
 import { useStore } from '../../store';
+import { isTauri } from '../../utils/tauri';
 import { getVersion } from '../../utils/version';
 import { ServerStatus } from '../components/ServerStatus';
 import { Changelog } from '../hud/components/Changelog';
@@ -42,15 +43,19 @@ export const LoginScreen = observer(() => {
    }, []);
 
    useEffect(() => {
-      const unlisten = listen<number>('updateProgress', (event) => {
-         if (event.payload >= 0) {
-            updaterStore.updateProgress(event.payload);
-         }
-      });
+      if (isTauri()) {
+         const unlisten = listen<number>('updateProgress', (event) => {
+            if (event.payload >= 0) {
+               updaterStore.updateProgress(event.payload);
+            }
+         });
 
-      return () => {
-         unlisten.then((f) => f());
-      };
+         return () => {
+            unlisten.then((f) => f());
+         };
+      }
+
+      return undefined;
    }, []);
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

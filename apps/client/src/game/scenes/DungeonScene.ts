@@ -10,10 +10,16 @@ export class DungeonScene extends Scene {
       this.load.image('Dungeon Indoor_tileset', '/assets/tilesets/dungeon_indoor.png');
       this.load.image('Dungeon Outdoor_tileset', '/assets/tilesets/dungeon_outdoor.png');
       this.load.tilemapTiledJSON('Dungeon_tiledmap', '/assets/maps/Dungeon.json');
-      this.load.spritesheet('player', '/assets/characters/characters.png', {
-         frameWidth: 26,
-         frameHeight: 36,
-      });
+   }
+
+   public unloadAssets(): void {
+      this.sound.removeByKey('Dungeon_music');
+      this.textures.remove('Dungeon Indoor_tileset');
+      this.textures.remove('Dungeon Outdoor_tileset');
+
+      if (this.tilemap !== null) {
+         this.tilemap.destroy();
+      }
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

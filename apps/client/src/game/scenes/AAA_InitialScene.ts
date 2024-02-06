@@ -1,4 +1,4 @@
-import { Scene } from '../Scene';
+import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
 
 export class AAA_InitialScene extends Scene {
    constructor() {
@@ -7,10 +7,14 @@ export class AAA_InitialScene extends Scene {
 
    public loadAssets(): void {
       this.load.audio('AAA_Initial_music', '/assets/musics/Menu.mp3');
-      this.load.spritesheet('player', '/assets/characters/characters.png', {
-         frameWidth: 26,
-         frameHeight: 36,
+      this.load.spritesheet('PlayerSpritesheet', '/assets/characters/characters.png', {
+         frameWidth: CHARACTER_WIDTH,
+         frameHeight: CHARACTER_HEIGHT,
       });
+   }
+
+   public unloadAssets(): void {
+      this.sound.removeByKey('AAA_Initial_music');
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
