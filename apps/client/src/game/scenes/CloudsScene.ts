@@ -9,10 +9,15 @@ export class CloudsScene extends Scene {
       this.load.audio('Clouds_music', '/assets/musics/Clouds.mp3');
       this.load.image('Cloud City_tileset', '/assets/tilesets/cloud_tileset.png');
       this.load.tilemapTiledJSON('Clouds_tiledmap', '/assets/maps/Clouds.json');
-      this.load.spritesheet('player', '/assets/characters/characters.png', {
-         frameWidth: 26,
-         frameHeight: 36,
-      });
+   }
+
+   public unloadAssets(): void {
+      this.sound.removeByKey('Clouds_music');
+      this.textures.remove('Cloud City_tileset');
+
+      if (this.tilemap !== null) {
+         this.tilemap.destroy();
+      }
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

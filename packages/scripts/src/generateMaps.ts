@@ -125,10 +125,15 @@ export class ${map}Scene extends Scene {
       this.load.audio('${map}_music', '/assets/musics/${map}.mp3');
       ${tiledMapTilesets.map((tileset) => `this.load.image('${tileset.name}_tileset', '${tileset.image}');`).join('\n      ')}
       this.load.tilemapTiledJSON('${map}_tiledmap', '/assets/maps/${map}.json');
-      this.load.spritesheet('player', '/assets/characters/characters.png', {
-         frameWidth: 26,
-         frameHeight: 36,
-      });
+   }
+
+   public unloadAssets(): void {
+      this.sound.removeByKey('${map}_music');
+      ${tiledMapTilesets.map((tileset) => `this.textures.remove('${tileset.name}_tileset');`).join('\n      ')}
+
+      if (this.tilemap !== null) {
+         this.tilemap.destroy();
+      }
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

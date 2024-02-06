@@ -24,6 +24,7 @@ export const PLAYER_LAYER = 'Player';
 export const PLAYER_GE_LAYER = 'player';
 export const PLAYER_SPEED = 2.5;
 export const CHARACTER_WIDTH = 26;
+export const CHARACTER_HEIGHT = 36;
 export const CHARACTER_LETTER_WIDTH = 8;
 export const ZOOM_MIN = 1;
 export const ZOOM_MAX = 2;
@@ -113,6 +114,8 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public abstract loadAssets(): void;
+
+   public abstract unloadAssets(): void;
 
    public create(): void {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);

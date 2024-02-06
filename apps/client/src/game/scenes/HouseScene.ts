@@ -10,10 +10,16 @@ export class HouseScene extends Scene {
       this.load.image('House_tileset', '/assets/tilesets/house_tileset.png');
       this.load.image('Clouds_tileset', '/assets/tilesets/cloud_tileset.png');
       this.load.tilemapTiledJSON('House_tiledmap', '/assets/maps/House.json');
-      this.load.spritesheet('player', '/assets/characters/characters.png', {
-         frameWidth: 26,
-         frameHeight: 36,
-      });
+   }
+
+   public unloadAssets(): void {
+      this.sound.removeByKey('House_music');
+      this.textures.remove('House_tileset');
+      this.textures.remove('Clouds_tileset');
+
+      if (this.tilemap !== null) {
+         this.tilemap.destroy();
+      }
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
