@@ -14,6 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { listen } from '@tauri-apps/api/event';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { AuthRoomUserData } from 'shared';
@@ -21,6 +22,7 @@ import { useStore } from '../../store';
 import { getVersion } from '../../utils/version';
 import { ServerStatus } from '../components/ServerStatus';
 import { Changelog } from '../hud/components/Changelog';
+import { ProgressBar } from '../hud/components/ProgressBar';
 
 export const NEWS_HEIGHT = 324;
 
@@ -37,6 +39,18 @@ export const LoginScreen = observer(() => {
 
    useEffect(() => {
       newsStore.fetchChangelogs();
+   }, []);
+
+   useEffect(() => {
+      const unlisten = listen<number>('updateProgress', (event) => {
+         if (event.payload >= 0) {
+            updaterStore.updateProgress(event.payload);
+         }
+      });
+
+      return () => {
+         unlisten.then((f) => f());
+      };
    }, []);
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -187,23 +201,27 @@ export const LoginScreen = observer(() => {
                   <Typography variant="h1" align="center">
                      Access the universe
                   </Typography>
-                  <Typography>
-                     A new update is available: {updaterStore.updateManifest?.version}
+                  <Typography sx={{ mt: 4 }}>
+                     A new update is available: v{updaterStore.updateManifest?.version}
                   </Typography>
-                  <Typography>Please update to continue</Typography>
-                  <Button
-                     disabled={updaterStore.updating}
-                     variant="contained"
-                     color="primary"
-                     onClick={() => updaterStore.update()}
-                     sx={{ mt: 2 }}
-                  >
-                     {updaterStore.updating ? (
-                        <CircularProgress color="inherit" size={24} />
-                     ) : (
-                        'Update'
-                     )}
-                  </Button>
+                  <Typography>Please update to continue.</Typography>
+                  {updaterStore.updating ? (
+                     <ProgressBar
+                        label={`${updaterStore.progress.toFixed(2)}%`}
+                        value={updaterStore.progress}
+                        sx={{ mt: 2 }}
+                     />
+                  ) : (
+                     <Button
+                        disabled={updaterStore.updating}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => updaterStore.update()}
+                        sx={{ mt: 2 }}
+                     >
+                        Update
+                     </Button>
+                  )}
                </CardContent>
             )}
             <Dialog open={updaterStore.openUpdateModal}>
@@ -213,7 +231,7 @@ export const LoginScreen = observer(() => {
                      In order to finish the update, the game will need to restart!
                   </DialogContentText>
                </DialogContent>
-               <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
+               <DialogActions sx={{ justifyContent: 'center' }}>
                   <Button variant="contained" onClick={() => updaterStore.restart()}>
                      Restart
                   </Button>
