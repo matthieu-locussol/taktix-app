@@ -27,7 +27,11 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          onClick={async (event) => {
             if (event.target === gameLayoutRef.current) {
                const scene = await gameStore.getCurrentScene();
-               scene.input.emit(Phaser.Input.Events.POINTER_DOWN, scene.input.activePointer);
+               scene.input.emit(
+                  Phaser.Input.Events.POINTER_DOWN,
+                  scene.input.activePointer,
+                  scene.children.list,
+               );
             }
          }}
          onWheel={async (event) => {
@@ -40,6 +44,22 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
                   event.deltaX,
                   event.deltaY,
                   event.deltaZ,
+               );
+            }
+         }}
+         onMouseMove={async (event) => {
+            if (event.target === gameLayoutRef.current) {
+               const scene = await gameStore.getCurrentScene();
+               scene.input.manager.transformPointer(
+                  scene.input.activePointer,
+                  event.pageX,
+                  event.pageY,
+                  true,
+               );
+               scene.input.emit(
+                  Phaser.Input.Events.POINTER_MOVE,
+                  scene.input.activePointer,
+                  scene.children.list,
                );
             }
          }}
