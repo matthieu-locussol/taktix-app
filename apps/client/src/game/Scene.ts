@@ -149,11 +149,14 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    private initializeHandlers(): void {
-      this.input.on(Phaser.Input.Events.POINTER_DOWN, (pointer: Phaser.Input.Pointer) => {
-         if (pointer.leftButtonReleased()) {
-            this.handlePointerDown(pointer);
-         }
-      });
+      this.input.on(
+         Phaser.Input.Events.POINTER_DOWN,
+         (pointer: Phaser.Input.Pointer, gameObjects: Phaser.GameObjects.GameObject[]) => {
+            if (pointer.leftButtonReleased()) {
+               this.handlePointerDown(pointer, gameObjects);
+            }
+         },
+      );
 
       this.input.on(
          Phaser.Input.Events.POINTER_WHEEL,
@@ -165,6 +168,13 @@ export abstract class Scene extends Phaser.Scene {
             _deltaZ: number,
          ) => {
             this.handlePointerWheel(deltaY);
+         },
+      );
+
+      this.input.on(
+         Phaser.Input.Events.POINTER_MOVE,
+         (pointer: Phaser.Input.Pointer, gameObjects: Phaser.GameObjects.GameObject[]) => {
+            this.handlePointerMove(pointer, gameObjects);
          },
       );
    }
@@ -213,7 +223,28 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
-   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
+   private handlePointerMove(
+      pointer: Phaser.Input.Pointer,
+      gameObjects: Phaser.GameObjects.GameObject[],
+   ): void {
+      const position = pointer.positionToCamera(this.cameras.main) as Phaser.Math.Vector2;
+
+      gameObjects
+         .filter(({ type }) => type === 'Sprite')
+         .map((gameObject) => gameObject as Phaser.GameObjects.Sprite)
+         .forEach((gameObject) => {
+            if (gameObject.getBounds().contains(position.x, position.y)) {
+               gameObject.setAlpha(0.7);
+            } else {
+               gameObject.setAlpha(1);
+            }
+         });
+   }
+
+   private handlePointerDown(
+      pointer: Phaser.Input.Pointer,
+      _gameObjects: Phaser.GameObjects.GameObject[],
+   ): void {
       const pointerPosition = pointer.positionToCamera(this.cameras.main) as Phaser.Math.Vector2;
       const pointerWorldPosition: Position = {
          x: Math.floor(pointerPosition.x / (TILE_SIZE * SCALE_FACTOR)),
