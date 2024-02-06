@@ -29,6 +29,7 @@ describe('UpdaterStore', () => {
       expect(store.shouldUpdate).toEqual(undefined);
       expect(store.updateManifest).toEqual(undefined);
       expect(store.updating).toEqual(false);
+      expect(store.progress).toEqual(0);
       expect(store.openUpdateModal).toEqual(false);
       expect(store.errorMessage).toEqual('');
    });
@@ -94,5 +95,18 @@ describe('UpdaterStore', () => {
       store.restart();
 
       expect(store.openUpdateModal).toEqual(false);
+   });
+
+   it('should update progress', async () => {
+      const store = new UpdaterStore();
+
+      store.updateProgress(0.05);
+      expect(store.progress.toFixed(2)).toEqual('5.00');
+
+      store.updateProgress(0.1);
+      expect(store.progress.toFixed(2)).toEqual('15.00');
+
+      store.updateProgress(0.9);
+      expect(store.progress.toFixed(2)).toEqual('100.00');
    });
 });

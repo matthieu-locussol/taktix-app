@@ -10,6 +10,8 @@ export class UpdaterStore {
 
    public updating: boolean = false;
 
+   private _progress: number = 0;
+
    public openUpdateModal: boolean = false;
 
    public errorMessage: string = '';
@@ -68,5 +70,17 @@ export class UpdaterStore {
                'Sorry, an error occurred while restarting Taktix. Try restarting it by yourself.';
          });
       }
+   }
+
+   updateProgress(delta: number) {
+      this._progress += delta;
+
+      if (this._progress > 1) {
+         this._progress = 1;
+      }
+   }
+
+   get progress() {
+      return this._progress * 100;
    }
 }
