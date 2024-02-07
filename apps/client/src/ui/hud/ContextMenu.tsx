@@ -1,5 +1,6 @@
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { useStore } from '../../store';
@@ -9,7 +10,10 @@ export const ContextMenu = observer(() => {
 
    useEffect(() => {
       if (contextMenuStore.menu.length === 1) {
-         contextMenuStore.setCurrentSubMenu(contextMenuStore.menu[0].subMenu);
+         contextMenuStore.setCurrentSubMenu(
+            contextMenuStore.menu[0].text,
+            contextMenuStore.menu[0].subMenu,
+         );
       }
    }, [contextMenuStore.menu]);
 
@@ -24,7 +28,10 @@ export const ContextMenu = observer(() => {
          }}
          MenuListProps={{
             dense: true,
-            sx: { padding: 0 },
+            sx: {
+               p: 0,
+               minWidth: 130,
+            },
          }}
          open={contextMenuStore.isOpened}
          onClose={() => contextMenuStore.closeContextMenu()}
@@ -34,11 +41,18 @@ export const ContextMenu = observer(() => {
             left: contextMenuStore.positionX,
          }}
       >
+         {contextMenuStore.currentSubMenu.length > 0 && (
+            <Typography variant="body2" align="center" fontWeight="bold" sx={{ py: 0.75, px: 1 }}>
+               {contextMenuStore.currentSubMenuTitle}
+            </Typography>
+         )}
          {contextMenuStore.currentSubMenu.length === 0
             ? contextMenuStore.menu.map(({ text, subMenu }) => (
                  <MenuItem
                     key={`menu-${text}`}
-                    onClick={() => contextMenuStore.setCurrentSubMenu(subMenu)}
+                    onClick={() => {
+                       contextMenuStore.setCurrentSubMenu(text, subMenu);
+                    }}
                     sx={{
                        px: 1,
                        '&:hover': {
