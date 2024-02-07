@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.36.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.35.0...v1.36.0) (2024-02-07)
+
+
+### Features
+
+* added a context menu on players ([06108be](https://github.com/matthieu-locussol/taktix-app/commit/06108be649281f96cf9cd177b3491cb878980c7c))
+* added a register sprite events function & make use of the Phaser DataManager ([0cd670b](https://github.com/matthieu-locussol/taktix-app/commit/0cd670b39690e870f241fcf1a7bd5964a0ce5ad0))
+* can hover sprites ([3e91ef4](https://github.com/matthieu-locussol/taktix-app/commit/3e91ef42c6a70f94dbf7835d6e84d87387498e8d))
+* display download progress bar ([7904b0d](https://github.com/matthieu-locussol/taktix-app/commit/7904b0d61b03429b5556a6c933cadeedff6242ab))
+* unload assets when changing maps ([985cb67](https://github.com/matthieu-locussol/taktix-app/commit/985cb679b67d7dfd494e29f001e2b7146757c863))
+
 ## [1.35.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.34.0...v1.35.0) (2024-02-05)
 
 
