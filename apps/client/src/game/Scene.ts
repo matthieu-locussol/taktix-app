@@ -234,9 +234,9 @@ export abstract class Scene extends Phaser.Scene {
          .map((gameObject) => gameObject as Phaser.GameObjects.Sprite)
          .forEach((gameObject) => {
             if (gameObject.getBounds().contains(position.x, position.y)) {
-               gameObject.setAlpha(0.7);
+               gameObject.setData('hovered', true);
             } else {
-               gameObject.setAlpha(1);
+               gameObject.setData('hovered', false);
             }
          });
    }
