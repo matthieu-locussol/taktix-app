@@ -4,6 +4,7 @@ import { CharacterSelectionStore } from './CharacterSelectionStore';
 import { CharacterStore } from './CharacterStore';
 import { ChatStore } from './ChatStore';
 import { ColyseusStore } from './ColyseusStore';
+import { ContextMenuStore } from './ContextMenuStore';
 import { DiscordStore } from './DiscordStore';
 import { GameStore } from './GameStore';
 import { HudStore } from './HudStore';
@@ -24,6 +25,8 @@ export class Store {
    public chatStore: ChatStore;
 
    public colyseusStore: ColyseusStore;
+
+   public contextMenuStore: ContextMenuStore;
 
    public discordStore: DiscordStore;
 
@@ -51,6 +54,7 @@ export class Store {
       this.characterSelectionStore = new CharacterSelectionStore();
       this.chatStore = new ChatStore(this);
       this.colyseusStore = new ColyseusStore(this);
+      this.contextMenuStore = new ContextMenuStore(this);
       this.discordStore = new DiscordStore(this);
       this.gameStore = new GameStore(this);
       this.hudStore = new HudStore(this);

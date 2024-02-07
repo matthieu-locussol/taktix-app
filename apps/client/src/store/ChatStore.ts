@@ -19,6 +19,8 @@ export class ChatStore {
 
    public input: string = '';
 
+   public inputRef: HTMLInputElement | null = null;
+
    public messages: ChatMessage[] = [];
 
    public currentChannel: Channel = Channel.GENERAL;
@@ -75,6 +77,10 @@ export class ChatStore {
 
    public setInput(input: string) {
       this.input = input;
+   }
+
+   public setInputRef(inputRef: HTMLInputElement | null) {
+      this.inputRef = inputRef;
    }
 
    public isSystemChannel(channel: Channel): boolean {

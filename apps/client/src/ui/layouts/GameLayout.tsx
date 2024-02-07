@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { useStore } from '../../store';
 import { Character } from '../hud/Character';
 import { Chatbox } from '../hud/Chatbox';
+import { ContextMenu } from '../hud/ContextMenu';
 import { Menu } from '../hud/Menu';
 
 interface GameLayoutProps extends BoxProps {}
@@ -69,6 +70,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
             {hudStore.isChatboxVisible && <Chatbox />}
             {hudStore.isCharacterVisible && <Character />}
             {hudStore.isMenuVisible && <Menu />}
+            <ContextMenu />
          </StyledBox>
          {children}
       </Box>

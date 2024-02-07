@@ -243,9 +243,27 @@ export abstract class Scene extends Phaser.Scene {
 
    private handlePointerDown(
       pointer: Phaser.Input.Pointer,
-      _gameObjects: Phaser.GameObjects.GameObject[],
+      gameObjects: Phaser.GameObjects.GameObject[],
    ): void {
       const pointerPosition = pointer.positionToCamera(this.cameras.main) as Phaser.Math.Vector2;
+
+      const clickedSprites = gameObjects
+         .filter(({ type }) => type === 'Sprite')
+         .map((gameObject) => gameObject as Phaser.GameObjects.Sprite)
+         .filter((gameObject) => gameObject.getData('hovered'));
+
+      if (clickedSprites.length > 0) {
+         if (pointer.event instanceof MouseEvent) {
+            store.contextMenuStore.openContextMenu(
+               pointer.event.clientX,
+               pointer.event.clientY,
+               clickedSprites,
+            );
+         }
+
+         return;
+      }
+
       const pointerWorldPosition: Position = {
          x: Math.floor(pointerPosition.x / (TILE_SIZE * SCALE_FACTOR)),
          y: Math.floor(pointerPosition.y / (TILE_SIZE * SCALE_FACTOR)),
