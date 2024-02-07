@@ -27,6 +27,8 @@ export class ContextMenuStore {
 
    public currentSubMenu: SubMenuItem[] = [];
 
+   public currentSubMenuTitle: string = '';
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -39,6 +41,7 @@ export class ContextMenuStore {
       this.positionY = y;
       this.sprites = [...sprites];
       this.currentSubMenu = [];
+      this.currentSubMenuTitle = '';
 
       this.sprites.forEach((sprite) => {
          sprite.setData('hovered', false);
@@ -51,6 +54,7 @@ export class ContextMenuStore {
       this.positionY = 0;
       this.sprites = [];
       this.currentSubMenu = [];
+      this.currentSubMenuTitle = '';
    }
 
    public get menu(): MenuItem[] {
@@ -82,7 +86,7 @@ export class ContextMenuStore {
 
       return [
          {
-            text: isCurrentCharacter ? 'Slap' : `Talk to ${characterName}`,
+            text: isCurrentCharacter ? 'Slap' : 'Send a message',
             callback: () => {
                if (isCurrentCharacter) {
                   this._store.colyseusStore.sendMessage(Channel.GENERAL, 'Ouch!');
@@ -101,7 +105,8 @@ export class ContextMenuStore {
       ];
    }
 
-   public setCurrentSubMenu(subMenu: SubMenuItem[]): void {
+   public setCurrentSubMenu(title: string, subMenu: SubMenuItem[]): void {
+      this.currentSubMenuTitle = title;
       this.currentSubMenu = [...subMenu];
    }
 }
