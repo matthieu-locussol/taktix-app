@@ -23,6 +23,12 @@ export const Chatbox = observer(() => {
    const [currentChannelAnchor, setCurrentChannelAnchor] = useState<null | SVGSVGElement>(null);
 
    useEffect(() => {
+      if (inputRef.current !== null) {
+         chatStore.setInputRef(inputRef.current);
+      }
+   }, [inputRef.current]);
+
+   useEffect(() => {
       if (chatboxRef.current !== null) {
          chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
       }
@@ -75,7 +81,13 @@ export const Chatbox = observer(() => {
                <ChatInput
                   ref={inputRef}
                   value={chatStore.input}
-                  onFocus={() => gameStore.enableKeyboard(false)}
+                  onFocus={(e) => {
+                     gameStore.enableKeyboard(false);
+                     e.currentTarget.setSelectionRange(
+                        e.currentTarget.value.length,
+                        e.currentTarget.value.length,
+                     );
+                  }}
                   onBlur={() => gameStore.enableKeyboard(true)}
                   onChange={(e) => chatStore.setInput(e.target.value)}
                   maxLength={160}

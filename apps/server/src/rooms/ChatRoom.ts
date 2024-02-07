@@ -108,8 +108,21 @@ export class ChatRoom extends Room {
       };
 
       if (targetClient !== undefined) {
-         client.send(packet.type, packet.message);
-         targetClient.send(packet.type, packet.message);
+         if (targetClient.id !== client.id) {
+            client.send(packet.type, packet.message);
+            targetClient.send(packet.type, packet.message);
+         } else {
+            const errorPacket: ChatRoomResponse = {
+               type: 'message',
+               message: {
+                  author: 'Server',
+                  channel: Channel.ERROR,
+                  content: `You can't send a private message to yourself!`,
+               },
+            };
+
+            client.send(errorPacket.type, errorPacket.message);
+         }
       } else {
          const errorPacket: ChatRoomResponse = {
             type: 'message',
