@@ -1,3 +1,4 @@
+import { SpriteType } from '../../utils/spriteType';
 import {
    CHARACTER_LETTER_WIDTH,
    CHARACTER_WIDTH,
@@ -5,6 +6,7 @@ import {
    TILE_SIZE,
    type Scene,
 } from '../Scene';
+import { registerSpriteEvents } from './registerSpriteEvents';
 
 export const makeCharacter = (scene: Scene, name: string, isPlayer: boolean) => {
    if (scene.gridEngine.getAllCharacters().find((playerName) => playerName === name)) {
@@ -14,6 +16,9 @@ export const makeCharacter = (scene: Scene, name: string, isPlayer: boolean) => 
    const characterSprite = scene.add.sprite(0, 0, 'PlayerSpritesheet');
    characterSprite.setPipeline('Light2D');
    characterSprite.scale = SCALE_FACTOR;
+   characterSprite.setName(name);
+   characterSprite.setData('type', SpriteType.Character);
+   registerSpriteEvents(characterSprite);
 
    const offsetX = (CHARACTER_WIDTH * SCALE_FACTOR - name.length * CHARACTER_LETTER_WIDTH) / 2;
    const characterName = scene.add
