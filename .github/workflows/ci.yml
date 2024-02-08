@@ -42,13 +42,13 @@ jobs:
       if: github.ref == 'refs/heads/master'
       steps:
          - run: |
-              curl '${{ env.MAINTENANCE_ENDPOINT }}' \
+              curl "${{ secrets.MAINTENANCE_ENDPOINT }}" \
                  -sSf \
                  -H 'Accept: application/json' \
                  -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
                  -H 'Connection: keep-alive' \
                  -H 'Content-Type: application/json' \
-                 --data-raw '{"type":"start","token":"${{ env.MAINTENANCE_TOKEN }}"}' \
+                 --data-raw '{"type":"start","token":"${{ secrets.MAINTENANCE_TOKEN }}"}' \
                  --compressed
 
    deploy:
@@ -122,11 +122,11 @@ jobs:
       if: github.ref == 'refs/heads/master'
       steps:
          - run: |
-              curl '${{ env.MAINTENANCE_ENDPOINT }}' \
+              curl "${{ secrets.MAINTENANCE_ENDPOINT }}" \
                  -sSf \
                  -H 'Accept: application/json' \
                  -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
                  -H 'Connection: keep-alive' \
                  -H 'Content-Type: application/json' \
-                 --data-raw '{"type":"end","token":"${{ env.MAINTENANCE_TOKEN }}"}' \
+                 --data-raw '{"type":"end","token":"${{ secrets.MAINTENANCE_TOKEN }}"}' \
                  --compressed
