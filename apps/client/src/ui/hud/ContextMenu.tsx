@@ -1,3 +1,4 @@
+import { styled } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
@@ -10,17 +11,14 @@ export const ContextMenu = observer(() => {
 
    useEffect(() => {
       if (contextMenuStore.menu.length === 1) {
-         contextMenuStore.setCurrentSubMenu(
-            contextMenuStore.menu[0].text,
-            contextMenuStore.menu[0].subMenu,
-         );
+         const { text, subMenu } = contextMenuStore.menu[0];
+         contextMenuStore.setCurrentSubMenu(text, subMenu);
       }
    }, [contextMenuStore.menu]);
 
    return (
       <Menu
          slotProps={{
-            root: {},
             paper: {
                variant: 'outlined',
                elevation: 0,
@@ -35,6 +33,10 @@ export const ContextMenu = observer(() => {
          }}
          open={contextMenuStore.isOpened}
          onClose={() => contextMenuStore.closeContextMenu()}
+         transitionDuration={{
+            exit: 0,
+            enter: 300,
+         }}
          anchorReference="anchorPosition"
          anchorPosition={{
             top: contextMenuStore.positionY,
@@ -48,38 +50,30 @@ export const ContextMenu = observer(() => {
          )}
          {contextMenuStore.currentSubMenu.length === 0
             ? contextMenuStore.menu.map(({ text, subMenu }) => (
-                 <MenuItem
+                 <StyledMenuItem
                     key={`menu-${text}`}
-                    onClick={() => {
-                       contextMenuStore.setCurrentSubMenu(text, subMenu);
-                    }}
-                    sx={{
-                       px: 1,
-                       '&:hover': {
-                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                       },
-                    }}
+                    onClick={() => contextMenuStore.setCurrentSubMenu(text, subMenu)}
                  >
                     {text}
-                 </MenuItem>
+                 </StyledMenuItem>
               ))
             : contextMenuStore.currentSubMenu.map(({ text, callback }) => (
-                 <MenuItem
+                 <StyledMenuItem
                     key={`sub-menu-${text}`}
                     onClick={() => {
                        contextMenuStore.closeContextMenu();
                        callback();
                     }}
-                    sx={{
-                       px: 1,
-                       '&:hover': {
-                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                       },
-                    }}
                  >
                     {text}
-                 </MenuItem>
+                 </StyledMenuItem>
               ))}
       </Menu>
    );
 });
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+   paddingLeft: theme.spacing(1),
+   paddingRight: theme.spacing(1),
+   borderTop: `1px solid ${theme.palette.paper.border}`,
+}));

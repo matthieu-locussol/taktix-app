@@ -22,7 +22,7 @@ export class CloudsScene extends Scene {
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
-      this.sound.play('Clouds_music', { loop: true, volume: 0.05 });
+      this.sound.play('Clouds_music', { loop: true, volume: 0.5 });
       this.sound.pauseOnBlur = false;
 
       this.tilemap = this.make.tilemap({ key: 'Clouds_tiledmap' });

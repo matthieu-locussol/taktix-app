@@ -6,6 +6,15 @@
    src: url('/assets/fonts/Orbitron.woff2') format('woff2');
 }
 
+* {
+   user-select: none;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   -o-user-select: none;
+   -khtml-user-select: none;
+}
+
 *::-webkit-scrollbar {
    width: 8px;
 }

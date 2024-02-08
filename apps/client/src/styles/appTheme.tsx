@@ -1,4 +1,4 @@
-import { buttonClasses } from '@mui/material';
+import { buttonClasses, menuItemClasses, toggleButtonClasses } from '@mui/material';
 import { createTheme, darken } from '@mui/material/styles';
 import { Channel } from 'shared/src/types/Channel';
 
@@ -114,7 +114,14 @@ export const appTheme = createTheme({
          styleOverrides: {
             paper: ({ theme }) => ({
                border: `1px solid ${theme.palette.paper.border}`,
-               background: theme.palette.paper.background,
+               background: `${theme.palette.paper.background}DD`,
+            }),
+         },
+      },
+      MuiDialogContent: {
+         styleOverrides: {
+            dividers: ({ theme }) => ({
+               borderColor: theme.palette.paper.border,
             }),
          },
       },
@@ -150,6 +157,32 @@ export const appTheme = createTheme({
             }),
          },
       },
+      MuiMenu: {
+         styleOverrides: {
+            root: ({ theme }) => ({
+               [`&& .${menuItemClasses.selected}`]: {
+                  backgroundColor: `${theme.palette.primary.main}33`,
+                  '&:hover': {
+                     backgroundColor: `${theme.palette.primary.main}33`,
+                  },
+               },
+            }),
+            paper: ({ theme }) => ({
+               background: `${theme.palette.paper.background}DD`,
+            }),
+         },
+      },
+      MuiMenuItem: {
+         styleOverrides: {
+            root: ({ theme }) => ({
+               color: theme.palette.text.primary,
+               transition: 'background-color 0.3s, border-color 0.3s, box-shadow 0.3s',
+               '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+               },
+            }),
+         },
+      },
       MuiOutlinedInput: {
          styleOverrides: {
             root: ({ theme }) => ({
@@ -176,9 +209,38 @@ export const appTheme = createTheme({
             }),
          },
       },
+      MuiSelect: {
+         styleOverrides: {
+            icon: ({ theme }) => ({
+               color: theme.palette.text.primary,
+            }),
+         },
+      },
       MuiTextField: {
          styleOverrides: {
             root: {},
+         },
+      },
+      MuiToggleButton: {
+         styleOverrides: {
+            root: ({ theme }) => ({
+               color: theme.palette.text.primary,
+               border: `1px solid ${theme.palette.paper.border}`,
+               paddingLeft: theme.spacing(2),
+               paddingRight: theme.spacing(2),
+               textTransform: 'none',
+            }),
+         },
+      },
+      MuiToggleButtonGroup: {
+         styleOverrides: {
+            root: ({ theme }) => ({
+               background: darken(`${theme.palette.paper.background}C6`, 0.15),
+               [`& .${toggleButtonClasses.selected}`]: {
+                  color: `${theme.palette.link.hover} !important`,
+                  background: `${theme.palette.primary.main}33 !important`,
+               },
+            }),
          },
       },
    },

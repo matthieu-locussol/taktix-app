@@ -138,7 +138,7 @@ export class ${map}Scene extends Scene {
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
-      this.sound.play('${map}_music', { loop: true, volume: 0.05 });
+      this.sound.play('${map}_music', { loop: true, volume: 0.5 });
       this.sound.pauseOnBlur = false;
 
       this.tilemap = this.make.tilemap({ key: '${map}_tiledmap' });
