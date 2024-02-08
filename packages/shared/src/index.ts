@@ -9,6 +9,7 @@ export * from './rooms/MapRoom';
 export * from './routers/ChangelogResults';
 export * from './routers/StatusResults';
 export * from './schemas/CharacterCreationSchema';
+export * from './schemas/MaintenanceSchema';
 export * from './schemas/RegisterSchema';
 export * from './states/MapState';
 export * from './states/PlayerState';

@@ -12,6 +12,9 @@ import {
 import { match } from 'ts-pattern';
 import { usersMap } from './utils/usersMap';
 
+// eslint-disable-next-line import/no-mutable-exports
+export let notifyMaintenance: (() => void) | null = null;
+
 type Client = ColyseusClient<UserData, unknown>;
 
 interface CharacterInfos {
@@ -49,6 +52,19 @@ export class ChatRoom extends Room {
             logger.error(`[ChatRoom] Received invalid message from '${client.sessionId}'`);
          }
       });
+
+      notifyMaintenance = () => {
+         const packet: ChatRoomResponse = {
+            type: 'message',
+            message: {
+               author: 'Server',
+               channel: Channel.SERVER,
+               content: `A maintenance is ongoing, the server will be shut down soon!`,
+            },
+         };
+
+         this.broadcast(packet.type, packet.message);
+      };
    }
 
    onUserMessage(
@@ -194,6 +210,7 @@ export class ChatRoom extends Room {
    }
 
    onDispose() {
+      notifyMaintenance = null;
       logger.info(`[ChatRoom] Room disposed`);
    }
 }

@@ -61,6 +61,17 @@ export class AuthRoom extends Room {
    async onAuth(client: Client, options: Options) {
       logger.info(`[AuthRoom] Client '${client.sessionId}' authenticating...`);
 
+      const maintenance = await prisma.maintenance.findFirst({
+         where: { done: false },
+      });
+
+      if (maintenance !== null) {
+         logger.info(
+            `[AuthRoom] Client '${client.sessionId}' failed to authenticate because of the maintenance`,
+         );
+         return false;
+      }
+
       const { username, password } = options;
       const hashedPassword = await hashPassword(password);
 
