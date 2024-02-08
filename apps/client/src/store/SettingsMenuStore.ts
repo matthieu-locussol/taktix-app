@@ -97,15 +97,15 @@ export class SettingsMenuStore {
    }
 
    public resetToDefaults(): void {
-      this.applyState(this.defaultState);
+      this._applyState(this.defaultState);
    }
 
    public cancelChanges(): void {
-      this.applyState(this.savedState);
+      this._applyState(this.savedState);
       this.close();
    }
 
-   public applyState(state: SettingsMenuState): void {
+   private _applyState(state: SettingsMenuState): void {
       this.setKeyboardLayout(state.keyboardLayout);
       this.setVolume(state.volume);
       this.setFullScreen(state.fullScreen);
