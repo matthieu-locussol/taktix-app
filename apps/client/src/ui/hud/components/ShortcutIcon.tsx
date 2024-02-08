@@ -19,6 +19,7 @@ export const ShortcutIcon = forwardRef<HTMLButtonElement, ShortcutIconProps>(
                borderRadius: '8px',
                border: `1px solid ${palette.paper.border}`,
                background: darken(`${palette.paper.background}C6`, 0.2),
+               opacity: rest.disabled ? 0.5 : 1,
                color: palette.primary.light,
                '&:hover': {
                   background: darken(`${palette.paper.background}C6`, 0.8),

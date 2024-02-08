@@ -24,13 +24,13 @@ export const Menu = observer(() => {
    return (
       <Root widthPercent={hudStore.menuWidth} heightPercent={hudStore.menuHeight}>
          {/* Top line */}
-         <ShortcutIcon icon={<StatsIcon />} />
-         <ShortcutIcon icon={<SkillsIcon />} />
-         <ShortcutIcon icon={<InventoryIcon />} />
-         <ShortcutIcon icon={<MapIcon />} />
-         <ShortcutIcon icon={<ForgeIcon />} />
-         <ShortcutIcon icon={<AuctionHouseIcon />} />
-         <ShortcutIcon icon={<FriendsIcon />} />
+         <ShortcutIcon disabled icon={<StatsIcon />} />
+         <ShortcutIcon disabled icon={<SkillsIcon />} />
+         <ShortcutIcon disabled icon={<InventoryIcon />} />
+         <ShortcutIcon disabled icon={<MapIcon />} />
+         <ShortcutIcon disabled icon={<ForgeIcon />} />
+         <ShortcutIcon disabled icon={<AuctionHouseIcon />} />
+         <ShortcutIcon disabled icon={<FriendsIcon />} />
          <ShortcutIcon
             active={settingsMenuStore.isOpened}
             icon={<SettingsIcon />}
