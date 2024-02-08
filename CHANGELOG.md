@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.37.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.36.0...v1.37.0) (2024-02-08)
+
+
+### Features
+
+* added a settings menu ([3ffdaee](https://github.com/matthieu-locussol/taktix-app/commit/3ffdaee46a6036164bf0678efd6d220b752b0448))
+
+
+### Bug Fixes
+
+* set context menu title & players hover colors ([7d48481](https://github.com/matthieu-locussol/taktix-app/commit/7d484818f9d0ca94f4fb763a561c359029871a8d))
+
 ## [1.36.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.35.0...v1.36.0) (2024-02-07)
 
 
