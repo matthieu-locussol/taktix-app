@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.38.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.37.0...v1.38.0) (2024-02-08)
+
+
+### Features
+
+* maintenance system set up in the CI ([2e4d175](https://github.com/matthieu-locussol/taktix-app/commit/2e4d175bfb7cc436e84b41106e99397cf0ce3dd0))
+
+
+### Bug Fixes
+
+* disabled unimplemented menu buttons ([cba963c](https://github.com/matthieu-locussol/taktix-app/commit/cba963c35cc37bfdc3c0c0d16d1b59b902fcee4a))
+
 ## [1.37.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.36.0...v1.37.0) (2024-02-08)
 
 
