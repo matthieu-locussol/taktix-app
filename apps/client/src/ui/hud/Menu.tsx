@@ -19,7 +19,7 @@ import { useStore } from '../../store';
 import { ShortcutIcon } from './components/ShortcutIcon';
 
 export const Menu = observer(() => {
-   const { hudStore } = useStore();
+   const { hudStore, settingsMenuStore } = useStore();
 
    return (
       <Root widthPercent={hudStore.menuWidth} heightPercent={hudStore.menuHeight}>
@@ -31,7 +31,11 @@ export const Menu = observer(() => {
          <ShortcutIcon icon={<ForgeIcon />} />
          <ShortcutIcon icon={<AuctionHouseIcon />} />
          <ShortcutIcon icon={<FriendsIcon />} />
-         <ShortcutIcon icon={<SettingsIcon />} />
+         <ShortcutIcon
+            active={settingsMenuStore.isOpened}
+            icon={<SettingsIcon />}
+            onClick={() => settingsMenuStore.open()}
+         />
          {/* Bottom line */}
          <ShortcutIcon
             active={hudStore.isMinimapVisible}

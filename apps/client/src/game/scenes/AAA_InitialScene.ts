@@ -19,7 +19,7 @@ export class AAA_InitialScene extends Scene {
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
-      this.sound.play('AAA_Initial_music', { loop: true, volume: 0.05 });
+      this.sound.play('AAA_Initial_music', { loop: true, volume: 0.2 });
       this.sound.pauseOnBlur = false;
 
       this.tilemap = this.make.tilemap();

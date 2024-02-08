@@ -9,6 +9,7 @@ export const config: Phaser.Types.Core.GameConfig = {
    type: Phaser.AUTO,
    backgroundColor: '#1f2937',
    parent: 'root-game',
+   fullscreenTarget: 'root-game',
    scene: [...mapsScenes],
    pixelArt: true,
    fps: {

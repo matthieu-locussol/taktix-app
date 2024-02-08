@@ -181,6 +181,7 @@ export class ColyseusStore {
 
             this._store.characterSelectionStore.setLoading(false);
             this._store.screenStore.setLoggedIn(true);
+            this._store.settingsMenuStore.applyState(this._store.settingsMenuStore.savedState);
 
             const scene = await this._store.gameStore.changeMapPlayer(map, {
                entrancePosition: { x: posX, y: posY },

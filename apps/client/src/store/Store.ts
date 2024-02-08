@@ -13,6 +13,7 @@ import { LoginStore } from './LoginStore';
 import { NewsStore } from './NewsStore';
 import { RegisterStore } from './RegisterStore';
 import { ScreenStore } from './ScreenStore';
+import { SettingsMenuStore } from './SettingsMenuStore';
 import { UpdaterStore } from './UpdaterStore';
 
 export class Store {
@@ -44,6 +45,8 @@ export class Store {
 
    public screenStore: ScreenStore;
 
+   public settingsMenuStore: SettingsMenuStore;
+
    public updaterStore: UpdaterStore;
 
    constructor() {
@@ -63,6 +66,7 @@ export class Store {
       this.newsStore = new NewsStore();
       this.registerStore = new RegisterStore();
       this.screenStore = new ScreenStore(this);
+      this.settingsMenuStore = new SettingsMenuStore(this);
       this.updaterStore = new UpdaterStore();
    }
 }

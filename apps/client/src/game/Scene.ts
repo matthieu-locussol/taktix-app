@@ -177,6 +177,14 @@ export abstract class Scene extends Phaser.Scene {
             this.handlePointerMove(pointer, gameObjects);
          },
       );
+
+      this.scale.on(Phaser.Scale.Events.ENTER_FULLSCREEN, () => {
+         store.settingsMenuStore.setFullScreen(true, true);
+      });
+
+      this.scale.on(Phaser.Scale.Events.LEAVE_FULLSCREEN, () => {
+         store.settingsMenuStore.setFullScreen(false, true);
+      });
    }
 
    private initializeGrid(): void {
@@ -424,9 +432,38 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
+   private getKeyboardCursors(): Phaser.Types.Input.Keyboard.CursorKeys {
+      _assert(this.input.keyboard, 'input.keyboard should be defined');
+      const { keyboardLayout } = store.settingsMenuStore;
+
+      if (keyboardLayout === 'zqsd') {
+         return this.input.keyboard.addKeys({
+            up: Phaser.Input.Keyboard.KeyCodes.Z,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            left: Phaser.Input.Keyboard.KeyCodes.Q,
+            right: Phaser.Input.Keyboard.KeyCodes.D,
+         }) as Phaser.Types.Input.Keyboard.CursorKeys;
+      }
+
+      if (keyboardLayout === 'wasd') {
+         return this.input.keyboard.addKeys({
+            up: Phaser.Input.Keyboard.KeyCodes.W,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            left: Phaser.Input.Keyboard.KeyCodes.A,
+            right: Phaser.Input.Keyboard.KeyCodes.D,
+         }) as Phaser.Types.Input.Keyboard.CursorKeys;
+      }
+
+      if (keyboardLayout === 'arrows') {
+         return this.input.keyboard.createCursorKeys();
+      }
+
+      throw new Error('Invalid keyboard layout');
+   }
+
    public updateMoves(): void {
       if (this.input.keyboard !== null) {
-         const cursors = this.input.keyboard.createCursorKeys();
+         const cursors = this.getKeyboardCursors();
          const playerPosition = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
 
          if (!this.gridEngine.isMoving(INTERNAL_PLAYER_NAME)) {
