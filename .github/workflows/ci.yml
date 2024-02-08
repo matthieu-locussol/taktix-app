@@ -35,10 +35,26 @@ jobs:
          - run: pnpm build
          - run: pnpm test
 
+   startMaintenance:
+      name: Start Maintenance
+      runs-on: ubuntu-latest
+      needs: [build]
+      if: github.ref == 'refs/heads/master'
+      steps:
+         - run: |
+              curl '${{ env.MAINTENANCE_ENDPOINT }}' \
+                 -sSf \
+                 -H 'Accept: application/json' \
+                 -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
+                 -H 'Connection: keep-alive' \
+                 -H 'Content-Type: application/json' \
+                 --data-raw '{"type":"start","token":"${{ env.MAINTENANCE_TOKEN }}"}' \
+                 --compressed
+
    deploy:
       name: Deploy
       runs-on: ubuntu-latest
-      needs: [build]
+      needs: [startMaintenance]
       if: github.ref == 'refs/heads/master'
       steps:
          - run: echo "${{ secrets.SSHKEY }}" > key.pem
@@ -98,3 +114,19 @@ jobs:
               releaseBody: 'See the assets to download this version and install it.'
               releaseDraft: false
               prerelease: false
+
+   endMaintenance:
+      name: End Maintenance
+      runs-on: ubuntu-latest
+      needs: [release]
+      if: github.ref == 'refs/heads/master'
+      steps:
+         - run: |
+              curl '${{ env.MAINTENANCE_ENDPOINT }}' \
+                 -sSf \
+                 -H 'Accept: application/json' \
+                 -H 'Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7' \
+                 -H 'Connection: keep-alive' \
+                 -H 'Content-Type: application/json' \
+                 --data-raw '{"type":"end","token":"${{ env.MAINTENANCE_TOKEN }}"}' \
+                 --compressed
