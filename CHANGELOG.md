@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.40.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.39.0...v1.40.0) (2024-02-10)
+
+
+### Features
+
+* check for update after maintenance is done ([9b79264](https://github.com/matthieu-locussol/taktix-app/commit/9b79264fcdf0407f2754d0dfbd12c1488882cfd6))
+* correctly manage user sessions & handles double login invalidation ([8778567](https://github.com/matthieu-locussol/taktix-app/commit/8778567bae119b147865e8fb2037b0f701aa02bd))
+
+
+### Bug Fixes
+
+* allow setFullscreen in tauri allowList ([376539f](https://github.com/matthieu-locussol/taktix-app/commit/376539f284e5f026a44471cb5848d381076f4a65))
+* removed unloadAssets method ([7baaaee](https://github.com/matthieu-locussol/taktix-app/commit/7baaaee1cf077bdb269156ba7aa3e057e8219d2b))
+* StatusSchema and NewsStore specs ([6e89ef6](https://github.com/matthieu-locussol/taktix-app/commit/6e89ef627f28653f3ec6e1c333485ffdfd324443))
+
 ## [1.39.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.38.0...v1.39.0) (2024-02-10)
 
 
