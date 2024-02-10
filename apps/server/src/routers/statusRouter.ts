@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import { StatusSchema } from 'shared';
 import { prisma } from '../utils/prisma';
 
 export const statusRouter: RequestHandler = async (_, res) => {
@@ -6,9 +7,9 @@ export const statusRouter: RequestHandler = async (_, res) => {
       where: { done: false },
    });
 
-   if (maintenance !== null) {
-      res.send({ status: 'maintenance' });
-   } else {
-      res.send({ status: 'ok' });
-   }
+   const payload: StatusSchema = {
+      status: maintenance !== null ? 'maintenance' : 'online',
+   };
+
+   res.send(payload);
 };

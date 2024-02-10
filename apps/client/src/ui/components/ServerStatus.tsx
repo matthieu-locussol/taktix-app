@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { StatusResults } from 'shared/src/routers/StatusResults';
+import { StatusSchema, zStatusSchema } from 'shared/src/schemas/StatusSchema';
 import { useStore } from '../../store';
 
 const REFRESH_INTERVAL = 5_000;
@@ -18,12 +18,13 @@ export const ServerStatus = observer((props: BoxProps) => {
             const results = await fetch(`${import.meta.env.VITE_SERVER_URL}/status`, {
                method: 'GET',
             });
-            const json: StatusResults = await results.json();
-            newsStore.setServerOnline(json.status === 'ok');
-            newsStore.setServerMaintenance(json.status === 'maintenance');
+
+            const json = await results.json();
+            const { status } = zStatusSchema.parse(json);
+
+            newsStore.setStatus(status);
          } catch (e) {
-            newsStore.setServerOnline(false);
-            newsStore.setServerMaintenance(false);
+            newsStore.setStatus('offline');
          }
       };
 
@@ -43,7 +44,7 @@ export const ServerStatus = observer((props: BoxProps) => {
          <Typography sx={{ m: 0 }}>
             <b>Server status:</b> {newsStore.status}
          </Typography>
-         <BadgeIcon online={newsStore.serverOnline} maintenance={newsStore.serverMaintenance} />
+         <BadgeIcon status={newsStore.status} />
       </StyledBox>
    );
 });
@@ -54,12 +55,17 @@ const StyledBox = styled(Box)({
    justifyContent: 'space-between',
 });
 
-const BadgeIcon = styled('div')<{ online: boolean; maintenance: boolean }>(
-   ({ theme, online, maintenance }) => ({
-      width: theme.spacing(1.5),
-      height: theme.spacing(1.5),
-      borderRadius: 999,
-      // eslint-disable-next-line no-nested-ternary
-      backgroundColor: maintenance ? 'orange' : online ? 'green' : 'red',
-   }),
-);
+interface StyleProps {
+   status: StatusSchema['status'];
+}
+
+const BadgeIcon = styled('div')<StyleProps>(({ theme, status }) => ({
+   width: theme.spacing(1.5),
+   height: theme.spacing(1.5),
+   borderRadius: 999,
+   backgroundColor: {
+      online: '#22c55e',
+      maintenance: '#f59e0b',
+      offline: '#ef4444',
+   }[status],
+}));
