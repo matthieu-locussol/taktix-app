@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { ChangelogResults } from 'shared';
+import { ChangelogSchema } from 'shared';
 import { prisma } from '../utils/prisma';
 
 export const changelogRouter: RequestHandler = async (_, res) => {
@@ -10,7 +10,7 @@ export const changelogRouter: RequestHandler = async (_, res) => {
       take: 10,
    });
 
-   const result: ChangelogResults = {
+   const result: ChangelogSchema = {
       changelogs: changelogs.map((changelog) => ({
          id: changelog.id,
          date: changelog.date.toISOString(),
