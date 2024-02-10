@@ -1,9 +1,22 @@
 import { describe, expect, it, vi } from 'vitest';
 import { NewsStore } from './NewsStore';
+import { Store } from './Store';
+
+vi.mock('./Store', () => {
+   const updaterStore = {
+      checkUpdate: vi.fn(),
+   };
+
+   const MockedStore = vi.fn().mockImplementation(() => ({
+      updaterStore,
+   }));
+
+   return { Store: MockedStore };
+});
 
 describe('NewsStore', () => {
    it('should be initialized', () => {
-      const store = new NewsStore();
+      const store = new NewsStore(new Store());
 
       expect(store).toBeDefined();
       expect(store.status).toBe('offline');
@@ -12,13 +25,13 @@ describe('NewsStore', () => {
    });
 
    it('should set the server online', () => {
-      const store = new NewsStore();
+      const store = new NewsStore(new Store());
       store.setStatus('online');
       expect(store.status).toBe('online');
    });
 
    it('should return the status', () => {
-      const store = new NewsStore();
+      const store = new NewsStore(new Store());
 
       store.setStatus('online');
       expect(store.status).toBe('online');
@@ -31,7 +44,7 @@ describe('NewsStore', () => {
    });
 
    it('should fetch the changelogs', async () => {
-      const store = new NewsStore();
+      const store = new NewsStore(new Store());
 
       const mockResponse = {
          json: async () => ({
