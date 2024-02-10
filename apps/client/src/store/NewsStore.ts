@@ -1,10 +1,9 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { ChangelogResults } from 'shared/src/routers/ChangelogResults';
+import { StatusSchema } from 'shared/src/schemas/StatusSchema';
 
 export class NewsStore {
-   public serverOnline: boolean = false;
-
-   public serverMaintenance: boolean = false;
+   public status: StatusSchema['status'] = 'offline';
 
    public loading: boolean = false;
 
@@ -28,16 +27,7 @@ export class NewsStore {
       });
    }
 
-   setServerOnline(serverOnline: boolean) {
-      this.serverOnline = serverOnline;
-   }
-
-   setServerMaintenance(serverMaintenance: boolean) {
-      this.serverMaintenance = serverMaintenance;
-   }
-
-   get status() {
-      // eslint-disable-next-line no-nested-ternary
-      return this.serverMaintenance ? 'maintenance' : this.serverOnline ? 'online' : 'offline';
+   setStatus(status: StatusSchema['status']) {
+      this.status = status;
    }
 }

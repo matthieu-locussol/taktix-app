@@ -142,7 +142,7 @@ export const LoginScreen = observer(() => {
                   </Typography>
                   {loginStore.errorMessage && (
                      <Typography variant="body1" align="center" color="error">
-                        {newsStore.serverMaintenance
+                        {newsStore.status === 'maintenance'
                            ? 'Server in maintenance, please try again later!'
                            : loginStore.errorMessage}
                      </Typography>
