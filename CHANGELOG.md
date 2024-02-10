@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.39.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.38.0...v1.39.0) (2024-02-10)
+
+
+### Features
+
+* handles maintenance on client side ([a12d555](https://github.com/matthieu-locussol/taktix-app/commit/a12d555a85673790d5f23a0d8a3f8c6411250c91))
+
 ## [1.38.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.37.0...v1.38.0) (2024-02-08)
 
 
