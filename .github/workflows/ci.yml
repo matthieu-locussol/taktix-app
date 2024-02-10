@@ -52,7 +52,7 @@ jobs:
                  --compressed
 
    deploy:
-      name: Deploy
+      name: Deploy Server
       runs-on: ubuntu-latest
       needs: [startMaintenance]
       if: github.ref == 'refs/heads/master'
