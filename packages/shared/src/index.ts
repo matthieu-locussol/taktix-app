@@ -6,7 +6,7 @@ export * from './data/teleportationSpots';
 export * from './rooms/AuthRoom';
 export * from './rooms/ChatRoom';
 export * from './rooms/MapRoom';
-export * from './routers/ChangelogResults';
+export * from './schemas/ChangelogSchema';
 export * from './schemas/CharacterCreationSchema';
 export * from './schemas/MaintenanceSchema';
 export * from './schemas/RegisterSchema';

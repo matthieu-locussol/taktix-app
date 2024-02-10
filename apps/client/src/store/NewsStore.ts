@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { ChangelogResults } from 'shared/src/routers/ChangelogResults';
+import { ChangelogSchema, zChangelogSchema } from 'shared/src/schemas/ChangelogSchema';
 import { StatusSchema } from 'shared/src/schemas/StatusSchema';
 
 export class NewsStore {
@@ -7,7 +7,7 @@ export class NewsStore {
 
    public loading: boolean = false;
 
-   public changelogs: ChangelogResults['changelogs'] = [];
+   public changelogs: ChangelogSchema['changelogs'] = [];
 
    constructor() {
       makeAutoObservable(this);
@@ -18,13 +18,21 @@ export class NewsStore {
          this.loading = true;
       });
 
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/changelog`);
-      const data: ChangelogResults = await response.json();
+      try {
+         const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/changelog`);
+         const json = await response.json();
+         const { changelogs } = zChangelogSchema.parse(json);
 
-      runInAction(() => {
-         this.changelogs = data.changelogs;
-         this.loading = false;
-      });
+         runInAction(() => {
+            this.changelogs = changelogs;
+            this.loading = false;
+         });
+      } catch (error) {
+         runInAction(() => {
+            this.changelogs = [];
+            this.loading = false;
+         });
+      }
    }
 
    setStatus(status: StatusSchema['status']) {
