@@ -14,6 +14,7 @@ export * from './schemas/StatusSchema';
 export * from './states/MapState';
 export * from './states/PlayerState';
 export * from './types/Channel';
+export * from './types/Colyseus';
 export * from './types/Player';
 export * from './types/Role';
 export * from './types/Room';
