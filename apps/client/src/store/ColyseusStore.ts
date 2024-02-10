@@ -349,7 +349,6 @@ export class ColyseusStore {
       await this.joinRoom(map, { x, y });
 
       this.setChangingMap(false);
-      scene.unloadAssets();
 
       this._store.characterStore.setMap(map as TRoom);
       this._store.gameStore.enableKeyboard(true);

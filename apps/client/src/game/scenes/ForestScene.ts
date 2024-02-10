@@ -14,18 +14,6 @@ export class ForestScene extends Scene {
       this.load.tilemapTiledJSON('Forest_tiledmap', '/assets/maps/Forest.json');
    }
 
-   public unloadAssets(): void {
-      this.sound.removeByKey('Forest_music');
-      this.textures.remove('Cloud City_tileset');
-      this.textures.remove('forest_trees_tileset');
-      this.textures.remove('forest_ground_tileset');
-      this.textures.remove('forest_props_tileset');
-
-      if (this.tilemap !== null) {
-         this.tilemap.destroy();
-      }
-   }
-
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
       this.sound.play('Forest_music', { loop: true, volume: 0.5 });

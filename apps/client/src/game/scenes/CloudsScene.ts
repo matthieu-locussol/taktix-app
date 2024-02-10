@@ -11,15 +11,6 @@ export class CloudsScene extends Scene {
       this.load.tilemapTiledJSON('Clouds_tiledmap', '/assets/maps/Clouds.json');
    }
 
-   public unloadAssets(): void {
-      this.sound.removeByKey('Clouds_music');
-      this.textures.remove('Cloud City_tileset');
-
-      if (this.tilemap !== null) {
-         this.tilemap.destroy();
-      }
-   }
-
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
       this.sound.play('Clouds_music', { loop: true, volume: 0.5 });

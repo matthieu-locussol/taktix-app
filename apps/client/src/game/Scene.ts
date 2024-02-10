@@ -115,8 +115,6 @@ export abstract class Scene extends Phaser.Scene {
 
    public abstract loadAssets(): void;
 
-   public abstract unloadAssets(): void;
-
    public create(): void {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
       this.cameras.main.setZoom(store.gameStore.zoom);
