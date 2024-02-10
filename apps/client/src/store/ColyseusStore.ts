@@ -4,6 +4,7 @@ import { AuthRoomResponse, isAuthRoomResponse } from 'shared/src/rooms/AuthRoom'
 import { ChatRoomResponse, isChatRoomResponse } from 'shared/src/rooms/ChatRoom';
 import { MapRoomResponse, isMapRoomResponse } from 'shared/src/rooms/MapRoom';
 import { MapState } from 'shared/src/states/MapState';
+import { CustomProtocol, Protocol } from 'shared/src/types/Colyseus';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { Room as TRoom } from 'shared/src/types/Room';
 import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
@@ -11,16 +12,14 @@ import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { match } from 'ts-pattern';
 import { Store } from './Store';
 
-const WS_CLOSED_CONSENTED = 4000;
-
 export class ColyseusStore {
    private _client: Client;
 
-   private _authRoom: Room | null;
+   private _authRoom: Room | null = null;
 
-   private _chatRoom: Room | null;
+   private _chatRoom: Room | null = null;
 
-   private _gameRoom: Room<MapState> | null;
+   private _gameRoom: Room<MapState> | null = null;
 
    private _store: Store;
 
@@ -32,10 +31,14 @@ export class ColyseusStore {
       makeAutoObservable(this);
 
       this._client = new Client(import.meta.env.VITE_SERVER_WEBSOCKET_URL);
+      this._store = store;
+   }
+
+   reset() {
+      this._client = new Client(import.meta.env.VITE_SERVER_WEBSOCKET_URL);
       this._authRoom = null;
       this._chatRoom = null;
       this._gameRoom = null;
-      this._store = store;
       this._uuid = null;
    }
 
@@ -356,14 +359,24 @@ export class ColyseusStore {
    }
 
    private async onWebSocketClosed(code: number) {
-      if (code !== WS_CLOSED_CONSENTED) {
+      if (code !== Protocol.WS_CLOSE_CONSENTED) {
          this._store.screenStore.setLoggedIn(false);
          this._store.screenStore.setScreen('login');
-         this._store.loginStore.setErrorMessage(
-            `[${code}] You have been disconnected from the server`,
-         );
 
-         this._client = new Client(import.meta.env.VITE_SERVER_WEBSOCKET_URL);
+         this._store.characterCreationStore.reset();
+         this._store.characterSelectionStore.reset();
+
+         if (code === CustomProtocol.DISCONNECT_FROM_OTHER_SESSION) {
+            this._store.loginStore.setErrorMessage(
+               `You have been disconnected because someone logged in with your account from another location.`,
+            );
+         } else {
+            this._store.loginStore.setErrorMessage(
+               `[${code}] You have been disconnected from the server`,
+            );
+         }
+
+         this.reset();
       }
    }
 }

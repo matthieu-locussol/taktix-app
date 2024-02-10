@@ -10,7 +10,7 @@ import {
    isChatRoomMessage,
 } from 'shared';
 import { match } from 'ts-pattern';
-import { usersMap } from './utils/usersMap';
+import { removeDanglingUsers, usersMap } from './utils/usersMap';
 
 // eslint-disable-next-line import/no-mutable-exports
 export let notifyMaintenance: (() => void) | null = null;
@@ -158,6 +158,7 @@ export class ChatRoom extends Room {
 
       const userInfos = usersMap.get(uuid);
       _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
+      usersMap.set(uuid, { ...userInfos, chatRoomClient: client });
       const { characterName } = userInfos;
 
       this.characterInfosByClientId.set(client.id, { name: characterName, uuid });
@@ -207,6 +208,8 @@ export class ChatRoom extends Room {
       };
 
       this.broadcast(packet.type, packet.message, { except: client });
+
+      setTimeout(() => removeDanglingUsers(), 1000);
    }
 
    onDispose() {

@@ -59,6 +59,7 @@ export class MapRoom extends Room<MapState> {
    async onJoin(client: Client, { uuid, position, direction }: Options) {
       const userInfos = usersMap.get(uuid);
       _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
+      usersMap.set(uuid, { ...userInfos, gameRoomClient: client });
       const { characterName } = userInfos;
 
       if (position !== undefined) {

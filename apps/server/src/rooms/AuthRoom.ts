@@ -1,6 +1,7 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import {
    AuthRoomMessage,
+   CustomProtocol,
    DEFAULT_DIRECTION,
    DEFAULT_MAP,
    DEFAULT_X,
@@ -11,6 +12,7 @@ import {
    StringMgt,
    AuthRoomUserData as UserData,
    _assert,
+   _assertTrue,
    isAuthRoomMessage,
 } from 'shared';
 import { AuthRoomResponse } from 'shared/src/rooms/AuthRoom';
@@ -18,12 +20,17 @@ import { match } from 'ts-pattern';
 import { v4 as uuidv4 } from 'uuid';
 import { hashPassword } from '../utils/hashPassword';
 import { prisma } from '../utils/prisma';
-import { usersMap } from './utils/usersMap';
+import { removeDanglingUsers, usersMap } from './utils/usersMap';
 
 type Client = ColyseusClient<UserData, unknown>;
 
+interface UserInformations {
+   username: string;
+   client: Client;
+}
+
 export class AuthRoom extends Room {
-   users = new Map<string, string>();
+   users = new Map<string, UserInformations>();
 
    onCreate(_options: Options) {
       logger.info('[AuthRoom] Room created');
@@ -89,14 +96,65 @@ export class AuthRoom extends Room {
          characters: user.characters.map(({ name }) => name),
       };
 
+      if (this.userIsAlreadyLoggedIn(username)) {
+         logger.info(
+            `[AuthRoom] Client '${client.sessionId}' caused the disconnection of another client with the same username '${username}'`,
+         );
+         this.disconnectUserWithSameUsername(client, username);
+      }
+
       logger.info(`[AuthRoom] Client '${client.sessionId}' successfully authenticated`);
       return true;
+   }
+
+   userIsAlreadyLoggedIn(usernameToCheck: string) {
+      for (const [, { username }] of this.users) {
+         if (username === usernameToCheck) {
+            return true;
+         }
+      }
+
+      for (const [, { username }] of usersMap) {
+         if (username === usernameToCheck) {
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+   disconnectUserWithSameUsername(client: Client, usernameToLogOut: string) {
+      for (const [uuid, { username, authRoomClient, chatRoomClient, gameRoomClient }] of usersMap) {
+         if (username === usernameToLogOut) {
+            if (authRoomClient !== null) {
+               _assertTrue(authRoomClient.id !== client.id);
+               authRoomClient.leave(CustomProtocol.DISCONNECT_FROM_OTHER_SESSION);
+            }
+
+            if (chatRoomClient !== null) {
+               chatRoomClient.leave(CustomProtocol.DISCONNECT_FROM_OTHER_SESSION);
+            }
+
+            if (gameRoomClient !== null) {
+               gameRoomClient.leave(CustomProtocol.DISCONNECT_FROM_OTHER_SESSION);
+            }
+
+            usersMap.delete(uuid);
+         }
+      }
+
+      for (const [clientId, { username, client: userClient }] of this.users) {
+         if (username === usernameToLogOut) {
+            userClient.leave(CustomProtocol.DISCONNECT_FROM_OTHER_SESSION);
+            this.users.delete(clientId);
+         }
+      }
    }
 
    onJoin(client: Client, options: Options) {
       logger.info(`[AuthRoom] Client '${client.sessionId}' joined the room`);
       _assert(client.userData, 'userData should be defined');
-      this.users.set(client.id, options.username);
+      this.users.set(client.id, { username: options.username, client });
       client.send('userData', client.userData);
    }
 
@@ -104,8 +162,9 @@ export class AuthRoom extends Room {
       client: Client,
       { message: { characterName } }: Extract<AuthRoomMessage, { type: 'selectCharacter' }>,
    ) {
-      const username = this.users.get(client.id);
-      _assert(username, 'username should be defined');
+      const userInformations = this.users.get(client.id);
+      _assert(userInformations, 'userInformations should be defined');
+      const { username } = userInformations;
 
       const character = await prisma.character.findUnique({
          where: { name: characterName },
@@ -142,6 +201,9 @@ export class AuthRoom extends Room {
             username,
             characterName: character.name,
             role: character.user.role,
+            authRoomClient: client,
+            gameRoomClient: null,
+            chatRoomClient: null,
          });
       }
 
@@ -157,8 +219,9 @@ export class AuthRoom extends Room {
       client: Client,
       { message: { characterName } }: Extract<AuthRoomMessage, { type: 'createCharacter' }>,
    ) {
-      const username = this.users.get(client.id);
-      _assert(username, 'username should be defined');
+      const userInformations = this.users.get(client.id);
+      _assert(userInformations, 'userInformations should be defined');
+      const { username } = userInformations;
 
       let message:
          | Extract<AuthRoomResponse, { type: 'createCharacterResponse' }>['message']
@@ -232,8 +295,10 @@ export class AuthRoom extends Room {
          message: { characterName, password },
       }: Extract<AuthRoomMessage, { type: 'deleteCharacter' }>,
    ) {
-      const username = this.users.get(client.id);
-      _assert(username, 'username should be defined');
+      const userInformations = this.users.get(client.id);
+      _assert(userInformations, 'userInformations should be defined');
+      const { username } = userInformations;
+
       const hashedPassword = await hashPassword(password);
 
       let message:
@@ -282,6 +347,8 @@ export class AuthRoom extends Room {
    onLeave(client: Client, _consented: boolean) {
       logger.info(`[AuthRoom] Client '${client.sessionId}' left the room`);
       this.users.delete(client.id);
+
+      setTimeout(() => removeDanglingUsers(), 1000);
    }
 
    onDispose() {
