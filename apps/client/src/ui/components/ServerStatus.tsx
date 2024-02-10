@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { StatusResults } from 'shared/src/routers/StatusResults';
 import { useStore } from '../../store';
 
-const REFRESH_INTERVAL = 30_000;
+const REFRESH_INTERVAL = 5_000;
 
 export const ServerStatus = observer((props: BoxProps) => {
    const store = useStore();
@@ -20,8 +20,10 @@ export const ServerStatus = observer((props: BoxProps) => {
             });
             const json: StatusResults = await results.json();
             newsStore.setServerOnline(json.status === 'ok');
+            newsStore.setServerMaintenance(json.status === 'maintenance');
          } catch (e) {
             newsStore.setServerOnline(false);
+            newsStore.setServerMaintenance(false);
          }
       };
 
@@ -41,7 +43,7 @@ export const ServerStatus = observer((props: BoxProps) => {
          <Typography sx={{ m: 0 }}>
             <b>Server status:</b> {newsStore.status}
          </Typography>
-         <BadgeIcon online={newsStore.serverOnline} />
+         <BadgeIcon online={newsStore.serverOnline} maintenance={newsStore.serverMaintenance} />
       </StyledBox>
    );
 });
@@ -52,9 +54,12 @@ const StyledBox = styled(Box)({
    justifyContent: 'space-between',
 });
 
-const BadgeIcon = styled('div')<{ online: boolean }>(({ theme, online }) => ({
-   width: theme.spacing(1.5),
-   height: theme.spacing(1.5),
-   borderRadius: 999,
-   backgroundColor: online ? 'green' : 'red',
-}));
+const BadgeIcon = styled('div')<{ online: boolean; maintenance: boolean }>(
+   ({ theme, online, maintenance }) => ({
+      width: theme.spacing(1.5),
+      height: theme.spacing(1.5),
+      borderRadius: 999,
+      // eslint-disable-next-line no-nested-ternary
+      backgroundColor: maintenance ? 'orange' : online ? 'green' : 'red',
+   }),
+);

@@ -6,7 +6,7 @@ import { prisma } from '../utils/prisma';
 export const registerRouter: RequestHandler = async (req, res) => {
    const { email, password, username } = zRegisterSchema.parse(req.body);
 
-   const [userByEmail, userByUsername] = await Promise.all([
+   const [userByEmail, userByUsername, maintenance] = await Promise.all([
       prisma.user.findFirst({
          where: {
             email,
@@ -17,7 +17,17 @@ export const registerRouter: RequestHandler = async (req, res) => {
             username,
          },
       }),
+      prisma.maintenance.findFirst({
+         where: {
+            done: false,
+         },
+      }),
    ]);
+
+   if (maintenance) {
+      res.status(503).send({ error: 'Server in maintenance, please try again later!' });
+      return;
+   }
 
    if (userByEmail) {
       res.status(400).send({ error: 'Email already in use!' });
