@@ -59,7 +59,7 @@ export class ChatRoom extends Room {
             message: {
                author: 'Server',
                channel: Channel.SERVER,
-               content: `A maintenance is ongoing, the server will be shut down soon!`,
+               content: `A maintenance has started. From now on, every action you do might be lost, so please log out as soon as possible. Thank you for your understanding.`,
             },
          };
 
