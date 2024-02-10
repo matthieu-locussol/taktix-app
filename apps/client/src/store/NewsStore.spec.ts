@@ -6,13 +6,13 @@ describe('NewsStore', () => {
       const store = new NewsStore();
 
       expect(store).toBeDefined();
-      expect(store.serverOnline).toBe(false);
+      expect(store.status).toBe(false);
    });
 
    it('should set the server online', () => {
       const store = new NewsStore();
       store.setServerOnline(true);
-      expect(store.serverOnline).toBe(true);
+      expect(store.status).toBe(true);
    });
 
    it('should return the status', () => {

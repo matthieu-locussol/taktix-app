@@ -4,6 +4,8 @@ import { ChangelogResults } from 'shared/src/routers/ChangelogResults';
 export class NewsStore {
    public serverOnline: boolean = false;
 
+   public serverMaintenance: boolean = false;
+
    public loading: boolean = false;
 
    public changelogs: ChangelogResults['changelogs'] = [];
@@ -30,7 +32,12 @@ export class NewsStore {
       this.serverOnline = serverOnline;
    }
 
+   setServerMaintenance(serverMaintenance: boolean) {
+      this.serverMaintenance = serverMaintenance;
+   }
+
    get status() {
-      return this.serverOnline ? 'online' : 'offline';
+      // eslint-disable-next-line no-nested-ternary
+      return this.serverMaintenance ? 'maintenance' : this.serverOnline ? 'online' : 'offline';
    }
 }
