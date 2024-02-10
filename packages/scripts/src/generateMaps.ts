@@ -127,15 +127,6 @@ export class ${map}Scene extends Scene {
       this.load.tilemapTiledJSON('${map}_tiledmap', '/assets/maps/${map}.json');
    }
 
-   public unloadAssets(): void {
-      this.sound.removeByKey('${map}_music');
-      ${tiledMapTilesets.map((tileset) => `this.textures.remove('${tileset.name}_tileset');`).join('\n      ')}
-
-      if (this.tilemap !== null) {
-         this.tilemap.destroy();
-      }
-   }
-
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
       this.sound.play('${map}_music', { loop: true, volume: 0.5 });

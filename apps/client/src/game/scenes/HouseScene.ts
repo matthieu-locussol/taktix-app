@@ -12,16 +12,6 @@ export class HouseScene extends Scene {
       this.load.tilemapTiledJSON('House_tiledmap', '/assets/maps/House.json');
    }
 
-   public unloadAssets(): void {
-      this.sound.removeByKey('House_music');
-      this.textures.remove('House_tileset');
-      this.textures.remove('Clouds_tileset');
-
-      if (this.tilemap !== null) {
-         this.tilemap.destroy();
-      }
-   }
-
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
       this.sound.play('House_music', { loop: true, volume: 0.5 });

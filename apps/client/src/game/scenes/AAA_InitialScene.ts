@@ -13,10 +13,6 @@ export class AAA_InitialScene extends Scene {
       });
    }
 
-   public unloadAssets(): void {
-      this.sound.removeByKey('AAA_Initial_music');
-   }
-
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
       this.sound.play('AAA_Initial_music', { loop: true, volume: 0.2 });

@@ -12,16 +12,6 @@ export class DungeonScene extends Scene {
       this.load.tilemapTiledJSON('Dungeon_tiledmap', '/assets/maps/Dungeon.json');
    }
 
-   public unloadAssets(): void {
-      this.sound.removeByKey('Dungeon_music');
-      this.textures.remove('Dungeon Indoor_tileset');
-      this.textures.remove('Dungeon Outdoor_tileset');
-
-      if (this.tilemap !== null) {
-         this.tilemap.destroy();
-      }
-   }
-
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
       this.sound.play('Dungeon_music', { loop: true, volume: 0.5 });
