@@ -63,7 +63,7 @@ export class Store {
       this.hudStore = new HudStore(this);
       this.loadingScreenStore = new LoadingScreenStore();
       this.loginStore = new LoginStore();
-      this.newsStore = new NewsStore();
+      this.newsStore = new NewsStore(this);
       this.registerStore = new RegisterStore();
       this.screenStore = new ScreenStore(this);
       this.settingsMenuStore = new SettingsMenuStore(this);

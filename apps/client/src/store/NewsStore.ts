@@ -1,16 +1,21 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { ChangelogSchema, zChangelogSchema } from 'shared/src/schemas/ChangelogSchema';
 import { StatusSchema } from 'shared/src/schemas/StatusSchema';
+import { Store } from './Store';
 
 export class NewsStore {
+   private _store: Store;
+
    public status: StatusSchema['status'] = 'offline';
 
    public loading: boolean = false;
 
    public changelogs: ChangelogSchema['changelogs'] = [];
 
-   constructor() {
+   constructor(store: Store) {
       makeAutoObservable(this);
+
+      this._store = store;
    }
 
    public async fetchChangelogs() {
@@ -36,6 +41,11 @@ export class NewsStore {
    }
 
    setStatus(status: StatusSchema['status']) {
+      if (this.status === 'maintenance' && status === 'online') {
+         this.fetchChangelogs();
+         this._store.updaterStore.checkUpdate();
+      }
+
       this.status = status;
    }
 }
