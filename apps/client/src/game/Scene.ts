@@ -413,19 +413,23 @@ export abstract class Scene extends Phaser.Scene {
    public updatePlayersWrappers(): void {
       for (const [name, wrapper] of this.playersWrappers) {
          const realName = name === INTERNAL_PLAYER_NAME ? store.characterStore.name : name;
-         const characterSprite = this.gridEngine.getSprite(name);
 
-         if (characterSprite !== undefined) {
-            const { name: characterName, square } = wrapper;
+         try {
+            const characterSprite = this.gridEngine.getSprite(name);
+            if (characterSprite !== undefined) {
+               const { name: characterName, square } = wrapper;
 
-            Phaser.Display.Align.To.TopCenter(
-               characterName,
-               characterSprite,
-               (CHARACTER_WIDTH * SCALE_FACTOR - realName.length * CHARACTER_LETTER_WIDTH) / 4,
-               0,
-            );
+               Phaser.Display.Align.To.TopCenter(
+                  characterName,
+                  characterSprite,
+                  (CHARACTER_WIDTH * SCALE_FACTOR - realName.length * CHARACTER_LETTER_WIDTH) / 4,
+                  0,
+               );
 
-            Phaser.Display.Align.To.BottomCenter(square, characterSprite, CHARACTER_WIDTH / 2);
+               Phaser.Display.Align.To.BottomCenter(square, characterSprite, CHARACTER_WIDTH / 2);
+            }
+         } catch (e) {
+            console.error(e);
          }
       }
    }
