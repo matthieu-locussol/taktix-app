@@ -1,4 +1,4 @@
-import { Scene } from '../Scene';
+import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
 
 export class CloudsScene extends Scene {
    constructor() {
@@ -9,6 +9,10 @@ export class CloudsScene extends Scene {
       this.load.audio('Clouds_music', '/assets/musics/Clouds.mp3');
       this.load.image('Cloud City_tileset', '/assets/tilesets/cloud_tileset.png');
       this.load.tilemapTiledJSON('Clouds_tiledmap', '/assets/maps/Clouds.json');
+      this.load.spritesheet('PlayerSpritesheet', '/assets/characters/characters.png', {
+         frameWidth: CHARACTER_WIDTH,
+         frameHeight: CHARACTER_HEIGHT,
+      });
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

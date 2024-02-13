@@ -114,7 +114,7 @@ const generateClientMapsScenes = (maps: string[]) => {
          __dirname,
          `../../../apps/client/src/game/scenes/${map}Scene.ts`,
       );
-      const mapSceneBlob = `import { Scene } from '../Scene';
+      const mapSceneBlob = `import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
 
 export class ${map}Scene extends Scene {
    constructor() {
@@ -125,6 +125,10 @@ export class ${map}Scene extends Scene {
       this.load.audio('${map}_music', '/assets/musics/${map}.mp3');
       ${tiledMapTilesets.map((tileset) => `this.load.image('${tileset.name}_tileset', '${tileset.image}');`).join('\n      ')}
       this.load.tilemapTiledJSON('${map}_tiledmap', '/assets/maps/${map}.json');
+      this.load.spritesheet('PlayerSpritesheet', '/assets/characters/characters.png', {
+         frameWidth: CHARACTER_WIDTH,
+         frameHeight: CHARACTER_HEIGHT,
+      });
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
