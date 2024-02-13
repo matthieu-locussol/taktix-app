@@ -1,4 +1,4 @@
-import { Scene } from '../Scene';
+import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
 
 export class ForestScene extends Scene {
    constructor() {
@@ -12,6 +12,10 @@ export class ForestScene extends Scene {
       this.load.image('forest_ground_tileset', '/assets/tilesets/forest_ground.png');
       this.load.image('forest_props_tileset', '/assets/tilesets/forest_props.png');
       this.load.tilemapTiledJSON('Forest_tiledmap', '/assets/maps/Forest.json');
+      this.load.spritesheet('PlayerSpritesheet', '/assets/characters/characters.png', {
+         frameWidth: CHARACTER_WIDTH,
+         frameHeight: CHARACTER_HEIGHT,
+      });
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
