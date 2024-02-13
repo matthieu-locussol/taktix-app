@@ -347,8 +347,7 @@ export class AuthRoom extends Room {
    onLeave(client: Client, _consented: boolean) {
       logger.info(`[AuthRoom] Client '${client.sessionId}' left the room`);
       this.users.delete(client.id);
-
-      setTimeout(() => removeDanglingUsers(), 1000);
+      removeDanglingUsers();
    }
 
    onDispose() {
