@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.40.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.40.0...v1.40.1) (2024-02-13)
+
+
+### Bug Fixes
+
+* maintenance message ([b516a3d](https://github.com/matthieu-locussol/taktix-app/commit/b516a3d382eb4da29520692428f2f708d927402f))
+* NewsStore specs ([2dafd17](https://github.com/matthieu-locussol/taktix-app/commit/2dafd17f6f3036ebb2766f8c42438c0bc60c3b59))
+* scenes load the character spritesheet ([550e526](https://github.com/matthieu-locussol/taktix-app/commit/550e52628f7f8b69e2383fec168556ca9f746e95))
+* updatePlayersWrappers is not crashing if the external player does not exist ([7d4aa21](https://github.com/matthieu-locussol/taktix-app/commit/7d4aa215b807a37a516b68c06b2ba49d10aea576))
+
 ## [1.40.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.39.0...v1.40.0) (2024-02-10)
 
 
