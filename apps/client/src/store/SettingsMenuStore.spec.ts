@@ -87,20 +87,6 @@ describe('SettingsMenuStore', () => {
       expect(store.fullScreen).toBe(false);
    });
 
-   it('should set full screen with Phaser update', () => {
-      const store = new SettingsMenuStore(new Store());
-
-      store.setFullScreen(true, true);
-      expect(store.fullScreen).toBe(true);
-   });
-
-   it('should set full screen without Phaser update', () => {
-      const store = new SettingsMenuStore(new Store());
-
-      store.setFullScreen(true, false);
-      expect(store.fullScreen).toBe(true);
-   });
-
    it('should set language', () => {
       const store = new SettingsMenuStore(new Store());
 

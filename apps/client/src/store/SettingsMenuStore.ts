@@ -1,5 +1,7 @@
+import { appWindow } from '@tauri-apps/api/window';
 import { makeAutoObservable } from 'mobx';
 import { z } from 'zod';
+import { isTauri } from '../utils/tauri';
 import { Store } from './Store';
 
 export const keyboardLayouts = [
@@ -86,14 +88,14 @@ export class SettingsMenuStore {
       this._store.gameStore.game.sound.volume = volume / 100;
    }
 
-   public setFullScreen(fullScreen: boolean, skipPhaserUpdate?: boolean): void {
+   public async setFullScreen(fullScreen: boolean): Promise<void> {
       this.fullScreen = fullScreen;
 
-      if (!skipPhaserUpdate) {
-         if (fullScreen) {
-            this._store.gameStore.game.scale.startFullscreen();
-         } else {
-            this._store.gameStore.game.scale.stopFullscreen();
+      if (isTauri()) {
+         const isTauriFullscreen = await appWindow.isFullscreen();
+
+         if (fullScreen !== isTauriFullscreen) {
+            appWindow.setFullscreen(fullScreen);
          }
       }
    }

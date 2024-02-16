@@ -177,11 +177,11 @@ export abstract class Scene extends Phaser.Scene {
       );
 
       this.scale.on(Phaser.Scale.Events.ENTER_FULLSCREEN, () => {
-         store.settingsMenuStore.setFullScreen(true, true);
+         store.settingsMenuStore.setFullScreen(true);
       });
 
       this.scale.on(Phaser.Scale.Events.LEAVE_FULLSCREEN, () => {
-         store.settingsMenuStore.setFullScreen(false, true);
+         store.settingsMenuStore.setFullScreen(false);
       });
    }
 
