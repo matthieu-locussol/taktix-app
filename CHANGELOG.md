@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.41.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.40.1...v1.41.0) (2024-02-16)
+
+
+### Features
+
+* added a community router & community menu ([7193561](https://github.com/matthieu-locussol/taktix-app/commit/7193561f95451fe793e69ae9478fc4651b0e9185))
+
+
+### Bug Fixes
+
+* fullscreen mode is set using tauri, not phaser ([57c187b](https://github.com/matthieu-locussol/taktix-app/commit/57c187b1adce72c6b6dfb33cce856361ae5c0ba4))
+
 ### [1.40.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.40.0...v1.40.1) (2024-02-13)
 
 
