@@ -28,6 +28,8 @@ export class SettingsMenuStore {
 
    public isOpened: boolean = false;
 
+   public isFullscreen: boolean = false;
+
    public defaultState: SettingsMenuState = {
       keyboardLayout: 'arrows',
       volume: 50,
@@ -68,6 +70,10 @@ export class SettingsMenuStore {
 
    public close(): void {
       this.isOpened = false;
+   }
+
+   public toggleFullscreen(): void {
+      this.isFullscreen = !this.isFullscreen;
    }
 
    public setKeyboardLayout(layout: string): void {

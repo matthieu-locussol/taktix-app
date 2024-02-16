@@ -8,6 +8,7 @@ export * from './rooms/ChatRoom';
 export * from './rooms/MapRoom';
 export * from './schemas/ChangelogSchema';
 export * from './schemas/CharacterCreationSchema';
+export * from './schemas/CommunitySchema';
 export * from './schemas/MaintenanceSchema';
 export * from './schemas/RegisterSchema';
 export * from './schemas/StatusSchema';
