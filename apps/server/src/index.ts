@@ -10,6 +10,7 @@ import { AuthRoom } from './rooms/AuthRoom';
 import { ChatRoom } from './rooms/ChatRoom';
 import { defineMapsRooms } from './rooms/utils/defineMapsRooms';
 import { changelogRouter } from './routers/changelogRouter';
+import { communityRouter } from './routers/communityRouter';
 import { maintenanceRouter } from './routers/maintenanceRouter';
 import { registerRouter } from './routers/registerRouter';
 import { statusRouter } from './routers/statusRouter';
@@ -26,6 +27,7 @@ app.use('/monitor', auth, monitor());
 app.use('/playground', auth, playground);
 
 app.get('/changelog', changelogRouter);
+app.get('/community', communityRouter);
 app.get('/status', statusRouter);
 app.post('/register', registerRouter);
 app.post('/maintenance', maintenanceRouter);

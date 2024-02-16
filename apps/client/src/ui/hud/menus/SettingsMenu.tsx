@@ -1,4 +1,6 @@
 import CloseIcon from '@mui/icons-material/CloseRounded';
+import FullscreenOffIcon from '@mui/icons-material/FullscreenExitRounded';
+import FullscreenIcon from '@mui/icons-material/FullscreenRounded';
 import VolumeDown from '@mui/icons-material/VolumeDownRounded';
 import VolumeUp from '@mui/icons-material/VolumeUpRounded';
 import { styled } from '@mui/material';
@@ -26,16 +28,29 @@ export const SettingsMenu = observer(() => {
 
    return (
       <StyledDialog
-         fullScreen
          onClose={() => settingsMenuStore.cancelChanges()}
          open={settingsMenuStore.isOpened}
+         fullScreen={settingsMenuStore.isFullscreen}
          PaperProps={{
             sx: (theme) => ({
                borderRadius: theme.spacing(0.5),
+               transition: 'all 0.3s',
             }),
          }}
       >
          <DialogTitle sx={{ m: 0, p: 2 }}>Settings</DialogTitle>
+         <IconButton
+            aria-label="fullscreen"
+            onClick={() => settingsMenuStore.toggleFullscreen()}
+            sx={{
+               position: 'absolute',
+               right: 48,
+               top: 12,
+               color: (theme) => theme.palette.text.primary,
+            }}
+         >
+            {settingsMenuStore.isFullscreen ? <FullscreenOffIcon /> : <FullscreenIcon />}
+         </IconButton>
          <IconButton
             aria-label="close"
             onClick={() => settingsMenuStore.cancelChanges()}

@@ -7,6 +7,7 @@ import { Character } from '../hud/Character';
 import { Chatbox } from '../hud/Chatbox';
 import { ContextMenu } from '../hud/ContextMenu';
 import { Menu } from '../hud/Menu';
+import { CommunityMenu } from '../hud/menus/CommunityMenu';
 import { SettingsMenu } from '../hud/menus/SettingsMenu';
 
 interface GameLayoutProps extends BoxProps {}
@@ -72,6 +73,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
             {hudStore.isCharacterVisible && <Character />}
             {hudStore.isMenuVisible && <Menu />}
          </StyledBox>
+         <CommunityMenu />
          <ContextMenu />
          <SettingsMenu />
          {children}
