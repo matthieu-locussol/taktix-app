@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.41.3](https://github.com/matthieu-locussol/taktix-app/compare/v1.41.2...v1.41.3) (2024-02-17)
+
+
+### Bug Fixes
+
+* changelog generation ([3ab1831](https://github.com/matthieu-locussol/taktix-app/commit/3ab1831c773a55ac0815ce5d9f9a86b5e8722048))
+
 ### [1.41.2](https://github.com/matthieu-locussol/taktix-app/compare/v1.41.1...v1.41.2) (2024-02-17)
 
 
