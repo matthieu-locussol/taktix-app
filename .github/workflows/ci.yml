@@ -70,17 +70,25 @@ jobs:
       runs-on: ubuntu-latest
       needs: [deploy]
       if: github.ref == 'refs/heads/master'
+      outputs:
+         changelog: ${{ steps.build_changelog.outputs.changelog }}
       steps:
          - uses: actions/checkout@v4
            name: Checkout repository
-         - id: build_changelog
-           name: Build changelog
-           run: |
-              CURRENT_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n '1p')
-              PREV_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n '2p')
-              echo "changelog=$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^- feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })" >> $GITHUB_OUTPUT
-      outputs:
-         changelog: ${{ steps.build_changelog.outputs.changelog }}
+         - run:
+              CURRENT_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n
+              '1p')
+         - run: echo $CURRENT_TAG
+         - run:
+              PREV_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n
+              '2p')
+         - run: echo $PREV_TAG
+         - name: Build changelog
+           id: build_changelog
+           run:
+              echo "changelog=$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^-
+              feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...$CURRENT_TAG --pretty=format:"-
+              %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })" >> $GITHUB_OUTPUT
 
    release:
       name: Update Client
@@ -125,7 +133,9 @@ jobs:
            env:
               GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
               TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-              CHANGELOG: "${{ needs.changelog.outputs.changelog }}\nSee the assets to download this version and install it."
+              CHANGELOG:
+                 "${{ needs.changelog.outputs.changelog }}\nSee the assets to download this version
+                 and install it."
            with:
               tagName: v__VERSION__
               releaseName: 'v__VERSION__'
