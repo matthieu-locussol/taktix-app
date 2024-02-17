@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const zChangelogSchema = z.object({
    changelogs: z.array(
       z.object({
-         id: z.number(),
+         id: z.string(),
          date: z.string(),
          text: z.string(),
       }),

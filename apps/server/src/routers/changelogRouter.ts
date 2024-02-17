@@ -1,22 +1,32 @@
 import { RequestHandler } from 'express';
-import { ChangelogSchema } from 'shared';
-import { prisma } from '../utils/prisma';
+import { ChangelogSchema, fetchGitHubReleases } from 'shared';
+
+const CHANGELOG_DEFAULT_MESSAGE = 'See the assets to download this version and install it.';
 
 export const changelogRouter: RequestHandler = async (_, res) => {
-   const changelogs = await prisma.changelog.findMany({
-      orderBy: {
-         date: 'desc',
-      },
-      take: 10,
-   });
+   try {
+      const releases = await fetchGitHubReleases();
 
-   const result: ChangelogSchema = {
-      changelogs: changelogs.map((changelog) => ({
-         id: changelog.id,
-         date: changelog.date.toISOString(),
-         text: changelog.text,
-      })),
-   };
+      const payload: ChangelogSchema = {
+         changelogs: releases
+            .map((release) => ({
+               ...release,
+               body: release.body.replace(new RegExp(CHANGELOG_DEFAULT_MESSAGE, 'g'), ''),
+            }))
+            .filter(({ body }) => body !== '')
+            .map(({ tag_name, published_at, body }) => ({
+               id: tag_name,
+               date: published_at,
+               text: body,
+            })),
+      };
 
-   res.send(result);
+      res.send(payload);
+   } catch (e) {
+      const payload: ChangelogSchema = {
+         changelogs: [],
+      };
+
+      res.send(payload);
+   }
 };
