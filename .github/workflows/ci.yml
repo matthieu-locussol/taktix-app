@@ -78,7 +78,7 @@ jobs:
            run: |
               CURRENT_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n '1p')
               PREV_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n '2p')
-              echo "CHANGELOG=$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^- feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...v1.41.0 --pretty=format:"- %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })" >> $GITHUB_OUTPUT
+              echo "CHANGELOG=$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^- feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })" >> $GITHUB_OUTPUT
 
    release:
       name: Update Client
