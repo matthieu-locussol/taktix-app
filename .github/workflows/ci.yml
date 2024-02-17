@@ -52,7 +52,7 @@ jobs:
                  --compressed
 
    deploy:
-      name: Deploy Server
+      name: Update Server
       runs-on: ubuntu-latest
       needs: [startMaintenance]
       if: github.ref == 'refs/heads/master'
@@ -65,9 +65,23 @@ jobs:
               master && ${{ secrets.INSTALL_COMMAND }} && ${{ secrets.BUILD_COMMAND }} && ${{
               secrets.RESTART_COMMAND }}"
 
-   release:
-      name: Release
+   changelog:
+      name: Changelog
+      runs-on: ubuntu-latest
       needs: [deploy]
+      if: github.ref == 'refs/heads/master'
+      steps:
+         - uses: actions/checkout@v4
+           name: Checkout repository
+         - id: build_changelog
+           name: Build changelog
+           run: |
+              PREV_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n '2p')
+              echo "CHANGELOG=$({ git log $PREV_TAG...${{ github.ref_name }} --pretty=format:"- %s" | grep '^- feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...v1.41.0 --pretty=format:"- %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })" >> $GITHUB_OUTPUT
+
+   release:
+      name: Update Client
+      needs: [changelog]
       if: github.ref == 'refs/heads/master'
       strategy:
          matrix:
@@ -111,7 +125,9 @@ jobs:
            with:
               tagName: v__VERSION__
               releaseName: 'v__VERSION__'
-              releaseBody: 'See the assets to download this version and install it.'
+              releaseBody: |
+                ${{ needs.changelog.outputs.CHANGELOG }}
+                See the assets to download this version and install.
               releaseDraft: false
               prerelease: false
 
