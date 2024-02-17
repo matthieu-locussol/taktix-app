@@ -366,6 +366,7 @@ export abstract class Scene extends Phaser.Scene {
             if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
                const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
                store.colyseusStore.stopMoving(entity.direction, position);
+               store.characterStore.setPosition(position);
             }
          });
 
