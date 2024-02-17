@@ -17,9 +17,9 @@
       "typescript": "^5.3.3"
    },
    "dependencies": {
-      "@colyseus/core": "^0.15.24",
+      "@colyseus/core": "^0.15.25",
       "@colyseus/schema": "^2.0.26",
-      "vitest": "^1.2.2",
+      "vitest": "^1.3.0",
       "zod": "^3.22.4"
    }
 }
