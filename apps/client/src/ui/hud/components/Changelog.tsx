@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { useStore } from '../../../store';
 
 export const Changelog = observer(() => {
@@ -26,8 +27,9 @@ export const Changelog = observer(() => {
                      variant="body1"
                      color="textSecondary"
                      dangerouslySetInnerHTML={{
-                        __html: `<b>${new Date(date).toLocaleDateString()}</b><br />${text}<br />`,
+                        __html: `<b>${TimeMgt.formatDatetime(new Date(date))}</b><br />${text}<br />`,
                      }}
+                     mb={2}
                   />
                ))}
             </>

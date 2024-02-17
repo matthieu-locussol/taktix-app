@@ -1,5 +1,6 @@
 export * from './config';
 export * from './data/channelsInformations';
+export * from './data/githubReleases';
 export * from './data/rolesInformations';
 export * from './data/roomsNames';
 export * from './data/teleportationSpots';
@@ -27,3 +28,4 @@ export * from './utils/numberMgt';
 export * from './utils/permissionMgt';
 export * from './utils/stringMgt';
 export * from './utils/timeMgt';
+export * from './utils/zodMgt';

@@ -50,7 +50,7 @@ describe('NewsStore', () => {
          json: async () => ({
             changelogs: [
                {
-                  id: 1,
+                  id: 'v1',
                   date: '2021-01-01T00:00:00.000Z',
                   text: 'Initial release',
                },
@@ -65,7 +65,7 @@ describe('NewsStore', () => {
       expect(fetchSpy).toHaveBeenCalledWith(`${import.meta.env.VITE_SERVER_URL}/changelog`);
       expect(store.changelogs).toEqual([
          {
-            id: 1,
+            id: 'v1',
             date: '2021-01-01T00:00:00.000Z',
             text: 'Initial release',
          },
