@@ -8,7 +8,7 @@
    },
    "package": {
       "productName": "taktix",
-      "version": "1.41.6"
+      "version": "1.41.7"
    },
    "tauri": {
       "allowlist": {
