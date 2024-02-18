@@ -77,22 +77,14 @@ jobs:
            name: Checkout repository
            with:
               fetch-depth: 0
-         - run: git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n '1p'
-         - run: git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n '2p'
-         - run:
+         - name: Retrieve current tag
+           run:
               echo "CURRENT_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' |
               sed -n '1p')" >> "$GITHUB_ENV"
-         - run:
+         - name: Retrieve previous tag
+           run:
               echo "PREV_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed
               -n '2p')" >> "$GITHUB_ENV"
-         - run: echo $PREV_TAG
-         - run: echo $CURRENT_TAG
-         - run: echo ${{ env.PREV_TAG }}
-         - run: echo ${{ env.CURRENT_TAG }}
-         - run:
-              echo "changelog=$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^-
-              feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...$CURRENT_TAG --pretty=format:"-
-              %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })"
          - name: Build changelog
            id: build_changelog
            run:
@@ -143,13 +135,12 @@ jobs:
            env:
               GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
               TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-              CHANGELOG:
-                 "${{ needs.changelog.outputs.changelog }}\nSee the assets to download this version
-                 and install it."
            with:
               tagName: v__VERSION__
               releaseName: 'v__VERSION__'
-              releaseBody: ${{ env.CHANGELOG }}
+              releaseBody:
+                 ${{ needs.changelog.outputs.changelog || 'See the assets to download this version
+                 and install it.' }}
               releaseDraft: false
               prerelease: false
 
