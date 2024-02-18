@@ -21,6 +21,10 @@ const zSettingsMenuState = z.object({
    volume: z.number(),
    fullScreen: z.boolean(),
    language: z.string(),
+   fullScreenMenus: z.object({
+      community: z.boolean(),
+      settings: z.boolean(),
+   }),
 });
 
 type SettingsMenuState = z.infer<typeof zSettingsMenuState>;
@@ -30,13 +34,15 @@ export class SettingsMenuStore {
 
    public isOpened: boolean = false;
 
-   public isFullscreen: boolean = false;
-
    public defaultState: SettingsMenuState = {
       keyboardLayout: 'arrows',
       volume: 50,
       fullScreen: false,
       language: 'en',
+      fullScreenMenus: {
+         community: true,
+         settings: true,
+      },
    };
 
    public savedState: SettingsMenuState;
@@ -48,6 +54,8 @@ export class SettingsMenuStore {
    public fullScreen: boolean = this.defaultState.fullScreen;
 
    public language = this.defaultState.language;
+
+   public fullScreenMenus = { ...this.defaultState.fullScreenMenus };
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -74,8 +82,8 @@ export class SettingsMenuStore {
       this.isOpened = false;
    }
 
-   public toggleFullscreen(): void {
-      this.isFullscreen = !this.isFullscreen;
+   public toggleFullScreenMenu(menu: keyof SettingsMenuState['fullScreenMenus']): void {
+      this.setFullScreenMenu(menu, !this.fullScreenMenus[menu]);
    }
 
    public setKeyboardLayout(layout: string): void {
@@ -104,6 +112,17 @@ export class SettingsMenuStore {
       this.language = language;
    }
 
+   public setFullScreenMenus(fullScreenMenus: SettingsMenuState['fullScreenMenus']): void {
+      this.fullScreenMenus = { ...fullScreenMenus };
+   }
+
+   public setFullScreenMenu(
+      menu: keyof SettingsMenuState['fullScreenMenus'],
+      value: boolean,
+   ): void {
+      this.fullScreenMenus[menu] = value;
+   }
+
    public resetToDefaults(): void {
       this.applyState(this.defaultState);
    }
@@ -118,6 +137,7 @@ export class SettingsMenuStore {
       this.setVolume(state.volume);
       this.setFullScreen(state.fullScreen);
       this.setLanguage(state.language);
+      this.setFullScreenMenus(state.fullScreenMenus);
    }
 
    public saveChanges(): void {
@@ -126,6 +146,7 @@ export class SettingsMenuStore {
          volume: this.volume,
          fullScreen: this.fullScreen,
          language: this.language,
+         fullScreenMenus: this.fullScreenMenus,
       };
 
       localStorage.setItem('settings', JSON.stringify(this.savedState));
@@ -140,6 +161,7 @@ export class SettingsMenuStore {
             volume: this.volume,
             fullScreen: this.fullScreen,
             language: this.language,
+            fullScreenMenus: this.fullScreenMenus,
          })
       );
    }

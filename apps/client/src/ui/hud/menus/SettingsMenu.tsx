@@ -30,7 +30,7 @@ export const SettingsMenu = observer(() => {
       <StyledDialog
          onClose={() => settingsMenuStore.cancelChanges()}
          open={settingsMenuStore.isOpened}
-         fullScreen={settingsMenuStore.isFullscreen}
+         fullScreen={settingsMenuStore.fullScreenMenus.settings}
          PaperProps={{
             sx: (theme) => ({
                borderRadius: theme.spacing(0.5),
@@ -41,7 +41,7 @@ export const SettingsMenu = observer(() => {
          <DialogTitle sx={{ m: 0, p: 2 }}>Settings</DialogTitle>
          <IconButton
             aria-label="fullscreen"
-            onClick={() => settingsMenuStore.toggleFullscreen()}
+            onClick={() => settingsMenuStore.toggleFullScreenMenu('settings')}
             sx={{
                position: 'absolute',
                right: 48,
@@ -49,7 +49,11 @@ export const SettingsMenu = observer(() => {
                color: (theme) => theme.palette.text.primary,
             }}
          >
-            {settingsMenuStore.isFullscreen ? <FullscreenOffIcon /> : <FullscreenIcon />}
+            {settingsMenuStore.fullScreenMenus.settings ? (
+               <FullscreenOffIcon />
+            ) : (
+               <FullscreenIcon />
+            )}
          </IconButton>
          <IconButton
             aria-label="close"
