@@ -49,7 +49,7 @@ const columns: Column[] = [
 ];
 
 export const CommunityMenu = observer(() => {
-   const { characterStore, communityMenuStore } = useStore();
+   const { characterStore, communityMenuStore, settingsMenuStore } = useStore();
 
    return (
       <StyledDialog
@@ -57,7 +57,7 @@ export const CommunityMenu = observer(() => {
          disableEnforceFocus
          onClose={() => communityMenuStore.close()}
          open={communityMenuStore.isOpened}
-         fullScreen={communityMenuStore.isFullscreen}
+         fullScreen={settingsMenuStore.fullScreenMenus.community}
          PaperProps={{
             sx: (theme) => ({
                borderRadius: theme.spacing(0.5),
@@ -68,7 +68,7 @@ export const CommunityMenu = observer(() => {
          <DialogTitle sx={{ m: 0, p: 2 }}>Community</DialogTitle>
          <IconButton
             aria-label="fullscreen"
-            onClick={() => communityMenuStore.toggleFullscreen()}
+            onClick={() => settingsMenuStore.toggleFullScreenMenu('community')}
             sx={{
                position: 'absolute',
                right: 48,
@@ -76,7 +76,11 @@ export const CommunityMenu = observer(() => {
                color: (theme) => theme.palette.text.primary,
             }}
          >
-            {communityMenuStore.isFullscreen ? <FullscreenOffIcon /> : <FullscreenIcon />}
+            {settingsMenuStore.fullScreenMenus.community ? (
+               <FullscreenOffIcon />
+            ) : (
+               <FullscreenIcon />
+            )}
          </IconButton>
          <IconButton
             aria-label="close"

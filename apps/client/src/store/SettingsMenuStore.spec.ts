@@ -31,6 +31,10 @@ describe('SettingsMenuStore', () => {
          keyboardLayout: 'arrows',
          language: 'en',
          volume: 50,
+         fullScreenMenus: {
+            community: true,
+            settings: true,
+         },
       };
 
       expect(store).toBeDefined();
@@ -103,6 +107,10 @@ describe('SettingsMenuStore', () => {
       store.setVolume(100);
       store.setFullScreen(true);
       store.setLanguage('ru');
+      store.setFullScreenMenus({
+         community: false,
+         settings: true,
+      });
 
       store.saveChanges();
 
@@ -111,6 +119,10 @@ describe('SettingsMenuStore', () => {
          keyboardLayout: 'arrows',
          language: 'ru',
          volume: 100,
+         fullScreenMenus: {
+            community: false,
+            settings: true,
+         },
       });
    });
 

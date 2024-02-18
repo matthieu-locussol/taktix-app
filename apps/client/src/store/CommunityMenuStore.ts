@@ -8,8 +8,6 @@ export class CommunityMenuStore {
 
    public isOpened: boolean = false;
 
-   public isFullscreen: boolean = false;
-
    public loading: boolean = false;
 
    public players: CommunitySchema['players'] = [];
@@ -57,10 +55,6 @@ export class CommunityMenuStore {
       } else {
          this.open();
       }
-   }
-
-   public toggleFullscreen(): void {
-      this.isFullscreen = !this.isFullscreen;
    }
 
    public sendPrivateMessage(playerName: string) {
