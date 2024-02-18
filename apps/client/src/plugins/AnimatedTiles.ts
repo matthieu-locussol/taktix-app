@@ -1,13 +1,13 @@
 import { _assert } from 'shared/src/utils/_assert';
 
-export interface Animation {
+export interface AnimationTileDataFrame {
    tileid: number;
    duration: number;
 }
 
 export interface AnimatedTileData {
    currentFrame: number;
-   frames: any[];
+   frames: AnimationTileDataFrame[];
    index: number;
    next: number;
    rate: number;
@@ -23,8 +23,6 @@ export interface AnimatedTile {
 }
 
 export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
-   map: any;
-
    animatedTiles: AnimatedTile[];
 
    rate: number;
@@ -37,8 +35,6 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
 
    constructor(scene: Phaser.Scene, pluginManager: Phaser.Plugins.PluginManager) {
       super(scene, pluginManager, 'animatedTiles');
-
-      this.map = null;
 
       this.animatedTiles = [];
 
@@ -259,7 +255,7 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
                   };
 
                   if ('animation' in tileDataObject) {
-                     (tileDataObject.animation as Animation[]).forEach((frameData) => {
+                     (tileDataObject.animation as AnimationTileDataFrame[]).forEach((frameData) => {
                         const frame = {
                            duration: frameData.duration,
                            tileid: frameData.tileid + tileset.firstgid,
