@@ -75,12 +75,22 @@ jobs:
       steps:
          - uses: actions/checkout@v4
            name: Checkout repository
+         - run: git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n '1p')
+         - run: git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed -n '2p')
          - run:
               echo "CURRENT_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' |
               sed -n '1p')" >> "$GITHUB_ENV"
          - run:
               echo "PREV_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed
               -n '2p')" >> "$GITHUB_ENV"
+         - run: echo $PREV_TAG
+         - run: echo $CURRENT_TAG
+         - run: echo ${{ env.PREV_TAG }}
+         - run: echo ${{ env.CURRENT_TAG }}
+         - run:
+              echo "changelog=$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^-
+              feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...$CURRENT_TAG --pretty=format:"-
+              %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })"
          - name: Build changelog
            id: build_changelog
            run:
