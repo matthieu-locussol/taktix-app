@@ -1,4 +1,4 @@
-import { SpriteType } from '../../utils/spriteType';
+import { EntityType } from '../../utils/phaser';
 import {
    CHARACTER_LETTER_WIDTH,
    CHARACTER_WIDTH,
@@ -17,7 +17,7 @@ export const makeCharacter = (scene: Scene, name: string, isPlayer: boolean) => 
    characterSprite.setPipeline('Light2D');
    characterSprite.scale = SCALE_FACTOR;
    characterSprite.setName(name);
-   characterSprite.setData('type', SpriteType.Character);
+   characterSprite.setData('type', EntityType.Character);
    registerSpriteEvents(characterSprite);
 
    const offsetX = (CHARACTER_WIDTH * SCALE_FACTOR - name.length * CHARACTER_LETTER_WIDTH) / 2;

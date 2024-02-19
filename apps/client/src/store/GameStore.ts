@@ -34,18 +34,23 @@ export class GameStore {
       return this._game;
    }
 
+   get currentScene() {
+      const { scenes } = this.game.scene;
+      const activeScenes = scenes.filter(({ scene }) => this.game.scene.isActive(scene.key));
+      _assertTrue(activeScenes.length <= 1, 'There should be only one active scene at a time.');
+
+      return activeScenes[0] as Scene;
+   }
+
    async getCurrentScene() {
       let attempts = 0;
 
       while (attempts < MAX_CHECK_ATTEMPTS) {
          attempts += 1;
 
-         const { scenes } = this.game.scene;
-         const activeScenes = scenes.filter(({ scene }) => this.game.scene.isActive(scene.key));
-         _assertTrue(activeScenes.length <= 1, 'There should be only one active scene at a time.');
-
-         if (activeScenes.length === 1) {
-            return activeScenes[0] as Scene;
+         const { currentScene } = this;
+         if (currentScene !== undefined) {
+            return currentScene;
          }
 
          // eslint-disable-next-line no-await-in-loop
