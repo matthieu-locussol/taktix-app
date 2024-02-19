@@ -1,7 +1,7 @@
-import { SpriteType } from '../../utils/spriteType';
+import { EntityType } from '../../utils/phaser';
 
 export const registerSpriteEvents = (sprite: Phaser.GameObjects.Sprite) => {
-   if (sprite.getData('type') === SpriteType.Character) {
+   if (sprite.getData('type') === EntityType.Character) {
       sprite.on(
          `${Phaser.Data.Events.CHANGE_DATA_KEY}hovered`,
          (spriteRef: Phaser.GameObjects.Sprite, value: boolean, previousValue: boolean) => {

@@ -12,8 +12,10 @@ import { _assert } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { AnimatedTiles } from '../plugins/AnimatedTiles';
 import { store } from '../store';
+import { isInteractiveObjectType, isObjectProperties } from '../utils/phaser';
 import { makeCharacter } from './utils/makeCharacter';
 import { makeGrid } from './utils/makeGrid';
+import { makeInteractiveObject } from './utils/makeInteractiveObject';
 import { makeLight } from './utils/makeLight';
 import { makeMarker } from './utils/makeMarker';
 import { makeMinimap } from './utils/makeMinimap';
@@ -32,6 +34,12 @@ export const ZOOM_STEP = 0.1;
 export const FADE_IN_DURATION = 1000;
 export const FADE_OUT_DURATION = 300;
 export const TRANSPARENCY_FACTOR = 0.75;
+export const INTERACTIVE_OBJECT_DEPTH = 999;
+
+export interface InteractiveObject {
+   polygon: Phaser.GameObjects.Polygon;
+   geometry: Phaser.Geom.Polygon;
+}
 
 interface PlayerWrappers {
    square: Phaser.GameObjects.Rectangle;
@@ -62,6 +70,8 @@ export abstract class Scene extends Phaser.Scene {
    public marker: Phaser.GameObjects.Graphics | null = null;
 
    public minimap: Phaser.Cameras.Scene2D.Camera | null = null;
+
+   public interactiveObjects: InteractiveObject[] = [];
 
    constructor(config: Room | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
       super(config);
@@ -127,6 +137,7 @@ export abstract class Scene extends Phaser.Scene {
       this.createPlayer(store.characterStore.name);
 
       this.initializeLights();
+      this.initializeInteractiveObjects();
       this.initializeHandlers();
       this.initializeGrid();
       this.initializeMarker();
@@ -144,6 +155,28 @@ export abstract class Scene extends Phaser.Scene {
       this.lights.enable();
       this.lights.setAmbientColor(0xd8d8d8);
       this.lights.addLight(-100, -100, 12800).setColor(0xffffff).setIntensity(1.0);
+   }
+
+   private initializeInteractiveObjects(): void {
+      if (this.tilemap === null) {
+         return;
+      }
+
+      const layer = this.tilemap.getObjectLayer('Interactive');
+      if (layer === null) {
+         return;
+      }
+
+      for (const object of layer.objects) {
+         if (object.polygon !== undefined && isObjectProperties(object.properties)) {
+            const idProperty = object.properties.find(({ name }) => name === 'id');
+
+            if (idProperty !== undefined && isInteractiveObjectType(idProperty.value)) {
+               const interactiveObject = makeInteractiveObject(this, idProperty.value, object);
+               this.interactiveObjects.push(interactiveObject);
+            }
+         }
+      }
    }
 
    private initializeHandlers(): void {
@@ -239,12 +272,12 @@ export abstract class Scene extends Phaser.Scene {
          .filter(({ type }) => type === 'Sprite')
          .map((gameObject) => gameObject as Phaser.GameObjects.Sprite)
          .forEach((gameObject) => {
-            if (gameObject.getBounds().contains(position.x, position.y)) {
-               gameObject.setData('hovered', true);
-            } else {
-               gameObject.setData('hovered', false);
-            }
+            gameObject.setData('hovered', gameObject.getBounds().contains(position.x, position.y));
          });
+
+      this.interactiveObjects.forEach(({ polygon, geometry }) => {
+         polygon.setData('hovered', Phaser.Geom.Polygon.Contains(geometry, position.x, position.y));
+      });
    }
 
    private handlePointerDown(
@@ -258,12 +291,17 @@ export abstract class Scene extends Phaser.Scene {
          .map((gameObject) => gameObject as Phaser.GameObjects.Sprite)
          .filter((gameObject) => gameObject.getData('hovered'));
 
-      if (clickedSprites.length > 0) {
+      const clickedInteractiveObjects = this.interactiveObjects.filter(({ polygon }) =>
+         polygon.getData('hovered'),
+      );
+
+      if (clickedSprites.length > 0 || clickedInteractiveObjects.length > 0) {
          if (pointer.event instanceof MouseEvent) {
             store.contextMenuStore.openContextMenu(
                pointer.event.clientX,
                pointer.event.clientY,
                clickedSprites,
+               clickedInteractiveObjects,
             );
          }
 
