@@ -1,3 +1,4 @@
+import { ProfessionType } from 'shared/src/types/Profession';
 import { describe, expect, it } from 'vitest';
 import { CharacterStore } from './CharacterStore';
 
@@ -8,6 +9,7 @@ describe('CharacterStore', () => {
       expect(store).toBeDefined();
       expect(store.map).toEqual('AAA_InitialRoom');
       expect(store.name).toEqual('');
+      expect(store.profession).toEqual(ProfessionType.Warrior);
       expect(store.position).toEqual({ x: 0, y: 0 });
       expect(store.players).toHaveLength(0);
    });
@@ -22,6 +24,12 @@ describe('CharacterStore', () => {
       const store = new CharacterStore();
       store.setName('John');
       expect(store.name).toBe('John');
+   });
+
+   it('should set the profession', () => {
+      const store = new CharacterStore();
+      store.setProfession(ProfessionType.Mage);
+      expect(store.profession).toBe(ProfessionType.Mage);
    });
 
    it('should set the position', () => {

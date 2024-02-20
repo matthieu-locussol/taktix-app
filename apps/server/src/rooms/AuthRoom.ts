@@ -14,6 +14,7 @@ import {
    _assert,
    _assertTrue,
    isAuthRoomMessage,
+   zProfessionType,
 } from 'shared';
 import { AuthRoomResponse } from 'shared/src/rooms/AuthRoom';
 import { match } from 'ts-pattern';
@@ -93,7 +94,10 @@ export class AuthRoom extends Room {
       }
 
       client.userData = {
-         characters: user.characters.map(({ name }) => name),
+         characters: user.characters.map(({ name, profession }) => ({
+            name,
+            profession: zProfessionType.parse(profession),
+         })),
       };
 
       if (this.userIsAlreadyLoggedIn(username)) {
@@ -195,6 +199,7 @@ export class AuthRoom extends Room {
             posX: character.pos_x,
             posY: character.pos_y,
             direction: character.direction,
+            profession: zProfessionType.parse(character.profession),
          };
 
          usersMap.set(uuid, {
@@ -217,7 +222,9 @@ export class AuthRoom extends Room {
 
    async onCreateCharacter(
       client: Client,
-      { message: { characterName } }: Extract<AuthRoomMessage, { type: 'createCharacter' }>,
+      {
+         message: { characterName, profession },
+      }: Extract<AuthRoomMessage, { type: 'createCharacter' }>,
    ) {
       const userInformations = this.users.get(client.id);
       _assert(userInformations, 'userInformations should be defined');
@@ -263,6 +270,7 @@ export class AuthRoom extends Room {
          await prisma.character.create({
             data: {
                name: characterName,
+               profession,
                pos_x: DEFAULT_X,
                pos_y: DEFAULT_Y,
                direction: DEFAULT_DIRECTION,
@@ -277,7 +285,16 @@ export class AuthRoom extends Room {
 
          message = {
             status: 'success',
-            characters: [...userCharacters.map((entry) => entry.name), characterName],
+            characters: [
+               ...userCharacters.map((entry) => ({
+                  profession: zProfessionType.parse(entry.profession),
+                  name: entry.name,
+               })),
+               {
+                  profession,
+                  name: characterName,
+               },
+            ],
          };
       }
 
@@ -332,7 +349,10 @@ export class AuthRoom extends Room {
             status: 'success',
             characters: user.characters
                .filter((entry) => entry.name !== characterName)
-               .map((entry) => entry.name),
+               .map((entry) => ({
+                  profession: zProfessionType.parse(entry.profession),
+                  name: entry.name,
+               })),
          };
       }
 

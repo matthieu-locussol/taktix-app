@@ -84,6 +84,7 @@ export class MapRoom extends Room<MapState> {
       this.state.createPlayer(
          client.sessionId,
          characterName,
+         characterInfos.profession,
          characterPosition.x,
          characterPosition.y,
          characterDirection,

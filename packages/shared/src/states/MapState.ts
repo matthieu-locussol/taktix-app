@@ -5,8 +5,15 @@ export class MapState extends Schema {
    @type({ map: PlayerState })
    players = new MapSchema<PlayerState, string>();
 
-   createPlayer(sessionId: string, name: string, x: number, y: number, direction: string) {
-      const player = new PlayerState(name, x, y, direction);
+   createPlayer(
+      sessionId: string,
+      name: string,
+      profession: string,
+      x: number,
+      y: number,
+      direction: string,
+   ) {
+      const player = new PlayerState(name, profession, x, y, direction);
       this.players.set(sessionId, player);
    }
 

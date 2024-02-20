@@ -18,6 +18,7 @@ export * from './states/PlayerState';
 export * from './types/Channel';
 export * from './types/Colyseus';
 export * from './types/Player';
+export * from './types/Profession';
 export * from './types/Role';
 export * from './types/Room';
 export * from './types/SceneData';

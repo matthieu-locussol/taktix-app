@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ProfessionType, zProfessionType } from '../types/Profession';
 
 export interface AuthRoomOptions {
    username: string;
@@ -6,7 +7,10 @@ export interface AuthRoomOptions {
 }
 
 export interface AuthRoomUserData {
-   characters: string[];
+   characters: {
+      name: string;
+      profession: ProfessionType;
+   }[];
 }
 
 export const zAuthRoomMessage = z.discriminatedUnion('type', [
@@ -20,6 +24,7 @@ export const zAuthRoomMessage = z.discriminatedUnion('type', [
       type: z.literal('createCharacter'),
       message: z.object({
          characterName: z.string(),
+         profession: zProfessionType,
       }),
    }),
    z.object({
@@ -51,6 +56,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
             posX: z.number(),
             posY: z.number(),
             direction: z.string(),
+            profession: zProfessionType,
          }),
       ]),
    }),
@@ -63,7 +69,12 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
          }),
          z.object({
             status: z.literal('success'),
-            characters: z.array(z.string()),
+            characters: z.array(
+               z.object({
+                  name: z.string(),
+                  profession: zProfessionType,
+               }),
+            ),
          }),
       ]),
    }),
@@ -76,7 +87,12 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
          }),
          z.object({
             status: z.literal('success'),
-            characters: z.array(z.string()),
+            characters: z.array(
+               z.object({
+                  name: z.string(),
+                  profession: zProfessionType,
+               }),
+            ),
          }),
       ]),
    }),

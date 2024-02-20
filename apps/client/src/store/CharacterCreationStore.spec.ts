@@ -1,3 +1,4 @@
+import { ProfessionType } from 'shared/src/types/Profession';
 import { describe, expect, it } from 'vitest';
 import { CharacterCreationStore } from './CharacterCreationStore';
 
@@ -9,6 +10,7 @@ describe('CharacterCreationStore', () => {
       expect(store.errorMessage).toEqual('');
       expect(store.successMessage).toEqual('');
       expect(store.name).toEqual('');
+      expect(store.profession).toEqual(ProfessionType.Warrior);
       expect(store.loading).toEqual(false);
    });
 
@@ -16,6 +18,12 @@ describe('CharacterCreationStore', () => {
       const store = new CharacterCreationStore();
       store.setName('John');
       expect(store.name).toBe('John');
+   });
+
+   it('should set the profession', () => {
+      const store = new CharacterCreationStore();
+      store.setProfession(ProfessionType.Mage);
+      expect(store.profession).toBe(ProfessionType.Mage);
    });
 
    it('should set the loading', () => {
@@ -42,6 +50,7 @@ describe('CharacterCreationStore', () => {
       store.setErrorMessage('error');
       store.setSuccessMessage('success');
       store.setName('John');
+      store.setProfession(ProfessionType.Mage);
       store.setLoading(true);
 
       store.reset();
@@ -49,6 +58,7 @@ describe('CharacterCreationStore', () => {
       expect(store.errorMessage).toBe('');
       expect(store.successMessage).toBe('');
       expect(store.name).toBe('');
+      expect(store.profession).toBe(ProfessionType.Warrior);
       expect(store.loading).toBe(false);
    });
 

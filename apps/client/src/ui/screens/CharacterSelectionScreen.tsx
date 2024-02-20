@@ -72,24 +72,26 @@ export const CharacterSelectionScreen = observer(() => {
                   </Typography>
                )}
                <Box display="grid" gap={2}>
-                  {characterSelectionStore.characters.map((name) => (
-                     <Box key={name} display="flex">
+                  {characterSelectionStore.characters.map((character) => (
+                     <Box key={character.name} display="flex">
                         <Card
                            variant="clickable"
-                           onClick={() => characterSelectionStore.setSelectedCharacter(name)}
+                           onClick={() =>
+                              characterSelectionStore.setSelectedCharacter(character.name)
+                           }
                            sx={(theme) => ({
                               width: '100%',
                               display: 'flex',
                               alignItems: 'center',
                               opacity: 0.8,
-                              ...(characterSelectionStore.isSelectedCharacter(name) && {
+                              ...(characterSelectionStore.isSelectedCharacter(character.name) && {
                                  border: `1px solid ${theme.palette.primary.light}}`,
                                  opacity: 1,
                               }),
                            })}
                         >
                            <img
-                              src="/assets/characters/face.png"
+                              src={`/assets/professions/face/${character.profession}.png`}
                               alt=""
                               width={32}
                               height={32}
@@ -100,20 +102,22 @@ export const CharacterSelectionScreen = observer(() => {
                            />
                            <Typography
                               fontWeight={
-                                 characterSelectionStore.isSelectedCharacter(name)
+                                 characterSelectionStore.isSelectedCharacter(character.name)
                                     ? 'bold'
                                     : 'normal'
                               }
                               variant="body1"
                            >
-                              {name}
+                              {character.name}
                            </Typography>
                            <Typography variant="body1" sx={{ ml: 'auto' }}>
                               Level 1
                            </Typography>
                         </Card>
                         <IconButton
-                           onClick={() => characterSelectionStore.openDeleteCharacterDialog(name)}
+                           onClick={() =>
+                              characterSelectionStore.openDeleteCharacterDialog(character.name)
+                           }
                            color="error"
                            sx={{ mx: 1, my: 'auto' }}
                         >

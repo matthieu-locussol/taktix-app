@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
+import { CharacterSelector } from '../hud/components/CharacterSelector';
 
 export const CharacterCreationScreen = observer(() => {
    const store = useStore();
@@ -16,7 +17,7 @@ export const CharacterCreationScreen = observer(() => {
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       characterCreationStore.setLoading(true);
-      colyseusStore.createCharacter(characterCreationStore.name);
+      colyseusStore.createCharacter(characterCreationStore.name, characterCreationStore.profession);
    };
 
    return (
@@ -56,12 +57,12 @@ export const CharacterCreationScreen = observer(() => {
                   </Typography>
                )}
                <Box display="grid" gap={2}>
+                  <CharacterSelector />
                   <TextField
                      type="text"
                      placeholder="Character name"
                      value={characterCreationStore.name}
                      onChange={(e) => characterCreationStore.setName(e.target.value)}
-                     sx={{ mt: 2 }}
                   />
                </Box>
                <Button
