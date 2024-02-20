@@ -1,3 +1,4 @@
+import { ProfessionType } from 'shared/src/types/Profession';
 import { describe, expect, it } from 'vitest';
 import { CharacterSelectionStore } from './CharacterSelectionStore';
 
@@ -49,8 +50,18 @@ describe('CharacterSelectionStore', () => {
 
    it('should set the characters', () => {
       const store = new CharacterSelectionStore();
-      store.setCharacters(['John']);
-      expect(store.characters).toEqual(['John']);
+      store.setCharacters([
+         {
+            name: 'John',
+            profession: ProfessionType.Archer,
+         },
+      ]);
+      expect(store.characters).toEqual([
+         {
+            name: 'John',
+            profession: ProfessionType.Archer,
+         },
+      ]);
    });
 
    it('should set the selected character', () => {
@@ -93,7 +104,12 @@ describe('CharacterSelectionStore', () => {
       store.setSuccessMessage('success');
       store.setLoading(true);
       store.setLoadingDeleteCharacter(true);
-      store.setCharacters(['John']);
+      store.setCharacters([
+         {
+            name: 'John',
+            profession: ProfessionType.Archer,
+         },
+      ]);
       store.setSelectedCharacter('John');
       store.setCharacterToDelete('John');
       store.openDeleteCharacterDialog('John');
