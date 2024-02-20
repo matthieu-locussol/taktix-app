@@ -85,14 +85,17 @@ jobs:
            run:
               echo "PREV_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed
               -n '2p')" >> "$GITHUB_ENV"
-         - run: echo "changelog<<EOF" >> "$GITHUB_OUTPUT"
          - name: Build changelog
            id: build_changelog
-           run:
-              echo "$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^-
+           run: |
+              {
+                echo "changelog<<EOF"
+                echo "$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^-
               feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...$CURRENT_TAG --pretty=format:"-
-              %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })" >> "$GITHUB_OUTPUT"
-         - run: echo "EOF" >> "$GITHUB_OUTPUT"
+              %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })"
+                echo EOF
+              } >> "$GITHUB_OUTPUT"
+
 
    release:
       name: Update Client
