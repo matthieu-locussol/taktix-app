@@ -19,4 +19,22 @@ describe('stringMgt', () => {
          results.forEach((result) => expect(result).toBe(false));
       });
    });
+
+   describe('toUpperCaseFirst', () => {
+      it('should return the string with the first character in uppercase', () => {
+         const strings = ['user', 'User', 'USER', '123user', 'user123', 'user_123', 'user-123'];
+         const expectedResults = [
+            'User',
+            'User',
+            'USER',
+            '123user',
+            'User123',
+            'User_123',
+            'User-123',
+         ];
+
+         const results = strings.map((str) => StringMgt.toUpperCaseFirst(str));
+         results.forEach((result, index) => expect(result).toBe(expectedResults[index]));
+      });
+   });
 });

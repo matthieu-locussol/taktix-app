@@ -7,9 +7,8 @@ export const communityRouter: RequestHandler = async (_, res) => {
    const usersInformations = await prisma.character.findMany({
       select: {
          name: true,
+         profession: true,
          // level: true,
-         // class: true,
-         // avatar: true,
       },
       where: {
          name: {
@@ -19,8 +18,8 @@ export const communityRouter: RequestHandler = async (_, res) => {
    });
 
    const payload: CommunitySchema = {
-      players: usersInformations.map(({ name }) => ({
-         avatar: '/assets/characters/face_big.png',
+      players: usersInformations.map(({ name, profession }) => ({
+         avatar: `/assets/professions/face/${profession}.png`,
          player: name,
          level: 1,
          class: 'Ranger',

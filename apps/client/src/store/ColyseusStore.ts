@@ -6,6 +6,7 @@ import { MapRoomResponse, isMapRoomResponse } from 'shared/src/rooms/MapRoom';
 import { MapState } from 'shared/src/states/MapState';
 import { CustomProtocol, Protocol } from 'shared/src/types/Colyseus';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
+import { ProfessionType, zProfessionType } from 'shared/src/types/Profession';
 import { Room as TRoom } from 'shared/src/types/Room';
 import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
@@ -110,8 +111,8 @@ export class ColyseusStore {
       this.authRoom.send('selectCharacter', { characterName });
    }
 
-   createCharacter(characterName: string) {
-      this.authRoom.send('createCharacter', { characterName });
+   createCharacter(characterName: string, profession: ProfessionType) {
+      this.authRoom.send('createCharacter', { characterName, profession });
    }
 
    deleteCharacter(characterName: string, password: string) {
@@ -178,7 +179,7 @@ export class ColyseusStore {
             this._store.characterSelectionStore.setErrorMessage(errorMessage);
             this._store.characterSelectionStore.setLoading(false);
          })
-         .with({ status: 'success' }, async ({ map, posX, posY, direction, uuid }) => {
+         .with({ status: 'success' }, async ({ map, posX, posY, direction, uuid, profession }) => {
             this.setUuid(uuid);
             await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
 
@@ -199,6 +200,7 @@ export class ColyseusStore {
             this._store.characterStore.setMap(map as TRoom);
             this._store.characterStore.setPosition({ x: posX, y: posY });
             this._store.characterStore.setPlayers([]);
+            this._store.characterStore.setProfession(profession);
 
             this._store.loadingScreenStore.setSceneVisible(true);
             this._store.discordStore.updateDiscordRichPresence();
@@ -288,12 +290,17 @@ export class ColyseusStore {
       });
 
       this.gameRoom.state.players.onAdd(async (player) => {
-         const { name, x, y, direction } = player;
+         const { name, profession, x, y, direction } = player;
          const isPlayer = name === this._store.characterStore.name;
 
          if (!isPlayer) {
             const scene = await this._store.gameStore.getCurrentScene();
-            scene.addExternalPlayer(name, { x, y }, direction as Direction);
+            scene.addExternalPlayer(
+               name,
+               zProfessionType.parse(profession),
+               { x, y },
+               direction as Direction,
+            );
 
             player.listen('x', (newX) => {
                scene.setNextX(name, newX);

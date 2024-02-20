@@ -6,6 +6,7 @@ import {
    Position,
 } from 'grid-engine';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
+import { CharacterSpritesheet, ProfessionType } from 'shared/src/types/Profession';
 import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
 import { _assert } from 'shared/src/utils/_assert';
@@ -380,13 +381,14 @@ export abstract class Scene extends Phaser.Scene {
       const character = makeCharacter(this, nickname, true);
 
       if (character !== null) {
+         const { profession } = store.characterStore;
          const { sprite, wrapper } = character;
          this.playersWrappers.set(INTERNAL_PLAYER_NAME, wrapper);
 
          this.gridEngine.addCharacter({
             id: INTERNAL_PLAYER_NAME,
             sprite,
-            walkingAnimationMapping: 6,
+            walkingAnimationMapping: CharacterSpritesheet[profession],
             startPosition: this.entrancePosition,
             charLayer: PLAYER_GE_LAYER,
             speed: PLAYER_SPEED,
@@ -541,7 +543,12 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
-   public addExternalPlayer(name: string, position: Position, direction: Direction): void {
+   public addExternalPlayer(
+      name: string,
+      profession: ProfessionType,
+      position: Position,
+      direction: Direction,
+   ): void {
       const character = makeCharacter(this, name, false);
 
       if (character !== null) {
@@ -551,7 +558,7 @@ export abstract class Scene extends Phaser.Scene {
          this.gridEngine.addCharacter({
             id: name,
             sprite,
-            walkingAnimationMapping: 0,
+            walkingAnimationMapping: CharacterSpritesheet[profession],
             startPosition: position,
             charLayer: PLAYER_GE_LAYER,
             speed: PLAYER_SPEED,
@@ -631,5 +638,8 @@ export abstract class Scene extends Phaser.Scene {
 
    public fadeOut(callback: (_: unknown, progress: number) => void): void {
       this.cameras.main.fade(FADE_OUT_DURATION, 31, 41, 55, false, callback);
+
+      this.interactiveObjects.forEach(({ polygon }) => polygon.destroy());
+      this.interactiveObjects = [];
    }
 }

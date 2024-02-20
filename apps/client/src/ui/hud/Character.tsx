@@ -14,7 +14,7 @@ export const Character = observer(() => {
          heightPercent={hudStore.characterHeight}
          chatboxWidth={hudStore.chatboxWidth}
       >
-         <Image src="/assets/characters/face_big.png" alt="Character" />
+         <Image src={`/assets/professions/face/${characterStore.profession}.png`} alt="Character" />
          <Informations>
             <Typography
                align="right"

@@ -31,7 +31,7 @@ export class DiscordStore {
             timestamp: this.startTimestamp,
          });
       } else {
-         const { mapName, name /* level */ } = this._store.characterStore;
+         const { mapName, name, profession /* level */ } = this._store.characterStore;
          const level = 1;
 
          setDiscordRichPresence({
@@ -39,7 +39,7 @@ export class DiscordStore {
             state: 'Playing',
             large_image: 'default',
             large_text: `Taktix - ${getVersion()}`,
-            small_image: 'face',
+            small_image: profession.toLocaleLowerCase(),
             small_text: `${name} - Level ${level}`,
             timestamp: this.startTimestamp,
          });

@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import { ProfessionType } from 'shared/src/types/Profession';
 
 export class CharacterCreationStore {
    public errorMessage: string = '';
@@ -6,6 +7,8 @@ export class CharacterCreationStore {
    public successMessage: string = '';
 
    public name: string = '';
+
+   public profession: ProfessionType = ProfessionType.Warrior;
 
    public loading: boolean = false;
 
@@ -15,6 +18,10 @@ export class CharacterCreationStore {
 
    setName(name: string) {
       this.name = name;
+   }
+
+   setProfession(professionType: ProfessionType) {
+      this.profession = professionType;
    }
 
    setLoading(loading: boolean) {
@@ -35,6 +42,7 @@ export class CharacterCreationStore {
       this.errorMessage = '';
       this.successMessage = '';
       this.name = '';
+      this.profession = ProfessionType.Warrior;
       this.loading = false;
    }
 
