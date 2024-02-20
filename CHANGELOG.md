@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.42.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.41.11...v1.42.0) (2024-02-20)
+
+
+### Features
+
+* character class customization ([035a540](https://github.com/matthieu-locussol/taktix-app/commit/035a540fd8a00d6e0290a1b0cc56a79edb2171de))
+* interactive objects system ([231556e](https://github.com/matthieu-locussol/taktix-app/commit/231556e577cda9e6cac162e67a88ddc0307988d2))
+
+
+### Bug Fixes
+
+* menus fullscreen state was not being memorized ([06a2b27](https://github.com/matthieu-locussol/taktix-app/commit/06a2b278f3bc7d1a8aa5432b028943ab95010735))
+
 ### [1.41.11](https://github.com/matthieu-locussol/taktix-app/compare/v1.41.10...v1.41.11) (2024-02-18)
 
 
