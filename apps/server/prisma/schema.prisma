@@ -23,7 +23,7 @@ model Character {
   id         Int    @id @default(autoincrement())
   name       String @unique
   map        String
-  profession String @default("Warrior")
+  profession String
   pos_x      Int
   pos_y      Int
   direction  String
