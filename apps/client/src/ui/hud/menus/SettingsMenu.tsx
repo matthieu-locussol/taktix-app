@@ -12,8 +12,6 @@ import DialogContent, { dialogContentClasses } from '@mui/material/DialogContent
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import Slider from '@mui/material/Slider';
 import Stack from '@mui/material/Stack';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -21,10 +19,13 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../store';
-import { keyboardLayouts, languages } from '../../../store/SettingsMenuStore';
+import { keyboardLayouts } from '../../../store/SettingsMenuStore';
+import { useTranslation } from '../../../types/react-i18next';
+import { LanguageSelector } from '../../components/LanguageSelector';
 
 export const SettingsMenu = observer(() => {
    const { settingsMenuStore } = useStore();
+   const { t } = useTranslation();
 
    return (
       <StyledDialog
@@ -38,7 +39,7 @@ export const SettingsMenu = observer(() => {
             }),
          }}
       >
-         <DialogTitle sx={{ m: 0, p: 2 }}>Settings</DialogTitle>
+         <DialogTitle sx={{ m: 0, p: 2 }}>{t('settings')}</DialogTitle>
          <IconButton
             aria-label="fullscreen"
             onClick={() => settingsMenuStore.toggleFullScreenMenu('settings')}
@@ -74,7 +75,7 @@ export const SettingsMenu = observer(() => {
                      minWidth: 200,
                   }}
                >
-                  Keyboard layout
+                  {t('keyboardLayout')}
                </Typography>
                <ToggleButtonGroup
                   size="small"
@@ -90,7 +91,7 @@ export const SettingsMenu = observer(() => {
                >
                   {keyboardLayouts.map(({ label, value }) => (
                      <ToggleButton key={value} value={value}>
-                        {label}
+                        {t(label)}
                      </ToggleButton>
                   ))}
                </ToggleButtonGroup>
@@ -102,29 +103,8 @@ export const SettingsMenu = observer(() => {
                      minWidth: 200,
                   },
                }}
-               control={
-                  <Select
-                     size="small"
-                     value={settingsMenuStore.language}
-                     onChange={(e) => settingsMenuStore.setLanguage(e.target.value)}
-                     MenuProps={{
-                        slotProps: {
-                           paper: {
-                              elevation: 0,
-                              variant: 'outlined',
-                           },
-                        },
-                     }}
-                     sx={{ ml: 2 }}
-                  >
-                     {languages.map(({ label, value }) => (
-                        <MenuItem key={value} value={value}>
-                           {label}
-                        </MenuItem>
-                     ))}
-                  </Select>
-               }
-               label="Display language"
+               control={<LanguageSelector />}
+               label={t('displayLanguage')}
                labelPlacement="start"
             />
             <br />
@@ -135,7 +115,7 @@ export const SettingsMenu = observer(() => {
                      onChange={(e) => settingsMenuStore.setFullScreen(e.target.checked)}
                   />
                }
-               label="Fullscreen mode"
+               label={t('fullscreenMode')}
                labelPlacement="start"
                slotProps={{
                   typography: {
@@ -172,17 +152,17 @@ export const SettingsMenu = observer(() => {
                onClick={() => settingsMenuStore.resetToDefaults()}
                sx={{ mr: 'auto' }}
             >
-               Reset to defaults
+               {t('resetDefaults')}
             </Button>
             <Button color="chalk" onClick={() => settingsMenuStore.cancelChanges()}>
-               Cancel
+               {t('cancel')}
             </Button>
             <Button
                variant="contained"
                disabled={!settingsMenuStore.canSave()}
                onClick={() => settingsMenuStore.saveChanges()}
             >
-               Save changes
+               {t('saveChanges')}
             </Button>
          </DialogActions>
       </StyledDialog>

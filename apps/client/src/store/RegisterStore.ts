@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import { TranslationKey } from 'shared/src/data/translations';
 
 export class RegisterStore {
    public email: string = '';
@@ -7,9 +8,9 @@ export class RegisterStore {
 
    public password: string = '';
 
-   public errorMessage: string = '';
+   public errorMessage: TranslationKey | '' = '';
 
-   public successMessage: string = '';
+   public errorMessageOptions: Record<string, string> = {};
 
    public loading: boolean = false;
 
@@ -29,14 +30,9 @@ export class RegisterStore {
       this.password = password;
    }
 
-   setErrorMessage(errorMessage: string) {
-      this.successMessage = '';
+   setErrorMessage(errorMessage: TranslationKey | '', options: Record<string, string> = {}) {
       this.errorMessage = errorMessage;
-   }
-
-   setSuccessMessage(successMessage: string) {
-      this.errorMessage = '';
-      this.successMessage = successMessage;
+      this.errorMessageOptions = options;
    }
 
    setLoading(loading: boolean) {
@@ -48,7 +44,6 @@ export class RegisterStore {
       this.username = '';
       this.password = '';
       this.errorMessage = '';
-      this.successMessage = '';
       this.loading = false;
    }
 

@@ -14,14 +14,17 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
+import { useTranslation } from '../../types/react-i18next';
 import { getVersion } from '../../utils/version';
 import { ServerStatus } from '../components/ServerStatus';
 import { Changelog } from '../hud/components/Changelog';
+import { ProgressBar } from '../hud/components/ProgressBar';
 import { NEWS_HEIGHT } from './LoginScreen';
 
 export const RegisterScreen = observer(() => {
    const store = useStore();
-   const { loginStore, registerStore, screenStore, updaterStore } = store;
+   const { loginStore, newsStore, registerStore, screenStore, updaterStore } = store;
+   const { t } = useTranslation();
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -46,7 +49,7 @@ export const RegisterScreen = observer(() => {
          registerStore.setErrorMessage(json.error);
       } else {
          registerStore.reset();
-         loginStore.setSuccessMessage('Account created! You can now login.');
+         loginStore.setSuccessMessage('accountCreated');
          screenStore.setScreen('login');
       }
    };
@@ -91,7 +94,7 @@ export const RegisterScreen = observer(() => {
             {updaterStore.shouldUpdate === undefined && (
                <CardContent>
                   <Typography variant="h1" align="center">
-                     Access the universe
+                     {t('accessUniverse')}
                   </Typography>
                   <CircularProgress />
                </CardContent>
@@ -99,25 +102,18 @@ export const RegisterScreen = observer(() => {
             {updaterStore.shouldUpdate === false && (
                <CardContent>
                   <Typography variant="h1" align="center" gutterBottom>
-                     Access the universe
+                     {t('accessUniverse')}
                   </Typography>
                   {registerStore.errorMessage && (
                      <Typography variant="body1" align="center" color="error">
-                        {registerStore.errorMessage}
-                     </Typography>
-                  )}
-                  {registerStore.successMessage && (
-                     <Typography
-                        variant="body1"
-                        align="center"
-                        sx={(theme) => ({ color: theme.palette.success.main })}
-                     >
-                        {registerStore.successMessage}
+                        {newsStore.status === 'maintenance'
+                           ? t('serverInMaintenance')
+                           : t(registerStore.errorMessage, registerStore.errorMessageOptions)}
                      </Typography>
                   )}
                   <TextField
                      type="email"
-                     placeholder="Email address"
+                     placeholder={t('emailAddress')}
                      autoComplete="email"
                      value={registerStore.email}
                      onChange={(e) => registerStore.setEmail(e.target.value)}
@@ -125,7 +121,7 @@ export const RegisterScreen = observer(() => {
                   />
                   <TextField
                      type="text"
-                     placeholder="Username"
+                     placeholder={t('username')}
                      autoComplete="username"
                      value={registerStore.username}
                      onChange={(e) => registerStore.setUsername(e.target.value)}
@@ -133,7 +129,7 @@ export const RegisterScreen = observer(() => {
                   />
                   <TextField
                      type="password"
-                     placeholder="Password"
+                     placeholder={t('password')}
                      autoComplete="new-password"
                      value={registerStore.password}
                      onChange={(e) => registerStore.setPassword(e.target.value)}
@@ -149,51 +145,53 @@ export const RegisterScreen = observer(() => {
                      {registerStore.loading ? (
                         <CircularProgress size={24} color="inherit" />
                      ) : (
-                        screenStore.screenName
+                        t(screenStore.screen)
                      )}
                   </Button>
                   <Link
                      onClick={() => screenStore.switchBetweenLoginAndRegister()}
                      sx={{ mt: 'auto', mr: 'auto' }}
                   >
-                     {screenStore.loginOrRegisterOppositeName}
+                     {t(screenStore.loginOrRegisterOppositeName)}
                   </Link>
                </CardContent>
             )}
             {updaterStore.shouldUpdate && (
                <CardContent>
                   <Typography variant="h1" align="center">
-                     Access the universe
+                     {t('accessUniverse')}
                   </Typography>
-                  <Typography>
-                     A new update is available: {updaterStore.updateManifest?.version}
+                  <Typography sx={{ mt: 4 }}>
+                     {t('updateAvailable', { version: updaterStore.updateManifest?.version })}
                   </Typography>
-                  <Typography>Please update to continue</Typography>
-                  <Button
-                     disabled={updaterStore.updating}
-                     variant="contained"
-                     color="primary"
-                     onClick={() => updaterStore.update()}
-                     sx={{ mt: 2 }}
-                  >
-                     {updaterStore.updating ? (
-                        <CircularProgress color="inherit" size={24} />
-                     ) : (
-                        'Update'
-                     )}
-                  </Button>
+                  <Typography>{t('updateAvailable_content')}</Typography>
+                  {updaterStore.updating ? (
+                     <ProgressBar
+                        label={`${updaterStore.progress.toFixed(2)}%`}
+                        value={updaterStore.progress}
+                        sx={{ mt: 2 }}
+                     />
+                  ) : (
+                     <Button
+                        disabled={updaterStore.updating}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => updaterStore.update()}
+                        sx={{ mt: 2 }}
+                     >
+                        {t('update')}
+                     </Button>
+                  )}
                </CardContent>
             )}
             <Dialog open={updaterStore.openUpdateModal}>
-               <DialogTitle>Game restart needed</DialogTitle>
+               <DialogTitle>{t('gameRestartNeeded_title')}</DialogTitle>
                <DialogContent>
-                  <DialogContentText>
-                     In order to finish the update, the game will need to restart!
-                  </DialogContentText>
+                  <DialogContentText>{t('gameRestartNeeded_content')}</DialogContentText>
                </DialogContent>
-               <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
+               <DialogActions sx={{ justifyContent: 'center' }}>
                   <Button variant="contained" onClick={() => updaterStore.restart()}>
-                     Restart
+                     {t('restart')}
                   </Button>
                </DialogActions>
             </Dialog>

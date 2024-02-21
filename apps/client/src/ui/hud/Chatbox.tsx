@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { channelsInformations } from 'shared/src/data/channelsInformations';
 import { Channel } from 'shared/src/types/Channel';
 import { useStore } from '../../store';
+import { useTranslation } from '../../types/react-i18next';
 import { ChannelsSelector } from './components/ChannelsSelector';
 import { CurrentChannelSelector } from './components/CurrentChannelSelector';
 import { SmallButton } from './components/SmallButton';
@@ -21,6 +22,7 @@ export const Chatbox = observer(() => {
    const { chatStore, colyseusStore, gameStore, hudStore, loadingScreenStore } = useStore();
    const [channelSelectorAnchor, setChannelSelectorAnchor] = useState<null | HTMLElement>(null);
    const [currentChannelAnchor, setCurrentChannelAnchor] = useState<null | SVGSVGElement>(null);
+   const { t } = useTranslation();
 
    useEffect(() => {
       if (inputRef.current !== null) {
@@ -62,7 +64,7 @@ export const Chatbox = observer(() => {
                         lineHeight="2vh"
                         color={theme.palette.channels[channel]}
                      >
-                        [{channelsInformations[channel].name}] {content}
+                        [{t(channelsInformations[channel].name)}] {content}
                      </Typography>
                   ) : (
                      <Typography
@@ -72,7 +74,7 @@ export const Chatbox = observer(() => {
                         lineHeight="2vh"
                         color={theme.palette.channels[channel]}
                      >
-                        [{channelsInformations[channel].name}] <b>{author}</b>: {content}
+                        [{t(channelsInformations[channel].name)}] <b>{author}</b>: {content}
                      </Typography>
                   ),
                )}

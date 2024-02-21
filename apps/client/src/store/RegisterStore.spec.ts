@@ -10,7 +10,6 @@ describe('RegisterStore', () => {
       expect(store.username).toBe('');
       expect(store.password).toBe('');
       expect(store.errorMessage).toBe('');
-      expect(store.successMessage).toBe('');
       expect(store.loading).toBe(false);
    });
 
@@ -34,14 +33,8 @@ describe('RegisterStore', () => {
 
    it('should set the error message', () => {
       const store = new RegisterStore();
-      store.setErrorMessage('error');
-      expect(store.errorMessage).toBe('error');
-   });
-
-   it('should set the success message', () => {
-      const store = new RegisterStore();
-      store.setSuccessMessage('success');
-      expect(store.successMessage).toBe('success');
+      store.setErrorMessage('incorrectCredentials', { username: 'username' });
+      expect(store.errorMessage).toBe('incorrectCredentials');
    });
 
    it('should set the loading', () => {
@@ -56,8 +49,7 @@ describe('RegisterStore', () => {
       store.setEmail('email');
       store.setUsername('username');
       store.setPassword('password');
-      store.setErrorMessage('error');
-      store.setSuccessMessage('success');
+      store.setErrorMessage('incorrectCredentials', { username: 'username' });
       store.setLoading(true);
 
       store.reset();
@@ -66,7 +58,6 @@ describe('RegisterStore', () => {
       expect(store.username).toBe('');
       expect(store.password).toBe('');
       expect(store.errorMessage).toBe('');
-      expect(store.successMessage).toBe('');
       expect(store.loading).toBe(false);
    });
 

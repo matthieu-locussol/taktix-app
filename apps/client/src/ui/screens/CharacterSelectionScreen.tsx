@@ -14,12 +14,15 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { Trans } from 'react-i18next';
 import { MAX_CHARACTERS_PER_ACCOUNT } from 'shared/src/config';
 import { useStore } from '../../store';
+import { useTranslation } from '../../types/react-i18next';
 
 export const CharacterSelectionScreen = observer(() => {
    const store = useStore();
    const { characterSelectionStore, colyseusStore, screenStore } = store;
+   const { t } = useTranslation();
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -55,11 +58,14 @@ export const CharacterSelectionScreen = observer(() => {
          <Card variant="outlined" sx={{ display: 'flex' }}>
             <CardContent>
                <Typography variant="h1" align="center" gutterBottom sx={{ mb: 2 }}>
-                  Character Selection
+                  {t(screenStore.screen)}
                </Typography>
                {characterSelectionStore.errorMessage && (
                   <Typography variant="body1" align="center" color="error" sx={{ mb: 2 }}>
-                     {characterSelectionStore.errorMessage}
+                     {t(
+                        characterSelectionStore.errorMessage,
+                        characterSelectionStore.errorMessageOptions,
+                     )}
                   </Typography>
                )}
                {characterSelectionStore.successMessage && (
@@ -68,7 +74,7 @@ export const CharacterSelectionScreen = observer(() => {
                      align="center"
                      sx={(theme) => ({ color: theme.palette.success.main, mb: 2 })}
                   >
-                     {characterSelectionStore.successMessage}
+                     {t(characterSelectionStore.successMessage)}
                   </Typography>
                )}
                <Box display="grid" gap={2}>
@@ -111,7 +117,7 @@ export const CharacterSelectionScreen = observer(() => {
                               {character.name}
                            </Typography>
                            <Typography variant="body1" sx={{ ml: 'auto' }}>
-                              Level 1
+                              {t('level', { level: 1 /* characterStore.level */ })}
                            </Typography>
                         </Card>
                         <IconButton
@@ -128,7 +134,7 @@ export const CharacterSelectionScreen = observer(() => {
                   {characterSelectionStore.characters.length === 0 && (
                      <Card variant="outlined">
                         <Typography variant="body1" align="center" sx={{ py: 2 }}>
-                           You don't have any characters yet.
+                           {t('noCharacters')}
                         </Typography>
                      </Card>
                   )}
@@ -143,7 +149,7 @@ export const CharacterSelectionScreen = observer(() => {
                            justifyContent: 'space-between',
                         }}
                      >
-                        <Typography>Create a new character</Typography>
+                        <Typography>{t('createNewCharacter')}</Typography>
                         <AddIcon fontSize="small" />
                      </Card>
                   )}
@@ -159,7 +165,7 @@ export const CharacterSelectionScreen = observer(() => {
                      {characterSelectionStore.loading ? (
                         <CircularProgress size={24} color="inherit" />
                      ) : (
-                        'Play'
+                        t('play')
                      )}
                   </Button>
                )}
@@ -170,18 +176,20 @@ export const CharacterSelectionScreen = observer(() => {
                open={characterSelectionStore.openDeleteDialog}
                onClose={() => characterSelectionStore.closeDeleteCharacterDialog()}
             >
-               <DialogTitle>Delete character</DialogTitle>
+               <DialogTitle>{t('deleteCharacter_title')}</DialogTitle>
                <DialogContent>
                   <Typography color="error" gutterBottom>
-                     Are you sure you want to delete{' '}
-                     <b>{characterSelectionStore.characterToDelete}</b>? This action cannot be
-                     undone and you will lose all your progress and items.
+                     <Trans
+                        i18nKey="deleteCharacter_content"
+                        values={{ name: characterSelectionStore.characterToDelete }}
+                        components={{ b: <b /> }}
+                     />
                   </Typography>
-                  <Typography>Please confirm your password to proceed.</Typography>
+                  <Typography>{t('deleteCharacter_confirm')}</Typography>
                   <TextField
                      fullWidth
                      type="password"
-                     placeholder="Password"
+                     placeholder={t('password')}
                      value={characterSelectionStore.password}
                      onChange={(e) => characterSelectionStore.setPassword(e.target.value)}
                      sx={{ mt: 2 }}
@@ -196,7 +204,7 @@ export const CharacterSelectionScreen = observer(() => {
                      {characterSelectionStore.loadingDeleteCharacter ? (
                         <CircularProgress size={24} color="inherit" />
                      ) : (
-                        'Delete'
+                        t('delete')
                      )}
                   </Button>
                </DialogActions>

@@ -16,6 +16,12 @@ vi.mock('./Store', () => {
    return { Store: MockedStore };
 });
 
+vi.mock('i18next', () => ({
+   default: {
+      t: (str: string) => str,
+   },
+}));
+
 describe('ContextMenuStore', () => {
    it('should be initialize', () => {
       const contextMenuStore = new ContextMenuStore(new Store());
@@ -75,20 +81,20 @@ describe('ContextMenuStore', () => {
 
       expect(contextMenuStore.menu).toEqual([
          {
-            text: '[Player] External Player',
+            text: '[Character] External Player',
             subMenu: [
                {
                   callback: expect.any(Function),
-                  text: 'Send a message',
+                  text: 'sendMessage',
                },
             ],
          },
          {
-            text: '[Object] Teleporter',
+            text: '[object] Teleporter',
             subMenu: [
                {
                   callback: expect.any(Function),
-                  text: 'Use',
+                  text: 'use',
                },
             ],
          },

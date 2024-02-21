@@ -1,26 +1,27 @@
 import { appWindow } from '@tauri-apps/api/window';
+import i18n from 'i18next';
 import { makeAutoObservable } from 'mobx';
+import { initReactI18next } from 'react-i18next';
+import { DEFAULT_LANGUAGE, TranslationKey, translations } from 'shared/src/data/translations';
+import { isLanguage, zLanguage } from 'shared/src/types/Language';
 import { z } from 'zod';
 import { isTauri } from '../utils/tauri';
 import { Store } from './Store';
 
-export const keyboardLayouts = [
-   { value: 'arrows', label: 'Arrows' },
-   { value: 'wasd', label: 'WASD' },
-   { value: 'zqsd', label: 'ZQSD' },
-];
-
-export const languages = [
-   { value: 'en', label: '🇬🇧 English' },
-   { value: 'fr', label: '🇫🇷 Français' },
-   { value: 'ja', label: '🇯🇵 日本語' },
+export const keyboardLayouts: {
+   value: string;
+   label: TranslationKey;
+}[] = [
+   { value: 'arrows', label: 'arrows' },
+   { value: 'wasd', label: 'wasd' },
+   { value: 'zqsd', label: 'zqsd' },
 ];
 
 const zSettingsMenuState = z.object({
    keyboardLayout: z.string(),
    volume: z.number(),
    fullScreen: z.boolean(),
-   language: z.string(),
+   language: zLanguage,
    fullScreenMenus: z.object({
       community: z.boolean(),
       settings: z.boolean(),
@@ -72,6 +73,20 @@ export class SettingsMenuStore {
       } else {
          this.savedState = this.defaultState;
       }
+
+      i18n
+         .use(initReactI18next)
+         .init({
+            resources: translations,
+            lng: this.savedState.language,
+            fallbackLng: DEFAULT_LANGUAGE,
+            interpolation: {
+               escapeValue: false,
+            },
+         })
+         .then(() => {
+            this.setLanguage(this.savedState.language);
+         });
    }
 
    public open(): void {
@@ -109,7 +124,14 @@ export class SettingsMenuStore {
    }
 
    public setLanguage(language: string): void {
-      this.language = language;
+      if (isLanguage(language)) {
+         this.language = language;
+      } else {
+         this.language = DEFAULT_LANGUAGE;
+      }
+
+      i18n.changeLanguage(this.language);
+      this._store.discordStore.updateDiscordRichPresence();
    }
 
    public setFullScreenMenus(fullScreenMenus: SettingsMenuState['fullScreenMenus']): void {

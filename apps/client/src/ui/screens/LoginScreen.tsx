@@ -19,8 +19,10 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { AuthRoomUserData } from 'shared';
 import { useStore } from '../../store';
+import { useTranslation } from '../../types/react-i18next';
 import { isTauri } from '../../utils/tauri';
 import { getVersion } from '../../utils/version';
+import { LanguageSelector } from '../components/LanguageSelector';
 import { ServerStatus } from '../components/ServerStatus';
 import { Changelog } from '../hud/components/Changelog';
 import { ProgressBar } from '../hud/components/ProgressBar';
@@ -37,6 +39,7 @@ export const LoginScreen = observer(() => {
       screenStore,
       updaterStore,
    } = store;
+   const { t } = useTranslation();
 
    useEffect(() => {
       newsStore.fetchChangelogs();
@@ -80,7 +83,7 @@ export const LoginScreen = observer(() => {
             });
          })
          .catch(() => {
-            loginStore.setErrorMessage(`Incorrect credentials for user "${username}"!`);
+            loginStore.setErrorMessage('incorrectCredentials', { username });
             loginStore.setLoading(false);
          });
    };
@@ -104,24 +107,26 @@ export const LoginScreen = observer(() => {
       >
          <Card variant="outlined" sx={{ display: 'flex' }}>
             <CardContent sx={{ height: NEWS_HEIGHT }}>
-               <Box
-                  sx={{
-                     display: 'flex',
-                     alignItems: 'baseline',
-                     mb: 4,
-                     justifyContent: 'center',
-                  }}
-               >
-                  <Typography variant="h1">Taktix</Typography>
-                  <Typography
-                     color="white"
-                     fontWeight="bold"
-                     fontFamily="Orbitron"
-                     variant="overline"
-                     sx={{ mt: 'auto', mb: -0.5, ml: 1 }}
+               <Box display="flex" justifyContent="space-between" alignItems="start" mb={4}>
+                  <Box
+                     sx={{
+                        display: 'flex',
+                        alignItems: 'baseline',
+                        justifyContent: 'center',
+                     }}
                   >
-                     {getVersion()}
-                  </Typography>
+                     <Typography variant="h1">Taktix</Typography>
+                     <Typography
+                        color="white"
+                        fontWeight="bold"
+                        fontFamily="Orbitron"
+                        variant="overline"
+                        sx={{ mt: 'auto', mb: -0.5, ml: 1 }}
+                     >
+                        {getVersion()}
+                     </Typography>
+                  </Box>
+                  <LanguageSelector sx={{ my: 'auto' }} />
                </Box>
                <Changelog />
                <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
@@ -130,7 +135,7 @@ export const LoginScreen = observer(() => {
             {updaterStore.shouldUpdate === undefined && (
                <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography variant="h1" align="center">
-                     Access the universe
+                     {t('accessUniverse')}
                   </Typography>
                   <CircularProgress size={64} sx={{ mt: 8 }} />
                </CardContent>
@@ -138,13 +143,13 @@ export const LoginScreen = observer(() => {
             {updaterStore.shouldUpdate === false && (
                <CardContent>
                   <Typography variant="h1" align="center" gutterBottom>
-                     Access the universe
+                     {t('accessUniverse')}
                   </Typography>
                   {loginStore.errorMessage && (
                      <Typography variant="body1" align="center" color="error">
                         {newsStore.status === 'maintenance'
-                           ? 'Server in maintenance, please try again later!'
-                           : loginStore.errorMessage}
+                           ? t('serverInMaintenance')
+                           : t(loginStore.errorMessage, loginStore.errorMessageOptions)}
                      </Typography>
                   )}
                   {loginStore.successMessage && (
@@ -153,12 +158,12 @@ export const LoginScreen = observer(() => {
                         align="center"
                         sx={(theme) => ({ color: theme.palette.success.main })}
                      >
-                        {loginStore.successMessage}
+                        {t(loginStore.successMessage, loginStore.successMessageOptions)}
                      </Typography>
                   )}
                   <TextField
                      type="text"
-                     placeholder="Username"
+                     placeholder={t('username')}
                      autoComplete="username"
                      value={loginStore.username}
                      onChange={(e) => loginStore.setUsername(e.target.value)}
@@ -166,7 +171,7 @@ export const LoginScreen = observer(() => {
                   />
                   <TextField
                      type="password"
-                     placeholder="Password"
+                     placeholder={t('password')}
                      autoComplete="current-password"
                      value={loginStore.password}
                      onChange={(e) => loginStore.setPassword(e.target.value)}
@@ -179,7 +184,7 @@ export const LoginScreen = observer(() => {
                            onChange={(e) => loginStore.setMemorizeCredentials(e.target.checked)}
                         />
                      }
-                     label="Memorize credentials"
+                     label={t('memorizeCredentials')}
                      sx={{ mt: 2 }}
                   />
                   <Button
@@ -192,26 +197,26 @@ export const LoginScreen = observer(() => {
                      {loginStore.loading ? (
                         <CircularProgress size={24} color="inherit" />
                      ) : (
-                        screenStore.screenName
+                        t(screenStore.screen)
                      )}
                   </Button>
                   <Link
                      onClick={() => screenStore.switchBetweenLoginAndRegister()}
                      sx={{ mt: 'auto', mr: 'auto' }}
                   >
-                     {screenStore.loginOrRegisterOppositeName}
+                     {t(screenStore.loginOrRegisterOppositeName)}
                   </Link>
                </CardContent>
             )}
             {updaterStore.shouldUpdate && (
                <CardContent>
                   <Typography variant="h1" align="center">
-                     Access the universe
+                     {t('accessUniverse')}
                   </Typography>
                   <Typography sx={{ mt: 4 }}>
-                     A new update is available: v{updaterStore.updateManifest?.version}
+                     {t('updateAvailable', { version: updaterStore.updateManifest?.version })}
                   </Typography>
-                  <Typography>Please update to continue.</Typography>
+                  <Typography>{t('updateAvailable_content')}</Typography>
                   {updaterStore.updating ? (
                      <ProgressBar
                         label={`${updaterStore.progress.toFixed(2)}%`}
@@ -226,39 +231,33 @@ export const LoginScreen = observer(() => {
                         onClick={() => updaterStore.update()}
                         sx={{ mt: 2 }}
                      >
-                        Update
+                        {t('update')}
                      </Button>
                   )}
                </CardContent>
             )}
             <Dialog open={updaterStore.openUpdateModal}>
-               <DialogTitle>Game restart needed</DialogTitle>
+               <DialogTitle>{t('gameRestartNeeded_title')}</DialogTitle>
                <DialogContent>
-                  <DialogContentText>
-                     In order to finish the update, the game will need to restart!
-                  </DialogContentText>
+                  <DialogContentText>{t('gameRestartNeeded_content')}</DialogContentText>
                </DialogContent>
                <DialogActions sx={{ justifyContent: 'center' }}>
                   <Button variant="contained" onClick={() => updaterStore.restart()}>
-                     Restart
+                     {t('restart')}
                   </Button>
                </DialogActions>
             </Dialog>
             <Dialog open={loginStore.openMemorizeCredentials}>
-               <DialogTitle>Saving credentials</DialogTitle>
+               <DialogTitle>{t('saveCredentials_title')}</DialogTitle>
                <DialogContent>
-                  <DialogContentText>
-                     If you memorize your credentials, they will be stored in your browser. It might
-                     expose you to a risk of being hacked if someone gets access to your computer.
-                     Are you sure you want to continue?
-                  </DialogContentText>
+                  <DialogContentText>{t('saveCredentials_content')}</DialogContentText>
                </DialogContent>
                <DialogActions>
                   <Button color="chalk" onClick={() => loginStore.cancelSaveCredentials()}>
-                     Cancel
+                     {t('cancel')}
                   </Button>
                   <Button variant="contained" onClick={() => loginStore.saveCredentials()}>
-                     Memorize
+                     {t('memorize')}
                   </Button>
                </DialogActions>
             </Dialog>

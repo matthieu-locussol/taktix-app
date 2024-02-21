@@ -1,8 +1,9 @@
 import { Role } from '../types/Role';
 import { PermissionMgt } from '../utils/permissionMgt';
+import { TranslationKey } from './translations';
 
 interface RoleInformations {
-   name: string;
+   name: TranslationKey;
    shortcut: string;
    permissions: number;
 }

@@ -25,17 +25,17 @@ export const registerRouter: RequestHandler = async (req, res) => {
    ]);
 
    if (maintenance) {
-      res.status(503).send({ error: 'Server in maintenance, please try again later!' });
+      res.status(503).send({ error: 'serverInMaintenance' });
       return;
    }
 
    if (userByEmail) {
-      res.status(400).send({ error: 'Email already in use!' });
+      res.status(400).send({ error: 'emailAlreadyInUse' });
       return;
    }
 
    if (userByUsername) {
-      res.status(400).send({ error: 'Username already in use!' });
+      res.status(400).send({ error: 'usernameAlreadyInUse' });
       return;
    }
 

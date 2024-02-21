@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { zTranslationKey } from '../data/translations';
 import { ProfessionType, zProfessionType } from '../types/Profession';
 
 export interface AuthRoomOptions {
@@ -47,7 +48,8 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
       message: z.discriminatedUnion('status', [
          z.object({
             status: z.literal('error'),
-            errorMessage: z.string(),
+            errorMessage: zTranslationKey,
+            errorMessageOptions: z.record(z.string()),
          }),
          z.object({
             status: z.literal('success'),
@@ -65,7 +67,8 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
       message: z.discriminatedUnion('status', [
          z.object({
             status: z.literal('error'),
-            errorMessage: z.string(),
+            errorMessage: zTranslationKey,
+            errorMessageOptions: z.record(z.string()),
          }),
          z.object({
             status: z.literal('success'),
@@ -83,7 +86,8 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
       message: z.discriminatedUnion('status', [
          z.object({
             status: z.literal('error'),
-            errorMessage: z.string(),
+            errorMessage: zTranslationKey,
+            errorMessageOptions: z.record(z.string()),
          }),
          z.object({
             status: z.literal('success'),

@@ -21,8 +21,8 @@ export const communityRouter: RequestHandler = async (_, res) => {
       players: usersInformations.map(({ name, profession }) => ({
          avatar: `/assets/professions/face/${profession}.png`,
          player: name,
-         level: 1,
-         class: 'Ranger',
+         level: 1, // level
+         profession,
       })),
    };
 

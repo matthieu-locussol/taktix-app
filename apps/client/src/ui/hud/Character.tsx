@@ -4,9 +4,11 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
+import { useTranslation } from '../../types/react-i18next';
 
 export const Character = observer(() => {
    const { characterStore, hudStore } = useStore();
+   const { t } = useTranslation();
 
    return (
       <Root
@@ -23,7 +25,7 @@ export const Character = observer(() => {
                fontSize="1vw"
                lineHeight="2.5vh"
             >
-               <b>{characterStore.name}</b> - Level 1
+               <b>{characterStore.name}</b> - {t('level', { level: 1 /* characterStore.level */ })}
             </Typography>
             <Typography
                align="right"
@@ -32,7 +34,7 @@ export const Character = observer(() => {
                fontSize="1vw"
                lineHeight="2.5vh"
             >
-               [{characterStore.position.x}, {characterStore.position.y}] - {characterStore.mapName}
+               [{characterStore.position.x}, {characterStore.position.y}] - {t(characterStore.map)}
             </Typography>
          </Informations>
          <LifeProgressBar variant="determinate" value={35} />

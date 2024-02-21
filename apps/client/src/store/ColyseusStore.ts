@@ -175,8 +175,8 @@ export class ColyseusStore {
       this._store.characterSelectionStore.setLoading(true);
 
       match(message)
-         .with({ status: 'error' }, ({ errorMessage }) => {
-            this._store.characterSelectionStore.setErrorMessage(errorMessage);
+         .with({ status: 'error' }, ({ errorMessage, errorMessageOptions }) => {
+            this._store.characterSelectionStore.setErrorMessage(errorMessage, errorMessageOptions);
             this._store.characterSelectionStore.setLoading(false);
          })
          .with({ status: 'success' }, async ({ map, posX, posY, direction, uuid, profession }) => {
@@ -214,13 +214,13 @@ export class ColyseusStore {
       this._store.characterCreationStore.reset();
 
       match(message)
-         .with({ status: 'error' }, ({ errorMessage }) => {
-            this._store.characterCreationStore.setErrorMessage(errorMessage);
+         .with({ status: 'error' }, ({ errorMessage, errorMessageOptions }) => {
+            this._store.characterCreationStore.setErrorMessage(errorMessage, errorMessageOptions);
          })
          .with({ status: 'success' }, async ({ characters }) => {
             this._store.characterCreationStore.reset();
             this._store.characterSelectionStore.setCharacters(characters);
-            this._store.characterSelectionStore.setSuccessMessage('Character created!');
+            this._store.characterSelectionStore.setSuccessMessage('characterCreated');
 
             this._store.screenStore.setScreen('characterSelection');
          })
@@ -233,12 +233,12 @@ export class ColyseusStore {
       this._store.characterSelectionStore.reset();
 
       match(message)
-         .with({ status: 'error' }, ({ errorMessage }) => {
-            this._store.characterSelectionStore.setErrorMessage(errorMessage);
+         .with({ status: 'error' }, ({ errorMessage, errorMessageOptions }) => {
+            this._store.characterSelectionStore.setErrorMessage(errorMessage, errorMessageOptions);
          })
          .with({ status: 'success' }, ({ characters }) => {
             this._store.characterSelectionStore.setCharacters(characters);
-            this._store.characterSelectionStore.setSuccessMessage('Character deleted');
+            this._store.characterSelectionStore.setSuccessMessage('characterDeleted');
          })
          .exhaustive();
    }
@@ -374,13 +374,11 @@ export class ColyseusStore {
          this._store.characterSelectionStore.reset();
 
          if (code === CustomProtocol.DISCONNECT_FROM_OTHER_SESSION) {
-            this._store.loginStore.setErrorMessage(
-               `You have been disconnected because someone logged in with your account from another location.`,
-            );
+            this._store.loginStore.setErrorMessage('loginInvalidation');
          } else {
-            this._store.loginStore.setErrorMessage(
-               `[${code}] You have been disconnected from the server`,
-            );
+            this._store.loginStore.setErrorMessage('serverDisconnection', {
+               code: code.toString(),
+            });
          }
 
          this.reset();

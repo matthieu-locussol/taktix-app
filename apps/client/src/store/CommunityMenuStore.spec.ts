@@ -20,7 +20,7 @@ global.fetch = vi.fn(
                      avatar: 'avatar',
                      player: 'player',
                      level: 12,
-                     class: 'class',
+                     profession: 'profession',
                   },
                ],
             }),
@@ -46,7 +46,7 @@ describe('CommunityMenuStore', () => {
             avatar: 'avatar',
             player: 'player',
             level: 12,
-            class: 'class',
+            profession: 'profession',
          },
       ]);
       expect(store.loading).toBe(false);

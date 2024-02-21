@@ -1,13 +1,18 @@
 import { makeAutoObservable } from 'mobx';
+import { TranslationKey } from 'shared/src/data/translations';
 
 export class LoginStore {
    public username: string = '';
 
    public password: string = '';
 
-   public errorMessage: string = '';
+   public errorMessage: TranslationKey | '' = '';
 
-   public successMessage: string = '';
+   public errorMessageOptions: Record<string, string> = {};
+
+   public successMessage: TranslationKey | '' = '';
+
+   public successMessageOptions: Record<string, string> = {};
 
    public loading: boolean = false;
 
@@ -43,14 +48,16 @@ export class LoginStore {
       this.password = password;
    }
 
-   setErrorMessage(errorMessage: string) {
+   setErrorMessage(errorMessage: TranslationKey | '', options: Record<string, string> = {}) {
       this.successMessage = '';
       this.errorMessage = errorMessage;
+      this.errorMessageOptions = options;
    }
 
-   setSuccessMessage(successMessage: string) {
+   setSuccessMessage(successMessage: TranslationKey | '', options: Record<string, string> = {}) {
       this.errorMessage = '';
       this.successMessage = successMessage;
+      this.successMessageOptions = options;
    }
 
    setLoading(loading: boolean) {

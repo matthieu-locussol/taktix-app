@@ -71,6 +71,6 @@ export class Store {
       this.registerStore = new RegisterStore();
       this.screenStore = new ScreenStore(this);
       this.settingsMenuStore = new SettingsMenuStore(this);
-      this.updaterStore = new UpdaterStore();
+      this.updaterStore = new UpdaterStore(this);
    }
 }

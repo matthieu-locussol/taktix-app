@@ -15,8 +15,13 @@ vi.mock('./Store', () => {
       },
    };
 
+   const discordStoreMock = {
+      updateDiscordRichPresence: vi.fn(),
+   };
+
    const MockedStore = vi.fn().mockImplementation(() => ({
       gameStore: gameStoreMock,
+      discordStore: discordStoreMock,
    }));
 
    return { Store: MockedStore };
@@ -97,8 +102,8 @@ describe('SettingsMenuStore', () => {
       store.setLanguage('en');
       expect(store.language).toBe('en');
 
-      store.setLanguage('ru');
-      expect(store.language).toBe('ru');
+      store.setLanguage('ja');
+      expect(store.language).toBe('ja');
    });
 
    it('should save state', () => {
@@ -106,7 +111,7 @@ describe('SettingsMenuStore', () => {
 
       store.setVolume(100);
       store.setFullScreen(true);
-      store.setLanguage('ru');
+      store.setLanguage('ja');
       store.setFullScreenMenus({
          community: false,
          settings: true,
@@ -117,7 +122,7 @@ describe('SettingsMenuStore', () => {
       expect(store.savedState).toEqual({
          fullScreen: true,
          keyboardLayout: 'arrows',
-         language: 'ru',
+         language: 'ja',
          volume: 100,
          fullScreenMenus: {
             community: false,
@@ -131,7 +136,7 @@ describe('SettingsMenuStore', () => {
 
       store.setVolume(100);
       store.setFullScreen(true);
-      store.setLanguage('ru');
+      store.setLanguage('ja');
 
       store.resetToDefaults();
       store.saveChanges();
@@ -144,7 +149,7 @@ describe('SettingsMenuStore', () => {
 
       store.setVolume(100);
       store.setFullScreen(true);
-      store.setLanguage('ru');
+      store.setLanguage('ja');
 
       store.cancelChanges();
 

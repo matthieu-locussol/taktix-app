@@ -26,14 +26,14 @@ describe('CharacterSelectionStore', () => {
 
    it('should set the error message', () => {
       const store = new CharacterSelectionStore();
-      store.setErrorMessage('error');
-      expect(store.errorMessage).toBe('error');
+      store.setErrorMessage('invalidPassword');
+      expect(store.errorMessage).toBe('invalidPassword');
    });
 
    it('should set the success message', () => {
       const store = new CharacterSelectionStore();
-      store.setSuccessMessage('success');
-      expect(store.successMessage).toBe('success');
+      store.setSuccessMessage('accountCreated');
+      expect(store.successMessage).toBe('accountCreated');
    });
 
    it('should set the loading', () => {
@@ -100,8 +100,8 @@ describe('CharacterSelectionStore', () => {
       const store = new CharacterSelectionStore();
 
       store.setPassword('password');
-      store.setErrorMessage('error');
-      store.setSuccessMessage('success');
+      store.setErrorMessage('invalidPassword');
+      store.setSuccessMessage('accountCreated');
       store.setLoading(true);
       store.setLoadingDeleteCharacter(true);
       store.setCharacters([
