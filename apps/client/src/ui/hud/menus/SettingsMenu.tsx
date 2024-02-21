@@ -103,7 +103,11 @@ export const SettingsMenu = observer(() => {
                      minWidth: 200,
                   },
                }}
-               control={<LanguageSelector />}
+               control={
+                  <LanguageSelector
+                     onChange={(e) => settingsMenuStore.setLanguage(e.target.value)}
+                  />
+               }
                label={t('displayLanguage')}
                labelPlacement="start"
             />

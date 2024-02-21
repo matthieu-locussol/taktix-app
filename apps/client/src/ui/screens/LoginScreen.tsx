@@ -37,6 +37,7 @@ export const LoginScreen = observer(() => {
       loginStore,
       newsStore,
       screenStore,
+      settingsMenuStore,
       updaterStore,
    } = store;
    const { t } = useTranslation();
@@ -126,7 +127,13 @@ export const LoginScreen = observer(() => {
                         {getVersion()}
                      </Typography>
                   </Box>
-                  <LanguageSelector sx={{ my: 'auto' }} />
+                  <LanguageSelector
+                     onChange={(e) => {
+                        settingsMenuStore.setLanguage(e.target.value);
+                        settingsMenuStore.saveChanges();
+                     }}
+                     sx={{ my: 'auto' }}
+                  />
                </Box>
                <Changelog />
                <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
