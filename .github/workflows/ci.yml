@@ -90,12 +90,9 @@ jobs:
            run: |
               {
                 echo "changelog<<EOF"
-                echo "$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^-
-              feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...$CURRENT_TAG --pretty=format:"-
-              %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })"
+                echo "$({ git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^- feat' | sed 's/^- feat:/- New:/'; git log $PREV_TAG...$CURRENT_TAG --pretty=format:"- %s" | grep '^- fix' | sed 's/^- fix:/- Fixed/'; })"
                 echo EOF
               } >> "$GITHUB_OUTPUT"
-
 
    release:
       name: Update Client
