@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.43.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.42.1...v1.43.0) (2024-02-21)
+
+
+### Features
+
+* internationalization system ([f89999c](https://github.com/matthieu-locussol/taktix-app/commit/f89999c332762f9c36933dc34ec6ef155ccef383))
+
 ### [1.42.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.42.0...v1.42.1) (2024-02-20)
 
 ## [1.42.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.41.11...v1.42.0) (2024-02-20)
