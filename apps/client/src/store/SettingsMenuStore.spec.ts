@@ -23,7 +23,7 @@ vi.mock('./Store', () => {
 });
 
 describe('SettingsMenuStore', () => {
-   it('should create', () => {
+   it('should be initialized', () => {
       const store = new SettingsMenuStore(new Store());
 
       const defaults = {
