@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
 import { Channel } from 'shared/src/types/Channel';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
@@ -89,16 +90,12 @@ export class ContextMenuStore {
    private _makeSpriteSubMenu(sprite: Phaser.GameObjects.Sprite) {
       const type: EntityType = sprite.getData('type');
 
-      const spriteName = {
-         [EntityType.Character]: `[Player] ${sprite.name}`,
-      }[type];
-
       const subMenu = {
          [EntityType.Character]: this._makeCharacterMenu(sprite.name),
       }[type];
 
       return {
-         text: spriteName,
+         text: `[${i18next.t(type)}] ${sprite.name}`,
          subMenu,
       };
    }
@@ -106,16 +103,12 @@ export class ContextMenuStore {
    private _makePolygonSubMenu(polygon: Phaser.GameObjects.Polygon) {
       const type = zInteractiveObjectType.parse(polygon.name);
 
-      const menuName = {
-         [InteractiveObjectType.Teleporter]: '[Object] Teleporter',
-      }[type];
-
       const subMenu = {
          [InteractiveObjectType.Teleporter]: this._makeTeleporterMenu(),
       }[type];
 
       return {
-         text: menuName,
+         text: `[${i18next.t('object')}] ${i18next.t(type)}`,
          subMenu,
       };
    }
@@ -123,12 +116,12 @@ export class ContextMenuStore {
    private _makeTeleporterMenu(): SubMenuItem[] {
       return [
          {
-            text: 'Use',
+            text: i18next.t('use'),
             callback: () => {
                this._store.chatStore.addMessage({
                   author: 'System',
                   channel: Channel.ERROR,
-                  content: 'Teleporting is not implemented yet >.>',
+                  content: i18next.t('teleportSystemUnimplemented'),
                });
             },
          },
@@ -140,10 +133,10 @@ export class ContextMenuStore {
 
       return [
          {
-            text: isCurrentCharacter ? 'Slap' : 'Send a message',
+            text: isCurrentCharacter ? i18next.t('slap') : i18next.t('sendMessage'),
             callback: () => {
                if (isCurrentCharacter) {
-                  this._store.colyseusStore.sendMessage(Channel.GENERAL, 'Ouch!');
+                  this._store.colyseusStore.sendMessage(Channel.GENERAL, i18next.t('ouch'));
                   this._store.chatStore.setInput('');
                } else {
                   this._store.chatStore.setInput(`/w ${characterName} `);

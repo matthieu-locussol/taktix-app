@@ -1,4 +1,6 @@
+import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
+import { TranslationKey } from 'shared/src/data/translations';
 import { setDiscordRichPresence } from '../utils/discord';
 import { isTauri } from '../utils/tauri';
 import { getVersion } from '../utils/version';
@@ -20,27 +22,27 @@ export class DiscordStore {
          return;
       }
 
-      const { loggedIn, screenName } = this._store.screenStore;
+      const { loggedIn, screen } = this._store.screenStore;
 
       if (!loggedIn) {
          setDiscordRichPresence({
-            details: 'In Menu',
-            state: screenName,
+            details: i18next.t('inMenu' satisfies TranslationKey),
+            state: i18next.t(screen satisfies TranslationKey),
             large_image: 'default',
             large_text: `Taktix - ${getVersion()}`,
             timestamp: this.startTimestamp,
          });
       } else {
-         const { mapName, name, profession /* level */ } = this._store.characterStore;
+         const { map, name, profession /* level */ } = this._store.characterStore;
          const level = 1;
 
          setDiscordRichPresence({
-            details: `In: ${mapName}`,
-            state: 'Playing',
+            details: i18next.t('inMap', { map: i18next.t(map satisfies TranslationKey) }),
+            state: i18next.t('playing' satisfies TranslationKey),
             large_image: 'default',
             large_text: `Taktix - ${getVersion()}`,
             small_image: profession.toLocaleLowerCase(),
-            small_text: `${name} - Level ${level}`,
+            small_text: `${name} - ${i18next.t('level', { level })}`,
             timestamp: this.startTimestamp,
          });
       }

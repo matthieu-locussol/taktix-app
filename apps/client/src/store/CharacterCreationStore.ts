@@ -1,10 +1,11 @@
 import { makeAutoObservable } from 'mobx';
+import { TranslationKey } from 'shared/src/data/translations';
 import { ProfessionType } from 'shared/src/types/Profession';
 
 export class CharacterCreationStore {
-   public errorMessage: string = '';
+   public errorMessage: TranslationKey | '' = '';
 
-   public successMessage: string = '';
+   public errorMessageOptions: Record<string, string> = {};
 
    public name: string = '';
 
@@ -28,19 +29,13 @@ export class CharacterCreationStore {
       this.loading = loading;
    }
 
-   setErrorMessage(errorMessage: string) {
-      this.successMessage = '';
+   setErrorMessage(errorMessage: TranslationKey | '', options: Record<string, string> = {}) {
       this.errorMessage = errorMessage;
-   }
-
-   setSuccessMessage(successMessage: string) {
-      this.errorMessage = '';
-      this.successMessage = successMessage;
+      this.errorMessageOptions = options;
    }
 
    reset() {
       this.errorMessage = '';
-      this.successMessage = '';
       this.name = '';
       this.profession = ProfessionType.Warrior;
       this.loading = false;

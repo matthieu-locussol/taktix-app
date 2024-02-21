@@ -8,7 +8,6 @@ describe('CharacterCreationStore', () => {
 
       expect(store).toBeDefined();
       expect(store.errorMessage).toEqual('');
-      expect(store.successMessage).toEqual('');
       expect(store.name).toEqual('');
       expect(store.profession).toEqual(ProfessionType.Warrior);
       expect(store.loading).toEqual(false);
@@ -34,21 +33,14 @@ describe('CharacterCreationStore', () => {
 
    it('should set the error message', () => {
       const store = new CharacterCreationStore();
-      store.setErrorMessage('error');
-      expect(store.errorMessage).toBe('error');
-   });
-
-   it('should set the success message', () => {
-      const store = new CharacterCreationStore();
-      store.setSuccessMessage('success');
-      expect(store.successMessage).toBe('success');
+      store.setErrorMessage('invalidPassword');
+      expect(store.errorMessage).toBe('invalidPassword');
    });
 
    it('should reset the store', () => {
       const store = new CharacterCreationStore();
 
-      store.setErrorMessage('error');
-      store.setSuccessMessage('success');
+      store.setErrorMessage('invalidPassword');
       store.setName('John');
       store.setProfession(ProfessionType.Mage);
       store.setLoading(true);
@@ -56,7 +48,6 @@ describe('CharacterCreationStore', () => {
       store.reset();
 
       expect(store.errorMessage).toBe('');
-      expect(store.successMessage).toBe('');
       expect(store.name).toBe('');
       expect(store.profession).toBe(ProfessionType.Warrior);
       expect(store.loading).toBe(false);

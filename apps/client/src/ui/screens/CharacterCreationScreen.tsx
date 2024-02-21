@@ -8,11 +8,13 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
+import { useTranslation } from '../../types/react-i18next';
 import { CharacterSelector } from '../hud/components/CharacterSelector';
 
 export const CharacterCreationScreen = observer(() => {
    const store = useStore();
    const { characterCreationStore, colyseusStore, screenStore } = store;
+   const { t } = useTranslation();
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -40,27 +42,21 @@ export const CharacterCreationScreen = observer(() => {
          <Card variant="outlined" sx={{ display: 'flex' }}>
             <CardContent>
                <Typography variant="h1" align="center" gutterBottom sx={{ mb: 2 }}>
-                  Create a new character
+                  {t(screenStore.screen)}
                </Typography>
                {characterCreationStore.errorMessage && (
                   <Typography variant="body1" align="center" color="error" sx={{ mb: 2 }}>
-                     {characterCreationStore.errorMessage}
-                  </Typography>
-               )}
-               {characterCreationStore.successMessage && (
-                  <Typography
-                     variant="body1"
-                     align="center"
-                     sx={(theme) => ({ color: theme.palette.success.main, mb: 2 })}
-                  >
-                     {characterCreationStore.successMessage}
+                     {t(
+                        characterCreationStore.errorMessage,
+                        characterCreationStore.errorMessageOptions,
+                     )}
                   </Typography>
                )}
                <Box display="grid" gap={2}>
                   <CharacterSelector />
                   <TextField
                      type="text"
-                     placeholder="Character name"
+                     placeholder={t('characterName')}
                      value={characterCreationStore.name}
                      onChange={(e) => characterCreationStore.setName(e.target.value)}
                   />
@@ -75,14 +71,14 @@ export const CharacterCreationScreen = observer(() => {
                   {characterCreationStore.loading ? (
                      <CircularProgress size={24} color="inherit" />
                   ) : (
-                     'Create'
+                     t('create')
                   )}
                </Button>
                <Link
                   onClick={() => screenStore.setScreen('characterSelection')}
                   sx={{ mt: 2, mr: 'auto' }}
                >
-                  Back
+                  {t('back')}
                </Link>
             </CardContent>
          </Card>

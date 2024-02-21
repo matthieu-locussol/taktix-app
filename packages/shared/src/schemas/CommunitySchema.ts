@@ -6,7 +6,7 @@ export const zCommunitySchema = z.object({
          avatar: z.string(),
          player: z.string(),
          level: z.number(),
-         class: z.string(),
+         profession: z.string(),
       }),
    ),
 });

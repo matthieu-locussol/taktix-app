@@ -7,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { channelsInformations } from 'shared/src/data/channelsInformations';
 import { Channel } from 'shared/src/types/Channel';
 import { useStore } from '../../../store';
+import { useTranslation } from '../../../types/react-i18next';
 
 interface ChannelsSelectorProps extends MenuProps {
    handleClose: () => void;
@@ -15,6 +16,7 @@ interface ChannelsSelectorProps extends MenuProps {
 export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSelectorProps) => {
    const theme = useTheme();
    const { chatStore } = useStore();
+   const { t } = useTranslation();
 
    return (
       <Menu
@@ -65,7 +67,7 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
                            }}
                         />
                      }
-                     label={`${channelsInformations[channelId].name} (${channelsInformations[channelId].shortcut})`}
+                     label={`${t(channelsInformations[channelId].name)} (${channelsInformations[channelId].shortcut})`}
                      slotProps={{
                         typography: {
                            color: theme.palette.channels[channelId],

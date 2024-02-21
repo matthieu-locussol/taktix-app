@@ -1,6 +1,5 @@
 import type { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
-import { roomsNames } from 'shared/src/data/roomsNames';
 import { Player } from 'shared/src/types/Player';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { Room } from 'shared/src/types/Room';
@@ -46,9 +45,5 @@ export class CharacterStore {
 
    public setPlayers(players: Player[]) {
       this.players = players;
-   }
-
-   get mapName() {
-      return roomsNames[this.map];
    }
 }

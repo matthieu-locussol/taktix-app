@@ -46,18 +46,9 @@ describe('ScreenStore', () => {
    it('should get loginOrRegisterOppositeName', () => {
       const store = new ScreenStore(new Store());
 
-      expect(store.loginOrRegisterOppositeName).toEqual('Register');
+      expect(store.loginOrRegisterOppositeName).toEqual('register');
 
       store.switchBetweenLoginAndRegister();
-      expect(store.loginOrRegisterOppositeName).toEqual('Log In');
-   });
-
-   it('should get screenName', () => {
-      const store = new ScreenStore(new Store());
-
-      expect(store.screenName).toEqual('Log In');
-
-      store.setScreen('register');
-      expect(store.screenName).toEqual('Register');
+      expect(store.loginOrRegisterOppositeName).toEqual('login');
    });
 });

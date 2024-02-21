@@ -1,6 +1,12 @@
 import { when } from 'mobx';
 import { describe, expect, it, vi } from 'vitest';
+import { Store } from './Store';
 import { UpdaterStore } from './UpdaterStore';
+
+vi.mock('./Store', () => {
+   const MockedStore = vi.fn();
+   return { Store: MockedStore };
+});
 
 const mocks = vi.hoisted(() => ({
    isTauri: vi.fn(),
@@ -24,20 +30,19 @@ vi.mock('@tauri-apps/api/process', () => ({
 
 describe('UpdaterStore', () => {
    it('should be initialized', () => {
-      const store = new UpdaterStore();
+      const store = new UpdaterStore(new Store());
 
       expect(store.shouldUpdate).toEqual(undefined);
       expect(store.updateManifest).toEqual(undefined);
       expect(store.updating).toEqual(false);
       expect(store.progress).toEqual(0);
       expect(store.openUpdateModal).toEqual(false);
-      expect(store.errorMessage).toEqual('');
    });
 
    it('should check for updates', async () => {
       mocks.isTauri.mockReturnValue(false);
 
-      const store = new UpdaterStore();
+      const store = new UpdaterStore(new Store());
       await store.checkUpdate();
       expect(store.shouldUpdate).toEqual(false);
    });
@@ -49,7 +54,7 @@ describe('UpdaterStore', () => {
          manifest: {},
       });
 
-      const store = new UpdaterStore();
+      const store = new UpdaterStore(new Store());
       await store.checkUpdate();
 
       when(
@@ -67,7 +72,7 @@ describe('UpdaterStore', () => {
          manifest: {},
       });
 
-      const store = new UpdaterStore();
+      const store = new UpdaterStore(new Store());
       await store.checkUpdate();
 
       when(
@@ -81,7 +86,7 @@ describe('UpdaterStore', () => {
    it('should update', async () => {
       mocks.installUpdate.mockResolvedValue(undefined);
 
-      const store = new UpdaterStore();
+      const store = new UpdaterStore(new Store());
       await store.update();
 
       expect(store.updating).toEqual(false);
@@ -91,14 +96,14 @@ describe('UpdaterStore', () => {
    it('should restart', async () => {
       mocks.relaunch.mockResolvedValue(undefined);
 
-      const store = new UpdaterStore();
+      const store = new UpdaterStore(new Store());
       store.restart();
 
       expect(store.openUpdateModal).toEqual(false);
    });
 
    it('should update progress', async () => {
-      const store = new UpdaterStore();
+      const store = new UpdaterStore(new Store());
 
       store.updateProgress(0.05);
       expect(store.progress.toFixed(2)).toEqual('5.00');

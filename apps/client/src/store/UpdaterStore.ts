@@ -2,8 +2,11 @@ import { relaunch } from '@tauri-apps/api/process';
 import { UpdateManifest, checkUpdate, installUpdate } from '@tauri-apps/api/updater';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { isTauri } from '../utils/tauri';
+import { Store } from './Store';
 
 export class UpdaterStore {
+   private _store: Store;
+
    public shouldUpdate: boolean | undefined = undefined;
 
    public updateManifest: UpdateManifest | undefined = undefined;
@@ -14,10 +17,10 @@ export class UpdaterStore {
 
    public openUpdateModal: boolean = false;
 
-   public errorMessage: string = '';
-
-   constructor() {
+   constructor(store: Store) {
       makeAutoObservable(this);
+
+      this._store = store;
    }
 
    async checkUpdate() {
@@ -51,8 +54,7 @@ export class UpdaterStore {
          });
       } catch (e) {
          runInAction(() => {
-            this.errorMessage =
-               'Sorry, an error occurred while updating Taktix. If it happens again, try reinstalling the game.';
+            this._store.loginStore.setErrorMessage('updateError');
          });
       }
    }
@@ -66,8 +68,7 @@ export class UpdaterStore {
          });
       } catch (e) {
          runInAction(() => {
-            this.errorMessage =
-               'Sorry, an error occurred while restarting Taktix. Try restarting it by yourself.';
+            this._store.loginStore.setErrorMessage('restartError');
          });
       }
    }

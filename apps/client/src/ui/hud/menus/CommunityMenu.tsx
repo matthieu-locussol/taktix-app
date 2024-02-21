@@ -19,37 +19,42 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import { Trans } from 'react-i18next';
+import { zProfessionType } from 'shared/src/types/Profession';
 import { useStore } from '../../../store';
+import { TFunctionWrapper, useTranslation } from '../../../types/react-i18next';
 import { StatusBadge } from '../../components/StatusBadge';
 
 interface Column {
-   id: 'avatar' | 'player' | 'level' | 'class';
-   label: string;
+   id: 'avatar' | 'player' | 'level' | 'profession';
+   label: (t: TFunctionWrapper) => string;
    minWidth?: number;
    align?: 'right';
-   format?: (value: string) => React.ReactNode;
+   format?: (value: string, t: TFunctionWrapper) => React.ReactNode;
 }
 
 const columns: Column[] = [
    {
       id: 'avatar',
-      label: '',
+      label: () => '',
       format: (value) => <img src={value} width={24} height={24} />,
    },
-   { id: 'player', label: 'Player' },
+   { id: 'player', label: (t) => t('player') },
    {
       id: 'level',
-      label: 'Level',
+      label: (t) => t('levelRaw'),
       align: 'right',
    },
    {
-      id: 'class',
-      label: 'Class',
+      id: 'profession',
+      label: (t) => t('profession'),
+      format: (value, t) => t(zProfessionType.parse(value)),
    },
 ];
 
 export const CommunityMenu = observer(() => {
    const { characterStore, communityMenuStore, settingsMenuStore } = useStore();
+   const { t } = useTranslation();
 
    return (
       <StyledDialog
@@ -65,7 +70,7 @@ export const CommunityMenu = observer(() => {
             }),
          }}
       >
-         <DialogTitle sx={{ m: 0, p: 2 }}>Community</DialogTitle>
+         <DialogTitle sx={{ m: 0, p: 2 }}>{t('community')}</DialogTitle>
          <IconButton
             aria-label="fullscreen"
             onClick={() => settingsMenuStore.toggleFullScreenMenu('community')}
@@ -104,10 +109,10 @@ export const CommunityMenu = observer(() => {
                               key={`community-header-${column.id}`}
                               align={column.align}
                            >
-                              {column.label}
+                              {column.label(t)}
                            </StyledTableHead>
                         ))}
-                        <StyledTableHead>Actions</StyledTableHead>
+                        <StyledTableHead>{t('actions')}</StyledTableHead>
                      </TableRow>
                   </TableHead>
                   <TableBody>
@@ -133,7 +138,7 @@ export const CommunityMenu = observer(() => {
                                                 : 'normal',
                                        }}
                                     >
-                                       {column.format ? column.format(`${value}`) : value}
+                                       {column.format ? column.format(`${value}`, t) : value}
                                     </StyledTableCell>
                                  );
                               })}
@@ -159,11 +164,15 @@ export const CommunityMenu = observer(() => {
             <Box display="flex" alignItems="center" gap={1}>
                <StatusBadge status="online" />
                <Typography display="flex" alignItems="center" gap={1}>
-                  Players online: <b>{communityMenuStore.playerCount}</b>
+                  <Trans
+                     i18nKey="onlinePlayers"
+                     values={{ count: communityMenuStore.playerCount }}
+                     components={{ b: <b /> }}
+                  />
                </Typography>
             </Box>
             <Button variant="contained" onClick={() => communityMenuStore.close()}>
-               Close
+               {t('close')}
             </Button>
          </StyledDialogActions>
       </StyledDialog>

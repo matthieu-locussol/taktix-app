@@ -1,8 +1,9 @@
 import { Channel } from '../types/Channel';
 import { PermissionMgt } from '../utils/permissionMgt';
+import { TranslationKey } from './translations';
 
 interface ChannelInformations {
-   name: string;
+   name: TranslationKey;
    shortcut: string;
    permissions: PermissionMgt.Permission[];
 }

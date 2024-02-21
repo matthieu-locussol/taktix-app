@@ -37,21 +37,6 @@ export class ScreenStore {
    }
 
    public get loginOrRegisterOppositeName() {
-      return this.screen === 'login'
-         ? ScreenStore.SCREENS_NAMES.register
-         : ScreenStore.SCREENS_NAMES.login;
-   }
-
-   get screenName() {
-      return ScreenStore.SCREENS_NAMES[this.screen];
-   }
-
-   static get SCREENS_NAMES(): Record<Screen, string> {
-      return {
-         login: 'Log In',
-         register: 'Register',
-         characterSelection: 'Character Selection',
-         characterCreation: 'Character Creation',
-      };
+      return this.screen === 'login' ? 'register' : 'login';
    }
 }

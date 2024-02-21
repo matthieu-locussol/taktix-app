@@ -36,14 +36,14 @@ describe('LoginStore', () => {
 
    it('should set the error message', () => {
       const store = new LoginStore();
-      store.setErrorMessage('error');
-      expect(store.errorMessage).toBe('error');
+      store.setErrorMessage('incorrectCredentials', { username: 'username' });
+      expect(store.errorMessage).toBe('incorrectCredentials');
    });
 
    it('should set the success message', () => {
       const store = new LoginStore();
-      store.setSuccessMessage('success');
-      expect(store.successMessage).toBe('success');
+      store.setSuccessMessage('accountCreated');
+      expect(store.successMessage).toBe('accountCreated');
    });
 
    it('should set the loading', () => {
@@ -94,8 +94,8 @@ describe('LoginStore', () => {
 
       store.setUsername('username');
       store.setPassword('password');
-      store.setErrorMessage('error');
-      store.setSuccessMessage('success');
+      store.setErrorMessage('incorrectCredentials', { username: 'username' });
+      store.setSuccessMessage('accountCreated');
       store.setLoading(true);
       store.setMemorizeCredentials(true);
       store.setOpenMemorizeCredentials(true);

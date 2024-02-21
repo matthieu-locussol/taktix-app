@@ -55,6 +55,9 @@ importers:
          grid-engine:
             specifier: ^2.44.0
             version: 2.44.0(phaser@3.70.0)
+         i18next:
+            specifier: ^23.9.0
+            version: 23.9.0
          mobx:
             specifier: ^6.12.0
             version: 6.12.0
@@ -70,6 +73,9 @@ importers:
          react-dom:
             specifier: ^18.2.0
             version: 18.2.0(react@18.2.0)
+         react-i18next:
+            specifier: ^14.0.5
+            version: 14.0.5(i18next@23.9.0)(react-dom@18.2.0)(react@18.2.0)
          shared:
             specifier: workspace:latest
             version: link:../../packages/shared
@@ -6493,6 +6499,15 @@ packages:
          lru-cache: 6.0.0
       dev: true
 
+   /html-parse-stringify@3.0.1:
+      resolution:
+         {
+            integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==,
+         }
+      dependencies:
+         void-elements: 3.1.0
+      dev: false
+
    /http-errors@2.0.0:
       resolution:
          {
@@ -6538,6 +6553,15 @@ packages:
       engines: { node: '>=18' }
       hasBin: true
       dev: true
+
+   /i18next@23.9.0:
+      resolution:
+         {
+            integrity: sha512-f3MUciKqwzNV//mHG6EtdSlC65+nqH/3zK8sOSWqNV6FVu2tmHhF/rFOp9UF8S4m1odojtuipKaKJrP0Loh60g==,
+         }
+      dependencies:
+         '@babel/runtime': 7.23.9
+      dev: false
 
    /iconv-lite@0.4.24:
       resolution:
@@ -8785,6 +8809,29 @@ packages:
          scheduler: 0.23.0
       dev: false
 
+   /react-i18next@14.0.5(i18next@23.9.0)(react-dom@18.2.0)(react@18.2.0):
+      resolution:
+         {
+            integrity: sha512-5+bQSeEtgJrMBABBL5lO7jPdSNAbeAZ+MlFWDw//7FnVacuVu3l9EeWFzBQvZsKy+cihkbThWOAThEdH8YjGEw==,
+         }
+      peerDependencies:
+         i18next: '>= 23.2.3'
+         react: '>= 16.8.0'
+         react-dom: '*'
+         react-native: '*'
+      peerDependenciesMeta:
+         react-dom:
+            optional: true
+         react-native:
+            optional: true
+      dependencies:
+         '@babel/runtime': 7.23.9
+         html-parse-stringify: 3.0.1
+         i18next: 23.9.0
+         react: 18.2.0
+         react-dom: 18.2.0(react@18.2.0)
+      dev: false
+
    /react-is@16.13.1:
       resolution:
          {
@@ -10614,6 +10661,14 @@ packages:
          - sugarss
          - supports-color
          - terser
+      dev: false
+
+   /void-elements@3.1.0:
+      resolution:
+         {
+            integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==,
+         }
+      engines: { node: '>=0.10.0' }
       dev: false
 
    /webidl-conversions@7.0.0:

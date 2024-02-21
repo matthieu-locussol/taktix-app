@@ -1,12 +1,15 @@
 import { makeAutoObservable } from 'mobx';
 import { AuthRoomUserData } from 'shared';
+import { TranslationKey } from 'shared/src/data/translations';
 
 export class CharacterSelectionStore {
    public password: string = '';
 
-   public errorMessage: string = '';
+   public errorMessage: TranslationKey | '' = '';
 
-   public successMessage: string = '';
+   public errorMessageOptions: Record<string, string> = {};
+
+   public successMessage: TranslationKey | '' = '';
 
    public loading: boolean = false;
 
@@ -28,12 +31,13 @@ export class CharacterSelectionStore {
       this.password = password;
    }
 
-   setErrorMessage(errorMessage: string) {
+   setErrorMessage(errorMessage: TranslationKey | '', options: Record<string, string> = {}) {
       this.successMessage = '';
       this.errorMessage = errorMessage;
+      this.errorMessageOptions = options;
    }
 
-   setSuccessMessage(successMessage: string) {
+   setSuccessMessage(successMessage: TranslationKey | '') {
       this.errorMessage = '';
       this.successMessage = successMessage;
    }

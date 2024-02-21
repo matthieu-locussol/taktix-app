@@ -182,12 +182,19 @@ export class AuthRoom extends Room {
       if (character === null) {
          message = {
             status: 'error',
-            errorMessage: `Character "${characterName}" does not exist!`,
+            errorMessage: 'characterDoesNotExist',
+            errorMessageOptions: {
+               name: characterName,
+            },
          };
       } else if (character.user.username !== username) {
          message = {
             status: 'error',
-            errorMessage: `Character "${characterName}" does not belong to user "${username}"!`,
+            errorMessage: 'characterDoesNotBelongToUser',
+            errorMessageOptions: {
+               name: characterName,
+               username,
+            },
          };
       } else {
          const uuid = uuidv4();
@@ -237,7 +244,10 @@ export class AuthRoom extends Room {
       if (characterName === INTERNAL_PLAYER_NAME) {
          message = {
             status: 'error',
-            errorMessage: `Character name "${characterName}" already exists!`,
+            errorMessage: 'characterAlreadyExists',
+            errorMessageOptions: {
+               name: characterName,
+            },
          };
       }
 
@@ -253,18 +263,22 @@ export class AuthRoom extends Room {
       if (character !== null) {
          message = {
             status: 'error',
-            errorMessage: `Character name "${characterName}" already exists!`,
+            errorMessage: 'characterAlreadyExists',
+            errorMessageOptions: {
+               name: characterName,
+            },
          };
       } else if (userCharacters.length >= MAX_CHARACTERS_PER_ACCOUNT) {
          message = {
             status: 'error',
-            errorMessage: `Maximum number of characters reached!`,
+            errorMessage: 'maximumCharactersReached',
+            errorMessageOptions: {},
          };
       } else if (!StringMgt.isCharacterNameValid(characterName)) {
          message = {
             status: 'error',
-            errorMessage:
-               'Invalid name: only letters, numbers, underscore and hyphens are allowed. Must be between 3 and 15 characters. No spaces allowed. Should not start with an underscore or hyphen.',
+            errorMessage: 'invalidCharacterName',
+            errorMessageOptions: {},
          };
       } else {
          await prisma.character.create({
@@ -333,12 +347,14 @@ export class AuthRoom extends Room {
       if (user === null) {
          message = {
             status: 'error',
-            errorMessage: 'Invalid password!',
+            errorMessage: 'invalidPassword',
+            errorMessageOptions: {},
          };
       } else if (!user.characters.some((entry) => entry.name === characterName)) {
          message = {
             status: 'error',
-            errorMessage: `Character "${characterName}" does not exist!`,
+            errorMessage: 'characterDoesNotExist',
+            errorMessageOptions: {},
          };
       } else {
          await prisma.character.delete({

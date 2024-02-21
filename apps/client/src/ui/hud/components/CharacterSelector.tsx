@@ -3,11 +3,12 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { observer } from 'mobx-react-lite';
 import { professions } from 'shared/src/types/Profession';
-import { StringMgt } from 'shared/src/utils/stringMgt';
 import { useStore } from '../../../store';
+import { useTranslation } from '../../../types/react-i18next';
 
 export const CharacterSelector = observer(() => {
    const { characterCreationStore } = useStore();
+   const { t } = useTranslation();
 
    return (
       <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
@@ -30,7 +31,7 @@ export const CharacterSelector = observer(() => {
          >
             {professions.map((profession) => (
                <ToggleButton key={profession} value={profession}>
-                  {StringMgt.toUpperCaseFirst(profession)}
+                  {t(profession)}
                </ToggleButton>
             ))}
          </ToggleButtonGroup>
