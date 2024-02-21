@@ -1,0 +1,77 @@
+import { describe, expect, it, vi } from 'vitest';
+import { DiscordStore } from './DiscordStore';
+import { Store } from './Store';
+
+const mocks = vi.hoisted(() => ({
+   setDiscordRichPresence: vi.fn(),
+   isTauri: vi.fn().mockReturnValue(true),
+   getVersion: vi.fn().mockReturnValue('1.0.0'),
+}));
+
+vi.mock('./Store', () => {
+   const screenStoreMock = {
+      loggedIn: false,
+      screenName: 'Menu',
+   };
+
+   const MockedStore = vi.fn().mockImplementation(() => ({
+      screenStore: screenStoreMock,
+   }));
+
+   return { Store: MockedStore };
+});
+
+vi.mock('../utils/discord', () => ({
+   setDiscordRichPresence: mocks.setDiscordRichPresence,
+}));
+
+vi.mock('../utils/tauri', () => ({
+   isTauri: mocks.isTauri,
+}));
+
+vi.mock('../utils/version', () => ({
+   getVersion: mocks.getVersion,
+}));
+
+describe('DiscordStore', () => {
+   vi.useFakeTimers();
+   const now = new Date().getTime();
+
+   it('should be initialized', () => {
+      const store = new DiscordStore(new Store());
+
+      expect(store).toBeDefined();
+   });
+
+   it('should update discord rich presence', () => {
+      const store = new DiscordStore(new Store());
+
+      store.updateDiscordRichPresence();
+
+      expect(mocks.isTauri).toHaveBeenCalled();
+      expect(mocks.getVersion).toHaveBeenCalled();
+      expect(mocks.setDiscordRichPresence).toHaveBeenCalledWith({
+         details: 'In Menu',
+         state: 'Menu',
+         large_image: 'default',
+         large_text: 'Taktix - 1.0.0',
+         timestamp: now,
+      });
+   });
+
+   it('should update discord rich presence when logged in', () => {
+      const store = new DiscordStore(new Store());
+
+      store.updateDiscordRichPresence();
+
+      expect(mocks.isTauri).toHaveBeenCalled();
+      expect(mocks.getVersion).toHaveBeenCalled();
+      expect(mocks.setDiscordRichPresence).toHaveBeenCalledWith({
+         details: 'In Menu',
+         state: 'Menu',
+         large_image: 'default',
+         large_text: 'Taktix - 1.0.0',
+         timestamp: now,
+      });
+   });
+});
