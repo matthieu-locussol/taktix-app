@@ -22,10 +22,6 @@ export const LanguageSelector = observer((props: SelectProps<Language>) => {
          sx={{ ml: 2 }}
          {...props}
          value={settingsMenuStore.language}
-         onChange={(e) => {
-            settingsMenuStore.setLanguage(e.target.value);
-            settingsMenuStore.saveChanges();
-         }}
       >
          {Object.entries(LANGUAGES_NAMES).map(([value, label]) => (
             <MenuItem key={value} value={value}>

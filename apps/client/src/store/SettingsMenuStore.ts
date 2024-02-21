@@ -129,9 +129,6 @@ export class SettingsMenuStore {
       } else {
          this.language = DEFAULT_LANGUAGE;
       }
-
-      i18n.changeLanguage(this.language);
-      this._store.discordStore.updateDiscordRichPresence();
    }
 
    public setFullScreenMenus(fullScreenMenus: SettingsMenuState['fullScreenMenus']): void {
@@ -170,6 +167,9 @@ export class SettingsMenuStore {
          language: this.language,
          fullScreenMenus: this.fullScreenMenus,
       };
+
+      i18n.changeLanguage(this.language);
+      this._store.discordStore.updateDiscordRichPresence();
 
       localStorage.setItem('settings', JSON.stringify(this.savedState));
       this.close();
