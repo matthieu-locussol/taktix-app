@@ -59,7 +59,10 @@
       "start:website": {
          "dependsOn": ["build:website"]
       },
-      "studio": {
+      "studio:staging": {
+         "dependsOn": ["build:server"]
+      },
+      "studio:production": {
          "dependsOn": ["build:server"]
       },
       "test": {}
