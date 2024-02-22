@@ -6,6 +6,13 @@
          "env": {
             "NODE_ENV": "production"
          }
+      },
+      {
+         "name": "Taktix - Studio (Production)",
+         "script": "pnpm studio:production",
+         "env": {
+            "NODE_ENV": "production"
+         }
       }
    ]
 }

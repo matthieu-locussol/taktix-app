@@ -3,6 +3,7 @@ import { monitor } from '@colyseus/monitor';
 import { playground } from '@colyseus/playground';
 import { WebSocketTransport } from '@colyseus/ws-transport';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import express, { json } from 'express';
 import basicAuth from 'express-basic-auth';
 import { createServer } from 'http';
@@ -14,6 +15,8 @@ import { communityRouter } from './routers/communityRouter';
 import { maintenanceRouter } from './routers/maintenanceRouter';
 import { registerRouter } from './routers/registerRouter';
 import { statusRouter } from './routers/statusRouter';
+
+dotenv.config({ path: `.env.${process.env.NODE_ENV || 'production'}` });
 
 const app = express();
 const auth = basicAuth({

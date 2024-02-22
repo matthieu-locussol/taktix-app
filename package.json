@@ -22,7 +22,8 @@
       "eslint:shared": "turbo run eslint --filter=shared",
       "format": "lint-staged",
       "release": "standard-version -a && turbo run bumpversion",
-      "studio": "turbo run studio",
+      "studio:staging": "turbo run studio:staging",
+      "studio:production": "turbo run studio:production",
       "generate_maps": "turbo run generate_maps && turbo run build --filter=shared"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
