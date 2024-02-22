@@ -22,7 +22,7 @@
       "@colyseus/ws-transport": "^0.15.1",
       "@fastify/cors": "^9.0.1",
       "@fastify/websocket": "^9.0.0",
-      "@prisma/client": "^5.10.1",
+      "@prisma/client": "^5.10.2",
       "@prisma/extension-accelerate": "^0.6.3",
       "cors": "^2.8.5",
       "dotenv": "^16.4.5",
