@@ -22,8 +22,7 @@
       "eslint:shared": "turbo run eslint --filter=shared",
       "format": "lint-staged",
       "release": "standard-version -a && turbo run bumpversion",
-      "studio:staging": "turbo run studio:staging",
-      "studio:production": "turbo run studio:production",
+      "studio": "turbo run studio",
       "generate_maps": "turbo run generate_maps && turbo run build --filter=shared"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
@@ -36,6 +35,11 @@
       "prettier": "^3.2.5",
       "standard-version": "^9.5.0",
       "turbo": "^1.12.4"
+   },
+   "resolutions": {
+      "@typescript-eslint/eslint-plugin": "^6.0.0",
+      "@typescript-eslint/parser": "^6.0.0",
+      "phaser": "~3.70.0"
    },
    "packageManager": "pnpm@8.8.0"
 }

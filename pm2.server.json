@@ -8,8 +8,8 @@
          }
       },
       {
-         "name": "Taktix - Studio (Production)",
-         "script": "pnpm studio:production",
+         "name": "Taktix - Studio",
+         "script": "pnpm studio",
          "env": {
             "NODE_ENV": "production"
          }

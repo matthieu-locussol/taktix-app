@@ -128,6 +128,7 @@ export const LoginScreen = observer(() => {
                      </Typography>
                   </Box>
                   <LanguageSelector
+                     variant="outlined"
                      onChange={(e) => {
                         settingsMenuStore.setLanguage(e.target.value);
                         settingsMenuStore.saveChanges();
