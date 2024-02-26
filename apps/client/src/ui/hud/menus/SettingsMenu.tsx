@@ -105,6 +105,7 @@ export const SettingsMenu = observer(() => {
                }}
                control={
                   <LanguageSelector
+                     variant="outlined"
                      onChange={(e) => settingsMenuStore.setLanguage(e.target.value)}
                   />
                }

@@ -5,7 +5,7 @@ import { LANGUAGES_NAMES } from 'shared/src/data/translations';
 import { Language } from 'shared/src/types/Language';
 import { useStore } from '../../store';
 
-export const LanguageSelector = observer((props: SelectProps<Language>) => {
+export const LanguageSelector = observer((props: SelectProps<Language, 'outlined'>) => {
    const { settingsMenuStore } = useStore();
 
    return (
