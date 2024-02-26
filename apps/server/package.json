@@ -10,7 +10,7 @@
       "dev:debug": "DEBUG=colyseus:* ts-node-dev --respawn --transpile-only src/index.ts",
       "start": "node ./dist/index.js",
       "test": "vitest --run",
-      "studio": "dotenv -e .env -- prisma studio"
+      "studio": "PATH=\"$PATH:/home/ubuntu/.local/share/pnpm\" && dotenv -e .env -- prisma studio"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
