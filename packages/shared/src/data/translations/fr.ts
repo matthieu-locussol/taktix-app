@@ -82,6 +82,8 @@ export const translationsFr: LanguageTranslations = {
    sendMessage: 'Envoyer un message',
    ouch: 'Aïe !',
    object: 'Objet',
+   map: 'Carte',
+   unknownMap: 'Inconnue',
 
    // Professions
    Warrior: 'Guerrier',

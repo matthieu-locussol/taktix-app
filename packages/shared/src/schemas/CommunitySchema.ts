@@ -7,6 +7,7 @@ export const zCommunitySchema = z.object({
          player: z.string(),
          level: z.number(),
          profession: z.string(),
+         map: z.string(),
       }),
    ),
 });

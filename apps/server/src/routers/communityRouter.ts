@@ -8,6 +8,7 @@ export const communityRouter: RequestHandler = async (_, res) => {
       select: {
          name: true,
          profession: true,
+         map: true,
          // level: true,
       },
       where: {
@@ -18,11 +19,12 @@ export const communityRouter: RequestHandler = async (_, res) => {
    });
 
    const payload: CommunitySchema = {
-      players: usersInformations.map(({ name, profession }) => ({
+      players: usersInformations.map(({ name, profession, map }) => ({
          avatar: `/assets/professions/face/${profession}.png`,
          player: name,
          level: 1, // level
          profession,
+         map,
       })),
    };
 

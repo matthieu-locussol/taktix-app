@@ -81,6 +81,8 @@ export const translationsJa: LanguageTranslations = {
    sendMessage: 'メッセージを送る',
    ouch: '痛い！',
    object: 'オブジェクト',
+   map: 'マップ',
+   unknownMap: '不明',
 
    // Professions
    Warrior: '戦士',

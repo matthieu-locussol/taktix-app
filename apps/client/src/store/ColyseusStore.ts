@@ -356,7 +356,7 @@ export class ColyseusStore {
          }
       });
 
-      await this.joinRoom(map, { x, y });
+      await this.joinRoom(map, { x, y }, direction as Direction);
 
       this.setChangingMap(false);
 
