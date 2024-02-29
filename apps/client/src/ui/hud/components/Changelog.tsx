@@ -5,6 +5,8 @@ import { observer } from 'mobx-react-lite';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { useStore } from '../../../store';
 
+const NEWS_HEIGHT = 240;
+
 export const Changelog = observer(() => {
    const { newsStore } = useStore();
 
@@ -15,6 +17,7 @@ export const Changelog = observer(() => {
             flexDirection: 'column',
             alignItems: newsStore.loading ? 'center' : 'flex-start',
             overflowY: newsStore.loading ? 'hidden' : 'auto',
+            maxHeight: NEWS_HEIGHT,
          }}
       >
          {newsStore.loading ? (
