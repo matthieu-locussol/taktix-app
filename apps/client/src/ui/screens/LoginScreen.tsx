@@ -27,8 +27,6 @@ import { ServerStatus } from '../components/ServerStatus';
 import { Changelog } from '../hud/components/Changelog';
 import { ProgressBar } from '../hud/components/ProgressBar';
 
-export const NEWS_HEIGHT = 324;
-
 export const LoginScreen = observer(() => {
    const store = useStore();
    const {
@@ -43,7 +41,9 @@ export const LoginScreen = observer(() => {
    const { t } = useTranslation();
 
    useEffect(() => {
-      newsStore.fetchChangelogs();
+      if (newsStore.changelogs.length === 0) {
+         newsStore.fetchChangelogs();
+      }
    }, []);
 
    useEffect(() => {
@@ -107,7 +107,7 @@ export const LoginScreen = observer(() => {
          }}
       >
          <Card variant="outlined" sx={{ display: 'flex' }}>
-            <CardContent sx={{ height: NEWS_HEIGHT }}>
+            <CardContent>
                <Box display="flex" justifyContent="space-between" alignItems="start" mb={4}>
                   <Box
                      sx={{

@@ -16,14 +16,15 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
 import { getVersion } from '../../utils/version';
+import { LanguageSelector } from '../components/LanguageSelector';
 import { ServerStatus } from '../components/ServerStatus';
 import { Changelog } from '../hud/components/Changelog';
 import { ProgressBar } from '../hud/components/ProgressBar';
-import { NEWS_HEIGHT } from './LoginScreen';
 
 export const RegisterScreen = observer(() => {
    const store = useStore();
-   const { loginStore, newsStore, registerStore, screenStore, updaterStore } = store;
+   const { loginStore, newsStore, registerStore, screenStore, settingsMenuStore, updaterStore } =
+      store;
    const { t } = useTranslation();
 
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -72,20 +73,34 @@ export const RegisterScreen = observer(() => {
          }}
       >
          <Card variant="outlined" sx={{ display: 'flex' }}>
-            <CardContent sx={{ height: NEWS_HEIGHT }}>
-               <Box
-                  sx={{ display: 'flex', alignItems: 'baseline', mb: 4, justifyContent: 'center' }}
-               >
-                  <Typography variant="h1">Taktix</Typography>
-                  <Typography
-                     color="white"
-                     fontWeight="bold"
-                     fontFamily="Orbitron"
-                     variant="overline"
-                     sx={{ mt: 'auto', mb: -0.5, ml: 1 }}
+            <CardContent>
+               <Box display="flex" justifyContent="space-between" alignItems="start" mb={4}>
+                  <Box
+                     sx={{
+                        display: 'flex',
+                        alignItems: 'baseline',
+                        justifyContent: 'center',
+                     }}
                   >
-                     {getVersion()}
-                  </Typography>
+                     <Typography variant="h1">Taktix</Typography>
+                     <Typography
+                        color="white"
+                        fontWeight="bold"
+                        fontFamily="Orbitron"
+                        variant="overline"
+                        sx={{ mt: 'auto', mb: -0.5, ml: 1 }}
+                     >
+                        {getVersion()}
+                     </Typography>
+                  </Box>
+                  <LanguageSelector
+                     variant="outlined"
+                     onChange={(e) => {
+                        settingsMenuStore.setLanguage(e.target.value);
+                        settingsMenuStore.saveChanges();
+                     }}
+                     sx={{ my: 'auto' }}
+                  />
                </Box>
                <Changelog />
                <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
