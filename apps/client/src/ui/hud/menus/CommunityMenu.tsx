@@ -21,12 +21,13 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { Trans } from 'react-i18next';
 import { zProfessionType } from 'shared/src/types/Profession';
+import { isRoom } from 'shared/src/types/Room';
 import { useStore } from '../../../store';
 import { TFunctionWrapper, useTranslation } from '../../../types/react-i18next';
 import { StatusBadge } from '../../components/StatusBadge';
 
 interface Column {
-   id: 'avatar' | 'player' | 'level' | 'profession';
+   id: 'avatar' | 'player' | 'map' | 'level' | 'profession';
    label: (t: TFunctionWrapper) => string;
    minWidth?: number;
    align?: 'right';
@@ -39,7 +40,21 @@ const columns: Column[] = [
       label: () => '',
       format: (value) => <img src={value} width={24} height={24} />,
    },
-   { id: 'player', label: (t) => t('player') },
+   {
+      id: 'player',
+      label: (t) => t('player'),
+   },
+   {
+      id: 'map',
+      label: (t) => t('map'),
+      format: (value, t) => {
+         if (isRoom(value)) {
+            return t(value);
+         }
+
+         return t('unknownMap');
+      },
+   },
    {
       id: 'level',
       label: (t) => t('levelRaw'),
@@ -118,7 +133,7 @@ export const CommunityMenu = observer(() => {
                   <TableBody>
                      {communityMenuStore.loading ? (
                         <TableRow>
-                           <StyledTableCell colSpan={5} sx={{ p: 0 }}>
+                           <StyledTableCell colSpan={columns.length + 1} sx={{ p: 0 }}>
                               <LinearProgress sx={{ height: 8 }} />
                            </StyledTableCell>
                         </TableRow>

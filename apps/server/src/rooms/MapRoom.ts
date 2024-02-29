@@ -81,6 +81,18 @@ export class MapRoom extends Room<MapState> {
       const characterPosition = position ?? { x: pos_x, y: pos_y };
       const characterDirection = direction ?? savedDirection;
 
+      if (position !== undefined && direction !== undefined) {
+         await prisma.character.update({
+            where: { name: characterName },
+            data: {
+               map: this.name,
+               pos_x: position.x,
+               pos_y: position.y,
+               direction,
+            },
+         });
+      }
+
       this.state.createPlayer(
          client.sessionId,
          characterName,

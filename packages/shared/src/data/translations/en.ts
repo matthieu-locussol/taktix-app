@@ -77,6 +77,8 @@ export const translationsEn = {
    sendMessage: 'Send a message',
    ouch: 'Ouch!',
    object: 'Object',
+   map: 'Map',
+   unknownMap: 'Unknown',
 
    // Professions
    Warrior: 'Warrior',

@@ -41,7 +41,19 @@ const generateMaps = () => {
 const regenerateSharedRoom = (maps: string[]) => {
    const roomDefinitionPath = resolve(__dirname, '../../shared/src/types/Room.ts');
    const roomDefinitionBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-export type Room = 'AAA_InitialRoom' | ${maps.map((map) => `'${map}Room'`).join(' | ')};
+import { z } from 'zod';
+import { ZodMgt } from '../utils/zodMgt';
+
+const rooms = [
+   'AAA_InitialRoom',
+   ${maps.map((map) => `'${map}Room'`).join(',\n   ')},
+] as const;
+
+const zRoom = ZodMgt.constructZodLiteralUnionType(rooms.map((room) => z.literal(room)));
+
+export const isRoom = (value: unknown): value is Room => zRoom.safeParse(value).success;
+
+export type Room = z.infer<typeof zRoom>;
 `;
    writeFileSync(roomDefinitionPath, roomDefinitionBlob, { flag: 'w' });
    console.log('[Shared] ✅  Regenerated Room.ts');

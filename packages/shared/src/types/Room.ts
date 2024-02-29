@@ -1,3 +1,12 @@
 // This file has been automatically generated. DO NOT edit it manually.
 
-export type Room = 'AAA_InitialRoom' | 'CloudsRoom' | 'DungeonRoom' | 'ForestRoom' | 'HouseRoom';
+import { z } from 'zod';
+import { ZodMgt } from '../utils/zodMgt';
+
+const rooms = ['AAA_InitialRoom', 'CloudsRoom', 'DungeonRoom', 'ForestRoom', 'HouseRoom'] as const;
+
+const zRoom = ZodMgt.constructZodLiteralUnionType(rooms.map((room) => z.literal(room)));
+
+export const isRoom = (value: unknown): value is Room => zRoom.safeParse(value).success;
+
+export type Room = z.infer<typeof zRoom>;
