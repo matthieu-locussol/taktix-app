@@ -9,7 +9,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
-import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
@@ -17,6 +16,7 @@ import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
 import { getVersion } from '../../utils/version';
 import { LanguageSelector } from '../components/LanguageSelector';
+import { LauncherFormFooter } from '../components/LauncherFormFooter';
 import { ServerStatus } from '../components/ServerStatus';
 import { Changelog } from '../hud/components/Changelog';
 import { ProgressBar } from '../hud/components/ProgressBar';
@@ -163,12 +163,7 @@ export const RegisterScreen = observer(() => {
                         t(screenStore.screen)
                      )}
                   </Button>
-                  <Link
-                     onClick={() => screenStore.switchBetweenLoginAndRegister()}
-                     sx={{ mt: 'auto', mr: 'auto' }}
-                  >
-                     {t(screenStore.loginOrRegisterOppositeName)}
-                  </Link>
+                  <LauncherFormFooter />
                </CardContent>
             )}
             {updaterStore.shouldUpdate && (

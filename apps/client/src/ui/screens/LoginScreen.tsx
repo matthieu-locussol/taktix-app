@@ -11,7 +11,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { listen } from '@tauri-apps/api/event';
@@ -23,6 +22,7 @@ import { useTranslation } from '../../types/react-i18next';
 import { isTauri } from '../../utils/tauri';
 import { getVersion } from '../../utils/version';
 import { LanguageSelector } from '../components/LanguageSelector';
+import { LauncherFormFooter } from '../components/LauncherFormFooter';
 import { ServerStatus } from '../components/ServerStatus';
 import { Changelog } from '../hud/components/Changelog';
 import { ProgressBar } from '../hud/components/ProgressBar';
@@ -208,12 +208,7 @@ export const LoginScreen = observer(() => {
                         t(screenStore.screen)
                      )}
                   </Button>
-                  <Link
-                     onClick={() => screenStore.switchBetweenLoginAndRegister()}
-                     sx={{ mt: 'auto', mr: 'auto' }}
-                  >
-                     {t(screenStore.loginOrRegisterOppositeName)}
-                  </Link>
+                  <LauncherFormFooter />
                </CardContent>
             )}
             {updaterStore.shouldUpdate && (
