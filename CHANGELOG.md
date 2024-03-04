@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.44.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.43.4...v1.44.0) (2024-03-04)
+
+
+### Features
+
+* added dendron docs ([0937eac](https://github.com/matthieu-locussol/taktix-app/commit/0937eac6cc0747bcad8c588e982f2780d7e9abc5))
+* display current map of online users ([44c8b4a](https://github.com/matthieu-locussol/taktix-app/commit/44c8b4a582350521c11e4dea6ef547f84b8b62ae))
+* launcher links ([de464a2](https://github.com/matthieu-locussol/taktix-app/commit/de464a2fa102b0d6800566a5b48cc4e3e375bdef))
+
+
+### Bug Fixes
+
+* launcher language menu ([dd99f82](https://github.com/matthieu-locussol/taktix-app/commit/dd99f82739f4aec06795afd2d7922af094c3cd23))
+
 ### [1.43.4](https://github.com/matthieu-locussol/taktix-app/compare/v1.43.3...v1.43.4) (2024-02-26)
 
 ### [1.43.3](https://github.com/matthieu-locussol/taktix-app/compare/v1.43.2...v1.43.3) (2024-02-26)
