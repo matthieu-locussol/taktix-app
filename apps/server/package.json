@@ -16,7 +16,7 @@
    "license": "MIT",
    "dependencies": {
       "@colyseus/core": "^0.15.27",
-      "@colyseus/monitor": "^0.15.5",
+      "@colyseus/monitor": "^0.15.6",
       "@colyseus/playground": "^0.15.11",
       "@colyseus/ws-transport": "^0.15.1",
       "@prisma/client": "^5.10.2",
