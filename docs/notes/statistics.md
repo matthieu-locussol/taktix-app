@@ -2,7 +2,7 @@
 id: isqhux0achjm6voa7hpr1b2
 title: Statistics
 desc: Specifications for the game statistics
-updated: 1709454582481
+updated: 1709643456285
 created: 1709126598150
 ---
 
@@ -13,9 +13,9 @@ _Can be increased every level but also through items & talents._
 -  Health
    -  +**\#** to maximum health
    -  **\#**% increased maximum health
--  Energy shield
-   -  +**\#** to maximum energy shield
-   -  **\#**% increased maximum energy shield
+-  Magic shield
+   -  +**\#** to maximum magic shield
+   -  **\#**% increased maximum magic shield
 -  Strength
    -  +**\#** to strength
    -  **\#**% increased strength
@@ -40,7 +40,7 @@ _Can be increased every level but also through items & talents._
 -  Luck is linked to ice damages
 
 -  Every 5 strength grants an additional 1 maximum life
--  Every 5 spirit grants an additional 1 maximum energy shield
+-  Every 5 spirit grants an additional 1 maximum magic shield
 -  Every 5 dexterity grants an additional 1 maximum evasion
 -  Every 5 luck grants an additional 1 prospect
 
@@ -76,6 +76,7 @@ _Can be increased through items & talents._
    -  **\#**% increased area damages
 -  Precision ([formula](#precision-and-evasion))
    -  +**\#** to precision
+   -  **\#**% increased precision
 
 #### Defences
 
@@ -92,6 +93,10 @@ _Can be increased through items & talents._
 -  Evasion ([formula](#precision-and-evasion))
    -  +**\#** to evasion
    -  **\#**% increased evasion
+
+#### Notes
+
+-  Life steal does not affect magic shield
 
 ### Misc value
 

@@ -2,7 +2,7 @@
 id: 0ahsdknjec7qziu5qcbzrj2
 title: Leveling
 desc: ''
-updated: 1709538562205
+updated: 1709653242597
 created: 1709454576331
 ---
 
@@ -19,6 +19,14 @@ created: 1709454576331
 
 -  Level: 1
 -  Experience: 0
+
+#### Notes
+
+-  For the first version of the game, the classes will be:
+   -  Warrior
+   -  Mage
+   -  Archer
+-  For the first version of the game, the maximum level will be 10.
 
 ### Leveling up grants:
 
