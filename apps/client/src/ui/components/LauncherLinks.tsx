@@ -26,6 +26,7 @@ export const LauncherLinks = () => (
    <Box>
       {LINKS.map(({ href, icon, color }) => (
          <IconButton
+            key={href}
             href={href}
             target="_blank"
             rel="noopener noreferrer"

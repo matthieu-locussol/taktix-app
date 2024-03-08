@@ -25,6 +25,7 @@ const zSettingsMenuState = z.object({
    fullScreenMenus: z.object({
       community: z.boolean(),
       settings: z.boolean(),
+      talents: z.boolean(),
    }),
 });
 
@@ -43,6 +44,7 @@ export class SettingsMenuStore {
       fullScreenMenus: {
          community: true,
          settings: true,
+         talents: true,
       },
    };
 
