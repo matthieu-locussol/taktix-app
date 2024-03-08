@@ -1,4 +1,4 @@
-import SkillsIcon from '@mui/icons-material/AutoFixHighTwoTone';
+import TalentsIcon from '@mui/icons-material/AutoFixHighTwoTone';
 import AuctionHouseIcon from '@mui/icons-material/BalanceTwoTone';
 import InventoryIcon from '@mui/icons-material/BusinessCenterTwoTone';
 import CommunityIcon from '@mui/icons-material/Diversity1TwoTone';
@@ -19,13 +19,17 @@ import { useStore } from '../../store';
 import { ShortcutIcon } from './components/ShortcutIcon';
 
 export const Menu = observer(() => {
-   const { communityMenuStore, hudStore, settingsMenuStore } = useStore();
+   const { communityMenuStore, hudStore, settingsMenuStore, talentsMenuStore } = useStore();
 
    return (
       <Root widthPercent={hudStore.menuWidth} heightPercent={hudStore.menuHeight}>
          {/* Top line */}
          <ShortcutIcon disabled icon={<StatsIcon />} />
-         <ShortcutIcon disabled icon={<SkillsIcon />} />
+         <ShortcutIcon
+            active={talentsMenuStore.isOpened}
+            icon={<TalentsIcon />}
+            onClick={() => talentsMenuStore.toggle()}
+         />
          <ShortcutIcon disabled icon={<InventoryIcon />} />
          <ShortcutIcon disabled icon={<MapIcon />} />
          <ShortcutIcon disabled icon={<ForgeIcon />} />
