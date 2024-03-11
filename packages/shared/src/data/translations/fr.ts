@@ -84,6 +84,7 @@ export const translationsFr: LanguageTranslations = {
    object: 'Objet',
    map: 'Carte',
    unknownMap: 'Inconnue',
+   talentTree: 'Arbre de talents',
 
    // Professions
    Warrior: 'Guerrier',

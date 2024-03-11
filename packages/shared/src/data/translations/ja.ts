@@ -83,6 +83,7 @@ export const translationsJa: LanguageTranslations = {
    object: 'オブジェクト',
    map: 'マップ',
    unknownMap: '不明',
+   talentTree: 'タレントツリー',
 
    // Professions
    Warrior: '戦士',
