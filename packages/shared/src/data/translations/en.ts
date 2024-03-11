@@ -79,6 +79,7 @@ export const translationsEn = {
    object: 'Object',
    map: 'Map',
    unknownMap: 'Unknown',
+   talentTree: 'Talent Tree',
 
    // Professions
    Warrior: 'Warrior',

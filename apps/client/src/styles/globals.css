@@ -62,6 +62,10 @@ body {
    box-sizing: 'content-box';
 }
 
+.react-flow__handle {
+   visibility: hidden;
+}
+
 #bg-stars-sm {
    content: ' ';
    background: 0 0;
