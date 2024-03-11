@@ -17,7 +17,7 @@ export const changelogRouter: RequestHandler = async (_, res) => {
             .map(({ tag_name, published_at, body }) => ({
                id: tag_name,
                date: published_at,
-               text: body.replace(/\r\n/g, '<br />'),
+               text: body.replace(/\r\n/g, '<br />').replace(/\n/g, '<br />'),
             })),
       };
 
