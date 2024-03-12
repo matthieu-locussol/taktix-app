@@ -2,6 +2,7 @@ export * from './config';
 export * from './data/channelsInformations';
 export * from './data/githubReleases';
 export * from './data/rolesInformations';
+export * from './data/talents';
 export * from './data/teleportationSpots';
 export * from './data/translations';
 export * from './rooms/AuthRoom';

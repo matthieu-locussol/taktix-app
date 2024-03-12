@@ -80,6 +80,8 @@ export const translationsEn = {
    map: 'Map',
    unknownMap: 'Unknown',
    talentTree: 'Talent Tree',
+   talentPointsAvailable_one: '{{count}} point available',
+   talentPointsAvailable_other: '{{count}} points available',
 
    // Professions
    Warrior: 'Warrior',

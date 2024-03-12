@@ -1,10 +1,19 @@
+import { useTheme } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import { EdgeProps, getStraightPath, useStore } from 'reactflow';
+import { EdgeProps, getStraightPath, useStore as useReactflowStore } from 'reactflow';
+import { useStore } from '../../store';
 import { getEdgeParams } from '../../utils/graph';
 
-export const CustomEdge = ({ id, source, target, style }: EdgeProps) => {
-   const sourceNode = useStore(useCallback((store) => store.nodeInternals.get(source), [source]));
-   const targetNode = useStore(useCallback((store) => store.nodeInternals.get(target), [target]));
+export const CustomEdge = observer(({ id, source, target, style }: EdgeProps) => {
+   const theme = useTheme();
+   const { talentsMenuStore } = useStore();
+   const sourceNode = useReactflowStore(
+      useCallback((store) => store.nodeInternals.get(source), [source]),
+   );
+   const targetNode = useReactflowStore(
+      useCallback((store) => store.nodeInternals.get(target), [target]),
+   );
 
    if (sourceNode === undefined || targetNode === undefined) {
       return null;
@@ -19,5 +28,18 @@ export const CustomEdge = ({ id, source, target, style }: EdgeProps) => {
       targetY: ty,
    });
 
-   return <path id={id} className="react-flow__edge-path" d={edgePath} style={style} />;
-};
+   return (
+      <path
+         id={id}
+         className="react-flow__edge-path"
+         d={edgePath}
+         style={{
+            ...style,
+            stroke:
+               talentsMenuStore.talentsMap[source] && talentsMenuStore.talentsMap[target]
+                  ? theme.palette.talents.color.hover
+                  : theme.palette.talents.color.normal,
+         }}
+      />
+   );
+});

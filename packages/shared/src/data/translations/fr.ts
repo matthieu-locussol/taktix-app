@@ -85,6 +85,8 @@ export const translationsFr: LanguageTranslations = {
    map: 'Carte',
    unknownMap: 'Inconnue',
    talentTree: 'Arbre de talents',
+   talentPointsAvailable_one: '{{count}} point disponible',
+   talentPointsAvailable_other: '{{count}} points disponibles',
 
    // Professions
    Warrior: 'Guerrier',

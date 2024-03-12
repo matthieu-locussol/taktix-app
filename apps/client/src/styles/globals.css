@@ -62,6 +62,11 @@ body {
    box-sizing: 'content-box';
 }
 
+.react-flow__node-custom-node {
+   width: 40px;
+   height: 40px;
+}
+
 .react-flow__handle {
    visibility: hidden;
 }

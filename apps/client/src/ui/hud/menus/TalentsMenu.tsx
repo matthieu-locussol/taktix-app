@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent, { dialogContentClasses } from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
@@ -45,11 +46,12 @@ export const TalentsMenu = observer(() => {
          <StyledDialogContent dividers>
             <TalentTree />
          </StyledDialogContent>
-         <DialogActions>
+         <StyledDialogActions>
+            <Typography>{t('talentPointsAvailable', { count: 0 })}</Typography>
             <Button variant="contained" onClick={() => talentsMenuStore.close()}>
                {t('close')}
             </Button>
-         </DialogActions>
+         </StyledDialogActions>
       </StyledDialog>
    );
 });
@@ -72,4 +74,9 @@ const StyledDialogContent = styled(DialogContent)(() => ({
    [`&.${dialogContentClasses.root}`]: {
       padding: 0,
    },
+}));
+
+const StyledDialogActions = styled(DialogActions)(() => ({
+   display: 'flex',
+   justifyContent: 'space-between',
 }));
