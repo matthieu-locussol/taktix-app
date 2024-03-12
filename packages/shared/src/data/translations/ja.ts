@@ -84,6 +84,8 @@ export const translationsJa: LanguageTranslations = {
    map: 'マップ',
    unknownMap: '不明',
    talentTree: 'タレントツリー',
+   talentPointsAvailable_one: '{{count}} ポイントが利用可能',
+   talentPointsAvailable_other: '{{count}} ポイントが利用可能',
 
    // Professions
    Warrior: '戦士',

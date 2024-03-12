@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import { TALENTS, Talent, UNKNOWN_TALENT } from 'shared/src/data/talents';
 import { Store } from './Store';
 
 export class TalentsMenuStore {
@@ -8,7 +9,9 @@ export class TalentsMenuStore {
 
    public loading: boolean = false;
 
-   public talents: unknown[] = [];
+   public talents: string[] = [];
+
+   public hoveredTalent: string | null = null;
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -53,6 +56,54 @@ export class TalentsMenuStore {
          this.close();
       } else {
          this.open();
+      }
+   }
+
+   public addTalent(talent: string): void {
+      this.talents = [...this.talents, talent];
+   }
+
+   public removeTalent(talent: string): void {
+      this.talents = this.talents.filter((t) => t !== talent);
+   }
+
+   public setHoveredTalent(talent: string | null): void {
+      this.hoveredTalent = talent;
+   }
+
+   public get talentsMap(): Record<string, boolean> {
+      return this.talents.reduce(
+         (acc, talent) => {
+            acc[talent] = true;
+            return acc;
+         },
+         {} as Record<string, boolean>,
+      );
+   }
+
+   public get hoveredTalentData(): Talent {
+      if (this.hoveredTalent === null) {
+         return UNKNOWN_TALENT;
+      }
+
+      const talent = TALENTS[this.hoveredTalent];
+
+      if (talent === undefined) {
+         return UNKNOWN_TALENT;
+      }
+
+      return talent;
+   }
+
+   public get tooltipOpened(): boolean {
+      return this.hoveredTalent !== null;
+   }
+
+   public toggleNode(nodeId: string) {
+      if (this.talentsMap[nodeId]) {
+         this.removeTalent(nodeId);
+      } else {
+         this.addTalent(nodeId);
       }
    }
 }

@@ -44,6 +44,16 @@ export const appTheme = createTheme({
          [Channel.TRADE]: '#a16207',
          [Channel.PRIVATE]: '#0ea5e9',
       },
+      talents: {
+         color: {
+            normal: '#D1D5DB',
+            hover: '#14B8A6',
+         },
+         background: {
+            normal: '#111827',
+            hover: 'rgba(20, 184, 166, 0.085)',
+         },
+      },
       mode: 'light',
    },
    typography: (palette) => ({

@@ -24,6 +24,16 @@ interface CustomPalette {
       [Channel.TRADE]: string;
       [Channel.PRIVATE]: string;
    };
+   talents: {
+      color: {
+         normal: string;
+         hover: string;
+      };
+      background: {
+         normal: string;
+         hover: string;
+      };
+   };
 }
 
 declare module '@mui/material/styles' {

@@ -5,7 +5,10 @@ import { translationsEn } from './translations/en';
 import { translationsFr } from './translations/fr';
 import { translationsJa } from './translations/ja';
 
-export type LanguageTranslations = Record<TranslationKey, string>;
+type BaseKey<T extends string> = T extends `${infer Base}_${'one' | 'other'}` ? Base : never;
+export type TranslationKey = TranslationKeyInternal | BaseKey<TranslationKeyInternal>;
+
+export type LanguageTranslations = Record<TranslationKeyInternal, string>;
 
 export const translationKeys = Object.keys(translationsEn) as (keyof typeof translationsEn)[];
 
@@ -13,7 +16,7 @@ export const zTranslationKey = ZodMgt.constructZodLiteralUnionType(
    translationKeys.map((key) => z.literal(key)),
 );
 
-export type TranslationKey = z.infer<typeof zTranslationKey>;
+type TranslationKeyInternal = z.infer<typeof zTranslationKey>;
 
 export const translations: Record<Language, { translation: LanguageTranslations }> = {
    en: { translation: translationsEn },
