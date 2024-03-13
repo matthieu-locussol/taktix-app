@@ -1,12 +1,20 @@
-import { UNKNOWN_TALENT } from 'shared/src/data/talents';
 import { describe, expect, it, vi } from 'vitest';
 import { Store } from './Store';
 import { TalentsMenuStore } from './TalentsMenuStore';
 
 vi.mock('./Store', () => {
    const MockedStore = vi.fn().mockImplementation(() => ({}));
+
    return { Store: MockedStore };
 });
+
+vi.mock('shared/src/data/talents', () => ({
+   STARTING_TALENTS: [1, 2],
+   TALENTS: {
+      1: { id: 1, edges: [] },
+      2: { id: 2, edges: [] },
+   },
+}));
 
 describe('TalentsMenuStore', () => {
    it('should be initialized', () => {
@@ -14,8 +22,8 @@ describe('TalentsMenuStore', () => {
 
       expect(store).toBeDefined();
       expect(store.isOpened).toBe(false);
-      expect(store.loading).toBe(false);
       expect(store.talents).toEqual([]);
+      expect(store.talentsPoints).toBe(0);
       expect(store.hoveredTalent).toBe(null);
    });
 
@@ -47,33 +55,33 @@ describe('TalentsMenuStore', () => {
    it('can add a talent', () => {
       const store = new TalentsMenuStore(new Store());
 
-      store.addTalent('talent1');
-      expect(store.talents).toEqual(['talent1']);
+      store.addTalent(1);
+      expect(store.talents).toEqual([1]);
 
-      store.addTalent('talent2');
-      expect(store.talents).toEqual(['talent1', 'talent2']);
+      store.addTalent(2);
+      expect(store.talents).toEqual([1, 2]);
    });
 
    it('can remove a talent', () => {
       const store = new TalentsMenuStore(new Store());
 
-      store.addTalent('talent1');
-      store.addTalent('talent2');
-      store.removeTalent('talent1');
-      expect(store.talents).toEqual(['talent2']);
+      store.addTalent(1);
+      store.addTalent(2);
+      store.removeTalent(1);
+      expect(store.talents).toEqual([2]);
    });
 
    it('can set a hovered talent', () => {
       const store = new TalentsMenuStore(new Store());
 
-      store.setHoveredTalent('talent1');
-      expect(store.hoveredTalent).toBe('talent1');
+      store.setHoveredTalent(1);
+      expect(store.hoveredTalent).toBe(1);
    });
 
    it('can clear a hovered talent', () => {
       const store = new TalentsMenuStore(new Store());
 
-      store.setHoveredTalent('talent1');
+      store.setHoveredTalent(1);
       store.setHoveredTalent(null);
       expect(store.hoveredTalent).toBe(null);
    });
@@ -81,7 +89,7 @@ describe('TalentsMenuStore', () => {
    it('computes the tooltip state', () => {
       const store = new TalentsMenuStore(new Store());
 
-      store.setHoveredTalent('talent1');
+      store.setHoveredTalent(1);
       expect(store.tooltipOpened).toBe(true);
 
       store.setHoveredTalent(null);
@@ -91,24 +99,46 @@ describe('TalentsMenuStore', () => {
    it('computes the talents map', () => {
       const store = new TalentsMenuStore(new Store());
 
-      store.addTalent('talent1');
-      store.addTalent('talent2');
-      expect(store.talentsMap).toEqual({ talent1: true, talent2: true });
+      store.addTalent(1);
+      store.addTalent(2);
+      expect(store.talentsMap).toEqual({ 1: true, 2: true });
    });
 
    it('computes the hovered talent data', () => {
       const store = new TalentsMenuStore(new Store());
 
-      store.setHoveredTalent('talent1');
-      expect(store.hoveredTalentData).toEqual(UNKNOWN_TALENT);
+      store.setHoveredTalent(1);
+      expect(store.hoveredTalentData).toEqual({
+         id: 1,
+         edges: [],
+      });
+   });
+
+   it('can set talents points', () => {
+      const store = new TalentsMenuStore(new Store());
+
+      store.setTalentsPoints(5);
+      expect(store.talentsPoints).toBe(5);
+   });
+
+   it('can set talents', () => {
+      const store = new TalentsMenuStore(new Store());
+
+      store.setTalents([1, 2]);
+      expect(store.talents).toEqual([1, 2]);
    });
 
    it('can toggle a talent', () => {
       const store = new TalentsMenuStore(new Store());
+      store.setTalentsPoints(1);
 
-      store.addTalent('talent1');
-      store.addTalent('talent2');
-      store.toggleNode('talent1');
-      expect(store.talents).toEqual(['talent2']);
+      store.toggleNode(1);
+      expect(store.talents).toEqual([1]);
+
+      store.toggleNode(1);
+      expect(store.talents).toEqual([]);
+
+      store.toggleNode(2);
+      expect(store.talents).toEqual([2]);
    });
 });

@@ -25,6 +25,12 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
          direction: z.string(),
       }),
    }),
+   z.object({
+      type: z.literal('updateTalents'),
+      message: z.object({
+         talents: z.string(),
+      }),
+   }),
 ]);
 
 export type MapRoomMessage = z.infer<typeof zMapRoomMessage>;

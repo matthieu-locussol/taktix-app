@@ -82,6 +82,7 @@ export const translationsEn = {
    talentTree: 'Talent Tree',
    talentPointsAvailable_one: '{{count}} point available',
    talentPointsAvailable_other: '{{count}} points available',
+   apply: 'Apply',
 
    // Professions
    Warrior: 'Warrior',

@@ -1,5 +1,7 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { TALENTS, Talent, UNKNOWN_TALENT } from 'shared/src/data/talents';
+import { ArrayMgt } from 'shared/src/utils/arrayMgt';
+import { TalentMgt } from 'shared/src/utils/talentMgt';
 import { Store } from './Store';
 
 export class TalentsMenuStore {
@@ -7,40 +9,16 @@ export class TalentsMenuStore {
 
    public isOpened: boolean = false;
 
-   public loading: boolean = false;
+   public talents: number[] = [];
 
-   public talents: string[] = [];
+   public talentsPoints: number = 0;
 
-   public hoveredTalent: string | null = null;
+   public hoveredTalent: number | null = null;
 
    constructor(store: Store) {
       makeAutoObservable(this);
 
       this._store = store;
-
-      this.fetchTalents();
-   }
-
-   private async fetchTalents() {
-      runInAction(() => {
-         this.loading = true;
-      });
-
-      try {
-         // const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/talents`);
-         // const json = await response.json();
-         // const { talents } = zTalentsSchema.parse(json);
-
-         runInAction(() => {
-            // this.talents = talents;
-            this.loading = false;
-         });
-      } catch (error) {
-         runInAction(() => {
-            this.talents = [];
-            this.loading = false;
-         });
-      }
    }
 
    public open(): void {
@@ -59,25 +37,59 @@ export class TalentsMenuStore {
       }
    }
 
-   public addTalent(talent: string): void {
+   public addTalent(talent: number): void {
       this.talents = [...this.talents, talent];
    }
 
-   public removeTalent(talent: string): void {
+   public removeTalent(talent: number): void {
       this.talents = this.talents.filter((t) => t !== talent);
    }
 
-   public setHoveredTalent(talent: string | null): void {
+   public setHoveredTalent(talent: number | null): void {
       this.hoveredTalent = talent;
    }
 
-   public get talentsMap(): Record<string, boolean> {
+   public toggleNode(nodeId: number) {
+      if (this.talentsMap[nodeId] && TalentMgt.canDisallocateTalent(nodeId, this.talents)) {
+         this.removeTalent(nodeId);
+         this.talentsPoints += 1;
+      } else if (
+         !this.talentsMap[nodeId] &&
+         TalentMgt.canAllocateTalent(nodeId, this.talents, this.talentsPoints)
+      ) {
+         this.addTalent(nodeId);
+         this.talentsPoints -= 1;
+      }
+   }
+
+   public shouldBlink(nodeId: number): boolean {
+      return this.adjacentTalentsMap[nodeId] && this.talentsPoints > 0;
+   }
+
+   public setTalents(talents: number[]) {
+      this.talents = [...talents];
+   }
+
+   public setTalentsPoints(talentsPoints: number) {
+      this.talentsPoints = talentsPoints;
+   }
+
+   public save() {
+      this._store.colyseusStore.updateTalents(this.talents);
+
+      this._store.characterStore.setTalents(this.talents);
+      this._store.characterStore.setTalentsPoints(this.talentsPoints);
+
+      this.close();
+   }
+
+   public get talentsMap(): Record<number, boolean> {
       return this.talents.reduce(
          (acc, talent) => {
             acc[talent] = true;
             return acc;
          },
-         {} as Record<string, boolean>,
+         {} as Record<number, boolean>,
       );
    }
 
@@ -99,11 +111,18 @@ export class TalentsMenuStore {
       return this.hoveredTalent !== null;
    }
 
-   public toggleNode(nodeId: string) {
-      if (this.talentsMap[nodeId]) {
-         this.removeTalent(nodeId);
-      } else {
-         this.addTalent(nodeId);
-      }
+   public get adjacentTalentsMap(): Record<number, boolean> {
+      const adjacentTalents = TalentMgt.getAdjacentTalentsExcludingAllocated(this.talents);
+      return adjacentTalents.reduce(
+         (acc, talent) => {
+            acc[talent] = true;
+            return acc;
+         },
+         {} as Record<number, boolean>,
+      );
+   }
+
+   public get canApply(): boolean {
+      return !ArrayMgt.areEquals(this._store.characterStore.talents, this.talents);
    }
 }

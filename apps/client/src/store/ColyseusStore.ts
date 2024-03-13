@@ -10,6 +10,7 @@ import { ProfessionType, zProfessionType } from 'shared/src/types/Profession';
 import { Room as TRoom } from 'shared/src/types/Room';
 import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
+import { TalentMgt } from 'shared/src/utils/talentMgt';
 import { match } from 'ts-pattern';
 import { Store } from './Store';
 
@@ -179,32 +180,40 @@ export class ColyseusStore {
             this._store.characterSelectionStore.setErrorMessage(errorMessage, errorMessageOptions);
             this._store.characterSelectionStore.setLoading(false);
          })
-         .with({ status: 'success' }, async ({ map, posX, posY, direction, uuid, profession }) => {
-            this.setUuid(uuid);
-            await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
+         .with(
+            { status: 'success' },
+            async ({ map, posX, posY, direction, uuid, profession, talents, talentsPoints }) => {
+               this.setUuid(uuid);
+               await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
 
-            this._store.characterSelectionStore.setLoading(false);
-            this._store.screenStore.setLoggedIn(true);
-            this._store.settingsMenuStore.applyState(this._store.settingsMenuStore.savedState);
+               this._store.characterSelectionStore.setLoading(false);
+               this._store.screenStore.setLoggedIn(true);
+               this._store.settingsMenuStore.applyState(this._store.settingsMenuStore.savedState);
 
-            const scene = await this._store.gameStore.changeMapPlayer(map, {
-               entrancePosition: { x: posX, y: posY },
-               entranceDirection: direction as Direction,
-            });
+               const scene = await this._store.gameStore.changeMapPlayer(map, {
+                  entrancePosition: { x: posX, y: posY },
+                  entranceDirection: direction as Direction,
+               });
 
-            scene.gridEngine.setPosition(INTERNAL_PLAYER_NAME, { x: posX, y: posY }, 'player');
+               scene.gridEngine.setPosition(INTERNAL_PLAYER_NAME, { x: posX, y: posY }, 'player');
 
-            this._store.characterStore.setName(
-               this._store.characterSelectionStore.selectedCharacter,
-            );
-            this._store.characterStore.setMap(map as TRoom);
-            this._store.characterStore.setPosition({ x: posX, y: posY });
-            this._store.characterStore.setPlayers([]);
-            this._store.characterStore.setProfession(profession);
+               this._store.characterStore.setName(
+                  this._store.characterSelectionStore.selectedCharacter,
+               );
+               this._store.characterStore.setMap(map as TRoom);
+               this._store.characterStore.setPosition({ x: posX, y: posY });
+               this._store.characterStore.setPlayers([]);
+               this._store.characterStore.setProfession(profession);
 
-            this._store.loadingScreenStore.setSceneVisible(true);
-            this._store.discordStore.updateDiscordRichPresence();
-         })
+               this._store.characterStore.setTalents(TalentMgt.deserializeTalents(talents));
+               this._store.characterStore.setTalentsPoints(talentsPoints);
+               this._store.talentsMenuStore.setTalents(TalentMgt.deserializeTalents(talents));
+               this._store.talentsMenuStore.setTalentsPoints(talentsPoints);
+
+               this._store.loadingScreenStore.setSceneVisible(true);
+               this._store.discordStore.updateDiscordRichPresence();
+            },
+         )
          .exhaustive();
    }
 
@@ -333,6 +342,10 @@ export class ColyseusStore {
 
    stopMoving(direction: Direction, { x, y }: Position) {
       this.gameRoom.send('stopMoving', { direction, x, y });
+   }
+
+   updateTalents(talents: number[]) {
+      this.gameRoom.send('updateTalents', { talents: TalentMgt.serializeTalents(talents) });
    }
 
    async onChangeMap({

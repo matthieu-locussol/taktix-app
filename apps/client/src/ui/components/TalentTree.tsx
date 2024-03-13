@@ -49,7 +49,7 @@ const Flow = observer(() => {
             }}
             nodes={nodes}
             edges={edges}
-            onNodeClick={(_, node) => talentsMenuStore.toggleNode(node.id)}
+            onNodeClick={(_, node) => talentsMenuStore.toggleNode(+node.id)}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             proOptions={{ hideAttribution: true }}

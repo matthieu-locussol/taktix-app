@@ -7,6 +7,7 @@ import {
    PlayerState,
    TELEPORTATION_SPOTS,
    Room as TRoom,
+   TalentMgt,
    MapRoomUserData as UserData,
    _assert,
    isMapRoomMessage,
@@ -47,6 +48,7 @@ export class MapRoom extends Room<MapState> {
             match(packet)
                .with({ type: 'move' }, (payload) => this.onMove(client, payload))
                .with({ type: 'stopMoving' }, (payload) => this.onStopMoving(client, payload))
+               .with({ type: 'updateTalents' }, (payload) => this.onUpdateTalents(client, payload))
                .exhaustive();
          } else {
             logger.error(
@@ -127,6 +129,50 @@ export class MapRoom extends Room<MapState> {
 
       player.stopMoving(direction, x, y);
       this.checkTeleportationSpots(client, player);
+   }
+
+   async onUpdateTalents(
+      client: Client,
+      { message: { talents } }: Extract<MapRoomMessage, { type: 'updateTalents' }>,
+   ) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      const characterInfos = await prisma.character.findUnique({
+         where: { name: player.name },
+         select: {
+            talents: true,
+            talentsPoints: true,
+         },
+      });
+
+      if (characterInfos === null) {
+         return;
+      }
+
+      const results = TalentMgt.isProgressionValid(
+         TalentMgt.deserializeTalents(characterInfos.talents),
+         TalentMgt.deserializeTalents(talents),
+         characterInfos.talentsPoints,
+      );
+
+      if (results.valid) {
+         await prisma.character.update({
+            where: { name: player.name },
+            data: {
+               talents,
+               talentsPoints: results.remainingPoints,
+            },
+         });
+
+         logger.info(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) updated talents successfully`,
+         );
+      } else {
+         logger.error(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to update talents but failed`,
+         );
+      }
    }
 
    checkTeleportationSpots(client: Client, player: PlayerState) {

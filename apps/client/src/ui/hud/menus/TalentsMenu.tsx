@@ -47,9 +47,15 @@ export const TalentsMenu = observer(() => {
             <TalentTree />
          </StyledDialogContent>
          <StyledDialogActions>
-            <Typography>{t('talentPointsAvailable', { count: 0 })}</Typography>
-            <Button variant="contained" onClick={() => talentsMenuStore.close()}>
-               {t('close')}
+            <Typography>
+               {t('talentPointsAvailable', { count: talentsMenuStore.talentsPoints })}
+            </Typography>
+            <Button
+               variant="contained"
+               onClick={() => talentsMenuStore.save()}
+               disabled={!talentsMenuStore.canApply}
+            >
+               {t('apply')}
             </Button>
          </StyledDialogActions>
       </StyledDialog>
