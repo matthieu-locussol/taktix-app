@@ -12,9 +12,9 @@
       "shared": "workspace:latest"
    },
    "devDependencies": {
-      "@types/node": "^20.11.24",
+      "@types/node": "^20.11.26",
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
-      "typescript": "^5.3.3"
+      "typescript": "^5.4.2"
    }
 }
