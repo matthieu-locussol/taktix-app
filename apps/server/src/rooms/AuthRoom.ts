@@ -4,12 +4,15 @@ import {
    CustomProtocol,
    DEFAULT_DIRECTION,
    DEFAULT_MAP,
+   DEFAULT_TALENTS,
+   DEFAULT_TALENTS_POINTS,
    DEFAULT_X,
    DEFAULT_Y,
    INTERNAL_PLAYER_NAME,
    MAX_CHARACTERS_PER_ACCOUNT,
    AuthRoomOptions as Options,
    StringMgt,
+   TalentMgt,
    AuthRoomUserData as UserData,
    _assert,
    _assertTrue,
@@ -206,6 +209,8 @@ export class AuthRoom extends Room {
             posX: character.pos_x,
             posY: character.pos_y,
             direction: character.direction,
+            talents: character.talents,
+            talentsPoints: character.talentsPoints,
             profession: zProfessionType.parse(character.profession),
          };
 
@@ -289,6 +294,8 @@ export class AuthRoom extends Room {
                pos_y: DEFAULT_Y,
                direction: DEFAULT_DIRECTION,
                map: DEFAULT_MAP,
+               talents: TalentMgt.serializeTalents(DEFAULT_TALENTS),
+               talentsPoints: DEFAULT_TALENTS_POINTS,
                user: {
                   connect: {
                      username,

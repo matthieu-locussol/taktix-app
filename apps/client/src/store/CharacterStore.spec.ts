@@ -49,4 +49,16 @@ describe('CharacterStore', () => {
       store.setPositionY(2);
       expect(store.position).toEqual({ x: 0, y: 2 });
    });
+
+   it('should set the talents', () => {
+      const store = new CharacterStore();
+      store.setTalents([1, 2, 3]);
+      expect(store.talents).toEqual([1, 2, 3]);
+   });
+
+   it('should set the talents points', () => {
+      const store = new CharacterStore();
+      store.setTalentsPoints(5);
+      expect(store.talentsPoints).toBe(5);
+   });
 });

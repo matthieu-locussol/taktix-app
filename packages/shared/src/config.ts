@@ -6,3 +6,5 @@ export const DEFAULT_MAP: Room = 'CloudsRoom';
 export const DEFAULT_X = 12;
 export const DEFAULT_Y = 7;
 export const DEFAULT_DIRECTION = Direction.DOWN;
+export const DEFAULT_TALENTS = [];
+export const DEFAULT_TALENTS_POINTS = 0;

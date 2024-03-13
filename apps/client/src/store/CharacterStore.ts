@@ -15,6 +15,10 @@ export class CharacterStore {
 
    public players: Player[] = [];
 
+   public talents: number[] = [];
+
+   public talentsPoints: number = 0;
+
    constructor() {
       makeAutoObservable(this);
    }
@@ -45,5 +49,13 @@ export class CharacterStore {
 
    public setPlayers(players: Player[]) {
       this.players = players;
+   }
+
+   public setTalents(talents: number[]) {
+      this.talents = [...talents];
+   }
+
+   public setTalentsPoints(talentsPoints: number) {
+      this.talentsPoints = talentsPoints;
    }
 }

@@ -58,6 +58,8 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
             posX: z.number(),
             posY: z.number(),
             direction: z.string(),
+            talents: z.string(),
+            talentsPoints: z.number(),
             profession: zProfessionType,
          }),
       ]),

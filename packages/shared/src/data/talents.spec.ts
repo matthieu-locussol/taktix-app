@@ -6,7 +6,7 @@ describe('talents', () => {
 
    it.each(Object.values(TALENTS))('Talent $id should be well-defined', ({ edges }) => {
       for (const edge of edges) {
-         expect(nodesIds).toContain(edge.toString());
+         expect(nodesIds).toContain(edge);
       }
    });
 });

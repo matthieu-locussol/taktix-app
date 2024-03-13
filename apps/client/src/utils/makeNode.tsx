@@ -5,7 +5,7 @@ import { TalentIcon } from '../ui/components/TalentIcon';
 export const initialEdges: Edge[] = [];
 
 export const makeNode = (
-   id: string,
+   id: number,
    edges: number[],
    x: number,
    y: number,

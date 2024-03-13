@@ -1,15 +1,28 @@
-import { styled } from '@mui/material';
+import { keyframes, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
+import { useEffect, useRef } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
 import { useStore } from '../../store';
 
-export const CustomNode = observer(({ id, data, selected, ...rest }: NodeProps) => {
+export const CustomNode = observer(({ data, selected, ...rest }: NodeProps) => {
+   const ref = useRef<HTMLDivElement>(null);
    const { talentsMenuStore } = useStore();
+   const id = +rest.id;
+
+   useEffect(() => {
+      if (ref.current) {
+         ref.current.style.animation = 'none';
+         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+         ref.current.offsetHeight;
+         ref.current.style.animation = '';
+      }
+   }, [talentsMenuStore.talents]);
 
    return (
       <>
          <StyledNode
-            id={id}
+            ref={ref}
+            adjacent={talentsMenuStore.shouldBlink(id)}
             selected={selected}
             hovered={talentsMenuStore.hoveredTalent === id || talentsMenuStore.talentsMap[id]}
             onMouseEnter={() => {
@@ -32,25 +45,41 @@ export const CustomNode = observer(({ id, data, selected, ...rest }: NodeProps) 
 });
 
 interface StyleProps extends NodeProps {
+   adjacent: boolean;
    hovered: boolean;
 }
 
-const StyledNode = styled('div')<StyleProps>(({ theme, hovered, data: { type } }) => () => ({
-   width: 40,
-   height: 40,
-   maxWidth: 40,
-   maxHeight: 40,
-   display: 'flex',
-   alignItems: 'center',
-   justifyContent: 'center',
-   border: hovered
-      ? `2px solid ${theme.palette.talents.color.hover}`
-      : `1px solid ${theme.palette.talents.color.normal}`,
-   backgroundColor: hovered
-      ? theme.palette.talents.background.hover
-      : theme.palette.talents.background.normal,
-   color: hovered ? theme.palette.talents.color.hover : theme.palette.talents.color.normal,
-   fontWeight: hovered ? 'bold' : 'normal',
-   borderRadius: type === 'large' ? '0%' : '100%',
-   boxSizing: 'border-box',
-}));
+const blink = keyframes`
+   50% {
+      border-color: #FFFFFF;
+   }
+`;
+
+const StyledNode = styled('div')<StyleProps>(
+   ({ theme, adjacent, hovered, data: { type } }) =>
+      () => {
+         const borderHovered = hovered
+            ? `2px solid ${theme.palette.talents.color.hover}`
+            : `1px solid ${theme.palette.talents.color.normal}`;
+
+         return {
+            width: 40,
+            height: 40,
+            maxWidth: 40,
+            maxHeight: 40,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: adjacent ? '2px solid transparent' : borderHovered,
+            backgroundColor: hovered
+               ? theme.palette.talents.background.hover
+               : theme.palette.talents.background.normal,
+            color: hovered ? theme.palette.talents.color.hover : theme.palette.talents.color.normal,
+            fontWeight: hovered ? 'bold' : 'normal',
+            borderRadius: type === 'large' ? '0%' : '100%',
+            boxSizing: 'border-box',
+            animation: adjacent ? `${blink} 1s infinite` : 'none',
+            opacity: !adjacent && !hovered ? 0.5 : 1,
+         };
+      },
+);
