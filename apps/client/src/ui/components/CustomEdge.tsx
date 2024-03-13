@@ -36,7 +36,7 @@ export const CustomEdge = observer(({ id, source, target, style }: EdgeProps) =>
          style={{
             ...style,
             stroke:
-               talentsMenuStore.talentsMap[source] && talentsMenuStore.talentsMap[target]
+               talentsMenuStore.talentsMap[+source] && talentsMenuStore.talentsMap[+target]
                   ? theme.palette.talents.color.hover
                   : theme.palette.talents.color.normal,
          }}
