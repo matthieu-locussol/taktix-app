@@ -39,7 +39,7 @@
       "@babel/core": "^7.24.0",
       "@tauri-apps/cli": "^1.5.10",
       "@types/react": "^18.2.61",
-      "@types/react-dom": "^18.2.19",
+      "@types/react-dom": "^18.2.21",
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
       "eslint": "^8.57.0",
