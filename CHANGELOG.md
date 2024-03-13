@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.45.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.44.0...v1.45.0) (2024-03-13)
+
+
+### Features
+
+* base talent tree ([54aecf6](https://github.com/matthieu-locussol/taktix-app/commit/54aecf64afd22ddffa5238baa3c51aea23294048))
+
 ## [1.44.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.43.4...v1.44.0) (2024-03-04)
 
 
