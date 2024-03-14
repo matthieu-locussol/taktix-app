@@ -19,6 +19,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
 import { zProfessionType } from 'shared/src/types/Profession';
 import { isRoom } from 'shared/src/types/Room';
@@ -72,125 +73,129 @@ export const CommunityMenu = observer(() => {
    const { t } = useTranslation();
 
    return (
-      <StyledDialog
-         hideBackdrop
-         disableEnforceFocus
-         onClose={() => communityMenuStore.close()}
-         open={communityMenuStore.isOpened}
-         fullScreen={settingsMenuStore.fullScreenMenus.community}
-         PaperProps={{
-            sx: (theme) => ({
-               borderRadius: theme.spacing(0.5),
-               transition: 'all 0.3s',
-            }),
-         }}
-      >
-         <DialogTitle sx={{ m: 0, p: 2 }}>{t('community')}</DialogTitle>
-         <IconButton
-            aria-label="fullscreen"
-            onClick={() => settingsMenuStore.toggleFullScreenMenu('community')}
-            sx={{
-               position: 'absolute',
-               right: 48,
-               top: 12,
-               color: (theme) => theme.palette.text.primary,
+      <Draggable handle=".community-menu-handle">
+         <StyledDialog
+            hideBackdrop
+            disableEnforceFocus
+            onClose={() => communityMenuStore.close()}
+            open={communityMenuStore.isOpened}
+            fullScreen={settingsMenuStore.fullScreenMenus.community}
+            PaperProps={{
+               sx: (theme) => ({
+                  borderRadius: theme.spacing(0.5),
+                  transition: 'all 0.3s',
+               }),
             }}
          >
-            {settingsMenuStore.fullScreenMenus.community ? (
-               <FullscreenOffIcon />
-            ) : (
-               <FullscreenIcon />
-            )}
-         </IconButton>
-         <IconButton
-            aria-label="close"
-            onClick={() => communityMenuStore.close()}
-            sx={{
-               position: 'absolute',
-               right: 8,
-               top: 12,
-               color: (theme) => theme.palette.text.primary,
-            }}
-         >
-            <CloseIcon />
-         </IconButton>
-         <StyledDialogContent dividers>
-            <TableContainer sx={{ maxHeight: '100%' }}>
-               <StyledTable stickyHeader size="small">
-                  <TableHead>
-                     <TableRow>
-                        {columns.map((column) => (
-                           <StyledTableHead
-                              key={`community-header-${column.id}`}
-                              align={column.align}
-                           >
-                              {column.label(t)}
-                           </StyledTableHead>
-                        ))}
-                        <StyledTableHead>{t('actions')}</StyledTableHead>
-                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                     {communityMenuStore.loading ? (
+            <StyledDialogTitle className="community-menu-handle">
+               {t('community')}
+            </StyledDialogTitle>
+            <IconButton
+               aria-label="fullscreen"
+               onClick={() => settingsMenuStore.toggleFullScreenMenu('community')}
+               sx={{
+                  position: 'absolute',
+                  right: 48,
+                  top: 12,
+                  color: (theme) => theme.palette.text.primary,
+               }}
+            >
+               {settingsMenuStore.fullScreenMenus.community ? (
+                  <FullscreenOffIcon />
+               ) : (
+                  <FullscreenIcon />
+               )}
+            </IconButton>
+            <IconButton
+               aria-label="close"
+               onClick={() => communityMenuStore.close()}
+               sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 12,
+                  color: (theme) => theme.palette.text.primary,
+               }}
+            >
+               <CloseIcon />
+            </IconButton>
+            <StyledDialogContent dividers>
+               <TableContainer sx={{ maxHeight: '100%' }}>
+                  <StyledTable stickyHeader size="small">
+                     <TableHead>
                         <TableRow>
-                           <StyledTableCell colSpan={columns.length + 1} sx={{ p: 0 }}>
-                              <LinearProgress sx={{ height: 8 }} />
-                           </StyledTableCell>
+                           {columns.map((column) => (
+                              <StyledTableHead
+                                 key={`community-header-${column.id}`}
+                                 align={column.align}
+                              >
+                                 {column.label(t)}
+                              </StyledTableHead>
+                           ))}
+                           <StyledTableHead>{t('actions')}</StyledTableHead>
                         </TableRow>
-                     ) : (
-                        communityMenuStore.sortedPlayers.map((row) => (
-                           <TableRow hover tabIndex={-1} key={`community-value-${row.player}`}>
-                              {columns.map((column) => {
-                                 const value = row[column.id];
-                                 return (
-                                    <StyledTableCell
-                                       key={`community-value-${column.id}-${row.player}`}
-                                       align={column.align}
-                                       sx={{
-                                          fontStyle:
-                                             row.player === characterStore.name
-                                                ? 'italic'
-                                                : 'normal',
-                                       }}
-                                    >
-                                       {column.format ? column.format(`${value}`, t) : value}
-                                    </StyledTableCell>
-                                 );
-                              })}
-                              <StyledTableCell>
-                                 <IconButton
-                                    color="inherit"
-                                    onClick={() =>
-                                       communityMenuStore.sendPrivateMessage(row.player)
-                                    }
-                                    disabled={row.player === characterStore.name}
-                                 >
-                                    <MessageIcon />
-                                 </IconButton>
+                     </TableHead>
+                     <TableBody>
+                        {communityMenuStore.loading ? (
+                           <TableRow>
+                              <StyledTableCell colSpan={columns.length + 1} sx={{ p: 0 }}>
+                                 <LinearProgress sx={{ height: 8 }} />
                               </StyledTableCell>
                            </TableRow>
-                        ))
-                     )}
-                  </TableBody>
-               </StyledTable>
-            </TableContainer>
-         </StyledDialogContent>
-         <StyledDialogActions>
-            <Box display="flex" alignItems="center" gap={1}>
-               <StatusBadge status="online" />
-               <Typography display="flex" alignItems="center" gap={1}>
-                  <Trans
-                     i18nKey="onlinePlayers"
-                     values={{ count: communityMenuStore.playerCount }}
-                     components={{ b: <b /> }}
-                  />
-               </Typography>
-            </Box>
-            <Button variant="contained" onClick={() => communityMenuStore.close()}>
-               {t('close')}
-            </Button>
-         </StyledDialogActions>
-      </StyledDialog>
+                        ) : (
+                           communityMenuStore.sortedPlayers.map((row) => (
+                              <TableRow hover tabIndex={-1} key={`community-value-${row.player}`}>
+                                 {columns.map((column) => {
+                                    const value = row[column.id];
+                                    return (
+                                       <StyledTableCell
+                                          key={`community-value-${column.id}-${row.player}`}
+                                          align={column.align}
+                                          sx={{
+                                             fontStyle:
+                                                row.player === characterStore.name
+                                                   ? 'italic'
+                                                   : 'normal',
+                                          }}
+                                       >
+                                          {column.format ? column.format(`${value}`, t) : value}
+                                       </StyledTableCell>
+                                    );
+                                 })}
+                                 <StyledTableCell>
+                                    <IconButton
+                                       color="inherit"
+                                       onClick={() =>
+                                          communityMenuStore.sendPrivateMessage(row.player)
+                                       }
+                                       disabled={row.player === characterStore.name}
+                                    >
+                                       <MessageIcon />
+                                    </IconButton>
+                                 </StyledTableCell>
+                              </TableRow>
+                           ))
+                        )}
+                     </TableBody>
+                  </StyledTable>
+               </TableContainer>
+            </StyledDialogContent>
+            <StyledDialogActions>
+               <Box display="flex" alignItems="center" gap={1}>
+                  <StatusBadge status="online" />
+                  <Typography display="flex" alignItems="center" gap={1}>
+                     <Trans
+                        i18nKey="onlinePlayers"
+                        values={{ count: communityMenuStore.playerCount }}
+                        components={{ b: <b /> }}
+                     />
+                  </Typography>
+               </Box>
+               <Button variant="contained" onClick={() => communityMenuStore.close()}>
+                  {t('close')}
+               </Button>
+            </StyledDialogActions>
+         </StyledDialog>
+      </Draggable>
    );
 });
 
@@ -205,6 +210,15 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
    },
    '& .MuiDialogActions-root': {
       padding: theme.spacing(1),
+   },
+}));
+
+const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
+   margin: 0,
+   padding: theme.spacing(2),
+   cursor: 'grab',
+   ':active': {
+      cursor: 'grabbing',
    },
 }));
 
