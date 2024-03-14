@@ -88,6 +88,15 @@ export const translationsFr: LanguageTranslations = {
    talentPointsAvailable_one: '{{count}} point disponible',
    talentPointsAvailable_other: '{{count}} points disponibles',
    apply: 'Appliquer',
+   statistics: 'Statistiques',
+   experience: 'Expérience',
+   health: 'Vitalité',
+   magicShield: 'Bouclier magique',
+   strength: 'Force',
+   dexterity: 'Dextérité',
+   intelligence: 'Intelligence',
+   luck: 'Chance',
+   statisticPointsAvailable: 'Points disponibles : <b>{{count}}</b>',
 
    // Professions
    Warrior: 'Guerrier',

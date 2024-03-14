@@ -1,4 +1,4 @@
-import { keyframes, styled } from '@mui/material';
+import { Theme, keyframes, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 import { Handle, NodeProps, Position } from 'reactflow';
@@ -49,9 +49,9 @@ interface StyleProps extends NodeProps {
    hovered: boolean;
 }
 
-const blink = keyframes`
+const blink = (theme: Theme) => keyframes`
    50% {
-      border-color: #FFFFFF;
+      border-color: ${theme.palette.text.secondary};
    }
 `;
 
@@ -61,6 +61,8 @@ const StyledNode = styled('div')<StyleProps>(
          const borderHovered = hovered
             ? `2px solid ${theme.palette.talents.color.hover}`
             : `1px solid ${theme.palette.talents.color.normal}`;
+
+         const blinkKeyframes = blink(theme);
 
          return {
             width: 40,
@@ -78,7 +80,7 @@ const StyledNode = styled('div')<StyleProps>(
             fontWeight: hovered ? 'bold' : 'normal',
             borderRadius: type === 'large' ? '0%' : '100%',
             boxSizing: 'border-box',
-            animation: adjacent ? `${blink} 1s infinite` : 'none',
+            animation: adjacent ? `${blinkKeyframes} 1s infinite` : 'none',
             opacity: !adjacent && !hovered ? 0.5 : 1,
          };
       },

@@ -39,6 +39,8 @@ export const CustomEdge = observer(({ id, source, target, style }: EdgeProps) =>
                talentsMenuStore.talentsMap[+source] && talentsMenuStore.talentsMap[+target]
                   ? theme.palette.talents.color.hover
                   : theme.palette.talents.color.normal,
+            strokeWidth:
+               talentsMenuStore.talentsMap[+source] && talentsMenuStore.talentsMap[+target] ? 2 : 1,
          }}
       />
    );

@@ -15,6 +15,7 @@ import { NewsStore } from './NewsStore';
 import { RegisterStore } from './RegisterStore';
 import { ScreenStore } from './ScreenStore';
 import { SettingsMenuStore } from './SettingsMenuStore';
+import { StatisticsStore } from './StatisticsStore';
 import { TalentsMenuStore } from './TalentsMenuStore';
 import { UpdaterStore } from './UpdaterStore';
 
@@ -51,6 +52,8 @@ export class Store {
 
    public settingsMenuStore: SettingsMenuStore;
 
+   public statisticsStore: StatisticsStore;
+
    public talentsMenuStore: TalentsMenuStore;
 
    public updaterStore: UpdaterStore;
@@ -74,6 +77,7 @@ export class Store {
       this.registerStore = new RegisterStore();
       this.screenStore = new ScreenStore(this);
       this.settingsMenuStore = new SettingsMenuStore(this);
+      this.statisticsStore = new StatisticsStore(this);
       this.talentsMenuStore = new TalentsMenuStore(this);
       this.updaterStore = new UpdaterStore(this);
    }

@@ -83,6 +83,15 @@ export const translationsEn = {
    talentPointsAvailable_one: '{{count}} point available',
    talentPointsAvailable_other: '{{count}} points available',
    apply: 'Apply',
+   statistics: 'Statistics',
+   experience: 'Experience',
+   health: 'Health',
+   magicShield: 'Magic Shield',
+   strength: 'Strength',
+   dexterity: 'Dexterity',
+   intelligence: 'Intelligence',
+   luck: 'Luck',
+   statisticPointsAvailable: 'Points available: <b>{{count}}</b>',
 
    // Professions
    Warrior: 'Warrior',
