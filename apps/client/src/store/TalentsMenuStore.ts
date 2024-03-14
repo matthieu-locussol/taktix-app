@@ -27,6 +27,9 @@ export class TalentsMenuStore {
 
    public close(): void {
       this.isOpened = false;
+
+      this.talents = [...this._store.characterStore.talents];
+      this.talentsPoints = this._store.characterStore.talentsPoints;
    }
 
    public toggle(): void {

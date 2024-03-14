@@ -48,10 +48,13 @@ export const TalentsMenu = observer(() => {
             <StyledDialogContent dividers>
                <TalentTree />
             </StyledDialogContent>
-            <StyledDialogActions>
-               <Typography>
+            <DialogActions>
+               <Typography sx={{ mr: 'auto' }}>
                   {t('talentPointsAvailable', { count: talentsMenuStore.talentsPoints })}
                </Typography>
+               <Button color="chalk" onClick={() => talentsMenuStore.close()}>
+                  {t('cancel')}
+               </Button>
                <Button
                   variant="contained"
                   onClick={() => talentsMenuStore.save()}
@@ -59,7 +62,7 @@ export const TalentsMenu = observer(() => {
                >
                   {t('apply')}
                </Button>
-            </StyledDialogActions>
+            </DialogActions>
          </StyledDialog>
       </Draggable>
    );
@@ -92,9 +95,4 @@ const StyledDialogContent = styled(DialogContent)(() => ({
    [`&.${dialogContentClasses.root}`]: {
       padding: 0,
    },
-}));
-
-const StyledDialogActions = styled(DialogActions)(() => ({
-   display: 'flex',
-   justifyContent: 'space-between',
 }));
