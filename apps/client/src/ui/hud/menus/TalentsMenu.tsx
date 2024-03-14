@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import Draggable from 'react-draggable';
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 import TalentTree from '../../components/TalentTree';
@@ -17,48 +18,50 @@ export const TalentsMenu = observer(() => {
    const { t } = useTranslation();
 
    return (
-      <StyledDialog
-         fullScreen
-         hideBackdrop
-         disableEnforceFocus
-         onClose={() => talentsMenuStore.close()}
-         open={talentsMenuStore.isOpened}
-         PaperProps={{
-            sx: (theme) => ({
-               borderRadius: theme.spacing(0.5),
-               transition: 'all 0.3s',
-            }),
-         }}
-      >
-         <DialogTitle sx={{ m: 0, p: 2 }}>{t('talentTree')}</DialogTitle>
-         <IconButton
-            aria-label="close"
-            onClick={() => talentsMenuStore.close()}
-            sx={{
-               position: 'absolute',
-               right: 8,
-               top: 12,
-               color: (theme) => theme.palette.text.primary,
+      <Draggable handle=".talents-menu-handle">
+         <StyledDialog
+            fullScreen
+            hideBackdrop
+            disableEnforceFocus
+            onClose={() => talentsMenuStore.close()}
+            open={talentsMenuStore.isOpened}
+            PaperProps={{
+               sx: (theme) => ({
+                  borderRadius: theme.spacing(0.5),
+                  transition: 'all 0.3s',
+               }),
             }}
          >
-            <CloseIcon />
-         </IconButton>
-         <StyledDialogContent dividers>
-            <TalentTree />
-         </StyledDialogContent>
-         <StyledDialogActions>
-            <Typography>
-               {t('talentPointsAvailable', { count: talentsMenuStore.talentsPoints })}
-            </Typography>
-            <Button
-               variant="contained"
-               onClick={() => talentsMenuStore.save()}
-               disabled={!talentsMenuStore.canApply}
+            <StyledDialogTitle className="talents-menu-handle">{t('talentTree')}</StyledDialogTitle>
+            <IconButton
+               aria-label="close"
+               onClick={() => talentsMenuStore.close()}
+               sx={{
+                  position: 'absolute',
+                  right: 8,
+                  top: 12,
+                  color: (theme) => theme.palette.text.primary,
+               }}
             >
-               {t('apply')}
-            </Button>
-         </StyledDialogActions>
-      </StyledDialog>
+               <CloseIcon />
+            </IconButton>
+            <StyledDialogContent dividers>
+               <TalentTree />
+            </StyledDialogContent>
+            <StyledDialogActions>
+               <Typography>
+                  {t('talentPointsAvailable', { count: talentsMenuStore.talentsPoints })}
+               </Typography>
+               <Button
+                  variant="contained"
+                  onClick={() => talentsMenuStore.save()}
+                  disabled={!talentsMenuStore.canApply}
+               >
+                  {t('apply')}
+               </Button>
+            </StyledDialogActions>
+         </StyledDialog>
+      </Draggable>
    );
 });
 
@@ -73,6 +76,15 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
    },
    '& .MuiDialogActions-root': {
       padding: theme.spacing(1),
+   },
+}));
+
+const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
+   margin: 0,
+   padding: theme.spacing(2),
+   cursor: 'grab',
+   ':active': {
+      cursor: 'grabbing',
    },
 }));
 
