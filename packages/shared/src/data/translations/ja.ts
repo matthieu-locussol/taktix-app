@@ -87,6 +87,15 @@ export const translationsJa: LanguageTranslations = {
    talentPointsAvailable_one: '{{count}} ポイントが利用可能',
    talentPointsAvailable_other: '{{count}} ポイントが利用可能',
    apply: '適用',
+   statistics: '統計',
+   experience: '経験',
+   health: '体力',
+   magicShield: 'マジックシールド',
+   strength: '力',
+   dexterity: '器用さ',
+   intelligence: '知性',
+   luck: '運',
+   statisticPointsAvailable: '利用可能なポイント：<b>{{count}}</b>',
 
    // Professions
    Warrior: '戦士',

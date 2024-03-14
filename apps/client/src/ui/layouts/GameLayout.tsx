@@ -9,6 +9,7 @@ import { ContextMenu } from '../hud/ContextMenu';
 import { Menu } from '../hud/Menu';
 import { CommunityMenu } from '../hud/menus/CommunityMenu';
 import { SettingsMenu } from '../hud/menus/SettingsMenu';
+import { StatisticsMenu } from '../hud/menus/StatisticsMenu';
 import { TalentsMenu } from '../hud/menus/TalentsMenu';
 
 interface GameLayoutProps extends BoxProps {}
@@ -78,6 +79,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          <ContextMenu />
          <SettingsMenu />
          <TalentsMenu />
+         <StatisticsMenu />
          {children}
       </Box>
    );
