@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.46.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.45.0...v1.46.0) (2024-03-15)
+
+
+### Features
+
+* ability to upgrade statistics ([de36371](https://github.com/matthieu-locussol/taktix-app/commit/de36371f68ab6543cca094ee533326a0eb6610a6))
+* draggable menu dialogs ([f462cc1](https://github.com/matthieu-locussol/taktix-app/commit/f462cc11436b5af09de4f047bf2ca55ee8239155))
+* statistics menu ([015f3f5](https://github.com/matthieu-locussol/taktix-app/commit/015f3f5e3ee9cd5fb498aeb912fc739519cf9a45))
+
 ## [1.45.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.44.0...v1.45.0) (2024-03-13)
 
 
