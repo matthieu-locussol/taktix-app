@@ -3,7 +3,14 @@ import { Store } from './Store';
 import { TalentsMenuStore } from './TalentsMenuStore';
 
 vi.mock('./Store', () => {
-   const MockedStore = vi.fn().mockImplementation(() => ({}));
+   const characterStoreMock = {
+      talents: [1, 2],
+      talentsPoints: 0,
+   };
+
+   const MockedStore = vi.fn().mockImplementation(() => ({
+      characterStore: characterStoreMock,
+   }));
 
    return { Store: MockedStore };
 });

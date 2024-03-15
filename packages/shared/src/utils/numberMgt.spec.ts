@@ -103,4 +103,52 @@ describe('NumberMgt', () => {
          });
       });
    });
+
+   describe('random', () => {
+      const samples = [
+         {
+            title: 'should return a number between min and max',
+            min: 1,
+            max: 10,
+         },
+         {
+            title: 'should return a number between 0 and 1',
+            min: 0,
+            max: 1,
+         },
+         {
+            title: 'should return a number between -10 and 10',
+            min: -10,
+            max: 10,
+         },
+         {
+            title: 'should return a number between 0 and 100',
+            min: 0,
+            max: 100,
+         },
+         {
+            title: 'should return a number between 0 and 10000',
+            min: 0,
+            max: 10000,
+         },
+         {
+            title: 'should return a number between -10000 and 10000',
+            min: -10000,
+            max: 10000,
+         },
+         {
+            title: 'should return a number between -1000000 and 1000000',
+            min: -1000000,
+            max: 1000000,
+         },
+      ];
+
+      samples.forEach(({ title, min, max }) => {
+         it(title, () => {
+            const value = NumberMgt.random(min, max);
+            expect(value).toBeGreaterThanOrEqual(min);
+            expect(value).toBeLessThanOrEqual(max);
+         });
+      });
+   });
 });
