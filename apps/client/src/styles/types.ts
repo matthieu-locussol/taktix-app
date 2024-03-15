@@ -34,6 +34,16 @@ interface CustomPalette {
          hover: string;
       };
    };
+   statistics: {
+      border: {
+         clear: string;
+         normal: string;
+      };
+      background: {
+         normal: string;
+         hover: string;
+      };
+   };
 }
 
 declare module '@mui/material/styles' {

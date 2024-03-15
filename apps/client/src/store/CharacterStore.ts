@@ -3,6 +3,8 @@ import { makeAutoObservable } from 'mobx';
 import { Player } from 'shared/src/types/Player';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { Room } from 'shared/src/types/Room';
+import { Statistic } from 'shared/src/types/Statistic';
+import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 
 export class CharacterStore {
    public map: Room = 'AAA_InitialRoom';
@@ -18,6 +20,10 @@ export class CharacterStore {
    public talents: number[] = [];
 
    public talentsPoints: number = 0;
+
+   public baseStatistics: Record<Statistic, number> = StatisticMgt.makeMockedStatistics({});
+
+   public baseStatisticsPoints: number = 0;
 
    constructor() {
       makeAutoObservable(this);
@@ -57,5 +63,13 @@ export class CharacterStore {
 
    public setTalentsPoints(talentsPoints: number) {
       this.talentsPoints = talentsPoints;
+   }
+
+   public setBaseStatistics(baseStatistics: Record<Statistic, number>) {
+      this.baseStatistics = { ...baseStatistics };
+   }
+
+   public setBaseStatisticsPoints(baseStatisticsPoints: number) {
+      this.baseStatisticsPoints = baseStatisticsPoints;
    }
 }

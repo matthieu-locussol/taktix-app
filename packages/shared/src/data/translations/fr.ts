@@ -90,7 +90,7 @@ export const translationsFr: LanguageTranslations = {
    apply: 'Appliquer',
    statistics: 'Statistiques',
    experience: 'Expérience',
-   health: 'Vitalité',
+   vitality: 'Vitalité',
    magicShield: 'Bouclier magique',
    strength: 'Force',
    dexterity: 'Dextérité',

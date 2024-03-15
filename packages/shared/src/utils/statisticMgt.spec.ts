@@ -983,4 +983,194 @@ describe('StatisticMgt', () => {
          expect(result).toEqual(sample.expected);
       });
    });
+
+   describe('serializeBaseStatistics', () => {
+      const samples = [
+         {
+            title: 'No base statistics',
+            baseStatistics: {},
+            expected: '',
+         },
+         {
+            title: 'Can serialize base statistics',
+            baseStatistics: {
+               'vitality_+f': 100,
+               'magicShield_+f': 200,
+               'strength_+f': 89,
+               'dexterity_+f': 10,
+               'intelligence_+f': 5,
+               'luck_+f': 10,
+            },
+            expected:
+               'vitality_+f:100,magicShield_+f:200,strength_+f:89,dexterity_+f:10,intelligence_+f:5,luck_+f:10',
+         },
+         {
+            title: 'Can serialize any given statistics',
+            baseStatistics: {
+               'vitality_+f': 100,
+               'magicShield_+f': 200,
+               'strength_+f': 89,
+               'dexterity_+f': 10,
+               'intelligence_+f': 5,
+               'luck_+f': 10,
+               'elementalDamages_-f': 37,
+               'sword2HDamages_-%': 12,
+               'mace2HDamages_+x%': 23,
+               'criticalStrikeDamages_+%': 18,
+               'criticalStrikeDamages_-%': 80,
+               'thornsMagical_-%': 10,
+               'precision_-f': 849,
+               'windResistance_+%': 45,
+               'windResistance_-f': 88,
+            },
+            expected:
+               'vitality_+f:100,magicShield_+f:200,strength_+f:89,dexterity_+f:10,intelligence_+f:5,luck_+f:10,elementalDamages_-f:37,sword2HDamages_-%:12,mace2HDamages_+x%:23,criticalStrikeDamages_+%:18,criticalStrikeDamages_-%:80,thornsMagical_-%:10,precision_-f:849,windResistance_+%:45,windResistance_-f:88',
+         },
+      ];
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.serializeStatistics(sample.baseStatistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('deserializeBaseStatistics', () => {
+      const samples = [
+         {
+            title: 'No base statistics',
+            serializedBaseStatistics: '',
+            expected: StatisticMgt.makeMockedStatistics({}),
+         },
+         {
+            title: 'Can deserialize base statistics',
+            serializedBaseStatistics:
+               'vitality_+f:100,magicShield_+f:200,strength_+f:89,dexterity_+f:10,intelligence_+f:5,luck_+f:10',
+            expected: StatisticMgt.makeMockedStatistics({
+               'vitality_+f': 100,
+               'magicShield_+f': 200,
+               'strength_+f': 89,
+               'dexterity_+f': 10,
+               'intelligence_+f': 5,
+               'luck_+f': 10,
+            }),
+         },
+         {
+            title: 'Can deserialize any given statistics',
+            serializedBaseStatistics:
+               'vitality_+f:100,magicShield_+f:200,strength_+f:89,dexterity_+f:10,intelligence_+f:5,luck_+f:10,elementalDamages_-f:37,sword2HDamages_-%:12,mace2HDamages_+x%:23,criticalStrikeDamages_+%:18,criticalStrikeDamages_-%:80,thornsMagical_-%:10,precision_-f:849,windResistance_+%:45,windResistance_-f:88',
+            expected: StatisticMgt.makeMockedStatistics({
+               'vitality_+f': 100,
+               'magicShield_+f': 200,
+               'strength_+f': 89,
+               'dexterity_+f': 10,
+               'intelligence_+f': 5,
+               'luck_+f': 10,
+               'elementalDamages_-f': 37,
+               'sword2HDamages_-%': 12,
+               'mace2HDamages_+x%': 23,
+               'criticalStrikeDamages_+%': 18,
+               'criticalStrikeDamages_-%': 80,
+               'thornsMagical_-%': 10,
+               'precision_-f': 849,
+               'windResistance_+%': 45,
+               'windResistance_-f': 88,
+            }),
+         },
+      ];
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.deserializeStatistics(sample.serializedBaseStatistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('isProgressionValid', () => {
+      const samples = [
+         {
+            title: 'Empty progression',
+            statistics: {},
+            oldStatistics: {},
+            oldStatisticsPoints: 0,
+            expected: { valid: true, remainingPoints: 0 },
+         },
+         {
+            title: 'No progression',
+            statistics: {
+               'vitality_+f': 100,
+               'magicShield_+f': 200,
+               'strength_+f': 89,
+               'dexterity_+f': 10,
+               'intelligence_+f': 5,
+               'luck_+f': 10,
+            },
+            oldStatistics: {
+               'vitality_+f': 100,
+               'magicShield_+f': 200,
+               'strength_+f': 89,
+               'dexterity_+f': 10,
+               'intelligence_+f': 5,
+               'luck_+f': 10,
+            },
+            oldStatisticsPoints: 0,
+            expected: { valid: true, remainingPoints: 0 },
+         },
+         {
+            title: 'Not enough points to spend',
+            statistics: {
+               'vitality_+f': 5,
+            },
+            oldStatistics: {},
+            oldStatisticsPoints: 3,
+            expected: { valid: false },
+         },
+         {
+            title: 'No progression with unused points',
+            statistics: {
+               'vitality_+f': 100,
+               'magicShield_+f': 200,
+               'strength_+f': 89,
+               'dexterity_+f': 10,
+               'intelligence_+f': 5,
+               'luck_+f': 10,
+            },
+            oldStatistics: {
+               'vitality_+f': 100,
+               'magicShield_+f': 200,
+               'strength_+f': 89,
+               'dexterity_+f': 10,
+               'intelligence_+f': 5,
+               'luck_+f': 10,
+            },
+            oldStatisticsPoints: 10,
+            expected: { valid: true, remainingPoints: 10 },
+         },
+         {
+            title: 'Just enough points to spend',
+            statistics: {
+               'vitality_+f': 5,
+            },
+            oldStatistics: {},
+            oldStatisticsPoints: 5,
+            expected: { valid: true, remainingPoints: 0 },
+         },
+         {
+            title: 'More than enough points to spend',
+            statistics: {
+               'vitality_+f': 5,
+            },
+            oldStatistics: {},
+            oldStatisticsPoints: 10,
+            expected: { valid: true, remainingPoints: 5 },
+         },
+      ];
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.isProgressionValid(
+            sample.statistics,
+            sample.oldStatistics,
+            sample.oldStatisticsPoints,
+         );
+         expect(result).toEqual(sample.expected);
+      });
+   });
 });

@@ -5,6 +5,7 @@ import {
    MapState,
    MapRoomOptions as Options,
    PlayerState,
+   StatisticMgt,
    TELEPORTATION_SPOTS,
    Room as TRoom,
    TalentMgt,
@@ -49,6 +50,9 @@ export class MapRoom extends Room<MapState> {
                .with({ type: 'move' }, (payload) => this.onMove(client, payload))
                .with({ type: 'stopMoving' }, (payload) => this.onStopMoving(client, payload))
                .with({ type: 'updateTalents' }, (payload) => this.onUpdateTalents(client, payload))
+               .with({ type: 'updateStatistics' }, (payload) =>
+                  this.onUpdateStatistics(client, payload),
+               )
                .exhaustive();
          } else {
             logger.error(
@@ -171,6 +175,50 @@ export class MapRoom extends Room<MapState> {
       } else {
          logger.error(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to update talents but failed`,
+         );
+      }
+   }
+
+   async onUpdateStatistics(
+      client: Client,
+      { message: { statistics } }: Extract<MapRoomMessage, { type: 'updateStatistics' }>,
+   ) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      const characterInfos = await prisma.character.findUnique({
+         where: { name: player.name },
+         select: {
+            baseStatistics: true,
+            baseStatisticsPoints: true,
+         },
+      });
+
+      if (characterInfos === null) {
+         return;
+      }
+
+      const results = StatisticMgt.isProgressionValid(
+         StatisticMgt.deserializeStatistics(statistics),
+         StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
+         characterInfos.baseStatisticsPoints,
+      );
+
+      if (results.valid) {
+         await prisma.character.update({
+            where: { name: player.name },
+            data: {
+               baseStatistics: statistics,
+               baseStatisticsPoints: results.remainingPoints,
+            },
+         });
+
+         logger.info(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) updated statistics successfully`,
+         );
+      } else {
+         logger.error(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to update statistics but failed`,
          );
       }
    }

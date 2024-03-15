@@ -85,7 +85,7 @@ export const translationsEn = {
    apply: 'Apply',
    statistics: 'Statistics',
    experience: 'Experience',
-   health: 'Health',
+   vitality: 'Vitality',
    magicShield: 'Magic Shield',
    strength: 'Strength',
    dexterity: 'Dexterity',

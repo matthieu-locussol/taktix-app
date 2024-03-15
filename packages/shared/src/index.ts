@@ -31,6 +31,7 @@ export * from './utils/arrayMgt';
 export * from './utils/channelMgt';
 export * from './utils/numberMgt';
 export * from './utils/permissionMgt';
+export * from './utils/statisticMgt';
 export * from './utils/stringMgt';
 export * from './utils/talentMgt';
 export * from './utils/timeMgt';
