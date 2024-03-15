@@ -16,8 +16,8 @@
    "dependencies": {
       "@emotion/react": "^11.11.4",
       "@emotion/styled": "^11.11.0",
-      "@mui/icons-material": "^5.15.12",
-      "@mui/material": "^5.15.12",
+      "@mui/icons-material": "^5.15.13",
+      "@mui/material": "^5.15.13",
       "@tauri-apps/api": "^1.5.3",
       "@vitejs/plugin-react": "^4.2.1",
       "colyseus.js": "^0.15.18",
@@ -40,12 +40,12 @@
    "devDependencies": {
       "@babel/core": "^7.24.0",
       "@tauri-apps/cli": "^1.5.11",
-      "@types/react": "^18.2.65",
-      "@types/react-dom": "^18.2.21",
+      "@types/react": "^18.2.66",
+      "@types/react-dom": "^18.2.22",
       "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
       "eslint": "^8.57.0",
-      "happy-dom": "^13.8.2",
+      "happy-dom": "^13.8.6",
       "typescript": "^5.4.2"
    }
 }
