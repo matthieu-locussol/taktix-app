@@ -24,6 +24,7 @@ export * from './types/Profession';
 export * from './types/Role';
 export * from './types/Room';
 export * from './types/SceneData';
+export * from './types/Statistic';
 export * from './types/TeleportationSpot';
 export * from './utils/_assert';
 export * from './utils/arrayMgt';

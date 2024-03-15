@@ -2,7 +2,7 @@
 id: isqhux0achjm6voa7hpr1b2
 title: Statistics
 desc: Specifications for the game statistics
-updated: 1709643456285
+updated: 1710408315497
 created: 1709126598150
 ---
 
