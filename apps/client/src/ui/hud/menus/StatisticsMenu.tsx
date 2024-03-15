@@ -1,12 +1,5 @@
-import DexterityIcon from '@mui/icons-material/AirRounded';
 import ExperienceIcon from '@mui/icons-material/ArrowCircleUpRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
-import LifeIcon from '@mui/icons-material/FavoriteRounded';
-import Intelligence from '@mui/icons-material/LocalFireDepartmentRounded';
-import ResetIcon from '@mui/icons-material/RestartAltRounded';
-import MagicShieldIcon from '@mui/icons-material/ShieldMoonRounded';
-import StrengthIcon from '@mui/icons-material/VolcanoRounded';
-import LuckIcon from '@mui/icons-material/WaterDropRounded';
 import { darken, linearProgressClasses, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -24,6 +17,7 @@ import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
+import { StatisticIcon } from '../../components/StatisticIcon';
 import { Statistic, StatisticProps } from '../components/Statistic';
 import { Tooltip } from '../components/Tooltip';
 
@@ -34,43 +28,68 @@ export const StatisticsMenu = observer(() => {
    const statistics = useMemo(
       (): StatisticProps[] => [
          {
-            icon: <LifeIcon sx={{ mr: 2 }} />,
-            value: 144,
-            label: 'health',
-            onIncrease: () => console.log('increase'),
+            icon: <StatisticIcon id="vitality_+f" sx={{ mr: 2 }} />,
+            value: statisticsStore.vitality,
+            label: 'vitality',
+            onIncrease: () => statisticsStore.increase('vitality'),
+            onDecrease: () => statisticsStore.decrease('vitality'),
+            canIncrease: statisticsStore.canIncrease,
+            canDecrease: statisticsStore.canDecrease.vitality,
          },
          {
-            icon: <MagicShieldIcon sx={{ mr: 2 }} />,
-            value: 1234,
+            icon: <StatisticIcon id="magicShield_+f" sx={{ mr: 2 }} />,
+            value: statisticsStore.magicShield,
             label: 'magicShield',
-            onIncrease: () => console.log('increase'),
+            onIncrease: () => statisticsStore.increase('magicShield'),
+            onDecrease: () => statisticsStore.decrease('magicShield'),
+            canIncrease: statisticsStore.canIncrease,
+            canDecrease: statisticsStore.canDecrease.magicShield,
          },
          {
-            icon: <StrengthIcon sx={{ mr: 2 }} />,
-            value: 1234,
+            icon: <StatisticIcon id="strength_+f" sx={{ mr: 2 }} />,
+            value: statisticsStore.strength,
             label: 'strength',
-            onIncrease: () => console.log('increase'),
+            onIncrease: () => statisticsStore.increase('strength'),
+            onDecrease: () => statisticsStore.decrease('strength'),
+            canIncrease: statisticsStore.canIncrease,
+            canDecrease: statisticsStore.canDecrease.strength,
          },
          {
-            icon: <DexterityIcon sx={{ mr: 2 }} />,
-            value: 1234,
+            icon: <StatisticIcon id="dexterity_+f" sx={{ mr: 2 }} />,
+            value: statisticsStore.dexterity,
             label: 'dexterity',
-            onIncrease: () => console.log('increase'),
+            onIncrease: () => statisticsStore.increase('dexterity'),
+            onDecrease: () => statisticsStore.decrease('dexterity'),
+            canIncrease: statisticsStore.canIncrease,
+            canDecrease: statisticsStore.canDecrease.dexterity,
          },
          {
-            icon: <Intelligence sx={{ mr: 2 }} />,
-            value: 1234,
+            icon: <StatisticIcon id="intelligence_+f" sx={{ mr: 2 }} />,
+            value: statisticsStore.intelligence,
             label: 'intelligence',
-            onIncrease: () => console.log('increase'),
+            onIncrease: () => statisticsStore.increase('intelligence'),
+            onDecrease: () => statisticsStore.decrease('intelligence'),
+            canIncrease: statisticsStore.canIncrease,
+            canDecrease: statisticsStore.canDecrease.intelligence,
          },
          {
-            icon: <LuckIcon sx={{ mr: 2 }} />,
-            value: 1234,
+            icon: <StatisticIcon id="luck_+f" sx={{ mr: 2 }} />,
+            value: statisticsStore.luck,
             label: 'luck',
-            onIncrease: () => console.log('increase'),
+            onIncrease: () => statisticsStore.increase('luck'),
+            onDecrease: () => statisticsStore.decrease('luck'),
+            canIncrease: statisticsStore.canIncrease,
+            canDecrease: statisticsStore.canDecrease.luck,
          },
       ],
-      [characterStore],
+      [
+         statisticsStore.vitality,
+         statisticsStore.magicShield,
+         statisticsStore.strength,
+         statisticsStore.dexterity,
+         statisticsStore.intelligence,
+         statisticsStore.luck,
+      ],
    );
 
    return (
@@ -133,7 +152,9 @@ export const StatisticsMenu = observer(() => {
                      <Tooltip
                         title={
                            <Typography display="flex" alignItems="center">
-                              35 / 110 <LifeIcon fontSize="small" sx={{ mx: 0.5 }} /> (31%)
+                              35 / 110{' '}
+                              <StatisticIcon id="vitality_+f" fontSize="small" sx={{ mx: 0.5 }} />{' '}
+                              (31%)
                            </Typography>
                         }
                         placement="right"
@@ -159,24 +180,28 @@ export const StatisticsMenu = observer(() => {
                      value={statistic.value}
                      label={statistic.label}
                      onIncrease={statistic.onIncrease}
+                     onDecrease={statistic.onDecrease}
+                     canIncrease={statistic.canIncrease}
+                     canDecrease={statistic.canDecrease}
                   />
                ))}
-               <Typography align="center" sx={{ py: 1 }}>
+            </StyledDialogContent>
+            <DialogActions>
+               <Typography align="center" sx={{ mr: 'auto' }}>
                   <Trans
                      i18nKey="statisticPointsAvailable"
-                     values={{ count: 15 }}
+                     values={{ count: statisticsStore.statisticsPoints }}
                      components={{ b: <b /> }}
                   />
                </Typography>
-            </StyledDialogContent>
-            <DialogActions>
-               <IconButton color="inherit" sx={{ mr: 'auto' }}>
-                  <ResetIcon />
-               </IconButton>
                <Button color="chalk" onClick={() => statisticsStore.close()} sx={{ ml: 'auto' }}>
                   {t('cancel')}
                </Button>
-               <Button variant="contained" onClick={() => statisticsStore.close()}>
+               <Button
+                  disabled={!statisticsStore.canSave}
+                  variant="contained"
+                  onClick={() => statisticsStore.save()}
+               >
                   {t('apply')}
                </Button>
             </DialogActions>
@@ -250,7 +275,7 @@ const ProgressBar = styled(LinearProgress)(() => ({
 }));
 
 const ExperienceProgressBar = styled(ProgressBar)(({ theme }) => ({
-   height: '0.75vw',
+   height: '0.5vw',
    backgroundColor: '#c4b5fd',
    border: `1px solid ${theme.palette.paper.border}`,
    marginTop: '0.25vh',
@@ -261,7 +286,7 @@ const ExperienceProgressBar = styled(ProgressBar)(({ theme }) => ({
 }));
 
 const LifeProgressBar = styled(ProgressBar)(({ theme }) => ({
-   height: '0.75vw',
+   height: '0.5vw',
    backgroundColor: '#fca5a5',
    border: `1px solid ${theme.palette.paper.border}`,
    marginTop: '0.25vh',

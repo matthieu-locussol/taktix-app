@@ -9,7 +9,9 @@ import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { ProfessionType, zProfessionType } from 'shared/src/types/Profession';
 import { Room as TRoom } from 'shared/src/types/Room';
 import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
+import { Statistic } from 'shared/src/types/Statistic';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
+import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
 import { match } from 'ts-pattern';
 import { Store } from './Store';
@@ -182,7 +184,18 @@ export class ColyseusStore {
          })
          .with(
             { status: 'success' },
-            async ({ map, posX, posY, direction, uuid, profession, talents, talentsPoints }) => {
+            async ({
+               map,
+               posX,
+               posY,
+               direction,
+               uuid,
+               profession,
+               talents,
+               talentsPoints,
+               baseStatistics,
+               baseStatisticsPoints,
+            }) => {
                this.setUuid(uuid);
                await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
 
@@ -204,11 +217,20 @@ export class ColyseusStore {
                this._store.characterStore.setPosition({ x: posX, y: posY });
                this._store.characterStore.setPlayers([]);
                this._store.characterStore.setProfession(profession);
-
                this._store.characterStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.characterStore.setTalentsPoints(talentsPoints);
+               this._store.characterStore.setBaseStatistics(
+                  StatisticMgt.deserializeStatistics(baseStatistics),
+               );
+               this._store.characterStore.setBaseStatisticsPoints(baseStatisticsPoints);
+
                this._store.talentsMenuStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.talentsMenuStore.setTalentsPoints(talentsPoints);
+
+               this._store.statisticsStore.setStatistics(
+                  StatisticMgt.deserializeStatistics(baseStatistics),
+               );
+               this._store.statisticsStore.setStatisticsPoints(baseStatisticsPoints);
 
                this._store.loadingScreenStore.setSceneVisible(true);
                this._store.discordStore.updateDiscordRichPresence();
@@ -346,6 +368,12 @@ export class ColyseusStore {
 
    updateTalents(talents: number[]) {
       this.gameRoom.send('updateTalents', { talents: TalentMgt.serializeTalents(talents) });
+   }
+
+   updateStatistics(statistics: Partial<Record<Statistic, number>>) {
+      this.gameRoom.send('updateStatistics', {
+         statistics: StatisticMgt.serializeStatistics(statistics),
+      });
    }
 
    async onChangeMap({

@@ -89,7 +89,7 @@ export const translationsJa: LanguageTranslations = {
    apply: '適用',
    statistics: '統計',
    experience: '経験',
-   health: '体力',
+   vitality: '活力',
    magicShield: 'マジックシールド',
    strength: '力',
    dexterity: '器用さ',

@@ -1,4 +1,5 @@
 import { ProfessionType } from 'shared/src/types/Profession';
+import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { describe, expect, it } from 'vitest';
 import { CharacterStore } from './CharacterStore';
 
@@ -12,6 +13,10 @@ describe('CharacterStore', () => {
       expect(store.profession).toEqual(ProfessionType.Warrior);
       expect(store.position).toEqual({ x: 0, y: 0 });
       expect(store.players).toHaveLength(0);
+      expect(store.talents).toHaveLength(0);
+      expect(store.talentsPoints).toBe(0);
+      expect(store.baseStatistics).toEqual(StatisticMgt.makeMockedStatistics({}));
+      expect(store.baseStatisticsPoints).toBe(0);
    });
 
    it('should set the map', () => {
@@ -60,5 +65,19 @@ describe('CharacterStore', () => {
       const store = new CharacterStore();
       store.setTalentsPoints(5);
       expect(store.talentsPoints).toBe(5);
+   });
+
+   it('should set the base statistics', () => {
+      const store = new CharacterStore();
+      store.setBaseStatistics(StatisticMgt.makeMockedStatistics({ 'strength_+f': 10 }));
+      expect(store.baseStatistics).toEqual(
+         StatisticMgt.makeMockedStatistics({ 'strength_+f': 10 }),
+      );
+   });
+
+   it('should set the base statistics points', () => {
+      const store = new CharacterStore();
+      store.setBaseStatisticsPoints(5);
+      expect(store.baseStatisticsPoints).toBe(5);
    });
 });

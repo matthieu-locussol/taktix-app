@@ -20,15 +20,17 @@ model User {
 }
 
 model Character {
-  id            Int    @id @default(autoincrement())
-  name          String @unique
-  map           String
-  profession    String
-  pos_x         Int
-  pos_y         Int
-  direction     String
-  talents       String
-  talentsPoints Int
+  id                   Int    @id @default(autoincrement())
+  name                 String @unique
+  map                  String
+  profession           String
+  pos_x                Int
+  pos_y                Int
+  direction            String
+  talents              String
+  talentsPoints        Int
+  baseStatistics       String
+  baseStatisticsPoints Int
 
   user   User @relation(fields: [userId], references: [id])
   userId Int

@@ -1,4 +1,4 @@
-import { Statistic, statistics as allStatistics } from '../types/Statistic';
+import { Statistic, statistics as allStatistics, isStatistic } from '../types/Statistic';
 import { NumberMgt } from './numberMgt';
 
 export namespace StatisticMgt {
@@ -506,6 +506,54 @@ export namespace StatisticMgt {
                result[key] += statistic[key];
             }
          });
+      });
+
+      return result;
+   };
+
+   export const isProgressionValid = (
+      statistics: Partial<Record<Statistic, number>>,
+      oldStatistics: Partial<Record<Statistic, number>>,
+      oldStatisticsPoints: number,
+   ):
+      | { valid: false }
+      | {
+           valid: true;
+           remainingPoints: number;
+        } => {
+      const oldStatisticsPointsSpent = allStatistics.reduce(
+         (acc, key) => acc + (oldStatistics[key] ?? 0),
+         0,
+      );
+      const oldTotalPoints = oldStatisticsPoints + oldStatisticsPointsSpent;
+
+      const statisticsPointsSpent = allStatistics.reduce(
+         (acc, key) => acc + (statistics[key] ?? 0),
+         0,
+      );
+      const remainingPoints = oldTotalPoints - statisticsPointsSpent;
+
+      if (remainingPoints < 0) {
+         return { valid: false };
+      }
+
+      return { valid: true, remainingPoints };
+   };
+
+   export const serializeStatistics = (statistics: Partial<Record<Statistic, number>>): string =>
+      Object.entries(statistics)
+         .map(([key, value]) => `${key}:${value}`)
+         .join(',');
+
+   export const deserializeStatistics = (serialized: string): Record<Statistic, number> => {
+      const result: Record<Statistic, number> = makeMockedStatistics({});
+
+      serialized.split(',').forEach((part) => {
+         const [key, value] = part.split(':');
+
+         if (isStatistic(key)) {
+            result[key] = Number(value);
+         }
       });
 
       return result;

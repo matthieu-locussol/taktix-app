@@ -54,6 +54,16 @@ export const appTheme = createTheme({
             hover: 'rgba(20, 184, 166, 0.085)',
          },
       },
+      statistics: {
+         border: {
+            clear: '#D1D5DB',
+            normal: '#111827',
+         },
+         background: {
+            normal: darken(`#111827C6`, 0.15),
+            hover: 'rgba(20, 184, 166, 0.1)',
+         },
+      },
       mode: 'light',
    },
    typography: (palette) => ({

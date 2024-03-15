@@ -2,6 +2,8 @@ import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import {
    AuthRoomMessage,
    CustomProtocol,
+   DEFAULT_BASE_STATISTICS,
+   DEFAULT_BASE_STATISTICS_POINTS,
    DEFAULT_DIRECTION,
    DEFAULT_MAP,
    DEFAULT_TALENTS,
@@ -11,6 +13,7 @@ import {
    INTERNAL_PLAYER_NAME,
    MAX_CHARACTERS_PER_ACCOUNT,
    AuthRoomOptions as Options,
+   StatisticMgt,
    StringMgt,
    TalentMgt,
    AuthRoomUserData as UserData,
@@ -211,6 +214,8 @@ export class AuthRoom extends Room {
             direction: character.direction,
             talents: character.talents,
             talentsPoints: character.talentsPoints,
+            baseStatistics: character.baseStatistics,
+            baseStatisticsPoints: character.baseStatisticsPoints,
             profession: zProfessionType.parse(character.profession),
          };
 
@@ -296,6 +301,8 @@ export class AuthRoom extends Room {
                map: DEFAULT_MAP,
                talents: TalentMgt.serializeTalents(DEFAULT_TALENTS),
                talentsPoints: DEFAULT_TALENTS_POINTS,
+               baseStatistics: StatisticMgt.serializeStatistics(DEFAULT_BASE_STATISTICS),
+               baseStatisticsPoints: DEFAULT_BASE_STATISTICS_POINTS,
                user: {
                   connect: {
                      username,
