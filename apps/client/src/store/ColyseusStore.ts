@@ -195,6 +195,7 @@ export class ColyseusStore {
                talentsPoints,
                baseStatistics,
                baseStatisticsPoints,
+               experience,
             }) => {
                this.setUuid(uuid);
                await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
@@ -223,6 +224,7 @@ export class ColyseusStore {
                   StatisticMgt.deserializeStatistics(baseStatistics),
                );
                this._store.characterStore.setBaseStatisticsPoints(baseStatisticsPoints);
+               this._store.characterStore.setExperience(experience);
 
                this._store.talentsMenuStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.talentsMenuStore.setTalentsPoints(talentsPoints);

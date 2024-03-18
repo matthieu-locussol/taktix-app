@@ -25,7 +25,7 @@ export const Character = observer(() => {
                fontSize="1vw"
                lineHeight="2.5vh"
             >
-               <b>{characterStore.name}</b> - {t('level', { level: 1 /* characterStore.level */ })}
+               <b>{characterStore.name}</b> - {t('level', { level: characterStore.level })}
             </Typography>
             <Typography
                align="right"
@@ -37,8 +37,8 @@ export const Character = observer(() => {
                [{characterStore.position.x}, {characterStore.position.y}] - {t(characterStore.map)}
             </Typography>
          </Informations>
-         <LifeProgressBar variant="determinate" value={35} />
-         <ExperienceProgressBar variant="determinate" value={10} />
+         <LifeProgressBar variant="determinate" value={characterStore.healthPercentage} />
+         <ExperienceProgressBar variant="determinate" value={characterStore.experiencePercentage} />
       </Root>
    );
 });

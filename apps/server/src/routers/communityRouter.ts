@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { CommunitySchema } from 'shared';
+import { CommunitySchema, LevelMgt } from 'shared';
 import { usersMap } from '../rooms/utils/usersMap';
 import { prisma } from '../utils/prisma';
 
@@ -9,7 +9,7 @@ export const communityRouter: RequestHandler = async (_, res) => {
          name: true,
          profession: true,
          map: true,
-         // level: true,
+         experience: true,
       },
       where: {
          name: {
@@ -19,10 +19,10 @@ export const communityRouter: RequestHandler = async (_, res) => {
    });
 
    const payload: CommunitySchema = {
-      players: usersInformations.map(({ name, profession, map }) => ({
+      players: usersInformations.map(({ name, profession, map, experience }) => ({
          avatar: `/assets/professions/face/${profession}.png`,
          player: name,
-         level: 1, // level
+         level: LevelMgt.getLevel(experience),
          profession,
          map,
       })),

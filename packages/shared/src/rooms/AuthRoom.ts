@@ -11,6 +11,7 @@ export interface AuthRoomUserData {
    characters: {
       name: string;
       profession: ProfessionType;
+      experience: number;
    }[];
 }
 
@@ -62,6 +63,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
             talentsPoints: z.number(),
             baseStatistics: z.string(),
             baseStatisticsPoints: z.number(),
+            experience: z.number(),
             profession: zProfessionType,
          }),
       ]),

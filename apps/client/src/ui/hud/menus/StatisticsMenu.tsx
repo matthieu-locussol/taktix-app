@@ -106,29 +106,37 @@ export const StatisticsMenu = observer(() => {
                         lineHeight="2.5vh"
                      >
                         {t(characterStore.profession)} -{' '}
-                        {t('level', { level: 1 /* characterStore.level */ })}
+                        {t('level', { level: characterStore.level })}
                      </Typography>
                      <Tooltip
                         title={
                            <Typography display="flex" alignItems="center">
-                              35 / 110{' '}
-                              <StatisticIcon id="vitality_+f" fontSize="small" sx={{ mx: 0.5 }} />{' '}
-                              (31%)
+                              {characterStore.currentHealth} / {characterStore.maxHealth}
+                              <StatisticIcon id="vitality_+f" fontSize="small" sx={{ mx: 0.5 }} /> (
+                              {characterStore.healthPercentage.toFixed(1)}%)
                            </Typography>
                         }
                         placement="right"
                      >
-                        <LifeProgressBar variant="determinate" value={31} />
+                        <LifeProgressBar
+                           variant="determinate"
+                           value={characterStore.healthPercentage}
+                        />
                      </Tooltip>
                      <Tooltip
                         title={
                            <Typography display="flex" alignItems="center">
-                              984 / 9912 <ExperienceIcon fontSize="small" sx={{ mx: 0.5 }} /> (10%)
+                              {characterStore.experience} / {characterStore.maxExperience}{' '}
+                              <ExperienceIcon fontSize="small" sx={{ mx: 0.5 }} /> (
+                              {characterStore.experiencePercentage.toFixed(1)}%)
                            </Typography>
                         }
                         placement="right"
                      >
-                        <ExperienceProgressBar variant="determinate" value={10} />
+                        <ExperienceProgressBar
+                           variant="determinate"
+                           value={characterStore.experiencePercentage}
+                        />
                      </Tooltip>
                   </Stack>
                </Header>

@@ -1,6 +1,8 @@
 export * from './config';
 export * from './data/channelsInformations';
 export * from './data/githubReleases';
+export * from './data/levels';
+export * from './data/professions';
 export * from './data/rolesInformations';
 export * from './data/talents';
 export * from './data/teleportationSpots';
@@ -29,6 +31,7 @@ export * from './types/TeleportationSpot';
 export * from './utils/_assert';
 export * from './utils/arrayMgt';
 export * from './utils/channelMgt';
+export * from './utils/levelMgt';
 export * from './utils/numberMgt';
 export * from './utils/permissionMgt';
 export * from './utils/statisticMgt';
