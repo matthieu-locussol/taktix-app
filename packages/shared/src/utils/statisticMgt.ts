@@ -6,342 +6,57 @@ export namespace StatisticMgt {
    export const MAX_RESISTANCE_PERCENT = 50;
 
    export const computeRealStatistics = (statistics: Record<Statistic, number>) => {
-      const strength = computeTotalStatistic(
-         statistics['strength_+f'] + statistics['allAttributes_+f'],
-         statistics['strength_+%'] + statistics['allAttributes_+%'],
-         statistics['strength_+x%'] + statistics['allAttributes_+x%'],
-         statistics['strength_-f'] + statistics['allAttributes_-f'],
-         statistics['strength_-%'] + statistics['allAttributes_-%'],
-         statistics['strength_-x%'] + statistics['allAttributes_-x%'],
+      const vitality = computeVitality(statistics);
+      const magicShield = computeMagicShield(statistics);
+      const strength = computeAttribute('strength', statistics);
+      const dexterity = computeAttribute('dexterity', statistics);
+      const intelligence = computeAttribute('intelligence', statistics);
+      const luck = computeAttribute('luck', statistics);
+
+      const initiative = computeInitiative(statistics);
+      const precision = computePrecision(statistics);
+      const evasion = computeEvasion(statistics);
+
+      const lifeSteal = computeLifeSteal(statistics);
+      const areaOfEffect = computeAreaOfEffect(statistics);
+
+      const earthDamages = computeElementalDamages('earthDamages', statistics);
+      const windDamages = computeElementalDamages('windDamages', statistics);
+      const fireDamages = computeElementalDamages('fireDamages', statistics);
+      const iceDamages = computeElementalDamages('iceDamages', statistics);
+
+      const criticalStrikeChance = computeCriticalStrikeChance(statistics);
+      const criticalStrikeChancePercent = computeCriticalStrikeChancePercent(statistics);
+      const criticalStrikeDamages = computeCriticalStrikeDamages(statistics);
+      const criticalStrikeResistance = computeCriticalStrikeResistance(statistics);
+
+      const earthResistance = computeElementalResistance('earthResistance', statistics);
+      const earthResistancePercent = computeElementalResistancePercent(
+         'earthResistance',
+         statistics,
       );
+      const windResistance = computeElementalResistance('windResistance', statistics);
+      const windResistancePercent = computeElementalResistancePercent('windResistance', statistics);
+      const fireResistance = computeElementalResistance('fireResistance', statistics);
+      const fireResistancePercent = computeElementalResistancePercent('fireResistance', statistics);
+      const iceResistance = computeElementalResistance('iceResistance', statistics);
+      const iceResistancePercent = computeElementalResistancePercent('iceResistance', statistics);
 
-      const dexterity = computeTotalStatistic(
-         statistics['dexterity_+f'] + statistics['allAttributes_+f'],
-         statistics['dexterity_+%'] + statistics['allAttributes_+%'],
-         statistics['dexterity_+x%'] + statistics['allAttributes_+x%'],
-         statistics['dexterity_-f'] + statistics['allAttributes_-f'],
-         statistics['dexterity_-%'] + statistics['allAttributes_-%'],
-         statistics['dexterity_-x%'] + statistics['allAttributes_-x%'],
-      );
+      const sword1HDamages = computeWeaponDamages('sword1H', statistics);
+      const axe1HDamages = computeWeaponDamages('axe1H', statistics);
+      const mace1HDamages = computeWeaponDamages('mace1H', statistics);
+      const daggerDamages = computeWeaponDamages('dagger', statistics);
+      const wandDamages = computeWeaponDamages('wand', statistics);
+      const sword2HDamages = computeWeaponDamages('sword2H', statistics);
+      const axe2HDamages = computeWeaponDamages('axe2H', statistics);
+      const mace2HDamages = computeWeaponDamages('mace2H', statistics);
+      const bowDamages = computeWeaponDamages('bow', statistics);
+      const staffDamages = computeWeaponDamages('staff', statistics);
 
-      const intelligence = computeTotalStatistic(
-         statistics['intelligence_+f'] + statistics['allAttributes_+f'],
-         statistics['intelligence_+%'] + statistics['allAttributes_+%'],
-         statistics['intelligence_+x%'] + statistics['allAttributes_+x%'],
-         statistics['intelligence_-f'] + statistics['allAttributes_-f'],
-         statistics['intelligence_-%'] + statistics['allAttributes_-%'],
-         statistics['intelligence_-x%'] + statistics['allAttributes_-x%'],
-      );
+      const thornsPhysical = computeThornsDamages('thornsPhysical', statistics);
+      const thornsMagical = computeThornsDamages('thornsMagical', statistics);
 
-      const luck = computeTotalStatistic(
-         statistics['luck_+f'] + statistics['allAttributes_+f'],
-         statistics['luck_+%'] + statistics['allAttributes_+%'],
-         statistics['luck_+x%'] + statistics['allAttributes_+x%'],
-         statistics['luck_-f'] + statistics['allAttributes_-f'],
-         statistics['luck_-%'] + statistics['allAttributes_-%'],
-         statistics['luck_-x%'] + statistics['allAttributes_-x%'],
-      );
-
-      const vitality =
-         computeTotalStatistic(
-            statistics['vitality_+f'],
-            statistics['vitality_+%'],
-            statistics['vitality_+x%'],
-            statistics['vitality_-f'],
-            statistics['vitality_-%'],
-            statistics['vitality_-x%'],
-         ) + Math.floor(strength / 5);
-
-      const magicShield =
-         computeTotalStatistic(
-            statistics['magicShield_+f'],
-            statistics['magicShield_+%'],
-            statistics['magicShield_+x%'],
-            statistics['magicShield_-f'],
-            statistics['magicShield_-%'],
-            statistics['magicShield_-x%'],
-         ) + Math.floor(intelligence / 5);
-
-      const earthDamages = computeTotalStatistic(
-         statistics['earthDamages_+f'],
-         statistics['earthDamages_+%'],
-         statistics['earthDamages_+x%'],
-         statistics['earthDamages_-f'],
-         statistics['earthDamages_-%'],
-         statistics['earthDamages_-x%'],
-      );
-
-      const windDamage = computeTotalStatistic(
-         statistics['windDamage_+f'],
-         statistics['windDamage_+%'],
-         statistics['windDamage_+x%'],
-         statistics['windDamage_-f'],
-         statistics['windDamage_-%'],
-         statistics['windDamage_-x%'],
-      );
-
-      const fireDamages = computeTotalStatistic(
-         statistics['fireDamages_+f'],
-         statistics['fireDamages_+%'],
-         statistics['fireDamages_+x%'],
-         statistics['fireDamages_-f'],
-         statistics['fireDamages_-%'],
-         statistics['fireDamages_-x%'],
-      );
-
-      const iceDamages = computeTotalStatistic(
-         statistics['iceDamages_+f'],
-         statistics['iceDamages_+%'],
-         statistics['iceDamages_+x%'],
-         statistics['iceDamages_-f'],
-         statistics['iceDamages_-%'],
-         statistics['iceDamages_-x%'],
-      );
-
-      const elementalDamages = computeTotalStatistic(
-         statistics['elementalDamages_+f'],
-         statistics['elementalDamages_+%'],
-         statistics['elementalDamages_+x%'],
-         statistics['elementalDamages_-f'],
-         statistics['elementalDamages_-%'],
-         statistics['elementalDamages_-x%'],
-      );
-
-      const sword1HDamages = computeTotalStatistic(
-         statistics['sword1HDamages_+f'],
-         statistics['sword1HDamages_+%'],
-         statistics['sword1HDamages_+x%'],
-         statistics['sword1HDamages_-f'],
-         statistics['sword1HDamages_-%'],
-         statistics['sword1HDamages_-x%'],
-      );
-
-      const axe1HDamages = computeTotalStatistic(
-         statistics['axe1HDamages_+f'],
-         statistics['axe1HDamages_+%'],
-         statistics['axe1HDamages_+x%'],
-         statistics['axe1HDamages_-f'],
-         statistics['axe1HDamages_-%'],
-         statistics['axe1HDamages_-x%'],
-      );
-
-      const mace1HDamages = computeTotalStatistic(
-         statistics['mace1HDamages_+f'],
-         statistics['mace1HDamages_+%'],
-         statistics['mace1HDamages_+x%'],
-         statistics['mace1HDamages_-f'],
-         statistics['mace1HDamages_-%'],
-         statistics['mace1HDamages_-x%'],
-      );
-
-      const daggerDamages = computeTotalStatistic(
-         statistics['daggerDamages_+f'],
-         statistics['daggerDamages_+%'],
-         statistics['daggerDamages_+x%'],
-         statistics['daggerDamages_-f'],
-         statistics['daggerDamages_-%'],
-         statistics['daggerDamages_-x%'],
-      );
-
-      const wandDamages = computeTotalStatistic(
-         statistics['wandDamages_+f'],
-         statistics['wandDamages_+%'],
-         statistics['wandDamages_+x%'],
-         statistics['wandDamages_-f'],
-         statistics['wandDamages_-%'],
-         statistics['wandDamages_-x%'],
-      );
-
-      const sword2HDamages = computeTotalStatistic(
-         statistics['sword2HDamages_+f'],
-         statistics['sword2HDamages_+%'],
-         statistics['sword2HDamages_+x%'],
-         statistics['sword2HDamages_-f'],
-         statistics['sword2HDamages_-%'],
-         statistics['sword2HDamages_-x%'],
-      );
-
-      const axe2HDamages = computeTotalStatistic(
-         statistics['axe2HDamages_+f'],
-         statistics['axe2HDamages_+%'],
-         statistics['axe2HDamages_+x%'],
-         statistics['axe2HDamages_-f'],
-         statistics['axe2HDamages_-%'],
-         statistics['axe2HDamages_-x%'],
-      );
-
-      const mace2HDamages = computeTotalStatistic(
-         statistics['mace2HDamages_+f'],
-         statistics['mace2HDamages_+%'],
-         statistics['mace2HDamages_+x%'],
-         statistics['mace2HDamages_-f'],
-         statistics['mace2HDamages_-%'],
-         statistics['mace2HDamages_-x%'],
-      );
-
-      const bowDamages = computeTotalStatistic(
-         statistics['bowDamages_+f'],
-         statistics['bowDamages_+%'],
-         statistics['bowDamages_+x%'],
-         statistics['bowDamages_-f'],
-         statistics['bowDamages_-%'],
-         statistics['bowDamages_-x%'],
-      );
-
-      const staffDamages = computeTotalStatistic(
-         statistics['staffDamages_+f'],
-         statistics['staffDamages_+%'],
-         statistics['staffDamages_+x%'],
-         statistics['staffDamages_-f'],
-         statistics['staffDamages_-%'],
-         statistics['staffDamages_-x%'],
-      );
-
-      const earthResistance =
-         statistics['earthResistance_+f'] +
-         statistics['elementalDamages_+f'] -
-         statistics['earthResistance_-f'] -
-         statistics['elementalDamages_-f'];
-      const earthResistancePercent = Math.min(
-         statistics['earthResistance_+%'] +
-            statistics['elementalDamages_+%'] -
-            statistics['earthResistance_-%'] -
-            statistics['elementalDamages_-%'],
-         MAX_RESISTANCE_PERCENT,
-      );
-
-      const windResistance =
-         statistics['windResistance_+f'] +
-         statistics['elementalDamages_+f'] -
-         statistics['windResistance_-f'] -
-         statistics['elementalDamages_-f'];
-      const windResistancePercent = Math.min(
-         statistics['windResistance_+%'] +
-            statistics['elementalDamages_+%'] -
-            statistics['windResistance_-%'] -
-            statistics['elementalDamages_-%'],
-         MAX_RESISTANCE_PERCENT,
-      );
-
-      const fireResistance =
-         statistics['fireResistance_+f'] +
-         statistics['elementalDamages_+f'] -
-         statistics['fireResistance_-f'] -
-         statistics['elementalDamages_-f'];
-      const fireResistancePercent = Math.min(
-         statistics['fireResistance_+%'] +
-            statistics['elementalDamages_+%'] -
-            statistics['fireResistance_-%'] -
-            statistics['elementalDamages_-%'],
-         MAX_RESISTANCE_PERCENT,
-      );
-
-      const iceResistance =
-         statistics['iceResistance_+f'] +
-         statistics['elementalDamages_+f'] -
-         statistics['iceResistance_-f'] -
-         statistics['elementalDamages_-f'];
-      const iceResistancePercent = Math.min(
-         statistics['iceResistance_+%'] +
-            statistics['elementalDamages_+%'] -
-            statistics['iceResistance_-%'] -
-            statistics['elementalDamages_-%'],
-         MAX_RESISTANCE_PERCENT,
-      );
-
-      const lifeSteal = computeTotalStatistic(
-         statistics['lifeSteal_+f'],
-         statistics['lifeSteal_+%'],
-         0,
-         statistics['lifeSteal_-f'],
-         statistics['lifeSteal_-%'],
-         0,
-      );
-
-      const precision = computeTotalStatistic(
-         statistics['precision_+f'],
-         statistics['precision_+%'],
-         0,
-         statistics['precision_-f'],
-         statistics['precision_-%'],
-         0,
-      );
-
-      const evasion =
-         computeTotalStatistic(
-            statistics['evasion_+f'],
-            statistics['evasion_+%'],
-            0,
-            statistics['evasion_-f'],
-            statistics['evasion_-%'],
-            0,
-         ) + Math.floor(dexterity / 5);
-
-      const prospect =
-         computeTotalStatistic(statistics['prospect_+f'], 0, 0, statistics['prospect_-f'], 0, 0) +
-         Math.floor(luck / 5);
-
-      const initiative =
-         BASE_INITIATIVE +
-         computeTotalStatistic(
-            statistics['initiative_+f'],
-            0,
-            0,
-            statistics['initiative_-f'],
-            0,
-            0,
-         ) +
-         Math.floor((strength + dexterity + intelligence) * 0.5);
-
-      const thornsPhysical = computeTotalStatistic(
-         0,
-         statistics['thornsPhysical_+%'],
-         0,
-         0,
-         statistics['thornsPhysical_-%'],
-         0,
-      );
-
-      const thornsMagical = computeTotalStatistic(
-         0,
-         statistics['thornsMagical_+%'],
-         0,
-         0,
-         statistics['thornsMagical_-%'],
-         0,
-      );
-
-      const areaOfEffect = computeTotalStatistic(
-         0,
-         statistics['areaOfEffect_+%'],
-         0,
-         0,
-         statistics['areaOfEffect_-%'],
-         0,
-      );
-
-      const criticalStrikeResistance = computeTotalStatistic(
-         statistics['criticalStrikeResistance_+f'],
-         statistics['criticalStrikeResistance_+%'],
-         0,
-         statistics['criticalStrikeResistance_-f'],
-         statistics['criticalStrikeResistance_-%'],
-         0,
-      );
-
-      const criticalStrikeChance =
-         statistics['criticalStrikeChance_+f'] - statistics['criticalStrikeChance_-f'];
-      const criticalStrikeChancePercent =
-         statistics['criticalStrikeChance_+%'] - statistics['criticalStrikeChance_-%'];
-
-      const criticalStrikeDamages = computeTotalStatistic(
-         0,
-         statistics['criticalStrikeDamages_+%'],
-         0,
-         0,
-         statistics['criticalStrikeDamages_-%'],
-         0,
-      );
+      const prospect = computeProspect(statistics);
 
       return {
          vitality,
@@ -351,10 +66,9 @@ export namespace StatisticMgt {
          intelligence,
          luck,
          earthDamages,
-         windDamage,
+         windDamages,
          fireDamages,
          iceDamages,
-         elementalDamages,
          sword1HDamages,
          axe1HDamages,
          mace1HDamages,
@@ -386,6 +100,224 @@ export namespace StatisticMgt {
          criticalStrikeChancePercent,
          criticalStrikeDamages,
       };
+   };
+
+   export const computeAttribute = (
+      attribute: 'strength' | 'dexterity' | 'intelligence' | 'luck',
+      statistics: Record<Statistic, number>,
+   ) =>
+      computeTotalStatistic(
+         statistics[`${attribute}_+f`] + statistics['allAttributes_+f'],
+         statistics[`${attribute}_+%`] + statistics['allAttributes_+%'],
+         statistics[`${attribute}_+x%`] + statistics['allAttributes_+x%'],
+         statistics[`${attribute}_-f`] + statistics['allAttributes_-f'],
+         statistics[`${attribute}_-%`] + statistics['allAttributes_-%'],
+         statistics[`${attribute}_-x%`] + statistics['allAttributes_-x%'],
+      );
+
+   export const computeVitality = (statistics: Record<Statistic, number>): number =>
+      computeTotalStatistic(
+         statistics['vitality_+f'],
+         statistics['vitality_+%'],
+         statistics['vitality_+x%'],
+         statistics['vitality_-f'],
+         statistics['vitality_-%'],
+         statistics['vitality_-x%'],
+      ) + Math.floor(computeAttribute('strength', statistics) / 5);
+
+   export const computeMagicShield = (statistics: Record<Statistic, number>): number =>
+      computeTotalStatistic(
+         statistics['magicShield_+f'],
+         statistics['magicShield_+%'],
+         statistics['magicShield_+x%'],
+         statistics['magicShield_-f'],
+         statistics['magicShield_-%'],
+         statistics['magicShield_-x%'],
+      ) + Math.floor(computeAttribute('intelligence', statistics) / 5);
+
+   export const computeElementalDamages = (
+      elementalDamages: 'earthDamages' | 'windDamages' | 'fireDamages' | 'iceDamages',
+      statistics: Record<Statistic, number>,
+   ) =>
+      computeTotalStatistic(
+         statistics[`${elementalDamages}_+f`] + statistics['elementalDamages_+f'],
+         statistics[`${elementalDamages}_+%`] + statistics['elementalDamages_+%'],
+         statistics[`${elementalDamages}_+x%`] + statistics['elementalDamages_+x%'],
+         statistics[`${elementalDamages}_-f`] + statistics['elementalDamages_-f'],
+         statistics[`${elementalDamages}_-%`] + statistics['elementalDamages_-%'],
+         statistics[`${elementalDamages}_-x%`] + statistics['elementalDamages_-x%'],
+      );
+
+   export const computeWeaponDamages = (
+      weapon:
+         | 'sword1H'
+         | 'axe1H'
+         | 'mace1H'
+         | 'dagger'
+         | 'wand'
+         | 'sword2H'
+         | 'axe2H'
+         | 'mace2H'
+         | 'bow'
+         | 'staff',
+      statistics: Record<Statistic, number>,
+   ) =>
+      computeTotalStatistic(
+         statistics[`${weapon}Damages_+f`],
+         statistics[`${weapon}Damages_+%`],
+         statistics[`${weapon}Damages_+x%`],
+         statistics[`${weapon}Damages_-f`],
+         statistics[`${weapon}Damages_-%`],
+         statistics[`${weapon}Damages_-x%`],
+      );
+
+   export const computeElementalResistance = (
+      elementalResistance:
+         | 'earthResistance'
+         | 'windResistance'
+         | 'fireResistance'
+         | 'iceResistance',
+      statistics: Record<Statistic, number>,
+   ) => {
+      const resistance =
+         statistics[`${elementalResistance}_+f`] +
+         statistics['elementalResistances_+f'] -
+         statistics[`${elementalResistance}_-f`] -
+         statistics['elementalResistances_-f'];
+
+      return resistance;
+   };
+
+   export const computeElementalResistancePercent = (
+      elementalResistance:
+         | 'earthResistance'
+         | 'windResistance'
+         | 'fireResistance'
+         | 'iceResistance',
+      statistics: Record<Statistic, number>,
+   ) => {
+      const resistancePercent = Math.min(
+         statistics[`${elementalResistance}_+%`] +
+            statistics['elementalResistances_+%'] -
+            statistics[`${elementalResistance}_-%`] -
+            statistics['elementalResistances_-%'],
+         MAX_RESISTANCE_PERCENT,
+      );
+
+      return resistancePercent;
+   };
+
+   export const computeLifeSteal = (statistics: Record<Statistic, number>) => {
+      const lifeSteal = computeTotalStatistic(
+         statistics['lifeSteal_+f'],
+         statistics['lifeSteal_+%'],
+         0,
+         statistics['lifeSteal_-f'],
+         statistics['lifeSteal_-%'],
+         0,
+      );
+
+      return lifeSteal;
+   };
+
+   export const computePrecision = (statistics: Record<Statistic, number>) => {
+      const precision = computeTotalStatistic(
+         statistics['precision_+f'],
+         statistics['precision_+%'],
+         0,
+         statistics['precision_-f'],
+         statistics['precision_-%'],
+         0,
+      );
+
+      return precision;
+   };
+
+   export const computeEvasion = (statistics: Record<Statistic, number>) => {
+      const evasion =
+         computeTotalStatistic(
+            statistics['evasion_+f'],
+            statistics['evasion_+%'],
+            0,
+            statistics['evasion_-f'],
+            statistics['evasion_-%'],
+            0,
+         ) + Math.floor(computeAttribute('dexterity', statistics) / 5);
+
+      return evasion;
+   };
+
+   export const computeProspect = (statistics: Record<Statistic, number>) => {
+      const prospect =
+         computeTotalStatistic(statistics['prospect_+f'], 0, 0, statistics['prospect_-f'], 0, 0) +
+         Math.floor(computeAttribute('luck', statistics) / 5);
+
+      return prospect;
+   };
+
+   export const computeInitiative = (statistics: Record<Statistic, number>) => {
+      const initiative =
+         BASE_INITIATIVE +
+         computeTotalStatistic(
+            statistics['initiative_+f'],
+            0,
+            0,
+            statistics['initiative_-f'],
+            0,
+            0,
+         ) +
+         Math.floor(
+            (computeAttribute('strength', statistics) +
+               computeAttribute('dexterity', statistics) +
+               computeAttribute('intelligence', statistics)) *
+               0.5,
+         );
+
+      return initiative;
+   };
+
+   export const computeThornsDamages = (
+      damages: 'thornsPhysical' | 'thornsMagical',
+      statistics: Record<Statistic, number>,
+   ) => {
+      const thornsDamages = statistics[`${damages}_+%`] - statistics[`${damages}_-%`];
+      return thornsDamages;
+   };
+
+   export const computeAreaOfEffect = (statistics: Record<Statistic, number>) => {
+      const areaOfEffect = statistics['areaOfEffect_+%'] - statistics['areaOfEffect_-%'];
+      return areaOfEffect;
+   };
+
+   export const computeCriticalStrikeResistance = (statistics: Record<Statistic, number>) => {
+      const criticalStrikeResistance = computeTotalStatistic(
+         statistics['criticalStrikeResistance_+f'],
+         statistics['criticalStrikeResistance_+%'],
+         0,
+         statistics['criticalStrikeResistance_-f'],
+         statistics['criticalStrikeResistance_-%'],
+         0,
+      );
+
+      return criticalStrikeResistance;
+   };
+
+   export const computeCriticalStrikeChance = (statistics: Record<Statistic, number>) => {
+      const criticalStrikeChance =
+         statistics['criticalStrikeChance_+f'] - statistics['criticalStrikeChance_-f'];
+      return criticalStrikeChance;
+   };
+
+   export const computeCriticalStrikeChancePercent = (statistics: Record<Statistic, number>) => {
+      const criticalStrikeChancePercent =
+         statistics['criticalStrikeChance_+%'] - statistics['criticalStrikeChance_-%'];
+      return criticalStrikeChancePercent;
+   };
+
+   export const computeCriticalStrikeDamages = (statistics: Record<Statistic, number>) => {
+      const criticalStrikeDamages =
+         statistics['criticalStrikeDamages_+%'] - statistics['criticalStrikeDamages_-%'];
+      return criticalStrikeDamages;
    };
 
    export const computeHitChance = (attackerPrecision: number, defenderEvasion: number): number => {
@@ -610,12 +542,12 @@ export namespace StatisticMgt {
       'earthDamages_-f': 0,
       'earthDamages_-%': 0,
       'earthDamages_-x%': 0,
-      'windDamage_+f': 0,
-      'windDamage_+%': 0,
-      'windDamage_+x%': 0,
-      'windDamage_-f': 0,
-      'windDamage_-%': 0,
-      'windDamage_-x%': 0,
+      'windDamages_+f': 0,
+      'windDamages_+%': 0,
+      'windDamages_+x%': 0,
+      'windDamages_-f': 0,
+      'windDamages_-%': 0,
+      'windDamages_-x%': 0,
       'fireDamages_+f': 0,
       'fireDamages_+%': 0,
       'fireDamages_+x%': 0,
@@ -765,7 +697,6 @@ export namespace StatisticMgt {
       earthDamages: 0,
       earthResistance: 0,
       earthResistancePercent: 0,
-      elementalDamages: 0,
       evasion: 0,
       fireDamages: 0,
       fireResistance: 0,
@@ -790,7 +721,7 @@ export namespace StatisticMgt {
       thornsPhysical: 0,
       vitality: 0,
       wandDamages: 0,
-      windDamage: 0,
+      windDamages: 0,
       windResistance: 0,
       windResistancePercent: 0,
       ...partial,

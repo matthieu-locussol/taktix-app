@@ -867,6 +867,711 @@ describe('StatisticMgt', () => {
       });
    });
 
+   describe('computeAttribute', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            attribute: 'strength',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            attribute: 'strength',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'vitality_+f': 100,
+               'magicShield_+f': 200,
+               'strength_+f': 89,
+            }),
+            expected: 89,
+         },
+         {
+            title: 'Increased base statistics',
+            attribute: 'strength',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'strength_+f': 89,
+               'strength_+%': 25,
+               'strength_+x%': 35,
+            }),
+            expected: 150,
+         },
+         {
+            title: 'Increased base statistics with all attributes',
+            attribute: 'strength',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'strength_+f': 89,
+               'strength_+%': 25,
+               'strength_+x%': 35,
+               'allAttributes_+f': 100,
+               'allAttributes_+%': 17,
+               'allAttributes_+x%': 21,
+            }),
+            expected: 418,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeAttribute(sample.attribute, sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeVitality', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'vitality_+f': 100,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Increased base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'vitality_+f': 100,
+               'vitality_+%': 25,
+               'vitality_+x%': 35,
+            }),
+            expected: 168,
+         },
+         {
+            title: 'Increased base statistics with strength',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'vitality_+f': 100,
+               'vitality_+%': 25,
+               'vitality_+x%': 35,
+               'strength_+f': 100,
+               'strength_+%': 17,
+               'strength_+x%': 21,
+            }),
+            expected: 196,
+         },
+         {
+            title: 'Increased base statistics with strength and all attributes',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'vitality_+f': 100,
+               'vitality_+%': 25,
+               'vitality_+x%': 35,
+               'strength_+f': 100,
+               'strength_+%': 17,
+               'strength_+x%': 21,
+               'allAttributes_+f': 121,
+               'allAttributes_+%': 8,
+               'allAttributes_+x%': 32,
+            }),
+            expected: 252,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeVitality(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeMagicShield', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'magicShield_+f': 100,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Increased base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'magicShield_+f': 100,
+               'magicShield_+%': 25,
+               'magicShield_+x%': 35,
+            }),
+            expected: 168,
+         },
+         {
+            title: 'Increased base statistics with intelligence',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'magicShield_+f': 100,
+               'magicShield_+%': 25,
+               'magicShield_+x%': 35,
+               'intelligence_+f': 100,
+               'intelligence_+%': 17,
+               'intelligence_+x%': 21,
+            }),
+            expected: 196,
+         },
+         {
+            title: 'Increased base statistics with intelligence and all attributes',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'magicShield_+f': 100,
+               'magicShield_+%': 25,
+               'magicShield_+x%': 35,
+               'intelligence_+f': 100,
+               'intelligence_+%': 17,
+               'intelligence_+x%': 21,
+               'allAttributes_+f': 121,
+               'allAttributes_+%': 8,
+               'allAttributes_+x%': 32,
+            }),
+            expected: 252,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeMagicShield(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeElementalDamages', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            element: 'fireDamages',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            element: 'fireDamages',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireDamages_+f': 100,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Increased base statistics',
+            element: 'fireDamages',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireDamages_+f': 100,
+               'fireDamages_+%': 25,
+               'fireDamages_+x%': 35,
+            }),
+            expected: 168,
+         },
+         {
+            title: 'Increased base statistics with increased elemental damages',
+            element: 'fireDamages',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireDamages_+f': 100,
+               'fireDamages_+%': 25,
+               'fireDamages_+x%': 35,
+               'elementalDamages_+f': 10,
+               'elementalDamages_+%': 25,
+               'elementalDamages_+x%': 15,
+            }),
+            expected: 247,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeElementalDamages(sample.element, sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeWeaponDamages', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            weapon: 'sword1H',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            weapon: 'sword1H',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'sword1HDamages_+f': 100,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Increased base statistics',
+            weapon: 'sword1H',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'sword1HDamages_+f': 100,
+               'sword1HDamages_+%': 25,
+            }),
+            expected: 125,
+         },
+         {
+            title: 'Increased base statistics with more damages',
+            weapon: 'sword1H',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'sword1HDamages_+f': 100,
+               'sword1HDamages_+%': 25,
+               'sword1HDamages_+x%': 35,
+            }),
+            expected: 168,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeWeaponDamages(sample.weapon, sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeElementalResistance', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            element: 'fireResistance',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            element: 'fireResistance',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireResistance_+f': 100,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Increased base statistics',
+            element: 'fireResistance',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireResistance_+f': 100,
+               'fireResistance_+%': 25,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Increased base statistics with elemental resistances',
+            element: 'fireResistance',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireResistance_+f': 100,
+               'fireResistance_+%': 25,
+               'elementalResistances_+f': 10,
+               'elementalResistances_+%': 25,
+            }),
+            expected: 110,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeElementalResistance(sample.element, sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeElementalResistancePercent', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            element: 'fireResistance',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            element: 'fireResistance',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireResistance_+%': 10,
+            }),
+            expected: 10,
+         },
+         {
+            title: 'Increased base statistics',
+            element: 'fireResistance',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireResistance_+%': 10,
+               'fireResistance_+f': 25,
+            }),
+            expected: 10,
+         },
+         {
+            title: 'Increased base statistics with elemental resistances',
+            element: 'fireResistance',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireResistance_+%': 10,
+               'fireResistance_+f': 25,
+               'elementalResistances_+%': 19,
+               'elementalResistances_+f': 25,
+            }),
+            expected: 29,
+         },
+         {
+            title: 'Increased base statistics with elemental resistances should be capped',
+            element: 'fireResistance',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'fireResistance_+%': 30,
+               'elementalResistances_+%': 29,
+            }),
+            expected: 50,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeElementalResistancePercent(
+            sample.element,
+            sample.statistics,
+         );
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeLifeSteal', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'lifeSteal_+f': 100,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Increased base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'lifeSteal_+f': 100,
+               'lifeSteal_+%': 25,
+            }),
+            expected: 125,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeLifeSteal(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computePrecision', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'precision_+f': 100,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Increased base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'precision_+f': 100,
+               'precision_+%': 25,
+            }),
+            expected: 125,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computePrecision(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeEvasion', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'evasion_+f': 100,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Increased base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'evasion_+f': 100,
+               'evasion_+%': 25,
+            }),
+            expected: 125,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeEvasion(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeProspect', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'prospect_+f': 100,
+            }),
+            expected: 100,
+         },
+         {
+            title: 'Base statistics with luck',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'prospect_+f': 100,
+               'luck_+f': 80,
+               'luck_+%': 35,
+               'luck_+x%': 10,
+            }),
+            expected: 123,
+         },
+         {
+            title: 'Base statistics with luck and all attributes',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'prospect_+f': 100,
+               'luck_+f': 80,
+               'luck_+%': 35,
+               'luck_+x%': 10,
+               'allAttributes_+f': 100,
+               'allAttributes_+%': 17,
+               'allAttributes_+x%': 21,
+            }),
+            expected: 171,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeProspect(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeInitiative', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 100,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'initiative_+f': 100,
+            }),
+            expected: 200,
+         },
+         {
+            title: 'Base statistics with some attributes',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'initiative_+f': 100,
+               'intelligence_+f': 80,
+               'strength_+f': 80,
+               'strength_+%': 35,
+               'strength_+x%': 10,
+            }),
+            expected: 299,
+         },
+         {
+            title: 'Base statistics with some attributes and all attributes',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'initiative_+f': 100,
+               'intelligence_+f': 80,
+               'dexterity_+f': 80,
+               'dexterity_+%': 35,
+               'dexterity_+x%': 10,
+               'allAttributes_+f': 100,
+               'allAttributes_+%': 17,
+               'allAttributes_+x%': 21,
+            }),
+            expected: 576,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeInitiative(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeThornsDamages', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            type: 'thornsPhysical',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Increased base statistics',
+            type: 'thornsPhysical',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'thornsPhysical_+%': 0.02,
+            }),
+            expected: 0.02,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeThornsDamages(sample.type, sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeAreaOfEffect', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Increased base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'areaOfEffect_+%': 25,
+               'areaOfEffect_-%': 10,
+            }),
+            expected: 15,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeAreaOfEffect(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeCriticalStrikeResistance', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'criticalStrikeResistance_+f': 35,
+               'criticalStrikeResistance_-f': 20,
+            }),
+            expected: 15,
+         },
+         {
+            title: 'Increased base statistics with flat resistance',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'criticalStrikeResistance_+f': 15,
+               'criticalStrikeResistance_+%': 25,
+               'criticalStrikeResistance_-%': 10,
+            }),
+            expected: 17,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeCriticalStrikeResistance(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeCriticalStrikeChance', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'criticalStrikeChance_+f': 35,
+               'criticalStrikeChance_-f': 20,
+            }),
+            expected: 15,
+         },
+         {
+            title: 'Base statistics with increased modifiers',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'criticalStrikeChance_+f': 35,
+               'criticalStrikeChance_-f': 20,
+               'criticalStrikeChance_+%': 10,
+               'criticalStrikeChance_-%': 5,
+            }),
+            expected: 15,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeCriticalStrikeChance(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeCriticalStrikeChancePercent', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'criticalStrikeChance_+%': 35,
+               'criticalStrikeChance_-%': 20,
+            }),
+            expected: 15,
+         },
+         {
+            title: 'Base statistics with increased modifiers',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'criticalStrikeChance_+%': 35,
+               'criticalStrikeChance_-%': 20,
+               'criticalStrikeChance_+f': 10,
+               'criticalStrikeChance_-f': 5,
+            }),
+            expected: 15,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeCriticalStrikeChancePercent(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeCriticalStrikeDamages', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'criticalStrikeDamages_+%': 35,
+               'criticalStrikeDamages_-%': 20,
+            }),
+            expected: 15,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeCriticalStrikeDamages(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
    describe('mergeStatistics', () => {
       const samples = [
          {

@@ -1,6 +1,6 @@
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { describe, expect, it, vi } from 'vitest';
-import { StatisticsStore } from './StatisticsStore';
+import { StatisticsMenuStore } from './StatisticsMenuStore';
 import { Store } from './Store';
 
 vi.mock('./Store', () => {
@@ -30,9 +30,9 @@ vi.mock('./Store', () => {
    return { Store: MockedStore };
 });
 
-describe('StatisticsStore', () => {
+describe('StatisticsMenuStore', () => {
    it('should be initialized', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       expect(store).toBeDefined();
       expect(store.isOpened).toBe(false);
@@ -46,14 +46,14 @@ describe('StatisticsStore', () => {
    });
 
    it('should open', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       store.open();
       expect(store.isOpened).toBe(true);
    });
 
    it('should close', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       store.open();
       store.close();
@@ -69,7 +69,7 @@ describe('StatisticsStore', () => {
    });
 
    it('should toggle', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       store.toggle();
       expect(store.isOpened).toBe(true);
@@ -79,7 +79,7 @@ describe('StatisticsStore', () => {
    });
 
    it('should increase a stat', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       store.increase('vitality');
       expect(store.vitality).toBe(0);
@@ -92,7 +92,7 @@ describe('StatisticsStore', () => {
    });
 
    it('should decrease a stat', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       store.decrease('vitality');
       expect(store.vitality).toBe(0);
@@ -114,14 +114,14 @@ describe('StatisticsStore', () => {
    });
 
    it('should set statistics points', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       store.setStatisticsPoints(5);
       expect(store.statisticsPoints).toBe(5);
    });
 
    it('should set statistics', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       store.setStatistics(
          StatisticMgt.makeMockedStatistics({
@@ -142,29 +142,8 @@ describe('StatisticsStore', () => {
       expect(store.luck).toBe(6);
    });
 
-   it('should save', () => {
-      const store = new StatisticsStore(new Store());
-
-      store.open();
-      store.setStatisticsPoints(5);
-      store.setStatistics(
-         StatisticMgt.makeMockedStatistics({
-            'vitality_+f': 1,
-            'magicShield_+f': 2,
-            'strength_+f': 3,
-            'dexterity_+f': 4,
-            'intelligence_+f': 5,
-            'luck_+f': 6,
-         }),
-      );
-
-      store.save();
-
-      expect(store.isOpened).toBe(false);
-   });
-
    it('should compute canIncrease', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       store.setStatisticsPoints(0);
       expect(store.canIncrease).toBe(false);
@@ -174,7 +153,7 @@ describe('StatisticsStore', () => {
    });
 
    it('should compute canDecrease', () => {
-      const store = new StatisticsStore(new Store());
+      const store = new StatisticsMenuStore(new Store());
 
       store.setStatisticsPoints(0);
       expect(store.canDecrease.vitality).toBe(false);
@@ -187,5 +166,33 @@ describe('StatisticsStore', () => {
 
       store.decrease('vitality');
       expect(store.canDecrease.vitality).toBe(false);
+   });
+
+   it('should compute canSave', () => {
+      const store = new StatisticsMenuStore(new Store());
+
+      expect(store.canSave).toBe(true);
+
+      store.setStatistics(
+         StatisticMgt.makeMockedStatistics({
+            'vitality_+f': 1,
+            'magicShield_+f': 2,
+            'strength_+f': 3,
+            'dexterity_+f': 4,
+            'intelligence_+f': 5,
+            'luck_+f': 6,
+         }),
+      );
+      store.setStatisticsPoints(7);
+   });
+
+   it('should toggle advanced', () => {
+      const store = new StatisticsMenuStore(new Store());
+
+      store.toggleAdvanced();
+      expect(store.showAdvanced).toBe(true);
+
+      store.toggleAdvanced();
+      expect(store.showAdvanced).toBe(false);
    });
 });

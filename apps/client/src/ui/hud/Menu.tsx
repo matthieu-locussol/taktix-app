@@ -19,16 +19,21 @@ import { useStore } from '../../store';
 import { ShortcutIcon } from './components/ShortcutIcon';
 
 export const Menu = observer(() => {
-   const { communityMenuStore, hudStore, settingsMenuStore, statisticsStore, talentsMenuStore } =
-      useStore();
+   const {
+      communityMenuStore,
+      hudStore,
+      settingsMenuStore,
+      statisticsMenuStore,
+      talentsMenuStore,
+   } = useStore();
 
    return (
       <Root widthPercent={hudStore.menuWidth} heightPercent={hudStore.menuHeight}>
          {/* Top line */}
          <ShortcutIcon
-            active={statisticsStore.isOpened}
+            active={statisticsMenuStore.isOpened}
             icon={<StatsIcon />}
-            onClick={() => statisticsStore.toggle()}
+            onClick={() => statisticsMenuStore.toggle()}
          />
          <ShortcutIcon
             active={talentsMenuStore.isOpened}

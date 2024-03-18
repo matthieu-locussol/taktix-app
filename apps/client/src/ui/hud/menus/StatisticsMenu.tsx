@@ -1,105 +1,44 @@
 import ExperienceIcon from '@mui/icons-material/ArrowCircleUpRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOffRounded';
+import VisibilityIcon from '@mui/icons-material/VisibilityRounded';
 import { darken, linearProgressClasses, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Collapse from '@mui/material/Collapse';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent, { dialogContentClasses } from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import LinearProgress from '@mui/material/LinearProgress';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
-import { useMemo } from 'react';
+import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 import { StatisticIcon } from '../../components/StatisticIcon';
-import { Statistic, StatisticProps } from '../components/Statistic';
+import { Statistic } from '../components/Statistic';
 import { Tooltip } from '../components/Tooltip';
 
 export const StatisticsMenu = observer(() => {
-   const { characterStore, statisticsStore } = useStore();
+   const nodeRef = useRef(null);
+   const { characterStore, statisticsMenuStore } = useStore();
    const { t } = useTranslation();
 
-   const statistics = useMemo(
-      (): StatisticProps[] => [
-         {
-            icon: <StatisticIcon id="vitality_+f" sx={{ mr: 2 }} />,
-            value: statisticsStore.vitality,
-            label: 'vitality',
-            onIncrease: () => statisticsStore.increase('vitality'),
-            onDecrease: () => statisticsStore.decrease('vitality'),
-            canIncrease: statisticsStore.canIncrease,
-            canDecrease: statisticsStore.canDecrease.vitality,
-         },
-         {
-            icon: <StatisticIcon id="magicShield_+f" sx={{ mr: 2 }} />,
-            value: statisticsStore.magicShield,
-            label: 'magicShield',
-            onIncrease: () => statisticsStore.increase('magicShield'),
-            onDecrease: () => statisticsStore.decrease('magicShield'),
-            canIncrease: statisticsStore.canIncrease,
-            canDecrease: statisticsStore.canDecrease.magicShield,
-         },
-         {
-            icon: <StatisticIcon id="strength_+f" sx={{ mr: 2 }} />,
-            value: statisticsStore.strength,
-            label: 'strength',
-            onIncrease: () => statisticsStore.increase('strength'),
-            onDecrease: () => statisticsStore.decrease('strength'),
-            canIncrease: statisticsStore.canIncrease,
-            canDecrease: statisticsStore.canDecrease.strength,
-         },
-         {
-            icon: <StatisticIcon id="dexterity_+f" sx={{ mr: 2 }} />,
-            value: statisticsStore.dexterity,
-            label: 'dexterity',
-            onIncrease: () => statisticsStore.increase('dexterity'),
-            onDecrease: () => statisticsStore.decrease('dexterity'),
-            canIncrease: statisticsStore.canIncrease,
-            canDecrease: statisticsStore.canDecrease.dexterity,
-         },
-         {
-            icon: <StatisticIcon id="intelligence_+f" sx={{ mr: 2 }} />,
-            value: statisticsStore.intelligence,
-            label: 'intelligence',
-            onIncrease: () => statisticsStore.increase('intelligence'),
-            onDecrease: () => statisticsStore.decrease('intelligence'),
-            canIncrease: statisticsStore.canIncrease,
-            canDecrease: statisticsStore.canDecrease.intelligence,
-         },
-         {
-            icon: <StatisticIcon id="luck_+f" sx={{ mr: 2 }} />,
-            value: statisticsStore.luck,
-            label: 'luck',
-            onIncrease: () => statisticsStore.increase('luck'),
-            onDecrease: () => statisticsStore.decrease('luck'),
-            canIncrease: statisticsStore.canIncrease,
-            canDecrease: statisticsStore.canDecrease.luck,
-         },
-      ],
-      [
-         statisticsStore.vitality,
-         statisticsStore.magicShield,
-         statisticsStore.strength,
-         statisticsStore.dexterity,
-         statisticsStore.intelligence,
-         statisticsStore.luck,
-      ],
-   );
-
    return (
-      <Draggable handle=".statistics-menu-handle">
+      <Draggable handle=".statistics-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
+            ref={nodeRef}
             fullScreen
             hideBackdrop
             disableEnforceFocus
-            onClose={() => statisticsStore.close()}
-            open={statisticsStore.isOpened}
+            onClose={() => statisticsMenuStore.close()}
+            open={statisticsMenuStore.isOpened}
             PaperProps={{
                sx: (theme) => ({
                   borderRadius: theme.spacing(0.5),
@@ -109,10 +48,30 @@ export const StatisticsMenu = observer(() => {
          >
             <StyledDialogTitle className="statistics-menu-handle">
                {t('statistics')}
+               <Button
+                  variant="contained"
+                  size="small"
+                  onClick={() => statisticsMenuStore.toggleAdvanced()}
+               >
+                  <Typography
+                     fontWeight="bold"
+                     variant="overline"
+                     lineHeight={1.5}
+                     display="flex"
+                     alignItems="center"
+                  >
+                     {t('advanced')}
+                     {statisticsMenuStore.showAdvanced ? (
+                        <VisibilityOffIcon fontSize="small" sx={{ ml: 1 }} />
+                     ) : (
+                        <VisibilityIcon fontSize="small" sx={{ ml: 1 }} />
+                     )}
+                  </Typography>
+               </Button>
             </StyledDialogTitle>
             <IconButton
                aria-label="close"
-               onClick={() => statisticsStore.close()}
+               onClick={() => statisticsMenuStore.close()}
                sx={{
                   position: 'absolute',
                   right: 8,
@@ -173,34 +132,61 @@ export const StatisticsMenu = observer(() => {
                      </Tooltip>
                   </Stack>
                </Header>
-               {statistics.map((statistic) => (
-                  <Statistic
-                     key={statistic.label}
-                     icon={statistic.icon}
-                     value={statistic.value}
-                     label={statistic.label}
-                     onIncrease={statistic.onIncrease}
-                     onDecrease={statistic.onDecrease}
-                     canIncrease={statistic.canIncrease}
-                     canDecrease={statistic.canDecrease}
+               {statisticsMenuStore.statistics
+                  .filter(({ advanced }) => !advanced)
+                  .map((statistic) => (
+                     <Statistic
+                        key={statistic.label}
+                        icon={<StatisticIcon id={statistic.icon} sx={{ mr: 2 }} />}
+                        value={statistic.value}
+                        label={statistic.label}
+                        onIncrease={statistic.onIncrease}
+                        onDecrease={statistic.onDecrease}
+                        canIncrease={statistic.canIncrease}
+                        canDecrease={statistic.canDecrease}
+                        size={statistic.advanced ? 'small' : 'medium'}
+                     />
+                  ))}
+               <Collapse in={statisticsMenuStore.showAdvanced}>
+                  <Divider
+                     sx={(theme) => ({ border: `1px solid ${theme.palette.paper.border}` })}
                   />
-               ))}
+                  {statisticsMenuStore.statistics
+                     .filter(({ advanced }) => advanced)
+                     .map((statistic) => (
+                        <Statistic
+                           key={statistic.label}
+                           icon={<StatisticIcon id={statistic.icon} sx={{ mr: 2 }} />}
+                           value={statistic.value}
+                           label={statistic.label}
+                           onIncrease={statistic.onIncrease}
+                           onDecrease={statistic.onDecrease}
+                           canIncrease={statistic.canIncrease}
+                           canDecrease={statistic.canDecrease}
+                           size={statistic.advanced ? 'small' : 'medium'}
+                        />
+                     ))}
+               </Collapse>
             </StyledDialogContent>
             <DialogActions>
                <Typography align="center" sx={{ mr: 'auto' }}>
                   <Trans
                      i18nKey="statisticPointsAvailable"
-                     values={{ count: statisticsStore.statisticsPoints }}
+                     values={{ count: statisticsMenuStore.statisticsPoints }}
                      components={{ b: <b /> }}
                   />
                </Typography>
-               <Button color="chalk" onClick={() => statisticsStore.close()} sx={{ ml: 'auto' }}>
+               <Button
+                  color="chalk"
+                  onClick={() => statisticsMenuStore.close()}
+                  sx={{ ml: 'auto' }}
+               >
                   {t('cancel')}
                </Button>
                <Button
-                  disabled={!statisticsStore.canSave}
+                  disabled={!statisticsMenuStore.canSave}
                   variant="contained"
-                  onClick={() => statisticsStore.save()}
+                  onClick={() => statisticsMenuStore.save()}
                >
                   {t('apply')}
                </Button>
@@ -213,8 +199,8 @@ export const StatisticsMenu = observer(() => {
 const StyledDialog = styled(Dialog)(({ theme }) => ({
    position: 'absolute',
    top: '10vh',
-   left: '20vw',
-   right: '55vw',
+   left: '35vw',
+   right: '35vw',
    bottom: 'calc(15vh + 10vh)',
    [`& .${dialogContentClasses.root}`]: {
       padding: theme.spacing(2),
@@ -227,6 +213,9 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
 const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
    margin: 0,
    padding: theme.spacing(2),
+   display: 'flex',
+   alignItems: 'center',
+   gap: theme.spacing(2),
    cursor: 'grab',
    ':active': {
       cursor: 'grabbing',
@@ -278,7 +267,7 @@ const ExperienceProgressBar = styled(ProgressBar)(({ theme }) => ({
    height: '0.5vw',
    backgroundColor: '#c4b5fd',
    border: `1px solid ${theme.palette.paper.border}`,
-   marginTop: '0.25vh',
+   marginTop: '0.5vh',
    [`& .${linearProgressClasses.bar}`]: {
       backgroundColor: '#8b5cf6',
       borderRadius: 8,
@@ -289,7 +278,7 @@ const LifeProgressBar = styled(ProgressBar)(({ theme }) => ({
    height: '0.5vw',
    backgroundColor: '#fca5a5',
    border: `1px solid ${theme.palette.paper.border}`,
-   marginTop: '0.25vh',
+   marginTop: '0.5vh',
    [`& .${linearProgressClasses.bar}`]: {
       backgroundColor: '#ef4444',
       borderRadius: 8,
