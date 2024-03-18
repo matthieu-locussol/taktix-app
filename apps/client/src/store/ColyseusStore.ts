@@ -227,10 +227,10 @@ export class ColyseusStore {
                this._store.talentsMenuStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.talentsMenuStore.setTalentsPoints(talentsPoints);
 
-               this._store.statisticsStore.setStatistics(
+               this._store.statisticsMenuStore.setStatistics(
                   StatisticMgt.deserializeStatistics(baseStatistics),
                );
-               this._store.statisticsStore.setStatisticsPoints(baseStatisticsPoints);
+               this._store.statisticsMenuStore.setStatisticsPoints(baseStatisticsPoints);
 
                this._store.loadingScreenStore.setSceneVisible(true);
                this._store.discordStore.updateDiscordRichPresence();

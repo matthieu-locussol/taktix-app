@@ -72,4 +72,10 @@ export class CharacterStore {
    public setBaseStatisticsPoints(baseStatisticsPoints: number) {
       this.baseStatisticsPoints = baseStatisticsPoints;
    }
+
+   public get statistics(): Record<Statistic, number> {
+      // TO-DO: Accumulate every stats from items, talents & base stats
+      // return StatisticMgt.mergeStatistics(...[this.baseStatistics, ...this.talents.map((talent) => StatisticMgt.getTalentStatistics(talent.statistic)), ...this.items.map((item) => StatisticMgt.getItemStatistics(item.statistics))]);
+      return StatisticMgt.mergeStatistics(this.baseStatistics);
+   }
 }

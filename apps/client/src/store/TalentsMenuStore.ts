@@ -82,8 +82,6 @@ export class TalentsMenuStore {
 
       this._store.characterStore.setTalents(this.talents);
       this._store.characterStore.setTalentsPoints(this.talentsPoints);
-
-      this.close();
    }
 
    public get talentsMap(): Record<number, boolean> {

@@ -1,5 +1,6 @@
 import { PaletteColor } from '@mui/material/styles';
 import { Channel } from 'shared/src/types/Channel';
+import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 
 interface CustomPalette {
    chalk: PaletteColor;
@@ -34,6 +35,7 @@ interface CustomPalette {
          hover: string;
       };
    };
+   statisticsColors: Record<keyof ReturnType<typeof StatisticMgt.computeRealStatistics>, string>;
    statistics: {
       border: {
          clear: string;
@@ -43,6 +45,10 @@ interface CustomPalette {
          normal: string;
          hover: string;
       };
+   };
+   badges: {
+      color: string;
+      background: string;
    };
 }
 

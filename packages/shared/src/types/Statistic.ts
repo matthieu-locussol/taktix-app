@@ -18,7 +18,7 @@ export const statistics = [
 
    // Damages
    ...makeStatistic('earthDamages'),
-   ...makeStatistic('windDamage'),
+   ...makeStatistic('windDamages'),
    ...makeStatistic('fireDamages'),
    ...makeStatistic('iceDamages'),
    ...makeStatistic('elementalDamages'),
