@@ -82,6 +82,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
                z.object({
                   name: z.string(),
                   profession: zProfessionType,
+                  experience: z.number(),
                }),
             ),
          }),
@@ -101,6 +102,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
                z.object({
                   name: z.string(),
                   profession: zProfessionType,
+                  experience: z.number(),
                }),
             ),
          }),

@@ -9,7 +9,7 @@ import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { ProfessionType, zProfessionType } from 'shared/src/types/Profession';
 import { Room as TRoom } from 'shared/src/types/Room';
 import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
-import { Statistic } from 'shared/src/types/Statistic';
+import { Statistics } from 'shared/src/types/Statistic';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
@@ -372,7 +372,7 @@ export class ColyseusStore {
       this.gameRoom.send('updateTalents', { talents: TalentMgt.serializeTalents(talents) });
    }
 
-   updateStatistics(statistics: Partial<Record<Statistic, number>>) {
+   updateStatistics(statistics: Partial<Statistics>) {
       this.gameRoom.send('updateStatistics', {
          statistics: StatisticMgt.serializeStatistics(statistics),
       });

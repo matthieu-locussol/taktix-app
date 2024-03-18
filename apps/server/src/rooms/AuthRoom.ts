@@ -321,10 +321,12 @@ export class AuthRoom extends Room {
                ...userCharacters.map((entry) => ({
                   profession: zProfessionType.parse(entry.profession),
                   name: entry.name,
+                  experience: entry.experience,
                })),
                {
                   profession,
                   name: characterName,
+                  experience: DEFAULT_EXPERIENCE,
                },
             ],
          };
@@ -386,6 +388,7 @@ export class AuthRoom extends Room {
                .map((entry) => ({
                   profession: zProfessionType.parse(entry.profession),
                   name: entry.name,
+                  experience: entry.experience,
                })),
          };
       }

@@ -6,7 +6,7 @@ import { levelUpStatistics } from 'shared/src/data/professions';
 import { Player } from 'shared/src/types/Player';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { Room } from 'shared/src/types/Room';
-import { Statistic } from 'shared/src/types/Statistic';
+import { Statistics } from 'shared/src/types/Statistic';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 
@@ -25,7 +25,7 @@ export class CharacterStore {
 
    public talentsPoints: number = 0;
 
-   public baseStatistics: Record<Statistic, number> = StatisticMgt.makeMockedStatistics({});
+   public baseStatistics: Statistics = StatisticMgt.makeMockedStatistics({});
 
    public baseStatisticsPoints: number = 0;
 
@@ -73,7 +73,7 @@ export class CharacterStore {
       this.talentsPoints = talentsPoints;
    }
 
-   public setBaseStatistics(baseStatistics: Record<Statistic, number>) {
+   public setBaseStatistics(baseStatistics: Statistics) {
       this.baseStatistics = { ...baseStatistics };
    }
 
@@ -109,7 +109,7 @@ export class CharacterStore {
       return LevelMgt.getLevel(this.experience);
    }
 
-   public get statistics(): Record<Statistic, number> {
+   public get statistics(): Statistics {
       // TO-DO: Accumulate every stats from items & talents
       // return StatisticMgt.mergeStatistics(...[this.baseStatistics, ...this.talents.map((talent) => StatisticMgt.getTalentStatistics(talent.statistic)), ...this.items.map((item) => StatisticMgt.getItemStatistics(item.statistics))]);
       return StatisticMgt.mergeStatistics(
