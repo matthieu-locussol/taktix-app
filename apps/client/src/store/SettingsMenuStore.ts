@@ -172,7 +172,6 @@ export class SettingsMenuStore {
       this._store.discordStore.updateDiscordRichPresence();
 
       localStorage.setItem('settings', JSON.stringify(this.savedState));
-      this.close();
    }
 
    public canSave(): boolean {

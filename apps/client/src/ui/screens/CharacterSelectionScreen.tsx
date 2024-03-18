@@ -16,6 +16,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Trans } from 'react-i18next';
 import { MAX_CHARACTERS_PER_ACCOUNT } from 'shared/src/config';
+import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
 
@@ -117,7 +118,7 @@ export const CharacterSelectionScreen = observer(() => {
                               {character.name}
                            </Typography>
                            <Typography variant="body1" sx={{ ml: 'auto' }}>
-                              {t('level', { level: 1 /* characterStore.level */ })}
+                              {t('level', { level: LevelMgt.getLevel(character.experience) })}
                            </Typography>
                         </Card>
                         <IconButton

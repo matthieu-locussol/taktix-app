@@ -5,6 +5,7 @@ import {
    DEFAULT_BASE_STATISTICS,
    DEFAULT_BASE_STATISTICS_POINTS,
    DEFAULT_DIRECTION,
+   DEFAULT_EXPERIENCE,
    DEFAULT_MAP,
    DEFAULT_TALENTS,
    DEFAULT_TALENTS_POINTS,
@@ -100,9 +101,10 @@ export class AuthRoom extends Room {
       }
 
       client.userData = {
-         characters: user.characters.map(({ name, profession }) => ({
+         characters: user.characters.map(({ name, profession, experience }) => ({
             name,
             profession: zProfessionType.parse(profession),
+            experience,
          })),
       };
 
@@ -216,6 +218,7 @@ export class AuthRoom extends Room {
             talentsPoints: character.talentsPoints,
             baseStatistics: character.baseStatistics,
             baseStatisticsPoints: character.baseStatisticsPoints,
+            experience: character.experience,
             profession: zProfessionType.parse(character.profession),
          };
 
@@ -303,6 +306,7 @@ export class AuthRoom extends Room {
                talentsPoints: DEFAULT_TALENTS_POINTS,
                baseStatistics: StatisticMgt.serializeStatistics(DEFAULT_BASE_STATISTICS),
                baseStatisticsPoints: DEFAULT_BASE_STATISTICS_POINTS,
+               experience: DEFAULT_EXPERIENCE,
                user: {
                   connect: {
                      username,

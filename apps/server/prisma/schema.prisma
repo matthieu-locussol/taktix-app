@@ -31,6 +31,7 @@ model Character {
   talentsPoints        Int
   baseStatistics       String
   baseStatisticsPoints Int
+  experience           Int
 
   user   User @relation(fields: [userId], references: [id])
   userId Int
