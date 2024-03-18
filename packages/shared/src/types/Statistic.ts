@@ -112,3 +112,5 @@ export type Statistic = z.infer<typeof zStatistic>;
 
 export const isStatistic = (value: unknown): value is Statistic =>
    zStatistic.safeParse(value).success;
+
+export type Statistics = Record<Statistic, number>;

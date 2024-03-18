@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { TranslationKey } from 'shared/src/data/translations';
-import { Statistic } from 'shared/src/types/Statistic';
+import { Statistic, Statistics } from 'shared/src/types/Statistic';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { Store } from './Store';
 
@@ -82,7 +82,7 @@ export class StatisticsMenuStore {
       this.statisticsPoints = points;
    }
 
-   public setStatistics(statistics: Record<Statistic, number>): void {
+   public setStatistics(statistics: Statistics): void {
       this.vitality = statistics['vitality_+f'];
       this.magicShield = statistics['magicShield_+f'];
       this.strength = statistics['strength_+f'];

@@ -1,11 +1,11 @@
-import { Statistic, statistics as allStatistics, isStatistic } from '../types/Statistic';
+import { Statistics, statistics as allStatistics, isStatistic } from '../types/Statistic';
 import { NumberMgt } from './numberMgt';
 
 export namespace StatisticMgt {
    export const BASE_INITIATIVE = 100;
    export const MAX_RESISTANCE_PERCENT = 50;
 
-   export const computeRealStatistics = (statistics: Record<Statistic, number>) => {
+   export const computeRealStatistics = (statistics: Statistics) => {
       const vitality = computeVitality(statistics);
       const magicShield = computeMagicShield(statistics);
       const strength = computeAttribute('strength', statistics);
@@ -104,7 +104,7 @@ export namespace StatisticMgt {
 
    export const computeAttribute = (
       attribute: 'strength' | 'dexterity' | 'intelligence' | 'luck',
-      statistics: Record<Statistic, number>,
+      statistics: Statistics,
    ) =>
       computeTotalStatistic(
          statistics[`${attribute}_+f`] + statistics['allAttributes_+f'],
@@ -115,7 +115,7 @@ export namespace StatisticMgt {
          statistics[`${attribute}_-x%`] + statistics['allAttributes_-x%'],
       );
 
-   export const computeVitality = (statistics: Record<Statistic, number>): number =>
+   export const computeVitality = (statistics: Statistics): number =>
       computeTotalStatistic(
          statistics['vitality_+f'],
          statistics['vitality_+%'],
@@ -125,7 +125,7 @@ export namespace StatisticMgt {
          statistics['vitality_-x%'],
       ) + Math.floor(computeAttribute('strength', statistics) / 5);
 
-   export const computeMagicShield = (statistics: Record<Statistic, number>): number =>
+   export const computeMagicShield = (statistics: Statistics): number =>
       computeTotalStatistic(
          statistics['magicShield_+f'],
          statistics['magicShield_+%'],
@@ -137,7 +137,7 @@ export namespace StatisticMgt {
 
    export const computeElementalDamages = (
       elementalDamages: 'earthDamages' | 'windDamages' | 'fireDamages' | 'iceDamages',
-      statistics: Record<Statistic, number>,
+      statistics: Statistics,
    ) =>
       computeTotalStatistic(
          statistics[`${elementalDamages}_+f`] + statistics['elementalDamages_+f'],
@@ -160,7 +160,7 @@ export namespace StatisticMgt {
          | 'mace2H'
          | 'bow'
          | 'staff',
-      statistics: Record<Statistic, number>,
+      statistics: Statistics,
    ) =>
       computeTotalStatistic(
          statistics[`${weapon}Damages_+f`],
@@ -177,7 +177,7 @@ export namespace StatisticMgt {
          | 'windResistance'
          | 'fireResistance'
          | 'iceResistance',
-      statistics: Record<Statistic, number>,
+      statistics: Statistics,
    ) => {
       const resistance =
          statistics[`${elementalResistance}_+f`] +
@@ -194,7 +194,7 @@ export namespace StatisticMgt {
          | 'windResistance'
          | 'fireResistance'
          | 'iceResistance',
-      statistics: Record<Statistic, number>,
+      statistics: Statistics,
    ) => {
       const resistancePercent = Math.min(
          statistics[`${elementalResistance}_+%`] +
@@ -207,7 +207,7 @@ export namespace StatisticMgt {
       return resistancePercent;
    };
 
-   export const computeLifeSteal = (statistics: Record<Statistic, number>) => {
+   export const computeLifeSteal = (statistics: Statistics) => {
       const lifeSteal = computeTotalStatistic(
          statistics['lifeSteal_+f'],
          statistics['lifeSteal_+%'],
@@ -220,7 +220,7 @@ export namespace StatisticMgt {
       return lifeSteal;
    };
 
-   export const computePrecision = (statistics: Record<Statistic, number>) => {
+   export const computePrecision = (statistics: Statistics) => {
       const precision = computeTotalStatistic(
          statistics['precision_+f'],
          statistics['precision_+%'],
@@ -233,7 +233,7 @@ export namespace StatisticMgt {
       return precision;
    };
 
-   export const computeEvasion = (statistics: Record<Statistic, number>) => {
+   export const computeEvasion = (statistics: Statistics) => {
       const evasion =
          computeTotalStatistic(
             statistics['evasion_+f'],
@@ -247,7 +247,7 @@ export namespace StatisticMgt {
       return evasion;
    };
 
-   export const computeProspect = (statistics: Record<Statistic, number>) => {
+   export const computeProspect = (statistics: Statistics) => {
       const prospect =
          computeTotalStatistic(statistics['prospect_+f'], 0, 0, statistics['prospect_-f'], 0, 0) +
          Math.floor(computeAttribute('luck', statistics) / 5);
@@ -255,7 +255,7 @@ export namespace StatisticMgt {
       return prospect;
    };
 
-   export const computeInitiative = (statistics: Record<Statistic, number>) => {
+   export const computeInitiative = (statistics: Statistics) => {
       const initiative =
          BASE_INITIATIVE +
          computeTotalStatistic(
@@ -278,18 +278,18 @@ export namespace StatisticMgt {
 
    export const computeThornsDamages = (
       damages: 'thornsPhysical' | 'thornsMagical',
-      statistics: Record<Statistic, number>,
+      statistics: Statistics,
    ) => {
       const thornsDamages = statistics[`${damages}_+%`] - statistics[`${damages}_-%`];
       return thornsDamages;
    };
 
-   export const computeAreaOfEffect = (statistics: Record<Statistic, number>) => {
+   export const computeAreaOfEffect = (statistics: Statistics) => {
       const areaOfEffect = statistics['areaOfEffect_+%'] - statistics['areaOfEffect_-%'];
       return areaOfEffect;
    };
 
-   export const computeCriticalStrikeResistance = (statistics: Record<Statistic, number>) => {
+   export const computeCriticalStrikeResistance = (statistics: Statistics) => {
       const criticalStrikeResistance = computeTotalStatistic(
          statistics['criticalStrikeResistance_+f'],
          statistics['criticalStrikeResistance_+%'],
@@ -302,19 +302,19 @@ export namespace StatisticMgt {
       return criticalStrikeResistance;
    };
 
-   export const computeCriticalStrikeChance = (statistics: Record<Statistic, number>) => {
+   export const computeCriticalStrikeChance = (statistics: Statistics) => {
       const criticalStrikeChance =
          statistics['criticalStrikeChance_+f'] - statistics['criticalStrikeChance_-f'];
       return criticalStrikeChance;
    };
 
-   export const computeCriticalStrikeChancePercent = (statistics: Record<Statistic, number>) => {
+   export const computeCriticalStrikeChancePercent = (statistics: Statistics) => {
       const criticalStrikeChancePercent =
          statistics['criticalStrikeChance_+%'] - statistics['criticalStrikeChance_-%'];
       return criticalStrikeChancePercent;
    };
 
-   export const computeCriticalStrikeDamages = (statistics: Record<Statistic, number>) => {
+   export const computeCriticalStrikeDamages = (statistics: Statistics) => {
       const criticalStrikeDamages =
          statistics['criticalStrikeDamages_+%'] - statistics['criticalStrikeDamages_-%'];
       return criticalStrikeDamages;
@@ -419,10 +419,8 @@ export namespace StatisticMgt {
             substracted,
       );
 
-   export const mergeStatistics = (
-      ...statistics: Record<Statistic, number>[]
-   ): Record<Statistic, number> => {
-      const result: Record<Statistic, number> = makeMockedStatistics({});
+   export const mergeStatistics = (...statistics: Statistics[]): Statistics => {
+      const result: Statistics = makeMockedStatistics({});
 
       statistics.forEach((statistic) => {
          allStatistics.forEach((key) => {
@@ -444,8 +442,8 @@ export namespace StatisticMgt {
    };
 
    export const isProgressionValid = (
-      statistics: Partial<Record<Statistic, number>>,
-      oldStatistics: Partial<Record<Statistic, number>>,
+      statistics: Partial<Statistics>,
+      oldStatistics: Partial<Statistics>,
       oldStatisticsPoints: number,
    ):
       | { valid: false }
@@ -472,13 +470,13 @@ export namespace StatisticMgt {
       return { valid: true, remainingPoints };
    };
 
-   export const serializeStatistics = (statistics: Partial<Record<Statistic, number>>): string =>
+   export const serializeStatistics = (statistics: Partial<Statistics>): string =>
       Object.entries(statistics)
          .map(([key, value]) => `${key}:${value}`)
          .join(',');
 
-   export const deserializeStatistics = (serialized: string): Record<Statistic, number> => {
-      const result: Record<Statistic, number> = makeMockedStatistics({});
+   export const deserializeStatistics = (serialized: string): Statistics => {
+      const result: Statistics = makeMockedStatistics({});
 
       serialized.split(',').forEach((part) => {
          const [key, value] = part.split(':');
@@ -491,9 +489,7 @@ export namespace StatisticMgt {
       return result;
    };
 
-   export const makeMockedStatistics = (
-      partial: Partial<Record<Statistic, number>>,
-   ): Record<Statistic, number> => ({
+   export const makeMockedStatistics = (partial: Partial<Statistics>): Statistics => ({
       'vitality_+f': 0,
       'vitality_+%': 0,
       'vitality_+x%': 0,
