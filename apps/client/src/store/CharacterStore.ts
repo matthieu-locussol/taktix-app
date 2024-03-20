@@ -110,7 +110,7 @@ export class CharacterStore {
    }
 
    public get statistics(): Statistics {
-      // TO-DO: Accumulate every stats from items & talents
+      // TODO: Accumulate every stats from items & talents
       // return StatisticMgt.mergeStatistics(...[this.baseStatistics, ...this.talents.map((talent) => StatisticMgt.getTalentStatistics(talent.statistic)), ...this.items.map((item) => StatisticMgt.getItemStatistics(item.statistics))]);
       return StatisticMgt.mergeStatistics(
          this.baseStatistics,

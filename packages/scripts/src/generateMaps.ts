@@ -24,7 +24,6 @@ interface TiledMapJson {
    }[];
 }
 
-// TODO: handle teleportation spots
 const generateMaps = () => {
    const mapsFolderPath = resolve(__dirname, '../../../apps/client/public/assets/maps');
    const mapsFolder = readdirSync(mapsFolderPath);

@@ -1,9 +1,10 @@
-import { Statistics } from '../types/Statistic';
+import { PvEFight, PvEFightParameters, PvEFightResults } from '../fights/PvEFight';
 
 export namespace FightMgt {
-   export const computeFight = (
-      _player: { experience: number; statistics: Statistics },
-      _allies: { experience: number; statistics: Statistics }[],
-      _monsters: { level: number; experience: number; statistics: Statistics }[],
-   ) => {};
+   export const MAX_PVE_FIGHT_TURNS = 100;
+
+   export const computePvEFight = (parameters: PvEFightParameters): PvEFightResults => {
+      const fight = new PvEFight(parameters);
+      return fight.run();
+   };
 }
