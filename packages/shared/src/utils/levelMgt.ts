@@ -27,7 +27,7 @@ export namespace LevelMgt {
 
    const computeExperienceBonus = (playersCount: number, playersWon: boolean): number => {
       if (!playersWon) {
-         return 0.5;
+         return 0;
       }
 
       return (
