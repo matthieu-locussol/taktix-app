@@ -76,7 +76,6 @@ export const translationsJa: LanguageTranslations = {
    restartError:
       '申し訳ありませんが、Taktixを再起動中にエラーが発生しました。自分で再起動してみてください。',
    use: '使用',
-   teleportSystemUnimplemented: 'テレポートはまだ実装されていません >.>',
    slap: '平手打ち',
    sendMessage: 'メッセージを送る',
    ouch: '痛い！',

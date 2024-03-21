@@ -318,6 +318,9 @@ export class ColyseusStore {
                .with({ type: 'changeMap' }, ({ message: payloadMessage }) => {
                   this.onChangeMap(payloadMessage);
                })
+               .with({ type: 'fightPvE' }, ({ message: payloadMessage }) => {
+                  this.onFightPvE(payloadMessage);
+               })
                .exhaustive();
          }
       });
@@ -378,6 +381,10 @@ export class ColyseusStore {
       });
    }
 
+   fightPvE(monsterGroupId: number) {
+      this.gameRoom.send('fightPvE', { monsterGroupId });
+   }
+
    async onChangeMap({
       map,
       x,
@@ -406,6 +413,10 @@ export class ColyseusStore {
       this._store.characterStore.setMap(map as TRoom);
       this._store.gameStore.enableKeyboard(true);
       this._store.discordStore.updateDiscordRichPresence();
+   }
+
+   onFightPvE({ results }: Extract<MapRoomResponse, { type: 'fightPvE' }>['message']) {
+      console.log('Fight results:', results);
    }
 
    private async onWebSocketClosed(code: number) {

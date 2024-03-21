@@ -1,8 +1,8 @@
 export * from './config';
 export * from './data/channelsInformations';
+export * from './data/fights';
 export * from './data/githubReleases';
 export * from './data/levels';
-export * from './data/professions';
 export * from './data/rolesInformations';
 export * from './data/talents';
 export * from './data/teleportationSpots';
@@ -24,6 +24,7 @@ export * from './types/Colyseus';
 export * from './types/Language';
 export * from './types/Player';
 export * from './types/Profession';
+export * from './types/PvEFight';
 export * from './types/Role';
 export * from './types/Room';
 export * from './types/SceneData';

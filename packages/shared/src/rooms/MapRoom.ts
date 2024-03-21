@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { zPvEFightResults } from '../types/PvEFight';
 import { Direction, Position } from '../types/SceneData';
 
 export interface MapRoomOptions {
@@ -37,6 +38,12 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
          statistics: z.string(),
       }),
    }),
+   z.object({
+      type: z.literal('fightPvE'),
+      message: z.object({
+         monsterGroupId: z.number(),
+      }),
+   }),
 ]);
 
 export type MapRoomMessage = z.infer<typeof zMapRoomMessage>;
@@ -52,6 +59,12 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
          x: z.number(),
          y: z.number(),
          direction: z.string(),
+      }),
+   }),
+   z.object({
+      type: z.literal('fightPvE'),
+      message: z.object({
+         results: zPvEFightResults,
       }),
    }),
 ]);

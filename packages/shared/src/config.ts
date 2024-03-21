@@ -1,7 +1,6 @@
 import type { Room } from './types/Room';
 import { Direction } from './types/SceneData';
 import { Statistics } from './types/Statistic';
-import { StatisticMgt } from './utils/statisticMgt';
 
 export const MAX_CHARACTERS_PER_ACCOUNT = 3;
 export const DEFAULT_MAP: Room = 'CloudsRoom';
@@ -19,9 +18,4 @@ export const DEFAULT_BASE_STATISTICS: Partial<Statistics> = {
    'luck_+f': 0,
 };
 export const DEFAULT_BASE_STATISTICS_POINTS = 0;
-export const DEFAULT_CHARACTER_STATISTICS: Statistics = StatisticMgt.makeMockedStatistics({
-   'vitality_+f': 50,
-   'precision_+f': 15,
-   'evasion_+f': 15,
-});
 export const DEFAULT_EXPERIENCE = 0;

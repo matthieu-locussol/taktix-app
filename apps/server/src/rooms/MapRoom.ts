@@ -1,18 +1,24 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import {
+   FightMgt,
+   LevelMgt,
    MapRoomMessage,
    MapRoomResponse,
    MapState,
    MapRoomOptions as Options,
    PlayerState,
+   PvEFightParameters,
    StatisticMgt,
    TELEPORTATION_SPOTS,
    Room as TRoom,
    TalentMgt,
    MapRoomUserData as UserData,
    _assert,
+   getMonstersInformations,
    isMapRoomMessage,
+   zProfessionType,
 } from 'shared';
+import { WeaponType } from 'shared/dist/types/Weapon';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
 import { usersMap } from './utils/usersMap';
@@ -53,6 +59,7 @@ export class MapRoom extends Room<MapState> {
                .with({ type: 'updateStatistics' }, (payload) =>
                   this.onUpdateStatistics(client, payload),
                )
+               .with({ type: 'fightPvE' }, (payload) => this.onFightPvE(client, payload))
                .exhaustive();
          } else {
             logger.error(
@@ -147,6 +154,7 @@ export class MapRoom extends Room<MapState> {
          select: {
             talents: true,
             talentsPoints: true,
+            experience: true,
          },
       });
 
@@ -158,6 +166,7 @@ export class MapRoom extends Room<MapState> {
          TalentMgt.deserializeTalents(characterInfos.talents),
          TalentMgt.deserializeTalents(talents),
          characterInfos.talentsPoints,
+         characterInfos.experience,
       );
 
       if (results.valid) {
@@ -191,6 +200,7 @@ export class MapRoom extends Room<MapState> {
          select: {
             baseStatistics: true,
             baseStatisticsPoints: true,
+            experience: true,
          },
       });
 
@@ -202,6 +212,7 @@ export class MapRoom extends Room<MapState> {
          StatisticMgt.deserializeStatistics(statistics),
          StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
          characterInfos.baseStatisticsPoints,
+         characterInfos.experience,
       );
 
       if (results.valid) {
@@ -219,6 +230,81 @@ export class MapRoom extends Room<MapState> {
       } else {
          logger.error(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to update statistics but failed`,
+         );
+      }
+   }
+
+   async onFightPvE(
+      client: Client,
+      { message: { monsterGroupId } }: Extract<MapRoomMessage, { type: 'fightPvE' }>,
+   ) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      const characterInfos = await prisma.character.findUnique({
+         where: { name: player.name },
+         select: {
+            baseStatistics: true,
+            talents: true,
+            map: true,
+            experience: true,
+            profession: true,
+         },
+      });
+
+      if (characterInfos === null) {
+         logger.error(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight but failed because character infos were not found`,
+         );
+         return;
+      }
+
+      const realStatistics = StatisticMgt.computeRealStatistics(
+         StatisticMgt.aggregateStatistics(
+            StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
+            characterInfos.experience,
+            zProfessionType.parse(characterInfos.profession),
+         ),
+      );
+
+      try {
+         const parameters: PvEFightParameters = {
+            alliesInformations: [
+               {
+                  health: realStatistics.vitality, // TODO: get current health, not max health
+                  magicShield: realStatistics.magicShield, // TODO: get current magic shield, not max magic shield
+                  experience: characterInfos.experience,
+                  level: LevelMgt.getLevel(characterInfos.experience),
+                  profession: zProfessionType.parse(characterInfos.profession),
+                  rawStatistics: characterInfos.baseStatistics,
+                  talents: TalentMgt.deserializeTalents(characterInfos.talents),
+                  uniquesPowers: [],
+                  weaponType: WeaponType.Sword1H,
+                  weaponDamages: [
+                     { type: 'strength', min: 3, max: 5 },
+                     { type: 'strength', min: 2, max: 4 },
+                  ],
+               },
+            ],
+            monstersInformations: getMonstersInformations(monsterGroupId),
+         };
+
+         const packet: MapRoomResponse = {
+            type: 'fightPvE',
+            message: {
+               results: FightMgt.computePvEFight(parameters),
+            },
+         };
+
+         client.send(packet.type, packet.message);
+
+         logger.info(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) started a PvE fight against monster group '${monsterGroupId}' and ${packet.message.results.won ? 'won' : 'lost'}`,
+         );
+      } catch (error) {
+         logger.error(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight against an invalid monster group '${monsterGroupId}'`,
+            error,
          );
       }
    }

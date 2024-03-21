@@ -1,4 +1,5 @@
-import { PvEFight, PvEFightParameters, PvEFightResults } from '../fights/PvEFight';
+import { PvEFight } from '../fights/PvEFight';
+import { PvEFightParameters, PvEFightResults } from '../types/PvEFight';
 
 export namespace FightMgt {
    export const MAX_PVE_FIGHT_TURNS = 100;

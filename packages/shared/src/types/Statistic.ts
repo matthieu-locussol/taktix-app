@@ -114,3 +114,55 @@ export const isStatistic = (value: unknown): value is Statistic =>
    zStatistic.safeParse(value).success;
 
 export type Statistics = Record<Statistic, number>;
+
+export const realStatistics = [
+   'vitality',
+   'magicShield',
+   'strength',
+   'dexterity',
+   'intelligence',
+   'luck',
+   'earthDamages',
+   'windDamages',
+   'fireDamages',
+   'iceDamages',
+   'sword1HDamages',
+   'axe1HDamages',
+   'mace1HDamages',
+   'daggerDamages',
+   'wandDamages',
+   'sword2HDamages',
+   'axe2HDamages',
+   'mace2HDamages',
+   'bowDamages',
+   'staffDamages',
+   'earthResistance',
+   'earthResistancePercent',
+   'windResistance',
+   'windResistancePercent',
+   'fireResistance',
+   'fireResistancePercent',
+   'iceResistance',
+   'iceResistancePercent',
+   'lifeSteal',
+   'precision',
+   'evasion',
+   'prospect',
+   'initiative',
+   'thornsPhysical',
+   'thornsMagical',
+   'areaOfEffect',
+   'criticalStrikeResistance',
+   'criticalStrikeChance',
+   'criticalStrikeChancePercent',
+   'criticalStrikeDamages',
+] as const;
+
+export const zRealStatistic = ZodMgt.constructZodLiteralUnionType(
+   realStatistics.map((realStatistic) => z.literal(realStatistic)),
+);
+
+export type RealStatistic = z.infer<typeof zRealStatistic>;
+
+export const isRealStatistic = (value: unknown): value is RealStatistic =>
+   zRealStatistic.safeParse(value).success;

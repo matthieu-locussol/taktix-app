@@ -1,5 +1,11 @@
-import { Statistics } from '../types/Statistic';
-import { WeaponDamages, WeaponType } from '../types/Weapon';
+import {
+   PvEFighter,
+   PvEFightMove,
+   PvEFightParameters,
+   PvEFightResults,
+   PvEFightTurn,
+} from '../types/PvEFight';
+import { _assert, _assertTrue } from '../utils/_assert';
 import { ArrayMgt } from '../utils/arrayMgt';
 import { LevelMgt } from '../utils/levelMgt';
 import { NumberMgt } from '../utils/numberMgt';
@@ -12,7 +18,7 @@ export class PvEFight {
 
    private fighters: PvEFighter[];
 
-   private turns: PveFightTurn[];
+   private turns: PvEFightTurn[];
 
    constructor(parameters: PvEFightParameters) {
       this.parameters = parameters;
@@ -30,8 +36,8 @@ export class PvEFight {
       return this.getResults();
    }
 
-   private computeTurn(): PveFightTurn {
-      const moves: PveFightMove[] = ArrayMgt.filterNullish(
+   private computeTurn(): PvEFightTurn {
+      const moves: PvEFightMove[] = ArrayMgt.filterNullish(
          this.fighters.map((fighter) => this.computeMove(fighter)),
       );
 
@@ -45,7 +51,7 @@ export class PvEFight {
       return { fighters, moves };
    }
 
-   private computeMove(fighter: PvEFighter): PveFightMove | null {
+   private computeMove(fighter: PvEFighter): PvEFightMove | null {
       const target = this.getRandomAliveTarget(fighter);
       if (target === null) {
          return null;
@@ -186,19 +192,35 @@ export class PvEFight {
    }
 
    private initializeFighters(): PvEFighter[] {
-      const allies: PvEFighter[] = this.parameters.alliesInformations.map((infos, idx) => ({
-         ...infos,
-         id: idx + 1,
-         type: 'ally',
-         statistics: StatisticMgt.computeRealStatistics(infos.rawStatistics),
-      }));
+      const allies: PvEFighter[] = this.parameters.alliesInformations.map((infos, idx) => {
+         _assert(infos.profession, 'profession should be defined!');
 
-      const monsters: PvEFighter[] = this.parameters.monstersInformations.map((infos, idx) => ({
-         ...infos,
-         id: allies.length + idx + 1,
-         type: 'monster',
-         statistics: StatisticMgt.computeRealStatistics(infos.rawStatistics),
-      }));
+         return {
+            ...infos,
+            id: idx + 1,
+            type: 'ally',
+            statistics: StatisticMgt.computeRealStatistics(
+               StatisticMgt.aggregateStatistics(
+                  StatisticMgt.deserializeStatistics(infos.rawStatistics),
+                  infos.experience,
+                  infos.profession,
+               ),
+            ),
+         };
+      });
+
+      const monsters: PvEFighter[] = this.parameters.monstersInformations.map((infos, idx) => {
+         _assertTrue(infos.profession === undefined, 'profession should not be defined!');
+
+         return {
+            ...infos,
+            id: allies.length + idx + 1,
+            type: 'monster',
+            statistics: StatisticMgt.computeRealStatistics(
+               StatisticMgt.deserializeStatistics(infos.rawStatistics),
+            ),
+         };
+      });
 
       return this.orderFighters(allies, monsters);
    }
@@ -217,66 +239,4 @@ export class PvEFight {
    private orderFightersByInitiative(fighters: PvEFighter[]): PvEFighter[] {
       return [...fighters].sort((a, b) => b.statistics.initiative - a.statistics.initiative);
    }
-}
-
-export interface PvEFightParameters {
-   alliesInformations: PvEFighterInformations[];
-   monstersInformations: PvEFighterInformations[];
-}
-
-export interface PvEFightResults {
-   allies: PvEAllySimplified[];
-   monsters: PvEMonsterSimplified[];
-   turns: PveFightTurn[];
-   experiences: number[];
-   loots: unknown[][];
-   won: boolean;
-}
-
-interface PvEFighterInformations {
-   health: number;
-   magicShield: number;
-
-   level: number;
-   experience: number;
-
-   weaponType: WeaponType;
-   weaponDamages: WeaponDamages[];
-   rawStatistics: Statistics;
-
-   // TODO: talents & items powers from uniques
-   talents: unknown[];
-   uniquesPowers: unknown[];
-}
-
-interface PvEFighter extends PvEFighterInformations {
-   id: number;
-   type: 'ally' | 'monster';
-   statistics: ReturnType<typeof StatisticMgt.computeRealStatistics>;
-}
-
-type PvEFighterSimplified = Pick<PvEFighter, 'id' | 'type' | 'health' | 'magicShield'>;
-type PvEAllySimplified = Pick<
-   PvEFighter,
-   'id' | 'type' | 'health' | 'magicShield' | 'level' | 'experience'
->;
-type PvEMonsterSimplified = Pick<PvEFighter, 'id' | 'type' | 'health' | 'magicShield' | 'level'>;
-
-interface PveFightMove {
-   fighterId: number;
-   targetId: number;
-   damages: {
-      type: string;
-      value: number;
-   }[];
-   damagesAoE: {
-      type: string;
-      value: number;
-      targetId: number;
-   }[];
-}
-
-interface PveFightTurn {
-   fighters: PvEFighterSimplified[];
-   moves: PveFightMove[];
 }
