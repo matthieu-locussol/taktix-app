@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 import { listen } from '@tauri-apps/api/event';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { AuthRoomUserData } from 'shared';
+import { AuthRoomUserData } from 'shared/src/rooms/AuthRoom';
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
 import { isTauri } from '../../utils/tauri';

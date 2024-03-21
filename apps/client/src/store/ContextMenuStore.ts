@@ -118,11 +118,9 @@ export class ContextMenuStore {
          {
             text: i18next.t('use'),
             callback: () => {
-               this._store.chatStore.addMessage({
-                  author: 'System',
-                  channel: Channel.ERROR,
-                  content: i18next.t('teleportSystemUnimplemented'),
-               });
+               this._store.colyseusStore.fightPvE(1);
+               // TODO: loading while fight is starting...
+               // TODO: don't set this in a teleporter, but in a fight button...
             },
          },
       ];

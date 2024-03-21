@@ -77,7 +77,6 @@ export const translationsFr: LanguageTranslations = {
    restartError:
       "Désolé, une erreur s'est produite lors du redémarrage de Taktix. Essayez de le redémarrer par vous-même.",
    use: 'Utiliser',
-   teleportSystemUnimplemented: 'La téléportation n’est pas encore implémentée >.>',
    slap: 'Gifler',
    sendMessage: 'Envoyer un message',
    ouch: 'Aïe !',

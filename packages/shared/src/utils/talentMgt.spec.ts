@@ -194,6 +194,7 @@ describe('TalentMgt', () => {
             currentTalents: [1, 10, 13, 17],
             newTalents: [10, 17, 13, 1],
             availablePoints: 1,
+            experience: 5_000,
             expected: { valid: true, remainingPoints: 1 },
          },
          {
@@ -201,6 +202,7 @@ describe('TalentMgt', () => {
             currentTalents: [1, 10, 13, 17],
             newTalents: [1, 10],
             availablePoints: 0,
+            experience: 3_000,
             expected: { valid: true, remainingPoints: 2 },
          },
          {
@@ -208,6 +210,7 @@ describe('TalentMgt', () => {
             currentTalents: [2],
             newTalents: [2, 5, 14, 6],
             availablePoints: 4,
+            experience: 5_000,
             expected: { valid: true, remainingPoints: 1 },
          },
          {
@@ -215,6 +218,7 @@ describe('TalentMgt', () => {
             currentTalents: [2],
             newTalents: [2, 5, 14, 6],
             availablePoints: 2,
+            experience: 2_000,
             expected: { valid: false },
          },
          {
@@ -222,6 +226,7 @@ describe('TalentMgt', () => {
             currentTalents: [1, 10, 13, 17],
             newTalents: [10, 17, 13, 1],
             availablePoints: 0,
+            experience: 3_000,
             expected: { valid: true, remainingPoints: 0 },
          },
          {
@@ -229,6 +234,7 @@ describe('TalentMgt', () => {
             currentTalents: [1, 10, 13, 17],
             newTalents: [1, 10],
             availablePoints: 1,
+            experience: 5_000,
             expected: { valid: true, remainingPoints: 3 },
          },
          {
@@ -236,6 +242,7 @@ describe('TalentMgt', () => {
             currentTalents: [2, 5, 14],
             newTalents: [4, 7, 8, 12],
             availablePoints: 1,
+            experience: 3_000,
             expected: { valid: true, remainingPoints: 0 },
          },
          {
@@ -243,14 +250,23 @@ describe('TalentMgt', () => {
             currentTalents: [4, 7, 8, 12],
             newTalents: [13, 17],
             availablePoints: 4,
+            experience: 15_000,
             expected: { valid: false },
          },
       ];
 
-      it.each(samples)('$title', ({ currentTalents, newTalents, availablePoints, expected }) => {
-         expect(
-            TalentMgt.isProgressionValid(currentTalents, newTalents, availablePoints),
-         ).toStrictEqual(expected);
-      });
+      it.each(samples)(
+         '$title',
+         ({ currentTalents, newTalents, availablePoints, experience, expected }) => {
+            expect(
+               TalentMgt.isProgressionValid(
+                  currentTalents,
+                  newTalents,
+                  availablePoints,
+                  experience,
+               ),
+            ).toStrictEqual(expected);
+         },
+      );
    });
 });

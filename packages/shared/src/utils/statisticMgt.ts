@@ -1,11 +1,54 @@
-import { Statistics, statistics as allStatistics, isStatistic } from '../types/Statistic';
+import { ProfessionType } from '../types/Profession';
+import {
+   RealStatistic,
+   Statistics,
+   statistics as allStatistics,
+   isStatistic,
+} from '../types/Statistic';
+import { LevelMgt } from './levelMgt';
 import { NumberMgt } from './numberMgt';
 
 export namespace StatisticMgt {
    export const BASE_INITIATIVE = 100;
+
    export const MAX_RESISTANCE_PERCENT = 50;
 
-   export const computeRealStatistics = (statistics: Statistics) => {
+   export const DEFAULT_CHARACTER_STATISTICS = (): Statistics =>
+      StatisticMgt.makeMockedStatistics({
+         'vitality_+f': 50,
+         'precision_+f': 15,
+         'evasion_+f': 15,
+      });
+
+   export const LEVEL_UP_STATISTICS = (): Record<ProfessionType, Statistics> => ({
+      [ProfessionType.Warrior]: StatisticMgt.makeMockedStatistics({
+         'vitality_+f': 12,
+         'precision_+f': 2,
+      }),
+      [ProfessionType.Mage]: StatisticMgt.makeMockedStatistics({
+         'vitality_+f': 12,
+         'precision_+f': 2,
+      }),
+      [ProfessionType.Archer]: StatisticMgt.makeMockedStatistics({
+         'vitality_+f': 12,
+         'precision_+f': 2,
+      }),
+   });
+
+   export const aggregateStatistics = (
+      baseStatistics: Statistics,
+      experience: number,
+      profession: ProfessionType,
+   ): Statistics =>
+      // TODO: Accumulate every stats from items & talents
+      // return StatisticMgt.mergeStatistics(...[this.baseStatistics, ...this.talents.map((talent) => StatisticMgt.getTalentStatistics(talent.statistic)), ...this.items.map((item) => StatisticMgt.getItemStatistics(item.statistics))]);
+      StatisticMgt.mergeStatistics(
+         baseStatistics,
+         DEFAULT_CHARACTER_STATISTICS(),
+         ...new Array(LevelMgt.getLevel(experience) - 1).fill(LEVEL_UP_STATISTICS()[profession]),
+      );
+
+   export const computeRealStatistics = (statistics: Statistics): Record<RealStatistic, number> => {
       const vitality = computeVitality(statistics);
       const magicShield = computeMagicShield(statistics);
       const strength = computeAttribute('strength', statistics);
@@ -439,6 +482,7 @@ export namespace StatisticMgt {
       statistics: Partial<Statistics>,
       oldStatistics: Partial<Statistics>,
       oldStatisticsPoints: number,
+      experience: number,
    ):
       | { valid: false }
       | {
@@ -456,8 +500,12 @@ export namespace StatisticMgt {
          0,
       );
       const remainingPoints = oldTotalPoints - statisticsPointsSpent;
-
       if (remainingPoints < 0) {
+         return { valid: false };
+      }
+
+      const level = LevelMgt.getLevel(experience);
+      if (statisticsPointsSpent + remainingPoints !== (level - 1) * 5) {
          return { valid: false };
       }
 
@@ -672,8 +720,8 @@ export namespace StatisticMgt {
    });
 
    export const makeMockedRealStatistics = (
-      partial: Partial<ReturnType<(typeof StatisticMgt)['computeRealStatistics']>>,
-   ): ReturnType<(typeof StatisticMgt)['computeRealStatistics']> => ({
+      partial: Partial<Record<RealStatistic, number>>,
+   ): Record<RealStatistic, number> => ({
       areaOfEffect: 0,
       axe1HDamages: 0,
       axe2HDamages: 0,

@@ -72,7 +72,6 @@ export const translationsEn = {
       'Sorry, an error occurred while updating Taktix. If it happens again, try reinstalling the game.',
    restartError: 'Sorry, an error occurred while restarting Taktix. Try restarting it by yourself.',
    use: 'Use',
-   teleportSystemUnimplemented: 'Teleporting is not implemented yet >.>',
    slap: 'Slap',
    sendMessage: 'Send a message',
    ouch: 'Ouch!',

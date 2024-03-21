@@ -1,4 +1,5 @@
 import { STARTING_TALENTS, TALENTS } from '../data/talents';
+import { LevelMgt } from './levelMgt';
 
 export namespace TalentMgt {
    export const canAllocateTalent = (
@@ -91,6 +92,7 @@ export namespace TalentMgt {
       allocatedTalents: number[],
       newTalents: number[],
       availablePoints: number,
+      experience: number,
    ):
       | { valid: false }
       | {
@@ -101,6 +103,11 @@ export namespace TalentMgt {
       const remainingPoints = totalPoints - newTalents.length;
 
       if (newTalents.length > totalPoints) {
+         return { valid: false };
+      }
+
+      const level = LevelMgt.getLevel(experience);
+      if (newTalents.length + remainingPoints !== level - 1) {
          return { valid: false };
       }
 

@@ -1,8 +1,6 @@
 import type { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
-import { DEFAULT_CHARACTER_STATISTICS } from 'shared/src/config';
 import { LEVEL_TO_EXPERIENCE } from 'shared/src/data/levels';
-import { levelUpStatistics } from 'shared/src/data/professions';
 import { Player } from 'shared/src/types/Player';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { Room } from 'shared/src/types/Room';
@@ -110,12 +108,10 @@ export class CharacterStore {
    }
 
    public get statistics(): Statistics {
-      // TODO: Accumulate every stats from items & talents
-      // return StatisticMgt.mergeStatistics(...[this.baseStatistics, ...this.talents.map((talent) => StatisticMgt.getTalentStatistics(talent.statistic)), ...this.items.map((item) => StatisticMgt.getItemStatistics(item.statistics))]);
-      return StatisticMgt.mergeStatistics(
+      return StatisticMgt.aggregateStatistics(
          this.baseStatistics,
-         DEFAULT_CHARACTER_STATISTICS,
-         ...new Array(this.level - 1).fill(levelUpStatistics[this.profession]),
+         this.experience,
+         this.profession,
       );
    }
 }
