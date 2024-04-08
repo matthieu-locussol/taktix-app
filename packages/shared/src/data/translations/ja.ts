@@ -96,6 +96,16 @@ export const translationsJa: LanguageTranslations = {
    luck: '運',
    statisticPointsAvailable: '利用可能なポイント：<b>{{count}}</b>',
    advanced: '高度',
+   victory: '勝利',
+   defeat: '敗北',
+   name: '名前',
+   credits: 'クレジット',
+   loots: '戦利品',
+   winners: '勝者',
+   losers: '敗者',
+
+   // Enemies
+   'enemy:nono': 'ノノ、小さなロボット',
 
    // Statistics
    'earthDamages_+f': '地のダメージ',

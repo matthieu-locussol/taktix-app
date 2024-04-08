@@ -404,7 +404,7 @@ export class ColyseusStore {
             };
             scene.scene.start(map, sceneData);
          }
-      });
+      }, true);
 
       await this.joinRoom(map, { x, y }, direction as Direction);
 
@@ -415,8 +415,15 @@ export class ColyseusStore {
       this._store.discordStore.updateDiscordRichPresence();
    }
 
-   onFightPvE({ results }: Extract<MapRoomResponse, { type: 'fightPvE' }>['message']) {
-      console.log('Fight results:', results);
+   async onFightPvE({ results }: Extract<MapRoomResponse, { type: 'fightPvE' }>['message']) {
+      const scene = await this._store.gameStore.getCurrentScene();
+      scene.fadeOut((_, progress) => {
+         if (progress === 1) {
+            this._store.pveFightStore.setFightResults(results);
+            scene.scene.pause(this._store.characterStore.map);
+            scene.scene.launch('PvEFightScene');
+         }
+      });
    }
 
    private async onWebSocketClosed(code: number) {

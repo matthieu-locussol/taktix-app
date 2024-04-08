@@ -8,19 +8,48 @@ export const getMonstersInformations = (
    if (monsterGroupId === 1) {
       return [
          {
-            health: 90,
-            magicShield: 150,
-            level: 5,
-            experience: 200,
-            weaponType: WeaponType.Mace2H,
-            weaponDamages: [
-               { type: 'strength', min: 3, max: 5 },
-               { type: 'strength', min: 2, max: 4 },
-            ],
+            name: 'Character 1',
+            health: 50,
+            magicShield: 0,
+            level: 1,
+            experience: 50,
+            weaponType: WeaponType.Axe1H,
+            weaponDamages: [{ type: 'strength', min: 1, max: 2 }],
             rawStatistics: StatisticMgt.serializeStatistics(
                StatisticMgt.makeMockedStatistics({
-                  'vitality_+f': 600,
-                  'strength_+f': 240,
+                  'strength_+f': 10,
+               }),
+            ),
+            talents: [],
+            uniquesPowers: [],
+         },
+         {
+            name: 'Character 2',
+            health: 10,
+            magicShield: 0,
+            level: 1,
+            experience: 5,
+            weaponType: WeaponType.Axe1H,
+            weaponDamages: [{ type: 'dexterity', min: 2, max: 4 }],
+            rawStatistics: StatisticMgt.serializeStatistics(
+               StatisticMgt.makeMockedStatistics({
+                  'dexterity_+f': 10,
+               }),
+            ),
+            talents: [],
+            uniquesPowers: [],
+         },
+         {
+            name: 'Character 3',
+            health: 30,
+            magicShield: 0,
+            level: 1,
+            experience: 5,
+            weaponType: WeaponType.Axe1H,
+            weaponDamages: [{ type: 'strength', min: 1, max: 2 }],
+            rawStatistics: StatisticMgt.serializeStatistics(
+               StatisticMgt.makeMockedStatistics({
+                  'strength_+f': 10,
                }),
             ),
             talents: [],

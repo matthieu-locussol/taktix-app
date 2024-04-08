@@ -2,6 +2,7 @@ import { GridEngine } from 'grid-engine';
 import Phaser from 'phaser';
 import { store } from '../store';
 import { mapsScenes } from './mapsScenes';
+import { PvEFightScene } from './scenes/PvEFightScene';
 
 const FPS = 60;
 
@@ -10,7 +11,7 @@ export const config: Phaser.Types.Core.GameConfig = {
    backgroundColor: '#1f2937',
    parent: 'root-game',
    fullscreenTarget: 'root-game',
-   scene: [...mapsScenes],
+   scene: [...mapsScenes, PvEFightScene],
    pixelArt: true,
    fps: {
       min: FPS,

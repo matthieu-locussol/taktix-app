@@ -8,6 +8,7 @@ import { Chatbox } from '../hud/Chatbox';
 import { ContextMenu } from '../hud/ContextMenu';
 import { Menu } from '../hud/Menu';
 import { CommunityMenu } from '../hud/menus/CommunityMenu';
+import { FightResultsMenu } from '../hud/menus/FightResultsMenu';
 import { SettingsMenu } from '../hud/menus/SettingsMenu';
 import { StatisticsMenu } from '../hud/menus/StatisticsMenu';
 import { TalentsMenu } from '../hud/menus/TalentsMenu';
@@ -70,7 +71,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          }}
          {...rest}
       >
-         <StyledBox height={`${hudStore.chatboxHeight}vh`}>
+         <StyledBox id="game-layout-box" height={`${hudStore.chatboxHeight}vh`}>
             {hudStore.isChatboxVisible && <Chatbox />}
             {hudStore.isCharacterVisible && <Character />}
             {hudStore.isMenuVisible && <Menu />}
@@ -80,6 +81,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          <SettingsMenu />
          <TalentsMenu />
          <StatisticsMenu />
+         <FightResultsMenu />
          {children}
       </Box>
    );

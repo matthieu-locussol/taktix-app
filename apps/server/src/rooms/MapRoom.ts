@@ -249,6 +249,7 @@ export class MapRoom extends Room<MapState> {
             map: true,
             experience: true,
             profession: true,
+            name: true,
          },
       });
 
@@ -271,6 +272,7 @@ export class MapRoom extends Room<MapState> {
          const parameters: PvEFightParameters = {
             alliesInformations: [
                {
+                  name: characterInfos.name,
                   health: realStatistics.vitality, // TODO: get current health, not max health
                   magicShield: realStatistics.magicShield, // TODO: get current magic shield, not max magic shield
                   experience: characterInfos.experience,
@@ -279,10 +281,12 @@ export class MapRoom extends Room<MapState> {
                   rawStatistics: characterInfos.baseStatistics,
                   talents: TalentMgt.deserializeTalents(characterInfos.talents),
                   uniquesPowers: [],
+                  // TODO: get weapon from character equipment
                   weaponType: WeaponType.Sword1H,
                   weaponDamages: [
-                     { type: 'strength', min: 3, max: 5 },
-                     { type: 'strength', min: 2, max: 4 },
+                     { type: 'strength', min: 5, max: 17 },
+                     { type: 'dexterity', min: 2, max: 4 },
+                     { type: 'intelligence', min: 2, max: 4 },
                   ],
                },
             ],

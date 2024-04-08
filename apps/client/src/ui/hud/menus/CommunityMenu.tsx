@@ -224,7 +224,7 @@ const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
 
 const StyledDialogContent = styled(DialogContent)(() => ({
    [`&.${dialogContentClasses.root}`]: {
-      padding: 0,
+      padding: '0px !important',
    },
 }));
 

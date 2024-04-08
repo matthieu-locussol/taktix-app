@@ -92,6 +92,16 @@ export const translationsEn = {
    luck: 'Luck',
    statisticPointsAvailable: 'Points available: <b>{{count}}</b>',
    advanced: 'Advanced',
+   victory: 'Victory',
+   defeat: 'Defeat',
+   name: 'Name',
+   credits: 'Credits',
+   loots: 'Loots',
+   winners: 'Winners',
+   losers: 'Losers',
+
+   // Enemies
+   'enemy:nono': 'Nono, the little Robot',
 
    // Statistics
    'earthDamages_+f': 'Earth damages',
