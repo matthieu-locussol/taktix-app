@@ -129,7 +129,7 @@ export abstract class Scene extends Phaser.Scene {
    public create(): void {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
       this.cameras.main.setZoom(store.gameStore.zoom);
-      this.cameras.main.fadeIn(FADE_IN_DURATION, 31, 41, 55);
+      this.fadeIn();
 
       this.minimap = makeMinimap(this);
 
@@ -636,10 +636,16 @@ export abstract class Scene extends Phaser.Scene {
       this.gridEngine.turnTowards(name, direction);
    }
 
-   public fadeOut(callback: (_: unknown, progress: number) => void): void {
+   public fadeIn(): void {
+      this.cameras.main.fadeIn(FADE_IN_DURATION, 31, 41, 55).setRoundPixels(true);
+   }
+
+   public fadeOut(callback: (_: unknown, progress: number) => void, freeMemory?: boolean): void {
       this.cameras.main.fade(FADE_OUT_DURATION, 31, 41, 55, false, callback);
 
-      this.interactiveObjects.forEach(({ polygon }) => polygon.destroy());
-      this.interactiveObjects = [];
+      if (freeMemory) {
+         this.interactiveObjects.forEach(({ polygon }) => polygon.destroy());
+         this.interactiveObjects = [];
+      }
    }
 }

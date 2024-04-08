@@ -5,6 +5,7 @@ import {
    PvEFightResults,
    PvEFightTurn,
 } from '../types/PvEFight';
+import { WeaponDamagesType } from '../types/Weapon';
 import { _assert, _assertTrue } from '../utils/_assert';
 import { ArrayMgt } from '../utils/arrayMgt';
 import { LevelMgt } from '../utils/levelMgt';
@@ -38,7 +39,13 @@ export class PvEFight {
 
    private computeTurn(): PvEFightTurn {
       const moves: PvEFightMove[] = ArrayMgt.filterNullish(
-         this.fighters.map((fighter) => this.computeMove(fighter)),
+         this.fighters.map((fighter) => {
+            if (fighter.health <= 0) {
+               return null;
+            }
+
+            return this.computeMove(fighter);
+         }),
       );
 
       const fighters = this.fighters.map(({ id, health, magicShield, type }) => ({
@@ -61,7 +68,10 @@ export class PvEFight {
       const totalDamages = damages.reduce((acc, { value }) => acc + value, 0);
 
       const damagesAoE = this.computeDamagesAoE(fighter, target);
+      // TODO: handles dodge
       // TODO: apply damagesAoE
+      // TODO: handles life steal
+      // TODO: handles thorns damages
 
       const damagesOnShield = Math.min(totalDamages, target.magicShield);
       const damagesOnHealth = Math.min(totalDamages - damagesOnShield, target.health);
@@ -75,7 +85,7 @@ export class PvEFight {
    private computeDamages(
       fighter: PvEFighter,
       target: PvEFighter,
-   ): { type: string; value: number }[] {
+   ): { type: WeaponDamagesType; value: number }[] {
       return fighter.weaponDamages.map(({ type, min, max }) => ({
          type,
          value:
@@ -169,16 +179,21 @@ export class PvEFight {
 
    private getResults(): PvEFightResults {
       return {
-         allies: this.getAllies().map(({ id, type, health, magicShield, level, experience }) => ({
+         allies: this.getAllies().map(
+            ({ id, name, type, health, magicShield, level, experience, profession }) => ({
+               id,
+               name,
+               type,
+               health,
+               magicShield,
+               level,
+               experience,
+               profession,
+            }),
+         ),
+         monsters: this.getMonsters().map(({ id, name, type, health, magicShield, level }) => ({
             id,
-            type,
-            health,
-            magicShield,
-            level,
-            experience,
-         })),
-         monsters: this.getMonsters().map(({ id, type, health, magicShield, level }) => ({
-            id,
+            name,
             type,
             health,
             magicShield,

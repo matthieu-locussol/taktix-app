@@ -27,6 +27,8 @@ export const zWeaponDamagesType = ZodMgt.constructZodLiteralUnionType(
    weaponDamagesTypes.map((damage) => z.literal(damage)),
 );
 
+export type WeaponDamagesType = z.infer<typeof zWeaponDamagesType>;
+
 export const zWeaponDamages = z.object({
    type: zWeaponDamagesType,
    min: z.number(),
