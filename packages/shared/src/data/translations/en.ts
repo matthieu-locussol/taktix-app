@@ -99,6 +99,8 @@ export const translationsEn = {
    loots: 'Loots',
    winners: 'Winners',
    losers: 'Losers',
+   turns_one: '{{count}} turn',
+   turns_other: '{{count}} turns',
 
    // Enemies
    'enemy:nono': 'Nono, the little Robot',
