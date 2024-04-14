@@ -104,6 +104,8 @@ export const translationsFr: LanguageTranslations = {
    loots: 'Butins',
    winners: 'Gagnants',
    losers: 'Perdants',
+   turns_one: '{{count}} tour',
+   turns_other: '{{count}} tours',
 
    // Enemies
    'enemy:nono': 'Nono, le petit robot',

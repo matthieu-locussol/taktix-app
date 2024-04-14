@@ -103,6 +103,8 @@ export const translationsJa: LanguageTranslations = {
    loots: '戦利品',
    winners: '勝者',
    losers: '敗者',
+   turns_one: '{{count}} ターン',
+   turns_other: '{{count}} ターン',
 
    // Enemies
    'enemy:nono': 'ノノ、小さなロボット',
