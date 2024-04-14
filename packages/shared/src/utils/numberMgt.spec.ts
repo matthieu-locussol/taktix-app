@@ -151,4 +151,76 @@ describe('NumberMgt', () => {
          });
       });
    });
+
+   describe('hexStringToNumber', () => {
+      const samples = [
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#FF0000',
+            expected: 0xff0000,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#00FF00',
+            expected: 0x00ff00,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#0000FF',
+            expected: 0x0000ff,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#FFFFFF',
+            expected: 0xffffff,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#000000',
+            expected: 0x000000,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#123456',
+            expected: 0x123456,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#ABCDEF',
+            expected: 0xabcdef,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#abcdef',
+            expected: 0xabcdef,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#123abc',
+            expected: 0x123abc,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#a1b2c3',
+            expected: 0xa1b2c3,
+         },
+         {
+            title: 'should convert a hex string to a number',
+            hexString: '#a1b2c3',
+            expected: 0xa1b2c3,
+         },
+      ];
+
+      samples.forEach(({ title, hexString, expected }) => {
+         it(title, () => {
+            expect(NumberMgt.hexStringToNumber(hexString)).toBe(expected);
+         });
+      });
+
+      it('should throw an error if the hex string is invalid', () => {
+         expect(() => NumberMgt.hexStringToNumber('#12345')).toThrowError(
+            "Invalid hex string: '#12345'",
+         );
+      });
+   });
 });
