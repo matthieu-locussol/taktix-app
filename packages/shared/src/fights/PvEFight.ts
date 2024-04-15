@@ -4,6 +4,7 @@ import {
    PvEFightParameters,
    PvEFightResults,
    PvEFightTurn,
+   PvEInitialConditions,
 } from '../types/PvEFight';
 import { WeaponDamagesType } from '../types/Weapon';
 import { _assert, _assertTrue } from '../utils/_assert';
@@ -21,10 +22,13 @@ export class PvEFight {
 
    private turns: PvEFightTurn[];
 
+   private initialConditions: PvEInitialConditions;
+
    constructor(parameters: PvEFightParameters) {
       this.parameters = parameters;
 
       this.fighters = this.initializeFighters();
+      this.initialConditions = this.initializeInitialConditions();
       this.turns = [];
    }
 
@@ -179,6 +183,7 @@ export class PvEFight {
 
    private getResults(): PvEFightResults {
       return {
+         initialConditions: this.initialConditions,
          allies: this.getAllies().map(
             ({ id, name, type, health, magicShield, level, experience, profession }) => ({
                id,
@@ -253,5 +258,15 @@ export class PvEFight {
 
    private orderFightersByInitiative(fighters: PvEFighter[]): PvEFighter[] {
       return [...fighters].sort((a, b) => b.statistics.initiative - a.statistics.initiative);
+   }
+
+   private initializeInitialConditions(): PvEInitialConditions {
+      return this.fighters.map(({ id, health, magicShield }) => ({
+         fighterId: id,
+         health,
+         magicShield,
+         maxHealth: health, // TODO: compute maxHealth from statistics
+         maxMagicShield: magicShield, // TODO: compute maxMagicShield from statistics
+      }));
    }
 }

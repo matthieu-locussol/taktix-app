@@ -1,10 +1,11 @@
 import { makeAutoObservable } from 'mobx';
 import { PvEFightResults } from 'shared/src/types/PvEFight';
+import { _assert } from 'shared/src/utils/_assert';
 
 type PvEFightMode = 'fight' | 'spectate';
 
 export class PvEFightStore {
-   fightResults: PvEFightResults | null = null;
+   private _fightResults: PvEFightResults | null = null;
 
    mode: PvEFightMode = 'fight';
 
@@ -15,7 +16,7 @@ export class PvEFightStore {
    }
 
    public setFightResults(fightResults: PvEFightResults): void {
-      this.fightResults = fightResults;
+      this._fightResults = fightResults;
       this.closeFightResults();
    }
 
@@ -29,5 +30,20 @@ export class PvEFightStore {
 
    public closeFightResults(): void {
       this.isFightResultsMenuOpened = false;
+   }
+
+   public get fightResults(): PvEFightResults {
+      _assert(this._fightResults, 'fightResults should be defined');
+      return this._fightResults;
+   }
+
+   public get initialConditions(): Record<number, PvEFightResults['initialConditions'][number]> {
+      return this.fightResults.initialConditions.reduce(
+         (acc, { fighterId, health, magicShield, maxHealth, maxMagicShield }) => ({
+            ...acc,
+            [fighterId]: { health, magicShield, maxHealth, maxMagicShield },
+         }),
+         {},
+      );
    }
 }
