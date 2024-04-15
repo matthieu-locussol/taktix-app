@@ -28,13 +28,13 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "devDependencies": {
-      "@commitlint/cli": "^19.2.0",
-      "@commitlint/config-conventional": "^19.1.0",
+      "@commitlint/cli": "^19.2.2",
+      "@commitlint/config-conventional": "^19.2.2",
       "husky": "^9.0.11",
       "lint-staged": "^15.2.2",
       "prettier": "^3.2.5",
       "standard-version": "^9.5.0",
-      "turbo": "^1.12.5"
+      "turbo": "^1.13.2"
    },
    "resolutions": {
       "@typescript-eslint/eslint-plugin": "^6.0.0",
