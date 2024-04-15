@@ -2,6 +2,15 @@ import { buttonClasses, menuItemClasses, toggleButtonClasses } from '@mui/materi
 import { createTheme, darken } from '@mui/material/styles';
 import { Channel } from 'shared/src/types/Channel';
 
+export const STATS_COLORS = {
+   vitality: '#ef4444',
+   magicShield: '#8b5cf6',
+   strength: '#854d0e',
+   dexterity: '#10b981',
+   intelligence: '#ef4444',
+   luck: '#06b6d4',
+};
+
 export const appTheme = createTheme({
    palette: {
       primary: {
@@ -55,16 +64,16 @@ export const appTheme = createTheme({
          },
       },
       statisticsColors: {
-         vitality: '#ef4444',
-         magicShield: '#8b5cf6',
-         strength: '#854d0e',
-         dexterity: '#10b981',
-         intelligence: '#ef4444',
-         luck: '#06b6d4',
-         earthDamages: '#854d0e',
-         windDamages: '#10b981',
-         fireDamages: '#ef4444',
-         iceDamages: '#06b6d4',
+         vitality: STATS_COLORS.vitality,
+         magicShield: STATS_COLORS.magicShield,
+         strength: STATS_COLORS.strength,
+         dexterity: STATS_COLORS.dexterity,
+         intelligence: STATS_COLORS.intelligence,
+         luck: STATS_COLORS.luck,
+         earthDamages: STATS_COLORS.strength,
+         windDamages: STATS_COLORS.dexterity,
+         fireDamages: STATS_COLORS.intelligence,
+         iceDamages: STATS_COLORS.luck,
          sword1HDamages: '#94a3b8',
          axe1HDamages: '#94a3b8',
          mace1HDamages: '#94a3b8',
@@ -75,14 +84,14 @@ export const appTheme = createTheme({
          mace2HDamages: '#94a3b8',
          bowDamages: '#94a3b8',
          staffDamages: '#94a3b8',
-         earthResistance: '#854d0e',
-         earthResistancePercent: '#854d0e',
-         windResistance: '#10b981',
-         windResistancePercent: '#10b981',
-         fireResistance: '#ef4444',
-         fireResistancePercent: '#ef4444',
-         iceResistance: '#06b6d4',
-         iceResistancePercent: '#06b6d4',
+         earthResistance: STATS_COLORS.strength,
+         earthResistancePercent: STATS_COLORS.strength,
+         windResistance: STATS_COLORS.dexterity,
+         windResistancePercent: STATS_COLORS.dexterity,
+         fireResistance: STATS_COLORS.intelligence,
+         fireResistancePercent: STATS_COLORS.intelligence,
+         iceResistance: STATS_COLORS.luck,
+         iceResistancePercent: STATS_COLORS.luck,
          lifeSteal: '#f43f5e',
          precision: '#4f46e5',
          evasion: '#16a34a',

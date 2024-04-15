@@ -104,7 +104,20 @@ const zPvEFightTurn = z.object({
 
 export type PvEFightTurn = z.infer<typeof zPvEFightTurn>;
 
+const zPvEInitialConditions = z.array(
+   z.object({
+      fighterId: z.number(),
+      health: z.number(),
+      magicShield: z.number(),
+      maxHealth: z.number(),
+      maxMagicShield: z.number(),
+   }),
+);
+
+export type PvEInitialConditions = z.infer<typeof zPvEInitialConditions>;
+
 export const zPvEFightResults = z.object({
+   initialConditions: zPvEInitialConditions,
    allies: z.array(zPvEAllySimplified),
    monsters: z.array(zPvEMonsterSimplified),
    turns: z.array(zPvEFightTurn),

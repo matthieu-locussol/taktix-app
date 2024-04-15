@@ -26,6 +26,43 @@ export const FightResultsMenu = observer(() => {
    const { pveFightStore } = useStore();
    const { t } = useTranslation();
 
+   if (!pveFightStore.isFightResultsMenuOpened) {
+      return null;
+   }
+
+   const AlliesComponent = () => (
+      <>
+         {pveFightStore.fightResults?.allies.map(({ id, name, experience }, idx) => {
+            const gainedExperience = pveFightStore.fightResults?.experiences[idx] ?? 0;
+            const level = LevelMgt.getLevel(experience + gainedExperience);
+
+            return (
+               <TableRow hover tabIndex={-1} key={`fight-results-value-${id}-${name}`}>
+                  <StyledTableCell size="medium">{name}</StyledTableCell>
+                  <StyledTableCell size="medium">{level}</StyledTableCell>
+                  <StyledTableCell size="medium">+{gainedExperience} XP</StyledTableCell>
+                  <StyledTableCell size="medium">+1000 Credits</StyledTableCell>
+                  <StyledTableCell size="medium">Loots...</StyledTableCell>
+               </TableRow>
+            );
+         })}
+      </>
+   );
+
+   const EnemiesComponent = () => (
+      <>
+         {pveFightStore.fightResults?.monsters.map(({ id, name, level }) => (
+            <TableRow hover tabIndex={-1} key={`fight-results-value-${id}-${name}`}>
+               <StyledTableCell size="medium">{name}</StyledTableCell>
+               <StyledTableCell size="medium">{level}</StyledTableCell>
+               <StyledTableCell size="medium" />
+               <StyledTableCell size="medium" />
+               <StyledTableCell size="medium" />
+            </TableRow>
+         ))}
+      </>
+   );
+
    return (
       <Draggable handle=".fight-results-menu-handle">
          <StyledDialog
@@ -40,7 +77,8 @@ export const FightResultsMenu = observer(() => {
             }}
          >
             <StyledDialogTitle className="fight-results-menu-handle">
-               {store.pveFightStore.fightResults?.won ? t('victory') : t('defeat')}
+               {store.pveFightStore.fightResults?.won ? t('victory') : t('defeat')} -{' '}
+               {t('turns', { count: store.pveFightStore.fightResults?.turns.length })}
             </StyledDialogTitle>
             <IconButton
                aria-label="close"
@@ -82,27 +120,11 @@ export const FightResultsMenu = observer(() => {
                               </Box>
                            </StyledTableCell>
                         </TableRow>
-                        {pveFightStore.fightResults?.allies.map(({ id, name, experience }, idx) => {
-                           const gainedExperience =
-                              pveFightStore.fightResults?.experiences[idx] ?? 0;
-                           const level = LevelMgt.getLevel(experience + gainedExperience);
-
-                           return (
-                              <TableRow
-                                 hover
-                                 tabIndex={-1}
-                                 key={`fight-results-value-${id}-${name}`}
-                              >
-                                 <StyledTableCell size="medium">{name}</StyledTableCell>
-                                 <StyledTableCell size="medium">{level}</StyledTableCell>
-                                 <StyledTableCell size="medium">
-                                    +{gainedExperience} XP
-                                 </StyledTableCell>
-                                 <StyledTableCell size="medium">+1000 Credits</StyledTableCell>
-                                 <StyledTableCell size="medium">Loots...</StyledTableCell>
-                              </TableRow>
-                           );
-                        })}
+                        {pveFightStore.fightResults?.won ? (
+                           <AlliesComponent />
+                        ) : (
+                           <EnemiesComponent />
+                        )}
                         <TableRow>
                            <StyledTableCell
                               colSpan={5}
@@ -118,15 +140,11 @@ export const FightResultsMenu = observer(() => {
                               </Box>
                            </StyledTableCell>
                         </TableRow>
-                        {pveFightStore.fightResults?.monsters.map(({ id, name, level }) => (
-                           <TableRow hover tabIndex={-1} key={`fight-results-value-${id}-${name}`}>
-                              <StyledTableCell size="medium">{name}</StyledTableCell>
-                              <StyledTableCell size="medium">{level}</StyledTableCell>
-                              <StyledTableCell size="medium" />
-                              <StyledTableCell size="medium" />
-                              <StyledTableCell size="medium" />
-                           </TableRow>
-                        ))}
+                        {pveFightStore.fightResults?.won ? (
+                           <EnemiesComponent />
+                        ) : (
+                           <AlliesComponent />
+                        )}
                      </TableBody>
                   </StyledTable>
                </TableContainer>

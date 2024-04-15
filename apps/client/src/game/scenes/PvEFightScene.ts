@@ -3,8 +3,10 @@ import { PvEFightMove } from 'shared/src/types/PvEFight';
 import { Room } from 'shared/src/types/Room';
 import { Position } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
+import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { store } from '../../store';
+import { STATS_COLORS } from '../../styles/appTheme';
 import {
    CHARACTER_HEIGHT,
    CHARACTER_WIDTH,
@@ -14,14 +16,13 @@ import {
 } from '../Scene';
 
 const PARALLAX_FACTOR = 0.3;
-const SPEED_FACTOR = 1.25;
-
-const DAMAGES_COLORS = {
-   strength: '#854d0e',
-   dexterity: '#10b981',
-   intelligence: '#ef4444',
-   luck: '#06b6d4',
-};
+const SPEED_FACTOR = 1.5;
+const HEALTH_MARGIN = 10;
+const HEALTH_HEIGHT = 8;
+const HEALTH_WIDTH = 80;
+const MAGICSHIELD_MARGIN = 4 + HEALTH_HEIGHT + HEALTH_MARGIN;
+const MAGICSHIELD_HEIGHT = 8;
+const MAGICSHIELD_WIDTH = 80;
 
 export class PvEFightScene extends Phaser.Scene {
    private background: Phaser.GameObjects.TileSprite | null = null;
@@ -34,7 +35,11 @@ export class PvEFightScene extends Phaser.Scene {
 
    private trees: Phaser.GameObjects.TileSprite | null = null;
 
-   private fighters: Record<number, Phaser.GameObjects.Sprite> = {};
+   private fighters: Record<number, Phaser.GameObjects.Container> = {};
+
+   private fightersHealth: Record<number, number> = {};
+
+   private fightersMagicShield: Record<number, number> = {};
 
    private animationRunning: boolean = false;
 
@@ -69,6 +74,8 @@ export class PvEFightScene extends Phaser.Scene {
    }
 
    public create(): void {
+      _assert(store.pveFightStore.fightResults, 'fightResults must be set!');
+
       this.sound.pauseAll();
       this.sound.play('PvEFight', { loop: true, volume: 0.5 });
       this.sound.pauseOnBlur = false;
@@ -101,7 +108,7 @@ export class PvEFightScene extends Phaser.Scene {
    }
 
    public initializeFight(): void {
-      _assert(store.pveFightStore.fightResults, 'fightResults must be set!');
+      const { initialConditions } = store.pveFightStore;
       const alliesCount = store.pveFightStore.fightResults.allies.length;
       const monstersCount = store.pveFightStore.fightResults.monsters.length;
 
@@ -119,12 +126,21 @@ export class PvEFightScene extends Phaser.Scene {
          });
          playerSprite.setScale(SCALE_FACTOR);
          playerSprite.play('idle');
-         this.fighters[id] = playerSprite;
+         playerSprite.setName('sprite');
 
-         playerSprite.setPosition(
+         const container = this.add.container(0, 0, [playerSprite]);
+         container.setPosition(
             this.getAllyPosition(playerSprite, idx, alliesCount).x,
             this.getAllyPosition(playerSprite, idx, alliesCount).y,
          );
+         this.fighters[id] = container;
+         this.fightersHealth[id] = initialConditions[id].health;
+         this.fightersMagicShield[id] = initialConditions[id].magicShield;
+
+         this.createFighterHealthBar(id);
+         this.createFighterMagicShieldBar(id);
+         this.updateFighterHealthBar(id);
+         this.updateFighterMagicShieldBar(id);
       });
 
       store.pveFightStore.fightResults.monsters.forEach(({ id }, idx) => {
@@ -139,22 +155,30 @@ export class PvEFightScene extends Phaser.Scene {
          });
          monsterSprite.setScale(SCALE_FACTOR * 2);
          monsterSprite.play('idle');
-         this.fighters[id] = monsterSprite;
+         monsterSprite.setName('sprite');
 
-         monsterSprite.setPosition(
+         const container = this.add.container(0, 0, [monsterSprite]);
+         container.setPosition(
             this.getMonsterPosition(monsterSprite, idx, monstersCount).x,
             this.getMonsterPosition(monsterSprite, idx, monstersCount).y,
          );
+         this.fighters[id] = container;
+         this.fightersHealth[id] = initialConditions[id].health;
+         this.fightersMagicShield[id] = initialConditions[id].magicShield;
+
+         this.createFighterHealthBar(id);
+         this.createFighterMagicShieldBar(id);
+         this.updateFighterHealthBar(id);
+         this.updateFighterMagicShieldBar(id);
       });
    }
 
    public run(): void {
-      _assert(store.pveFightStore.fightResults, 'fightResults must be set!');
       const { turns } = store.pveFightStore.fightResults;
 
       turns.forEach(({ moves }, idx) => {
          moves.forEach(async (move, moveIdx) => {
-            await TimeMgt.wait(200 / SPEED_FACTOR);
+            await TimeMgt.wait(300 / SPEED_FACTOR);
             await this.executeMove(move, idx, moveIdx);
          });
       });
@@ -166,9 +190,13 @@ export class PvEFightScene extends Phaser.Scene {
       this.animationRunning = false;
       this.parallaxActive = false;
 
-      for (const sprite of Object.values(this.fighters)) {
-         if (sprite.active) {
-            sprite.stop();
+      for (const container of Object.values(this.fighters)) {
+         if (container.active) {
+            const sprite = container.getByName('sprite') as Phaser.GameObjects.Sprite;
+
+            if (sprite.active) {
+               sprite.anims.stop();
+            }
          }
       }
 
@@ -187,7 +215,6 @@ export class PvEFightScene extends Phaser.Scene {
    }
 
    public async executeMove(move: PvEFightMove, turnId: number, moveId: number): Promise<void> {
-      _assert(store.pveFightStore.fightResults, 'fightResults must be set!');
       const { fighters } = store.pveFightStore.fightResults.turns[turnId];
       const targetShouldDie = fighters.find(({ id }) => id === move.targetId)?.health === 0;
 
@@ -196,11 +223,126 @@ export class PvEFightScene extends Phaser.Scene {
          this.executeMove(move, turnId, moveId);
       } else {
          this.attackPhysical(move, targetShouldDie);
+         this.stopOnLastMove(turnId, moveId);
+      }
+   }
 
-         if (turnId === store.pveFightStore.fightResults.turns.length - 1) {
-            if (moveId === store.pveFightStore.fightResults.turns[turnId].moves.length - 1) {
-               this.stop();
-            }
+   private createFighterHealthBar(fighterId: number): void {
+      const container = this.fighters[fighterId];
+      const fighterSprite = container.getByName('sprite') as Phaser.GameObjects.Sprite;
+
+      const healthBgSprite = this.add.graphics();
+      healthBgSprite.fillStyle(0x111827, 0.3);
+      healthBgSprite.fillRoundedRect(
+         fighterSprite.x - 40,
+         fighterSprite.y - HEALTH_HEIGHT - CHARACTER_HEIGHT / 2 - HEALTH_MARGIN,
+         HEALTH_WIDTH,
+         HEALTH_HEIGHT,
+         4,
+      );
+      healthBgSprite.lineStyle(2, 0x111827, 1);
+      healthBgSprite.strokeRoundedRect(
+         fighterSprite.x - 40,
+         fighterSprite.y - HEALTH_HEIGHT - CHARACTER_HEIGHT / 2 - HEALTH_MARGIN,
+         HEALTH_WIDTH,
+         HEALTH_HEIGHT,
+         4,
+      );
+      healthBgSprite.setDepth(1);
+      healthBgSprite.setName('healthBg');
+
+      const healthSprite = this.add.graphics();
+      healthSprite.fillStyle(NumberMgt.hexStringToNumber(STATS_COLORS.vitality));
+      healthSprite.fillRoundedRect(
+         fighterSprite.x - 40 + 1,
+         fighterSprite.y - HEALTH_HEIGHT - CHARACTER_HEIGHT / 2 - HEALTH_MARGIN + 1,
+         HEALTH_WIDTH - 2,
+         HEALTH_HEIGHT - 2,
+         4,
+      );
+      healthSprite.setDepth(2);
+      healthSprite.setName('health');
+
+      container.add(healthBgSprite);
+      container.add(healthSprite);
+   }
+
+   private createFighterMagicShieldBar(fighterId: number): void {
+      const container = this.fighters[fighterId];
+      const fighterSprite = container.getByName('sprite') as Phaser.GameObjects.Sprite;
+
+      const magicShieldBgSprite = this.add.graphics();
+      magicShieldBgSprite.fillStyle(0x111827, 0.3);
+      magicShieldBgSprite.fillRoundedRect(
+         fighterSprite.x - 40,
+         fighterSprite.y - MAGICSHIELD_HEIGHT - CHARACTER_HEIGHT / 2 - MAGICSHIELD_MARGIN,
+         MAGICSHIELD_WIDTH,
+         MAGICSHIELD_HEIGHT,
+         4,
+      );
+      magicShieldBgSprite.lineStyle(2, 0x111827, 1);
+      magicShieldBgSprite.strokeRoundedRect(
+         fighterSprite.x - 40,
+         fighterSprite.y - MAGICSHIELD_HEIGHT - CHARACTER_HEIGHT / 2 - MAGICSHIELD_MARGIN,
+         MAGICSHIELD_WIDTH,
+         MAGICSHIELD_HEIGHT,
+         4,
+      );
+      magicShieldBgSprite.setDepth(1);
+      magicShieldBgSprite.setName('magicShieldBg');
+
+      const magicShieldSprite = this.add.graphics();
+      magicShieldSprite.fillStyle(NumberMgt.hexStringToNumber(STATS_COLORS.magicShield));
+      magicShieldSprite.fillRoundedRect(
+         fighterSprite.x - 40 + 1,
+         fighterSprite.y - MAGICSHIELD_HEIGHT - CHARACTER_HEIGHT / 2 - MAGICSHIELD_MARGIN + 1,
+         MAGICSHIELD_WIDTH - 2,
+         MAGICSHIELD_HEIGHT - 2,
+         4,
+      );
+      magicShieldSprite.setDepth(2);
+      magicShieldSprite.setName('magicShield');
+
+      container.add(magicShieldBgSprite);
+      container.add(magicShieldSprite);
+   }
+
+   private updateFighterHealthBar(fighterId: number): void {
+      const container = this.fighters[fighterId];
+      const healthSprite = container.getByName('health') as Phaser.GameObjects.Graphics;
+      const healthBgSprite = container.getByName('healthBg') as Phaser.GameObjects.Graphics;
+
+      if (healthSprite !== null && healthBgSprite !== null) {
+         const { maxHealth } = store.pveFightStore.initialConditions[fighterId];
+         const health = this.fightersHealth[fighterId];
+
+         healthSprite.setScale(health / maxHealth, 1);
+         const emptySpace = HEALTH_WIDTH - (health / maxHealth) * HEALTH_WIDTH;
+         healthSprite.setX(healthBgSprite.x - emptySpace / 2);
+      }
+   }
+
+   private updateFighterMagicShieldBar(fighterId: number): void {
+      const container = this.fighters[fighterId];
+      const magicShieldSprite = container.getByName('magicShield') as Phaser.GameObjects.Graphics;
+      const magicShieldBgSprite = container.getByName(
+         'magicShieldBg',
+      ) as Phaser.GameObjects.Graphics;
+
+      if (magicShieldSprite !== null && magicShieldBgSprite !== null) {
+         const { maxMagicShield } = store.pveFightStore.initialConditions[fighterId];
+         const magicShield = this.fightersMagicShield[fighterId];
+
+         magicShieldSprite.setScale(magicShield / maxMagicShield, 1);
+         const emptySpace = MAGICSHIELD_WIDTH - (magicShield / maxMagicShield) * MAGICSHIELD_WIDTH;
+         magicShieldSprite.setX(magicShieldBgSprite.x - emptySpace / 2);
+      }
+   }
+
+   private stopOnLastMove(turnId: number, moveId: number): void {
+      if (turnId === store.pveFightStore.fightResults.turns.length - 1) {
+         if (moveId === store.pveFightStore.fightResults.turns[turnId].moves.length - 1) {
+            this.stop();
          }
       }
    }
@@ -359,7 +501,7 @@ export class PvEFightScene extends Phaser.Scene {
       { fighterId, targetId, damages }: PvEFightMove,
       targetShouldDie: boolean,
    ): void {
-      _assert(store.pveFightStore.fightResults, 'fightResults must be set!');
+      this.animationRunning = true;
 
       const fighter =
          store.pveFightStore.fightResults.allies.find(({ id }) => id === fighterId) ||
@@ -371,42 +513,73 @@ export class PvEFightScene extends Phaser.Scene {
       _assert(fighter, 'fighter must be set');
       _assert(target, 'target must be set');
 
-      const fighterSprite = this.fighters[fighterId];
-      const targetSprite = this.fighters[targetId];
+      const fighterContainer = this.fighters[fighterId];
+      const targetContainer = this.fighters[targetId];
 
-      const initialPositionX = fighterSprite.x;
-      const initialPositionY = fighterSprite.y;
+      const initialPositionX = fighterContainer.x;
+      const initialPositionY = fighterContainer.y;
 
       const xFactor =
-         targetSprite.x > fighterSprite.x ? -4 * fighterSprite.width : 4 * fighterSprite.width;
+         targetContainer.x > fighterContainer.x
+            ? -4 * fighterContainer.width
+            : 4 * fighterContainer.width;
+
+      const highestDamagesType = damages.reduce(
+         (acc, { type, value }) => {
+            if (value > acc.value) {
+               return { type, value };
+            }
+
+            return acc;
+         },
+         { type: 'intelligence', value: 0 },
+      ).type;
 
       const chain = this.tweens.chain({
-         targets: fighterSprite,
+         targets: fighterContainer,
          tweens: [
             {
-               x: targetSprite.x + xFactor,
-               y: targetSprite.y,
+               x: targetContainer.x + xFactor,
+               y: targetContainer.y,
                duration: 500 / SPEED_FACTOR,
                ease: 'Power2',
                yoyo: true,
                repeat: 0,
                onYoyo: () => {
                   const hitAnimation = this.add
-                     .sprite(targetSprite.x, targetSprite.y, 'HitsSpritesheet')
-                     .setTint(0x10b981)
+                     .sprite(targetContainer.x, targetContainer.y, 'HitsSpritesheet')
+                     .setTint(NumberMgt.hexStringToNumber(STATS_COLORS[highestDamagesType]))
                      .setAlpha(0.8)
-                     .setScale(targetSprite.scaleX / 2, targetSprite.scaleY / 2);
+                     .setScale(targetContainer.scaleX / 2, targetContainer.scaleY / 2);
                   hitAnimation.postFX.addGlow(0x111827, 16, 0, false, 1, 10);
                   hitAnimation.play('physical');
                   hitAnimation.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
                      hitAnimation.destroy();
                   });
 
-                  this.displayDamages(damages, targetSprite);
+                  this.displayDamages(damages, targetContainer);
 
                   if (targetShouldDie) {
                      this.kill(targetId);
                   }
+               },
+               onComplete: () => {
+                  const totalDamages = damages.reduce((acc, { value }) => acc + value, 0);
+
+                  const damagesOnShield = Math.min(
+                     totalDamages,
+                     this.fightersMagicShield[targetId],
+                  );
+                  const damagesOnHealth = Math.min(
+                     totalDamages - damagesOnShield,
+                     this.fightersHealth[targetId],
+                  );
+
+                  this.fightersMagicShield[targetId] -= damagesOnShield;
+                  this.fightersHealth[targetId] -= damagesOnHealth;
+
+                  this.updateFighterHealthBar(targetId);
+                  this.updateFighterMagicShieldBar(targetId);
                },
             },
             {
@@ -424,20 +597,19 @@ export class PvEFightScene extends Phaser.Scene {
          },
       });
 
-      this.animationRunning = true;
       chain.play();
    }
 
    private displayDamages(
       damages: PvEFightMove['damages'],
-      targetSprite: Phaser.GameObjects.Sprite,
+      targetSprite: Phaser.GameObjects.Container,
    ): void {
       const damagesSprites = damages.map(({ value, type }) => {
          const sprite = this.add
             .text(targetSprite.x, targetSprite.y - 20, `-${value}`, {
                fontFamily: 'Orbitron',
                fontSize: 24,
-               color: DAMAGES_COLORS[type],
+               color: STATS_COLORS[type],
             })
             .setOrigin(0.5, 0.5)
             .setAlpha(0)
