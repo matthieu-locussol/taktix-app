@@ -30,7 +30,9 @@ export const Changelog = observer(() => {
                      variant="body1"
                      color="textSecondary"
                      dangerouslySetInnerHTML={{
-                        __html: `<b>${TimeMgt.formatDatetime(new Date(date))}</b><br />${text}<br />`,
+                        __html: `<b>${TimeMgt.formatDatetime(
+                           new Date(date),
+                        )}</b><br />${text}<br />`,
                      }}
                      mb={2}
                   />
