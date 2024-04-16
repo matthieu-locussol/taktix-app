@@ -1,9 +1,9 @@
 import {
-   PvEFighter,
    PvEFightMove,
    PvEFightParameters,
    PvEFightResults,
    PvEFightTurn,
+   PvEFighter,
    PvEInitialConditions,
 } from '../types/PvEFight';
 import { WeaponDamagesType } from '../types/Weapon';

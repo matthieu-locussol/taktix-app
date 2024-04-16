@@ -3,8 +3,8 @@ import {
    CHARACTER_LETTER_WIDTH,
    CHARACTER_WIDTH,
    SCALE_FACTOR,
-   TILE_SIZE,
    type Scene,
+   TILE_SIZE,
 } from '../Scene';
 import { registerSpriteEvents } from './registerSpriteEvents';
 

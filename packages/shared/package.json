@@ -6,7 +6,7 @@
    "scripts": {
       "build": "tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-      "lint": "biome lint src",
+      "lint": "biome check *",
       "test": "vitest --run"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",

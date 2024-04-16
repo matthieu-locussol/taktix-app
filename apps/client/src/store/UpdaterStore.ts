@@ -52,7 +52,7 @@ export class UpdaterStore {
             this.updating = false;
             this.openUpdateModal = true;
          });
-      } catch (e) {
+      } catch (_e) {
          runInAction(() => {
             this._store.loginStore.setErrorMessage('updateError');
          });
@@ -66,7 +66,7 @@ export class UpdaterStore {
          runInAction(() => {
             this.openUpdateModal = false;
          });
-      } catch (e) {
+      } catch (_e) {
          runInAction(() => {
             this._store.loginStore.setErrorMessage('restartError');
          });

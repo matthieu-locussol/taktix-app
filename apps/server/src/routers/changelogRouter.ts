@@ -22,7 +22,7 @@ export const changelogRouter: RequestHandler = async (_, res) => {
       };
 
       res.send(payload);
-   } catch (e) {
+   } catch (_e) {
       const payload: ChangelogSchema = {
          changelogs: [],
       };

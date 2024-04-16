@@ -68,13 +68,20 @@ describe('ContextMenuStore', () => {
          [
             {
                getData: () => EntityType.Character,
-               setData: () => {},
+               setData: () => {
+                  // This is a mock
+               },
                name: 'External Player',
             } as unknown as Phaser.GameObjects.Sprite,
          ],
          [
             {
-               polygon: { name: 'Teleporter', setData: () => {} },
+               polygon: {
+                  name: 'Teleporter',
+                  setData: () => {
+                     // This is a mock
+                  },
+               },
             } as unknown as InteractiveObject,
          ],
       );
@@ -106,7 +113,9 @@ describe('ContextMenuStore', () => {
 
       contextMenuStore.setCurrentSubMenu('Test', [
          {
-            callback: () => {},
+            callback: () => {
+               // This is a mock
+            },
             text: 'Test menu element',
          },
       ]);

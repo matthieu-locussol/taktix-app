@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { zProfessionType } from './Profession';
-import { isRealStatistic, RealStatistic, zRealStatistic } from './Statistic';
+import { RealStatistic, isRealStatistic, zRealStatistic } from './Statistic';
 import { zWeaponDamages, zWeaponDamagesType, zWeaponType } from './Weapon';
 
 const zPvEFighterInformations = z.object({

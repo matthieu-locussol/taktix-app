@@ -27,7 +27,7 @@ export const ServerStatus = observer((props: BoxProps) => {
             const { status } = zStatusSchema.parse(json);
 
             newsStore.setStatus(status);
-         } catch (e) {
+         } catch (_e) {
             newsStore.setStatus('offline');
          }
       };
