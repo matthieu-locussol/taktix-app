@@ -6,14 +6,14 @@
    "scripts": {
       "bumpversion": "tsc src/version.ts && node src/version.js",
       "generate_maps": "tsc src/generateMaps.ts && node src/generateMaps.js",
-      "clean": "rm -rf .turbo && rm -rf node_modules"
+      "clean": "rm -rf .turbo && rm -rf node_modules",
+      "lint": "biome lint src"
    },
    "dependencies": {
       "shared": "workspace:latest"
    },
    "devDependencies": {
       "@types/node": "^20.12.7",
-      "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
       "typescript": "^5.4.5"
    }

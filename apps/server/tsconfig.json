@@ -8,5 +8,5 @@
       "rootDir": "./src",
       "downlevelIteration": true
    },
-   "include": ["src", ".eslintrc.js"]
+   "include": ["src"]
 }

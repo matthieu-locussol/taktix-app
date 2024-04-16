@@ -18,8 +18,8 @@
       "start:server": "turbo run start --filter=server",
       "start:website": "turbo run start --filter=website",
       "clean": "turbo run clean && rm -rf node_modules",
-      "eslint": "turbo run eslint",
-      "eslint:shared": "turbo run eslint --filter=shared",
+      "lint": "turbo run lint",
+      "lint:shared": "turbo run lint --filter=shared",
       "format": "lint-staged",
       "release": "standard-version -a && turbo run bumpversion",
       "studio": "turbo run studio",
@@ -28,17 +28,15 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "devDependencies": {
+      "@biomejs/biome": "1.7.0",
       "@commitlint/cli": "^19.2.2",
       "@commitlint/config-conventional": "^19.2.2",
       "husky": "^9.0.11",
       "lint-staged": "^15.2.2",
-      "prettier": "^3.2.5",
       "standard-version": "^9.5.0",
       "turbo": "^1.13.2"
    },
    "resolutions": {
-      "@typescript-eslint/eslint-plugin": "^6.0.0",
-      "@typescript-eslint/parser": "^6.0.0",
       "phaser": "~3.70.0"
    },
    "packageManager": "pnpm@8.8.0"

@@ -1,22 +1,21 @@
-import { Theme, keyframes, styled } from '@mui/material';
-import { observer } from 'mobx-react-lite';
-import { useEffect, useRef } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
-import { useStore } from '../../store';
+import { Theme, keyframes, styled } from '@mui/material'
+import { observer } from 'mobx-react-lite'
+import { useEffect, useRef } from 'react'
+import { Handle, NodeProps, Position } from 'reactflow'
+import { useStore } from '../../store'
 
 export const CustomNode = observer(({ data, selected, ...rest }: NodeProps) => {
-   const ref = useRef<HTMLDivElement>(null);
-   const { talentsMenuStore } = useStore();
-   const id = +rest.id;
+   const ref = useRef<HTMLDivElement>(null)
+   const { talentsMenuStore } = useStore()
+   const id = +rest.id
 
    useEffect(() => {
       if (ref.current) {
-         ref.current.style.animation = 'none';
-         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-         ref.current.offsetHeight;
-         ref.current.style.animation = '';
+         ref.current.style.animation = 'none'
+         ref.current.offsetHeight
+         ref.current.style.animation = ''
       }
-   }, [talentsMenuStore.talents]);
+   }, [talentsMenuStore.talents])
 
    return (
       <>
@@ -27,11 +26,11 @@ export const CustomNode = observer(({ data, selected, ...rest }: NodeProps) => {
             hovered={talentsMenuStore.hoveredTalent === id || talentsMenuStore.talentsMap[id]}
             onMouseEnter={() => {
                if (talentsMenuStore.hoveredTalent !== id) {
-                  talentsMenuStore.setHoveredTalent(id);
+                  talentsMenuStore.setHoveredTalent(id)
                }
             }}
             onMouseLeave={() => {
-               talentsMenuStore.setHoveredTalent(null);
+               talentsMenuStore.setHoveredTalent(null)
             }}
             data={data}
             {...rest}
@@ -41,28 +40,28 @@ export const CustomNode = observer(({ data, selected, ...rest }: NodeProps) => {
             <Handle type="source" position={Position.Right} />
          </StyledNode>
       </>
-   );
-});
+   )
+})
 
 interface StyleProps extends NodeProps {
-   adjacent: boolean;
-   hovered: boolean;
+   adjacent: boolean
+   hovered: boolean
 }
 
 const blink = (theme: Theme) => keyframes`
    50% {
       border-color: ${theme.palette.text.secondary};
    }
-`;
+`
 
 const StyledNode = styled('div')<StyleProps>(
    ({ theme, adjacent, hovered, data: { type } }) =>
       () => {
          const borderHovered = hovered
             ? `2px solid ${theme.palette.talents.color.hover}`
-            : `1px solid ${theme.palette.talents.color.normal}`;
+            : `1px solid ${theme.palette.talents.color.normal}`
 
-         const blinkKeyframes = blink(theme);
+         const blinkKeyframes = blink(theme)
 
          return {
             width: 40,
@@ -82,6 +81,6 @@ const StyledNode = styled('div')<StyleProps>(
             boxSizing: 'border-box',
             animation: adjacent ? `${blinkKeyframes} 1s infinite` : 'none',
             opacity: !adjacent && !hovered ? 0.5 : 1,
-         };
+         }
       },
-);
+)

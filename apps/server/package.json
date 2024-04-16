@@ -5,7 +5,7 @@
       "postinstall": "prisma generate --accelerate",
       "build": "prisma generate --accelerate && tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-      "eslint": "eslint src --report-unused-disable-directives",
+      "lint": "biome lint src",
       "dev": "prisma generate --accelerate && ts-node-dev --respawn --transpile-only src/index.ts",
       "dev:debug": "DEBUG=colyseus:* ts-node-dev --respawn --transpile-only src/index.ts",
       "start": "node ./dist/index.js",
@@ -39,9 +39,7 @@
       "@types/node": "^20.12.7",
       "@types/uuid": "^9.0.8",
       "@types/ws": "^8.5.10",
-      "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
-      "eslint": "^9.0.0",
       "ts-node-dev": "^2.0.0",
       "typescript": "^5.4.5"
    }

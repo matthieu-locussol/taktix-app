@@ -9,5 +9,5 @@
       "resolveJsonModule": true,
       "jsx": "preserve"
    },
-   "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".eslintrc.js"]
+   "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts"]
 }

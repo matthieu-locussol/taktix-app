@@ -3,23 +3,23 @@
    "pipeline": {
       "build": {
          "outputs": ["dist/**"],
-         "dependsOn": ["eslint", "^build"]
+         "dependsOn": ["lint", "^build"]
       },
       "build:app": {
          "outputs": ["dist/**"],
-         "dependsOn": ["eslint", "build:shared", "^build:app"]
+         "dependsOn": ["lint", "build:shared", "^build:app"]
       },
       "build:server": {
          "outputs": ["dist/**"],
-         "dependsOn": ["eslint", "build:shared", "^build:server"]
+         "dependsOn": ["lint", "build:shared", "^build:server"]
       },
       "build:shared": {
          "outputs": ["dist/**"],
-         "dependsOn": ["eslint:shared", "^build:shared"]
+         "dependsOn": ["lint:shared", "^build:shared"]
       },
       "build:website": {
          "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-         "dependsOn": ["eslint", "build:shared"]
+         "dependsOn": ["lint", "build:shared"]
       },
       "bumpversion": {},
       "clean": {},
@@ -43,10 +43,10 @@
          "cache": false,
          "persistent": true
       },
-      "eslint": {
-         "dependsOn": ["build:shared", "^eslint"]
+      "lint": {
+         "dependsOn": ["build:shared", "^lint"]
       },
-      "eslint:shared": {},
+      "lint:shared": {},
       "generate_maps": {
          "cache": false
       },
