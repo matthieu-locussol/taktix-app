@@ -33,7 +33,7 @@
       "reactflow": "^11.10.4",
       "shared": "workspace:latest",
       "ts-pattern": "^5.0.8",
-      "vite": "^5.1.6",
+      "vite": "^5.2.9",
       "vitest": "^1.3.1",
       "zod": "^3.22.4"
    },
