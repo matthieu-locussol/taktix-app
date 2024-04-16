@@ -134,7 +134,9 @@ export class ${map}Scene extends Scene {
 
    public loadAssets(): void {
       this.load.audio('${map}_music', '/assets/musics/${map}.mp3');
-      ${tiledMapTilesets.map((tileset) => `this.load.image('${tileset.name}_tileset', '${tileset.image}');`).join('\n      ')}
+      ${tiledMapTilesets
+         .map((tileset) => `this.load.image('${tileset.name}_tileset', '${tileset.image}');`)
+         .join('\n      ')}
       this.load.tilemapTiledJSON('${map}_tiledmap', '/assets/maps/${map}.json');
       this.load.spritesheet('PlayerSpritesheet', '/assets/characters/characters.png', {
          frameWidth: CHARACTER_WIDTH,
@@ -148,7 +150,12 @@ export class ${map}Scene extends Scene {
       this.sound.pauseOnBlur = false;
 
       this.tilemap = this.make.tilemap({ key: '${map}_tiledmap' });
-      ${tiledMapTilesets.map((tileset) => `this.tilemap.addTilesetImage('${tileset.name}', '${tileset.name}_tileset');`).join('\n      ')}
+      ${tiledMapTilesets
+         .map(
+            (tileset) =>
+               `this.tilemap.addTilesetImage('${tileset.name}', '${tileset.name}_tileset');`,
+         )
+         .join('\n      ')}
       this.initializeTilemap([${tiledMapTilesets.map((tileset) => `'${tileset.name}'`).join(', ')}]);
 
       return this.tilemap;

@@ -8,7 +8,7 @@
       "lineEnding": "lf",
       "lineWidth": 100,
       "attributePosition": "auto",
-      "ignore": ["./packages/shared/src/data/talents.ts"]
+      "ignore": ["**/*dist*", "**/*node_modules*", "./packages/shared/src/data/talents.ts"]
    },
    "organizeImports": { "enabled": true },
    "linter": {
@@ -187,7 +187,7 @@
          "jsxQuoteStyle": "double",
          "quoteProperties": "asNeeded",
          "trailingComma": "all",
-         "semicolons": "asNeeded",
+         "semicolons": "always",
          "arrowParentheses": "always",
          "bracketSpacing": true,
          "bracketSameLine": false,
