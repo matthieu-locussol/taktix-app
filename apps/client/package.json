@@ -5,7 +5,7 @@
       "build": "tsc && vite build",
       "build:app": "TAURI_PRIVATE_KEY=~/.tauri/taktix-app.key tauri build",
       "lint": "biome check *",
-      "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+      "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm -rf src-tauri/target",
       "dev:client": "vite --host",
       "dev:app": "tauri dev",
       "start": "vite preview",
