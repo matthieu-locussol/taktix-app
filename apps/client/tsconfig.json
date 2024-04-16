@@ -6,5 +6,5 @@
       "rootDir": ".",
       "resolveJsonModule": true
    },
-   "include": ["src", "src-tauri", ".eslintrc.js", "vite.config.ts"]
+   "include": ["src", "src-tauri", "vite.config.ts"]
 }

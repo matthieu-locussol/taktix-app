@@ -5,6 +5,7 @@
       "dev": "next dev",
       "build": "next build",
       "clean": "rm -rf .next && rm -rf .turbo && rm -rf node_modules",
+      "lint": "biome lint src",
       "start": "next start"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
@@ -23,9 +24,7 @@
       "@babel/core": "^7.24.4",
       "@types/react": "^18.2.78",
       "@types/react-dom": "^18.2.25",
-      "config-eslint": "workspace:latest",
       "config-typescript": "workspace:latest",
-      "eslint": "^9.0.0",
       "typescript": "^5.4.5"
    }
 }

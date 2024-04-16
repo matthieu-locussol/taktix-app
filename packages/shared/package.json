@@ -6,20 +6,20 @@
    "scripts": {
       "build": "tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-      "eslint": "eslint src --report-unused-disable-directives",
+      "lint": "biome lint src",
       "test": "vitest --run"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
-   "devDependencies": {
-      "config-eslint": "workspace:latest",
-      "config-typescript": "workspace:latest",
-      "typescript": "^5.4.5"
-   },
    "dependencies": {
       "@colyseus/core": "^0.15.29",
       "@colyseus/schema": "^2.0.30",
       "vitest": "^1.5.0",
       "zod": "^3.22.4"
+   },
+   "devDependencies": {
+      "@biomejs/biome": "1.7.0",
+      "config-typescript": "workspace:latest",
+      "typescript": "^5.4.5"
    }
 }

@@ -1,4 +1,4 @@
-import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
+import { Client as ColyseusClient, Room, logger } from '@colyseus/core'
 import {
    Channel,
    ChannelMgt,
@@ -8,50 +8,49 @@ import {
    ChatRoomUserData as UserData,
    _assert,
    isChatRoomMessage,
-} from 'shared';
-import { match } from 'ts-pattern';
-import { removeDanglingUsers, usersMap } from './utils/usersMap';
+} from 'shared'
+import { match } from 'ts-pattern'
+import { removeDanglingUsers, usersMap } from './utils/usersMap'
 
-// eslint-disable-next-line import/no-mutable-exports
-export let notifyMaintenance: (() => void) | null = null;
+export let notifyMaintenance: (() => void) | null = null
 
-type Client = ColyseusClient<UserData, unknown>;
+type Client = ColyseusClient<UserData, unknown>
 
 interface CharacterInfos {
-   name: string;
-   uuid: string;
+   name: string
+   uuid: string
 }
 
 export class ChatRoom extends Room {
-   characterInfosByClientId = new Map<string, CharacterInfos>();
+   characterInfosByClientId = new Map<string, CharacterInfos>()
 
-   clientIdByCharacterName = new Map<string, Client>();
+   clientIdByCharacterName = new Map<string, Client>()
 
    onCreate(_options: Options) {
-      logger.info('[ChatRoom] Room created');
+      logger.info('[ChatRoom] Room created')
 
       this.onMessage('*', (client: Client, type: unknown, message: unknown) => {
          logger.info(
             `[ChatRoom] Received message from '${client.sessionId}': '${type}' -> '${JSON.stringify(
                message,
             )}'`,
-         );
+         )
 
          const packet = {
             type,
             message,
-         };
+         }
 
          if (isChatRoomMessage(packet)) {
             match(packet)
                .with({ type: 'message' }, (payloadMessage) =>
                   this.onUserMessage(client, payloadMessage.message),
                )
-               .exhaustive();
+               .exhaustive()
          } else {
-            logger.error(`[ChatRoom] Received invalid message from '${client.sessionId}'`);
+            logger.error(`[ChatRoom] Received invalid message from '${client.sessionId}'`)
          }
-      });
+      })
 
       notifyMaintenance = () => {
          const packet: ChatRoomResponse = {
@@ -61,26 +60,26 @@ export class ChatRoom extends Room {
                channel: Channel.SERVER,
                content: `A maintenance has started. From now on, every action you do might be lost, so please log out as soon as possible. Thank you for your understanding.`,
             },
-         };
+         }
 
-         this.broadcast(packet.type, packet.message);
-      };
+         this.broadcast(packet.type, packet.message)
+      }
    }
 
    onUserMessage(
       client: Client,
       message: Extract<ChatRoomMessage, { type: 'message' }>['message'],
    ) {
-      const characterInfos = this.characterInfosByClientId.get(client.id);
-      _assert(characterInfos, 'character should be defined');
-      const { name, uuid } = characterInfos;
-      const { channel, content } = message;
-      const userInfos = usersMap.get(uuid);
-      _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
-      const { role } = userInfos;
+      const characterInfos = this.characterInfosByClientId.get(client.id)
+      _assert(characterInfos, 'character should be defined')
+      const { name, uuid } = characterInfos
+      const { channel, content } = message
+      const userInfos = usersMap.get(uuid)
+      _assert(userInfos, `User infos for uuid '${uuid}' should be defined`)
+      const { role } = userInfos
 
       if (ChannelMgt.isPrivateMessage(content)) {
-         this.onPrivateMessage(client, content);
+         this.onPrivateMessage(client, content)
       } else {
          const packet: ChatRoomResponse = {
             type: 'message',
@@ -88,10 +87,10 @@ export class ChatRoom extends Room {
                ...ChannelMgt.getPrefixedChannelNameAndContent(content, channel),
                author: name,
             },
-         };
+         }
 
          if (ChannelMgt.hasPermission(role, packet.message.channel)) {
-            this.broadcast(packet.type, packet.message);
+            this.broadcast(packet.type, packet.message)
          } else {
             const errorPacket: ChatRoomResponse = {
                type: 'message',
@@ -100,19 +99,19 @@ export class ChatRoom extends Room {
                   channel: Channel.ERROR,
                   content: `You don't have permissions to send a message in this channel!`,
                },
-            };
+            }
 
-            client.send(errorPacket.type, errorPacket.message);
+            client.send(errorPacket.type, errorPacket.message)
          }
       }
    }
 
    onPrivateMessage(client: Client, message: string) {
-      const characterInfos = this.characterInfosByClientId.get(client.id);
-      _assert(characterInfos, 'character should be defined');
-      const { name } = characterInfos;
-      const { target, content } = ChannelMgt.extractPrivateMessage(message);
-      const targetClient = this.clientIdByCharacterName.get(target);
+      const characterInfos = this.characterInfosByClientId.get(client.id)
+      _assert(characterInfos, 'character should be defined')
+      const { name } = characterInfos
+      const { target, content } = ChannelMgt.extractPrivateMessage(message)
+      const targetClient = this.clientIdByCharacterName.get(target)
 
       const packet: ChatRoomResponse = {
          type: 'privateMessage',
@@ -121,12 +120,12 @@ export class ChatRoom extends Room {
             target,
             content,
          },
-      };
+      }
 
       if (targetClient !== undefined) {
          if (targetClient.id !== client.id) {
-            client.send(packet.type, packet.message);
-            targetClient.send(packet.type, packet.message);
+            client.send(packet.type, packet.message)
+            targetClient.send(packet.type, packet.message)
          } else {
             const errorPacket: ChatRoomResponse = {
                type: 'message',
@@ -135,9 +134,9 @@ export class ChatRoom extends Room {
                   channel: Channel.ERROR,
                   content: `You can't send a private message to yourself!`,
                },
-            };
+            }
 
-            client.send(errorPacket.type, errorPacket.message);
+            client.send(errorPacket.type, errorPacket.message)
          }
       } else {
          const errorPacket: ChatRoomResponse = {
@@ -147,22 +146,22 @@ export class ChatRoom extends Room {
                channel: Channel.ERROR,
                content: `User '${target}' does not exist or is not connected!`,
             },
-         };
+         }
 
-         client.send(errorPacket.type, errorPacket.message);
+         client.send(errorPacket.type, errorPacket.message)
       }
    }
 
    onJoin(client: Client, { uuid }: Options) {
-      logger.info(`[ChatRoom] Client '${client.sessionId}' joined the room`);
+      logger.info(`[ChatRoom] Client '${client.sessionId}' joined the room`)
 
-      const userInfos = usersMap.get(uuid);
-      _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
-      usersMap.set(uuid, { ...userInfos, chatRoomClient: client });
-      const { characterName } = userInfos;
+      const userInfos = usersMap.get(uuid)
+      _assert(userInfos, `User infos for uuid '${uuid}' should be defined`)
+      usersMap.set(uuid, { ...userInfos, chatRoomClient: client })
+      const { characterName } = userInfos
 
-      this.characterInfosByClientId.set(client.id, { name: characterName, uuid });
-      this.clientIdByCharacterName.set(characterName, client);
+      this.characterInfosByClientId.set(client.id, { name: characterName, uuid })
+      this.clientIdByCharacterName.set(characterName, client)
 
       const packet: ChatRoomResponse = {
          type: 'message',
@@ -171,9 +170,9 @@ export class ChatRoom extends Room {
             channel: Channel.SERVER,
             content: `${characterName} logged in!`,
          },
-      };
+      }
 
-      this.broadcast(packet.type, packet.message, { except: client });
+      this.broadcast(packet.type, packet.message, { except: client })
 
       const clientPacket: ChatRoomResponse = {
          type: 'message',
@@ -182,21 +181,21 @@ export class ChatRoom extends Room {
             channel: Channel.SERVER,
             content: `Connected to server {{SERVER_URL}}!`,
          },
-      };
+      }
 
-      client.send(clientPacket.type, clientPacket.message);
+      client.send(clientPacket.type, clientPacket.message)
    }
 
    onLeave(client: Client, _consented: boolean) {
-      logger.info(`[AuthRoom] Client '${client.sessionId}' left the room`);
+      logger.info(`[AuthRoom] Client '${client.sessionId}' left the room`)
 
-      const characterInfos = this.characterInfosByClientId.get(client.id);
-      _assert(characterInfos, 'character should be defined');
-      this.characterInfosByClientId.delete(client.id);
+      const characterInfos = this.characterInfosByClientId.get(client.id)
+      _assert(characterInfos, 'character should be defined')
+      this.characterInfosByClientId.delete(client.id)
 
-      const clientEntry = this.clientIdByCharacterName.get(characterInfos.name);
-      _assert(clientEntry, 'clientId should be defined');
-      this.clientIdByCharacterName.delete(characterInfos.name);
+      const clientEntry = this.clientIdByCharacterName.get(characterInfos.name)
+      _assert(clientEntry, 'clientId should be defined')
+      this.clientIdByCharacterName.delete(characterInfos.name)
 
       const packet: ChatRoomResponse = {
          type: 'message',
@@ -205,15 +204,15 @@ export class ChatRoom extends Room {
             channel: Channel.SERVER,
             content: `${characterInfos.name} logged out :'(`,
          },
-      };
+      }
 
-      this.broadcast(packet.type, packet.message, { except: client });
+      this.broadcast(packet.type, packet.message, { except: client })
 
-      setTimeout(() => removeDanglingUsers(), 1000);
+      setTimeout(() => removeDanglingUsers(), 1000)
    }
 
    onDispose() {
-      notifyMaintenance = null;
-      logger.info(`[ChatRoom] Room disposed`);
+      notifyMaintenance = null
+      logger.info(`[ChatRoom] Room disposed`)
    }
 }
