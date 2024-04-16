@@ -303,7 +303,11 @@ export class MapRoom extends Room<MapState> {
          client.send(packet.type, packet.message);
 
          logger.info(
-            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) started a PvE fight against monster group '${monsterGroupId}' and ${packet.message.results.won ? 'won' : 'lost'}`,
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${
+               player.name
+            }) started a PvE fight against monster group '${monsterGroupId}' and ${
+               packet.message.results.won ? 'won' : 'lost'
+            }`,
          );
       } catch (error) {
          logger.error(

@@ -74,7 +74,9 @@ export const CurrentChannelSelector = observer(
                                  }}
                               />
                            }
-                           label={`${t(channelsInformations[channelId].name)} (${channelsInformations[channelId].shortcut})`}
+                           label={`${t(channelsInformations[channelId].name)} (${
+                              channelsInformations[channelId].shortcut
+                           })`}
                            slotProps={{
                               typography: {
                                  color: theme.palette.channels[channelId],

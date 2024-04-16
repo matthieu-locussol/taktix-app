@@ -158,7 +158,9 @@ export class StatisticsMenuStore {
          // Base statistics
          {
             icon: 'vitality_+f',
-            value: `${this.vitality} (${StatisticMgt.computeVitality(this._store.characterStore.statistics)})`,
+            value: `${this.vitality} (${StatisticMgt.computeVitality(
+               this._store.characterStore.statistics,
+            )})`,
             label: 'vitality',
             onIncrease: () => this.increase('vitality'),
             onDecrease: () => this.decrease('vitality'),
@@ -168,7 +170,9 @@ export class StatisticsMenuStore {
          },
          {
             icon: 'magicShield_+f',
-            value: `${this.magicShield} (${StatisticMgt.computeMagicShield(this._store.characterStore.statistics)})`,
+            value: `${this.magicShield} (${StatisticMgt.computeMagicShield(
+               this._store.characterStore.statistics,
+            )})`,
             label: 'magicShield',
             onIncrease: () => this.increase('magicShield'),
             onDecrease: () => this.decrease('magicShield'),
@@ -178,7 +182,10 @@ export class StatisticsMenuStore {
          },
          {
             icon: 'strength_+f',
-            value: `${this.strength} (${StatisticMgt.computeAttribute('strength', this._store.characterStore.statistics)})`,
+            value: `${this.strength} (${StatisticMgt.computeAttribute(
+               'strength',
+               this._store.characterStore.statistics,
+            )})`,
             label: 'strength',
             onIncrease: () => this.increase('strength'),
             onDecrease: () => this.decrease('strength'),
@@ -188,7 +195,10 @@ export class StatisticsMenuStore {
          },
          {
             icon: 'dexterity_+f',
-            value: `${this.dexterity} (${StatisticMgt.computeAttribute('dexterity', this._store.characterStore.statistics)})`,
+            value: `${this.dexterity} (${StatisticMgt.computeAttribute(
+               'dexterity',
+               this._store.characterStore.statistics,
+            )})`,
             label: 'dexterity',
             onIncrease: () => this.increase('dexterity'),
             onDecrease: () => this.decrease('dexterity'),
@@ -198,7 +208,10 @@ export class StatisticsMenuStore {
          },
          {
             icon: 'intelligence_+f',
-            value: `${this.intelligence} (${StatisticMgt.computeAttribute('intelligence', this._store.characterStore.statistics)})`,
+            value: `${this.intelligence} (${StatisticMgt.computeAttribute(
+               'intelligence',
+               this._store.characterStore.statistics,
+            )})`,
             label: 'intelligence',
             onIncrease: () => this.increase('intelligence'),
             onDecrease: () => this.decrease('intelligence'),
@@ -208,7 +221,10 @@ export class StatisticsMenuStore {
          },
          {
             icon: 'luck_+f',
-            value: `${this.luck} (${StatisticMgt.computeAttribute('luck', this._store.characterStore.statistics)})`,
+            value: `${this.luck} (${StatisticMgt.computeAttribute(
+               'luck',
+               this._store.characterStore.statistics,
+            )})`,
             label: 'luck',
             onIncrease: () => this.increase('luck'),
             onDecrease: () => this.decrease('luck'),
