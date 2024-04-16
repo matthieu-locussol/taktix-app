@@ -54,12 +54,14 @@ describe('CharacterSelectionStore', () => {
          {
             name: 'John',
             profession: ProfessionType.Archer,
+            experience: 0,
          },
       ]);
       expect(store.characters).toEqual([
          {
             name: 'John',
             profession: ProfessionType.Archer,
+            experience: 0,
          },
       ]);
    });
@@ -108,6 +110,7 @@ describe('CharacterSelectionStore', () => {
          {
             name: 'John',
             profession: ProfessionType.Archer,
+            experience: 0,
          },
       ]);
       store.setSelectedCharacter('John');
