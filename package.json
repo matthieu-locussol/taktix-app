@@ -23,7 +23,8 @@
       "format": "lint-staged",
       "release": "standard-version -a && turbo run bumpversion",
       "studio": "turbo run studio",
-      "generate_maps": "turbo run generate_maps && turbo run build --filter=shared"
+      "generate_maps": "turbo run generate_maps && turbo run build --filter=shared",
+      "ci": "biome ci *"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",

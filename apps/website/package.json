@@ -5,7 +5,7 @@
       "dev": "next dev",
       "build": "next build",
       "clean": "rm -rf .next && rm -rf .turbo && rm -rf node_modules",
-      "lint": "biome lint src",
+      "lint": "biome check *",
       "start": "next start"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",

@@ -303,13 +303,6 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
       return animatedTiles;
    }
 
-   putTileAt(
-      _layer: Phaser.Tilemaps.TilemapLayer,
-      _tile: Phaser.Tilemaps.Tile,
-      _x: number,
-      _y: number,
-   ) {}
-
    updateAnimatedTiles() {
       const x = null;
       const y = null;

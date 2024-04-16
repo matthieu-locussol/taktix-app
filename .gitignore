@@ -1,3 +1,4 @@
+# Globals
 .turbo/
 **/.next/
 **/dist/
@@ -5,3 +6,7 @@
 **/.env
 **/.devmode.json
 **/.DS_Store
+**/target/
+
+# Scripts
+packages/scripts/src/*.js

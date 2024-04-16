@@ -67,7 +67,7 @@ export class SettingsMenuStore {
       if (savedState) {
          try {
             this.savedState = zSettingsMenuState.parse(JSON.parse(savedState));
-         } catch (e) {
+         } catch (_e) {
             this.savedState = this.defaultState;
          }
       } else {

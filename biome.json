@@ -7,14 +7,7 @@
       "indentWidth": 3,
       "lineEnding": "lf",
       "lineWidth": 100,
-      "attributePosition": "auto",
-      "ignore": [
-         "**/*.next*",
-         "**/*dist*",
-         "**/*src-tauri/target/*",
-         "**/*node_modules*",
-         "./packages/shared/src/data/talents.ts"
-      ]
+      "attributePosition": "auto"
    },
    "organizeImports": { "enabled": true },
    "linter": {
@@ -146,8 +139,8 @@
             "useDefaultParameterLast": "error",
             "useExponentiationOperator": "error",
             "useNamingConvention": {
-               "level": "error",
-               "options": { "strictCase": true, "enumMemberCase": "CONSTANT_CASE" }
+               "level": "off",
+               "options": {}
             },
             "useNumericLiterals": "error",
             "useShorthandAssign": "error",
@@ -230,5 +223,11 @@
             }
          }
       }
-   ]
+   ],
+   "vcs": {
+      "enabled": true,
+      "clientKind": "git",
+      "useIgnoreFile": true,
+      "defaultBranch": "master"
+   }
 }

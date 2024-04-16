@@ -32,7 +32,7 @@ export class CommunityMenuStore {
             this.players = players;
             this.loading = false;
          });
-      } catch (error) {
+      } catch (_error) {
          runInAction(() => {
             this.players = [];
             this.loading = false;

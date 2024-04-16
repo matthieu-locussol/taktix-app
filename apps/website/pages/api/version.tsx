@@ -83,7 +83,7 @@ const handler = async (_: NextRequest) => {
             },
          },
       );
-   } catch (e) {
+   } catch (_e) {
       return new Response(
          JSON.stringify({
             updating: true,

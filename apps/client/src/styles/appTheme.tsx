@@ -261,15 +261,15 @@ export const appTheme = createTheme({
       MuiOutlinedInput: {
          styleOverrides: {
             root: ({ theme }) => ({
-               [`& fieldset`]: {
+               '& fieldset': {
                   borderColor: theme.palette.paper.border,
                   transition: 'background-color 0.3s, border-color 0.3s, box-shadow 0.3s',
                },
-               [`&:hover fieldset`]: {
+               '&:hover fieldset': {
                   borderColor: 'rgb(107, 114, 128)',
                   transition: 'background-color 0.3s, border-color 0.3s, box-shadow 0.3s',
                },
-               [`&.Mui-focused fieldset`]: {
+               '&.Mui-focused fieldset': {
                   border: '1px solid red',
                   transition: 'background-color 0.3s, border-color 0.3s, box-shadow 0.3s',
                },

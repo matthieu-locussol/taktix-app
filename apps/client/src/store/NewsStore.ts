@@ -32,7 +32,7 @@ export class NewsStore {
             this.changelogs = changelogs;
             this.loading = false;
          });
-      } catch (error) {
+      } catch (_error) {
          runInAction(() => {
             this.changelogs = [];
             this.loading = false;

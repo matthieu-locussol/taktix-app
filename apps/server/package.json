@@ -5,7 +5,7 @@
       "postinstall": "prisma generate --accelerate",
       "build": "prisma generate --accelerate && tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-      "lint": "biome lint src",
+      "lint": "biome check *",
       "dev": "prisma generate --accelerate && ts-node-dev --respawn --transpile-only src/index.ts",
       "dev:debug": "DEBUG=colyseus:* ts-node-dev --respawn --transpile-only src/index.ts",
       "start": "node ./dist/index.js",
