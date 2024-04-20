@@ -4,6 +4,7 @@
    "scripts": {
       "postinstall": "prisma generate --accelerate",
       "build": "prisma generate --accelerate && tsc",
+      "build:noci": "prisma generate --accelerate && tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
       "lint": "biome check *",
       "dev": "prisma generate --accelerate && ts-node-dev --respawn --transpile-only src/index.ts",

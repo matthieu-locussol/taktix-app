@@ -5,6 +5,7 @@
    "types": "./dist/index.d.ts",
    "scripts": {
       "build": "tsc",
+      "build:noci": "tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
       "lint": "biome check *",
       "test": "vitest --run"
