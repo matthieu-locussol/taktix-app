@@ -15,7 +15,7 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "dependencies": {
-      "@colyseus/core": "^0.15.29",
+      "@colyseus/core": "^0.15.30",
       "@colyseus/monitor": "^0.15.6",
       "@colyseus/playground": "^0.15.12",
       "@colyseus/ws-transport": "^0.15.1",
@@ -26,7 +26,7 @@
       "express-basic-auth": "^1.2.1",
       "mobx": "^6.12.3",
       "prisma": "^5.12.1",
-      "shared": "workspace:latest",
+      "shared": "workspace:^",
       "ts-pattern": "^5.1.1",
       "uuid": "^9.0.1",
       "vitest": "^1.5.0",
@@ -39,7 +39,7 @@
       "@types/node": "^20.12.7",
       "@types/uuid": "^9.0.8",
       "@types/ws": "^8.5.10",
-      "config-typescript": "workspace:latest",
+      "config-typescript": "workspace:^",
       "ts-node-dev": "^2.0.0",
       "typescript": "^5.4.5"
    }

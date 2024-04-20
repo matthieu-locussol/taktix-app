@@ -10,11 +10,11 @@
       "lint": "biome lint src/*.ts"
    },
    "dependencies": {
-      "shared": "workspace:latest"
+      "shared": "workspace:^"
    },
    "devDependencies": {
       "@types/node": "^20.12.7",
-      "config-typescript": "workspace:latest",
+      "config-typescript": "workspace:^",
       "typescript": "^5.4.5"
    }
 }
