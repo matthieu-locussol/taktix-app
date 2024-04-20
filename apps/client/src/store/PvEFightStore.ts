@@ -2,11 +2,14 @@ import { makeAutoObservable } from 'mobx';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight';
 import { _assert } from 'shared/src/utils/_assert';
+import { Store } from './Store';
 
 type PvEFightMode = 'fight' | 'spectate';
 
 export class PvEFightStore {
    private _fightResults: PvEFightResults | null = null;
+
+   private _store: Store;
 
    fightOngoing = false;
 
@@ -22,8 +25,12 @@ export class PvEFightStore {
 
    fightersMagicShield: Record<number, number> = {};
 
-   constructor() {
+   startTimestamp: number = Date.now();
+
+   constructor(store: Store) {
       makeAutoObservable(this);
+
+      this._store = store;
    }
 
    public setFightResults(fightResults: PvEFightResults): void {
@@ -33,10 +40,13 @@ export class PvEFightStore {
 
    public startFight(): void {
       this.fightOngoing = true;
+      this.startTimestamp = Date.now();
+      this._store.discordStore.updateDiscordRichPresence();
    }
 
    public endFight(): void {
       this.fightOngoing = false;
+      this._store.discordStore.updateDiscordRichPresence();
    }
 
    public setCurrentTurn(currentTurn: number): void {

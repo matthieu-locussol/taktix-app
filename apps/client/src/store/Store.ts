@@ -77,7 +77,7 @@ export class Store {
       this.loadingScreenStore = new LoadingScreenStore();
       this.loginStore = new LoginStore();
       this.newsStore = new NewsStore(this);
-      this.pveFightStore = new PvEFightStore();
+      this.pveFightStore = new PvEFightStore(this);
       this.registerStore = new RegisterStore();
       this.screenStore = new ScreenStore(this);
       this.settingsMenuStore = new SettingsMenuStore(this);

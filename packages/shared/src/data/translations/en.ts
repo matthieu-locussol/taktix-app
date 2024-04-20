@@ -102,6 +102,7 @@ export const translationsEn = {
    turns_one: '{{count}} turn',
    turns_other: '{{count}} turns',
    turn: 'Turn {{count}}',
+   fighting: 'In a fight',
 
    // Enemies
    'enemy-nono': 'Nono, the little Robot',
