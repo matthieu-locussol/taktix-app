@@ -4,6 +4,7 @@
    "scripts": {
       "dev": "next dev",
       "build": "next build",
+      "build:noci": "next build",
       "clean": "rm -rf .next && rm -rf .turbo && rm -rf node_modules",
       "lint": "biome check *",
       "start": "next start"

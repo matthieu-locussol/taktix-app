@@ -10,6 +10,8 @@
       "dev:website": "turbo run dev --filter=website --continue",
       "test": "turbo run test",
       "build": "turbo run build",
+      "build:noci": "turbo run build:noci",
+      "build:shared:noci": "turbo run build:noci --filter=shared",
       "build:app": "turbo run build build:app",
       "build:server": "turbo run build --filter=server",
       "build:shared": "turbo run build --filter=shared",

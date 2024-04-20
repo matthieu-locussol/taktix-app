@@ -5,6 +5,14 @@
          "outputs": ["dist/**"],
          "dependsOn": ["lint", "^build"]
       },
+      "build:noci": {
+         "outputs": ["dist/**"],
+         "dependsOn": ["^build:noci"]
+      },
+      "build:shared:noci": {
+         "outputs": ["dist/**"],
+         "dependsOn": ["^build:shared:noci"]
+      },
       "build:app": {
          "outputs": ["dist/**"],
          "dependsOn": ["lint", "build:shared", "^build:app"]
