@@ -16,7 +16,6 @@ import {
 } from '../Scene';
 
 const PARALLAX_FACTOR = 0.3;
-const SPEED_FACTOR = 1.5;
 const HEALTH_MARGIN = 10;
 const HEALTH_HEIGHT = 8;
 const HEALTH_WIDTH = 80;
@@ -37,13 +36,15 @@ export class PvEFightScene extends Phaser.Scene {
 
    private fighters: Record<number, Phaser.GameObjects.Container> = {};
 
-   private fightersHealth: Record<number, number> = {};
-
-   private fightersMagicShield: Record<number, number> = {};
-
    private animationRunning: boolean = false;
 
    private parallaxActive: boolean = true;
+
+   private movesQueue: {
+      move: PvEFightMove;
+      turnId: number;
+      moveId: number;
+   }[] = [];
 
    constructor(_config: Room | Phaser.Types.Scenes.SettingsConfig) {
       super('PvEFightScene');
@@ -62,7 +63,7 @@ export class PvEFightScene extends Phaser.Scene {
          frameHeight: CHARACTER_HEIGHT,
       });
 
-      this.load.spritesheet('MonsterSpritesheet', '/assets/monsters/golem.png', {
+      this.load.spritesheet('MonsterSpritesheet', '/assets/monsters/body/enemy-nono.png', {
          frameWidth: 32,
          frameHeight: 32,
       });
@@ -104,7 +105,7 @@ export class PvEFightScene extends Phaser.Scene {
 
       window.setTimeout(() => {
          this.run();
-      }, 1500 / SPEED_FACTOR);
+      }, 1500);
    }
 
    public initializeFight(): void {
@@ -134,8 +135,8 @@ export class PvEFightScene extends Phaser.Scene {
             this.getAllyPosition(playerSprite, idx, alliesCount).y,
          );
          this.fighters[id] = container;
-         this.fightersHealth[id] = initialConditions[id].health;
-         this.fightersMagicShield[id] = initialConditions[id].magicShield;
+         store.pveFightStore.fightersHealth[id] = initialConditions[id].health;
+         store.pveFightStore.fightersMagicShield[id] = initialConditions[id].magicShield;
 
          this.createFighterHealthBar(id);
          this.createFighterMagicShieldBar(id);
@@ -163,8 +164,8 @@ export class PvEFightScene extends Phaser.Scene {
             this.getMonsterPosition(monsterSprite, idx, monstersCount).y,
          );
          this.fighters[id] = container;
-         this.fightersHealth[id] = initialConditions[id].health;
-         this.fightersMagicShield[id] = initialConditions[id].magicShield;
+         store.pveFightStore.fightersHealth[id] = initialConditions[id].health;
+         store.pveFightStore.fightersMagicShield[id] = initialConditions[id].magicShield;
 
          this.createFighterHealthBar(id);
          this.createFighterMagicShieldBar(id);
@@ -173,19 +174,32 @@ export class PvEFightScene extends Phaser.Scene {
       });
    }
 
-   public run(): void {
+   public async run(): Promise<void> {
+      store.pveFightStore.startFight();
       const { turns } = store.pveFightStore.fightResults;
 
-      turns.forEach(({ moves }, idx) => {
-         moves.forEach(async (move, moveIdx) => {
-            await TimeMgt.wait(300 / SPEED_FACTOR);
-            await this.executeMove(move, idx, moveIdx);
-         });
-      });
+      for (let idx = 0; idx < turns.length; idx++) {
+         const { moves } = turns[idx];
+
+         for (let moveIdx = 0; moveIdx < moves.length; moveIdx++) {
+            const move = moves[moveIdx];
+            this.movesQueue.push({
+               move,
+               turnId: idx,
+               moveId: moveIdx,
+            });
+         }
+      }
+
+      while (this.movesQueue.length > 0) {
+         const move = this.movesQueue.shift();
+         _assert(move, 'move must be set');
+         await this.executeMove(move.move, move.turnId, move.moveId);
+      }
    }
 
    public async stop(): Promise<void> {
-      await TimeMgt.wait(1000 / SPEED_FACTOR);
+      await TimeMgt.wait(1000 / store.settingsMenuStore.speedFactor);
 
       this.animationRunning = false;
       this.parallaxActive = false;
@@ -200,11 +214,12 @@ export class PvEFightScene extends Phaser.Scene {
          }
       }
 
-      await TimeMgt.wait(1000 / SPEED_FACTOR);
+      await TimeMgt.wait(1000 / store.settingsMenuStore.speedFactor);
       store.pveFightStore.openFightResults();
 
       this.fadeOut(async (_, progress) => {
          if (progress === 1) {
+            store.pveFightStore.endFight();
             this.scene.resume(store.characterStore.map);
             this.scene.stop(this.scene.key);
 
@@ -219,12 +234,14 @@ export class PvEFightScene extends Phaser.Scene {
       const targetShouldDie = fighters.find(({ id }) => id === move.targetId)?.health === 0;
 
       if (this.animationRunning) {
-         await TimeMgt.wait(200 / SPEED_FACTOR);
-         this.executeMove(move, turnId, moveId);
-      } else {
-         this.attackPhysical(move, targetShouldDie);
-         this.stopOnLastMove(turnId, moveId);
+         await TimeMgt.wait(200 / store.settingsMenuStore.speedFactor);
+         return this.executeMove(move, turnId, moveId);
       }
+
+      store.pveFightStore.setCurrentFighter(move.fighterId);
+      this.attackPhysical(move, targetShouldDie);
+      this.stopOnLastMove(turnId, moveId);
+      store.pveFightStore.setCurrentTurn(turnId + 1);
    }
 
    private createFighterHealthBar(fighterId: number): void {
@@ -314,7 +331,7 @@ export class PvEFightScene extends Phaser.Scene {
 
       if (healthSprite !== null && healthBgSprite !== null) {
          const { maxHealth } = store.pveFightStore.initialConditions[fighterId];
-         const health = this.fightersHealth[fighterId];
+         const health = store.pveFightStore.fightersHealth[fighterId];
 
          healthSprite.setScale(health / maxHealth, 1);
          const emptySpace = HEALTH_WIDTH - (health / maxHealth) * HEALTH_WIDTH;
@@ -331,7 +348,7 @@ export class PvEFightScene extends Phaser.Scene {
 
       if (magicShieldSprite !== null && magicShieldBgSprite !== null) {
          const { maxMagicShield } = store.pveFightStore.initialConditions[fighterId];
-         const magicShield = this.fightersMagicShield[fighterId];
+         const magicShield = store.pveFightStore.fightersMagicShield[fighterId];
 
          magicShieldSprite.setScale(magicShield / maxMagicShield, 1);
          const emptySpace = MAGICSHIELD_WIDTH - (magicShield / maxMagicShield) * MAGICSHIELD_WIDTH;
@@ -541,7 +558,7 @@ export class PvEFightScene extends Phaser.Scene {
             {
                x: targetContainer.x + xFactor,
                y: targetContainer.y,
-               duration: 500 / SPEED_FACTOR,
+               duration: 500 / store.settingsMenuStore.speedFactor,
                ease: 'Power2',
                yoyo: true,
                repeat: 0,
@@ -568,15 +585,21 @@ export class PvEFightScene extends Phaser.Scene {
 
                   const damagesOnShield = Math.min(
                      totalDamages,
-                     this.fightersMagicShield[targetId],
+                     store.pveFightStore.fightersMagicShield[targetId],
                   );
                   const damagesOnHealth = Math.min(
                      totalDamages - damagesOnShield,
-                     this.fightersHealth[targetId],
+                     store.pveFightStore.fightersHealth[targetId],
                   );
 
-                  this.fightersMagicShield[targetId] -= damagesOnShield;
-                  this.fightersHealth[targetId] -= damagesOnHealth;
+                  store.pveFightStore.setFighterMagicShield(
+                     targetId,
+                     store.pveFightStore.fightersMagicShield[targetId] - damagesOnShield,
+                  );
+                  store.pveFightStore.setFighterHealth(
+                     targetId,
+                     store.pveFightStore.fightersHealth[targetId] - damagesOnHealth,
+                  );
 
                   this.updateFighterHealthBar(targetId);
                   this.updateFighterMagicShieldBar(targetId);
@@ -585,7 +608,7 @@ export class PvEFightScene extends Phaser.Scene {
             {
                x: initialPositionX,
                y: initialPositionY,
-               duration: 750 / SPEED_FACTOR,
+               duration: 750 / store.settingsMenuStore.speedFactor,
                ease: 'Power2',
                yoyo: false,
                repeat: 0,
@@ -624,17 +647,17 @@ export class PvEFightScene extends Phaser.Scene {
             targets: sprite,
             alpha: 1,
             y: targetSprite.y * 0.7,
-            duration: 750 / SPEED_FACTOR,
+            duration: 750 / store.settingsMenuStore.speedFactor,
             ease: 'Power2',
             repeat: 0,
             scaleX: 1.25,
             scaleY: 1.25,
-            delay: (idx * 200) / SPEED_FACTOR,
+            delay: (idx * 200) / store.settingsMenuStore.speedFactor,
             onComplete: () => {
                this.tweens.add({
                   targets: sprite,
                   alpha: 0,
-                  duration: 300 / SPEED_FACTOR,
+                  duration: 300 / store.settingsMenuStore.speedFactor,
                   ease: 'Power2',
                   repeat: 0,
                   onComplete: () => {
@@ -652,7 +675,7 @@ export class PvEFightScene extends Phaser.Scene {
       const tween = this.tweens.add({
          targets: enemySprite,
          alpha: 0,
-         duration: 500 / SPEED_FACTOR,
+         duration: 500 / store.settingsMenuStore.speedFactor,
          ease: 'Power2',
          repeat: 0,
          onComplete: () => {
@@ -706,10 +729,13 @@ export class PvEFightScene extends Phaser.Scene {
          _assert(this.trees, 'trees must be set');
          _assert(this.foregroundTrees, 'foregroundTrees must be set');
 
-         this.mountainFar.tilePositionX += (0.2 * PARALLAX_FACTOR) / SPEED_FACTOR;
-         this.mountains.tilePositionX += (0.4 * PARALLAX_FACTOR) / SPEED_FACTOR;
-         this.trees.tilePositionX += (0.8 * PARALLAX_FACTOR) / SPEED_FACTOR;
-         this.foregroundTrees.tilePositionX += (1 * PARALLAX_FACTOR) / SPEED_FACTOR;
+         this.mountainFar.tilePositionX +=
+            (0.2 * PARALLAX_FACTOR) / store.settingsMenuStore.speedFactor;
+         this.mountains.tilePositionX +=
+            (0.4 * PARALLAX_FACTOR) / store.settingsMenuStore.speedFactor;
+         this.trees.tilePositionX += (0.8 * PARALLAX_FACTOR) / store.settingsMenuStore.speedFactor;
+         this.foregroundTrees.tilePositionX +=
+            (1 * PARALLAX_FACTOR) / store.settingsMenuStore.speedFactor;
 
          this.adjustTileSpritePosition(this.background);
          this.adjustTileSpritePosition(this.mountainFar);

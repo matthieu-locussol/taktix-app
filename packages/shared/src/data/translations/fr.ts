@@ -106,9 +106,10 @@ export const translationsFr: LanguageTranslations = {
    losers: 'Perdants',
    turns_one: '{{count}} tour',
    turns_other: '{{count}} tours',
+   turn: 'Tour {{count}}',
 
    // Enemies
-   'enemy:nono': 'Nono, le petit robot',
+   'enemy-nono': 'Nono, le petit robot',
 
    // Statistics
    'earthDamages_+f': 'Dégâts de terre',

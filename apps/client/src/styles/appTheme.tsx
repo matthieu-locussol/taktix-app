@@ -119,6 +119,10 @@ export const appTheme = createTheme({
          color: '#F3F4F6',
          background: '#111827',
       },
+      fight: {
+         ally: '#06b6d4',
+         monster: '#ef4444',
+      },
       mode: 'light',
    },
    typography: (palette) => ({

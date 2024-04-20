@@ -26,6 +26,7 @@ const zSettingsMenuState = z.object({
       community: z.boolean(),
       settings: z.boolean(),
    }),
+   speedFactor: z.number().refine((value) => [1, 1.5, 2].includes(value)),
 });
 
 type SettingsMenuState = z.infer<typeof zSettingsMenuState>;
@@ -44,6 +45,7 @@ export class SettingsMenuStore {
          community: true,
          settings: true,
       },
+      speedFactor: 1,
    };
 
    public savedState: SettingsMenuState;
@@ -57,6 +59,8 @@ export class SettingsMenuStore {
    public language = this.defaultState.language;
 
    public fullScreenMenus = { ...this.defaultState.fullScreenMenus };
+
+   public speedFactor = this.defaultState.speedFactor;
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -85,7 +89,7 @@ export class SettingsMenuStore {
             },
          })
          .then(() => {
-            this.setLanguage(this.savedState.language);
+            this.applyState(this.savedState);
          });
    }
 
@@ -108,7 +112,11 @@ export class SettingsMenuStore {
    public setVolume(volume: number): void {
       this.volume = volume;
 
-      this._store.gameStore.game.sound.volume = volume / 100;
+      try {
+         this._store.gameStore.game.sound.volume = volume / 100;
+      } catch (_e) {
+         // Not a problem as the sound will be set when the game is initialized
+      }
    }
 
    public async setFullScreen(fullScreen: boolean): Promise<void> {
@@ -142,6 +150,14 @@ export class SettingsMenuStore {
       this.fullScreenMenus[menu] = value;
    }
 
+   public setSpeedFactor(speedFactor: number): void {
+      if (![1, 1.5, 2].includes(speedFactor)) {
+         speedFactor = 1;
+      } else {
+         this.speedFactor = speedFactor;
+      }
+   }
+
    public resetToDefaults(): void {
       this.applyState(this.defaultState);
    }
@@ -157,6 +173,7 @@ export class SettingsMenuStore {
       this.setFullScreen(state.fullScreen);
       this.setLanguage(state.language);
       this.setFullScreenMenus(state.fullScreenMenus);
+      this.setSpeedFactor(state.speedFactor);
    }
 
    public saveChanges(): void {
@@ -166,6 +183,7 @@ export class SettingsMenuStore {
          fullScreen: this.fullScreen,
          language: this.language,
          fullScreenMenus: this.fullScreenMenus,
+         speedFactor: this.speedFactor,
       };
 
       i18n.changeLanguage(this.language);
@@ -183,6 +201,7 @@ export class SettingsMenuStore {
             fullScreen: this.fullScreen,
             language: this.language,
             fullScreenMenus: this.fullScreenMenus,
+            speedFactor: this.speedFactor,
          })
       );
    }
