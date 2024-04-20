@@ -9,12 +9,17 @@ const mocks = vi.hoisted(() => ({
 }));
 
 vi.mock('./Store', () => {
+   const pveFightStoreMock = {
+      fightOngoing: false,
+   };
+
    const screenStoreMock = {
       loggedIn: false,
       screen: 'Menu',
    };
 
    const MockedStore = vi.fn().mockImplementation(() => ({
+      pveFightStore: pveFightStoreMock,
       screenStore: screenStoreMock,
    }));
 
