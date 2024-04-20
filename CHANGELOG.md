@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.47.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.46.0...v1.47.0) (2024-04-20)
+
+
+### Features
+
+* advanced statistics ([a62ba64](https://github.com/matthieu-locussol/taktix-app/commit/a62ba64b304582613fa7780ea7b1bbb7a26bde7b))
+* experience system ([2fcf86c](https://github.com/matthieu-locussol/taktix-app/commit/2fcf86cdc5f3af1560fdb8d883a5aa3628da4c13))
+* fight overlay ([3a13083](https://github.com/matthieu-locussol/taktix-app/commit/3a130830ac2f3fdd0ab66711092ec4360091b84d))
+* fight renderer ([432cc09](https://github.com/matthieu-locussol/taktix-app/commit/432cc0975ff7106521607ffec0ab0e8207e2e8bd))
+* fight results menu ([ae3d183](https://github.com/matthieu-locussol/taktix-app/commit/ae3d183ce20aa33fbd735d71d2390cb936d00141))
+* fight system logic ([2cc817e](https://github.com/matthieu-locussol/taktix-app/commit/2cc817eb54dd2ad99c56291e7bfd218d8f2f5c6f))
+
 ## [1.46.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.45.0...v1.46.0) (2024-03-15)
 
 
