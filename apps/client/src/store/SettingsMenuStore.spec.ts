@@ -40,6 +40,7 @@ describe('SettingsMenuStore', () => {
             community: true,
             settings: true,
          },
+         speedFactor: 1,
       };
 
       expect(store).toBeDefined();
@@ -50,6 +51,7 @@ describe('SettingsMenuStore', () => {
       expect(store.volume).toBe(50);
       expect(store.fullScreen).toBe(false);
       expect(store.language).toBe('en');
+      expect(store.speedFactor).toBe(1);
    });
 
    it('should open', () => {
@@ -106,6 +108,16 @@ describe('SettingsMenuStore', () => {
       expect(store.language).toBe('ja');
    });
 
+   it('should set the speed factor', () => {
+      const store = new SettingsMenuStore(new Store());
+
+      store.setSpeedFactor(1);
+      expect(store.speedFactor).toBe(1);
+
+      store.setSpeedFactor(2);
+      expect(store.speedFactor).toBe(2);
+   });
+
    it('should save state', () => {
       const store = new SettingsMenuStore(new Store());
 
@@ -116,6 +128,7 @@ describe('SettingsMenuStore', () => {
          community: false,
          settings: true,
       });
+      store.setSpeedFactor(2);
 
       store.saveChanges();
 
@@ -128,6 +141,7 @@ describe('SettingsMenuStore', () => {
             community: false,
             settings: true,
          },
+         speedFactor: 2,
       });
    });
 
