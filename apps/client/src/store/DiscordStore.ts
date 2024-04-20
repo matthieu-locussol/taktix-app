@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
 import { TranslationKey } from 'shared/src/data/translations';
+import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { setDiscordRichPresence } from '../utils/discord';
 import { isTauri } from '../utils/tauri';
 import { getVersion } from '../utils/version';
@@ -23,6 +24,7 @@ export class DiscordStore {
       }
 
       const { loggedIn, screen } = this._store.screenStore;
+      const { fightOngoing } = this._store.pveFightStore;
 
       if (!loggedIn) {
          setDiscordRichPresence({
@@ -32,9 +34,22 @@ export class DiscordStore {
             large_text: `Taktix - ${getVersion()}`,
             timestamp: this.startTimestamp,
          });
+      } else if (fightOngoing) {
+         const { map, name, profession, experience } = this._store.characterStore;
+         const level = LevelMgt.getLevel(experience);
+
+         setDiscordRichPresence({
+            details: i18next.t('inMap', { map: i18next.t(map satisfies TranslationKey) }),
+            state: i18next.t('fighting' satisfies TranslationKey),
+            large_image: 'default',
+            large_text: `Taktix - ${getVersion()}`,
+            small_image: profession.toLocaleLowerCase(),
+            small_text: `${name} - ${i18next.t('level', { level })}`,
+            timestamp: this._store.pveFightStore.startTimestamp,
+         });
       } else {
-         const { map, name, profession /* level */ } = this._store.characterStore;
-         const level = 1;
+         const { map, name, profession, experience } = this._store.characterStore;
+         const level = LevelMgt.getLevel(experience);
 
          setDiscordRichPresence({
             details: i18next.t('inMap', { map: i18next.t(map satisfies TranslationKey) }),

@@ -106,6 +106,7 @@ export const translationsJa: LanguageTranslations = {
    turns_one: '{{count}} ターン',
    turns_other: '{{count}} ターン',
    turn: 'ターン {{count}}',
+   fighting: '戦闘中',
 
    // Enemies
    'enemy-nono': 'ノノ、小さなロボット',
