@@ -12,6 +12,7 @@
       "build": "turbo run build",
       "build:noci": "turbo run build:noci",
       "build:shared:noci": "turbo run build:noci --filter=shared",
+      "build:website:noci": "turbo run build:noci --filter=website",
       "build:app": "turbo run build build:app",
       "build:server": "turbo run build --filter=server",
       "build:shared": "turbo run build --filter=shared",
