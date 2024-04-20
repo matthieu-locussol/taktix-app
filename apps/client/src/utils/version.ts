@@ -1,6 +1,6 @@
 import packageInfos from '../../package.json';
 
-export const getVersion = () => {
-   const version = `v${packageInfos.version}`;
+export const getVersion = (prefix = 'v') => {
+   const version = `${prefix}${packageInfos.version}`;
    return version;
 };

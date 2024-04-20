@@ -1,6 +1,7 @@
 import { GridEngine } from 'grid-engine';
 import Phaser from 'phaser';
 import { store } from '../store';
+import { getVersion } from '../utils/version';
 import { mapsScenes } from './mapsScenes';
 import { PvEFightScene } from './scenes/PvEFightScene';
 
@@ -13,6 +14,12 @@ export const config: Phaser.Types.Core.GameConfig = {
    fullscreenTarget: 'root-game',
    scene: [...mapsScenes, PvEFightScene],
    pixelArt: true,
+   banner: {
+      hidePhaser: process.env.NODE_ENV === 'production',
+   },
+   title: 'Taktix',
+   url: 'https://taktix.vercel.app',
+   version: getVersion(''),
    fps: {
       min: FPS,
       limit: FPS,
