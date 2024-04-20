@@ -31,6 +31,8 @@ export const SettingsMenu = observer(() => {
    return (
       <Draggable handle=".settings-menu-handle">
          <StyledDialog
+            hideBackdrop
+            disableEnforceFocus
             onClose={() => settingsMenuStore.cancelChanges()}
             open={settingsMenuStore.isOpened}
             fullScreen={settingsMenuStore.fullScreenMenus.settings}
