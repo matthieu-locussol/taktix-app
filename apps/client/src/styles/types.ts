@@ -50,6 +50,10 @@ interface CustomPalette {
       color: string;
       background: string;
    };
+   fight: {
+      ally: string;
+      monster: string;
+   };
 }
 
 declare module '@mui/material/styles' {

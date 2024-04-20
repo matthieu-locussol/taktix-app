@@ -5,11 +5,7 @@ export const getMonstersInformations = (
    monsterGroupId: number,
 ): PvEFightParameters['monstersInformations'] => {
    if (monsterGroupId === 1) {
-      return [
-         monsters['enemy:nono']({ level: 2 }),
-         monsters['enemy:nono']({ level: 1 }),
-         monsters['enemy:nono']({ level: 1 }),
-      ];
+      return [monsters['enemy-nono']({ level: 1 }), monsters['enemy-nono']({ level: 2 })];
    }
 
    throw new Error(`Unknown monsterGroupId: '${monsterGroupId}'`);

@@ -40,6 +40,8 @@
       "editor.defaultFormatter": "biomejs.biome",
       "editor.codeActionsOnSave": {
          "source.fixAll": "explicit",
+         "quickfix.biome": "explicit",
+         "source.organizeImports": "explicit",
          "source.organizeImports.biome": "explicit"
       },
       "typescript.tsdk": "Client ✨/node_modules/typescript/lib",

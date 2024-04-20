@@ -105,9 +105,10 @@ export const translationsJa: LanguageTranslations = {
    losers: '敗者',
    turns_one: '{{count}} ターン',
    turns_other: '{{count}} ターン',
+   turn: 'ターン {{count}}',
 
    // Enemies
-   'enemy:nono': 'ノノ、小さなロボット',
+   'enemy-nono': 'ノノ、小さなロボット',
 
    // Statistics
    'earthDamages_+f': '地のダメージ',

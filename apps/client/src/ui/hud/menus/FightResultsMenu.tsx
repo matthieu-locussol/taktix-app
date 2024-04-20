@@ -18,6 +18,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import Draggable from 'react-draggable';
+import { TranslationKey } from 'shared/src/data/translations';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { store, useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
@@ -34,15 +35,17 @@ export const FightResultsMenu = observer(() => {
       <>
          {pveFightStore.fightResults?.allies.map(({ id, name, experience }, idx) => {
             const gainedExperience = pveFightStore.fightResults?.experiences[idx] ?? 0;
-            const level = LevelMgt.getLevel(experience + gainedExperience);
+            const oldLevel = LevelMgt.getLevel(experience);
+            const newLevel = LevelMgt.getLevel(experience + gainedExperience);
+            const levelCell = oldLevel === newLevel ? newLevel : `${oldLevel} -> ${newLevel}`;
 
             return (
                <TableRow hover tabIndex={-1} key={`fight-results-value-${id}-${name}`}>
-                  <StyledTableCell size="medium">{name}</StyledTableCell>
-                  <StyledTableCell size="medium">{level}</StyledTableCell>
-                  <StyledTableCell size="medium">+{gainedExperience} XP</StyledTableCell>
-                  <StyledTableCell size="medium">+1000 Credits</StyledTableCell>
-                  <StyledTableCell size="medium">Loots...</StyledTableCell>
+                  <StyledTableCell>{name}</StyledTableCell>
+                  <StyledTableCell>{levelCell}</StyledTableCell>
+                  <StyledTableCell>+{gainedExperience} XP</StyledTableCell>
+                  <StyledTableCell>+1000 Credits</StyledTableCell>
+                  <StyledTableCell>Loots...</StyledTableCell>
                </TableRow>
             );
          })}
@@ -53,11 +56,11 @@ export const FightResultsMenu = observer(() => {
       <>
          {pveFightStore.fightResults?.monsters.map(({ id, name, level }) => (
             <TableRow hover tabIndex={-1} key={`fight-results-value-${id}-${name}`}>
-               <StyledTableCell size="medium">{name}</StyledTableCell>
-               <StyledTableCell size="medium">{level}</StyledTableCell>
-               <StyledTableCell size="medium" />
-               <StyledTableCell size="medium" />
-               <StyledTableCell size="medium" />
+               <StyledTableCell>{t(name as TranslationKey)}</StyledTableCell>
+               <StyledTableCell>{level}</StyledTableCell>
+               <StyledTableCell />
+               <StyledTableCell />
+               <StyledTableCell />
             </TableRow>
          ))}
       </>
@@ -92,7 +95,13 @@ export const FightResultsMenu = observer(() => {
             >
                <CloseIcon />
             </IconButton>
-            <StyledDialogContent dividers>
+            <StyledDialogContent
+               dividers
+               sx={{
+                  width: '100%',
+                  overflow: 'hidden',
+               }}
+            >
                <TableContainer sx={{ maxHeight: '100%' }}>
                   <StyledTable stickyHeader size="small">
                      <TableHead>
@@ -202,4 +211,5 @@ const StyledTableHead = styled(TableCell)(({ theme }) => ({
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
    backgroundColor: theme.palette.paper.background,
    borderColor: theme.palette.paper.border,
+   whiteSpace: 'nowrap',
 }));

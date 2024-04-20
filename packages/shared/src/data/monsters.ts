@@ -3,7 +3,7 @@ import { WeaponType } from '../types/Weapon';
 import { StatisticMgt } from '../utils/statisticMgt';
 import { TranslationKey } from './translations';
 
-type FilterEnemy<T> = T extends `enemy:${infer EnemyName}` ? `enemy:${EnemyName}` : never;
+type FilterEnemy<T> = T extends `enemy-${infer EnemyName}` ? `enemy-${EnemyName}` : never;
 type MonsterName = FilterEnemy<TranslationKey>;
 type MonsterGenerator = (parameters: {
    level: number;
@@ -11,8 +11,8 @@ type MonsterGenerator = (parameters: {
 
 const monstersArray: MonsterGenerator[] = [
    ({ level }) => ({
-      name: 'enemy:nono',
-      health: 80 + level * 15,
+      name: 'enemy-nono',
+      health: 20 + level * 15,
       magicShield: 30 + level * 5,
       level,
       experience: 30 + level * 25,
