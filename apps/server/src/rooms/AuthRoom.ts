@@ -11,7 +11,6 @@ import {
    DEFAULT_TALENTS_POINTS,
    DEFAULT_X,
    DEFAULT_Y,
-   INTERNAL_PLAYER_NAME,
    MAX_CHARACTERS_PER_ACCOUNT,
    AuthRoomOptions as Options,
    StatisticMgt,
@@ -254,7 +253,7 @@ export class AuthRoom extends Room {
          | Extract<AuthRoomResponse, { type: 'createCharacterResponse' }>['message']
          | null = null;
 
-      if (characterName === INTERNAL_PLAYER_NAME) {
+      if (StringMgt.isReservedName(characterName)) {
          message = {
             status: 'error',
             errorMessage: 'characterAlreadyExists',
