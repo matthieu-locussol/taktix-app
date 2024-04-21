@@ -1,11 +1,21 @@
 import { LinearProgress, linearProgressClasses, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
+import { forwardRef } from 'react';
 import { useStore } from '../../../store';
 
-export const HealthBar = observer(() => {
-   const { characterStore } = useStore();
-   return <StyledProgressBar variant="determinate" value={characterStore.healthPercentage} />;
-});
+export const HealthBar = observer<{}, HTMLDivElement>(
+   forwardRef((props, ref) => {
+      const { characterStore } = useStore();
+      return (
+         <StyledProgressBar
+            {...props}
+            ref={ref}
+            variant="determinate"
+            value={characterStore.healthPercentage}
+         />
+      );
+   }),
+);
 
 const ProgressBar = styled(LinearProgress)(({ theme }) => ({
    width: '100%',

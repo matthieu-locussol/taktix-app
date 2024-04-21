@@ -1,7 +1,9 @@
 import { makeAutoObservable } from 'mobx';
+import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from 'shared/src/config';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight';
 import { _assert } from 'shared/src/utils/_assert';
+import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { Store } from './Store';
 
 type PvEFightMode = 'fight' | 'spectate';
@@ -47,6 +49,8 @@ export class PvEFightStore {
    public endFight(): void {
       this.fightOngoing = false;
       this._store.discordStore.updateDiscordRichPresence();
+
+      this.checkLevelUp();
    }
 
    public setCurrentTurn(currentTurn: number): void {
@@ -75,6 +79,26 @@ export class PvEFightStore {
 
    public setFighterMagicShield(fighterId: number, magicShield: number): void {
       this.fightersMagicShield[fighterId] = magicShield;
+   }
+
+   public checkLevelUp() {
+      const { characterStore, statisticsMenuStore, talentsMenuStore } = this._store;
+      const { name, experience, baseStatisticsPoints, talentsPoints } = characterStore;
+
+      const allyIdx = this.fightResults.allies.findIndex((ally) => ally.name === name);
+      const experienceGained = this.fightResults.experiences[allyIdx];
+      const newExperience = experience + experienceGained;
+
+      const levelGained = LevelMgt.computeGainedLevels(experience, newExperience);
+      const baseStatisticsPointsGained = levelGained * STATISTICS_POINTS_PER_LEVEL;
+      const talentsPointsGained = levelGained * TALENTS_POINTS_PER_LEVEL;
+
+      characterStore.setExperience(newExperience);
+      characterStore.setBaseStatisticsPoints(baseStatisticsPoints + baseStatisticsPointsGained);
+      characterStore.setTalentsPoints(talentsPoints + talentsPointsGained);
+
+      statisticsMenuStore.statisticsPoints = baseStatisticsPoints;
+      talentsMenuStore.talentsPoints = talentsPoints;
    }
 
    public get fightersOrder(): (PvEFighterSimplified & { name: string; avatar: string })[] {
