@@ -266,7 +266,7 @@ export class PvEFight {
          health,
          magicShield,
          maxHealth: health, // TODO: compute maxHealth from statistics
-         maxMagicShield: magicShield, // TODO: compute maxMagicShield from statistics
+         maxMagicShield: magicShield,
       }));
    }
 }
