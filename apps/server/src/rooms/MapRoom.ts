@@ -274,7 +274,7 @@ export class MapRoom extends Room<MapState> {
                {
                   name: characterInfos.name,
                   health: realStatistics.vitality, // TODO: get current health, not max health
-                  magicShield: realStatistics.magicShield, // TODO: get current magic shield, not max magic shield
+                  magicShield: realStatistics.magicShield,
                   experience: characterInfos.experience,
                   level: LevelMgt.getLevel(characterInfos.experience),
                   profession: zProfessionType.parse(characterInfos.profession),
