@@ -20,6 +20,7 @@ import { ShortcutIcon } from './components/ShortcutIcon';
 
 export const Menu = observer(() => {
    const {
+      characterStore,
       communityMenuStore,
       hudStore,
       settingsMenuStore,
@@ -34,11 +35,13 @@ export const Menu = observer(() => {
             active={statisticsMenuStore.isOpened}
             icon={<StatsIcon />}
             onClick={() => statisticsMenuStore.toggle()}
+            count={characterStore.baseStatisticsPoints}
          />
          <ShortcutIcon
             active={talentsMenuStore.isOpened}
             icon={<TalentsIcon />}
             onClick={() => talentsMenuStore.toggle()}
+            count={characterStore.talentsPoints}
          />
          <ShortcutIcon disabled icon={<InventoryIcon />} />
          <ShortcutIcon disabled icon={<MapIcon />} />

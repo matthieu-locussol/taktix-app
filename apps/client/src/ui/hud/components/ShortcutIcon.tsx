@@ -1,4 +1,4 @@
-import { darken, svgIconClasses } from '@mui/material';
+import { Badge, darken, svgIconClasses } from '@mui/material';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import { forwardRef } from 'react';
 import { Tooltip } from './Tooltip';
@@ -7,10 +7,11 @@ export interface ShortcutIconProps extends IconButtonProps {
    icon: React.ReactNode;
    active?: boolean;
    title?: string;
+   count?: number;
 }
 
 export const ShortcutIcon = forwardRef<HTMLButtonElement, ShortcutIconProps>(
-   ({ icon, active, title, ...rest }, ref) => (
+   ({ icon, active, title, count, ...rest }, ref) => (
       <Tooltip title={title} placement="top">
          <IconButton
             ref={ref}
@@ -31,7 +32,9 @@ export const ShortcutIcon = forwardRef<HTMLButtonElement, ShortcutIconProps>(
             })}
             {...rest}
          >
-            {icon}
+            <Badge color="error" badgeContent={count}>
+               {icon}
+            </Badge>
          </IconButton>
       </Tooltip>
    ),
