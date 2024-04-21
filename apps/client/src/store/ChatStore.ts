@@ -1,4 +1,6 @@
+import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
+import { TranslationKey } from 'shared/src/data/translations';
 import { Channel } from 'shared/src/types/Channel';
 import { Store } from './Store';
 
@@ -46,6 +48,15 @@ export class ChatStore {
    public addMessage(message: ChatMessage) {
       if (message.content.length > 0) {
          this.messages.push(this.formatMessage(message));
+
+         if (message.channel === Channel.SERVER || message.channel === Channel.PRIVATE) {
+            if (message.author !== this._store.characterStore.name) {
+               this._store.notificationStore.sendNotification(
+                  i18next.t('from' satisfies TranslationKey, { name: message.author }),
+                  message.content,
+               );
+            }
+         }
       }
    }
 
@@ -54,7 +65,9 @@ export class ChatStore {
          this.messages.push(
             this.formatMessage({
                author:
-                  author === this._store.characterStore.name ? `To ${target}` : `From ${author}`,
+                  author === this._store.characterStore.name
+                     ? i18next.t('to' satisfies TranslationKey, { name: target })
+                     : i18next.t('from' satisfies TranslationKey, { name: author }),
                content,
                channel: Channel.PRIVATE,
             }),

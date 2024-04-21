@@ -12,6 +12,7 @@ import { HudStore } from './HudStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
 import { LoginStore } from './LoginStore';
 import { NewsStore } from './NewsStore';
+import { NotificationStore } from './NotificationStore';
 import { PvEFightStore } from './PvEFightStore';
 import { RegisterStore } from './RegisterStore';
 import { ScreenStore } from './ScreenStore';
@@ -47,6 +48,8 @@ export class Store {
 
    public newsStore: NewsStore;
 
+   public notificationStore: NotificationStore;
+
    public pveFightStore: PvEFightStore;
 
    public registerStore: RegisterStore;
@@ -77,6 +80,7 @@ export class Store {
       this.loadingScreenStore = new LoadingScreenStore();
       this.loginStore = new LoginStore();
       this.newsStore = new NewsStore(this);
+      this.notificationStore = new NotificationStore();
       this.pveFightStore = new PvEFightStore(this);
       this.registerStore = new RegisterStore();
       this.screenStore = new ScreenStore(this);

@@ -108,6 +108,9 @@ export const translationsFr: LanguageTranslations = {
    turns_other: '{{count}} tours',
    turn: 'Tour {{count}}',
    fighting: 'En combat',
+   notificationsEnabled: 'Vous pouvez maintenant recevoir des notifications !',
+   to: 'À {{name}}',
+   from: 'De {{name}}',
 
    // Enemies
    'enemy-nono': 'Nono, le petit robot',
