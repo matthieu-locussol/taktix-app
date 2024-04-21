@@ -2,7 +2,7 @@ import ExperienceIcon from '@mui/icons-material/ArrowCircleUpRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOffRounded';
 import VisibilityIcon from '@mui/icons-material/VisibilityRounded';
-import { darken, linearProgressClasses, styled } from '@mui/material';
+import { darken, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
@@ -12,7 +12,6 @@ import DialogContent, { dialogContentClasses } from '@mui/material/DialogContent
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import LinearProgress from '@mui/material/LinearProgress';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
@@ -22,6 +21,8 @@ import { Trans } from 'react-i18next';
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 import { StatisticIcon } from '../../components/StatisticIcon';
+import { ExperienceBar } from '../components/ExperienceBar';
+import { HealthBar } from '../components/HealthBar';
 import { Statistic } from '../components/Statistic';
 import { Tooltip } from '../components/Tooltip';
 
@@ -118,10 +119,7 @@ export const StatisticsMenu = observer(() => {
                         }
                         placement="right"
                      >
-                        <LifeProgressBar
-                           variant="determinate"
-                           value={characterStore.healthPercentage}
-                        />
+                        <HealthBar />
                      </Tooltip>
                      <Tooltip
                         title={
@@ -133,10 +131,7 @@ export const StatisticsMenu = observer(() => {
                         }
                         placement="right"
                      >
-                        <ExperienceProgressBar
-                           variant="determinate"
-                           value={characterStore.experiencePercentage}
-                        />
+                        <ExperienceBar />
                      </Tooltip>
                   </Stack>
                </Header>
@@ -258,37 +253,4 @@ const Image = styled('img')(({ theme }) => ({
    borderRadius: 8,
    width: 'min(4vw, 7.5vh)',
    height: 'min(4vw, 7.5vh)',
-}));
-
-const ProgressBar = styled(LinearProgress)(() => ({
-   width: '100%',
-   height: '0.5vw',
-   borderRadius: 8,
-   border: `1px solid #374151`,
-   transition: 'all 0.3s',
-   ':hover': {
-      opacity: 0.7,
-   },
-}));
-
-const ExperienceProgressBar = styled(ProgressBar)(({ theme }) => ({
-   height: '0.5vw',
-   backgroundColor: '#c4b5fd',
-   border: `1px solid ${theme.palette.paper.border}`,
-   marginTop: '0.5vh',
-   [`& .${linearProgressClasses.bar}`]: {
-      backgroundColor: '#8b5cf6',
-      borderRadius: 8,
-   },
-}));
-
-const LifeProgressBar = styled(ProgressBar)(({ theme }) => ({
-   height: '0.5vw',
-   backgroundColor: '#fca5a5',
-   border: `1px solid ${theme.palette.paper.border}`,
-   marginTop: '0.5vh',
-   [`& .${linearProgressClasses.bar}`]: {
-      backgroundColor: '#ef4444',
-      borderRadius: 8,
-   },
 }));

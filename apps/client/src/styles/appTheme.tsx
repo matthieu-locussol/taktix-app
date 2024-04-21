@@ -123,6 +123,14 @@ export const appTheme = createTheme({
          ally: '#06b6d4',
          monster: '#ef4444',
       },
+      health: {
+         background: '#fca5a5',
+         color: '#ef4444',
+      },
+      experience: {
+         background: '#93c5fd',
+         color: '#3b82f6',
+      },
       mode: 'light',
    },
    typography: (palette) => ({
