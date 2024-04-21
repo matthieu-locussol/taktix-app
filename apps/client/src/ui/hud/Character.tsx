@@ -1,10 +1,11 @@
 import { darken, styled } from '@mui/material';
 import Box from '@mui/material/Box';
-import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
+import { ExperienceBar } from './components/ExperienceBar';
+import { HealthBar } from './components/HealthBar';
 
 export const Character = observer(() => {
    const { characterStore, hudStore } = useStore();
@@ -37,8 +38,10 @@ export const Character = observer(() => {
                [{characterStore.position.x}, {characterStore.position.y}] - {t(characterStore.map)}
             </Typography>
          </Informations>
-         <LifeProgressBar variant="determinate" value={characterStore.healthPercentage} />
-         <ExperienceProgressBar variant="determinate" value={characterStore.experiencePercentage} />
+         <ProgressBars>
+            <HealthBar />
+            <ExperienceBar />
+         </ProgressBars>
       </Root>
    );
 });
@@ -86,30 +89,9 @@ const Informations = styled(Box)(() => ({
    right: 8,
 }));
 
-const ProgressBar = styled(LinearProgress)(() => ({
+const ProgressBars = styled(Box)(() => ({
    position: 'absolute',
    left: 8,
    right: 8,
    bottom: 8,
-   width: 'calc(100% - 16px - 2px)',
-   height: '0.5vw',
-   borderRadius: 8,
-   border: `1px solid #374151`,
-}));
-
-const ExperienceProgressBar = styled(ProgressBar)(() => ({
-   backgroundColor: '#c4b5fd',
-   [`& .${linearProgressClasses.bar}`]: {
-      backgroundColor: '#8b5cf6',
-      borderRadius: 8,
-   },
-}));
-
-const LifeProgressBar = styled(ProgressBar)(() => ({
-   bottom: `calc(8px + 0.5vw + 4px + 2px)`,
-   backgroundColor: '#fca5a5',
-   [`& .${linearProgressClasses.bar}`]: {
-      backgroundColor: '#ef4444',
-      borderRadius: 8,
-   },
 }));

@@ -54,6 +54,14 @@ interface CustomPalette {
       ally: string;
       monster: string;
    };
+   health: {
+      background: string;
+      color: string;
+   };
+   experience: {
+      background: string;
+      color: string;
+   };
 }
 
 declare module '@mui/material/styles' {
