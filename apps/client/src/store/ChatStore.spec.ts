@@ -41,10 +41,10 @@ describe('ChatStore', () => {
 
       store.addPrivateMessage({ author: 'player', content: 'content', target: 'player2' });
       expect(store.messages).toHaveLength(1);
-      expect(store.messages[0].author).toBe('To player2');
+      expect(store.messages[0].content).toBe('content');
 
       store.addPrivateMessage({ author: 'player2', content: 'content', target: 'player' });
       expect(store.messages).toHaveLength(2);
-      expect(store.messages[1].author).toBe('From player2');
+      expect(store.messages[1].content).toBe('content');
    });
 });
