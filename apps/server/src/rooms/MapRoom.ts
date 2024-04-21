@@ -8,7 +8,10 @@ import {
    MapRoomOptions as Options,
    PlayerState,
    PvEFightParameters,
+   PvEFightResults,
+   STATISTICS_POINTS_PER_LEVEL,
    StatisticMgt,
+   TALENTS_POINTS_PER_LEVEL,
    TELEPORTATION_SPOTS,
    Room as TRoom,
    TalentMgt,
@@ -309,12 +312,68 @@ export class MapRoom extends Room<MapState> {
                packet.message.results.won ? 'won' : 'lost'
             }`,
          );
+
+         this.onFightPvEResults(client, packet.message.results);
       } catch (error) {
          logger.error(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight against an invalid monster group '${monsterGroupId}'`,
             error,
          );
       }
+   }
+
+   async onFightPvEResults(client: Client, results: PvEFightResults) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      if (results.won) {
+         const charactersInfos = (
+            await prisma.character.findMany({
+               where: { name: { in: results.allies.map(({ name }) => name) } },
+               select: {
+                  name: true,
+                  baseStatisticsPoints: true,
+                  talentsPoints: true,
+               },
+            })
+         ).reduce<Record<string, { baseStatisticsPoints: number; talentsPoints: number }>>(
+            (acc, { name, ...rest }) => ({ ...acc, [name]: rest }),
+            {},
+         );
+
+         const updates = results.allies.map(({ name, experience }, idx) => {
+            const experienceGained = results.experiences[idx];
+            const newExperience = experience + experienceGained;
+
+            const levelGained = LevelMgt.computeGainedLevels(experience, newExperience);
+            const baseStatisticsPointsGained = levelGained * STATISTICS_POINTS_PER_LEVEL;
+            const talentsPointsGained = levelGained * TALENTS_POINTS_PER_LEVEL;
+
+            return {
+               name: results.allies[idx].name,
+               experience: newExperience,
+               talentsPoints: charactersInfos[name].talentsPoints + talentsPointsGained,
+               baseStatisticsPoints:
+                  charactersInfos[name].baseStatisticsPoints + baseStatisticsPointsGained,
+               leveledUp: levelGained > 0,
+            };
+         });
+
+         prisma.$transaction(
+            updates.map(({ name, experience, talentsPoints, baseStatisticsPoints }) =>
+               prisma.character.update({
+                  where: { name },
+                  data: {
+                     experience,
+                     talentsPoints,
+                     baseStatisticsPoints,
+                  },
+               }),
+            ),
+         );
+      }
+
+      logger.info(`[MapRoom][${this.name}] Updated characters after the fight`);
    }
 
    checkTeleportationSpots(client: Client, player: PlayerState) {

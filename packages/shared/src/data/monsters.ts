@@ -15,7 +15,7 @@ const monstersArray: MonsterGenerator[] = [
       health: 20 + level * 15,
       magicShield: 30 + level * 5,
       level,
-      experience: 30 + level * 25,
+      experience: 130 + level * 25,
       weaponType: WeaponType.Axe1H,
       weaponDamages: [{ type: 'strength', min: level, max: level * 3 }],
       rawStatistics: StatisticMgt.serializeStatistics(

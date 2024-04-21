@@ -19,3 +19,6 @@ export const DEFAULT_BASE_STATISTICS: Partial<Statistics> = {
 };
 export const DEFAULT_BASE_STATISTICS_POINTS = 0;
 export const DEFAULT_EXPERIENCE = 0;
+
+export const STATISTICS_POINTS_PER_LEVEL = 5;
+export const TALENTS_POINTS_PER_LEVEL = 1;

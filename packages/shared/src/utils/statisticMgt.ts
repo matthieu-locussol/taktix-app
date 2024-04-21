@@ -1,3 +1,4 @@
+import { STATISTICS_POINTS_PER_LEVEL } from '../config';
 import { ProfessionType } from '../types/Profession';
 import {
    RealStatistic,
@@ -505,7 +506,7 @@ export namespace StatisticMgt {
       }
 
       const level = LevelMgt.getLevel(experience);
-      if (statisticsPointsSpent + remainingPoints !== (level - 1) * 5) {
+      if (statisticsPointsSpent + remainingPoints !== (level - 1) * STATISTICS_POINTS_PER_LEVEL) {
          return { valid: false };
       }
 

@@ -1,9 +1,10 @@
 import { LinearProgress, linearProgressClasses, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
+import { forwardRef } from 'react';
 import { useStore } from '../../../store';
 
 export const ExperienceBar = observer<{}, HTMLDivElement>(
-   (props, ref) => {
+   forwardRef((props, ref) => {
       const { characterStore } = useStore();
       return (
          <StyledProgressBar
@@ -13,8 +14,7 @@ export const ExperienceBar = observer<{}, HTMLDivElement>(
             value={characterStore.experiencePercentage}
          />
       );
-   },
-   { forwardRef: true },
+   }),
 );
 
 const ProgressBar = styled(LinearProgress)(({ theme }) => ({

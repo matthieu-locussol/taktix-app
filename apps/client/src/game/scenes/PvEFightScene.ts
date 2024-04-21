@@ -135,8 +135,8 @@ export class PvEFightScene extends Phaser.Scene {
             this.getAllyPosition(playerSprite, idx, alliesCount).y,
          );
          this.fighters[id] = container;
-         store.pveFightStore.fightersHealth[id] = initialConditions[id].health;
-         store.pveFightStore.fightersMagicShield[id] = initialConditions[id].magicShield;
+         store.pveFightStore.setFighterHealth(id, initialConditions[id].health);
+         store.pveFightStore.setFighterMagicShield(id, initialConditions[id].magicShield);
 
          this.createFighterHealthBar(id);
          this.createFighterMagicShieldBar(id);
@@ -164,8 +164,8 @@ export class PvEFightScene extends Phaser.Scene {
             this.getMonsterPosition(monsterSprite, idx, monstersCount).y,
          );
          this.fighters[id] = container;
-         store.pveFightStore.fightersHealth[id] = initialConditions[id].health;
-         store.pveFightStore.fightersMagicShield[id] = initialConditions[id].magicShield;
+         store.pveFightStore.setFighterHealth(id, initialConditions[id].health);
+         store.pveFightStore.setFighterMagicShield(id, initialConditions[id].magicShield);
 
          this.createFighterHealthBar(id);
          this.createFighterMagicShieldBar(id);

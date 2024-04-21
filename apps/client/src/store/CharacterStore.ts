@@ -96,7 +96,17 @@ export class CharacterStore {
    }
 
    public get experiencePercentage() {
-      return (this.experience / this.maxExperience) * 100;
+      return (
+         ((this.experience - this.minExperience) / (this.maxExperience - this.minExperience)) * 100
+      );
+   }
+
+   public get remainingExperience() {
+      return this.maxExperience - this.experience;
+   }
+
+   public get minExperience() {
+      return LEVEL_TO_EXPERIENCE[this.level];
    }
 
    public get maxExperience() {
