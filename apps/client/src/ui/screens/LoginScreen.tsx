@@ -34,11 +34,16 @@ export const LoginScreen = observer(() => {
       colyseusStore,
       loginStore,
       newsStore,
+      notificationStore,
       screenStore,
       settingsMenuStore,
       updaterStore,
    } = store;
    const { t } = useTranslation();
+
+   useEffect(() => {
+      notificationStore.askPermission();
+   }, []);
 
    useEffect(() => {
       if (newsStore.changelogs.length === 0) {

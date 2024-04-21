@@ -107,6 +107,9 @@ export const translationsJa: LanguageTranslations = {
    turns_other: '{{count}} ターン',
    turn: 'ターン {{count}}',
    fighting: '戦闘中',
+   notificationsEnabled: '通知を受信できるようになりました！',
+   to: '{{name}} へ',
+   from: '{{name}} から',
 
    // Enemies
    'enemy-nono': 'ノノ、小さなロボット',
