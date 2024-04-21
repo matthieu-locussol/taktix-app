@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.48.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.47.3...v1.48.0) (2024-04-21)
+
+
+### Features
+
+* experience and level up system ([4c657ad](https://github.com/matthieu-locussol/taktix-app/commit/4c657ada54b76d49f5fd3c3923e17f4c1b5e4c8d))
+* native notification system ([ff312b4](https://github.com/matthieu-locussol/taktix-app/commit/ff312b450070ad298cd72dd70d46d868682066f2))
+
 ### [1.47.3](https://github.com/matthieu-locussol/taktix-app/compare/v1.47.2...v1.47.3) (2024-04-20)
 
 ### [1.47.2](https://github.com/matthieu-locussol/taktix-app/compare/v1.47.1...v1.47.2) (2024-04-20)
