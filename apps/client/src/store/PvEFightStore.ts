@@ -97,8 +97,8 @@ export class PvEFightStore {
       characterStore.setBaseStatisticsPoints(baseStatisticsPoints + baseStatisticsPointsGained);
       characterStore.setTalentsPoints(talentsPoints + talentsPointsGained);
 
-      statisticsMenuStore.statisticsPoints = baseStatisticsPoints;
-      talentsMenuStore.talentsPoints = talentsPoints;
+      statisticsMenuStore.setStatisticsPoints(baseStatisticsPoints + baseStatisticsPointsGained);
+      talentsMenuStore.setTalentsPoints(talentsPoints + talentsPointsGained);
    }
 
    public get fightersOrder(): (PvEFighterSimplified & { name: string; avatar: string })[] {
