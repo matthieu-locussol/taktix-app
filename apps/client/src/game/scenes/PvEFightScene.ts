@@ -15,7 +15,6 @@ import {
    SCALE_FACTOR,
 } from '../Scene';
 
-const PARALLAX_FACTOR = 0.3;
 const HEALTH_MARGIN = 10;
 const HEALTH_HEIGHT = 8;
 const HEALTH_WIDTH = 80;
@@ -24,21 +23,9 @@ const MAGICSHIELD_HEIGHT = 8;
 const MAGICSHIELD_WIDTH = 80;
 
 export class PvEFightScene extends Phaser.Scene {
-   private background: Phaser.GameObjects.TileSprite | null = null;
-
-   private foregroundTrees: Phaser.GameObjects.TileSprite | null = null;
-
-   private mountainFar: Phaser.GameObjects.TileSprite | null = null;
-
-   private mountains: Phaser.GameObjects.TileSprite | null = null;
-
-   private trees: Phaser.GameObjects.TileSprite | null = null;
-
    private fighters: Record<number, Phaser.GameObjects.Container> = {};
 
    private animationRunning: boolean = false;
-
-   private parallaxActive: boolean = true;
 
    private movesQueue: {
       move: PvEFightMove;
@@ -81,11 +68,11 @@ export class PvEFightScene extends Phaser.Scene {
       this.sound.play('PvEFight', { loop: true, volume: 0.5 });
       this.sound.pauseOnBlur = false;
 
-      this.background = this.createTileSprite('background');
-      this.foregroundTrees = this.createTileSprite('foreground-trees');
-      this.mountainFar = this.createTileSprite('mountain-far');
-      this.mountains = this.createTileSprite('mountains');
-      this.trees = this.createTileSprite('trees');
+      this.createTileSprite('background');
+      this.createTileSprite('foreground-trees');
+      this.createTileSprite('mountain-far');
+      this.createTileSprite('mountains');
+      this.createTileSprite('trees');
 
       // TODO: refactor animations in a separate file
       this.anims.create({
@@ -202,7 +189,6 @@ export class PvEFightScene extends Phaser.Scene {
       await TimeMgt.wait(1000 / store.settingsMenuStore.speedFactor);
 
       this.animationRunning = false;
-      this.parallaxActive = false;
 
       for (const container of Object.values(this.fighters)) {
          if (container.active) {
@@ -697,15 +683,6 @@ export class PvEFightScene extends Phaser.Scene {
       return sprite;
    }
 
-   private adjustTileSpritePosition(tileSprite: Phaser.GameObjects.TileSprite): void {
-      const { width, height } = this.sys.cameras.main;
-
-      tileSprite.setScale(
-         width / tileSprite.width,
-         height / (tileSprite.height + this.getHeightOffset() / 4.25),
-      );
-   }
-
    private getHeightOffset(): number {
       const gameLayoutBoxHeight = document.getElementById('game-layout-box')?.offsetHeight ?? 0;
       return gameLayoutBoxHeight - 8;
@@ -719,30 +696,6 @@ export class PvEFightScene extends Phaser.Scene {
       this.scale.on(Phaser.Scale.Events.LEAVE_FULLSCREEN, () => {
          store.settingsMenuStore.setFullScreen(false);
       });
-   }
-
-   public override update(_time: number, _delta: number): void {
-      if (this.parallaxActive) {
-         _assert(this.background, 'background must be set');
-         _assert(this.mountainFar, 'mountainFar must be set');
-         _assert(this.mountains, 'mountains must be set');
-         _assert(this.trees, 'trees must be set');
-         _assert(this.foregroundTrees, 'foregroundTrees must be set');
-
-         this.mountainFar.tilePositionX +=
-            (0.2 * PARALLAX_FACTOR) / store.settingsMenuStore.speedFactor;
-         this.mountains.tilePositionX +=
-            (0.4 * PARALLAX_FACTOR) / store.settingsMenuStore.speedFactor;
-         this.trees.tilePositionX += (0.8 * PARALLAX_FACTOR) / store.settingsMenuStore.speedFactor;
-         this.foregroundTrees.tilePositionX +=
-            (1 * PARALLAX_FACTOR) / store.settingsMenuStore.speedFactor;
-
-         this.adjustTileSpritePosition(this.background);
-         this.adjustTileSpritePosition(this.mountainFar);
-         this.adjustTileSpritePosition(this.mountains);
-         this.adjustTileSpritePosition(this.trees);
-         this.adjustTileSpritePosition(this.foregroundTrees);
-      }
    }
 
    public fadeIn(): void {
