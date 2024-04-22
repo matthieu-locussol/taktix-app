@@ -48,15 +48,6 @@ export class ChatStore {
    public addMessage(message: ChatMessage) {
       if (message.content.length > 0) {
          this.messages.push(this.formatMessage(message));
-
-         if (message.channel === Channel.SERVER || message.channel === Channel.PRIVATE) {
-            if (message.author !== this._store.characterStore.name) {
-               this._store.notificationStore.sendNotification(
-                  i18next.t('from' satisfies TranslationKey, { name: message.author }),
-                  message.content,
-               );
-            }
-         }
       }
    }
 
