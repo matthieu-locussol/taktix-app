@@ -103,7 +103,6 @@ export const translationsEn = {
    turns_other: '{{count}} turns',
    turn: 'Turn {{count}}',
    fighting: 'In a fight',
-   notificationsEnabled: 'You can now receive notifications!',
    to: 'To {{name}}',
    from: 'From {{name}}',
 
