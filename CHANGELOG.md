@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.48.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.48.0...v1.48.1) (2024-04-22)
+
+
+### Bug Fixes
+
+* multiple fights exploit ([3468c69](https://github.com/matthieu-locussol/taktix-app/commit/3468c69b3d6e279ee650022563799a0933a6f1b0))
+* stats & talents points after fight are computed correctly ([99c84f0](https://github.com/matthieu-locussol/taktix-app/commit/99c84f0438fc77c3cab00548814c476ea875ca32))
+
 ## [1.48.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.47.3...v1.48.0) (2024-04-21)
 
 
