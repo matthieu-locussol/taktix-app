@@ -349,6 +349,10 @@ export class ColyseusStore {
             player.listen('direction', (newDirection) => {
                scene.setPlayerDirection(name, newDirection as Direction);
             });
+
+            player.listen('isFight', (isFight) => {
+               scene.setCharacterFighting(name, isFight);
+            });
          }
       });
 
