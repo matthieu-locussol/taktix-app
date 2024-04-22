@@ -44,6 +44,10 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
          monsterGroupId: z.number(),
       }),
    }),
+   z.object({
+      type: z.literal('stopFighting'),
+      message: z.object({}),
+   }),
 ]);
 
 export type MapRoomMessage = z.infer<typeof zMapRoomMessage>;

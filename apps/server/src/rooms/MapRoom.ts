@@ -2,6 +2,7 @@ import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import {
    FightMgt,
    LevelMgt,
+   MINIMUM_TURN_TIME,
    MapRoomMessage,
    MapRoomResponse,
    MapState,
@@ -63,6 +64,7 @@ export class MapRoom extends Room<MapState> {
                   this.onUpdateStatistics(client, payload),
                )
                .with({ type: 'fightPvE' }, (payload) => this.onFightPvE(client, payload))
+               .with({ type: 'stopFighting' }, (payload) => this.onStopFighting(client, payload))
                .exhaustive();
          } else {
             logger.error(
@@ -244,6 +246,15 @@ export class MapRoom extends Room<MapState> {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
+      if (player.isFight) {
+         logger.error(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight while already in a fight | Might be a cheat attempt`,
+         );
+         return;
+      }
+
+      this.state.startFight(client.sessionId);
+
       const characterInfos = await prisma.character.findUnique({
          where: { name: player.name },
          select: {
@@ -303,6 +314,7 @@ export class MapRoom extends Room<MapState> {
             },
          };
 
+         this.state.setFightTurns(client.sessionId, packet.message.results.turns.length);
          client.send(packet.type, packet.message);
 
          logger.info(
@@ -319,7 +331,22 @@ export class MapRoom extends Room<MapState> {
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight against an invalid monster group '${monsterGroupId}'`,
             error,
          );
+
+         this.state.stopFight(client.sessionId);
       }
+   }
+
+   async onStopFighting(client: Client, _: Extract<MapRoomMessage, { type: 'stopFighting' }>) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      if (Date.now() - player.fightTimestamp < player.fightTurns * MINIMUM_TURN_TIME) {
+         logger.error(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' tried to stop a fight after the allowed time | Might be a cheat attempt`,
+         );
+      }
+
+      this.state.stopFight(client.sessionId);
    }
 
    async onFightPvEResults(client: Client, results: PvEFightResults) {
