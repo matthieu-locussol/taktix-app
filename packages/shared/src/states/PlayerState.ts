@@ -19,6 +19,13 @@ export class PlayerState extends Schema {
    @type('boolean')
    isMoving = false;
 
+   @type('boolean')
+   isFight = false;
+
+   fightTimestamp = 0;
+
+   fightTurns = 0;
+
    constructor(name: string, profession: string, x: number, y: number, direction: string) {
       super();
 
@@ -40,5 +47,19 @@ export class PlayerState extends Schema {
       this.y = y;
       this.direction = direction;
       this.isMoving = false;
+   }
+
+   startFight() {
+      this.isFight = true;
+      this.fightTimestamp = Date.now();
+      this.fightTurns = 0;
+   }
+
+   stopFight() {
+      this.isFight = false;
+   }
+
+   setFightTurns(turns: number) {
+      this.fightTurns = turns;
    }
 }

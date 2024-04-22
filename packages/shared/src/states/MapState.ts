@@ -28,4 +28,28 @@ export class MapState extends Schema {
          player.move(x, y);
       }
    }
+
+   startFight(sessionId: string) {
+      const player = this.players.get(sessionId);
+
+      if (player !== undefined) {
+         player.startFight();
+      }
+   }
+
+   stopFight(sessionId: string) {
+      const player = this.players.get(sessionId);
+
+      if (player !== undefined) {
+         player.stopFight();
+      }
+   }
+
+   setFightTurns(sessionId: string, turns: number) {
+      const player = this.players.get(sessionId);
+
+      if (player !== undefined) {
+         player.setFightTurns(turns);
+      }
+   }
 }

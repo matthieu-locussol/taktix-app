@@ -209,6 +209,8 @@ export class PvEFightScene extends Phaser.Scene {
             this.scene.resume(store.characterStore.map);
             this.scene.stop(this.scene.key);
 
+            store.colyseusStore.stopFighting();
+
             await TimeMgt.wait(300);
             store.gameStore.currentScene.fadeIn();
          }

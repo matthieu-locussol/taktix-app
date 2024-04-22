@@ -385,6 +385,10 @@ export class ColyseusStore {
       this.gameRoom.send('fightPvE', { monsterGroupId });
    }
 
+   stopFighting() {
+      this.gameRoom.send('stopFighting', {});
+   }
+
    async onChangeMap({
       map,
       x,
