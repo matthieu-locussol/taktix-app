@@ -50,9 +50,11 @@ export class PvEFightScene extends Phaser.Scene {
          frameHeight: CHARACTER_HEIGHT,
       });
 
-      this.load.spritesheet('MonsterSpritesheet', '/assets/monsters/body/enemy-nono.png', {
-         frameWidth: 32,
-         frameHeight: 32,
+      store.pveFightStore.uniqueMonstersNames.forEach((name) => {
+         this.load.spritesheet(name, `/assets/monsters/body/${name}.png`, {
+            frameWidth: 32,
+            frameHeight: 32,
+         });
       });
 
       this.load.spritesheet('HitsSpritesheet', '/assets/animations/hits.png', {
@@ -131,11 +133,11 @@ export class PvEFightScene extends Phaser.Scene {
          this.updateFighterMagicShieldBar(id);
       });
 
-      store.pveFightStore.fightResults.monsters.forEach(({ id }, idx) => {
-         const monsterSprite = this.add.sprite(0, 0, 'MonsterSpritesheet');
+      store.pveFightStore.fightResults.monsters.forEach(({ id, name }, idx) => {
+         const monsterSprite = this.add.sprite(0, 0, name);
          monsterSprite.anims.create({
             key: 'idle',
-            frames: monsterSprite.anims.generateFrameNumbers('MonsterSpritesheet', {
+            frames: monsterSprite.anims.generateFrameNumbers(name, {
                frames: [0, 1, 2, 3, 4, 5, 6, 7],
             }),
             frameRate: 8,
@@ -626,7 +628,7 @@ export class PvEFightScene extends Phaser.Scene {
             .setAlpha(0)
             .setDepth(1)
             .setScale(0.5, 0.5);
-         sprite.postFX.addGlow(0x111827, 16, 0, false, 1, 10);
+         sprite.postFX.addGlow(0x111827, 16, 0, false, 0.3, 10);
          return sprite;
       });
 

@@ -107,4 +107,28 @@ describe('ArrayMgt', () => {
          expect(ArrayMgt.filterNullish(arr)).toEqual(expected);
       });
    });
+
+   describe('makeUnique', () => {
+      const samples: {
+         arr: (number | string)[];
+         expected: (number | string)[];
+      }[] = [
+         {
+            arr: [1, 2, 3],
+            expected: [1, 2, 3],
+         },
+         {
+            arr: [1, 2, 3, 1, 2, 3],
+            expected: [1, 2, 3],
+         },
+         {
+            arr: ['a', 'b', 'c', 'a', 'b', 'c'],
+            expected: ['a', 'b', 'c'],
+         },
+      ];
+
+      it.each(samples)('should return $expected when making $arr unique', ({ arr, expected }) => {
+         expect(ArrayMgt.makeUnique(arr)).toEqual(expected);
+      });
+   });
 });

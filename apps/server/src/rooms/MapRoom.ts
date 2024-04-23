@@ -382,7 +382,6 @@ export class MapRoom extends Room<MapState> {
                talentsPoints: charactersInfos[name].talentsPoints + talentsPointsGained,
                baseStatisticsPoints:
                   charactersInfos[name].baseStatisticsPoints + baseStatisticsPointsGained,
-               leveledUp: levelGained > 0,
             };
          });
 
