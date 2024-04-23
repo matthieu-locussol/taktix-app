@@ -23,4 +23,6 @@ export namespace ArrayMgt {
 
    export const filterNullish = <T>(arr: (T | null | undefined)[]): T[] =>
       arr.filter((e): e is T => e !== null && e !== undefined);
+
+   export const makeUnique = <T>(arr: T[]): T[] => Array.from(new Set(arr));
 }

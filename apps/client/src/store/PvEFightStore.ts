@@ -3,6 +3,7 @@ import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from 'shared/sr
 import { ProfessionType } from 'shared/src/types/Profession';
 import { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight';
 import { _assert } from 'shared/src/utils/_assert';
+import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { Store } from './Store';
 
@@ -145,5 +146,9 @@ export class PvEFightStore {
          }),
          {},
       );
+   }
+
+   public get uniqueMonstersNames(): string[] {
+      return ArrayMgt.makeUnique(this.fightResults.monsters.map(({ name }) => name));
    }
 }
