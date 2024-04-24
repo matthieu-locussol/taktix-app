@@ -8,66 +8,66 @@ const DISCORD_CLIENT_ID: &str = "1200740796371054612";
 
 #[derive(serde::Serialize, serde::Deserialize, Debug)]
 pub struct DiscordRichPresencePayload {
-   state: String,
-   details: String,
-   large_image: String,
-   large_text: String,
-   small_image: Option<String>,
-   small_text: Option<String>,
-   timestamp: i64,
+    state: String,
+    details: String,
+    large_image: String,
+    large_text: String,
+    small_image: Option<String>,
+    small_text: Option<String>,
+    timestamp: i64,
 }
 
 pub struct DiscordState {
-   client: Mutex<DiscordIpcClient>,
+    client: Mutex<DiscordIpcClient>,
 }
 
 impl DiscordState {
-   pub fn new() -> Self {
-      let mut client = DiscordIpcClient::new(DISCORD_CLIENT_ID).expect(
-         "Failed to create Discord IPC client"
-      );
+    pub fn new() -> Self {
+        let mut client = DiscordIpcClient::new(DISCORD_CLIENT_ID).expect(
+            "Failed to create Discord IPC client"
+        );
 
-      client.connect().expect("Failed to connect to Discord");
+        client.connect().expect("Failed to connect to Discord");
 
-      DiscordState {
-         client: Mutex::new(client),
-      }
-   }
+        DiscordState {
+            client: Mutex::new(client),
+        }
+    }
 }
 
 #[command]
 pub fn set_discord_rich_presence(
-   payload: DiscordRichPresencePayload,
-   discord_state: tauri::State<DiscordState>
+    payload: DiscordRichPresencePayload,
+    discord_state: tauri::State<DiscordState>
 ) -> Result<(), String> {
-   let mut client = discord_state.client.lock().unwrap();
-   let mut assets = activity::Assets::new();
+    let mut client = discord_state.client.lock().unwrap();
+    let mut assets = activity::Assets::new();
 
-   if
-      let (Some(small_image), Some(small_text)) = (
-         payload.small_image.as_ref(),
-         payload.small_text.as_ref(),
-      )
-   {
-      assets = assets.small_image(small_image).small_text(small_text);
-   }
+    if
+        let (Some(small_image), Some(small_text)) = (
+            payload.small_image.as_ref(),
+            payload.small_text.as_ref(),
+        )
+    {
+        assets = assets.small_image(small_image).small_text(small_text);
+    }
 
-   client
-      .set_activity(
-         activity::Activity
-            ::new()
-            .state(&payload.state)
-            .details(&payload.details)
-            .assets(assets.large_image(&payload.large_image).large_text(&payload.large_text))
-            .timestamps(Timestamps::new().start(payload.timestamp))
-            .buttons(
-               [
-                  activity::Button::new("Website", "https://taktix.vercel.app/"),
-                  activity::Button::new("Discord", "https://discord.gg/9a9EVKTMkX"),
-               ].to_vec()
-            )
-      )
-      .map_err(|e| e.to_string())?;
+    client
+        .set_activity(
+            activity::Activity
+                ::new()
+                .state(&payload.state)
+                .details(&payload.details)
+                .assets(assets.large_image(&payload.large_image).large_text(&payload.large_text))
+                .timestamps(Timestamps::new().start(payload.timestamp))
+                .buttons(
+                    [
+                        activity::Button::new("Website", "https://taktix.vercel.app/"),
+                        activity::Button::new("Discord", "https://discord.gg/9a9EVKTMkX"),
+                    ].to_vec()
+                )
+        )
+        .map_err(|e| e.to_string())?;
 
-   Ok(())
+    Ok(())
 }
