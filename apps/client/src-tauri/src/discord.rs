@@ -22,52 +22,54 @@ pub struct DiscordState {
 }
 
 impl DiscordState {
-    pub fn new() -> Self {
-        let mut client = DiscordIpcClient::new(DISCORD_CLIENT_ID).expect(
-            "Failed to create Discord IPC client"
-        );
+    pub fn new() -> Result<Self, String> {
+        let mut client = DiscordIpcClient::new(DISCORD_CLIENT_ID).map_err(|e| e.to_string())?;
 
-        client.connect().expect("Failed to connect to Discord");
+        client.connect().map_err(|e| e.to_string())?;
 
-        DiscordState {
+        Ok(DiscordState {
             client: Mutex::new(client),
-        }
+        })
     }
 }
 
 #[command]
 pub fn set_discord_rich_presence(
     payload: DiscordRichPresencePayload,
-    discord_state: tauri::State<DiscordState>
+    discord_state: tauri::State<'_, Option<DiscordState>>
 ) -> Result<(), String> {
-    let mut client = discord_state.client.lock().unwrap();
-    let mut assets = activity::Assets::new();
+    if let Some(state) = discord_state.inner() {
+        let mut client = state.client.lock().unwrap();
+        let mut assets = activity::Assets::new();
 
-    if
-        let (Some(small_image), Some(small_text)) = (
-            payload.small_image.as_ref(),
-            payload.small_text.as_ref(),
-        )
-    {
-        assets = assets.small_image(small_image).small_text(small_text);
+        if
+            let (Some(small_image), Some(small_text)) = (
+                payload.small_image.as_ref(),
+                payload.small_text.as_ref(),
+            )
+        {
+            assets = assets.small_image(small_image).small_text(small_text);
+        }
+
+        client
+            .set_activity(
+                activity::Activity
+                    ::new()
+                    .state(&payload.state)
+                    .details(&payload.details)
+                    .assets(
+                        assets.large_image(&payload.large_image).large_text(&payload.large_text)
+                    )
+                    .timestamps(Timestamps::new().start(payload.timestamp))
+                    .buttons(
+                        [
+                            activity::Button::new("Website", "https://taktix.vercel.app/"),
+                            activity::Button::new("Discord", "https://discord.gg/9a9EVKTMkX"),
+                        ].to_vec()
+                    )
+            )
+            .map_err(|e| e.to_string())
+    } else {
+        Err("Discord integration is not available.".to_string())
     }
-
-    client
-        .set_activity(
-            activity::Activity
-                ::new()
-                .state(&payload.state)
-                .details(&payload.details)
-                .assets(assets.large_image(&payload.large_image).large_text(&payload.large_text))
-                .timestamps(Timestamps::new().start(payload.timestamp))
-                .buttons(
-                    [
-                        activity::Button::new("Website", "https://taktix.vercel.app/"),
-                        activity::Button::new("Discord", "https://discord.gg/9a9EVKTMkX"),
-                    ].to_vec()
-                )
-        )
-        .map_err(|e| e.to_string())?;
-
-    Ok(())
 }
