@@ -5,9 +5,11 @@ use discord::DiscordState;
 use tauri::Manager;
 
 fn main() {
+    let discord_state = DiscordState::new().ok();
+
     let app = tauri::Builder
         ::default()
-        .manage(DiscordState::new())
+        .manage(discord_state)
         .invoke_handler(tauri::generate_handler![discord::set_discord_rich_presence])
         .build(tauri::generate_context!())
         .expect("An error occurred while running the application");
@@ -19,18 +21,13 @@ fn main() {
 
                 match updater_event {
                     tauri::UpdaterEvent::DownloadProgress { chunk_length, content_length } => {
-                        if main_window.is_some() && content_length.is_some() {
-                            let content_length: u64 = content_length.unwrap();
-                            if content_length > 0 {
-                                if
-                                    let Err(err) = main_window
-                                        .unwrap()
-                                        .emit(
-                                            "updateProgress",
-                                            (chunk_length as f32) / (content_length as f32)
-                                        )
-                                {
-                                    println!("{}", err);
+                        if let Some(window) = main_window {
+                            if let Some(content_length) = content_length {
+                                if content_length > 0 {
+                                    let progress = (chunk_length as f32) / (content_length as f32);
+                                    if let Err(err) = window.emit("updateProgress", progress) {
+                                        println!("{}", err);
+                                    }
                                 }
                             }
                         }
