@@ -261,12 +261,14 @@ export class PvEFight {
    }
 
    private initializeInitialConditions(): PvEInitialConditions {
-      return this.fighters.map(({ id, health, magicShield }) => ({
-         fighterId: id,
-         health,
-         magicShield,
-         maxHealth: health, // TODO: compute maxHealth from statistics
-         maxMagicShield: magicShield,
-      }));
+      return this.fighters.map(({ id, health, magicShield, statistics, type }) => {
+         return {
+            fighterId: id,
+            health,
+            magicShield,
+            maxHealth: type === 'ally' ? statistics.vitality : health,
+            maxMagicShield: magicShield,
+         };
+      });
    }
 }

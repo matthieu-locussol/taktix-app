@@ -32,6 +32,7 @@ model Character {
   baseStatistics       String
   baseStatisticsPoints Int
   experience           Int
+  health               Int
 
   user   User @relation(fields: [userId], references: [id])
   userId Int

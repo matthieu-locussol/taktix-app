@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from 'shared/src/config';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight';
-import { _assert } from 'shared/src/utils/_assert';
+import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { Store } from './Store';
@@ -52,6 +52,23 @@ export class PvEFightStore {
       this._store.discordStore.updateDiscordRichPresence();
 
       this.checkLevelUp();
+
+      const allyInfosIdx = this.fightResults.allies.findIndex(
+         ({ name }) => name === this._store.characterStore.name,
+      );
+      _assertTrue(allyInfosIdx !== -1, 'Ally infos should be defined');
+
+      const allyInfos = this.fightResults.allies[allyInfosIdx];
+      const experienceGained = this.fightResults.experiences[allyInfosIdx];
+
+      const oldLevel = LevelMgt.getLevel(this._store.characterStore.experience - experienceGained);
+      const newLevel = LevelMgt.getLevel(this._store.characterStore.experience);
+
+      if (newLevel > oldLevel) {
+         this._store.characterStore.setCurrentHealth(this._store.characterStore.maxHealth);
+      } else {
+         this._store.characterStore.setCurrentHealth(Math.max(1, allyInfos.health));
+      }
    }
 
    public setCurrentTurn(currentTurn: number): void {

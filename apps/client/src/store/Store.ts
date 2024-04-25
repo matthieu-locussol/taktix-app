@@ -64,7 +64,7 @@ export class Store {
    constructor() {
       makeAutoObservable(this);
 
-      this.characterStore = new CharacterStore();
+      this.characterStore = new CharacterStore(this);
       this.characterCreationStore = new CharacterCreationStore();
       this.characterSelectionStore = new CharacterSelectionStore();
       this.chatStore = new ChatStore(this);

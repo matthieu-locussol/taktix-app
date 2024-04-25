@@ -6,6 +6,7 @@ import {
    DEFAULT_BASE_STATISTICS_POINTS,
    DEFAULT_DIRECTION,
    DEFAULT_EXPERIENCE,
+   DEFAULT_HEALTH,
    DEFAULT_MAP,
    DEFAULT_TALENTS,
    DEFAULT_TALENTS_POINTS,
@@ -219,6 +220,7 @@ export class AuthRoom extends Room {
             baseStatisticsPoints: character.baseStatisticsPoints,
             experience: character.experience,
             profession: zProfessionType.parse(character.profession),
+            health: character.health,
          };
 
          usersMap.set(uuid, {
@@ -306,6 +308,7 @@ export class AuthRoom extends Room {
                baseStatistics: StatisticMgt.serializeStatistics(DEFAULT_BASE_STATISTICS),
                baseStatisticsPoints: DEFAULT_BASE_STATISTICS_POINTS,
                experience: DEFAULT_EXPERIENCE,
+               health: DEFAULT_HEALTH,
                user: {
                   connect: {
                      username,

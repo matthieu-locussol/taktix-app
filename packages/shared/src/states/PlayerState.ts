@@ -1,4 +1,5 @@
 import { Schema, type } from '@colyseus/schema';
+import { DEFAULT_HEALTH_REGEN_MS } from '../config';
 
 export class PlayerState extends Schema {
    @type('string')
@@ -22,11 +23,24 @@ export class PlayerState extends Schema {
    @type('boolean')
    isFight = false;
 
+   health = 0;
+
+   maxHealth = 0;
+
+   healthTimestamp = 0;
+
    fightTimestamp = 0;
 
    fightTurns = 0;
 
-   constructor(name: string, profession: string, x: number, y: number, direction: string) {
+   constructor(
+      name: string,
+      profession: string,
+      x: number,
+      y: number,
+      direction: string,
+      health: number,
+   ) {
       super();
 
       this.name = name;
@@ -34,6 +48,8 @@ export class PlayerState extends Schema {
       this.x = x;
       this.y = y;
       this.direction = direction;
+
+      this.setHealth(health);
    }
 
    move(x: number, y: number) {
@@ -57,9 +73,24 @@ export class PlayerState extends Schema {
 
    stopFight() {
       this.isFight = false;
+      this.healthTimestamp = Date.now();
    }
 
    setFightTurns(turns: number) {
       this.fightTurns = turns;
+   }
+
+   setHealth(health: number) {
+      this.health = health;
+      this.healthTimestamp = Date.now();
+   }
+
+   setMaxHealth(maxHealth: number) {
+      this.maxHealth = maxHealth;
+   }
+
+   getHealth() {
+      const diff = Math.floor(Date.now() - this.healthTimestamp);
+      return Math.floor(Math.min(this.health + diff / DEFAULT_HEALTH_REGEN_MS, this.maxHealth));
    }
 }

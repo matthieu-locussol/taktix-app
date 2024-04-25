@@ -118,6 +118,7 @@ export class MapRoom extends Room<MapState> {
          characterPosition.x,
          characterPosition.y,
          characterDirection,
+         characterInfos.health,
       );
    }
 
@@ -282,12 +283,14 @@ export class MapRoom extends Room<MapState> {
          ),
       );
 
+      player.setMaxHealth(realStatistics.vitality);
+
       try {
          const parameters: PvEFightParameters = {
             alliesInformations: [
                {
                   name: characterInfos.name,
-                  health: realStatistics.vitality, // TODO: get current health, not max health
+                  health: player.getHealth(),
                   magicShield: realStatistics.magicShield,
                   experience: characterInfos.experience,
                   level: LevelMgt.getLevel(characterInfos.experience),
@@ -313,6 +316,32 @@ export class MapRoom extends Room<MapState> {
                results: FightMgt.computePvEFight(parameters),
             },
          };
+
+         const allyInfosIdx = packet.message.results.allies.findIndex(
+            ({ name }) => name === player.name,
+         );
+         if (allyInfosIdx !== -1) {
+            const allyInfos = packet.message.results.allies[allyInfosIdx];
+            const experienceGained = packet.message.results.experiences[allyInfosIdx];
+
+            const newLevel = LevelMgt.getLevel(characterInfos.experience + experienceGained);
+            const oldLevel = LevelMgt.getLevel(characterInfos.experience);
+
+            if (newLevel > oldLevel) {
+               const newRealStatistics = StatisticMgt.computeRealStatistics(
+                  StatisticMgt.aggregateStatistics(
+                     StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
+                     characterInfos.experience + experienceGained,
+                     zProfessionType.parse(characterInfos.profession),
+                  ),
+               );
+
+               player.setMaxHealth(newRealStatistics.vitality);
+               player.setHealth(newRealStatistics.vitality);
+            } else {
+               player.setHealth(Math.max(1, allyInfos.health));
+            }
+         }
 
          this.state.setFightTurns(client.sessionId, packet.message.results.turns.length);
          client.send(packet.type, packet.message);
@@ -447,6 +476,7 @@ export class MapRoom extends Room<MapState> {
             pos_x: player.x,
             pos_y: player.y,
             direction: player.direction,
+            health: player.getHealth(),
          },
       });
 

@@ -196,6 +196,7 @@ export class ColyseusStore {
                baseStatistics,
                baseStatisticsPoints,
                experience,
+               health,
             }) => {
                this.setUuid(uuid);
                await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
@@ -225,6 +226,7 @@ export class ColyseusStore {
                );
                this._store.characterStore.setBaseStatisticsPoints(baseStatisticsPoints);
                this._store.characterStore.setExperience(experience);
+               this._store.characterStore.setCurrentHealth(health);
 
                this._store.talentsMenuStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.talentsMenuStore.setTalentsPoints(talentsPoints);
@@ -425,6 +427,7 @@ export class ColyseusStore {
 
    async onFightPvE({ results }: Extract<MapRoomResponse, { type: 'fightPvE' }>['message']) {
       const scene = await this._store.gameStore.getCurrentScene();
+      console.log(results);
       scene.fadeOut((_, progress) => {
          if (progress === 1) {
             this._store.pveFightStore.setFightResults(results);
