@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.49.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.48.1...v1.49.0) (2024-04-25)
+
+
+### Features
+
+* health & health regeneration system ([bc1039a](https://github.com/matthieu-locussol/taktix-app/commit/bc1039aa27a678b2e690715dfc7bf131fc049526))
+
+
+### Bug Fixes
+
+* game crashing when discord was not running ([45e6bf7](https://github.com/matthieu-locussol/taktix-app/commit/45e6bf7701898825f3346f8ccf8098230963faf5))
+
 ### [1.48.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.48.0...v1.48.1) (2024-04-22)
 
 
