@@ -1,4 +1,4 @@
-import { STATISTICS_POINTS_PER_LEVEL } from '../config';
+import { DEFAULT_HEALTH, STATISTICS_POINTS_PER_LEVEL } from '../config';
 import { ProfessionType } from '../types/Profession';
 import {
    RealStatistic,
@@ -16,7 +16,7 @@ export namespace StatisticMgt {
 
    export const DEFAULT_CHARACTER_STATISTICS = (): Statistics =>
       StatisticMgt.makeMockedStatistics({
-         'vitality_+f': 50,
+         'vitality_+f': DEFAULT_HEALTH,
          'precision_+f': 15,
          'evasion_+f': 15,
       });

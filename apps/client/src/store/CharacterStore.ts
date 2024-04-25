@@ -1,5 +1,6 @@
 import type { Position } from 'grid-engine';
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
+import { DEFAULT_HEALTH_REGEN_MS } from 'shared/src/config';
 import { LEVEL_TO_EXPERIENCE } from 'shared/src/data/levels';
 import { Player } from 'shared/src/types/Player';
 import { ProfessionType } from 'shared/src/types/Profession';
@@ -7,8 +8,11 @@ import { Room } from 'shared/src/types/Room';
 import { Statistics } from 'shared/src/types/Statistic';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
+import { Store } from './Store';
 
 export class CharacterStore {
+   private _store: Store;
+
    public map: Room = 'AAA_InitialRoom';
 
    public name: string = '';
@@ -31,8 +35,12 @@ export class CharacterStore {
 
    public currentHealth: number = 35;
 
-   constructor() {
+   private _intervalTimeout: NodeJS.Timeout | null = null;
+
+   constructor(store: Store) {
       makeAutoObservable(this);
+
+      this._store = store;
    }
 
    public setMap(map: Room) {
@@ -81,10 +89,12 @@ export class CharacterStore {
 
    public setExperience(experience: number) {
       this.experience = experience;
+      this.regenLifeIfNeeded();
    }
 
    public setCurrentHealth(currentHealth: number) {
       this.currentHealth = currentHealth;
+      this.regenLifeIfNeeded();
    }
 
    public get healthPercentage() {
@@ -123,5 +133,31 @@ export class CharacterStore {
          this.experience,
          this.profession,
       );
+   }
+
+   private regenLifeIfNeeded() {
+      if (this._intervalTimeout) {
+         return;
+      }
+
+      this._intervalTimeout = setInterval(() => {
+         if (this._store.pveFightStore.fightOngoing) {
+            if (this._intervalTimeout) {
+               clearInterval(this._intervalTimeout);
+               this._intervalTimeout = null;
+            }
+         } else {
+            runInAction(() => {
+               this.currentHealth = Math.min(this.currentHealth + 1, this.maxHealth);
+            });
+
+            if (this.currentHealth === this.maxHealth) {
+               if (this._intervalTimeout) {
+                  clearInterval(this._intervalTimeout);
+                  this._intervalTimeout = null;
+               }
+            }
+         }
+      }, DEFAULT_HEALTH_REGEN_MS);
    }
 }
