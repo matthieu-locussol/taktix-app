@@ -16,7 +16,7 @@
       "@emotion/styled": "^11.11.5",
       "@mui/icons-material": "^5.15.15",
       "@mui/material": "^5.15.15",
-      "next": "^14.2.2",
+      "next": "^14.2.3",
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
       "shared": "workspace:^"
