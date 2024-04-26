@@ -74,6 +74,8 @@ export abstract class Scene extends Phaser.Scene {
 
    public interactiveObjects: InteractiveObject[] = [];
 
+   public fightIcons: Record<string, Phaser.GameObjects.Image> = {};
+
    constructor(config: Room | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
       super(config);
       this.gridEngine = (this as unknown as IScene).gridEngine;
@@ -121,6 +123,7 @@ export abstract class Scene extends Phaser.Scene {
       });
 
       this.loadAssets();
+      this.load.image('FightIcon', 'assets/fights/fight.png');
       this.load.scenePlugin('animatedTiles', AnimatedTiles, 'animatedTiles', 'animatedTiles');
    }
 
@@ -601,6 +604,12 @@ export abstract class Scene extends Phaser.Scene {
          wrapper.square.destroy();
          this.playersWrappers.delete(name);
       }
+
+      const fightIcon = this.fightIcons[name];
+      if (fightIcon !== undefined) {
+         fightIcon.destroy();
+         delete this.fightIcons[name];
+      }
    }
 
    public setNextX(name: string, x: number): void {
@@ -650,6 +659,27 @@ export abstract class Scene extends Phaser.Scene {
 
    public setPlayerDirection(name: string, direction: Direction): void {
       this.gridEngine.turnTowards(name, direction);
+   }
+
+   public setCharacterFighting(name: string, isFighting: boolean): void {
+      const spriteName = store.characterStore.name === name ? INTERNAL_PLAYER_NAME : name;
+      const characterSprite = this.gridEngine.getSprite(spriteName);
+
+      if (characterSprite !== undefined) {
+         const fightIconSprite = this.fightIcons[spriteName];
+         if (fightIconSprite !== undefined) {
+            fightIconSprite.destroy();
+            delete this.fightIcons[spriteName];
+         }
+
+         if (isFighting) {
+            const fightIconSprite = this.add
+               .image(characterSprite.x + 24, characterSprite.y - CHARACTER_HEIGHT + 8, 'FightIcon')
+               .setDepth(INTERACTIVE_OBJECT_DEPTH);
+
+            this.fightIcons[spriteName] = fightIconSprite;
+         }
+      }
    }
 
    public fadeIn(): void {

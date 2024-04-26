@@ -378,6 +378,16 @@ export class ColyseusStore {
                   });
                });
             });
+
+            player.listen('isFight', (isFight) => {
+               createExternalPlayerIfNeeded().then(() => {
+                  this._store.gameStore.getCurrentScene().then((scene) => {
+                     if (scene.getRoomType() === 'map') {
+                        scene.setCharacterFighting(name, isFight);
+                     }
+                  });
+               });
+            });
          }
       });
 
@@ -466,12 +476,13 @@ export class ColyseusStore {
 
       players
          .filter(({ name }) => name !== this._store.characterStore.name)
-         .forEach(({ name, x, y, direction, profession }) => {
+         .forEach(({ name, x, y, direction, profession, isFight }) => {
             if (scene.doesPlayerExist(name)) {
                scene.deleteExternalPlayer(name);
             }
 
             scene.addExternalPlayer(name, profession, { x, y }, direction as Direction);
+            scene.setCharacterFighting(name, isFight);
          });
    }
 
