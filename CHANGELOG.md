@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.49.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.49.0...v1.49.1) (2024-04-26)
+
+
+### Bug Fixes
+
+* character creation's name input ([db59743](https://github.com/matthieu-locussol/taktix-app/commit/db597439a9f041dbeca929fffa482b57b66e34f2))
+* characters synchronization after the fight ([0bd822a](https://github.com/matthieu-locussol/taktix-app/commit/0bd822a9e9fb418f82bdc058058d6f386220b951))
+* fight icon synchronization ([55d7950](https://github.com/matthieu-locussol/taktix-app/commit/55d79502ca5e32f906bda5c61a89aa1b2034d2f2))
+* players realtime synchronization ([d2b1a41](https://github.com/matthieu-locussol/taktix-app/commit/d2b1a412383e22a6b1360f54d40e4a5b955c677a))
+
 ## [1.49.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.48.1...v1.49.0) (2024-04-25)
 
 
