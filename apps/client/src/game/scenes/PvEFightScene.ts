@@ -713,4 +713,8 @@ export class PvEFightScene extends Phaser.Scene {
       this.sound.resumeAll();
       this.sound.pauseOnBlur = false;
    }
+
+   public getRoomType(): 'map' | 'fight' {
+      return 'fight';
+   }
 }
