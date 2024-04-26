@@ -427,7 +427,6 @@ export class ColyseusStore {
 
    async onFightPvE({ results }: Extract<MapRoomResponse, { type: 'fightPvE' }>['message']) {
       const scene = await this._store.gameStore.getCurrentScene();
-      console.log(results);
       scene.fadeOut((_, progress) => {
          if (progress === 1) {
             this._store.pveFightStore.setFightResults(results);
