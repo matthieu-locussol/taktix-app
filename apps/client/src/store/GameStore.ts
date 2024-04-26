@@ -74,7 +74,6 @@ export class GameStore {
       const { characterStore } = this._store;
       _assert(data.entrancePosition);
       characterStore.setPosition(data.entrancePosition);
-      characterStore.setPlayers([]);
 
       return returnedScene as Scene;
    }
