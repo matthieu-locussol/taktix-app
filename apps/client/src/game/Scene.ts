@@ -508,6 +508,10 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public updateMoves(): void {
+      if (!store.screenStore.loggedIn) {
+         return;
+      }
+
       if (this.input.keyboard !== null) {
          const cursors = this.getKeyboardCursors();
          const playerPosition = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
