@@ -386,6 +386,7 @@ export class MapRoom extends Room<MapState> {
                y: player.y,
                direction: player.direction,
                profession: zProfessionType.parse(player.profession),
+               isFight: player.isFight,
             })),
          },
       };

@@ -82,6 +82,7 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
                y: z.number(),
                direction: z.string(),
                profession: zProfessionType,
+               isFight: z.boolean(),
             }),
          ),
       }),
