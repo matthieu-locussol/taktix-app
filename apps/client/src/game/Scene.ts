@@ -456,18 +456,25 @@ export abstract class Scene extends Phaser.Scene {
          const realName = name === INTERNAL_PLAYER_NAME ? store.characterStore.name : name;
 
          try {
-            const characterSprite = this.gridEngine.getSprite(name);
-            if (characterSprite !== undefined) {
-               const { name: characterName, square } = wrapper;
+            if (this.gridEngine.hasCharacter(name)) {
+               const characterSprite = this.gridEngine.getSprite(name);
+               if (characterSprite !== undefined) {
+                  const { name: characterName, square } = wrapper;
 
-               Phaser.Display.Align.To.TopCenter(
-                  characterName,
-                  characterSprite,
-                  (CHARACTER_WIDTH * SCALE_FACTOR - realName.length * CHARACTER_LETTER_WIDTH) / 4,
-                  0,
-               );
+                  Phaser.Display.Align.To.TopCenter(
+                     characterName,
+                     characterSprite,
+                     (CHARACTER_WIDTH * SCALE_FACTOR - realName.length * CHARACTER_LETTER_WIDTH) /
+                        4,
+                     0,
+                  );
 
-               Phaser.Display.Align.To.BottomCenter(square, characterSprite, CHARACTER_WIDTH / 2);
+                  Phaser.Display.Align.To.BottomCenter(
+                     square,
+                     characterSprite,
+                     CHARACTER_WIDTH / 2,
+                  );
+               }
             }
          } catch (e) {
             console.error(e);
@@ -553,11 +560,6 @@ export abstract class Scene extends Phaser.Scene {
       position: Position,
       direction: Direction,
    ): void {
-      const existingPlayer = this.playersWrappers.get(name);
-      if (existingPlayer !== undefined) {
-         return;
-      }
-
       const character = makeCharacter(this, name, false);
       if (character !== null) {
          const { sprite, wrapper } = character;
@@ -619,6 +621,12 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
+   public doesPlayerExist(name: string): boolean {
+      return (
+         this.gridEngine.getAllCharacters().find((playerName) => playerName === name) !== undefined
+      );
+   }
+
    public moveIfNeeded(name: string) {
       const { x, y } = this.gridEngine.getPosition(name);
       const newPosition = this.nextPositions.get(name);
@@ -655,5 +663,9 @@ export abstract class Scene extends Phaser.Scene {
          this.interactiveObjects.forEach(({ polygon }) => polygon.destroy());
          this.interactiveObjects = [];
       }
+   }
+
+   public getRoomType(): 'map' | 'fight' {
+      return 'map';
    }
 }

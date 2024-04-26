@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { zProfessionType } from '../types/Profession';
 import { zPvEFightResults } from '../types/PvEFight';
 import { Direction, Position } from '../types/SceneData';
 
@@ -69,6 +70,20 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
       type: z.literal('fightPvE'),
       message: z.object({
          results: zPvEFightResults,
+      }),
+   }),
+   z.object({
+      type: z.literal('stopFightingResponse'),
+      message: z.object({
+         players: z.array(
+            z.object({
+               name: z.string(),
+               x: z.number(),
+               y: z.number(),
+               direction: z.string(),
+               profession: zProfessionType,
+            }),
+         ),
       }),
    }),
 ]);

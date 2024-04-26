@@ -376,6 +376,21 @@ export class MapRoom extends Room<MapState> {
       }
 
       this.state.stopFight(client.sessionId);
+
+      const packet: Extract<MapRoomResponse, { type: 'stopFightingResponse' }> = {
+         type: 'stopFightingResponse',
+         message: {
+            players: [...this.state.players.values()].map((player) => ({
+               name: player.name,
+               x: player.x,
+               y: player.y,
+               direction: player.direction,
+               profession: zProfessionType.parse(player.profession),
+            })),
+         },
+      };
+
+      client.send(packet.type, packet.message);
    }
 
    async onFightPvEResults(client: Client, results: PvEFightResults) {

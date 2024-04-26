@@ -322,6 +322,9 @@ export class ColyseusStore {
                .with({ type: 'fightPvE' }, ({ message: payloadMessage }) => {
                   this.onFightPvE(payloadMessage);
                })
+               .with({ type: 'stopFightingResponse' }, ({ message: payloadMessage }) => {
+                  this.onStopFightingResponse(payloadMessage);
+               })
                .exhaustive();
          }
       });
@@ -331,36 +334,47 @@ export class ColyseusStore {
          const isPlayer = name === this._store.characterStore.name;
 
          if (!isPlayer) {
-            const createExternalPlayer = async () => {
+            const createExternalPlayerIfNeeded = async () => {
                const scene = await this._store.gameStore.getCurrentScene();
-               scene.addExternalPlayer(
-                  name,
-                  zProfessionType.parse(profession),
-                  { x, y },
-                  direction as Direction,
-               );
+
+               if (scene.getRoomType() === 'map' && !scene.doesPlayerExist(name)) {
+                  scene.addExternalPlayer(
+                     name,
+                     zProfessionType.parse(profession),
+                     { x, y },
+                     direction as Direction,
+                  );
+               }
             };
 
+            createExternalPlayerIfNeeded();
+
             player.listen('x', (newX) => {
-               createExternalPlayer().then(() => {
+               createExternalPlayerIfNeeded().then(() => {
                   this._store.gameStore.getCurrentScene().then((scene) => {
-                     scene.setNextX(name, newX);
+                     if (scene.getRoomType() === 'map') {
+                        scene.setNextX(name, newX);
+                     }
                   });
                });
             });
 
             player.listen('y', (newY) => {
-               createExternalPlayer().then(() => {
+               createExternalPlayerIfNeeded().then(() => {
                   this._store.gameStore.getCurrentScene().then((scene) => {
-                     scene.setNextY(name, newY);
+                     if (scene.getRoomType() === 'map') {
+                        scene.setNextY(name, newY);
+                     }
                   });
                });
             });
 
             player.listen('direction', (newDirection) => {
-               createExternalPlayer().then(() => {
+               createExternalPlayerIfNeeded().then(() => {
                   this._store.gameStore.getCurrentScene().then((scene) => {
-                     scene.setPlayerDirection(name, newDirection as Direction);
+                     if (scene.getRoomType() === 'map') {
+                        scene.setPlayerDirection(name, newDirection as Direction);
+                     }
                   });
                });
             });
@@ -443,6 +457,22 @@ export class ColyseusStore {
             scene.scene.launch('PvEFightScene');
          }
       });
+   }
+
+   async onStopFightingResponse({
+      players,
+   }: Extract<MapRoomResponse, { type: 'stopFightingResponse' }>['message']) {
+      const scene = await this._store.gameStore.getCurrentScene();
+
+      players
+         .filter(({ name }) => name !== this._store.characterStore.name)
+         .forEach(({ name, x, y, direction, profession }) => {
+            if (scene.doesPlayerExist(name)) {
+               scene.deleteExternalPlayer(name);
+            }
+
+            scene.addExternalPlayer(name, profession, { x, y }, direction as Direction);
+         });
    }
 
    private async onWebSocketClosed(code: number) {
