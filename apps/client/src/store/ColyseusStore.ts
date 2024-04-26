@@ -217,7 +217,6 @@ export class ColyseusStore {
                );
                this._store.characterStore.setMap(map as TRoom);
                this._store.characterStore.setPosition({ x: posX, y: posY });
-               this._store.characterStore.setPlayers([]);
                this._store.characterStore.setProfession(profession);
                this._store.characterStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.characterStore.setTalentsPoints(talentsPoints);
@@ -332,28 +331,38 @@ export class ColyseusStore {
          const isPlayer = name === this._store.characterStore.name;
 
          if (!isPlayer) {
-            const scene = await this._store.gameStore.getCurrentScene();
-            scene.addExternalPlayer(
-               name,
-               zProfessionType.parse(profession),
-               { x, y },
-               direction as Direction,
-            );
+            const createExternalPlayer = async () => {
+               const scene = await this._store.gameStore.getCurrentScene();
+               scene.addExternalPlayer(
+                  name,
+                  zProfessionType.parse(profession),
+                  { x, y },
+                  direction as Direction,
+               );
+            };
 
             player.listen('x', (newX) => {
-               scene.setNextX(name, newX);
+               createExternalPlayer().then(() => {
+                  this._store.gameStore.getCurrentScene().then((scene) => {
+                     scene.setNextX(name, newX);
+                  });
+               });
             });
 
             player.listen('y', (newY) => {
-               scene.setNextY(name, newY);
+               createExternalPlayer().then(() => {
+                  this._store.gameStore.getCurrentScene().then((scene) => {
+                     scene.setNextY(name, newY);
+                  });
+               });
             });
 
             player.listen('direction', (newDirection) => {
-               scene.setPlayerDirection(name, newDirection as Direction);
-            });
-
-            player.listen('isFight', (isFight) => {
-               scene.setCharacterFighting(name, isFight);
+               createExternalPlayer().then(() => {
+                  this._store.gameStore.getCurrentScene().then((scene) => {
+                     scene.setPlayerDirection(name, newDirection as Direction);
+                  });
+               });
             });
          }
       });

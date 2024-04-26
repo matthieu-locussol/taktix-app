@@ -67,10 +67,6 @@ export class CharacterStore {
       this.position.y = y;
    }
 
-   public setPlayers(players: Player[]) {
-      this.players = players;
-   }
-
    public setTalents(talents: number[]) {
       this.talents = [...talents];
    }
