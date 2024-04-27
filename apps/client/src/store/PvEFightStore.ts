@@ -1,5 +1,8 @@
 import { makeAutoObservable } from 'mobx';
 import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from 'shared/src/config';
+import { weaponsAnimations } from 'shared/src/data/animations';
+import { isMonsterName, monsters } from 'shared/src/data/monsters';
+import { ANIMATION_TO_FILE, Animation, AnimationFile } from 'shared/src/types/Animation';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
@@ -167,5 +170,48 @@ export class PvEFightStore {
 
    public get uniqueMonstersNames(): string[] {
       return ArrayMgt.makeUnique(this.fightResults.monsters.map(({ name }) => name));
+   }
+
+   public get uniqueAnimations(): Animation[] {
+      const monstersAnimations = this.fightResults.monsters.map(({ name }) => {
+         if (isMonsterName(name)) {
+            return monsters[name]({ level: 1 }).animation;
+         }
+
+         throw new Error('Monster name should be defined');
+      });
+
+      const alliesAnimations = this.fightResults.allies.map(() => {
+         return Animation.Explosion;
+      });
+
+      return ArrayMgt.makeUnique([...monstersAnimations, ...alliesAnimations]);
+   }
+
+   public get uniqueAnimationFiles(): AnimationFile[] {
+      return this.uniqueAnimations.map((animation) => ANIMATION_TO_FILE[animation]);
+   }
+
+   public get animationByFighterId(): Record<number, Animation> {
+      const monstersAnimations = this.fightResults.monsters.reduce((acc, { id, name }) => {
+         if (isMonsterName(name)) {
+            return {
+               ...acc,
+               [id]: monsters[name]({ level: 1 }).animation,
+            };
+         }
+
+         throw new Error('Monster name should be defined');
+      }, {});
+
+      const alliesAnimations = this.fightResults.allies.reduce(
+         (acc, { id, weaponType }) => ({
+            ...acc,
+            [id]: weaponsAnimations[weaponType],
+         }),
+         {},
+      );
+
+      return { ...monstersAnimations, ...alliesAnimations };
    }
 }

@@ -1,3 +1,5 @@
+import { animationFilesData, animationsData } from 'shared/src/data/animations';
+import { ANIMATION_TO_FILE } from 'shared/src/types/Animation';
 import { CharacterSpritesheet, ProfessionType } from 'shared/src/types/Profession';
 import { PvEFightMove } from 'shared/src/types/PvEFight';
 import { Room } from 'shared/src/types/Room';
@@ -57,9 +59,9 @@ export class PvEFightScene extends Phaser.Scene {
          });
       });
 
-      this.load.spritesheet('HitsSpritesheet', '/assets/animations/hits.png', {
-         frameWidth: 64,
-         frameHeight: 64,
+      store.pveFightStore.uniqueAnimationFiles.forEach((animationFile) => {
+         const { frameHeight, frameWidth, path, id } = animationFilesData[animationFile];
+         this.load.spritesheet(id, path, { frameWidth, frameHeight });
       });
    }
 
@@ -76,15 +78,19 @@ export class PvEFightScene extends Phaser.Scene {
       this.createTileSprite('mountains');
       this.createTileSprite('trees');
 
-      // TODO: refactor animations in a separate file
-      this.anims.create({
-         key: 'physical',
-         frames: this.anims.generateFrameNumbers('HitsSpritesheet', {
-            frames: new Array(11).fill(0).map((_, idx) => 7 * 11 + idx),
-         }),
-         frameRate: 16,
-         repeat: 0,
-      });
+      for (const animation of store.pveFightStore.uniqueAnimations) {
+         const { id: fileId, framesPerRow } = animationFilesData[ANIMATION_TO_FILE[animation]];
+         const { id, frameRate, offset } = animationsData[animation];
+
+         this.anims.create({
+            key: id,
+            frames: this.anims.generateFrameNumbers(fileId, {
+               frames: new Array(framesPerRow).fill(0).map((_, idx) => offset * framesPerRow + idx),
+            }),
+            frameRate,
+            repeat: 0,
+         });
+      }
 
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
       this.fadeIn();
@@ -542,6 +548,10 @@ export class PvEFightScene extends Phaser.Scene {
          { type: 'intelligence', value: 0 },
       ).type;
 
+      const animationId = store.pveFightStore.animationByFighterId[fighterId];
+      const animationFileId = ANIMATION_TO_FILE[animationId];
+      const { scale } = animationsData[animationId];
+
       const chain = this.tweens.chain({
          targets: fighterContainer,
          tweens: [
@@ -554,12 +564,15 @@ export class PvEFightScene extends Phaser.Scene {
                repeat: 0,
                onYoyo: () => {
                   const hitAnimation = this.add
-                     .sprite(targetContainer.x, targetContainer.y, 'HitsSpritesheet')
+                     .sprite(targetContainer.x, targetContainer.y, animationFileId)
                      .setTint(NumberMgt.hexStringToNumber(STATS_COLORS[highestDamagesType]))
                      .setAlpha(0.8)
-                     .setScale(targetContainer.scaleX / 2, targetContainer.scaleY / 2);
+                     .setScale(
+                        (targetContainer.scaleX * scale) / 2,
+                        (targetContainer.scaleY * scale) / 2,
+                     );
                   hitAnimation.postFX.addGlow(0x111827, 16, 0, false, 1, 10);
-                  hitAnimation.play('physical');
+                  hitAnimation.play(animationId);
                   hitAnimation.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
                      hitAnimation.destroy();
                   });
