@@ -55,6 +55,7 @@ const zPvEAllySimplified = z.object({
    level: z.number(),
    experience: z.number(),
    profession: zProfessionType.optional(),
+   weaponType: zWeaponType,
 });
 
 export type PvEAllySimplified = z.infer<typeof zPvEAllySimplified>;

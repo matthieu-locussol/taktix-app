@@ -185,7 +185,7 @@ export class PvEFight {
       return {
          initialConditions: this.initialConditions,
          allies: this.getAllies().map(
-            ({ id, name, type, health, magicShield, level, experience, profession }) => ({
+            ({
                id,
                name,
                type,
@@ -194,6 +194,17 @@ export class PvEFight {
                level,
                experience,
                profession,
+               weaponType,
+            }) => ({
+               id,
+               name,
+               type,
+               health,
+               magicShield,
+               level,
+               experience,
+               profession,
+               weaponType,
             }),
          ),
          monsters: this.getMonsters().map(({ id, name, type, health, magicShield, level }) => ({

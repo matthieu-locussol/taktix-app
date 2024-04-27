@@ -301,9 +301,9 @@ export class MapRoom extends Room<MapState> {
                   // TODO: get weapon from character equipment
                   weaponType: WeaponType.Sword1H,
                   weaponDamages: [
-                     { type: 'strength', min: 5, max: 17 },
-                     { type: 'dexterity', min: 2, max: 4 },
-                     { type: 'intelligence', min: 2, max: 4 },
+                     { type: 'strength', min: 2, max: 6 },
+                     { type: 'luck', min: 2, max: 6 },
+                     { type: 'intelligence', min: 2, max: 6 },
                   ],
                },
             ],

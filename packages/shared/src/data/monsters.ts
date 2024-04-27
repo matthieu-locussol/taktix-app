@@ -1,3 +1,4 @@
+import { Animation } from '../types/Animation';
 import { PvEFighterInformations } from '../types/PvEFight';
 import { WeaponType } from '../types/Weapon';
 import { StatisticMgt } from '../utils/statisticMgt';
@@ -7,11 +8,15 @@ type FilterEnemy<T> = T extends `enemy-${infer EnemyName}` ? `enemy-${EnemyName}
 type MonsterName = FilterEnemy<TranslationKey>;
 type MonsterGenerator = (parameters: {
    level: number;
-}) => PvEFighterInformations & { name: MonsterName };
+}) => PvEFighterInformations & { name: MonsterName; animation: Animation };
+
+export const isMonsterName = (value: unknown): value is MonsterName =>
+   typeof value === 'string' && value.startsWith('enemy-');
 
 const monstersArray: MonsterGenerator[] = [
    ({ level }) => ({
       name: 'enemy-nono',
+      animation: Animation.Flower,
       health: 20 + level * 15,
       magicShield: 30 + level * 5,
       level,
