@@ -406,20 +406,20 @@ export class PvEFightScene extends Phaser.Scene {
 
    private getAllyFrames(profession: ProfessionType): number[] {
       return [
-         Math.floor(CharacterSpritesheet[profession] / 4) * 48 +
+         Math.floor(CharacterSpritesheet[profession] / 4) * 36 +
             CharacterSpritesheet[profession] * 3 +
-            4 * 3 * 1,
-         Math.floor(CharacterSpritesheet[profession] / 4) * 48 +
+            4 * 3 * 2,
+         Math.floor(CharacterSpritesheet[profession] / 4) * 36 +
             CharacterSpritesheet[profession] * 3 +
-            4 * 3 * 1 +
+            4 * 3 * 2 +
             1,
-         Math.floor(CharacterSpritesheet[profession] / 4) * 48 +
+         Math.floor(CharacterSpritesheet[profession] / 4) * 36 +
             CharacterSpritesheet[profession] * 3 +
-            4 * 3 * 1 +
+            4 * 3 * 2 +
             2,
-         Math.floor(CharacterSpritesheet[profession] / 4) * 48 +
+         Math.floor(CharacterSpritesheet[profession] / 4) * 36 +
             CharacterSpritesheet[profession] * 3 +
-            4 * 3 * 1 +
+            4 * 3 * 2 +
             1,
       ];
    }
