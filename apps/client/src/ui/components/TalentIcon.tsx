@@ -1,5 +1,6 @@
 import DefaultIcon from '@mui/icons-material/AddRounded';
 import { SvgIconProps } from '@mui/material';
+import { StatisticBaseIcon } from './statistics/StatisticBaseIcon';
 
 interface TalentIconProps extends SvgIconProps {
    id: string;
@@ -7,7 +8,7 @@ interface TalentIconProps extends SvgIconProps {
 
 export const TalentIcon = ({ id, ...rest }: TalentIconProps) =>
    ({
-      '1': <DefaultIcon {...rest} />,
+      '1': <StatisticBaseIcon {...rest} path="strength" color="strength" type="plus" />,
       '2': <DefaultIcon {...rest} />,
       '3': <DefaultIcon {...rest} />,
       '4': <DefaultIcon {...rest} />,

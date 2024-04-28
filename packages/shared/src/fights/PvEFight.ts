@@ -235,6 +235,7 @@ export class PvEFight {
                   StatisticMgt.deserializeStatistics(infos.rawStatistics),
                   infos.experience,
                   infos.profession,
+                  infos.talents,
                ),
             ),
          };

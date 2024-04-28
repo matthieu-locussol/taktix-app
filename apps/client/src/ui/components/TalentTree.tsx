@@ -3,8 +3,9 @@ import { observer } from 'mobx-react-lite';
 import { memo } from 'react';
 import ReactFlow, { ReactFlowProvider, useEdgesState, useNodesState } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { TALENTS } from 'shared/src/data/talents';
+import { getTalents } from 'shared/src/data/talents';
 import { useStore } from '../../store';
+import { useTranslation } from '../../types/react-i18next';
 import { initialEdges, makeNode } from '../../utils/makeNode';
 import { Tooltip } from '../hud/components/Tooltip';
 import { CustomEdge } from './CustomEdge';
@@ -18,11 +19,12 @@ const nodeTypes = {
    'custom-node': CustomNode,
 };
 
-const initialNodes = Object.values(TALENTS).map(({ id, edges, x, y, type }) =>
+const initialNodes = Object.values(getTalents()).map(({ id, edges, x, y, type }) =>
    makeNode(id, edges, x, y, type),
 );
 
 const Flow = observer(() => {
+   const { t } = useTranslation();
    const { talentsMenuStore } = useStore();
    const [nodes, , onNodesChange] = useNodesState(initialNodes);
    const [edges, , onEdgesChange] = useEdgesState(initialEdges);
@@ -35,9 +37,14 @@ const Flow = observer(() => {
          TransitionProps={{ timeout: 0 }}
          title={
             <>
-               <Typography variant="overline">{talentsMenuStore.hoveredTalentData.name}</Typography>
-               <Typography variant="body2">
-                  {talentsMenuStore.hoveredTalentData.description}
+               <Typography variant="overline" lineHeight={1.5}>
+                  {t(talentsMenuStore.hoveredTalentData.name)}
+               </Typography>
+               <Typography variant="body2" sx={{ mt: 0.5 }}>
+                  {t(
+                     talentsMenuStore.hoveredTalentData.description,
+                     talentsMenuStore.hoveredTalentData.options,
+                  )}
                </Typography>
             </>
          }

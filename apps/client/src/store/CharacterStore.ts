@@ -128,6 +128,7 @@ export class CharacterStore {
          this.baseStatistics,
          this.experience,
          this.profession,
+         this.talents,
       );
    }
 
