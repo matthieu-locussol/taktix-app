@@ -19,6 +19,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
 import { zProfessionType } from 'shared/src/types/Profession';
@@ -69,12 +70,14 @@ const columns: Column[] = [
 ];
 
 export const CommunityMenu = observer(() => {
+   const nodeRef = useRef(null);
    const { characterStore, communityMenuStore, settingsMenuStore } = useStore();
    const { t } = useTranslation();
 
    return (
-      <Draggable handle=".community-menu-handle">
+      <Draggable handle=".community-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
+            ref={nodeRef}
             hideBackdrop
             disableEnforceFocus
             onClose={() => communityMenuStore.close()}

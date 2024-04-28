@@ -8,18 +8,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 import TalentTree from '../../components/TalentTree';
 
 export const TalentsMenu = observer(() => {
+   const nodeRef = useRef(null);
    const { talentsMenuStore } = useStore();
    const { t } = useTranslation();
 
    return (
-      <Draggable handle=".talents-menu-handle">
+      <Draggable handle=".talents-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
+            ref={nodeRef}
             fullScreen
             hideBackdrop
             disableEnforceFocus

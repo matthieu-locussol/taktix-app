@@ -17,6 +17,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { TranslationKey } from 'shared/src/data/translations';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
@@ -24,6 +25,7 @@ import { store, useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 
 export const FightResultsMenu = observer(() => {
+   const nodeRef = useRef(null);
    const { pveFightStore } = useStore();
    const { t } = useTranslation();
 
@@ -67,8 +69,9 @@ export const FightResultsMenu = observer(() => {
    );
 
    return (
-      <Draggable handle=".fight-results-menu-handle">
+      <Draggable handle=".fight-results-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
+            ref={nodeRef}
             onClose={() => pveFightStore.closeFightResults()}
             open={pveFightStore.isFightResultsMenuOpened}
             fullScreen
