@@ -18,6 +18,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { useStore } from '../../../store';
 import { keyboardLayouts } from '../../../store/SettingsMenuStore';
@@ -25,12 +26,14 @@ import { useTranslation } from '../../../types/react-i18next';
 import { LanguageSelector } from '../../components/LanguageSelector';
 
 export const SettingsMenu = observer(() => {
+   const nodeRef = useRef(null);
    const { settingsMenuStore } = useStore();
    const { t } = useTranslation();
 
    return (
-      <Draggable handle=".settings-menu-handle">
+      <Draggable handle=".settings-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
+            ref={nodeRef}
             hideBackdrop
             disableEnforceFocus
             onClose={() => settingsMenuStore.cancelChanges()}
