@@ -82,14 +82,18 @@ export class PvEFightScene extends Phaser.Scene {
          const { id: fileId, framesPerRow } = animationFilesData[ANIMATION_TO_FILE[animation]];
          const { id, frameRate, offset } = animationsData[animation];
 
-         this.anims.create({
-            key: id,
-            frames: this.anims.generateFrameNumbers(fileId, {
-               frames: new Array(framesPerRow).fill(0).map((_, idx) => offset * framesPerRow + idx),
-            }),
-            frameRate,
-            repeat: 0,
-         });
+         if (this.anims.get(id) === undefined) {
+            this.anims.create({
+               key: id,
+               frames: this.anims.generateFrameNumbers(fileId, {
+                  frames: new Array(framesPerRow)
+                     .fill(0)
+                     .map((_, idx) => offset * framesPerRow + idx),
+               }),
+               frameRate,
+               repeat: 0,
+            });
+         }
       }
 
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);
