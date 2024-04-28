@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { TALENTS, Talent, UNKNOWN_TALENT } from 'shared/src/data/talents';
+import { Talent, UNKNOWN_TALENT, getTalents } from 'shared/src/data/talents';
 import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
 import { Store } from './Store';
@@ -96,13 +96,13 @@ export class TalentsMenuStore {
 
    public get hoveredTalentData(): Talent {
       if (this.hoveredTalent === null) {
-         return UNKNOWN_TALENT;
+         return UNKNOWN_TALENT();
       }
 
-      const talent = TALENTS[this.hoveredTalent];
+      const talent = getTalents()[this.hoveredTalent];
 
       if (talent === undefined) {
-         return UNKNOWN_TALENT;
+         return UNKNOWN_TALENT();
       }
 
       return talent;

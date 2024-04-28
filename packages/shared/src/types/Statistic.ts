@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ArrayMgt } from '../utils/arrayMgt';
 import { ZodMgt } from '../utils/zodMgt';
 
 const makeStatistic = <T extends string>(
@@ -114,6 +115,16 @@ export const isStatistic = (value: unknown): value is Statistic =>
    zStatistic.safeParse(value).success;
 
 export type Statistics = Record<Statistic, number>;
+
+export const zStatistics = z
+   .record(zStatistic, z.number())
+   .refine(
+      (value): value is Record<Statistic, number> =>
+         ArrayMgt.areEquals(Object.keys(value), [...statistics]),
+      {
+         message: 'Invalid statistics object',
+      },
+   );
 
 export const realStatistics = [
    'vitality',

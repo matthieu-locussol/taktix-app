@@ -280,6 +280,7 @@ export class MapRoom extends Room<MapState> {
             StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
             characterInfos.experience,
             zProfessionType.parse(characterInfos.profession),
+            TalentMgt.deserializeTalents(characterInfos.talents),
          ),
       );
 
@@ -333,6 +334,7 @@ export class MapRoom extends Room<MapState> {
                      StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
                      characterInfos.experience + experienceGained,
                      zProfessionType.parse(characterInfos.profession),
+                     TalentMgt.deserializeTalents(characterInfos.talents),
                   ),
                );
 

@@ -1,4 +1,4 @@
-import { STARTING_TALENTS, TALENTS } from '../data/talents';
+import { STARTING_TALENTS, getTalents } from '../data/talents';
 import { LevelMgt } from './levelMgt';
 
 export namespace TalentMgt {
@@ -28,7 +28,7 @@ export namespace TalentMgt {
 
    const getAdjacentTalents = (allocatedTalents: number[]): number[] =>
       allocatedTalents.reduce(
-         (acc, current) => [...acc, ...TALENTS[current].edges],
+         (acc, current) => [...acc, ...getTalents()[current].edges],
          [] as number[],
       );
 
@@ -44,7 +44,7 @@ export namespace TalentMgt {
    const getAllocatedTalentsWithOneNeighbour = (allocatedTalents: number[]): number[] =>
       allocatedTalents
          .filter((talent) => {
-            const { edges } = TALENTS[talent];
+            const { edges } = getTalents()[talent];
             return edges.filter((edge) => allocatedTalents.includes(edge)).length === 1;
          })
          .filter((talent) => !STARTING_TALENTS.includes(talent));
@@ -75,7 +75,7 @@ export namespace TalentMgt {
          if (!visitedTalents.has(current)) {
             visitedTalents.add(current);
 
-            const { edges } = TALENTS[current];
+            const { edges } = getTalents()[current];
 
             edges.forEach((edge) => {
                if (talents.includes(edge)) {
