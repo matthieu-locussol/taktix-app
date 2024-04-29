@@ -37,15 +37,26 @@ const Flow = observer(() => {
          TransitionProps={{ timeout: 0 }}
          title={
             <>
-               <Typography variant="overline" lineHeight={1.5}>
+               <Typography variant="overline" fontWeight="bold" lineHeight={1.5}>
                   {t(talentsMenuStore.hoveredTalentData.name)}
                </Typography>
-               <Typography variant="body2" sx={{ mt: 0.5 }}>
-                  {t(
-                     talentsMenuStore.hoveredTalentData.description,
-                     talentsMenuStore.hoveredTalentData.options,
-                  )}
-               </Typography>
+               <Typography
+                  variant="body2"
+                  sx={{ mt: 0.5 }}
+                  dangerouslySetInnerHTML={{
+                     __html: talentsMenuStore.hoveredTalentStatistics
+                        .map(([statistic, value]) => `${t(`${statistic}_value`, { value })}`)
+                        .join('<br />'),
+                  }}
+               />
+               {talentsMenuStore.hoveredTalentData.description !== undefined && (
+                  <Typography variant="body2" fontStyle="italic" color="gray" sx={{ mt: 0.5 }}>
+                     {t(
+                        talentsMenuStore.hoveredTalentData.description,
+                        talentsMenuStore.hoveredTalentData.options,
+                     )}
+                  </Typography>
+               )}
             </>
          }
       >
