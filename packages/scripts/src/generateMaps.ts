@@ -1,6 +1,7 @@
+import assert = require('assert');
 import { existsSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
-import { Direction, Room, TeleportationSpot, _assert } from 'shared';
+import type { Direction, Room, TeleportationSpot } from 'shared';
 
 interface TiledMapJson {
    name: string;
@@ -203,7 +204,10 @@ const regenerateTeleportationSpots = (maps: string[]) => {
       const teleportationSpotsLayer = tiledMap.layers.find(
          ({ name }) => name === 'TeleportationSpots',
       );
-      _assert(teleportationSpotsLayer, `TeleportationSpots layer not found in ${map}.json`);
+      assert(
+         teleportationSpotsLayer !== undefined,
+         `TeleportationSpots layer not found in ${map}.json`,
+      );
 
       const roomName = `${map}Room` as Room;
       teleportationSpots[roomName] = [];
@@ -214,10 +218,22 @@ const regenerateTeleportationSpots = (maps: string[]) => {
          const entrancePositionX = properties.find(({ name }) => name === 'entrancePositionX');
          const entrancePositionY = properties.find(({ name }) => name === 'entrancePositionY');
 
-         _assert(destinationMapName, `destinationMapName property not found in ${map}.json`);
-         _assert(entranceDirection, `entranceDirection property not found in ${map}.json`);
-         _assert(entrancePositionX, `entrancePositionX property not found in ${map}.json`);
-         _assert(entrancePositionY, `entrancePositionY property not found in ${map}.json`);
+         assert(
+            destinationMapName !== undefined,
+            `destinationMapName property not found in ${map}.json`,
+         );
+         assert(
+            entranceDirection !== undefined,
+            `entranceDirection property not found in ${map}.json`,
+         );
+         assert(
+            entrancePositionX !== undefined,
+            `entrancePositionX property not found in ${map}.json`,
+         );
+         assert(
+            entrancePositionY !== undefined,
+            `entrancePositionY property not found in ${map}.json`,
+         );
 
          teleportationSpots[roomName].push({
             x: x / width,
