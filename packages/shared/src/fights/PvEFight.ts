@@ -116,10 +116,10 @@ export class PvEFight {
                target.statistics.criticalStrikeResistance,
             ) +
             {
-               strength: target.statistics.earthDamages,
-               dexterity: target.statistics.windDamages,
-               intelligence: target.statistics.fireDamages,
-               luck: target.statistics.iceDamages,
+               strength: fighter.statistics.earthDamages,
+               dexterity: fighter.statistics.windDamages,
+               intelligence: fighter.statistics.fireDamages,
+               luck: fighter.statistics.iceDamages,
             }[type],
       }));
    }

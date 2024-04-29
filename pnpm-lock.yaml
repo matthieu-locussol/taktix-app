@@ -260,6 +260,9 @@ importers:
       config-typescript:
         specifier: workspace:^
         version: link:../config-typescript
+      ts-node-dev:
+        specifier: ^2.0.0
+        version: 2.0.0(@types/node@20.12.7)(typescript@5.4.5)
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
