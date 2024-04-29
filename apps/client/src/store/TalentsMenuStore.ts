@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { Talent, UNKNOWN_TALENT, getTalents } from 'shared/src/data/talents';
+import { Statistic, zStatistic } from 'shared/src/types/Statistic';
 import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
 import { Store } from './Store';
@@ -106,6 +107,12 @@ export class TalentsMenuStore {
       }
 
       return talent;
+   }
+
+   public get hoveredTalentStatistics(): [Statistic, number][] {
+      return Object.entries(this.hoveredTalentData.statistics)
+         .filter(([, value]) => value !== 0)
+         .map(([statistic, value]) => [zStatistic.parse(statistic), value]);
    }
 
    public get tooltipOpened(): boolean {

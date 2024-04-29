@@ -6,7 +6,7 @@ import { zTranslationKey } from './translations';
 export const zTalent = z.object({
    id: z.number(),
    name: zTranslationKey,
-   description: zTranslationKey,
+   description: zTranslationKey.optional(),
    options: z.record(z.string(), z.unknown()).optional(),
    edges: z.array(z.number()),
    x: z.number(),
@@ -20,7 +20,6 @@ export type Talent = z.infer<typeof zTalent>;
 export const UNKNOWN_TALENT: () => Talent = () => ({
    id: 0,
    name: 'unknown',
-   description: 'unknown',
    options: {},
    edges: [],
    x: 0,
@@ -50,8 +49,6 @@ const makeTalents = (): Record<number, Talent> => {
       1: {
          id: 1,
          name: 'talent-1',
-         description: 'talent-1-desc',
-         options: { value: 10 },
          edges: [2, 3],
          x: 0,
          y: -100,
@@ -61,42 +58,38 @@ const makeTalents = (): Record<number, Talent> => {
       2: {
          id: 2,
          name: 'talent-2',
-         description: 'talent-2-desc',
          edges: [1, 5],
          x: -30,
          y: -160,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'vitality_+f': 12, 'strength_+f': 5 }),
       },
       3: {
          id: 3,
          name: 'talent-3',
-         description: 'talent-3-desc',
          edges: [1, 4],
          x: 30,
          y: -160,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'earthDamages_+f': 1, 'strength_+f': 5 }),
       },
       4: {
          id: 4,
          name: 'talent-4',
-         description: 'talent-4-desc',
          edges: [3, 7],
          x: 30,
          y: -220,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'earthDamages_+f': 1, 'strength_+f': 5 }),
       },
       5: {
          id: 5,
          name: 'talent-5',
-         description: 'talent-5-desc',
          edges: [2, 7],
          x: -30,
          y: -220,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'vitality_+f': 12, 'strength_+f': 5 }),
       },
       7: {
          id: 7,
@@ -106,12 +99,14 @@ const makeTalents = (): Record<number, Talent> => {
          x: 0,
          y: -280,
          type: 'large',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'strength_+f': 20,
+            'earthDamages_+%': 16,
+         }),
       },
       11: {
          id: 11,
          name: 'talent-11',
-         description: 'talent-11-desc',
          edges: [7, 12],
          x: 80,
          y: -330,
@@ -121,7 +116,6 @@ const makeTalents = (): Record<number, Talent> => {
       12: {
          id: 12,
          name: 'talent-12',
-         description: 'talent-12-desc',
          edges: [11, 15],
          x: 40,
          y: -380,
@@ -131,7 +125,6 @@ const makeTalents = (): Record<number, Talent> => {
       13: {
          id: 13,
          name: 'talent-13',
-         description: 'talent-13-desc',
          edges: [7, 14],
          x: -80,
          y: -330,
@@ -141,7 +134,6 @@ const makeTalents = (): Record<number, Talent> => {
       14: {
          id: 14,
          name: 'talent-14',
-         description: 'talent-14-desc',
          edges: [13, 15],
          x: -40,
          y: -380,
@@ -151,7 +143,6 @@ const makeTalents = (): Record<number, Talent> => {
       15: {
          id: 15,
          name: 'talent-15',
-         description: 'talent-15-desc',
          edges: [14, 12, 16],
          x: 0,
          y: -440,
@@ -161,7 +152,6 @@ const makeTalents = (): Record<number, Talent> => {
       16: {
          id: 16,
          name: 'talent-16',
-         description: 'talent-16-desc',
          edges: [15, 39, 42, 17],
          x: 0,
          y: -500,
@@ -171,7 +161,6 @@ const makeTalents = (): Record<number, Talent> => {
       17: {
          id: 17,
          name: 'talent-17',
-         description: 'talent-17-desc',
          edges: [16, 24, 31, 18],
          x: 0,
          y: -560,
@@ -181,7 +170,6 @@ const makeTalents = (): Record<number, Talent> => {
       18: {
          id: 18,
          name: 'talent-18',
-         description: 'talent-18-desc',
          edges: [17, 21, 28, 19],
          x: 0,
          y: -620,
@@ -191,7 +179,6 @@ const makeTalents = (): Record<number, Talent> => {
       19: {
          id: 19,
          name: 'talent-19',
-         description: 'talent-19-desc',
          edges: [18, 20],
          x: 0,
          y: -680,
@@ -201,7 +188,6 @@ const makeTalents = (): Record<number, Talent> => {
       20: {
          id: 20,
          name: 'talent-20',
-         description: 'talent-20-desc',
          edges: [19, 191, 226, 301],
          x: 0,
          y: -740,
@@ -211,7 +197,6 @@ const makeTalents = (): Record<number, Talent> => {
       21: {
          id: 21,
          name: 'talent-21',
-         description: 'talent-21-desc',
          edges: [22, 18],
          x: 60,
          y: -620,
@@ -221,7 +206,6 @@ const makeTalents = (): Record<number, Talent> => {
       22: {
          id: 22,
          name: 'talent-22',
-         description: 'talent-22-desc',
          edges: [23, 21],
          x: 120,
          y: -620,
@@ -231,7 +215,6 @@ const makeTalents = (): Record<number, Talent> => {
       23: {
          id: 23,
          name: 'talent-23',
-         description: 'talent-23-desc',
          edges: [27, 22],
          x: 180,
          y: -620,
@@ -241,7 +224,6 @@ const makeTalents = (): Record<number, Talent> => {
       24: {
          id: 24,
          name: 'talent-24',
-         description: 'talent-24-desc',
          edges: [25, 17],
          x: 60,
          y: -560,
@@ -251,7 +233,6 @@ const makeTalents = (): Record<number, Talent> => {
       25: {
          id: 25,
          name: 'talent-25',
-         description: 'talent-25-desc',
          edges: [26, 24],
          x: 120,
          y: -560,
@@ -261,7 +242,6 @@ const makeTalents = (): Record<number, Talent> => {
       26: {
          id: 26,
          name: 'talent-26',
-         description: 'talent-26-desc',
          edges: [27, 25],
          x: 180,
          y: -560,
@@ -271,7 +251,6 @@ const makeTalents = (): Record<number, Talent> => {
       27: {
          id: 27,
          name: 'talent-27',
-         description: 'talent-27-desc',
          edges: [108, 109, 26, 23],
          x: 240,
          y: -590,
@@ -281,7 +260,6 @@ const makeTalents = (): Record<number, Talent> => {
       28: {
          id: 28,
          name: 'talent-28',
-         description: 'talent-28-desc',
          edges: [29, 18],
          x: -60,
          y: -620,
@@ -291,7 +269,6 @@ const makeTalents = (): Record<number, Talent> => {
       29: {
          id: 29,
          name: 'talent-29',
-         description: 'talent-29-desc',
          edges: [30, 28],
          x: -120,
          y: -620,
@@ -301,7 +278,6 @@ const makeTalents = (): Record<number, Talent> => {
       30: {
          id: 30,
          name: 'talent-30',
-         description: 'talent-30-desc',
          edges: [34, 29],
          x: -180,
          y: -620,
@@ -311,7 +287,6 @@ const makeTalents = (): Record<number, Talent> => {
       31: {
          id: 31,
          name: 'talent-31',
-         description: 'talent-31-desc',
          edges: [32, 17],
          x: -60,
          y: -560,
@@ -321,7 +296,6 @@ const makeTalents = (): Record<number, Talent> => {
       32: {
          id: 32,
          name: 'talent-32',
-         description: 'talent-32-desc',
          edges: [33, 31],
          x: -120,
          y: -560,
@@ -331,7 +305,6 @@ const makeTalents = (): Record<number, Talent> => {
       33: {
          id: 33,
          name: 'talent-33',
-         description: 'talent-33-desc',
          edges: [34, 32],
          x: -180,
          y: -560,
@@ -341,7 +314,6 @@ const makeTalents = (): Record<number, Talent> => {
       34: {
          id: 34,
          name: 'talent-34',
-         description: 'talent-34-desc',
          edges: [105, 104, 30, 33],
          x: -240,
          y: -590,
@@ -351,7 +323,6 @@ const makeTalents = (): Record<number, Talent> => {
       35: {
          id: 35,
          name: 'talent-35',
-         description: 'talent-35-desc',
          edges: [37, 39],
          x: 180,
          y: -500,
@@ -361,7 +332,6 @@ const makeTalents = (): Record<number, Talent> => {
       36: {
          id: 36,
          name: 'talent-36',
-         description: 'talent-36-desc',
          edges: [38, 39],
          x: 180,
          y: -440,
@@ -371,7 +341,6 @@ const makeTalents = (): Record<number, Talent> => {
       37: {
          id: 37,
          name: 'talent-37',
-         description: 'talent-37-desc',
          edges: [40, 35],
          x: 240,
          y: -500,
@@ -381,7 +350,6 @@ const makeTalents = (): Record<number, Talent> => {
       38: {
          id: 38,
          name: 'talent-38',
-         description: 'talent-38-desc',
          edges: [40, 36],
          x: 240,
          y: -440,
@@ -391,7 +359,6 @@ const makeTalents = (): Record<number, Talent> => {
       39: {
          id: 39,
          name: 'talent-39',
-         description: 'talent-39-desc',
          edges: [35, 36, 16],
          x: 120,
          y: -470,
@@ -401,7 +368,6 @@ const makeTalents = (): Record<number, Talent> => {
       40: {
          id: 40,
          name: 'talent-40',
-         description: 'talent-40-desc',
          edges: [41, 38, 37],
          x: 300,
          y: -470,
@@ -411,7 +377,6 @@ const makeTalents = (): Record<number, Talent> => {
       41: {
          id: 41,
          name: 'talent-41',
-         description: 'talent-41-desc',
          edges: [40],
          x: 360,
          y: -470,
@@ -421,7 +386,6 @@ const makeTalents = (): Record<number, Talent> => {
       42: {
          id: 42,
          name: 'talent-42',
-         description: 'talent-42-desc',
          edges: [43, 44, 16],
          x: -120,
          y: -470,
@@ -431,7 +395,6 @@ const makeTalents = (): Record<number, Talent> => {
       43: {
          id: 43,
          name: 'talent-43',
-         description: 'talent-43-desc',
          edges: [45, 42],
          x: -180,
          y: -500,
@@ -441,7 +404,6 @@ const makeTalents = (): Record<number, Talent> => {
       44: {
          id: 44,
          name: 'talent-44',
-         description: 'talent-44-desc',
          edges: [46, 42],
          x: -180,
          y: -440,
@@ -451,7 +413,6 @@ const makeTalents = (): Record<number, Talent> => {
       45: {
          id: 45,
          name: 'talent-45',
-         description: 'talent-45-desc',
          edges: [47, 43],
          x: -240,
          y: -500,
@@ -461,7 +422,6 @@ const makeTalents = (): Record<number, Talent> => {
       46: {
          id: 46,
          name: 'talent-46',
-         description: 'talent-46-desc',
          edges: [47, 44],
          x: -240,
          y: -440,
@@ -471,7 +431,6 @@ const makeTalents = (): Record<number, Talent> => {
       47: {
          id: 47,
          name: 'talent-47',
-         description: 'talent-47-desc',
          edges: [48, 46, 45],
          x: -300,
          y: -470,
@@ -481,7 +440,6 @@ const makeTalents = (): Record<number, Talent> => {
       48: {
          id: 48,
          name: 'talent-48',
-         description: 'talent-48-desc',
          edges: [47],
          x: -360,
          y: -470,
@@ -491,52 +449,59 @@ const makeTalents = (): Record<number, Talent> => {
       49: {
          id: 49,
          name: 'talent-49',
-         description: 'talent-49-desc',
          edges: [50, 51],
          x: 100,
          y: 0,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'intelligence_+f': 10 }),
       },
       50: {
          id: 50,
          name: 'talent-50',
-         description: 'talent-50-desc',
          edges: [52, 49],
          x: 160,
          y: -30,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'intelligence_+f': 5,
+            'magicShield_+f': 5,
+         }),
       },
       51: {
          id: 51,
          name: 'talent-51',
-         description: 'talent-51-desc',
          edges: [53, 49],
          x: 160,
          y: 30,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'intelligence_+f': 5,
+            'fireDamages_+f': 1,
+         }),
       },
       52: {
          id: 52,
          name: 'talent-52',
-         description: 'talent-52-desc',
          edges: [54, 50],
          x: 220,
          y: -30,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'intelligence_+f': 5,
+            'magicShield_+f': 5,
+         }),
       },
       53: {
          id: 53,
          name: 'talent-53',
-         description: 'talent-53-desc',
          edges: [54, 51],
          x: 220,
          y: 30,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'intelligence_+f': 5,
+            'fireDamages_+f': 1,
+         }),
       },
       54: {
          id: 54,
@@ -546,12 +511,14 @@ const makeTalents = (): Record<number, Talent> => {
          x: 280,
          y: 0,
          type: 'large',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'intelligence_+f': 20,
+            'fireDamages_+%': 16,
+         }),
       },
       55: {
          id: 55,
          name: 'talent-55',
-         description: 'talent-55-desc',
          edges: [57, 64, 54, 56],
          x: 340,
          y: 0,
@@ -561,7 +528,6 @@ const makeTalents = (): Record<number, Talent> => {
       56: {
          id: 56,
          name: 'talent-56',
-         description: 'talent-56-desc',
          edges: [55, 58],
          x: 340,
          y: -60,
@@ -571,7 +537,6 @@ const makeTalents = (): Record<number, Talent> => {
       57: {
          id: 57,
          name: 'talent-57',
-         description: 'talent-57-desc',
          edges: [61, 55],
          x: 340,
          y: 60,
@@ -581,7 +546,6 @@ const makeTalents = (): Record<number, Talent> => {
       58: {
          id: 58,
          name: 'talent-58',
-         description: 'talent-58-desc',
          edges: [59, 56],
          x: 290,
          y: -110,
@@ -591,7 +555,6 @@ const makeTalents = (): Record<number, Talent> => {
       59: {
          id: 59,
          name: 'talent-59',
-         description: 'talent-59-desc',
          edges: [60, 58],
          x: 340,
          y: -160,
@@ -601,7 +564,6 @@ const makeTalents = (): Record<number, Talent> => {
       60: {
          id: 60,
          name: 'talent-60',
-         description: 'talent-60-desc',
          edges: [59],
          x: 390,
          y: -110,
@@ -611,7 +573,6 @@ const makeTalents = (): Record<number, Talent> => {
       61: {
          id: 61,
          name: 'talent-61',
-         description: 'talent-61-desc',
          edges: [62, 57],
          x: 290,
          y: 110,
@@ -621,7 +582,6 @@ const makeTalents = (): Record<number, Talent> => {
       62: {
          id: 62,
          name: 'talent-62',
-         description: 'talent-62-desc',
          edges: [61, 63],
          x: 340,
          y: 160,
@@ -631,7 +591,6 @@ const makeTalents = (): Record<number, Talent> => {
       63: {
          id: 63,
          name: 'talent-63',
-         description: 'talent-63-desc',
          edges: [62],
          x: 390,
          y: 110,
@@ -641,7 +600,6 @@ const makeTalents = (): Record<number, Talent> => {
       64: {
          id: 64,
          name: 'talent-64',
-         description: 'talent-64-desc',
          edges: [65, 66, 55],
          x: 400,
          y: 0,
@@ -651,7 +609,6 @@ const makeTalents = (): Record<number, Talent> => {
       65: {
          id: 65,
          name: 'talent-65',
-         description: 'talent-65-desc',
          edges: [69, 64, 67],
          x: 510,
          y: -110,
@@ -661,7 +618,6 @@ const makeTalents = (): Record<number, Talent> => {
       66: {
          id: 66,
          name: 'talent-66',
-         description: 'talent-66-desc',
          edges: [77, 79, 64],
          x: 510,
          y: 110,
@@ -671,7 +627,6 @@ const makeTalents = (): Record<number, Talent> => {
       67: {
          id: 67,
          name: 'talent-67',
-         description: 'talent-67-desc',
          edges: [65, 68],
          x: 510,
          y: -170,
@@ -681,7 +636,6 @@ const makeTalents = (): Record<number, Talent> => {
       68: {
          id: 68,
          name: 'talent-68',
-         description: 'talent-68-desc',
          edges: [67, 75],
          x: 510,
          y: -230,
@@ -691,7 +645,6 @@ const makeTalents = (): Record<number, Talent> => {
       69: {
          id: 69,
          name: 'talent-69',
-         description: 'talent-69-desc',
          edges: [70, 88, 65, 71],
          x: 570,
          y: -110,
@@ -701,7 +654,6 @@ const makeTalents = (): Record<number, Talent> => {
       70: {
          id: 70,
          name: 'talent-70',
-         description: 'talent-70-desc',
          edges: [76, 69, 73],
          x: 630,
          y: -110,
@@ -711,7 +663,6 @@ const makeTalents = (): Record<number, Talent> => {
       71: {
          id: 71,
          name: 'talent-71',
-         description: 'talent-71-desc',
          edges: [69, 72],
          x: 570,
          y: -170,
@@ -721,7 +672,6 @@ const makeTalents = (): Record<number, Talent> => {
       72: {
          id: 72,
          name: 'talent-72',
-         description: 'talent-72-desc',
          edges: [71, 75],
          x: 570,
          y: -230,
@@ -731,7 +681,6 @@ const makeTalents = (): Record<number, Talent> => {
       73: {
          id: 73,
          name: 'talent-73',
-         description: 'talent-73-desc',
          edges: [70, 74],
          x: 630,
          y: -170,
@@ -741,7 +690,6 @@ const makeTalents = (): Record<number, Talent> => {
       74: {
          id: 74,
          name: 'talent-74',
-         description: 'talent-74-desc',
          edges: [73, 75],
          x: 630,
          y: -230,
@@ -751,7 +699,6 @@ const makeTalents = (): Record<number, Talent> => {
       75: {
          id: 75,
          name: 'talent-75',
-         description: 'talent-75-desc',
          edges: [68, 72, 74],
          x: 570,
          y: -290,
@@ -761,7 +708,6 @@ const makeTalents = (): Record<number, Talent> => {
       76: {
          id: 76,
          name: 'talent-76',
-         description: 'talent-76-desc',
          edges: [93, 94, 95, 188, 70],
          x: 690,
          y: -110,
@@ -771,7 +717,6 @@ const makeTalents = (): Record<number, Talent> => {
       77: {
          id: 77,
          name: 'talent-77',
-         description: 'talent-77-desc',
          edges: [78, 66, 91],
          x: 570,
          y: 110,
@@ -781,7 +726,6 @@ const makeTalents = (): Record<number, Talent> => {
       78: {
          id: 78,
          name: 'talent-78',
-         description: 'talent-78-desc',
          edges: [85, 77],
          x: 630,
          y: 110,
@@ -791,7 +735,6 @@ const makeTalents = (): Record<number, Talent> => {
       79: {
          id: 79,
          name: 'talent-79',
-         description: 'talent-79-desc',
          edges: [80, 82, 66],
          x: 510,
          y: 170,
@@ -801,7 +744,6 @@ const makeTalents = (): Record<number, Talent> => {
       80: {
          id: 80,
          name: 'talent-80',
-         description: 'talent-80-desc',
          edges: [81, 79],
          x: 570,
          y: 170,
@@ -811,7 +753,6 @@ const makeTalents = (): Record<number, Talent> => {
       81: {
          id: 81,
          name: 'talent-81',
-         description: 'talent-81-desc',
          edges: [80, 84],
          x: 630,
          y: 230,
@@ -821,7 +762,6 @@ const makeTalents = (): Record<number, Talent> => {
       82: {
          id: 82,
          name: 'talent-82',
-         description: 'talent-82-desc',
          edges: [83, 79],
          x: 510,
          y: 230,
@@ -831,7 +771,6 @@ const makeTalents = (): Record<number, Talent> => {
       83: {
          id: 83,
          name: 'talent-83',
-         description: 'talent-83-desc',
          edges: [84, 82],
          x: 570,
          y: 290,
@@ -841,7 +780,6 @@ const makeTalents = (): Record<number, Talent> => {
       84: {
          id: 84,
          name: 'talent-84',
-         description: 'talent-84-desc',
          edges: [81, 86, 83],
          x: 630,
          y: 290,
@@ -851,7 +789,6 @@ const makeTalents = (): Record<number, Talent> => {
       85: {
          id: 85,
          name: 'talent-85',
-         description: 'talent-85-desc',
          edges: [93, 99, 100, 199, 78],
          x: 690,
          y: 110,
@@ -861,7 +798,6 @@ const makeTalents = (): Record<number, Talent> => {
       86: {
          id: 86,
          name: 'talent-86',
-         description: 'talent-86-desc',
          edges: [84],
          x: 570,
          y: 230,
@@ -871,7 +807,6 @@ const makeTalents = (): Record<number, Talent> => {
       87: {
          id: 87,
          name: 'talent-87',
-         description: 'talent-87-desc',
          edges: [88, 90],
          x: 510,
          y: -40,
@@ -881,7 +816,6 @@ const makeTalents = (): Record<number, Talent> => {
       88: {
          id: 88,
          name: 'talent-88',
-         description: 'talent-88-desc',
          edges: [69, 87, 89],
          x: 570,
          y: -40,
@@ -891,7 +825,6 @@ const makeTalents = (): Record<number, Talent> => {
       89: {
          id: 89,
          name: 'talent-89',
-         description: 'talent-89-desc',
          edges: [88, 92],
          x: 630,
          y: -40,
@@ -901,7 +834,6 @@ const makeTalents = (): Record<number, Talent> => {
       90: {
          id: 90,
          name: 'talent-90',
-         description: 'talent-90-desc',
          edges: [87, 91],
          x: 510,
          y: 40,
@@ -911,7 +843,6 @@ const makeTalents = (): Record<number, Talent> => {
       91: {
          id: 91,
          name: 'talent-91',
-         description: 'talent-91-desc',
          edges: [92, 77, 90],
          x: 570,
          y: 40,
@@ -921,7 +852,6 @@ const makeTalents = (): Record<number, Talent> => {
       92: {
          id: 92,
          name: 'talent-92',
-         description: 'talent-92-desc',
          edges: [89, 91],
          x: 630,
          y: 40,
@@ -931,7 +861,6 @@ const makeTalents = (): Record<number, Talent> => {
       93: {
          id: 93,
          name: 'talent-93',
-         description: 'talent-93-desc',
          edges: [76, 85],
          x: 690,
          y: 0,
@@ -941,7 +870,6 @@ const makeTalents = (): Record<number, Talent> => {
       94: {
          id: 94,
          name: 'talent-94',
-         description: 'talent-94-desc',
          edges: [96, 76],
          x: 750,
          y: -150,
@@ -951,7 +879,6 @@ const makeTalents = (): Record<number, Talent> => {
       95: {
          id: 95,
          name: 'talent-95',
-         description: 'talent-95-desc',
          edges: [97, 76],
          x: 750,
          y: -70,
@@ -961,7 +888,6 @@ const makeTalents = (): Record<number, Talent> => {
       96: {
          id: 96,
          name: 'talent-96',
-         description: 'talent-96-desc',
          edges: [98, 94],
          x: 810,
          y: -150,
@@ -971,7 +897,6 @@ const makeTalents = (): Record<number, Talent> => {
       97: {
          id: 97,
          name: 'talent-97',
-         description: 'talent-97-desc',
          edges: [98, 95],
          x: 810,
          y: -70,
@@ -981,7 +906,6 @@ const makeTalents = (): Record<number, Talent> => {
       98: {
          id: 98,
          name: 'talent-98',
-         description: 'talent-98-desc',
          edges: [97, 96],
          x: 870,
          y: -110,
@@ -991,7 +915,6 @@ const makeTalents = (): Record<number, Talent> => {
       99: {
          id: 99,
          name: 'talent-99',
-         description: 'talent-99-desc',
          edges: [101, 85],
          x: 750,
          y: 150,
@@ -1001,7 +924,6 @@ const makeTalents = (): Record<number, Talent> => {
       100: {
          id: 100,
          name: 'talent-100',
-         description: 'talent-100-desc',
          edges: [102, 85],
          x: 750,
          y: 70,
@@ -1011,7 +933,6 @@ const makeTalents = (): Record<number, Talent> => {
       101: {
          id: 101,
          name: 'talent-101',
-         description: 'talent-101-desc',
          edges: [103, 99],
          x: 810,
          y: 150,
@@ -1021,7 +942,6 @@ const makeTalents = (): Record<number, Talent> => {
       102: {
          id: 102,
          name: 'talent-102',
-         description: 'talent-102-desc',
          edges: [103, 100],
          x: 810,
          y: 70,
@@ -1031,7 +951,6 @@ const makeTalents = (): Record<number, Talent> => {
       103: {
          id: 103,
          name: 'talent-103',
-         description: 'talent-103-desc',
          edges: [101, 102],
          x: 870,
          y: 110,
@@ -1041,7 +960,6 @@ const makeTalents = (): Record<number, Talent> => {
       104: {
          id: 104,
          name: 'talent-104',
-         description: 'talent-104-desc',
          edges: [227, 34],
          x: -230,
          y: -670,
@@ -1051,7 +969,6 @@ const makeTalents = (): Record<number, Talent> => {
       105: {
          id: 105,
          name: 'talent-105',
-         description: 'talent-105-desc',
          edges: [228, 34],
          x: -350,
          y: -670,
@@ -1061,7 +978,6 @@ const makeTalents = (): Record<number, Talent> => {
       108: {
          id: 108,
          name: 'talent-108',
-         description: 'talent-108-desc',
          edges: [192, 27],
          x: 230,
          y: -670,
@@ -1071,7 +987,6 @@ const makeTalents = (): Record<number, Talent> => {
       109: {
          id: 109,
          name: 'talent-109',
-         description: 'talent-109-desc',
          edges: [193, 27],
          x: 350,
          y: -670,
@@ -1081,52 +996,55 @@ const makeTalents = (): Record<number, Talent> => {
       110: {
          id: 110,
          name: 'talent-110',
-         description: 'talent-110-desc',
          edges: [111, 112],
          x: -100,
          y: 0,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'luck_+f': 10 }),
       },
       111: {
          id: 111,
          name: 'talent-111',
-         description: 'talent-111-desc',
          edges: [113, 110],
          x: -160,
          y: -30,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'luck_+f': 5, 'iceDamages_+f': 2 }),
       },
       112: {
          id: 112,
          name: 'talent-112',
-         description: 'talent-112-desc',
          edges: [114, 110],
          x: -160,
          y: 30,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'luck_+f': 5,
+            'vitality_+f': 6,
+            'evasion_+f': 6,
+         }),
       },
       113: {
          id: 113,
          name: 'talent-113',
-         description: 'talent-113-desc',
          edges: [115, 111],
          x: -220,
          y: -30,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'luck_+f': 5, 'prospect_+f': 8 }),
       },
       114: {
          id: 114,
          name: 'talent-114',
-         description: 'talent-114-desc',
          edges: [115, 112],
          x: -220,
          y: 30,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'luck_+f': 5,
+            'vitality_+f': 6,
+            'magicShield_+f': 5,
+         }),
       },
       115: {
          id: 115,
@@ -1136,12 +1054,11 @@ const makeTalents = (): Record<number, Talent> => {
          x: -280,
          y: 0,
          type: 'large',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'luck_+f': 20, 'iceDamages_+%': 16 }),
       },
       116: {
          id: 116,
          name: 'talent-116',
-         description: 'talent-116-desc',
          edges: [117, 130, 137, 115],
          x: -350,
          y: 0,
@@ -1151,7 +1068,6 @@ const makeTalents = (): Record<number, Talent> => {
       117: {
          id: 117,
          name: 'talent-117',
-         description: 'talent-117-desc',
          edges: [118, 116],
          x: -420,
          y: 0,
@@ -1161,7 +1077,6 @@ const makeTalents = (): Record<number, Talent> => {
       118: {
          id: 118,
          name: 'talent-118',
-         description: 'talent-118-desc',
          edges: [119, 122, 131, 117],
          x: -490,
          y: 0,
@@ -1171,7 +1086,6 @@ const makeTalents = (): Record<number, Talent> => {
       119: {
          id: 119,
          name: 'talent-119',
-         description: 'talent-119-desc',
          edges: [120, 118],
          x: -560,
          y: 0,
@@ -1181,7 +1095,6 @@ const makeTalents = (): Record<number, Talent> => {
       120: {
          id: 120,
          name: 'talent-120',
-         description: 'talent-120-desc',
          edges: [121, 129, 138, 119],
          x: -630,
          y: 0,
@@ -1191,7 +1104,6 @@ const makeTalents = (): Record<number, Talent> => {
       121: {
          id: 121,
          name: 'talent-121',
-         description: 'talent-121-desc',
          edges: [222, 269, 120, 214, 268],
          x: -700,
          y: 0,
@@ -1201,7 +1113,6 @@ const makeTalents = (): Record<number, Talent> => {
       122: {
          id: 122,
          name: 'talent-122',
-         description: 'talent-122-desc',
          edges: [124, 123, 118],
          x: -490,
          y: -70,
@@ -1211,7 +1122,6 @@ const makeTalents = (): Record<number, Talent> => {
       123: {
          id: 123,
          name: 'talent-123',
-         description: 'talent-123-desc',
          edges: [126, 122],
          x: -430,
          y: -70,
@@ -1221,7 +1131,6 @@ const makeTalents = (): Record<number, Talent> => {
       124: {
          id: 124,
          name: 'talent-124',
-         description: 'talent-124-desc',
          edges: [127, 122],
          x: -550,
          y: -70,
@@ -1231,7 +1140,6 @@ const makeTalents = (): Record<number, Talent> => {
       125: {
          id: 125,
          name: 'talent-125',
-         description: 'talent-125-desc',
          edges: [126, 128, 127],
          x: -490,
          y: -130,
@@ -1241,7 +1149,6 @@ const makeTalents = (): Record<number, Talent> => {
       126: {
          id: 126,
          name: 'talent-126',
-         description: 'talent-126-desc',
          edges: [125, 123, 130],
          x: -430,
          y: -130,
@@ -1251,7 +1158,6 @@ const makeTalents = (): Record<number, Talent> => {
       127: {
          id: 127,
          name: 'talent-127',
-         description: 'talent-127-desc',
          edges: [125, 124, 129],
          x: -550,
          y: -130,
@@ -1261,7 +1167,6 @@ const makeTalents = (): Record<number, Talent> => {
       128: {
          id: 128,
          name: 'talent-128',
-         description: 'talent-128-desc',
          edges: [125],
          x: -490,
          y: -210,
@@ -1271,7 +1176,6 @@ const makeTalents = (): Record<number, Talent> => {
       129: {
          id: 129,
          name: 'talent-129',
-         description: 'talent-129-desc',
          edges: [127, 120],
          x: -610,
          y: -70,
@@ -1281,7 +1185,6 @@ const makeTalents = (): Record<number, Talent> => {
       130: {
          id: 130,
          name: 'talent-130',
-         description: 'talent-130-desc',
          edges: [126, 116],
          x: -370,
          y: -70,
@@ -1291,7 +1194,6 @@ const makeTalents = (): Record<number, Talent> => {
       131: {
          id: 131,
          name: 'talent-131',
-         description: 'talent-131-desc',
          edges: [133, 132, 118],
          x: -490,
          y: 70,
@@ -1301,7 +1203,6 @@ const makeTalents = (): Record<number, Talent> => {
       132: {
          id: 132,
          name: 'talent-132',
-         description: 'talent-132-desc',
          edges: [135, 131],
          x: -430,
          y: 70,
@@ -1311,7 +1212,6 @@ const makeTalents = (): Record<number, Talent> => {
       133: {
          id: 133,
          name: 'talent-133',
-         description: 'talent-133-desc',
          edges: [136, 131],
          x: -550,
          y: 70,
@@ -1321,7 +1221,6 @@ const makeTalents = (): Record<number, Talent> => {
       134: {
          id: 134,
          name: 'talent-134',
-         description: 'talent-134-desc',
          edges: [135, 139, 136],
          x: -490,
          y: 130,
@@ -1331,7 +1230,6 @@ const makeTalents = (): Record<number, Talent> => {
       135: {
          id: 135,
          name: 'talent-135',
-         description: 'talent-135-desc',
          edges: [132, 134, 137],
          x: -430,
          y: 130,
@@ -1341,7 +1239,6 @@ const makeTalents = (): Record<number, Talent> => {
       136: {
          id: 136,
          name: 'talent-136',
-         description: 'talent-136-desc',
          edges: [134, 138, 133],
          x: -550,
          y: 130,
@@ -1351,7 +1248,6 @@ const makeTalents = (): Record<number, Talent> => {
       137: {
          id: 137,
          name: 'talent-137',
-         description: 'talent-137-desc',
          edges: [135, 116],
          x: -370,
          y: 70,
@@ -1361,7 +1257,6 @@ const makeTalents = (): Record<number, Talent> => {
       138: {
          id: 138,
          name: 'talent-138',
-         description: 'talent-138-desc',
          edges: [136, 120],
          x: -610,
          y: 70,
@@ -1371,7 +1266,6 @@ const makeTalents = (): Record<number, Talent> => {
       139: {
          id: 139,
          name: 'talent-139',
-         description: 'talent-139-desc',
          edges: [134],
          x: -490,
          y: 210,
@@ -1381,52 +1275,47 @@ const makeTalents = (): Record<number, Talent> => {
       140: {
          id: 140,
          name: 'talent-140',
-         description: 'talent-140-desc',
          edges: [142, 141],
          x: 0,
          y: 100,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'dexterity_+f': 10 }),
       },
       141: {
          id: 141,
          name: 'talent-141',
-         description: 'talent-141-desc',
          edges: [143, 140],
          x: 30,
          y: 160,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'dexterity_+f': 5, 'windDamages_+f': 1 }),
       },
       142: {
          id: 142,
          name: 'talent-142',
-         description: 'talent-142-desc',
          edges: [144, 140],
          x: -30,
          y: 160,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'evasion_+f': 12, 'dexterity_+f': 5 }),
       },
       143: {
          id: 143,
          name: 'talent-143',
-         description: 'talent-143-desc',
          edges: [145, 141],
          x: 30,
          y: 220,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'dexterity_+f': 5, 'windDamages_+f': 1 }),
       },
       144: {
          id: 144,
          name: 'talent-144',
-         description: 'talent-144-desc',
          edges: [145, 142],
          x: -30,
          y: 220,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'evasion_+f': 12, 'dexterity_+f': 5 }),
       },
       145: {
          id: 145,
@@ -1436,12 +1325,14 @@ const makeTalents = (): Record<number, Talent> => {
          x: 0,
          y: 280,
          type: 'large',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'dexterity_+f': 20,
+            'windDamages_+%': 16,
+         }),
       },
       146: {
          id: 146,
          name: 'talent-146',
-         description: 'talent-146-desc',
          edges: [148, 147, 145],
          x: 0,
          y: 340,
@@ -1451,7 +1342,6 @@ const makeTalents = (): Record<number, Talent> => {
       147: {
          id: 147,
          name: 'talent-147',
-         description: 'talent-147-desc',
          edges: [149, 154, 146],
          x: 50,
          y: 390,
@@ -1461,7 +1351,6 @@ const makeTalents = (): Record<number, Talent> => {
       148: {
          id: 148,
          name: 'talent-148',
-         description: 'talent-148-desc',
          edges: [149, 165, 146],
          x: -50,
          y: 390,
@@ -1471,7 +1360,6 @@ const makeTalents = (): Record<number, Talent> => {
       149: {
          id: 149,
          name: 'talent-149',
-         description: 'talent-149-desc',
          edges: [150, 147, 148],
          x: 0,
          y: 440,
@@ -1481,7 +1369,6 @@ const makeTalents = (): Record<number, Talent> => {
       150: {
          id: 150,
          name: 'talent-150',
-         description: 'talent-150-desc',
          edges: [151, 182, 183, 149],
          x: 0,
          y: 500,
@@ -1491,7 +1378,6 @@ const makeTalents = (): Record<number, Talent> => {
       151: {
          id: 151,
          name: 'talent-151',
-         description: 'talent-151-desc',
          edges: [152, 150],
          x: 0,
          y: 560,
@@ -1501,7 +1387,6 @@ const makeTalents = (): Record<number, Talent> => {
       152: {
          id: 152,
          name: 'talent-152',
-         description: 'talent-152-desc',
          edges: [153, 151],
          x: 0,
          y: 620,
@@ -1511,7 +1396,6 @@ const makeTalents = (): Record<number, Talent> => {
       153: {
          id: 153,
          name: 'talent-153',
-         description: 'talent-153-desc',
          edges: [202, 210, 306, 152],
          x: 0,
          y: 680,
@@ -1521,7 +1405,6 @@ const makeTalents = (): Record<number, Talent> => {
       154: {
          id: 154,
          name: 'talent-154',
-         description: 'talent-154-desc',
          edges: [155, 147],
          x: 110,
          y: 390,
@@ -1531,7 +1414,6 @@ const makeTalents = (): Record<number, Talent> => {
       155: {
          id: 155,
          name: 'talent-155',
-         description: 'talent-155-desc',
          edges: [156, 179, 187, 154],
          x: 170,
          y: 390,
@@ -1541,7 +1423,6 @@ const makeTalents = (): Record<number, Talent> => {
       156: {
          id: 156,
          name: 'talent-156',
-         description: 'talent-156-desc',
          edges: [157, 155],
          x: 230,
          y: 390,
@@ -1551,7 +1432,6 @@ const makeTalents = (): Record<number, Talent> => {
       157: {
          id: 157,
          name: 'talent-157',
-         description: 'talent-157-desc',
          edges: [158, 163, 156],
          x: 290,
          y: 390,
@@ -1561,7 +1441,6 @@ const makeTalents = (): Record<number, Talent> => {
       158: {
          id: 158,
          name: 'talent-158',
-         description: 'talent-158-desc',
          edges: [159, 157],
          x: 340,
          y: 340,
@@ -1571,7 +1450,6 @@ const makeTalents = (): Record<number, Talent> => {
       159: {
          id: 159,
          name: 'talent-159',
-         description: 'talent-159-desc',
          edges: [160, 158],
          x: 290,
          y: 300,
@@ -1581,7 +1459,6 @@ const makeTalents = (): Record<number, Talent> => {
       160: {
          id: 160,
          name: 'talent-160',
-         description: 'talent-160-desc',
          edges: [161, 159],
          x: 340,
          y: 260,
@@ -1591,7 +1468,6 @@ const makeTalents = (): Record<number, Talent> => {
       161: {
          id: 161,
          name: 'talent-161',
-         description: 'talent-161-desc',
          edges: [162, 160],
          x: 390,
          y: 300,
@@ -1601,7 +1477,6 @@ const makeTalents = (): Record<number, Talent> => {
       162: {
          id: 162,
          name: 'talent-162',
-         description: 'talent-162-desc',
          edges: [161],
          x: 440,
          y: 340,
@@ -1611,7 +1486,6 @@ const makeTalents = (): Record<number, Talent> => {
       163: {
          id: 163,
          name: 'talent-163',
-         description: 'talent-163-desc',
          edges: [164, 157],
          x: 340,
          y: 440,
@@ -1621,7 +1495,6 @@ const makeTalents = (): Record<number, Talent> => {
       164: {
          id: 164,
          name: 'talent-164',
-         description: 'talent-164-desc',
          edges: [163],
          x: 440,
          y: 440,
@@ -1631,7 +1504,6 @@ const makeTalents = (): Record<number, Talent> => {
       165: {
          id: 165,
          name: 'talent-165',
-         description: 'talent-165-desc',
          edges: [166, 148],
          x: -110,
          y: 390,
@@ -1641,7 +1513,6 @@ const makeTalents = (): Record<number, Talent> => {
       166: {
          id: 166,
          name: 'talent-166',
-         description: 'talent-166-desc',
          edges: [167, 175, 186, 165],
          x: -170,
          y: 390,
@@ -1651,7 +1522,6 @@ const makeTalents = (): Record<number, Talent> => {
       167: {
          id: 167,
          name: 'talent-167',
-         description: 'talent-167-desc',
          edges: [168, 166],
          x: -230,
          y: 390,
@@ -1661,7 +1531,6 @@ const makeTalents = (): Record<number, Talent> => {
       168: {
          id: 168,
          name: 'talent-168',
-         description: 'talent-168-desc',
          edges: [169, 167],
          x: -290,
          y: 390,
@@ -1671,7 +1540,6 @@ const makeTalents = (): Record<number, Talent> => {
       169: {
          id: 169,
          name: 'talent-169',
-         description: 'talent-169-desc',
          edges: [171, 168],
          x: -340,
          y: 340,
@@ -1681,7 +1549,6 @@ const makeTalents = (): Record<number, Talent> => {
       171: {
          id: 171,
          name: 'talent-171',
-         description: 'talent-171-desc',
          edges: [172, 169],
          x: -290,
          y: 300,
@@ -1691,7 +1558,6 @@ const makeTalents = (): Record<number, Talent> => {
       172: {
          id: 172,
          name: 'talent-172',
-         description: 'talent-172-desc',
          edges: [173, 171],
          x: -340,
          y: 260,
@@ -1701,7 +1567,6 @@ const makeTalents = (): Record<number, Talent> => {
       173: {
          id: 173,
          name: 'talent-173',
-         description: 'talent-173-desc',
          edges: [174, 172],
          x: -390,
          y: 300,
@@ -1711,7 +1576,6 @@ const makeTalents = (): Record<number, Talent> => {
       174: {
          id: 174,
          name: 'talent-174',
-         description: 'talent-174-desc',
          edges: [173],
          x: -440,
          y: 340,
@@ -1721,7 +1585,6 @@ const makeTalents = (): Record<number, Talent> => {
       175: {
          id: 175,
          name: 'talent-175',
-         description: 'talent-175-desc',
          edges: [176, 178, 166],
          x: -170,
          y: 330,
@@ -1731,7 +1594,6 @@ const makeTalents = (): Record<number, Talent> => {
       176: {
          id: 176,
          name: 'talent-176',
-         description: 'talent-176-desc',
          edges: [175],
          x: -210,
          y: 280,
@@ -1741,7 +1603,6 @@ const makeTalents = (): Record<number, Talent> => {
       178: {
          id: 178,
          name: 'talent-178',
-         description: 'talent-178-desc',
          edges: [175],
          x: -130,
          y: 280,
@@ -1751,7 +1612,6 @@ const makeTalents = (): Record<number, Talent> => {
       179: {
          id: 179,
          name: 'talent-179',
-         description: 'talent-179-desc',
          edges: [180, 181, 155],
          x: 170,
          y: 330,
@@ -1761,7 +1621,6 @@ const makeTalents = (): Record<number, Talent> => {
       180: {
          id: 180,
          name: 'talent-180',
-         description: 'talent-180-desc',
          edges: [179],
          x: 210,
          y: 280,
@@ -1771,7 +1630,6 @@ const makeTalents = (): Record<number, Talent> => {
       181: {
          id: 181,
          name: 'talent-181',
-         description: 'talent-181-desc',
          edges: [179],
          x: 130,
          y: 280,
@@ -1781,7 +1639,6 @@ const makeTalents = (): Record<number, Talent> => {
       182: {
          id: 182,
          name: 'talent-182',
-         description: 'talent-182-desc',
          edges: [184, 150],
          x: 110,
          y: 500,
@@ -1791,7 +1648,6 @@ const makeTalents = (): Record<number, Talent> => {
       183: {
          id: 183,
          name: 'talent-183',
-         description: 'talent-183-desc',
          edges: [185, 150],
          x: -110,
          y: 500,
@@ -1801,7 +1657,6 @@ const makeTalents = (): Record<number, Talent> => {
       184: {
          id: 184,
          name: 'talent-184',
-         description: 'talent-184-desc',
          edges: [182],
          x: 170,
          y: 560,
@@ -1811,7 +1666,6 @@ const makeTalents = (): Record<number, Talent> => {
       185: {
          id: 185,
          name: 'talent-185',
-         description: 'talent-185-desc',
          edges: [183],
          x: -170,
          y: 560,
@@ -1821,7 +1675,6 @@ const makeTalents = (): Record<number, Talent> => {
       186: {
          id: 186,
          name: 'talent-186',
-         description: 'talent-186-desc',
          edges: [212, 166],
          x: -290,
          y: 560,
@@ -1831,7 +1684,6 @@ const makeTalents = (): Record<number, Talent> => {
       187: {
          id: 187,
          name: 'talent-187',
-         description: 'talent-187-desc',
          edges: [204, 155],
          x: 290,
          y: 560,
@@ -1841,7 +1693,6 @@ const makeTalents = (): Record<number, Talent> => {
       188: {
          id: 188,
          name: 'talent-188',
-         description: 'talent-188-desc',
          edges: [189, 76],
          x: 690,
          y: -230,
@@ -1851,7 +1702,6 @@ const makeTalents = (): Record<number, Talent> => {
       189: {
          id: 189,
          name: 'talent-189',
-         description: 'talent-189-desc',
          edges: [190, 188],
          x: 690,
          y: -350,
@@ -1861,7 +1711,6 @@ const makeTalents = (): Record<number, Talent> => {
       190: {
          id: 190,
          name: 'talent-190',
-         description: 'talent-190-desc',
          edges: [197, 189],
          x: 690,
          y: -470,
@@ -1871,7 +1720,6 @@ const makeTalents = (): Record<number, Talent> => {
       191: {
          id: 191,
          name: 'talent-191',
-         description: 'talent-191-desc',
          edges: [192, 20],
          x: 110,
          y: -740,
@@ -1881,7 +1729,6 @@ const makeTalents = (): Record<number, Talent> => {
       192: {
          id: 192,
          name: 'talent-192',
-         description: 'talent-192-desc',
          edges: [193, 191, 108],
          x: 230,
          y: -740,
@@ -1891,7 +1738,6 @@ const makeTalents = (): Record<number, Talent> => {
       193: {
          id: 193,
          name: 'talent-193',
-         description: 'talent-193-desc',
          edges: [194, 192, 109],
          x: 350,
          y: -740,
@@ -1901,7 +1747,6 @@ const makeTalents = (): Record<number, Talent> => {
       194: {
          id: 194,
          name: 'talent-194',
-         description: 'talent-194-desc',
          edges: [195, 193, 264, 263],
          x: 470,
          y: -740,
@@ -1911,7 +1756,6 @@ const makeTalents = (): Record<number, Talent> => {
       195: {
          id: 195,
          name: 'talent-195',
-         description: 'talent-195-desc',
          edges: [194, 198],
          x: 510,
          y: -690,
@@ -1921,7 +1765,6 @@ const makeTalents = (): Record<number, Talent> => {
       196: {
          id: 196,
          name: 'talent-196',
-         description: 'talent-196-desc',
          edges: [198, 197, 294],
          x: 610,
          y: -570,
@@ -1931,7 +1774,6 @@ const makeTalents = (): Record<number, Talent> => {
       197: {
          id: 197,
          name: 'talent-197',
-         description: 'talent-197-desc',
          edges: [196, 190],
          x: 650,
          y: -520,
@@ -1941,7 +1783,6 @@ const makeTalents = (): Record<number, Talent> => {
       198: {
          id: 198,
          name: 'talent-198',
-         description: 'talent-198-desc',
          edges: [195, 294, 196],
          x: 550,
          y: -640,
@@ -1951,7 +1792,6 @@ const makeTalents = (): Record<number, Talent> => {
       199: {
          id: 199,
          name: 'talent-199',
-         description: 'talent-199-desc',
          edges: [200, 85],
          x: 690,
          y: 230,
@@ -1961,7 +1801,6 @@ const makeTalents = (): Record<number, Talent> => {
       200: {
          id: 200,
          name: 'talent-200',
-         description: 'talent-200-desc',
          edges: [201, 199],
          x: 690,
          y: 350,
@@ -1971,7 +1810,6 @@ const makeTalents = (): Record<number, Talent> => {
       201: {
          id: 201,
          name: 'talent-201',
-         description: 'talent-201-desc',
          edges: [208, 200],
          x: 690,
          y: 470,
@@ -1981,7 +1819,6 @@ const makeTalents = (): Record<number, Talent> => {
       202: {
          id: 202,
          name: 'talent-202',
-         description: 'talent-202-desc',
          edges: [203, 153],
          x: 110,
          y: 680,
@@ -1991,7 +1828,6 @@ const makeTalents = (): Record<number, Talent> => {
       203: {
          id: 203,
          name: 'talent-203',
-         description: 'talent-203-desc',
          edges: [204, 202],
          x: 230,
          y: 680,
@@ -2001,7 +1837,6 @@ const makeTalents = (): Record<number, Talent> => {
       204: {
          id: 204,
          name: 'talent-204',
-         description: 'talent-204-desc',
          edges: [205, 203, 187],
          x: 340,
          y: 680,
@@ -2011,7 +1846,6 @@ const makeTalents = (): Record<number, Talent> => {
       205: {
          id: 205,
          name: 'talent-205',
-         description: 'talent-205-desc',
          edges: [206, 247, 246, 204],
          x: 440,
          y: 680,
@@ -2021,7 +1855,6 @@ const makeTalents = (): Record<number, Talent> => {
       206: {
          id: 206,
          name: 'talent-206',
-         description: 'talent-206-desc',
          edges: [207, 205],
          x: 490,
          y: 640,
@@ -2031,7 +1864,6 @@ const makeTalents = (): Record<number, Talent> => {
       207: {
          id: 207,
          name: 'talent-207',
-         description: 'talent-207-desc',
          edges: [209, 280, 206],
          x: 540,
          y: 600,
@@ -2041,7 +1873,6 @@ const makeTalents = (): Record<number, Talent> => {
       208: {
          id: 208,
          name: 'talent-208',
-         description: 'talent-208-desc',
          edges: [209, 201],
          x: 640,
          y: 510,
@@ -2051,7 +1882,6 @@ const makeTalents = (): Record<number, Talent> => {
       209: {
          id: 209,
          name: 'talent-209',
-         description: 'talent-209-desc',
          edges: [280, 208, 207],
          x: 590,
          y: 550,
@@ -2061,7 +1891,6 @@ const makeTalents = (): Record<number, Talent> => {
       210: {
          id: 210,
          name: 'talent-210',
-         description: 'talent-210-desc',
          edges: [211, 153],
          x: -110,
          y: 680,
@@ -2071,7 +1900,6 @@ const makeTalents = (): Record<number, Talent> => {
       211: {
          id: 211,
          name: 'talent-211',
-         description: 'talent-211-desc',
          edges: [212, 210],
          x: -230,
          y: 680,
@@ -2081,7 +1909,6 @@ const makeTalents = (): Record<number, Talent> => {
       212: {
          id: 212,
          name: 'talent-212',
-         description: 'talent-212-desc',
          edges: [213, 211, 186],
          x: -340,
          y: 680,
@@ -2091,7 +1918,6 @@ const makeTalents = (): Record<number, Talent> => {
       213: {
          id: 213,
          name: 'talent-213',
-         description: 'talent-213-desc',
          edges: [221, 252, 251, 212],
          x: -440,
          y: 680,
@@ -2101,7 +1927,6 @@ const makeTalents = (): Record<number, Talent> => {
       214: {
          id: 214,
          name: 'talent-214',
-         description: 'talent-214-desc',
          edges: [121, 215],
          x: -700,
          y: 110,
@@ -2111,7 +1936,6 @@ const makeTalents = (): Record<number, Talent> => {
       215: {
          id: 215,
          name: 'talent-215',
-         description: 'talent-215-desc',
          edges: [214, 216, 320],
          x: -700,
          y: 230,
@@ -2121,7 +1945,6 @@ const makeTalents = (): Record<number, Talent> => {
       216: {
          id: 216,
          name: 'talent-216',
-         description: 'talent-216-desc',
          edges: [215, 217],
          x: -700,
          y: 350,
@@ -2131,7 +1954,6 @@ const makeTalents = (): Record<number, Talent> => {
       217: {
          id: 217,
          name: 'talent-217',
-         description: 'talent-217-desc',
          edges: [216, 218],
          x: -700,
          y: 470,
@@ -2141,7 +1963,6 @@ const makeTalents = (): Record<number, Talent> => {
       218: {
          id: 218,
          name: 'talent-218',
-         description: 'talent-218-desc',
          edges: [217, 219],
          x: -650,
          y: 520,
@@ -2151,7 +1972,6 @@ const makeTalents = (): Record<number, Talent> => {
       219: {
          id: 219,
          name: 'talent-219',
-         description: 'talent-219-desc',
          edges: [218, 273, 220],
          x: -600,
          y: 570,
@@ -2161,7 +1981,6 @@ const makeTalents = (): Record<number, Talent> => {
       220: {
          id: 220,
          name: 'talent-220',
-         description: 'talent-220-desc',
          edges: [219, 273, 221],
          x: -540,
          y: 610,
@@ -2171,7 +1990,6 @@ const makeTalents = (): Record<number, Talent> => {
       221: {
          id: 221,
          name: 'talent-221',
-         description: 'talent-221-desc',
          edges: [220, 213],
          x: -490,
          y: 650,
@@ -2181,7 +1999,6 @@ const makeTalents = (): Record<number, Talent> => {
       222: {
          id: 222,
          name: 'talent-222',
-         description: 'talent-222-desc',
          edges: [223, 121],
          x: -700,
          y: -110,
@@ -2191,7 +2008,6 @@ const makeTalents = (): Record<number, Talent> => {
       223: {
          id: 223,
          name: 'talent-223',
-         description: 'talent-223-desc',
          edges: [224, 311, 222],
          x: -700,
          y: -230,
@@ -2201,7 +2017,6 @@ const makeTalents = (): Record<number, Talent> => {
       224: {
          id: 224,
          name: 'talent-224',
-         description: 'talent-224-desc',
          edges: [225, 223],
          x: -700,
          y: -350,
@@ -2211,7 +2026,6 @@ const makeTalents = (): Record<number, Talent> => {
       225: {
          id: 225,
          name: 'talent-225',
-         description: 'talent-225-desc',
          edges: [224, 233],
          x: -700,
          y: -470,
@@ -2221,7 +2035,6 @@ const makeTalents = (): Record<number, Talent> => {
       226: {
          id: 226,
          name: 'talent-226',
-         description: 'talent-226-desc',
          edges: [227, 20],
          x: -110,
          y: -740,
@@ -2231,7 +2044,6 @@ const makeTalents = (): Record<number, Talent> => {
       227: {
          id: 227,
          name: 'talent-227',
-         description: 'talent-227-desc',
          edges: [228, 226, 104],
          x: -230,
          y: -740,
@@ -2241,7 +2053,6 @@ const makeTalents = (): Record<number, Talent> => {
       228: {
          id: 228,
          name: 'talent-228',
-         description: 'talent-228-desc',
          edges: [229, 227, 105],
          x: -350,
          y: -740,
@@ -2251,7 +2062,6 @@ const makeTalents = (): Record<number, Talent> => {
       229: {
          id: 229,
          name: 'talent-229',
-         description: 'talent-229-desc',
          edges: [230, 228, 259, 258],
          x: -470,
          y: -740,
@@ -2261,7 +2071,6 @@ const makeTalents = (): Record<number, Talent> => {
       230: {
          id: 230,
          name: 'talent-230',
-         description: 'talent-230-desc',
          edges: [231, 229],
          x: -510,
          y: -690,
@@ -2271,7 +2080,6 @@ const makeTalents = (): Record<number, Talent> => {
       231: {
          id: 231,
          name: 'talent-231',
-         description: 'talent-231-desc',
          edges: [232, 287, 230],
          x: -550,
          y: -640,
@@ -2281,7 +2089,6 @@ const makeTalents = (): Record<number, Talent> => {
       232: {
          id: 232,
          name: 'talent-232',
-         description: 'talent-232-desc',
          edges: [233, 231, 287],
          x: -620,
          y: -570,
@@ -2291,7 +2098,6 @@ const makeTalents = (): Record<number, Talent> => {
       233: {
          id: 233,
          name: 'talent-233',
-         description: 'talent-233-desc',
          edges: [225, 232],
          x: -660,
          y: -520,
@@ -2301,127 +2107,123 @@ const makeTalents = (): Record<number, Talent> => {
       234: {
          id: 234,
          name: 'talent-234',
-         description: 'talent-234-desc',
          edges: [236, 145],
          x: -100,
          y: 220,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'windDamages_+f': 3 }),
       },
       235: {
          id: 235,
          name: 'talent-235',
-         description: 'talent-235-desc',
          edges: [236, 115],
          x: -220,
          y: 100,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'iceDamages_+f': 3 }),
       },
       236: {
          id: 236,
          name: 'talent-236',
-         description: 'talent-236-desc',
          edges: [234, 235],
          x: -180,
          y: 180,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'iceDamages_+f': 2, 'windDamages_+f': 2 }),
       },
       237: {
          id: 237,
          name: 'talent-237',
-         description: 'talent-237-desc',
          edges: [238, 145],
          x: 100,
          y: 220,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'windDamages_+f': 3 }),
       },
       238: {
          id: 238,
          name: 'talent-238',
-         description: 'talent-238-desc',
          edges: [239, 237],
          x: 180,
          y: 180,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'windDamages_+f': 2,
+            'fireDamages_+f': 2,
+         }),
       },
       239: {
          id: 239,
          name: 'talent-239',
-         description: 'talent-239-desc',
          edges: [54, 238],
          x: 220,
          y: 100,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'fireDamages_+f': 3 }),
       },
       240: {
          id: 240,
          name: 'talent-240',
-         description: 'talent-240-desc',
          edges: [115, 242],
          x: -220,
          y: -100,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'iceDamages_+f': 3 }),
       },
       241: {
          id: 241,
          name: 'talent-241',
-         description: 'talent-241-desc',
          edges: [242, 7],
          x: -100,
          y: -220,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'earthDamages_+f': 3 }),
       },
       242: {
          id: 242,
          name: 'talent-242',
-         description: 'talent-242-desc',
          edges: [240, 241],
          x: -180,
          y: -180,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'earthDamages_+f': 2,
+            'iceDamages_+f': 2,
+         }),
       },
       243: {
          id: 243,
          name: 'talent-243',
-         description: 'talent-243-desc',
          edges: [244, 7],
          x: 100,
          y: -220,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'earthDamages_+f': 3 }),
       },
       244: {
          id: 244,
          name: 'talent-244',
-         description: 'talent-244-desc',
          edges: [245, 243],
          x: 180,
          y: -180,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({
+            'fireDamages_+f': 2,
+            'earthDamages_+f': 2,
+         }),
       },
       245: {
          id: 245,
          name: 'talent-245',
-         description: 'talent-245-desc',
          edges: [54, 244],
          x: 220,
          y: -100,
          type: 'small',
-         statistics: StatisticMgt.makeMockedStatistics({}),
+         statistics: StatisticMgt.makeMockedStatistics({ 'fireDamages_+f': 3 }),
       },
       246: {
          id: 246,
          name: 'talent-246',
-         description: 'talent-246-desc',
          edges: [248, 205],
          x: 480,
          y: 740,
@@ -2431,7 +2233,6 @@ const makeTalents = (): Record<number, Talent> => {
       247: {
          id: 247,
          name: 'talent-247',
-         description: 'talent-247-desc',
          edges: [249, 205],
          x: 400,
          y: 740,
@@ -2441,7 +2242,6 @@ const makeTalents = (): Record<number, Talent> => {
       248: {
          id: 248,
          name: 'talent-248',
-         description: 'talent-248-desc',
          edges: [257, 246],
          x: 480,
          y: 800,
@@ -2451,7 +2251,6 @@ const makeTalents = (): Record<number, Talent> => {
       249: {
          id: 249,
          name: 'talent-249',
-         description: 'talent-249-desc',
          edges: [257, 247],
          x: 400,
          y: 800,
@@ -2461,7 +2260,6 @@ const makeTalents = (): Record<number, Talent> => {
       251: {
          id: 251,
          name: 'talent-251',
-         description: 'talent-251-desc',
          edges: [253, 213],
          x: -400,
          y: 740,
@@ -2471,7 +2269,6 @@ const makeTalents = (): Record<number, Talent> => {
       252: {
          id: 252,
          name: 'talent-252',
-         description: 'talent-252-desc',
          edges: [254, 213],
          x: -480,
          y: 740,
@@ -2481,7 +2278,6 @@ const makeTalents = (): Record<number, Talent> => {
       253: {
          id: 253,
          name: 'talent-253',
-         description: 'talent-253-desc',
          edges: [256, 251],
          x: -400,
          y: 800,
@@ -2491,7 +2287,6 @@ const makeTalents = (): Record<number, Talent> => {
       254: {
          id: 254,
          name: 'talent-254',
-         description: 'talent-254-desc',
          edges: [256, 252],
          x: -480,
          y: 800,
@@ -2501,7 +2296,6 @@ const makeTalents = (): Record<number, Talent> => {
       256: {
          id: 256,
          name: 'talent-256',
-         description: 'talent-256-desc',
          edges: [254, 253],
          x: -440,
          y: 860,
@@ -2511,7 +2305,6 @@ const makeTalents = (): Record<number, Talent> => {
       257: {
          id: 257,
          name: 'talent-257',
-         description: 'talent-257-desc',
          edges: [249, 248],
          x: 440,
          y: 860,
@@ -2521,7 +2314,6 @@ const makeTalents = (): Record<number, Talent> => {
       258: {
          id: 258,
          name: 'talent-258',
-         description: 'talent-258-desc',
          edges: [229, 261],
          x: -430,
          y: -800,
@@ -2531,7 +2323,6 @@ const makeTalents = (): Record<number, Talent> => {
       259: {
          id: 259,
          name: 'talent-259',
-         description: 'talent-259-desc',
          edges: [229, 260],
          x: -510,
          y: -800,
@@ -2541,7 +2332,6 @@ const makeTalents = (): Record<number, Talent> => {
       260: {
          id: 260,
          name: 'talent-260',
-         description: 'talent-260-desc',
          edges: [259, 262],
          x: -510,
          y: -860,
@@ -2551,7 +2341,6 @@ const makeTalents = (): Record<number, Talent> => {
       261: {
          id: 261,
          name: 'talent-261',
-         description: 'talent-261-desc',
          edges: [258, 262],
          x: -430,
          y: -860,
@@ -2561,7 +2350,6 @@ const makeTalents = (): Record<number, Talent> => {
       262: {
          id: 262,
          name: 'talent-262',
-         description: 'talent-262-desc',
          edges: [260, 261],
          x: -470,
          y: -920,
@@ -2571,7 +2359,6 @@ const makeTalents = (): Record<number, Talent> => {
       263: {
          id: 263,
          name: 'talent-263',
-         description: 'talent-263-desc',
          edges: [194, 265],
          x: 510,
          y: -800,
@@ -2581,7 +2368,6 @@ const makeTalents = (): Record<number, Talent> => {
       264: {
          id: 264,
          name: 'talent-264',
-         description: 'talent-264-desc',
          edges: [194, 266],
          x: 430,
          y: -800,
@@ -2591,7 +2377,6 @@ const makeTalents = (): Record<number, Talent> => {
       265: {
          id: 265,
          name: 'talent-265',
-         description: 'talent-265-desc',
          edges: [263, 267],
          x: 510,
          y: -860,
@@ -2601,7 +2386,6 @@ const makeTalents = (): Record<number, Talent> => {
       266: {
          id: 266,
          name: 'talent-266',
-         description: 'talent-266-desc',
          edges: [264, 267],
          x: 430,
          y: -860,
@@ -2611,7 +2395,6 @@ const makeTalents = (): Record<number, Talent> => {
       267: {
          id: 267,
          name: 'talent-267',
-         description: 'talent-267-desc',
          edges: [266, 265],
          x: 470,
          y: -920,
@@ -2621,7 +2404,6 @@ const makeTalents = (): Record<number, Talent> => {
       268: {
          id: 268,
          name: 'talent-268',
-         description: 'talent-268-desc',
          edges: [121, 270],
          x: -760,
          y: -40,
@@ -2631,7 +2413,6 @@ const makeTalents = (): Record<number, Talent> => {
       269: {
          id: 269,
          name: 'talent-269',
-         description: 'talent-269-desc',
          edges: [271, 121],
          x: -760,
          y: 40,
@@ -2641,7 +2422,6 @@ const makeTalents = (): Record<number, Talent> => {
       270: {
          id: 270,
          name: 'talent-270',
-         description: 'talent-270-desc',
          edges: [272, 268],
          x: -820,
          y: -40,
@@ -2651,7 +2431,6 @@ const makeTalents = (): Record<number, Talent> => {
       271: {
          id: 271,
          name: 'talent-271',
-         description: 'talent-271-desc',
          edges: [272, 269],
          x: -820,
          y: 40,
@@ -2661,7 +2440,6 @@ const makeTalents = (): Record<number, Talent> => {
       272: {
          id: 272,
          name: 'talent-272',
-         description: 'talent-272-desc',
          edges: [271, 270],
          x: -880,
          y: 0,
@@ -2671,7 +2449,6 @@ const makeTalents = (): Record<number, Talent> => {
       273: {
          id: 273,
          name: 'talent-273',
-         description: 'talent-273-desc',
          edges: [219, 220, 275, 274],
          x: -620,
          y: 640,
@@ -2681,7 +2458,6 @@ const makeTalents = (): Record<number, Talent> => {
       274: {
          id: 274,
          name: 'talent-274',
-         description: 'talent-274-desc',
          edges: [273, 277],
          x: -620,
          y: 700,
@@ -2691,7 +2467,6 @@ const makeTalents = (): Record<number, Talent> => {
       275: {
          id: 275,
          name: 'talent-275',
-         description: 'talent-275-desc',
          edges: [273, 279],
          x: -680,
          y: 640,
@@ -2701,7 +2476,6 @@ const makeTalents = (): Record<number, Talent> => {
       276: {
          id: 276,
          name: 'talent-276',
-         description: 'talent-276-desc',
          edges: [278],
          x: -680,
          y: 700,
@@ -2711,7 +2485,6 @@ const makeTalents = (): Record<number, Talent> => {
       277: {
          id: 277,
          name: 'talent-277',
-         description: 'talent-277-desc',
          edges: [274, 278],
          x: -680,
          y: 760,
@@ -2721,7 +2494,6 @@ const makeTalents = (): Record<number, Talent> => {
       278: {
          id: 278,
          name: 'talent-278',
-         description: 'talent-278-desc',
          edges: [279, 277, 276],
          x: -740,
          y: 760,
@@ -2731,7 +2503,6 @@ const makeTalents = (): Record<number, Talent> => {
       279: {
          id: 279,
          name: 'talent-279',
-         description: 'talent-279-desc',
          edges: [275, 278],
          x: -740,
          y: 700,
@@ -2741,7 +2512,6 @@ const makeTalents = (): Record<number, Talent> => {
       280: {
          id: 280,
          name: 'talent-280',
-         description: 'talent-280-desc',
          edges: [282, 281, 209, 207],
          x: 620,
          y: 630,
@@ -2751,7 +2521,6 @@ const makeTalents = (): Record<number, Talent> => {
       281: {
          id: 281,
          name: 'talent-281',
-         description: 'talent-281-desc',
          edges: [284, 280],
          x: 680,
          y: 630,
@@ -2761,7 +2530,6 @@ const makeTalents = (): Record<number, Talent> => {
       282: {
          id: 282,
          name: 'talent-282',
-         description: 'talent-282-desc',
          edges: [280, 286],
          x: 620,
          y: 690,
@@ -2771,7 +2539,6 @@ const makeTalents = (): Record<number, Talent> => {
       283: {
          id: 283,
          name: 'talent-283',
-         description: 'talent-283-desc',
          edges: [285],
          x: 680,
          y: 690,
@@ -2781,7 +2548,6 @@ const makeTalents = (): Record<number, Talent> => {
       284: {
          id: 284,
          name: 'talent-284',
-         description: 'talent-284-desc',
          edges: [285, 281],
          x: 740,
          y: 690,
@@ -2791,7 +2557,6 @@ const makeTalents = (): Record<number, Talent> => {
       285: {
          id: 285,
          name: 'talent-285',
-         description: 'talent-285-desc',
          edges: [286, 283, 284],
          x: 740,
          y: 750,
@@ -2801,7 +2566,6 @@ const makeTalents = (): Record<number, Talent> => {
       286: {
          id: 286,
          name: 'talent-286',
-         description: 'talent-286-desc',
          edges: [282, 285],
          x: 680,
          y: 750,
@@ -2811,7 +2575,6 @@ const makeTalents = (): Record<number, Talent> => {
       287: {
          id: 287,
          name: 'talent-287',
-         description: 'talent-287-desc',
          edges: [232, 289, 231, 288],
          x: -640,
          y: -650,
@@ -2821,7 +2584,6 @@ const makeTalents = (): Record<number, Talent> => {
       288: {
          id: 288,
          name: 'talent-288',
-         description: 'talent-288-desc',
          edges: [287, 291],
          x: -640,
          y: -710,
@@ -2831,7 +2593,6 @@ const makeTalents = (): Record<number, Talent> => {
       289: {
          id: 289,
          name: 'talent-289',
-         description: 'talent-289-desc',
          edges: [293, 287],
          x: -700,
          y: -650,
@@ -2841,7 +2602,6 @@ const makeTalents = (): Record<number, Talent> => {
       290: {
          id: 290,
          name: 'talent-290',
-         description: 'talent-290-desc',
          edges: [292],
          x: -700,
          y: -710,
@@ -2851,7 +2611,6 @@ const makeTalents = (): Record<number, Talent> => {
       291: {
          id: 291,
          name: 'talent-291',
-         description: 'talent-291-desc',
          edges: [288, 292],
          x: -700,
          y: -770,
@@ -2861,7 +2620,6 @@ const makeTalents = (): Record<number, Talent> => {
       292: {
          id: 292,
          name: 'talent-292',
-         description: 'talent-292-desc',
          edges: [293, 291, 290],
          x: -760,
          y: -770,
@@ -2871,7 +2629,6 @@ const makeTalents = (): Record<number, Talent> => {
       293: {
          id: 293,
          name: 'talent-293',
-         description: 'talent-293-desc',
          edges: [289, 292],
          x: -760,
          y: -710,
@@ -2881,7 +2638,6 @@ const makeTalents = (): Record<number, Talent> => {
       294: {
          id: 294,
          name: 'talent-294',
-         description: 'talent-294-desc',
          edges: [196, 198, 295, 296],
          x: 620,
          y: -640,
@@ -2891,7 +2647,6 @@ const makeTalents = (): Record<number, Talent> => {
       295: {
          id: 295,
          name: 'talent-295',
-         description: 'talent-295-desc',
          edges: [294, 298],
          x: 620,
          y: -700,
@@ -2901,7 +2656,6 @@ const makeTalents = (): Record<number, Talent> => {
       296: {
          id: 296,
          name: 'talent-296',
-         description: 'talent-296-desc',
          edges: [294, 300],
          x: 680,
          y: -640,
@@ -2911,7 +2665,6 @@ const makeTalents = (): Record<number, Talent> => {
       297: {
          id: 297,
          name: 'talent-297',
-         description: 'talent-297-desc',
          edges: [299],
          x: 680,
          y: -700,
@@ -2921,7 +2674,6 @@ const makeTalents = (): Record<number, Talent> => {
       298: {
          id: 298,
          name: 'talent-298',
-         description: 'talent-298-desc',
          edges: [295, 299],
          x: 680,
          y: -760,
@@ -2931,7 +2683,6 @@ const makeTalents = (): Record<number, Talent> => {
       299: {
          id: 299,
          name: 'talent-299',
-         description: 'talent-299-desc',
          edges: [300, 297, 298],
          x: 740,
          y: -760,
@@ -2941,7 +2692,6 @@ const makeTalents = (): Record<number, Talent> => {
       300: {
          id: 300,
          name: 'talent-300',
-         description: 'talent-300-desc',
          edges: [296, 299],
          x: 740,
          y: -700,
@@ -2951,7 +2701,6 @@ const makeTalents = (): Record<number, Talent> => {
       301: {
          id: 301,
          name: 'talent-301',
-         description: 'talent-301-desc',
          edges: [20, 302],
          x: 0,
          y: -800,
@@ -2961,7 +2710,6 @@ const makeTalents = (): Record<number, Talent> => {
       302: {
          id: 302,
          name: 'talent-302',
-         description: 'talent-302-desc',
          edges: [301, 303, 304],
          x: 0,
          y: -860,
@@ -2971,7 +2719,6 @@ const makeTalents = (): Record<number, Talent> => {
       303: {
          id: 303,
          name: 'talent-303',
-         description: 'talent-303-desc',
          edges: [302, 305],
          x: 40,
          y: -920,
@@ -2981,7 +2728,6 @@ const makeTalents = (): Record<number, Talent> => {
       304: {
          id: 304,
          name: 'talent-304',
-         description: 'talent-304-desc',
          edges: [302, 305],
          x: -40,
          y: -920,
@@ -2991,7 +2737,6 @@ const makeTalents = (): Record<number, Talent> => {
       305: {
          id: 305,
          name: 'talent-305',
-         description: 'talent-305-desc',
          edges: [304, 303],
          x: 0,
          y: -980,
@@ -3001,7 +2746,6 @@ const makeTalents = (): Record<number, Talent> => {
       306: {
          id: 306,
          name: 'talent-306',
-         description: 'talent-306-desc',
          edges: [307, 153],
          x: 0,
          y: 740,
@@ -3011,7 +2755,6 @@ const makeTalents = (): Record<number, Talent> => {
       307: {
          id: 307,
          name: 'talent-307',
-         description: 'talent-307-desc',
          edges: [309, 308, 306],
          x: 0,
          y: 800,
@@ -3021,7 +2764,6 @@ const makeTalents = (): Record<number, Talent> => {
       308: {
          id: 308,
          name: 'talent-308',
-         description: 'talent-308-desc',
          edges: [310, 307],
          x: 40,
          y: 860,
@@ -3031,7 +2773,6 @@ const makeTalents = (): Record<number, Talent> => {
       309: {
          id: 309,
          name: 'talent-309',
-         description: 'talent-309-desc',
          edges: [310, 307],
          x: -40,
          y: 860,
@@ -3041,7 +2782,6 @@ const makeTalents = (): Record<number, Talent> => {
       310: {
          id: 310,
          name: 'talent-310',
-         description: 'talent-310-desc',
          edges: [309, 308],
          x: 0,
          y: 920,
@@ -3051,7 +2791,6 @@ const makeTalents = (): Record<number, Talent> => {
       311: {
          id: 311,
          name: 'talent-311',
-         description: 'talent-311-desc',
          edges: [223, 312, 313],
          x: -760,
          y: -230,
@@ -3061,7 +2800,6 @@ const makeTalents = (): Record<number, Talent> => {
       312: {
          id: 312,
          name: 'talent-312',
-         description: 'talent-312-desc',
          edges: [311, 317],
          x: -760,
          y: -290,
@@ -3071,7 +2809,6 @@ const makeTalents = (): Record<number, Talent> => {
       313: {
          id: 313,
          name: 'talent-313',
-         description: 'talent-313-desc',
          edges: [314, 311],
          x: -820,
          y: -230,
@@ -3081,7 +2818,6 @@ const makeTalents = (): Record<number, Talent> => {
       314: {
          id: 314,
          name: 'talent-314',
-         description: 'talent-314-desc',
          edges: [316, 313],
          x: -870,
          y: -180,
@@ -3091,7 +2827,6 @@ const makeTalents = (): Record<number, Talent> => {
       316: {
          id: 316,
          name: 'talent-316',
-         description: 'talent-316-desc',
          edges: [314],
          x: -920,
          y: -230,
@@ -3101,7 +2836,6 @@ const makeTalents = (): Record<number, Talent> => {
       317: {
          id: 317,
          name: 'talent-317',
-         description: 'talent-317-desc',
          edges: [312, 318],
          x: -820,
          y: -340,
@@ -3111,7 +2845,6 @@ const makeTalents = (): Record<number, Talent> => {
       318: {
          id: 318,
          name: 'talent-318',
-         description: 'talent-318-desc',
          edges: [317, 319],
          x: -870,
          y: -390,
@@ -3121,7 +2854,6 @@ const makeTalents = (): Record<number, Talent> => {
       319: {
          id: 319,
          name: 'talent-319',
-         description: 'talent-319-desc',
          edges: [318],
          x: -920,
          y: -340,
@@ -3131,7 +2863,6 @@ const makeTalents = (): Record<number, Talent> => {
       320: {
          id: 320,
          name: 'talent-320',
-         description: 'talent-320-desc',
          edges: [322, 215, 321],
          x: -760,
          y: 230,
@@ -3141,7 +2872,6 @@ const makeTalents = (): Record<number, Talent> => {
       321: {
          id: 321,
          name: 'talent-321',
-         description: 'talent-321-desc',
          edges: [323, 320],
          x: -820,
          y: 180,
@@ -3151,7 +2881,6 @@ const makeTalents = (): Record<number, Talent> => {
       322: {
          id: 322,
          name: 'talent-322',
-         description: 'talent-322-desc',
          edges: [323, 320],
          x: -820,
          y: 280,
@@ -3161,7 +2890,6 @@ const makeTalents = (): Record<number, Talent> => {
       323: {
          id: 323,
          name: 'talent-323',
-         description: 'talent-323-desc',
          edges: [322, 321],
          x: -880,
          y: 230,
