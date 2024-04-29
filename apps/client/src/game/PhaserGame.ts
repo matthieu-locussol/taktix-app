@@ -47,6 +47,9 @@ export const config: Phaser.Types.Core.GameConfig = {
       postBoot: () => store.gameStore.initialize(game),
    },
    canvasStyle: `border: 1px solid #374151;`,
+   render: {
+      powerPreference: 'high-performance',
+   },
 };
 
 export const game = new Phaser.Game(config);
