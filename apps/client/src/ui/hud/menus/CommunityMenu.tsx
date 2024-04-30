@@ -166,6 +166,7 @@ export const CommunityMenu = observer(() => {
                                  })}
                                  <StyledTableCell>
                                     <IconButton
+                                       size="small"
                                        color="inherit"
                                        onClick={() =>
                                           communityMenuStore.sendPrivateMessage(row.player)
