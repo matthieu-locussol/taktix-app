@@ -40,6 +40,8 @@ export const makeCharacter = ({ characterType, name, scene }: MakeCharacterProps
             stroke: true,
             fill: true,
          },
+         strokeThickness: 1,
+         stroke: '#000000',
       })
       .setDepth(999);
    characterName.scale = SCALE_FACTOR;
