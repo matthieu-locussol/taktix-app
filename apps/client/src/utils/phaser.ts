@@ -9,6 +9,7 @@ export const zEntityType = z.nativeEnum(EntityType);
 
 export enum InteractiveObjectType {
    Teleporter = 'Teleporter',
+   TeleporterCell = 'TeleporterCell',
 }
 
 export const zInteractiveObjectType = z.nativeEnum(InteractiveObjectType);

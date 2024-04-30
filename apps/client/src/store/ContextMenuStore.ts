@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
+import { isNPC, zNPC } from 'shared/src/data/npcs';
 import { Channel } from 'shared/src/types/Channel';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { InteractiveObject } from '../game/Scene';
@@ -14,6 +15,7 @@ interface MenuItem {
 interface SubMenuItem {
    text: string;
    callback: () => void;
+   disabled?: boolean;
 }
 
 export class ContextMenuStore {
@@ -106,6 +108,7 @@ export class ContextMenuStore {
 
       const subMenu = {
          [InteractiveObjectType.Teleporter]: this._makeTeleporterMenu(),
+         [InteractiveObjectType.TeleporterCell]: [],
       }[type];
 
       return {
@@ -117,11 +120,18 @@ export class ContextMenuStore {
    private _makeTeleporterMenu(): SubMenuItem[] {
       return [
          {
+            text: i18next.t('save'),
+            callback: () => {
+               this._store.colyseusStore.saveTeleporter(this._store.characterStore.map);
+            },
+            disabled: this._store.characterStore.teleporters.includes(
+               this._store.characterStore.map,
+            ),
+         },
+         {
             text: i18next.t('use'),
             callback: () => {
-               this._store.colyseusStore.fightPvE(1);
-               // TODO: loading while fight is starting...
-               // TODO: don't set this in a teleporter, but in a fight button...
+               this._store.mapMenuStore.open();
             },
          },
       ];
@@ -152,20 +162,41 @@ export class ContextMenuStore {
    }
 
    private _makeNpcMenu(npcName: string): SubMenuItem[] {
-      return [
-         {
-            text: i18next.t('talk'),
-            callback: () => {
-               this._store.chatStore.setInput(`Talking to ${npcName}...`);
+      if (!isNPC(npcName)) {
+         return [];
+      }
 
-               TimeMgt.wait(100).then(() => {
-                  if (this._store.chatStore.inputRef !== null) {
-                     this._store.chatStore.inputRef.focus();
-                  }
-               });
+      const parsedNpcName = zNPC.parse(npcName);
+
+      if (parsedNpcName === 'Akara') {
+         return [
+            {
+               text: i18next.t('startFight'),
+               callback: () => {
+                  this._store.colyseusStore.fightPvE(1);
+               },
             },
-         },
-      ];
+         ];
+      }
+
+      if (parsedNpcName === 'Serge Dualé') {
+         return [
+            {
+               text: i18next.t('talk'),
+               callback: () => {
+                  this._store.chatStore.setInput(`Talking to ${npcName}...`);
+
+                  TimeMgt.wait(100).then(() => {
+                     if (this._store.chatStore.inputRef !== null) {
+                        this._store.chatStore.inputRef.focus();
+                     }
+                  });
+               },
+            },
+         ];
+      }
+
+      return [];
    }
 
    public setCurrentSubMenu(title: string, subMenu: SubMenuItem[]): void {

@@ -112,6 +112,17 @@ export const translationsFr: LanguageTranslations = {
    from: 'De {{name}}',
    unknown: 'Inconnu',
    talk: 'Parler',
+   mapMenu: 'Carte du monde',
+   teleport: 'Se téléporter',
+   startFight: 'Commencer le combat',
+   save: 'Sauvegarder',
+   noTeleportationPlaces: 'Aucun point de téléportation enregistré.',
+   teleporterSaved: 'Point de téléportation enregistré !',
+   teleporterNotSaved:
+      'Impossible d’enregistrer le point de téléportation. Si le problème persiste, veuillez contacter le support.',
+   position: 'Position',
+   cost: 'Coût',
+   creditsValue: '<b>Crédits :</b> {{value}}',
 
    // Enemies
    'enemy-nono': 'Nono, le petit robot',
@@ -393,6 +404,7 @@ export const translationsFr: LanguageTranslations = {
 
    // Entities
    Character: 'Joueur',
+   NPC: 'PNJ',
 
    // Talents
    'talent-1': 'Force',

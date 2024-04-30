@@ -19,7 +19,7 @@ export const NPC_SPOTS: Record<Room, NPCSpot[]> = {
       {
          x: 8,
          y: 38,
-         npcName: 'Deckard Jr.',
+         npcName: 'Serge Dualé',
          mapName: 'DungeonRoom',
          direction: Direction.LEFT,
       },

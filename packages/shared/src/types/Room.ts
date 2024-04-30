@@ -5,7 +5,7 @@ import { ZodMgt } from '../utils/zodMgt';
 
 const rooms = ['AAA_InitialRoom', 'CloudsRoom', 'DungeonRoom', 'ForestRoom', 'HouseRoom'] as const;
 
-const zRoom = ZodMgt.constructZodLiteralUnionType(rooms.map((room) => z.literal(room)));
+export const zRoom = ZodMgt.constructZodLiteralUnionType(rooms.map((room) => z.literal(room)));
 
 export const isRoom = (value: unknown): value is Room => zRoom.safeParse(value).success;
 

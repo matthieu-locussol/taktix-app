@@ -5,7 +5,9 @@ import {
    type Direction,
    type NPCSpot,
    type Room,
+   TeleportationPlace,
    type TeleportationSpot,
+   _assertTrue,
    zDirection,
    zNPC,
 } from 'shared';
@@ -44,6 +46,7 @@ const generateMaps = () => {
    generateClientMapsScenes(maps);
    regenerateTeleportationSpots(maps);
    regenerateNpcSpots(maps);
+   regenerateTeleportationPlaces(maps);
 };
 
 const regenerateSharedRoom = (maps: string[]) => {
@@ -57,7 +60,7 @@ const rooms = [
    ${maps.map((map) => `'${map}Room'`).join(',\n   ')},
 ] as const;
 
-const zRoom = ZodMgt.constructZodLiteralUnionType(rooms.map((room) => z.literal(room)));
+export const zRoom = ZodMgt.constructZodLiteralUnionType(rooms.map((room) => z.literal(room)));
 
 export const isRoom = (value: unknown): value is Room => zRoom.safeParse(value).success;
 
@@ -320,7 +323,6 @@ const regenerateNpcSpots = (maps: string[]) => {
 import { NPCSpot } from '../types/NPCSpot';
 import type { Room } from '../types/Room';
 import { Direction } from '../types/SceneData';
-import { NPC } from './npcs';
 
 export const NPC_SPOTS: Record<Room, NPCSpot[]> = ${JSON.stringify(npcSpots, null, 3)
       .replace(/"UP"/gi, 'Direction.UP')
@@ -331,6 +333,86 @@ export const NPC_SPOTS: Record<Room, NPCSpot[]> = ${JSON.stringify(npcSpots, nul
 
    writeFileSync(npcSpotsPath, npcSpotsBlob, { flag: 'w' });
    console.log('[Shared] ✅  Regenerated npcSpots.ts');
+};
+
+const regenerateTeleportationPlaces = (maps: string[]) => {
+   const teleportationPlaces: Record<Room, TeleportationPlace | null> = {} as Record<
+      Room,
+      TeleportationPlace | null
+   >;
+
+   teleportationPlaces.AAA_InitialRoom = null;
+
+   for (const map of maps) {
+      const tiledMapPath = resolve(
+         __dirname,
+         `../../../apps/client/public/assets/maps/${map}.json`,
+      );
+      const tiledMapBlob = readFileSync(tiledMapPath, { encoding: 'utf-8' });
+      const tiledMap: TiledMapJson = JSON.parse(tiledMapBlob);
+
+      const roomName = `${map}Room` as Room;
+      teleportationPlaces[roomName] = null;
+
+      const interactiveLayer = tiledMap.layers.find(({ name }) => name === 'Interactive');
+      if (interactiveLayer === undefined) {
+         continue;
+      }
+
+      interactiveLayer.objects
+         .filter(({ properties }) => {
+            const id = properties.find(({ name }) => name === 'id');
+            assert(id !== undefined, `id property not found in ${map}.json`);
+            return id.value === 'Teleporter';
+         })
+         .forEach(() => {
+            _assertTrue(
+               teleportationPlaces[roomName] === null,
+               'Only one teleporter is allowed per room',
+            );
+
+            const teleporterCell = interactiveLayer.objects.find(({ properties }) => {
+               const id = properties.find(({ name }) => name === 'id');
+               assert(id !== undefined, `id property not found in ${map}.json`);
+               return id.value === 'TeleporterCell';
+            });
+
+            assert(teleporterCell !== undefined, `TeleporterCell not found in ${map}.json`);
+            const { x, y, width, height, properties } = teleporterCell;
+
+            const direction = properties.find(({ name }) => name === 'direction');
+            assert(direction !== undefined, `direction property not found in ${map}.json`);
+
+            teleportationPlaces[roomName] = {
+               x: x / width,
+               y: y / height,
+               direction: zDirection.parse(direction.value),
+            };
+         });
+   }
+
+   const teleportationPlacesPath = resolve(
+      __dirname,
+      '../../shared/src/data/teleportationPlaces.ts',
+   );
+   const teleportationPlacesBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
+import type { Room } from '../types/Room';
+import { Direction } from '../types/SceneData';
+import type { TeleportationPlace } from '../types/TeleportationPlace';
+
+export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = ${JSON.stringify(
+      teleportationPlaces,
+      null,
+      3,
+   )
+      .replace(/"UP"/gi, 'Direction.UP')
+      .replace(/"DOWN"/gi, 'Direction.DOWN')
+      .replace(/"LEFT"/gi, 'Direction.LEFT')
+      .replace(/"RIGHT"/gi, 'Direction.RIGHT')};
+`;
+
+   writeFileSync(teleportationPlacesPath, teleportationPlacesBlob, { flag: 'w' });
+   console.log('[Shared] ✅  Regenerated teleportationPlaces.ts');
 };
 
 generateMaps();

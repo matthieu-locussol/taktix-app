@@ -111,6 +111,17 @@ export const translationsJa: LanguageTranslations = {
    from: '{{name}} から',
    unknown: '不明',
    talk: '話す',
+   mapMenu: 'マップメニュー',
+   teleport: 'テレポート',
+   startFight: '戦闘を開始',
+   save: '保存',
+   noTeleportationPlaces: 'まだテレポートスポットが保存されていません。',
+   teleporterSaved: 'テレポートスポットが保存されました！',
+   teleporterNotSaved:
+      'テレポートスポットを保存できませんでした。問題が解決しない場合は、サポートにお問い合わせください。',
+   position: '位置',
+   cost: 'コスト',
+   creditsValue: '<b>クレジット</b>: {{value}}',
 
    // Enemies
    'enemy-nono': 'ノノ、小さなロボット',
@@ -392,6 +403,7 @@ export const translationsJa: LanguageTranslations = {
 
    // Entities
    Character: 'プレイヤー',
+   NPC: 'NPC',
 
    // Talents
    'talent-1': '力',

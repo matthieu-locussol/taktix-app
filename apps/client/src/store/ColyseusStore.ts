@@ -1,9 +1,12 @@
 import { Client, Room } from 'colyseus.js';
+import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
+import { TranslationKey } from 'shared/src/data/translations';
 import { AuthRoomResponse, isAuthRoomResponse } from 'shared/src/rooms/AuthRoom';
 import { ChatRoomResponse, isChatRoomResponse } from 'shared/src/rooms/ChatRoom';
 import { MapRoomResponse, isMapRoomResponse } from 'shared/src/rooms/MapRoom';
 import { MapState } from 'shared/src/states/MapState';
+import { Channel } from 'shared/src/types/Channel';
 import { CustomProtocol, Protocol } from 'shared/src/types/Colyseus';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { ProfessionType, zProfessionType } from 'shared/src/types/Profession';
@@ -11,7 +14,9 @@ import { Room as TRoom } from 'shared/src/types/Room';
 import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
 import { Statistics } from 'shared/src/types/Statistic';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
+import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
+import { StringMgt } from 'shared/src/utils/stringMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
 import { match } from 'ts-pattern';
 import { Store } from './Store';
@@ -197,6 +202,7 @@ export class ColyseusStore {
                baseStatisticsPoints,
                experience,
                health,
+               teleporters,
             }) => {
                this.setUuid(uuid);
                await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
@@ -226,6 +232,9 @@ export class ColyseusStore {
                this._store.characterStore.setBaseStatisticsPoints(baseStatisticsPoints);
                this._store.characterStore.setExperience(experience);
                this._store.characterStore.setCurrentHealth(health);
+               this._store.characterStore.setTeleporters(
+                  StringMgt.deserializeTeleporters(teleporters),
+               );
 
                this._store.talentsMenuStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.talentsMenuStore.setTalentsPoints(talentsPoints);
@@ -324,6 +333,9 @@ export class ColyseusStore {
                })
                .with({ type: 'stopFightingResponse' }, ({ message: payloadMessage }) => {
                   this.onStopFightingResponse(payloadMessage);
+               })
+               .with({ type: 'saveTeleporterResponse' }, ({ message: payloadMessage }) => {
+                  this.onSaveTeleporterResponse(payloadMessage);
                })
                .exhaustive();
          }
@@ -428,6 +440,14 @@ export class ColyseusStore {
       this.gameRoom.send('stopFighting', {});
    }
 
+   teleport(room: TRoom) {
+      this.gameRoom.send('teleport', { room });
+   }
+
+   saveTeleporter(room: TRoom) {
+      this.gameRoom.send('saveTeleporter', { room });
+   }
+
    async onChangeMap({
       map,
       x,
@@ -484,6 +504,31 @@ export class ColyseusStore {
             scene.addExternalPlayer(name, profession, { x, y }, direction as Direction);
             scene.setCharacterFighting(name, isFight);
          });
+   }
+
+   async onSaveTeleporterResponse({
+      success,
+   }: Extract<MapRoomResponse, { type: 'saveTeleporterResponse' }>['message']) {
+      if (success) {
+         this._store.characterStore.setTeleporters(
+            ArrayMgt.makeUnique([
+               ...this._store.characterStore.teleporters,
+               this._store.characterStore.map,
+            ]),
+         );
+
+         this._store.chatStore.addMessage({
+            channel: Channel.SERVER,
+            content: i18next.t('teleporterSaved' satisfies TranslationKey),
+            author: 'Server',
+         });
+      } else {
+         this._store.chatStore.addMessage({
+            channel: Channel.SERVER,
+            content: i18next.t('teleporterNotSaved' satisfies TranslationKey),
+            author: 'Server',
+         });
+      }
    }
 
    private async onWebSocketClosed(code: number) {

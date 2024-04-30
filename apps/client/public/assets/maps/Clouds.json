@@ -436,6 +436,29 @@
                "width": 0,
                "x": 141,
                "y": 150
+            },
+            {
+               "height": 16,
+               "id": 12,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "direction",
+                     "type": "string",
+                     "value": "left"
+                  },
+                  {
+                     "name": "id",
+                     "type": "string",
+                     "value": "TeleporterCell"
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 160,
+               "y": 176
             }
          ],
          "opacity": 1,
@@ -748,7 +771,7 @@
       }
    ],
    "nextlayerid": 14,
-   "nextobjectid": 12,
+   "nextobjectid": 13,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.10.2",

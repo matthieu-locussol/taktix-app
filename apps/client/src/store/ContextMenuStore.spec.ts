@@ -7,6 +7,7 @@ import { Store } from './Store';
 vi.mock('./Store', () => {
    const characterStoreMock = {
       name: 'Player',
+      teleporters: [],
    };
 
    const MockedStore = vi.fn().mockImplementation(() => ({
@@ -99,6 +100,11 @@ describe('ContextMenuStore', () => {
          {
             text: '[object] Teleporter',
             subMenu: [
+               {
+                  callback: expect.any(Function),
+                  text: 'save',
+                  disabled: false,
+               },
                {
                   callback: expect.any(Function),
                   text: 'use',

@@ -12,7 +12,9 @@ import {
    PvEFightResults,
    STATISTICS_POINTS_PER_LEVEL,
    StatisticMgt,
+   StringMgt,
    TALENTS_POINTS_PER_LEVEL,
+   TELEPORTATION_PLACES,
    TELEPORTATION_SPOTS,
    Room as TRoom,
    TalentMgt,
@@ -65,6 +67,10 @@ export class MapRoom extends Room<MapState> {
                )
                .with({ type: 'fightPvE' }, (payload) => this.onFightPvE(client, payload))
                .with({ type: 'stopFighting' }, (payload) => this.onStopFighting(client, payload))
+               .with({ type: 'teleport' }, (payload) => this.onTeleport(client, payload))
+               .with({ type: 'saveTeleporter' }, (payload) =>
+                  this.onSaveTeleporter(client, payload),
+               )
                .exhaustive();
          } else {
             logger.error(
@@ -119,6 +125,7 @@ export class MapRoom extends Room<MapState> {
          characterPosition.y,
          characterDirection,
          characterInfos.health,
+         StringMgt.deserializeTeleporters(characterInfos.teleporters),
       );
    }
 
@@ -390,6 +397,78 @@ export class MapRoom extends Room<MapState> {
                profession: zProfessionType.parse(player.profession),
                isFight: player.isFight,
             })),
+         },
+      };
+
+      client.send(packet.type, packet.message);
+   }
+
+   async onTeleport(
+      client: Client,
+      { message: { room } }: Extract<MapRoomMessage, { type: 'teleport' }>,
+   ) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      if (room === this.name) {
+         return;
+      }
+
+      if (!player.teleporters.includes(room)) {
+         return;
+      }
+
+      const place = TELEPORTATION_PLACES[room];
+      _assert(place, `Teleportation place for room '${room}' should be defined`);
+      const { direction, x, y } = place;
+
+      // TODO: make sure the player is on the teleportation spot
+      // TODO: substract the money for the teleportation
+
+      const packet: Extract<MapRoomResponse, { type: 'changeMap' }> = {
+         type: 'changeMap',
+         message: {
+            map: room,
+            x,
+            y,
+            direction,
+         },
+      };
+
+      client.send(packet.type, packet.message);
+   }
+
+   async onSaveTeleporter(
+      client: Client,
+      { message: { room } }: Extract<MapRoomMessage, { type: 'saveTeleporter' }>,
+   ) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      const place = TELEPORTATION_PLACES[room];
+
+      if (room !== this.name || place === undefined) {
+         const packet: Extract<MapRoomResponse, { type: 'saveTeleporterResponse' }> = {
+            type: 'saveTeleporterResponse',
+            message: {
+               success: false,
+            },
+         };
+         client.send(packet.type, packet.message);
+         return;
+      }
+
+      await prisma.character.update({
+         where: { name: player.name },
+         data: {
+            teleporters: StringMgt.serializeTeleporters([...player.teleporters, room]),
+         },
+      });
+
+      const packet: Extract<MapRoomResponse, { type: 'saveTeleporterResponse' }> = {
+         type: 'saveTeleporterResponse',
+         message: {
+            success: true,
          },
       };
 

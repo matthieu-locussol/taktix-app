@@ -33,7 +33,9 @@ export class CharacterStore {
 
    public experience: number = 0;
 
-   public currentHealth: number = 35;
+   public currentHealth: number = 0;
+
+   public teleporters: Room[] = [];
 
    private _intervalTimeout: NodeJS.Timeout | null = null;
 
@@ -91,6 +93,10 @@ export class CharacterStore {
    public setCurrentHealth(currentHealth: number) {
       this.currentHealth = currentHealth;
       this.regenLifeIfNeeded();
+   }
+
+   public setTeleporters(teleporters: Room[]) {
+      this.teleporters = [...teleporters];
    }
 
    public get healthPercentage() {

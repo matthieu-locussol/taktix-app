@@ -17,10 +17,10 @@ vi.mock('./Store', () => {
 
 vi.mock('shared/src/data/talents', () => ({
    STARTING_TALENTS: [1, 2],
-   TALENTS: {
+   getTalents: () => ({
       1: { id: 1, edges: [] },
       2: { id: 2, edges: [] },
-   },
+   }),
 }));
 
 describe('TalentsMenuStore', () => {
