@@ -1,4 +1,5 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
+import { Character } from '@prisma/client';
 import {
    FightMgt,
    LevelMgt,
@@ -124,9 +125,30 @@ export class MapRoom extends Room<MapState> {
          characterPosition.x,
          characterPosition.y,
          characterDirection,
-         characterInfos.health,
          StringMgt.deserializeTeleporters(characterInfos.teleporters),
       );
+
+      this.updatePlayerHealth(client, characterInfos);
+   }
+
+   private updatePlayerHealth(
+      client: Client,
+      infos: Pick<Character, 'baseStatistics' | 'experience' | 'profession' | 'talents' | 'health'>,
+   ) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      const realStatistics = StatisticMgt.computeRealStatistics(
+         StatisticMgt.aggregateStatistics(
+            StatisticMgt.deserializeStatistics(infos.baseStatistics),
+            infos.experience,
+            zProfessionType.parse(infos.profession),
+            TalentMgt.deserializeTalents(infos.talents),
+         ),
+      );
+
+      player.setHealth(infos.health);
+      player.setMaxHealth(realStatistics.vitality);
    }
 
    onMove(client: Client, { message: { x, y } }: Extract<MapRoomMessage, { type: 'move' }>) {
@@ -168,6 +190,8 @@ export class MapRoom extends Room<MapState> {
             talents: true,
             talentsPoints: true,
             experience: true,
+            baseStatistics: true,
+            profession: true,
          },
       });
 
@@ -189,6 +213,11 @@ export class MapRoom extends Room<MapState> {
                talents,
                talentsPoints: results.remainingPoints,
             },
+         });
+
+         this.updatePlayerHealth(client, {
+            ...characterInfos,
+            health: player.getHealth(),
          });
 
          logger.info(
@@ -214,6 +243,8 @@ export class MapRoom extends Room<MapState> {
             baseStatistics: true,
             baseStatisticsPoints: true,
             experience: true,
+            talents: true,
+            profession: true,
          },
       });
 
@@ -235,6 +266,11 @@ export class MapRoom extends Room<MapState> {
                baseStatistics: statistics,
                baseStatisticsPoints: results.remainingPoints,
             },
+         });
+
+         this.updatePlayerHealth(client, {
+            ...characterInfos,
+            health: player.getHealth(),
          });
 
          logger.info(
@@ -290,8 +326,6 @@ export class MapRoom extends Room<MapState> {
             TalentMgt.deserializeTalents(characterInfos.talents),
          ),
       );
-
-      player.setMaxHealth(realStatistics.vitality);
 
       try {
          const parameters: PvEFightParameters = {

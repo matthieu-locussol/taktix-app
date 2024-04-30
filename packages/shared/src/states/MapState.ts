@@ -13,10 +13,9 @@ export class MapState extends Schema {
       x: number,
       y: number,
       direction: string,
-      health: number,
       teleporters: Room[],
    ) {
-      const player = new PlayerState(name, profession, x, y, direction, health, teleporters);
+      const player = new PlayerState(name, profession, x, y, direction, teleporters);
       this.players.set(sessionId, player);
    }
 

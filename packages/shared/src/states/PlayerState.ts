@@ -42,7 +42,6 @@ export class PlayerState extends Schema {
       x: number,
       y: number,
       direction: string,
-      health: number,
       teleporters: Room[],
    ) {
       super();
@@ -53,8 +52,6 @@ export class PlayerState extends Schema {
       this.y = y;
       this.direction = direction;
       this.teleporters = teleporters;
-
-      this.setHealth(health);
    }
 
    move(x: number, y: number) {
