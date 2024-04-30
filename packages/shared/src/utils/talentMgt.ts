@@ -1,4 +1,5 @@
-import { STARTING_TALENTS, getTalents } from '../data/talents';
+import { STARTING_TALENTS, Talent, getTalents } from '../data/talents';
+import { ArrayMgt } from './arrayMgt';
 import { LevelMgt } from './levelMgt';
 
 export namespace TalentMgt {
@@ -15,7 +16,11 @@ export namespace TalentMgt {
          return true;
       }
 
-      return getAdjacentTalents(allocatedTalents).includes(talent);
+      if (allocatedTalents.includes(talent)) {
+         return false;
+      }
+
+      return isTalentTreeValid([...allocatedTalents, talent]);
    };
 
    export const canDisallocateTalent = (talent: number, allocatedTalents: number[]): boolean => {
@@ -23,7 +28,11 @@ export namespace TalentMgt {
          return true;
       }
 
-      return getAllocatedTalentsWithOneNeighbour(allocatedTalents).includes(talent);
+      if (!allocatedTalents.includes(talent)) {
+         return false;
+      }
+
+      return isTalentTreeValid(allocatedTalents.filter((t) => t !== talent));
    };
 
    const getAdjacentTalents = (allocatedTalents: number[]): number[] =>
@@ -38,16 +47,12 @@ export namespace TalentMgt {
       }
 
       const adjacentTalents = getAdjacentTalents(allocatedTalents);
-      return adjacentTalents.filter((edge) => !allocatedTalents.includes(edge));
-   };
+      const adjecentTalentsExludingAllocated = adjacentTalents.filter(
+         (edge) => !allocatedTalents.includes(edge),
+      );
 
-   const getAllocatedTalentsWithOneNeighbour = (allocatedTalents: number[]): number[] =>
-      allocatedTalents
-         .filter((talent) => {
-            const { edges } = getTalents()[talent];
-            return edges.filter((edge) => allocatedTalents.includes(edge)).length === 1;
-         })
-         .filter((talent) => !STARTING_TALENTS.includes(talent));
+      return ArrayMgt.makeUnique(adjecentTalentsExludingAllocated);
+   };
 
    export const serializeTalents = (talents: number[]): string => talents.join(',');
 
@@ -66,26 +71,32 @@ export namespace TalentMgt {
          return false;
       }
 
-      const visitedTalents = new Set<number>();
-      const stack = [...talents];
+      const subgraph: Record<number, Talent> = {};
+      const visited: Set<number> = new Set();
 
-      while (stack.length > 0) {
-         const current = stack.pop() as number;
-
-         if (!visitedTalents.has(current)) {
-            visitedTalents.add(current);
-
-            const { edges } = getTalents()[current];
-
-            edges.forEach((edge) => {
-               if (talents.includes(edge)) {
-                  stack.push(edge);
-               }
-            });
+      for (const id of talents) {
+         if (getTalents()[id]) {
+            subgraph[id] = {
+               ...getTalents()[id],
+               edges: getTalents()[id].edges.filter((edge) => talents.includes(edge)),
+            };
          }
       }
 
-      return visitedTalents.size === talents.length;
+      function dfs(nodeId: number) {
+         visited.add(nodeId);
+         for (const neighbor of subgraph[nodeId].edges) {
+            if (!visited.has(neighbor)) {
+               dfs(neighbor);
+            }
+         }
+      }
+
+      if (talents.length > 0) {
+         dfs(talents[0]);
+      }
+
+      return talents.every((id) => visited.has(id));
    };
 
    export const isProgressionValid = (
