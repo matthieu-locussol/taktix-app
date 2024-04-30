@@ -524,6 +524,41 @@
       },
       {
          "draworder": "topdown",
+         "id": 13,
+         "name": "Npcs",
+         "objects": [
+            {
+               "height": 16,
+               "id": 10,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "direction",
+                     "type": "string",
+                     "value": "down"
+                  },
+                  {
+                     "name": "id",
+                     "type": "string",
+                     "value": "Akara"
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 224,
+               "y": 112
+            }
+         ],
+         "opacity": 1,
+         "type": "objectgroup",
+         "visible": true,
+         "x": 0,
+         "y": 0
+      },
+      {
+         "draworder": "topdown",
          "id": 10,
          "name": "Lights",
          "objects": [
@@ -712,8 +747,8 @@
          "y": 0
       }
    ],
-   "nextlayerid": 13,
-   "nextobjectid": 10,
+   "nextlayerid": 14,
+   "nextobjectid": 12,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.10.2",

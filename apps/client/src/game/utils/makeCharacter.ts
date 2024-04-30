@@ -1,14 +1,15 @@
 import { EntityType } from '../../utils/phaser';
-import {
-   CHARACTER_LETTER_WIDTH,
-   CHARACTER_WIDTH,
-   SCALE_FACTOR,
-   type Scene,
-   TILE_SIZE,
-} from '../Scene';
+import { SCALE_FACTOR, type Scene, TILE_SIZE } from '../Scene';
 import { registerSpriteEvents } from './registerSpriteEvents';
 
-export const makeCharacter = (scene: Scene, name: string, isPlayer: boolean) => {
+type CharacterType = 'player' | 'externalPlayer' | 'npc';
+interface MakeCharacterProps {
+   scene: Scene;
+   name: string;
+   characterType: CharacterType;
+}
+
+export const makeCharacter = ({ characterType, name, scene }: MakeCharacterProps) => {
    if (scene.gridEngine.getAllCharacters().find((playerName) => playerName === name)) {
       return null;
    }
@@ -17,16 +18,20 @@ export const makeCharacter = (scene: Scene, name: string, isPlayer: boolean) => 
    characterSprite.setPipeline('Light2D');
    characterSprite.scale = SCALE_FACTOR;
    characterSprite.setName(name);
-   characterSprite.setData('type', EntityType.Character);
+   characterSprite.setData('type', characterType === 'npc' ? EntityType.NPC : EntityType.Character);
    registerSpriteEvents(characterSprite);
 
-   const offsetX = (CHARACTER_WIDTH * SCALE_FACTOR - name.length * CHARACTER_LETTER_WIDTH) / 2;
    const characterName = scene.add
-      .text(offsetX, 0, name, {
+      .text(0, 0, name, {
          align: 'center',
          fontSize: 6,
          fontFamily: 'Orbitron',
          resolution: 4,
+         color: {
+            player: '#ffffff',
+            externalPlayer: '#ffffff',
+            npc: '#00ff00',
+         }[characterType],
          shadow: {
             offsetX: 0,
             offsetY: 0,
@@ -45,7 +50,11 @@ export const makeCharacter = (scene: Scene, name: string, isPlayer: boolean) => 
          0,
          TILE_SIZE * SCALE_FACTOR,
          TILE_SIZE * SCALE_FACTOR,
-         isPlayer ? 0xff0000 : 0x00ff00,
+         {
+            player: 0xff0000,
+            externalPlayer: 0x00ff00,
+            npc: 0x0000ff,
+         }[characterType],
       )
       .setDepth(999);
 

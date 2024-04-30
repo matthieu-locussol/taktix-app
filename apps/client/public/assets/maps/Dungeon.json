@@ -672,6 +672,41 @@
       },
       {
          "draworder": "topdown",
+         "id": 11,
+         "name": "Npcs",
+         "objects": [
+            {
+               "height": 16,
+               "id": 21,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "direction",
+                     "type": "string",
+                     "value": "left"
+                  },
+                  {
+                     "name": "id",
+                     "type": "string",
+                     "value": "Deckard Jr."
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 128,
+               "y": 608
+            }
+         ],
+         "opacity": 1,
+         "type": "objectgroup",
+         "visible": true,
+         "x": 0,
+         "y": 0
+      },
+      {
+         "draworder": "topdown",
          "id": 5,
          "name": "Lights",
          "objects": [
@@ -866,8 +901,8 @@
          "y": 0
       }
    ],
-   "nextlayerid": 11,
-   "nextobjectid": 16,
+   "nextlayerid": 12,
+   "nextobjectid": 22,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.10.2",

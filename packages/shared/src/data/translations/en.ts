@@ -106,6 +106,7 @@ export const translationsEn = {
    to: 'To {{name}}',
    from: 'From {{name}}',
    unknown: 'Unknown',
+   talk: 'Talk',
 
    // Enemies
    'enemy-nono': 'Nono, the little Robot',

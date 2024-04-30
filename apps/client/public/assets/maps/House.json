@@ -259,6 +259,17 @@
       },
       {
          "draworder": "topdown",
+         "id": 19,
+         "name": "Npcs",
+         "objects": [],
+         "opacity": 1,
+         "type": "objectgroup",
+         "visible": true,
+         "x": 0,
+         "y": 0
+      },
+      {
+         "draworder": "topdown",
          "id": 17,
          "name": "Lights",
          "objects": [
@@ -629,11 +640,11 @@
          "y": 0
       }
    ],
-   "nextlayerid": 19,
-   "nextobjectid": 17,
+   "nextlayerid": 20,
+   "nextobjectid": 19,
    "orientation": "orthogonal",
    "renderorder": "right-down",
-   "tiledversion": "1.8.4",
+   "tiledversion": "1.10.2",
    "tileheight": 16,
    "tilesets": [
       {
@@ -1030,6 +1041,6 @@
    ],
    "tilewidth": 16,
    "type": "map",
-   "version": "1.8",
+   "version": "1.10",
    "width": 20
 }
