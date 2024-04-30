@@ -1,7 +1,14 @@
 import assert = require('assert');
 import { existsSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
-import type { Direction, Room, TeleportationSpot } from 'shared';
+import {
+   type Direction,
+   type NPCSpot,
+   type Room,
+   type TeleportationSpot,
+   zDirection,
+   zNPC,
+} from 'shared';
 
 interface TiledMapJson {
    name: string;
@@ -36,6 +43,7 @@ const generateMaps = () => {
    generateServerMapsRooms(maps);
    generateClientMapsScenes(maps);
    regenerateTeleportationSpots(maps);
+   regenerateNpcSpots(maps);
 };
 
 const regenerateSharedRoom = (maps: string[]) => {
@@ -261,14 +269,68 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = ${JSON.str
       null,
       3,
    )
-      .replace(/"UP"/g, 'Direction.UP')
-      .replace(/"DOWN"/g, 'Direction.DOWN')
-      .replace(/"LEFT"/g, 'Direction.LEFT')
-      .replace(/"RIGHT"/g, 'Direction.RIGHT')};
+      .replace(/"UP"/gi, 'Direction.UP')
+      .replace(/"DOWN"/gi, 'Direction.DOWN')
+      .replace(/"LEFT"/gi, 'Direction.LEFT')
+      .replace(/"RIGHT"/gi, 'Direction.RIGHT')};
 `;
 
    writeFileSync(teleportationSpotsPath, teleportationSpotsBlob, { flag: 'w' });
    console.log('[Shared] ✅  Regenerated teleportationSpots.ts');
+};
+
+const regenerateNpcSpots = (maps: string[]) => {
+   const npcSpots: Record<Room, NPCSpot[]> = {} as Record<Room, NPCSpot[]>;
+
+   npcSpots.AAA_InitialRoom = [];
+
+   for (const map of maps) {
+      const tiledMapPath = resolve(
+         __dirname,
+         `../../../apps/client/public/assets/maps/${map}.json`,
+      );
+      const tiledMapBlob = readFileSync(tiledMapPath, { encoding: 'utf-8' });
+      const tiledMap: TiledMapJson = JSON.parse(tiledMapBlob);
+
+      const npcSpotsLayer = tiledMap.layers.find(({ name }) => name === 'Npcs');
+      assert(npcSpotsLayer !== undefined, `Npcs layer not found in ${map}.json`);
+
+      const roomName = `${map}Room` as Room;
+      npcSpots[roomName] = [];
+
+      npcSpotsLayer.objects.forEach(({ properties, x, y, width, height }) => {
+         const id = properties.find(({ name }) => name === 'id');
+         const direction = properties.find(({ name }) => name === 'direction');
+
+         assert(id !== undefined, `id property not found in ${map}.json`);
+         assert(direction !== undefined, `direction property not found in ${map}.json`);
+
+         npcSpots[roomName].push({
+            x: x / width,
+            y: y / height,
+            npcName: zNPC.parse(id.value),
+            mapName: roomName,
+            direction: zDirection.parse(direction.value),
+         });
+      });
+   }
+
+   const npcSpotsPath = resolve(__dirname, '../../shared/src/data/npcSpots.ts');
+   const npcSpotsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
+import { NPCSpot } from '../types/NPCSpot';
+import type { Room } from '../types/Room';
+import { Direction } from '../types/SceneData';
+import { NPC } from './npcs';
+
+export const NPC_SPOTS: Record<Room, NPCSpot[]> = ${JSON.stringify(npcSpots, null, 3)
+      .replace(/"UP"/gi, 'Direction.UP')
+      .replace(/"DOWN"/gi, 'Direction.DOWN')
+      .replace(/"LEFT"/gi, 'Direction.LEFT')
+      .replace(/"RIGHT"/gi, 'Direction.RIGHT')};
+`;
+
+   writeFileSync(npcSpotsPath, npcSpotsBlob, { flag: 'w' });
+   console.log('[Shared] ✅  Regenerated npcSpots.ts');
 };
 
 generateMaps();

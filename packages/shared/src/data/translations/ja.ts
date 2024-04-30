@@ -110,6 +110,7 @@ export const translationsJa: LanguageTranslations = {
    to: '{{name}} へ',
    from: '{{name}} から',
    unknown: '不明',
+   talk: '話す',
 
    // Enemies
    'enemy-nono': 'ノノ、小さなロボット',

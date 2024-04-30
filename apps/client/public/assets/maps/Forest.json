@@ -1467,6 +1467,17 @@
       },
       {
          "draworder": "topdown",
+         "id": 16,
+         "name": "Npcs",
+         "objects": [],
+         "opacity": 1,
+         "type": "objectgroup",
+         "visible": true,
+         "x": 0,
+         "y": 0
+      },
+      {
+         "draworder": "topdown",
          "id": 10,
          "name": "Lights",
          "objects": [],
@@ -1477,8 +1488,8 @@
          "y": 0
       }
    ],
-   "nextlayerid": 16,
-   "nextobjectid": 13,
+   "nextlayerid": 17,
+   "nextobjectid": 15,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.10.2",

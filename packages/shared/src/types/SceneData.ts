@@ -1,3 +1,5 @@
+import { z } from 'zod';
+
 export enum Direction {
    NONE = 'none',
    LEFT = 'left',
@@ -9,6 +11,11 @@ export enum Direction {
    DOWN = 'down',
    DOWN_LEFT = 'down-left',
 }
+
+export const zDirection = z.nativeEnum(Direction);
+
+export const isDirection = (value: unknown): value is Direction =>
+   zDirection.safeParse(value).success;
 
 export interface Position {
    x: number;

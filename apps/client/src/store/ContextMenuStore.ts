@@ -92,6 +92,7 @@ export class ContextMenuStore {
 
       const subMenu = {
          [EntityType.Character]: this._makeCharacterMenu(sprite.name),
+         [EntityType.NPC]: this._makeNpcMenu(sprite.name),
       }[type];
 
       return {
@@ -145,6 +146,23 @@ export class ContextMenuStore {
                      }
                   });
                }
+            },
+         },
+      ];
+   }
+
+   private _makeNpcMenu(npcName: string): SubMenuItem[] {
+      return [
+         {
+            text: i18next.t('talk'),
+            callback: () => {
+               this._store.chatStore.setInput(`Talking to ${npcName}...`);
+
+               TimeMgt.wait(100).then(() => {
+                  if (this._store.chatStore.inputRef !== null) {
+                     this._store.chatStore.inputRef.focus();
+                  }
+               });
             },
          },
       ];

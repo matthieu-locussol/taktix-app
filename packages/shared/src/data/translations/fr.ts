@@ -111,6 +111,7 @@ export const translationsFr: LanguageTranslations = {
    to: 'À {{name}}',
    from: 'De {{name}}',
    unknown: 'Inconnu',
+   talk: 'Parler',
 
    // Enemies
    'enemy-nono': 'Nono, le petit robot',

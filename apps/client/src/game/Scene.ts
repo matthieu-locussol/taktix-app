@@ -5,6 +5,8 @@ import {
    PathBlockedStrategy,
    Position,
 } from 'grid-engine';
+import { NPC_SPOTS } from 'shared/src/data/npcSpots';
+import { NPCS } from 'shared/src/data/npcs';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { CharacterSpritesheet, ProfessionType } from 'shared/src/types/Profession';
 import { Room } from 'shared/src/types/Room';
@@ -145,6 +147,7 @@ export abstract class Scene extends Phaser.Scene {
       this.initializeHandlers();
       this.initializeGrid();
       this.initializeMarker();
+      this.initializeNPCs();
       this.initializeSceneState();
    }
 
@@ -230,7 +233,41 @@ export abstract class Scene extends Phaser.Scene {
       this.marker = makeMarker(this);
    }
 
-   public initializeSceneState(): void {
+   private initializeNPCs(): void {
+      if (this.tilemap === null) {
+         return;
+      }
+
+      const npcs = NPC_SPOTS[this.scene.key as Room];
+
+      for (const { npcName, x, y, direction } of npcs) {
+         const { name, spritesheet } = NPCS[npcName];
+
+         const npc = makeCharacter({
+            scene: this,
+            name,
+            characterType: 'npc',
+         });
+         _assert(npc, 'npc should be defined');
+         const { sprite, wrapper } = npc;
+
+         this.gridEngine.addCharacter({
+            id: `NPC@${name}`,
+            sprite,
+            walkingAnimationMapping: spritesheet,
+            startPosition: { x, y },
+            charLayer: PLAYER_GE_LAYER,
+            speed: PLAYER_SPEED,
+            collides: true,
+            facingDirection: direction,
+         });
+
+         this.playersSprites.set(`NPC@${name}`, sprite);
+         this.playersWrappers.set(`NPC@${name}`, wrapper);
+      }
+   }
+
+   private initializeSceneState(): void {
       const { hudStore } = store;
 
       this.setGridVisibility(hudStore.isGridVisible);
@@ -381,7 +418,11 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public createPlayer(nickname: string): void {
-      const character = makeCharacter(this, nickname, true);
+      const character = makeCharacter({
+         scene: this,
+         name: nickname,
+         characterType: 'player',
+      });
 
       if (character !== null) {
          const { profession } = store.characterStore;
@@ -563,7 +604,12 @@ export abstract class Scene extends Phaser.Scene {
       position: Position,
       direction: Direction,
    ): void {
-      const character = makeCharacter(this, name, false);
+      const character = makeCharacter({
+         scene: this,
+         name,
+         characterType: 'externalPlayer',
+      });
+
       if (character !== null) {
          const { sprite, wrapper } = character;
          this.playersWrappers.set(name, wrapper);
