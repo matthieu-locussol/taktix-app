@@ -7,15 +7,15 @@ import { TalentMgt } from './talentMgt';
  *            8
  *            |
  *            7  12
- *            | /
- *            4
- *   16             5 - 14
- *   |             /
- *   11 - 3       2
- *                 \
- *                  6 - 9
- *            1
- *          / |
+ *          / | / \
+ *         /    4  \
+ *    16  /         5 - 14
+ *    |  /         /
+ *    11 - 3       2
+ *     \           \
+ *      \           6 - 9
+ *       \    1   /
+ *        \ / |  /
  *        13  10 - 15
  *         |
  *        17
@@ -23,25 +23,25 @@ import { TalentMgt } from './talentMgt';
 
 vi.mock('../data/talents', () => ({
    STARTING_TALENTS: [1, 2, 3, 4],
-   TALENTS: {
+   getTalents: () => ({
       1: { edges: [10, 13] },
       2: { edges: [5, 6] },
       3: { edges: [11] },
       4: { edges: [7, 12] },
-      5: { edges: [2, 14] },
-      6: { edges: [2, 9] },
-      7: { edges: [4, 8] },
+      5: { edges: [2, 12, 14] },
+      6: { edges: [2, 9, 10] },
+      7: { edges: [4, 8, 11] },
       8: { edges: [7] },
       9: { edges: [6] },
-      10: { edges: [1, 15] },
-      11: { edges: [3, 16] },
-      12: { edges: [4] },
-      13: { edges: [1, 17] },
+      10: { edges: [1, 6, 15] },
+      11: { edges: [3, 7, 13, 16] },
+      12: { edges: [4, 5] },
+      13: { edges: [1, 11, 17] },
       14: { edges: [5] },
       15: { edges: [10] },
       16: { edges: [11] },
       17: { edges: [13] },
-   },
+   }),
 }));
 
 describe('TalentMgt', () => {
@@ -92,7 +92,7 @@ describe('TalentMgt', () => {
          {
             title: 'should return true if the talent is adjacent to an allocated talent while there are already allocated talents',
             talent: 6,
-            allocatedTalents: [1, 2],
+            allocatedTalents: [2, 5],
             availablePoints: 1,
             expected: true,
          },
@@ -173,7 +173,7 @@ describe('TalentMgt', () => {
          {
             title: 'should return all adjacent talents excluding the allocated ones',
             allocatedTalents: [1, 10],
-            expected: [13, 15],
+            expected: [13, 6, 15],
          },
          {
             title: 'should return all adjacent talents excluding the allocated ones even if multiple starting talents are allocated',
