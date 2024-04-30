@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.50.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.49.1...v1.50.0) (2024-04-30)
+
+
+### Features
+
+* first few talent nodes ([8d29aad](https://github.com/matthieu-locussol/taktix-app/commit/8d29aad238620ac8f5d1490760fa415560c2faa4))
+* Forest teleporter ([ffc9712](https://github.com/matthieu-locussol/taktix-app/commit/ffc971256f41c9e0b76d86f674eddad2c517d0e7))
+* NPCs system using the map editor ([f1d781f](https://github.com/matthieu-locussol/taktix-app/commit/f1d781fe09ec8658380f2a43bac49f528453bc8f))
+* talents statistics computation ([a2d374a](https://github.com/matthieu-locussol/taktix-app/commit/a2d374a96c2bca2565fec0deeaa741dbb7c973fb))
+* teleportation system & menu ([a573eb5](https://github.com/matthieu-locussol/taktix-app/commit/a573eb5cc1c85a4a7a1bf100d41ca6099cd44e18))
+
+
+### Bug Fixes
+
+* mage sprite during fight ([f8ebaea](https://github.com/matthieu-locussol/taktix-app/commit/f8ebaeaf412af0eb22c5a4b1fec623f7e20b1f32))
+* some cyclic talents disallocation that were not working ([f306337](https://github.com/matthieu-locussol/taktix-app/commit/f306337dd25a2d2c18c9e4925ba8fba9a9deb5ad))
+* wrong health being saved on exit ([08b3a3c](https://github.com/matthieu-locussol/taktix-app/commit/08b3a3cd80065c5eeeffb8fce3fb1946eed65090))
+
 ### [1.49.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.49.0...v1.49.1) (2024-04-26)
 
 
