@@ -23,6 +23,7 @@ export const Menu = observer(() => {
       characterStore,
       communityMenuStore,
       hudStore,
+      mapMenuStore,
       settingsMenuStore,
       statisticsMenuStore,
       talentsMenuStore,
@@ -44,7 +45,11 @@ export const Menu = observer(() => {
             count={characterStore.talentsPoints}
          />
          <ShortcutIcon disabled icon={<InventoryIcon />} />
-         <ShortcutIcon disabled icon={<MapIcon />} />
+         <ShortcutIcon
+            active={mapMenuStore.isOpened}
+            icon={<MapIcon />}
+            onClick={() => mapMenuStore.toggle()}
+         />
          <ShortcutIcon disabled icon={<ForgeIcon />} />
          <ShortcutIcon disabled icon={<AuctionHouseIcon />} />
          <ShortcutIcon

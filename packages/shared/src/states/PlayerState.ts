@@ -1,5 +1,6 @@
 import { Schema, type } from '@colyseus/schema';
 import { DEFAULT_HEALTH_REGEN_MS } from '../config';
+import { Room } from '../types/Room';
 
 export class PlayerState extends Schema {
    @type('string')
@@ -33,6 +34,8 @@ export class PlayerState extends Schema {
 
    fightTurns = 0;
 
+   teleporters: Room[] = [];
+
    constructor(
       name: string,
       profession: string,
@@ -40,6 +43,7 @@ export class PlayerState extends Schema {
       y: number,
       direction: string,
       health: number,
+      teleporters: Room[],
    ) {
       super();
 
@@ -48,6 +52,7 @@ export class PlayerState extends Schema {
       this.x = x;
       this.y = y;
       this.direction = direction;
+      this.teleporters = teleporters;
 
       this.setHealth(health);
    }

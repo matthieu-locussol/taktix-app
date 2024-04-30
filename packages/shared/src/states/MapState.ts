@@ -1,4 +1,5 @@
 import { MapSchema, Schema, type } from '@colyseus/schema';
+import { Room } from '../types/Room';
 import { PlayerState } from './PlayerState';
 
 export class MapState extends Schema {
@@ -13,8 +14,9 @@ export class MapState extends Schema {
       y: number,
       direction: string,
       health: number,
+      teleporters: Room[],
    ) {
-      const player = new PlayerState(name, profession, x, y, direction, health);
+      const player = new PlayerState(name, profession, x, y, direction, health, teleporters);
       this.players.set(sessionId, player);
    }
 

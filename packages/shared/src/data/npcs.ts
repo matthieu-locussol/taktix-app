@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { ZodMgt } from '../utils/zodMgt';
 
-const npcs = ['Akara', 'Deckard Jr.'] as const;
+const npcs = ['Akara', 'Serge Dualé'] as const;
 
 export const zNPC = ZodMgt.constructZodLiteralUnionType(npcs.map((npc) => z.literal(npc)));
 
@@ -19,8 +19,8 @@ export const NPCS: Record<NPC, NPCInformations> = {
       name: 'Akara',
       spritesheet: 1,
    },
-   'Deckard Jr.': {
-      name: 'Deckard Jr.',
+   'Serge Dualé': {
+      name: 'Serge Dualé',
       spritesheet: 2,
    },
 };

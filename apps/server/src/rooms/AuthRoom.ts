@@ -10,6 +10,7 @@ import {
    DEFAULT_MAP,
    DEFAULT_TALENTS,
    DEFAULT_TALENTS_POINTS,
+   DEFAULT_TELEPORTERS,
    DEFAULT_X,
    DEFAULT_Y,
    MAX_CHARACTERS_PER_ACCOUNT,
@@ -221,6 +222,7 @@ export class AuthRoom extends Room {
             experience: character.experience,
             profession: zProfessionType.parse(character.profession),
             health: character.health,
+            teleporters: character.teleporters,
          };
 
          usersMap.set(uuid, {
@@ -309,6 +311,7 @@ export class AuthRoom extends Room {
                baseStatisticsPoints: DEFAULT_BASE_STATISTICS_POINTS,
                experience: DEFAULT_EXPERIENCE,
                health: DEFAULT_HEALTH,
+               teleporters: StringMgt.serializeTeleporters(DEFAULT_TELEPORTERS),
                user: {
                   connect: {
                      username,

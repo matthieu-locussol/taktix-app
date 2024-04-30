@@ -107,6 +107,17 @@ export const translationsEn = {
    from: 'From {{name}}',
    unknown: 'Unknown',
    talk: 'Talk',
+   mapMenu: 'World map',
+   teleport: 'Teleport',
+   startFight: 'Start fight',
+   save: 'Save',
+   noTeleportationPlaces: 'No teleportation spots saved yet.',
+   teleporterSaved: 'Teleporter saved!',
+   teleporterNotSaved:
+      'Teleporter could not be saved. If the problem persists, please contact support.',
+   position: 'Position',
+   cost: 'Cost',
+   creditsValue: '<b>Credits:</b> {{value}}',
 
    // Enemies
    'enemy-nono': 'Nono, the little Robot',
@@ -398,6 +409,7 @@ export const translationsEn = {
 
    // Entities
    Character: 'Player',
+   NPC: 'NPC',
 
    // Talents
    'talent-1': 'Strength',

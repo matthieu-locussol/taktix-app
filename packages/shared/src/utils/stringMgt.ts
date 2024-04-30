@@ -1,4 +1,5 @@
 import { INTERNAL_PLAYER_NAME } from '../types/Player';
+import { Room, zRoom } from '../types/Room';
 
 export namespace StringMgt {
    export const isCharacterNameValid = (characterName: string): boolean =>
@@ -22,5 +23,15 @@ export namespace StringMgt {
 
       const lowerCaseName = name.toLowerCase();
       return reservedNames.includes(lowerCaseName);
+   };
+
+   export const serializeTeleporters = (teleporters: Room[]): string => teleporters.join(';');
+
+   export const deserializeTeleporters = (teleporters: string): Room[] => {
+      if (teleporters === '') {
+         return [];
+      }
+
+      return teleporters.split(';').map((room) => zRoom.parse(room));
    };
 }

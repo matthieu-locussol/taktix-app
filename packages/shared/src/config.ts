@@ -21,8 +21,11 @@ export const DEFAULT_BASE_STATISTICS_POINTS = 0;
 export const DEFAULT_EXPERIENCE = 0;
 export const DEFAULT_HEALTH = 50;
 export const DEFAULT_HEALTH_REGEN_MS = 1000;
+export const DEFAULT_TELEPORTERS: Room[] = [];
 
 export const STATISTICS_POINTS_PER_LEVEL = 5;
 export const TALENTS_POINTS_PER_LEVEL = 1;
 
 export const MINIMUM_TURN_TIME = 1000;
+
+export const TILE_SIZE = 16;

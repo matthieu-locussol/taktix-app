@@ -57,13 +57,14 @@ export const ContextMenu = observer(() => {
                     {text}
                  </StyledMenuItem>
               ))
-            : contextMenuStore.currentSubMenu.map(({ text, callback }) => (
+            : contextMenuStore.currentSubMenu.map(({ text, callback, disabled }) => (
                  <StyledMenuItem
                     key={`sub-menu-${text}`}
                     onClick={() => {
                        contextMenuStore.closeContextMenu();
                        callback();
                     }}
+                    disabled={disabled}
                  >
                     {text}
                  </StyledMenuItem>

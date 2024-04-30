@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { zProfessionType } from '../types/Profession';
 import { zPvEFightResults } from '../types/PvEFight';
+import { zRoom } from '../types/Room';
 import { Direction, Position } from '../types/SceneData';
 
 export interface MapRoomOptions {
@@ -49,6 +50,18 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
       type: z.literal('stopFighting'),
       message: z.object({}),
    }),
+   z.object({
+      type: z.literal('teleport'),
+      message: z.object({
+         room: zRoom,
+      }),
+   }),
+   z.object({
+      type: z.literal('saveTeleporter'),
+      message: z.object({
+         room: zRoom,
+      }),
+   }),
 ]);
 
 export type MapRoomMessage = z.infer<typeof zMapRoomMessage>;
@@ -85,6 +98,12 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
                isFight: z.boolean(),
             }),
          ),
+      }),
+   }),
+   z.object({
+      type: z.literal('saveTeleporterResponse'),
+      message: z.object({
+         success: z.boolean(),
       }),
    }),
 ]);

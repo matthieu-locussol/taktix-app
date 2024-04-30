@@ -11,6 +11,7 @@ import { GameStore } from './GameStore';
 import { HudStore } from './HudStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
 import { LoginStore } from './LoginStore';
+import { MapMenuStore } from './MapMenuStore';
 import { NewsStore } from './NewsStore';
 import { PvEFightStore } from './PvEFightStore';
 import { RegisterStore } from './RegisterStore';
@@ -45,6 +46,8 @@ export class Store {
 
    public loginStore: LoginStore;
 
+   public mapMenuStore: MapMenuStore;
+
    public newsStore: NewsStore;
 
    public pveFightStore: PvEFightStore;
@@ -76,6 +79,7 @@ export class Store {
       this.hudStore = new HudStore(this);
       this.loadingScreenStore = new LoadingScreenStore();
       this.loginStore = new LoginStore();
+      this.mapMenuStore = new MapMenuStore(this);
       this.newsStore = new NewsStore(this);
       this.pveFightStore = new PvEFightStore(this);
       this.registerStore = new RegisterStore();

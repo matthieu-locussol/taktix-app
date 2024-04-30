@@ -23,6 +23,9 @@ describe('CharacterStore', () => {
       expect(store.talentsPoints).toBe(0);
       expect(store.baseStatistics).toEqual(StatisticMgt.makeMockedStatistics({}));
       expect(store.baseStatisticsPoints).toBe(0);
+      expect(store.experience).toBe(0);
+      expect(store.currentHealth).toBe(0);
+      expect(store.teleporters).toHaveLength(0);
    });
 
    it('should set the map', () => {
