@@ -9,18 +9,21 @@ export type NPC = (typeof npcs)[number];
 
 export const isNPC = (value: unknown): value is NPC => zNPC.safeParse(value).success;
 
-interface NPCInformations {
+export interface NPCInformations {
    name: NPC;
+   avatar: string;
    spritesheet: number;
 }
 
 export const NPCS: Record<NPC, NPCInformations> = {
    Akara: {
       name: 'Akara',
+      avatar: 'akara.jpeg',
       spritesheet: 1,
    },
    'Serge Dualé': {
       name: 'Serge Dualé',
+      avatar: 'serge.jpeg',
       spritesheet: 2,
    },
 };

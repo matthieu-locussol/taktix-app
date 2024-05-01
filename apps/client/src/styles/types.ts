@@ -62,6 +62,10 @@ interface CustomPalette {
       background: string;
       color: string;
    };
+   dialogs: {
+      hover: string;
+      select: string;
+   };
 }
 
 declare module '@mui/material/styles' {

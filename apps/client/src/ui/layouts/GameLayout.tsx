@@ -8,6 +8,7 @@ import { Chatbox } from '../hud/Chatbox';
 import { ContextMenu } from '../hud/ContextMenu';
 import { Menu } from '../hud/Menu';
 import { CommunityMenu } from '../hud/menus/CommunityMenu';
+import { DialogMenu } from '../hud/menus/DialogMenu';
 import { FightOverlay } from '../hud/menus/FightOverlay';
 import { FightResultsMenu } from '../hud/menus/FightResultsMenu';
 import { MapMenu } from '../hud/menus/MapMenu';
@@ -86,6 +87,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          <FightOverlay />
          <FightResultsMenu />
          <MapMenu />
+         <DialogMenu />
          {children}
       </Box>
    );

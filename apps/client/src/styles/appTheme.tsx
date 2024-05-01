@@ -131,6 +131,10 @@ export const appTheme = createTheme({
          background: '#93c5fd',
          color: '#3b82f6',
       },
+      dialogs: {
+         hover: 'rgba(20, 184, 166, 0.36)',
+         select: '#F3F4F6',
+      },
       mode: 'light',
    },
    typography: (palette) => ({
