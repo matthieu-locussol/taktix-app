@@ -9,11 +9,11 @@ export const npcsDialogs: Record<
 > = {
    Akara: ({ avatar, name }, store, _t) => [
       {
-         content: 'Sais-tu qui je suis, jeune cuck...?',
+         content: 'Sais-tu qui je suis...?',
          name: '???',
       },
       {
-         content: 'Je suis AKARA la PUTE !',
+         content: 'Je suis AKARA du CAMP DES ROGUES !',
          name,
          avatar,
       },
