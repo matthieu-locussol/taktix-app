@@ -1,6 +1,6 @@
 {
    "name": "scripts",
-   "version": "1.50.0",
+   "version": "1.51.0",
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "scripts": {
