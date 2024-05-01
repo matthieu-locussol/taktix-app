@@ -1,9 +1,10 @@
 import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
-import { isNPC, zNPC } from 'shared/src/data/npcs';
+import { NPCS, isNPC, zNPC } from 'shared/src/data/npcs';
 import { Channel } from 'shared/src/types/Channel';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { InteractiveObject } from '../game/Scene';
+import { npcsDialogs } from '../utils/npcsDialogs';
 import { EntityType, InteractiveObjectType, zInteractiveObjectType } from '../utils/phaser';
 import { Store } from './Store';
 
@@ -167,9 +168,19 @@ export class ContextMenuStore {
       }
 
       const parsedNpcName = zNPC.parse(npcName);
+      const npcInfos = NPCS[parsedNpcName];
+      const { name } = npcInfos;
 
-      if (parsedNpcName === 'Akara') {
+      if (name === 'Akara') {
          return [
+            {
+               text: i18next.t('talk'),
+               callback: () => {
+                  this._store.dialogMenuStore.openDialog(
+                     npcsDialogs[parsedNpcName](npcInfos, this._store, i18next.t),
+                  );
+               },
+            },
             {
                text: i18next.t('startFight'),
                callback: () => {
@@ -179,18 +190,14 @@ export class ContextMenuStore {
          ];
       }
 
-      if (parsedNpcName === 'Serge Dualé') {
+      if (name === 'Serge Dualé') {
          return [
             {
                text: i18next.t('talk'),
                callback: () => {
-                  this._store.chatStore.setInput(`Talking to ${npcName}...`);
-
-                  TimeMgt.wait(100).then(() => {
-                     if (this._store.chatStore.inputRef !== null) {
-                        this._store.chatStore.inputRef.focus();
-                     }
-                  });
+                  this._store.dialogMenuStore.openDialog(
+                     npcsDialogs[parsedNpcName](npcInfos, this._store, i18next.t),
+                  );
                },
             },
          ];
