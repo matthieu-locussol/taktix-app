@@ -516,7 +516,7 @@ export class PvEFightScene extends Phaser.Scene {
    }
 
    private attackPhysical(
-      { fighterId, targetId, damages }: PvEFightMove,
+      { fighterId, targetId, damages, hasDodged }: PvEFightMove,
       targetShouldDie: boolean,
    ): void {
       this.animationRunning = true;
@@ -568,6 +568,10 @@ export class PvEFightScene extends Phaser.Scene {
                yoyo: true,
                repeat: 0,
                onYoyo: () => {
+                  if (hasDodged) {
+                     return;
+                  }
+
                   const hitAnimation = this.add
                      .sprite(targetContainer.x, targetContainer.y, animationFileId)
                      .setTint(NumberMgt.hexStringToNumber(STATS_COLORS[highestDamagesType]))
@@ -589,6 +593,23 @@ export class PvEFightScene extends Phaser.Scene {
                   }
                },
                onComplete: () => {
+                  if (hasDodged) {
+                     const dodgeAnimation = this.tweens.add({
+                        targets: [targetContainer],
+                        x: targetContainer.x + (targetContainer.x > fighterContainer.x ? 20 : -20),
+                        duration: 150 / store.settingsMenuStore.speedFactor,
+                        ease: 'Power2',
+                        yoyo: true,
+                        repeat: 0,
+                        onComplete: () => {
+                           dodgeAnimation.destroy();
+                        },
+                     });
+                     dodgeAnimation.play();
+                     this.displayDodge(targetContainer);
+                     return;
+                  }
+
                   const totalDamages = damages.reduce((acc, { value }) => acc + value, 0);
 
                   const damagesOnShield = Math.min(
@@ -679,6 +700,42 @@ export class PvEFightScene extends Phaser.Scene {
                });
             },
          });
+      });
+   }
+
+   private displayDodge(targetSprite: Phaser.GameObjects.Container): void {
+      const dodgeSprite = this.add
+         .text(targetSprite.x, targetSprite.y - 20, 'Dodged!', {
+            fontFamily: 'Orbitron',
+            fontSize: 18,
+         })
+         .setOrigin(0.5, 0.5)
+         .setAlpha(0)
+         .setDepth(1)
+         .setScale(0.5, 0.5);
+
+      this.tweens.add({
+         targets: dodgeSprite,
+         alpha: 1,
+         y: targetSprite.y * 0.7,
+         duration: 750 / store.settingsMenuStore.speedFactor,
+         ease: 'Power2',
+         repeat: 0,
+         scaleX: 1.25,
+         scaleY: 1.25,
+         delay: 300 / store.settingsMenuStore.speedFactor,
+         onComplete: () => {
+            this.tweens.add({
+               targets: dodgeSprite,
+               alpha: 0,
+               duration: 400 / store.settingsMenuStore.speedFactor,
+               ease: 'Power2',
+               repeat: 0,
+               onComplete: () => {
+                  dodgeSprite.destroy();
+               },
+            });
+         },
       });
    }
 

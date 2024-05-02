@@ -20,20 +20,21 @@ export namespace StatisticMgt {
          'vitality_+f': DEFAULT_HEALTH,
          'precision_+f': 15,
          'evasion_+f': 15,
+         'criticalStrikeDamages_+%': 50,
       });
 
    export const LEVEL_UP_STATISTICS = (): Record<ProfessionType, Statistics> => ({
       [ProfessionType.Warrior]: StatisticMgt.makeMockedStatistics({
          'vitality_+f': 12,
-         'precision_+f': 2,
+         'precision_+f': 1,
       }),
       [ProfessionType.Mage]: StatisticMgt.makeMockedStatistics({
          'vitality_+f': 12,
-         'precision_+f': 2,
+         'precision_+f': 1,
       }),
       [ProfessionType.Archer]: StatisticMgt.makeMockedStatistics({
          'vitality_+f': 12,
-         'precision_+f': 2,
+         'precision_+f': 1,
       }),
    });
 

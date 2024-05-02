@@ -339,7 +339,7 @@ export class MapRoom extends Room<MapState> {
                   profession: zProfessionType.parse(characterInfos.profession),
                   rawStatistics: StatisticMgt.serializeStatistics({
                      ...StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
-                     'criticalStrikeChance_+f': 50,
+                     'criticalStrikeChance_+f': 30,
                      'criticalStrikeChance_+%': 25,
                   }),
                   talents: TalentMgt.deserializeTalents(characterInfos.talents),
