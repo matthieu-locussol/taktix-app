@@ -71,23 +71,27 @@ export class PvEFight {
       const damages = this.computeDamages(fighter, target);
       const totalDamages = damages.reduce((acc, { value }) => acc + value, 0);
 
-      const damagesAoE = this.computeDamagesAoE(fighter, target);
-      // TODO: handles dodge
+      const hasDodged = this.computeHasDodged(fighter, target);
+
       // TODO: apply damagesAoE
+      const damagesAoE = this.computeDamagesAoE(fighter, target);
       // TODO: handles life steal
       // TODO: handles thorns damages
 
-      const damagesOnShield = Math.min(totalDamages, target.magicShield);
-      const damagesOnHealth = Math.min(totalDamages - damagesOnShield, target.health);
+      if (!hasDodged) {
+         const damagesOnShield = Math.min(totalDamages, target.magicShield);
+         const damagesOnHealth = Math.min(totalDamages - damagesOnShield, target.health);
 
-      target.magicShield -= damagesOnShield;
-      target.health -= damagesOnHealth;
+         target.magicShield -= damagesOnShield;
+         target.health -= damagesOnHealth;
+      }
 
       return {
          fighterId: fighter.id,
          targetId: target.id,
          damages,
          damagesAoE,
+         hasDodged,
       };
    }
 
@@ -143,6 +147,15 @@ export class PvEFight {
       _target: PvEFighter,
    ): { type: string; value: number; targetId: number }[] {
       return [];
+   }
+
+   private computeHasDodged(fighter: PvEFighter, target: PvEFighter): boolean {
+      const hitChance = StatisticMgt.computeHitChance(
+         fighter.statistics.precision,
+         target.statistics.evasion,
+      );
+
+      return Math.random() > hitChance;
    }
 
    private getRandomAliveTarget(fighter: PvEFighter): PvEFighter | null {

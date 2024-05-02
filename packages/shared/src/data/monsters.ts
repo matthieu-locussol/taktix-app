@@ -26,6 +26,9 @@ const monstersArray: MonsterGenerator[] = [
       rawStatistics: StatisticMgt.serializeStatistics(
          StatisticMgt.makeMockedStatistics({
             'strength_+f': level * 8,
+            'precision_+f': level * 5,
+            'evasion_+f': 35 + level * 5,
+            'criticalStrikeDamages_+%': 30,
          }),
       ),
       talents: [],
