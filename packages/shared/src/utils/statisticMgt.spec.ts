@@ -363,7 +363,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 0,
+            expected: {
+               finalDamages: 0,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.5;
             },
@@ -379,7 +382,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 3,
+            expected: {
+               finalDamages: 3,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.5;
             },
@@ -395,7 +401,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 9,
+            expected: {
+               finalDamages: 9,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.6778454;
             },
@@ -411,7 +420,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 13,
+            expected: {
+               finalDamages: 13,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.379449;
             },
@@ -427,7 +439,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 24,
+            expected: {
+               finalDamages: 24,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.897392;
             },
@@ -443,7 +458,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 184,
+            expected: {
+               finalDamages: 184,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.932849;
             },
@@ -459,7 +477,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 61,
+            expected: {
+               finalDamages: 61,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.127944;
             },
@@ -475,7 +496,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 831,
+            expected: {
+               finalDamages: 831,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.63922;
             },
@@ -491,7 +515,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 801,
+            expected: {
+               finalDamages: 801,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.63922;
             },
@@ -507,7 +534,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 721,
+            expected: {
+               finalDamages: 721,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.63922;
             },
@@ -523,7 +553,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 499,
+            expected: {
+               finalDamages: 499,
+               isCriticalStrike: true,
+            },
             mockRandom: () => {
                Math.random = () => 0.04;
             },
@@ -539,7 +572,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 0,
             defenderRealCriticalResistance: 0,
-            expected: 499,
+            expected: {
+               finalDamages: 499,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.06;
             },
@@ -555,7 +591,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 45,
             defenderRealCriticalResistance: 0,
-            expected: 723,
+            expected: {
+               finalDamages: 723,
+               isCriticalStrike: true,
+            },
             mockRandom: () => {
                Math.random = () => 0.04;
             },
@@ -571,7 +610,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 0,
             realCriticalStrikeDamages: 45,
             defenderRealCriticalResistance: 0,
-            expected: 499,
+            expected: {
+               finalDamages: 499,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.06;
             },
@@ -587,7 +629,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 85,
             realCriticalStrikeDamages: 45,
             defenderRealCriticalResistance: 0,
-            expected: 679,
+            expected: {
+               finalDamages: 679,
+               isCriticalStrike: false,
+            },
             mockRandom: () => {
                Math.random = () => 0.50665;
             },
@@ -603,7 +648,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 85,
             realCriticalStrikeDamages: 45,
             defenderRealCriticalResistance: 0,
-            expected: 804,
+            expected: {
+               finalDamages: 804,
+               isCriticalStrike: true,
+            },
             mockRandom: () => {
                Math.random = () => 0.20665;
             },
@@ -619,7 +667,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 85,
             realCriticalStrikeDamages: 45,
             defenderRealCriticalResistance: 44,
-            expected: 760,
+            expected: {
+               finalDamages: 760,
+               isCriticalStrike: true,
+            },
             mockRandom: () => {
                Math.random = () => 0.20665;
             },
@@ -635,7 +686,10 @@ describe('StatisticMgt', () => {
             realCriticalStrikeChancePercent: 85,
             realCriticalStrikeDamages: 45,
             defenderRealCriticalResistance: 120,
-            expected: 684,
+            expected: {
+               finalDamages: 684,
+               isCriticalStrike: true,
+            },
             mockRandom: () => {
                Math.random = () => 0.20665;
             },

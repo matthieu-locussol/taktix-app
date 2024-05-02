@@ -83,45 +83,59 @@ export class PvEFight {
       target.magicShield -= damagesOnShield;
       target.health -= damagesOnHealth;
 
-      return { fighterId: fighter.id, targetId: target.id, damages, damagesAoE };
+      return {
+         fighterId: fighter.id,
+         targetId: target.id,
+         damages,
+         damagesAoE,
+      };
    }
 
    private computeDamages(
       fighter: PvEFighter,
       target: PvEFighter,
-   ): { type: WeaponDamagesType; value: number }[] {
-      return fighter.weaponDamages.map(({ type, min, max }) => ({
-         type,
-         value:
-            StatisticMgt.computeDamages(
-               min,
-               max,
-               fighter.statistics[`${fighter.weaponType}Damages`],
-               fighter.statistics[type],
-               {
-                  strength: target.statistics.earthResistance,
-                  dexterity: target.statistics.windResistance,
-                  intelligence: target.statistics.fireResistance,
-                  luck: target.statistics.iceResistance,
-               }[type],
-               {
-                  strength: target.statistics.earthResistancePercent,
-                  dexterity: target.statistics.windResistancePercent,
-                  intelligence: target.statistics.fireResistancePercent,
-                  luck: target.statistics.iceResistancePercent,
-               }[type],
-               fighter.statistics.criticalStrikeChance,
-               fighter.statistics.criticalStrikeChancePercent,
-               fighter.statistics.criticalStrikeDamages,
-               target.statistics.criticalStrikeResistance,
-            ) +
+   ): {
+      type: WeaponDamagesType;
+      value: number;
+      isCriticalStrike: boolean;
+   }[] {
+      return fighter.weaponDamages.map(({ type, min, max }) => {
+         const { finalDamages, isCriticalStrike } = StatisticMgt.computeDamages(
+            min,
+            max,
+            fighter.statistics[`${fighter.weaponType}Damages`],
+            fighter.statistics[type],
             {
-               strength: fighter.statistics.earthDamages,
-               dexterity: fighter.statistics.windDamages,
-               intelligence: fighter.statistics.fireDamages,
-               luck: fighter.statistics.iceDamages,
+               strength: target.statistics.earthResistance,
+               dexterity: target.statistics.windResistance,
+               intelligence: target.statistics.fireResistance,
+               luck: target.statistics.iceResistance,
             }[type],
-      }));
+            {
+               strength: target.statistics.earthResistancePercent,
+               dexterity: target.statistics.windResistancePercent,
+               intelligence: target.statistics.fireResistancePercent,
+               luck: target.statistics.iceResistancePercent,
+            }[type],
+            fighter.statistics.criticalStrikeChance,
+            fighter.statistics.criticalStrikeChancePercent,
+            fighter.statistics.criticalStrikeDamages,
+            target.statistics.criticalStrikeResistance,
+         );
+
+         return {
+            type,
+            value:
+               finalDamages +
+               {
+                  strength: fighter.statistics.earthDamages,
+                  dexterity: fighter.statistics.windDamages,
+                  intelligence: fighter.statistics.fireDamages,
+                  luck: fighter.statistics.iceDamages,
+               }[type],
+            isCriticalStrike,
+         };
+      });
    }
 
    private computeDamagesAoE(

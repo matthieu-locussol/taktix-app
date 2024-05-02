@@ -337,7 +337,11 @@ export class MapRoom extends Room<MapState> {
                   experience: characterInfos.experience,
                   level: LevelMgt.getLevel(characterInfos.experience),
                   profession: zProfessionType.parse(characterInfos.profession),
-                  rawStatistics: characterInfos.baseStatistics,
+                  rawStatistics: StatisticMgt.serializeStatistics({
+                     ...StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
+                     'criticalStrikeChance_+f': 50,
+                     'criticalStrikeChance_+%': 25,
+                  }),
                   talents: TalentMgt.deserializeTalents(characterInfos.talents),
                   uniquesPowers: [],
                   // TODO: get weapon from character equipment

@@ -4,6 +4,7 @@ import { CharacterSpritesheet, ProfessionType } from 'shared/src/types/Professio
 import { PvEFightMove } from 'shared/src/types/PvEFight';
 import { Room } from 'shared/src/types/Room';
 import { Position } from 'shared/src/types/SceneData';
+import { WeaponDamagesType } from 'shared/src/types/Weapon';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
@@ -541,7 +542,7 @@ export class PvEFightScene extends Phaser.Scene {
             ? -4 * fighterContainer.width
             : 4 * fighterContainer.width;
 
-      const highestDamagesType = damages.reduce(
+      const highestDamagesType = damages.reduce<{ type: WeaponDamagesType; value: number }>(
          (acc, { type, value }) => {
             if (value > acc.value) {
                return { type, value };
@@ -634,18 +635,23 @@ export class PvEFightScene extends Phaser.Scene {
       damages: PvEFightMove['damages'],
       targetSprite: Phaser.GameObjects.Container,
    ): void {
-      const damagesSprites = damages.map(({ value, type }) => {
+      const damagesSprites = damages.map(({ value, type, isCriticalStrike }) => {
          const sprite = this.add
-            .text(targetSprite.x, targetSprite.y - 20, `-${value}`, {
-               fontFamily: 'Orbitron',
-               fontSize: 24,
-               color: STATS_COLORS[type],
-            })
+            .text(
+               targetSprite.x,
+               targetSprite.y - 20,
+               `-${value}${isCriticalStrike ? ' !!' : ''}`,
+               {
+                  fontFamily: 'Orbitron',
+                  fontSize: 24,
+                  color: STATS_COLORS[type],
+               },
+            )
             .setOrigin(0.5, 0.5)
             .setAlpha(0)
             .setDepth(1)
             .setScale(0.5, 0.5);
-         sprite.postFX.addGlow(0x111827, 16, 0, false, 0.3, 10);
+         sprite.postFX.addGlow(isCriticalStrike ? 0xfbbf24 : 0x111827, 4, 0, false, 0.3, 10);
          return sprite;
       });
 
@@ -659,12 +665,12 @@ export class PvEFightScene extends Phaser.Scene {
             repeat: 0,
             scaleX: 1.25,
             scaleY: 1.25,
-            delay: (idx * 200) / store.settingsMenuStore.speedFactor,
+            delay: (idx * 300) / store.settingsMenuStore.speedFactor,
             onComplete: () => {
                this.tweens.add({
                   targets: sprite,
                   alpha: 0,
-                  duration: 300 / store.settingsMenuStore.speedFactor,
+                  duration: 400 / store.settingsMenuStore.speedFactor,
                   ease: 'Power2',
                   repeat: 0,
                   onComplete: () => {
