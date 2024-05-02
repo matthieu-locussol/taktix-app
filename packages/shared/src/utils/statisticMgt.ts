@@ -399,7 +399,10 @@ export namespace StatisticMgt {
       realCriticalStrikeChancePercent: number,
       realCriticalStrikeDamages: number,
       defenderRealCriticalResistance: number,
-   ): number => {
+   ): {
+      finalDamages: number;
+      isCriticalStrike: boolean;
+   } => {
       const weaponBaseRoll = NumberMgt.random(weaponBaseMin, weaponBaseMax);
       const weaponBaseDamages = weaponBaseRoll + weaponBaseRoll * (weaponRealStatistic / 100);
       const statisticDamages = weaponBaseDamages + weaponBaseDamages * (realStatistic / 100);
@@ -410,16 +413,19 @@ export namespace StatisticMgt {
 
       const criticalStrikeChance =
          (realCriticalStrikeChance * (1 + realCriticalStrikeChancePercent / 100)) / 100;
+      const isCriticalStrike = Math.random() < criticalStrikeChance;
 
-      if (Math.random() < criticalStrikeChance) {
-         return computeCriticalDamages(
+      if (isCriticalStrike) {
+         const finalCriticalDamages = computeCriticalDamages(
             finalDamages,
             realCriticalStrikeDamages,
             defenderRealCriticalResistance,
          );
+
+         return { finalDamages: finalCriticalDamages, isCriticalStrike };
       }
 
-      return finalDamages;
+      return { finalDamages, isCriticalStrike };
    };
 
    export const computeCriticalDamages = (

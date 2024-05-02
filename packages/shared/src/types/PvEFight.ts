@@ -85,6 +85,7 @@ const zPvEFightMove = z.object({
       z.object({
          type: zWeaponDamagesType,
          value: z.number(),
+         isCriticalStrike: z.boolean(),
       }),
    ),
    damagesAoE: z.array(
