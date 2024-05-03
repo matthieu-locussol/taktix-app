@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.52.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.51.0...v1.52.0) (2024-05-03)
+
+
+### Features
+
+* different visual for critical strikes ([1aef61d](https://github.com/matthieu-locussol/taktix-app/commit/1aef61d6892d33f4a7c99ede0a405dfe6d7689b5))
+* dodge & precision system ([6c2f553](https://github.com/matthieu-locussol/taktix-app/commit/6c2f55315540a6c80182332a34dd63735d2204e9))
+* fighters names in fight ([6d920de](https://github.com/matthieu-locussol/taktix-app/commit/6d920decd2e3f4ebb5d3bc78c20aeb3581d0f179))
+* life stealing mechanic ([ae4781c](https://github.com/matthieu-locussol/taktix-app/commit/ae4781cd5d7f7a924d71226612f13aba33ecb2c3))
+* money system ([ed6f566](https://github.com/matthieu-locussol/taktix-app/commit/ed6f5660f3fa31f47e0a8b72b236e4bb18ebe46c))
+* thorns damages mechanic ([540f243](https://github.com/matthieu-locussol/taktix-app/commit/540f243b3f1b4f3e74976ee261f9be3231dacfc1))
+
+
+### Bug Fixes
+
+* map randomly misloading (fix attempt) ([f136829](https://github.com/matthieu-locussol/taktix-app/commit/f13682946f62cd96960fd16c3da2e0bcec7df2d4))
+
 ## [1.51.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.50.0...v1.51.0) (2024-05-01)
 
 
