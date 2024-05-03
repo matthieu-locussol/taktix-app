@@ -23,7 +23,7 @@
       "@vitejs/plugin-react": "^4.2.1",
       "colyseus.js": "^0.15.18",
       "grid-engine": "^2.44.2",
-      "i18next": "^23.11.2",
+      "i18next": "^23.11.3",
       "mobx": "^6.12.3",
       "mobx-react-lite": "^4.0.7",
       "phaser": "~3.80.1",

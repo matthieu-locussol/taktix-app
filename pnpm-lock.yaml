@@ -60,8 +60,8 @@ importers:
         specifier: ^2.44.2
         version: 2.44.2(phaser@3.70.0)
       i18next:
-        specifier: ^23.11.2
-        version: 23.11.2
+        specifier: ^23.11.3
+        version: 23.11.3
       mobx:
         specifier: ^6.12.3
         version: 6.12.3
@@ -82,7 +82,7 @@ importers:
         version: 4.4.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-i18next:
         specifier: ^14.1.1
-        version: 14.1.1(i18next@23.11.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 14.1.1(i18next@23.11.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       reactflow:
         specifier: ^11.11.2
         version: 11.11.2(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -2550,8 +2550,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  i18next@23.11.2:
-    resolution: {integrity: sha512-qMBm7+qT8jdpmmDw/kQD16VpmkL9BdL+XNAK5MNbNFaf1iQQq35ZbPrSlqmnNPOSUY4m342+c0t0evinF5l7sA==}
+  i18next@23.11.3:
+    resolution: {integrity: sha512-Pq/aSKowir7JM0rj+Wa23Kb6KKDUGno/HjG+wRQu0PxoTbpQ4N89MAT0rFGvXmLkRLNMb1BbBOKGozl01dabzg==}
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -6868,7 +6868,7 @@ snapshots:
 
   husky@9.0.11: {}
 
-  i18next@23.11.2:
+  i18next@23.11.3:
     dependencies:
       '@babel/runtime': 7.24.4
 
@@ -7669,11 +7669,11 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  react-i18next@14.1.1(i18next@23.11.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  react-i18next@14.1.1(i18next@23.11.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@babel/runtime': 7.24.4
       html-parse-stringify: 3.0.1
-      i18next: 23.11.2
+      i18next: 23.11.3
       react: 18.2.0
     optionalDependencies:
       react-dom: 18.2.0(react@18.2.0)
