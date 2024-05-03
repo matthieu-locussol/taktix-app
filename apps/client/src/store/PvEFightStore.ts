@@ -33,6 +33,8 @@ export class PvEFightStore {
 
    startTimestamp: number = Date.now();
 
+   alliesMoney: Record<string, number> = {};
+
    constructor(store: Store) {
       makeAutoObservable(this);
 
@@ -42,6 +44,10 @@ export class PvEFightStore {
    public setFightResults(fightResults: PvEFightResults): void {
       this._fightResults = fightResults;
       this.closeFightResults();
+   }
+
+   public setAlliesMoney(alliesMoney: Record<string, number>): void {
+      this.alliesMoney = alliesMoney;
    }
 
    public startFight(): void {
@@ -72,6 +78,9 @@ export class PvEFightStore {
       } else {
          this._store.characterStore.setCurrentHealth(Math.max(1, allyInfos.health));
       }
+
+      const moneyEarned = this.alliesMoney[this._store.characterStore.name] ?? 0;
+      this._store.characterStore.setMoney(this._store.characterStore.money + moneyEarned);
    }
 
    public setCurrentTurn(currentTurn: number): void {

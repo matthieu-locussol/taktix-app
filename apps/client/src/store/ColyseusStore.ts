@@ -203,6 +203,7 @@ export class ColyseusStore {
                experience,
                health,
                teleporters,
+               money,
             }) => {
                this.setUuid(uuid);
                await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
@@ -235,6 +236,7 @@ export class ColyseusStore {
                this._store.characterStore.setTeleporters(
                   StringMgt.deserializeTeleporters(teleporters),
                );
+               this._store.characterStore.setMoney(money);
 
                this._store.talentsMenuStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.talentsMenuStore.setTalentsPoints(talentsPoints);
@@ -453,6 +455,7 @@ export class ColyseusStore {
       x,
       y,
       direction,
+      money,
    }: Extract<MapRoomResponse, { type: 'changeMap' }>['message']) {
       this._store.gameStore.enableKeyboard(false);
 
@@ -476,14 +479,21 @@ export class ColyseusStore {
       this._store.characterStore.setMap(map as TRoom);
       this._store.gameStore.enableKeyboard(true);
       this._store.discordStore.updateDiscordRichPresence();
+
+      if (money !== undefined) {
+         this._store.characterStore.setMoney(this._store.characterStore.money - money);
+      }
    }
 
-   async onFightPvE({ results }: Extract<MapRoomResponse, { type: 'fightPvE' }>['message']) {
+   async onFightPvE({
+      results,
+      alliesMoney,
+   }: Extract<MapRoomResponse, { type: 'fightPvE' }>['message']) {
       const scene = await this._store.gameStore.getCurrentScene();
-      console.log('fight results', results);
       scene.fadeOut((_, progress) => {
          if (progress === 1) {
             this._store.pveFightStore.setFightResults(results);
+            this._store.pveFightStore.setAlliesMoney(alliesMoney);
             scene.scene.pause(this._store.characterStore.map);
             scene.scene.launch('PvEFightScene');
          }

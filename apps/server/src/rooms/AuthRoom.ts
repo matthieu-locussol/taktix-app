@@ -8,6 +8,7 @@ import {
    DEFAULT_EXPERIENCE,
    DEFAULT_HEALTH,
    DEFAULT_MAP,
+   DEFAULT_MONEY,
    DEFAULT_TALENTS,
    DEFAULT_TALENTS_POINTS,
    DEFAULT_TELEPORTERS,
@@ -223,6 +224,7 @@ export class AuthRoom extends Room {
             profession: zProfessionType.parse(character.profession),
             health: character.health,
             teleporters: character.teleporters,
+            money: character.money,
          };
 
          usersMap.set(uuid, {
@@ -312,6 +314,7 @@ export class AuthRoom extends Room {
                experience: DEFAULT_EXPERIENCE,
                health: DEFAULT_HEALTH,
                teleporters: StringMgt.serializeTeleporters(DEFAULT_TELEPORTERS),
+               money: DEFAULT_MONEY,
                user: {
                   connect: {
                      username,

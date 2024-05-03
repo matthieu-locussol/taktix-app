@@ -10,12 +10,14 @@ export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = {
       x: 10,
       y: 11,
       direction: Direction.LEFT,
+      price: 120,
    },
    DungeonRoom: null,
    ForestRoom: {
       x: 13,
       y: 39,
       direction: Direction.DOWN,
+      price: 230,
    },
    HouseRoom: null,
 };

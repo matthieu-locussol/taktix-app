@@ -77,12 +77,14 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
          x: z.number(),
          y: z.number(),
          direction: z.string(),
+         money: z.number().optional(),
       }),
    }),
    z.object({
       type: z.literal('fightPvE'),
       message: z.object({
          results: zPvEFightResults,
+         alliesMoney: z.record(z.string(), z.number()),
       }),
    }),
    z.object({
