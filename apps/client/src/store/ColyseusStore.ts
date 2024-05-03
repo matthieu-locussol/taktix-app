@@ -18,8 +18,12 @@ import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { StringMgt } from 'shared/src/utils/stringMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
+import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { match } from 'ts-pattern';
 import { Store } from './Store';
+
+const CHECK_INTERVAL = 10;
+const MAX_CHECK_ATTEMPTS = 1_000;
 
 export class ColyseusStore {
    private _client: Client;
@@ -471,6 +475,17 @@ export class ColyseusStore {
             scene.scene.start(map, sceneData);
          }
       }, true);
+
+      let attempts = 0;
+      while (attempts < MAX_CHECK_ATTEMPTS) {
+         attempts += 1;
+
+         if (this._store.gameStore.game.scene.isActive(map)) {
+            break;
+         }
+
+         await TimeMgt.wait(CHECK_INTERVAL);
+      }
 
       await this.joinRoom(map, { x, y }, direction as Direction);
 

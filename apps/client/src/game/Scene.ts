@@ -733,12 +733,18 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public fadeOut(callback: (_: unknown, progress: number) => void, freeMemory?: boolean): void {
-      this.cameras.main.fade(FADE_OUT_DURATION, 31, 41, 55, false, callback);
-
       if (freeMemory) {
+         for (const character of this.gridEngine.getAllCharacters()) {
+            if (character !== INTERNAL_PLAYER_NAME) {
+               this.deleteExternalPlayer(character);
+            }
+         }
+
          this.interactiveObjects.forEach(({ polygon }) => polygon.destroy());
          this.interactiveObjects = [];
       }
+
+      this.cameras.main.fade(FADE_OUT_DURATION, 31, 41, 55, false, callback);
    }
 
    public getRoomType(): 'map' | 'fight' {
