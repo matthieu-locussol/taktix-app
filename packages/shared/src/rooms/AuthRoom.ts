@@ -67,6 +67,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
             profession: zProfessionType,
             health: z.number(),
             teleporters: z.string(),
+            money: z.number(),
          }),
       ]),
    }),

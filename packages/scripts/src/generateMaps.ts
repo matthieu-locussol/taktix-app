@@ -382,11 +382,14 @@ const regenerateTeleportationPlaces = (maps: string[]) => {
 
             const direction = properties.find(({ name }) => name === 'direction');
             assert(direction !== undefined, `direction property not found in ${map}.json`);
+            const price = properties.find(({ name }) => name === 'price');
+            assert(price !== undefined, `price property not found in ${map}.json`);
 
             teleportationPlaces[roomName] = {
                x: x / width,
                y: y / height,
                direction: zDirection.parse(direction.value),
+               price: Number(price.value),
             };
          });
    }

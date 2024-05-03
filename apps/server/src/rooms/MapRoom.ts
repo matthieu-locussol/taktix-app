@@ -3,6 +3,7 @@ import { Character } from '@prisma/client';
 import {
    FightMgt,
    LevelMgt,
+   LootMgt,
    MINIMUM_TURN_TIME,
    MapRoomMessage,
    MapRoomResponse,
@@ -328,6 +329,7 @@ export class MapRoom extends Room<MapState> {
       );
 
       try {
+         const monstersInformations = getMonstersInformations(monsterGroupId);
          const parameters: PvEFightParameters = {
             alliesInformations: [
                {
@@ -354,22 +356,27 @@ export class MapRoom extends Room<MapState> {
                   ],
                },
             ],
-            monstersInformations: getMonstersInformations(monsterGroupId),
+            monstersInformations,
          };
+
+         const results = FightMgt.computePvEFight(parameters);
+         const alliesMoney = results.allies.reduce<Record<string, number>>(
+            (acc, { name }) => ({
+               ...acc,
+               [name]: results.won ? LootMgt.computeMoneyEarned(monstersInformations) : 0,
+            }),
+            {},
+         );
 
          const packet: MapRoomResponse = {
             type: 'fightPvE',
-            message: {
-               results: FightMgt.computePvEFight(parameters),
-            },
+            message: { results, alliesMoney },
          };
 
-         const allyInfosIdx = packet.message.results.allies.findIndex(
-            ({ name }) => name === player.name,
-         );
+         const allyInfosIdx = results.allies.findIndex(({ name }) => name === player.name);
          if (allyInfosIdx !== -1) {
-            const allyInfos = packet.message.results.allies[allyInfosIdx];
-            const experienceGained = packet.message.results.experiences[allyInfosIdx];
+            const allyInfos = results.allies[allyInfosIdx];
+            const experienceGained = results.experiences[allyInfosIdx];
 
             const newLevel = LevelMgt.getLevel(characterInfos.experience + experienceGained);
             const oldLevel = LevelMgt.getLevel(characterInfos.experience);
@@ -391,18 +398,18 @@ export class MapRoom extends Room<MapState> {
             }
          }
 
-         this.state.setFightTurns(client.sessionId, packet.message.results.turns.length);
+         this.state.setFightTurns(client.sessionId, results.turns.length);
          client.send(packet.type, packet.message);
 
          logger.info(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${
                player.name
             }) started a PvE fight against monster group '${monsterGroupId}' and ${
-               packet.message.results.won ? 'won' : 'lost'
+               results.won ? 'won' : 'lost'
             }`,
          );
 
-         this.onFightPvEResults(client, packet.message.results);
+         this.onFightPvEResults(client, results, alliesMoney);
       } catch (error) {
          logger.error(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight against an invalid monster group '${monsterGroupId}'`,
@@ -461,8 +468,22 @@ export class MapRoom extends Room<MapState> {
       _assert(place, `Teleportation place for room '${room}' should be defined`);
       const { direction, x, y } = place;
 
-      // TODO: make sure the player is on the teleportation spot
-      // TODO: substract the money for the teleportation
+      const characterInfos = await prisma.character.findUnique({
+         where: { name: player.name },
+         select: { money: true },
+      });
+      _assert(characterInfos, `Character infos for name '${player.name}' should be defined`);
+
+      if (characterInfos.money < place.price) {
+         return;
+      }
+
+      await prisma.character.update({
+         where: { name: player.name },
+         data: {
+            money: { decrement: place.price },
+         },
+      });
 
       const packet: Extract<MapRoomResponse, { type: 'changeMap' }> = {
          type: 'changeMap',
@@ -471,6 +492,7 @@ export class MapRoom extends Room<MapState> {
             x,
             y,
             direction,
+            money: place.price,
          },
       };
 
@@ -514,7 +536,11 @@ export class MapRoom extends Room<MapState> {
       client.send(packet.type, packet.message);
    }
 
-   async onFightPvEResults(client: Client, results: PvEFightResults) {
+   async onFightPvEResults(
+      client: Client,
+      results: PvEFightResults,
+      alliesMoney: Record<string, number>,
+   ) {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
@@ -526,12 +552,12 @@ export class MapRoom extends Room<MapState> {
                   name: true,
                   baseStatisticsPoints: true,
                   talentsPoints: true,
+                  money: true,
                },
             })
-         ).reduce<Record<string, { baseStatisticsPoints: number; talentsPoints: number }>>(
-            (acc, { name, ...rest }) => ({ ...acc, [name]: rest }),
-            {},
-         );
+         ).reduce<
+            Record<string, { baseStatisticsPoints: number; talentsPoints: number; money: number }>
+         >((acc, { name, ...rest }) => ({ ...acc, [name]: rest }), {});
 
          const updates = results.allies.map(({ name, experience }, idx) => {
             const experienceGained = results.experiences[idx];
@@ -547,17 +573,19 @@ export class MapRoom extends Room<MapState> {
                talentsPoints: charactersInfos[name].talentsPoints + talentsPointsGained,
                baseStatisticsPoints:
                   charactersInfos[name].baseStatisticsPoints + baseStatisticsPointsGained,
+               money: charactersInfos[name].money + alliesMoney[name],
             };
          });
 
          prisma.$transaction(
-            updates.map(({ name, experience, talentsPoints, baseStatisticsPoints }) =>
+            updates.map(({ name, experience, talentsPoints, baseStatisticsPoints, money }) =>
                prisma.character.update({
                   where: { name },
                   data: {
                      experience,
                      talentsPoints,
                      baseStatisticsPoints,
+                     money,
                   },
                }),
             ),

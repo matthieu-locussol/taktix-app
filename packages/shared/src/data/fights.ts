@@ -1,9 +1,6 @@
-import { PvEFightParameters } from '../types/PvEFight';
-import { monsters } from './monsters';
+import { Monster, monsters } from './monsters';
 
-export const getMonstersInformations = (
-   monsterGroupId: number,
-): PvEFightParameters['monstersInformations'] => {
+export const getMonstersInformations = (monsterGroupId: number): Monster[] => {
    if (monsterGroupId === 1) {
       return [monsters['enemy-nono']({ level: 1 }), monsters['enemy-nono']({ level: 1 })];
    }

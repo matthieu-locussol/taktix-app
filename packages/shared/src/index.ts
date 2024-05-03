@@ -41,6 +41,7 @@ export * from './utils/arrayMgt';
 export * from './utils/channelMgt';
 export * from './utils/fightMgt';
 export * from './utils/levelMgt';
+export * from './utils/lootMgt';
 export * from './utils/numberMgt';
 export * from './utils/permissionMgt';
 export * from './utils/statisticMgt';

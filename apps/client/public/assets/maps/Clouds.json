@@ -451,6 +451,11 @@
                      "name": "id",
                      "type": "string",
                      "value": "TeleporterCell"
+                  },
+                  {
+                     "name": "price",
+                     "type": "int",
+                     "value": 120
                   }
                ],
                "rotation": 0,

@@ -147,7 +147,7 @@ export const MapMenu = observer(() => {
                                           : 1,
                                     }}
                                  >
-                                    480
+                                    {TELEPORTATION_PLACES[transferSpot]?.price ?? 0}
                                  </StyledTableCell>
                               </StyledTableRow>
                            ))
@@ -161,13 +161,8 @@ export const MapMenu = observer(() => {
                   <Typography display="flex" alignItems="center" gap={1}>
                      <Trans
                         i18nKey="creditsValue"
-                        components={{
-                           b: <b />,
-                        }}
-                        values={{
-                           // TODO: set the money here
-                           value: 13029,
-                        }}
+                        components={{ b: <b /> }}
+                        values={{ value: characterStore.money }}
                      />
                   </Typography>
                </Box>
@@ -182,7 +177,7 @@ export const MapMenu = observer(() => {
                <Button
                   variant="contained"
                   onClick={() => mapMenuStore.teleport()}
-                  disabled={mapMenuStore.selectedRoom === null}
+                  disabled={mapMenuStore.selectedRoom === null || !mapMenuStore.hasEnoughMoney}
                >
                   {t('teleport')}
                </Button>

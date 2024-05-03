@@ -37,6 +37,8 @@ export class CharacterStore {
 
    public teleporters: Room[] = [];
 
+   public money: number = 0;
+
    private _intervalTimeout: NodeJS.Timeout | null = null;
 
    constructor(store: Store) {
@@ -97,6 +99,10 @@ export class CharacterStore {
 
    public setTeleporters(teleporters: Room[]) {
       this.teleporters = [...teleporters];
+   }
+
+   public setMoney(money: number) {
+      this.money = money;
    }
 
    public get healthPercentage() {

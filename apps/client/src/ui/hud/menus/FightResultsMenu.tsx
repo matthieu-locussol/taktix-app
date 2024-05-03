@@ -40,13 +40,14 @@ export const FightResultsMenu = observer(() => {
             const oldLevel = LevelMgt.getLevel(experience);
             const newLevel = LevelMgt.getLevel(experience + gainedExperience);
             const levelCell = oldLevel === newLevel ? newLevel : `${oldLevel} -> ${newLevel}`;
+            const gainedMoney = pveFightStore.alliesMoney[name] ?? 0;
 
             return (
                <TableRow hover tabIndex={-1} key={`fight-results-value-${id}-${name}`}>
                   <StyledTableCell>{name}</StyledTableCell>
                   <StyledTableCell>{levelCell}</StyledTableCell>
                   <StyledTableCell>+{gainedExperience} XP</StyledTableCell>
-                  <StyledTableCell>+1000 Credits</StyledTableCell>
+                  <StyledTableCell>+{gainedMoney} Credits</StyledTableCell>
                   <StyledTableCell>Loots...</StyledTableCell>
                </TableRow>
             );

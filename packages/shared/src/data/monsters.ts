@@ -6,9 +6,13 @@ import { TranslationKey } from './translations';
 
 type FilterEnemy<T> = T extends `enemy-${infer EnemyName}` ? `enemy-${EnemyName}` : never;
 type MonsterName = FilterEnemy<TranslationKey>;
-type MonsterGenerator = (parameters: {
-   level: number;
-}) => PvEFighterInformations & { name: MonsterName; animation: Animation };
+type MonsterGenerator = (parameters: { level: number }) => Monster;
+
+export interface Monster extends PvEFighterInformations {
+   name: MonsterName;
+   animation: Animation;
+   money: { min: number; max: number };
+}
 
 export const isMonsterName = (value: unknown): value is MonsterName =>
    typeof value === 'string' && value.startsWith('enemy-');
@@ -35,6 +39,7 @@ const monstersArray: MonsterGenerator[] = [
       ),
       talents: [],
       uniquesPowers: [],
+      money: { min: 30, max: 75 },
    }),
 ] as const;
 

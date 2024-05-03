@@ -59,7 +59,8 @@ export class MapMenuStore {
    public isTeleportationPlaceDisabled(room: Room): boolean {
       return (
          this._store.characterStore.map === room ||
-         !this._store.characterStore.teleporters.includes(room)
+         !this._store.characterStore.teleporters.includes(room) ||
+         !this.hasEnoughMoneyForRoom(room)
       );
    }
 
@@ -82,5 +83,22 @@ export class MapMenuStore {
       ).sort((a, b) =>
          a === this._store.characterStore.map ? -1 : b === this._store.characterStore.map ? 1 : 0,
       );
+   }
+
+   public get hasEnoughMoney(): boolean {
+      if (this.selectedRoom === null) {
+         return false;
+      }
+
+      return this.hasEnoughMoneyForRoom(this.selectedRoom);
+   }
+
+   public hasEnoughMoneyForRoom(room: Room): boolean {
+      const place = TELEPORTATION_PLACES[room];
+      if (place === null) {
+         return false;
+      }
+
+      return this._store.characterStore.money >= place.price;
    }
 }
