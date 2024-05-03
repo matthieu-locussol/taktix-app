@@ -13,13 +13,13 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "dependencies": {
-      "@colyseus/core": "^0.15.34",
-      "@colyseus/schema": "^2.0.30",
-      "vitest": "^1.5.1",
-      "zod": "^3.23.4"
+      "@colyseus/core": "^0.15.36",
+      "@colyseus/schema": "^2.0.31",
+      "vitest": "^1.5.3",
+      "zod": "^3.23.6"
    },
    "devDependencies": {
-      "@biomejs/biome": "1.7.1",
+      "@biomejs/biome": "1.7.2",
       "config-typescript": "workspace:^",
       "typescript": "^5.4.5"
    }
