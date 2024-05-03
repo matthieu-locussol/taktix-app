@@ -77,6 +77,8 @@ export class PvEFight {
             damagesAoE: [],
             hasDodged,
             lifeStolen: 0,
+            magicalThornsDamages: 0,
+            physicalThornsDamages: 0,
          };
       }
 
@@ -88,14 +90,25 @@ export class PvEFight {
       const totalDamages = damages.reduce((acc, { value }) => acc + value, 0);
       const lifeStolen = this.computeLifeStolen(totalDamages, maxHealth, fighter, target);
 
-      // TODO: handles thorns damages
-
       const damagesOnShield = Math.min(totalDamages, target.magicShield);
       const damagesOnHealth = Math.min(totalDamages - damagesOnShield, target.health);
+      const { magicalThornsDamages, physicalThornsDamages } = this.computeThornsDamages(
+         damagesOnShield,
+         damagesOnHealth,
+         target,
+      );
+      const totalThornsDamages = magicalThornsDamages + physicalThornsDamages;
 
       target.magicShield -= damagesOnShield;
       target.health -= damagesOnHealth;
 
+      const thornsDamagesOnShield = Math.min(totalThornsDamages, fighter.magicShield);
+      const thornsDamagesOnHealth = Math.min(
+         totalThornsDamages - thornsDamagesOnShield,
+         fighter.health,
+      );
+      fighter.magicShield -= thornsDamagesOnShield;
+      fighter.health = Math.max(0, fighter.health - thornsDamagesOnHealth);
       fighter.health = Math.min(maxHealth, fighter.health + lifeStolen);
 
       // TODO: apply damagesAoE
@@ -108,6 +121,8 @@ export class PvEFight {
          damagesAoE,
          hasDodged,
          lifeStolen,
+         magicalThornsDamages,
+         physicalThornsDamages,
       };
    }
 
@@ -163,6 +178,19 @@ export class PvEFight {
       _target: PvEFighter,
    ): { type: string; value: number; targetId: number }[] {
       return [];
+   }
+
+   private computeThornsDamages(
+      damagesOnShield: number,
+      damagesOnHealth: number,
+      target: PvEFighter,
+   ) {
+      const { thornsMagical, thornsPhysical } = target.statistics;
+
+      return {
+         physicalThornsDamages: Math.floor(damagesOnHealth * thornsPhysical),
+         magicalThornsDamages: Math.floor(damagesOnShield * thornsMagical),
+      };
    }
 
    private computeHasDodged(fighter: PvEFighter, target: PvEFighter): boolean {

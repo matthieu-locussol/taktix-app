@@ -516,7 +516,15 @@ export class PvEFightScene extends Phaser.Scene {
    }
 
    private attackPhysical(
-      { fighterId, targetId, damages, hasDodged, lifeStolen }: PvEFightMove,
+      {
+         fighterId,
+         targetId,
+         damages,
+         hasDodged,
+         lifeStolen,
+         magicalThornsDamages,
+         physicalThornsDamages,
+      }: PvEFightMove,
       targetShouldDie: boolean,
    ): void {
       this.animationRunning = true;
@@ -610,6 +618,48 @@ export class PvEFightScene extends Phaser.Scene {
                      return;
                   }
 
+                  if (physicalThornsDamages || magicalThornsDamages) {
+                     this.displayThornsDamages(
+                        physicalThornsDamages,
+                        magicalThornsDamages,
+                        fighterContainer,
+                     );
+
+                     const damagesOnShield = Math.min(
+                        physicalThornsDamages + magicalThornsDamages,
+                        store.pveFightStore.fightersMagicShield[fighterId],
+                     );
+
+                     const damagesOnHealth = Math.min(
+                        physicalThornsDamages + magicalThornsDamages - damagesOnShield,
+                        store.pveFightStore.fightersHealth[fighterId],
+                     );
+
+                     store.pveFightStore.setFighterMagicShield(
+                        fighterId,
+                        store.pveFightStore.fightersMagicShield[fighterId] - damagesOnShield,
+                     );
+
+                     store.pveFightStore.setFighterHealth(
+                        fighterId,
+                        store.pveFightStore.fightersHealth[fighterId] - damagesOnHealth,
+                     );
+
+                     this.updateFighterHealthBar(fighterId);
+                     this.updateFighterMagicShieldBar(fighterId);
+                  }
+
+                  if (lifeStolen) {
+                     this.displayLifeStolen(lifeStolen, fighterContainer);
+
+                     store.pveFightStore.setFighterHealth(
+                        fighterId,
+                        store.pveFightStore.fightersHealth[fighterId] + lifeStolen,
+                     );
+
+                     this.updateFighterHealthBar(fighterId);
+                  }
+
                   const totalDamages = damages.reduce((acc, { value }) => acc + value, 0);
 
                   const damagesOnShield = Math.min(
@@ -641,18 +691,6 @@ export class PvEFightScene extends Phaser.Scene {
                ease: 'Power2',
                yoyo: false,
                repeat: 0,
-               onComplete: () => {
-                  if (lifeStolen) {
-                     this.displayLifeStolen(lifeStolen, fighterContainer);
-
-                     store.pveFightStore.setFighterHealth(
-                        fighterId,
-                        store.pveFightStore.fightersHealth[fighterId] + lifeStolen,
-                     );
-
-                     this.updateFighterHealthBar(fighterId);
-                  }
-               },
             },
          ],
          onComplete: () => {
@@ -786,6 +824,87 @@ export class PvEFightScene extends Phaser.Scene {
             });
          },
       });
+   }
+
+   private displayThornsDamages(
+      physical: number,
+      magical: number,
+      targetSprite: Phaser.GameObjects.Container,
+   ): void {
+      if (physical > 0) {
+         const physicalSprite = this.add
+            .text(targetSprite.x, targetSprite.y + 20, `-${physical}`, {
+               fontFamily: 'Orbitron',
+               fontSize: 24,
+               color: STATS_COLORS.thornsPhysical,
+            })
+            .setOrigin(0.5, 0.5)
+            .setAlpha(0)
+            .setDepth(1)
+            .setScale(0.5, 0.5);
+         physicalSprite.postFX.addGlow(0x111827, 4, 0, false, 0.3, 10);
+
+         this.tweens.add({
+            targets: physicalSprite,
+            alpha: 1,
+            y: targetSprite.y * 1.2,
+            duration: 350 / store.settingsMenuStore.speedFactor,
+            ease: 'Power2',
+            repeat: 0,
+            scaleX: 1.25,
+            scaleY: 1.25,
+            onComplete: () => {
+               this.tweens.add({
+                  targets: physicalSprite,
+                  alpha: 0,
+                  duration: 400 / store.settingsMenuStore.speedFactor,
+                  ease: 'Power2',
+                  repeat: 0,
+                  onComplete: () => {
+                     physicalSprite.destroy();
+                  },
+               });
+            },
+         });
+      }
+
+      if (magical > 0) {
+         const magicalSprite = this.add
+            .text(targetSprite.x, targetSprite.y + 20, `-${magical}`, {
+               fontFamily: 'Orbitron',
+               fontSize: 24,
+               color: STATS_COLORS.thornsMagical,
+            })
+            .setOrigin(0.5, 0.5)
+            .setAlpha(0)
+            .setDepth(1)
+            .setScale(0.5, 0.5);
+         magicalSprite.postFX.addGlow(0x111827, 4, 0, false, 0.3, 10);
+
+         this.tweens.add({
+            targets: magicalSprite,
+            alpha: 1,
+            y: targetSprite.y * 1.2,
+            duration: 350 / store.settingsMenuStore.speedFactor,
+            ease: 'Power2',
+            repeat: 0,
+            scaleX: 1.25,
+            scaleY: 1.25,
+            delay: 300 / store.settingsMenuStore.speedFactor,
+            onComplete: () => {
+               this.tweens.add({
+                  targets: magicalSprite,
+                  alpha: 0,
+                  duration: 400 / store.settingsMenuStore.speedFactor,
+                  ease: 'Power2',
+                  repeat: 0,
+                  onComplete: () => {
+                     magicalSprite.destroy();
+                  },
+               });
+            },
+         });
+      }
    }
 
    private kill(fighterId: number): void {
