@@ -1,5 +1,6 @@
 import { EntityType } from '../../utils/phaser';
 import { SCALE_FACTOR, type Scene, TILE_SIZE } from '../Scene';
+import { makeCharacterName } from './makeCharacterName';
 import { registerSpriteEvents } from './registerSpriteEvents';
 
 type CharacterType = 'player' | 'externalPlayer' | 'npc';
@@ -21,30 +22,12 @@ export const makeCharacter = ({ characterType, name, scene }: MakeCharacterProps
    characterSprite.setData('type', characterType === 'npc' ? EntityType.NPC : EntityType.Character);
    registerSpriteEvents(characterSprite);
 
-   const characterName = scene.add
-      .text(0, 0, name, {
-         align: 'center',
-         fontSize: 6,
-         fontFamily: 'Orbitron',
-         resolution: 4,
-         color: {
-            player: '#ffffff',
-            externalPlayer: '#ffffff',
-            npc: '#00ff00',
-         }[characterType],
-         shadow: {
-            offsetX: 0,
-            offsetY: 0,
-            color: '#000000',
-            blur: 2,
-            stroke: true,
-            fill: true,
-         },
-         strokeThickness: 1,
-         stroke: '#000000',
-      })
-      .setDepth(999);
-   characterName.scale = SCALE_FACTOR;
+   const nameColor = {
+      player: '#ffffff',
+      externalPlayer: '#ffffff',
+      npc: '#00ff00',
+   }[characterType];
+   const characterName = makeCharacterName(scene, name, nameColor);
 
    const characterSquare = scene.add
       .rectangle(

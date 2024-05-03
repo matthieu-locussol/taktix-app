@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { animationFilesData, animationsData } from 'shared/src/data/animations';
 import { ANIMATION_TO_FILE } from 'shared/src/types/Animation';
 import { CharacterSpritesheet, ProfessionType } from 'shared/src/types/Profession';
@@ -17,6 +18,7 @@ import {
    FADE_OUT_DURATION,
    SCALE_FACTOR,
 } from '../Scene';
+import { makeCharacterName } from '../utils/makeCharacterName';
 
 const HEALTH_MARGIN = 10;
 const HEALTH_HEIGHT = 8;
@@ -24,6 +26,7 @@ const HEALTH_WIDTH = 80;
 const MAGICSHIELD_MARGIN = 4 + HEALTH_HEIGHT + HEALTH_MARGIN;
 const MAGICSHIELD_HEIGHT = 8;
 const MAGICSHIELD_WIDTH = 80;
+const NAME_MARGIN = 4 + MAGICSHIELD_HEIGHT + MAGICSHIELD_MARGIN;
 
 export class PvEFightScene extends Phaser.Scene {
    private fighters: Record<number, Phaser.GameObjects.Container> = {};
@@ -142,6 +145,7 @@ export class PvEFightScene extends Phaser.Scene {
          this.createFighterMagicShieldBar(id);
          this.updateFighterHealthBar(id);
          this.updateFighterMagicShieldBar(id);
+         this.createFighterName(id);
       });
 
       store.pveFightStore.fightResults.monsters.forEach(({ id, name }, idx) => {
@@ -171,6 +175,7 @@ export class PvEFightScene extends Phaser.Scene {
          this.createFighterMagicShieldBar(id);
          this.updateFighterHealthBar(id);
          this.updateFighterMagicShieldBar(id);
+         this.createFighterName(id);
       });
    }
 
@@ -323,6 +328,25 @@ export class PvEFightScene extends Phaser.Scene {
 
       container.add(magicShieldBgSprite);
       container.add(magicShieldSprite);
+   }
+
+   private createFighterName(fighterId: number): void {
+      const container = this.fighters[fighterId];
+      const fighterSprite = container.getByName('sprite') as Phaser.GameObjects.Sprite;
+
+      const fighterInfos = [
+         ...store.pveFightStore.fightResults.allies,
+         ...store.pveFightStore.fightResults.monsters,
+      ].find(({ id }) => id === fighterId);
+
+      _assert(fighterInfos, 'fighterInfos must be set');
+
+      const { name } = fighterInfos;
+      const characterName = makeCharacterName(this, i18next.t(name), '#ffffff')
+         .setY(fighterSprite.y - MAGICSHIELD_HEIGHT - CHARACTER_HEIGHT / 2 - NAME_MARGIN + 2)
+         .setOrigin(0.5, 0.5);
+
+      container.add(characterName);
    }
 
    private updateFighterHealthBar(fighterId: number): void {
