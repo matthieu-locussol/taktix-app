@@ -6,6 +6,7 @@ vi.mock('./Store', () => {
    const characterStoreMock = {
       teleporters: ['CloudsRoom', 'ForestRoom'],
       map: 'ForestRoom',
+      money: 999_999,
    };
 
    const MockedStore = vi.fn().mockImplementation(() => ({
