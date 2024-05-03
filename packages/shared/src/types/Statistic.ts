@@ -156,6 +156,7 @@ export const realStatistics = [
    'iceResistance',
    'iceResistancePercent',
    'lifeSteal',
+   'lifeStealPercent',
    'precision',
    'evasion',
    'prospect',

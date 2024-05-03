@@ -68,23 +68,38 @@ export class PvEFight {
          return null;
       }
 
+      const hasDodged = this.computeHasDodged(fighter, target);
+      if (hasDodged) {
+         return {
+            fighterId: fighter.id,
+            targetId: target.id,
+            damages: [],
+            damagesAoE: [],
+            hasDodged,
+            lifeStolen: 0,
+         };
+      }
+
+      const fighterInfos = this.initialConditions.find(({ fighterId }) => fighterId === fighter.id);
+      _assert(fighterInfos, 'fighterInfos should be defined!');
+      const { maxHealth } = fighterInfos;
+
       const damages = this.computeDamages(fighter, target);
       const totalDamages = damages.reduce((acc, { value }) => acc + value, 0);
+      const lifeStolen = this.computeLifeStolen(totalDamages, maxHealth, fighter, target);
 
-      const hasDodged = this.computeHasDodged(fighter, target);
+      // TODO: handles thorns damages
+
+      const damagesOnShield = Math.min(totalDamages, target.magicShield);
+      const damagesOnHealth = Math.min(totalDamages - damagesOnShield, target.health);
+
+      target.magicShield -= damagesOnShield;
+      target.health -= damagesOnHealth;
+
+      fighter.health = Math.min(maxHealth, fighter.health + lifeStolen);
 
       // TODO: apply damagesAoE
       const damagesAoE = this.computeDamagesAoE(fighter, target);
-      // TODO: handles life steal
-      // TODO: handles thorns damages
-
-      if (!hasDodged) {
-         const damagesOnShield = Math.min(totalDamages, target.magicShield);
-         const damagesOnHealth = Math.min(totalDamages - damagesOnShield, target.health);
-
-         target.magicShield -= damagesOnShield;
-         target.health -= damagesOnHealth;
-      }
 
       return {
          fighterId: fighter.id,
@@ -92,6 +107,7 @@ export class PvEFight {
          damages,
          damagesAoE,
          hasDodged,
+         lifeStolen,
       };
    }
 
@@ -156,6 +172,33 @@ export class PvEFight {
       );
 
       return Math.random() > hitChance;
+   }
+
+   private computeLifeStolen(
+      totalDamages: number,
+      maxHealth: number,
+      fighter: PvEFighter,
+      target: PvEFighter,
+   ): number {
+      if (fighter.health === maxHealth) {
+         return 0;
+      }
+
+      const missingLife = maxHealth - fighter.health;
+      const lifeStolen = StatisticMgt.computeLifeStolen(
+         totalDamages,
+         fighter.statistics.lifeSteal,
+         fighter.statistics.lifeStealPercent,
+         target.health,
+         target.magicShield,
+      );
+
+      const cappedLifeStolen = Math.min(missingLife, lifeStolen);
+      if (cappedLifeStolen <= 0) {
+         return 0;
+      }
+
+      return cappedLifeStolen;
    }
 
    private getRandomAliveTarget(fighter: PvEFighter): PvEFighter | null {

@@ -516,7 +516,7 @@ export class PvEFightScene extends Phaser.Scene {
    }
 
    private attackPhysical(
-      { fighterId, targetId, damages, hasDodged }: PvEFightMove,
+      { fighterId, targetId, damages, hasDodged, lifeStolen }: PvEFightMove,
       targetShouldDie: boolean,
    ): void {
       this.animationRunning = true;
@@ -637,10 +637,22 @@ export class PvEFightScene extends Phaser.Scene {
             {
                x: initialPositionX,
                y: initialPositionY,
-               duration: 750 / store.settingsMenuStore.speedFactor,
+               duration: 1000 / store.settingsMenuStore.speedFactor,
                ease: 'Power2',
                yoyo: false,
                repeat: 0,
+               onComplete: () => {
+                  if (lifeStolen) {
+                     this.displayLifeStolen(lifeStolen, fighterContainer);
+
+                     store.pveFightStore.setFighterHealth(
+                        fighterId,
+                        store.pveFightStore.fightersHealth[fighterId] + lifeStolen,
+                     );
+
+                     this.updateFighterHealthBar(fighterId);
+                  }
+               },
             },
          ],
          onComplete: () => {
@@ -733,6 +745,43 @@ export class PvEFightScene extends Phaser.Scene {
                repeat: 0,
                onComplete: () => {
                   dodgeSprite.destroy();
+               },
+            });
+         },
+      });
+   }
+
+   private displayLifeStolen(lifeStolen: number, targetSprite: Phaser.GameObjects.Container): void {
+      const lifeStolenSprite = this.add
+         .text(targetSprite.x, targetSprite.y - 20, `+${lifeStolen}`, {
+            fontFamily: 'Orbitron',
+            fontSize: 24,
+            color: STATS_COLORS.lifeSteal,
+         })
+         .setOrigin(0.5, 0.5)
+         .setAlpha(0)
+         .setDepth(1)
+         .setScale(0.5, 0.5);
+      lifeStolenSprite.postFX.addGlow(0x111827, 4, 0, false, 0.3, 10);
+
+      this.tweens.add({
+         targets: lifeStolenSprite,
+         alpha: 1,
+         y: targetSprite.y * 0.7,
+         duration: 350 / store.settingsMenuStore.speedFactor,
+         ease: 'Power2',
+         repeat: 0,
+         scaleX: 1.25,
+         scaleY: 1.25,
+         onComplete: () => {
+            this.tweens.add({
+               targets: lifeStolenSprite,
+               alpha: 0,
+               duration: 400 / store.settingsMenuStore.speedFactor,
+               ease: 'Power2',
+               repeat: 0,
+               onComplete: () => {
+                  lifeStolenSprite.destroy();
                },
             });
          },
