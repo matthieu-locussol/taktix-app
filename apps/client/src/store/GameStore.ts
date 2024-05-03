@@ -8,8 +8,8 @@ import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { PLAYER_GE_LAYER, Scene, ZOOM_MAX, ZOOM_MIN } from '../game/Scene';
 import { Store } from './Store';
 
-const CHECK_INTERVAL = 100;
-const MAX_CHECK_ATTEMPTS = 10;
+const CHECK_INTERVAL = 10;
+const MAX_CHECK_ATTEMPTS = 1_000;
 
 export class GameStore {
    private _game: Phaser.Game | null;
@@ -44,7 +44,6 @@ export class GameStore {
 
    async getCurrentScene() {
       let attempts = 0;
-
       while (attempts < MAX_CHECK_ATTEMPTS) {
          attempts += 1;
 
