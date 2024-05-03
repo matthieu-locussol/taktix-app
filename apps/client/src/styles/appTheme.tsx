@@ -10,6 +10,8 @@ export const STATS_COLORS = {
    intelligence: '#ef4444',
    luck: '#06b6d4',
    lifeSteal: '#f43f5e',
+   thornsPhysical: '#854d0e',
+   thornsMagical: '#8b5cf6',
 };
 
 export const appTheme = createTheme({
@@ -99,8 +101,8 @@ export const appTheme = createTheme({
          evasion: '#16a34a',
          prospect: '#14b8a6',
          initiative: '#eab308',
-         thornsPhysical: '#854d0e',
-         thornsMagical: '#8b5cf6',
+         thornsPhysical: STATS_COLORS.thornsPhysical,
+         thornsMagical: STATS_COLORS.thornsMagical,
          areaOfEffect: '#71717a',
          criticalStrikeResistance: '#dc2626',
          criticalStrikeChance: '#dc2626',
