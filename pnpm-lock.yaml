@@ -58,7 +58,7 @@ importers:
         version: 0.15.19
       grid-engine:
         specifier: ^2.44.2
-        version: 2.44.2(phaser@3.80.1)
+        version: 2.44.2(phaser@3.70.0)
       i18next:
         specifier: ^23.11.3
         version: 23.11.3
@@ -69,8 +69,8 @@ importers:
         specifier: ^4.0.7
         version: 4.0.7(mobx@6.12.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       phaser:
-        specifier: ~3.80.1
-        version: 3.80.1
+        specifier: ~3.70.0
+        version: 3.70.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -3273,8 +3273,8 @@ packages:
   pathval@1.1.1:
     resolution: {integrity: sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==}
 
-  phaser@3.80.1:
-    resolution: {integrity: sha512-VQGAWoDOkEpAWYkI+PUADv5Ql+SM0xpLuAMBJHz9tBcOLqjJ2wd8bUhxJgOqclQlLTg97NmMd9MhS75w16x1Cw==}
+  phaser@3.70.0:
+    resolution: {integrity: sha512-2g+gh+Jp9f/Ho9FOXOYbIJMGf3UZXyMbW2iLScFaLQw11e/LqVyxj/YmaBauWbHabeTnZjiWkPklDnxhesMH0g==}
 
   picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
@@ -6785,10 +6785,10 @@ snapshots:
 
   grapheme-splitter@1.0.4: {}
 
-  grid-engine@2.44.2(phaser@3.80.1):
+  grid-engine@2.44.2(phaser@3.70.0):
     dependencies:
       mnemonist: 0.39.8
-      phaser: 3.80.1
+      phaser: 3.70.0
       rxjs: 7.8.1
       tiled-property-flattener: 1.1.1
 
@@ -7561,7 +7561,7 @@ snapshots:
 
   pathval@1.1.1: {}
 
-  phaser@3.80.1:
+  phaser@3.70.0:
     dependencies:
       eventemitter3: 5.0.1
 
