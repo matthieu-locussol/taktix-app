@@ -9,6 +9,7 @@ export const STATS_COLORS = {
    dexterity: '#10b981',
    intelligence: '#ef4444',
    luck: '#06b6d4',
+   lifeSteal: '#f43f5e',
 };
 
 export const appTheme = createTheme({
@@ -92,7 +93,8 @@ export const appTheme = createTheme({
          fireResistancePercent: STATS_COLORS.intelligence,
          iceResistance: STATS_COLORS.luck,
          iceResistancePercent: STATS_COLORS.luck,
-         lifeSteal: '#f43f5e',
+         lifeSteal: STATS_COLORS.lifeSteal,
+         lifeStealPercent: STATS_COLORS.lifeSteal,
          precision: '#4f46e5',
          evasion: '#16a34a',
          prospect: '#14b8a6',

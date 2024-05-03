@@ -66,6 +66,7 @@ export namespace StatisticMgt {
       const evasion = computeEvasion(statistics);
 
       const lifeSteal = computeLifeSteal(statistics);
+      const lifeStealPercent = computeLifeStealPercent(statistics);
       const areaOfEffect = computeAreaOfEffect(statistics);
 
       const earthDamages = computeElementalDamages('earthDamages', statistics);
@@ -136,6 +137,7 @@ export namespace StatisticMgt {
          iceResistance,
          iceResistancePercent,
          lifeSteal,
+         lifeStealPercent,
          precision,
          evasion,
          prospect,
@@ -258,14 +260,19 @@ export namespace StatisticMgt {
    export const computeLifeSteal = (statistics: Statistics) => {
       const lifeSteal = computeTotalStatistic(
          statistics['lifeSteal_+f'],
-         statistics['lifeSteal_+%'],
+         0,
          0,
          statistics['lifeSteal_-f'],
-         statistics['lifeSteal_-%'],
+         0,
          0,
       );
 
       return lifeSteal;
+   };
+
+   export const computeLifeStealPercent = (statistics: Statistics) => {
+      const lifeStealPercent = statistics['lifeSteal_+%'] - statistics['lifeSteal_-%'];
+      return NumberMgt.clamp(lifeStealPercent, 0, 100);
    };
 
    export const computePrecision = (statistics: Statistics) => {
@@ -756,6 +763,7 @@ export namespace StatisticMgt {
       initiative: StatisticMgt.BASE_INITIATIVE,
       intelligence: 0,
       lifeSteal: 0,
+      lifeStealPercent: 0,
       luck: 0,
       mace1HDamages: 0,
       mace2HDamages: 0,

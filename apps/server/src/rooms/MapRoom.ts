@@ -341,6 +341,7 @@ export class MapRoom extends Room<MapState> {
                      ...StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
                      'criticalStrikeChance_+f': 30,
                      'criticalStrikeChance_+%': 25,
+                     'lifeSteal_+f': 5,
                   }),
                   talents: TalentMgt.deserializeTalents(characterInfos.talents),
                   uniquesPowers: [],

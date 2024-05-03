@@ -96,6 +96,7 @@ const zPvEFightMove = z.object({
       }),
    ),
    hasDodged: z.boolean(),
+   lifeStolen: z.number(),
 });
 
 export type PvEFightMove = z.infer<typeof zPvEFightMove>;

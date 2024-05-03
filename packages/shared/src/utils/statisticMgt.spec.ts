@@ -217,6 +217,14 @@ describe('StatisticMgt', () => {
             defenderMagicShield: 500,
             expected: 9,
          },
+         {
+            damages: 720,
+            realLifeSteal: 5,
+            realLifeStealPercent: 0.25,
+            defenderVitality: 32000,
+            defenderMagicShield: 500,
+            expected: 60,
+         },
       ];
 
       it.each(samples)(
@@ -885,7 +893,8 @@ describe('StatisticMgt', () => {
                'lifeSteal_+%': 67,
             }),
             expected: StatisticMgt.makeMockedRealStatistics({
-               lifeSteal: 145,
+               lifeSteal: 87,
+               lifeStealPercent: 67,
             }),
          },
       ];
@@ -1271,12 +1280,42 @@ describe('StatisticMgt', () => {
                'lifeSteal_+f': 100,
                'lifeSteal_+%': 25,
             }),
-            expected: 125,
+            expected: 100,
          },
       ] as const;
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeLifeSteal(sample.statistics);
+         expect(result).toEqual(sample.expected);
+      });
+   });
+
+   describe('computeLifeStealPercent', () => {
+      const samples = [
+         {
+            title: 'Empty statistics',
+            statistics: StatisticMgt.makeMockedStatistics({}),
+            expected: 0,
+         },
+         {
+            title: 'Base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'lifeSteal_+f': 100,
+            }),
+            expected: 0,
+         },
+         {
+            title: 'Increased base statistics',
+            statistics: StatisticMgt.makeMockedStatistics({
+               'lifeSteal_+f': 100,
+               'lifeSteal_+%': 25,
+            }),
+            expected: 25,
+         },
+      ] as const;
+
+      it.each(samples)('$title', (sample) => {
+         const result = StatisticMgt.computeLifeStealPercent(sample.statistics);
          expect(result).toEqual(sample.expected);
       });
    });
