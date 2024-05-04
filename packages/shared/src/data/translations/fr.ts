@@ -123,6 +123,7 @@ export const translationsFr: LanguageTranslations = {
    position: 'Position',
    cost: 'Coût',
    creditsValue: '<b>Crédits :</b> {{value}}',
+   inventory: 'Inventaire',
 
    // Enemies
    'enemy-nono': 'Nono, le petit robot',

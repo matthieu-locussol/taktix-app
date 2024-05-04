@@ -118,6 +118,7 @@ export const translationsEn = {
    position: 'Position',
    cost: 'Cost',
    creditsValue: '<b>Credits:</b> {{value}}',
+   inventory: 'Inventory',
 
    // Enemies
    'enemy-nono': 'Nono, the little Robot',

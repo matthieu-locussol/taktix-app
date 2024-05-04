@@ -66,6 +66,13 @@ interface CustomPalette {
       hover: string;
       select: string;
    };
+   item: {
+      normal: string;
+      magic: string;
+      rare: string;
+      epic: string;
+      legendary: string;
+   };
 }
 
 declare module '@mui/material/styles' {
