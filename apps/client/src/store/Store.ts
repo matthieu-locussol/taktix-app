@@ -10,6 +10,7 @@ import { DialogMenuStore } from './DialogMenuStore';
 import { DiscordStore } from './DiscordStore';
 import { GameStore } from './GameStore';
 import { HudStore } from './HudStore';
+import { InventoryMenuStore } from './InventoryMenuStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
 import { LoginStore } from './LoginStore';
 import { MapMenuStore } from './MapMenuStore';
@@ -44,6 +45,8 @@ export class Store {
    public gameStore: GameStore;
 
    public hudStore: HudStore;
+
+   public inventoryMenuStore: InventoryMenuStore;
 
    public loadingScreenStore: LoadingScreenStore;
 
@@ -81,6 +84,7 @@ export class Store {
       this.discordStore = new DiscordStore(this);
       this.gameStore = new GameStore(this);
       this.hudStore = new HudStore(this);
+      this.inventoryMenuStore = new InventoryMenuStore(this);
       this.loadingScreenStore = new LoadingScreenStore();
       this.loginStore = new LoginStore();
       this.mapMenuStore = new MapMenuStore(this);

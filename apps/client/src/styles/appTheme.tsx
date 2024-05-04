@@ -139,6 +139,13 @@ export const appTheme = createTheme({
          hover: 'rgba(20, 184, 166, 0.36)',
          select: '#F3F4F6',
       },
+      item: {
+         normal: '#D1D5DB',
+         magic: '#1d4ed8',
+         rare: '#facc15',
+         epic: '#6d28d9',
+         legendary: '#854d0e',
+      },
       mode: 'light',
    },
    typography: (palette) => ({

@@ -122,6 +122,7 @@ export const translationsJa: LanguageTranslations = {
    position: '位置',
    cost: 'コスト',
    creditsValue: '<b>クレジット</b>: {{value}}',
+   inventory: 'インベントリ',
 
    // Enemies
    'enemy-nono': 'ノノ、小さなロボット',
