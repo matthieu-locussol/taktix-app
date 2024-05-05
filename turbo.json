@@ -59,6 +59,9 @@
          "dependsOn": ["build:shared", "^lint"]
       },
       "lint:shared": {},
+      "generate_item": {
+         "cache": false
+      },
       "generate_maps": {
          "cache": false
       },

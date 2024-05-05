@@ -1,6 +1,5 @@
 import { Animation } from '../types/Animation';
 import { PvEFighterInformations } from '../types/PvEFight';
-import { WeaponType } from '../types/Weapon';
 import { StatisticMgt } from '../utils/statisticMgt';
 import { TranslationKey } from './translations';
 
@@ -25,7 +24,7 @@ const monstersArray: MonsterGenerator[] = [
       magicShield: 30 + level * 5,
       level,
       experience: 130 + level * 25,
-      weaponType: WeaponType.Axe1H,
+      weaponType: 'axe1H',
       weaponDamages: [{ type: 'strength', min: level, max: level * 3 }],
       rawStatistics: StatisticMgt.serializeStatistics(
          StatisticMgt.makeMockedStatistics({

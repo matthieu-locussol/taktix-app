@@ -2,7 +2,7 @@
 id: 8k33d2axz3zvc8fiu2fmp1z
 title: Equipments
 desc: ''
-updated: 1709615051954
+updated: 1714788960340
 created: 1709598334670
 ---
 
@@ -308,7 +308,7 @@ created: 1709598334670
       -  Required level 7, +105 to +140 precision, 21 to 35 damages
       -  Required level 12, +175 to +210 precision, 38 to 52 damages
       -  Required level 18, +245 to +280 precision, 56 to 70 damages
-   -  Axe (2H) (increase damages) (x1.75 compared to axe 1H)
+   -  Axe (2H) (increase damages)
       -  Required level 1, 9 to 21 damages
       -  Required level 7, 25 to 41 damages
       -  Required level 12, 44 to 59 damages
