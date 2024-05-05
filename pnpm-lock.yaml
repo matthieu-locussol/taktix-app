@@ -275,6 +275,9 @@ importers:
       '@colyseus/schema':
         specifier: ^2.0.31
         version: 2.0.31
+      ts-pattern:
+        specifier: ^5.1.1
+        version: 5.1.1
       vitest:
         specifier: ^1.5.3
         version: 1.5.3(@types/node@20.12.8)(happy-dom@14.7.1)

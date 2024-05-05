@@ -1,5 +1,6 @@
 import { PaletteColor } from '@mui/material/styles';
 import { Channel } from 'shared/src/types/Channel';
+import { ItemRarity } from 'shared/src/types/Item';
 import { RealStatistic } from 'shared/src/types/Statistic';
 
 interface CustomPalette {
@@ -66,13 +67,7 @@ interface CustomPalette {
       hover: string;
       select: string;
    };
-   item: {
-      normal: string;
-      magic: string;
-      rare: string;
-      epic: string;
-      legendary: string;
-   };
+   item: Record<ItemRarity, string>;
 }
 
 declare module '@mui/material/styles' {

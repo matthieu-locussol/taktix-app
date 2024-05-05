@@ -26,7 +26,6 @@ import {
    isMapRoomMessage,
    zProfessionType,
 } from 'shared';
-import { WeaponType } from 'shared/dist/types/Weapon';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
 import { usersMap } from './utils/usersMap';
@@ -348,7 +347,7 @@ export class MapRoom extends Room<MapState> {
                   talents: TalentMgt.deserializeTalents(characterInfos.talents),
                   uniquesPowers: [],
                   // TODO: get weapon from character equipment
-                  weaponType: WeaponType.Sword1H,
+                  weaponType: 'sword1H',
                   weaponDamages: [
                      { type: 'strength', min: 2, max: 6 },
                      { type: 'luck', min: 2, max: 6 },
