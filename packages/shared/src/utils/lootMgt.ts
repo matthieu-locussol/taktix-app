@@ -153,7 +153,7 @@ export namespace LootMgt {
    };
 
    interface ComputeMonstersLootProps {
-      monsters: Monster[];
+      monsters: Pick<Monster, 'name' | 'type' | 'level'>[];
       areaBonus: number;
       prospect: number;
    }

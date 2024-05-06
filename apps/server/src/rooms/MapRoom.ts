@@ -2,6 +2,7 @@ import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import { Character } from '@prisma/client';
 import {
    FightMgt,
+   ItemMgt,
    LevelMgt,
    LootMgt,
    MINIMUM_TURN_TIME,
@@ -330,6 +331,8 @@ export class MapRoom extends Room<MapState> {
       try {
          const monstersInformations = getMonstersInformations(monsterGroupId);
          const parameters: PvEFightParameters = {
+            areaLootBonus: 100,
+            areaExperienceBonus: 100,
             alliesInformations: [
                {
                   name: characterInfos.name,
@@ -359,6 +362,53 @@ export class MapRoom extends Room<MapState> {
          };
 
          const results = FightMgt.computePvEFight(parameters);
+
+         if (results.won) {
+            const charactersInfos = await prisma.character.findMany({
+               where: { name: { in: results.allies.map(({ name }) => name) } },
+               select: {
+                  id: true,
+                  name: true,
+               },
+            });
+
+            const createdItems = await Promise.all(
+               results.loots.map((loots, idx) => {
+                  const characterName = results.allies[idx].name;
+                  const characterId = charactersInfos.find(
+                     ({ name }) => name === characterName,
+                  )?.id;
+
+                  _assert(
+                     characterId,
+                     `Character id for name '${characterName}' should be defined`,
+                  );
+
+                  return prisma.$transaction(
+                     loots.map(({ isUnique, level, prefixes, suffixes, requiredLevel, type }) =>
+                        prisma.item.create({
+                           data: {
+                              isUnique,
+                              level,
+                              prefixes: ItemMgt.serializeAffixes(prefixes),
+                              suffixes: ItemMgt.serializeAffixes(suffixes),
+                              requiredLevel,
+                              type,
+                              characterId,
+                           },
+                        }),
+                     ),
+                  );
+               }),
+            );
+
+            createdItems.forEach((items, idx) => {
+               items.forEach((item, itemIdx) => {
+                  results.loots[idx][itemIdx].id = item.id;
+               });
+            });
+         }
+
          const alliesMoney = results.allies.reduce<Record<string, number>>(
             (acc, { name }) => ({
                ...acc,
