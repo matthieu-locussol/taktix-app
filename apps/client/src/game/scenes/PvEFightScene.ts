@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import { animationFilesData, animationsData } from 'shared/src/data/animations';
 import { ANIMATION_TO_FILE } from 'shared/src/types/Animation';
+import { MonsterType } from 'shared/src/types/Monster';
 import { CharacterSpritesheet, ProfessionType } from 'shared/src/types/Profession';
 import { PvEFightMove } from 'shared/src/types/PvEFight';
 import { Room } from 'shared/src/types/Room';
@@ -10,7 +11,7 @@ import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { store } from '../../store';
-import { STATS_COLORS } from '../../styles/appTheme';
+import { MONSTER_TYPE_COLORS, STATS_COLORS } from '../../styles/appTheme';
 import {
    CHARACTER_HEIGHT,
    CHARACTER_WIDTH,
@@ -27,6 +28,20 @@ const MAGICSHIELD_MARGIN = 4 + HEALTH_HEIGHT + HEALTH_MARGIN;
 const MAGICSHIELD_HEIGHT = 8;
 const MAGICSHIELD_WIDTH = 80;
 const NAME_MARGIN = 4 + MAGICSHIELD_HEIGHT + MAGICSHIELD_MARGIN;
+
+const MONSTER_TYPE_GLOW: Record<MonsterType, number> = {
+   common: 0,
+   magic: 4,
+   rare: 8,
+   boss: 8,
+};
+
+const MONSTER_TYPE_SCALE: Record<MonsterType, number> = {
+   common: SCALE_FACTOR,
+   magic: SCALE_FACTOR * 1.2,
+   rare: SCALE_FACTOR * 1.5,
+   boss: SCALE_FACTOR * 2,
+};
 
 export class PvEFightScene extends Phaser.Scene {
    private fighters: Record<number, Phaser.GameObjects.Container> = {};
@@ -148,7 +163,7 @@ export class PvEFightScene extends Phaser.Scene {
          this.createFighterName(id);
       });
 
-      store.pveFightStore.fightResults.monsters.forEach(({ id, name }, idx) => {
+      store.pveFightStore.fightResults.monsters.forEach(({ id, name, monsterType }, idx) => {
          const monsterSprite = this.add.sprite(0, 0, name);
          monsterSprite.anims.create({
             key: 'idle',
@@ -158,7 +173,7 @@ export class PvEFightScene extends Phaser.Scene {
             frameRate: 8,
             repeat: -1,
          });
-         monsterSprite.setScale(SCALE_FACTOR * 2);
+         monsterSprite.setScale(SCALE_FACTOR);
          monsterSprite.play('idle');
          monsterSprite.setName('sprite');
 
@@ -175,7 +190,8 @@ export class PvEFightScene extends Phaser.Scene {
          this.createFighterMagicShieldBar(id);
          this.updateFighterHealthBar(id);
          this.updateFighterMagicShieldBar(id);
-         this.createFighterName(id);
+         this.createFighterName(id, monsterType);
+         this.updateMonsterTypeDisplay(id, monsterType);
       });
    }
 
@@ -330,7 +346,7 @@ export class PvEFightScene extends Phaser.Scene {
       container.add(magicShieldSprite);
    }
 
-   private createFighterName(fighterId: number): void {
+   private createFighterName(fighterId: number, monsterType?: MonsterType): void {
       const container = this.fighters[fighterId];
       const fighterSprite = container.getByName('sprite') as Phaser.GameObjects.Sprite;
 
@@ -341,12 +357,33 @@ export class PvEFightScene extends Phaser.Scene {
 
       _assert(fighterInfos, 'fighterInfos must be set');
 
-      const { name } = fighterInfos;
-      const characterName = makeCharacterName(this, i18next.t(name), '#ffffff')
+      const { name, level } = fighterInfos;
+      const characterName = makeCharacterName(
+         this,
+         `${i18next.t(name)} - ${level}`,
+         monsterType !== undefined ? MONSTER_TYPE_COLORS[monsterType] : '#ffffff',
+      )
          .setY(fighterSprite.y - MAGICSHIELD_HEIGHT - CHARACTER_HEIGHT / 2 - NAME_MARGIN + 2)
          .setOrigin(0.5, 0.5);
 
       container.add(characterName);
+   }
+
+   private updateMonsterTypeDisplay(fighterId: number, monsterType?: MonsterType): void {
+      const container = this.fighters[fighterId];
+      const fighterSprite = container.getByName('sprite') as Phaser.GameObjects.Sprite;
+
+      if (monsterType !== undefined) {
+         fighterSprite.postFX.addGlow(
+            NumberMgt.hexStringToNumber(MONSTER_TYPE_COLORS[monsterType]),
+            MONSTER_TYPE_GLOW[monsterType],
+            0,
+            false,
+            1,
+            10,
+         );
+         fighterSprite.setScale(MONSTER_TYPE_SCALE[monsterType]);
+      }
    }
 
    private updateFighterHealthBar(fighterId: number): void {

@@ -6,6 +6,7 @@
    "scripts": {
       "bumpversion": "ts-node-dev src/version.ts",
       "generate_item": "ts-node-dev src/generateItem.ts",
+      "generate_loot": "ts-node-dev src/generateLoot.ts",
       "generate_maps": "ts-node-dev src/generateMaps.ts",
       "clean": "rm -rf .turbo && rm -rf node_modules",
       "lint": "biome lint src/*.ts"

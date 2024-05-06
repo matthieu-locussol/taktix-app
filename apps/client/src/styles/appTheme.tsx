@@ -1,6 +1,7 @@
 import { buttonClasses, menuItemClasses, toggleButtonClasses } from '@mui/material';
 import { createTheme, darken } from '@mui/material/styles';
 import { Channel } from 'shared/src/types/Channel';
+import { MonsterType } from 'shared/src/types/Monster';
 
 export const STATS_COLORS = {
    vitality: '#ef4444',
@@ -12,6 +13,13 @@ export const STATS_COLORS = {
    lifeSteal: '#f43f5e',
    thornsPhysical: '#854d0e',
    thornsMagical: '#8b5cf6',
+};
+
+export const MONSTER_TYPE_COLORS: Record<MonsterType, string> = {
+   common: '#D1D5DB',
+   magic: '#1d4ed8',
+   rare: '#6d28d9',
+   boss: '#854d0e',
 };
 
 export const appTheme = createTheme({
@@ -145,6 +153,12 @@ export const appTheme = createTheme({
          rare: '#facc15',
          epic: '#6d28d9',
          unique: '#854d0e',
+      },
+      monster: {
+         common: MONSTER_TYPE_COLORS.common,
+         magic: MONSTER_TYPE_COLORS.magic,
+         rare: MONSTER_TYPE_COLORS.rare,
+         boss: MONSTER_TYPE_COLORS.boss,
       },
       mode: 'light',
    },

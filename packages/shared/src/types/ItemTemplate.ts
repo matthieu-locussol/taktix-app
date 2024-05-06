@@ -8,7 +8,7 @@ const zAffixTemplate = z.object({
    max: z.number(),
 });
 
-type AffixTemplate = z.infer<typeof zAffixTemplate>;
+export type AffixTemplate = z.infer<typeof zAffixTemplate>;
 
 export type ItemTemplate = Record<
    'prefixes' | 'suffixes',

@@ -3,20 +3,44 @@ import { ZodMgt } from '../utils/zodMgt';
 import { zStatistic } from './Statistic';
 import { weapons } from './Weapon';
 
-const items = [
-   'helmet',
-   'chestplate',
+export const itemsTypes = [
+   'helmetE',
+   'helmetH',
+   'helmetM',
+   'helmetEH',
+   'helmetEM',
+   'helmetHM',
+   'chestplateE',
+   'chestplateH',
+   'chestplateM',
+   'chestplateEH',
+   'chestplateEM',
+   'chestplateHM',
+   'bootsE',
+   'bootsH',
+   'bootsM',
+   'bootsEH',
+   'bootsEM',
+   'bootsHM',
+   'glovesE',
+   'glovesH',
+   'glovesM',
+   'glovesEH',
+   'glovesEM',
+   'glovesHM',
    'belt',
-   'boots',
-   'gloves',
    'amulet',
    'ring',
-   'offhand',
+   'shield',
+   'quiver',
+   'orb',
    'relic',
    ...weapons,
 ] as const;
 
-export const zItemType = ZodMgt.constructZodLiteralUnionType(items.map((type) => z.literal(type)));
+export const zItemType = ZodMgt.constructZodLiteralUnionType(
+   itemsTypes.map((type) => z.literal(type)),
+);
 
 export type ItemType = z.infer<typeof zItemType>;
 

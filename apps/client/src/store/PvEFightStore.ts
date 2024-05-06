@@ -184,7 +184,7 @@ export class PvEFightStore {
    public get uniqueAnimations(): Animation[] {
       const monstersAnimations = this.fightResults.monsters.map(({ name }) => {
          if (isMonsterName(name)) {
-            return monsters[name]({ level: 1 }).animation;
+            return monsters[name]()({ level: 1 }).animation;
          }
 
          throw new Error('Monster name should be defined');
@@ -206,7 +206,7 @@ export class PvEFightStore {
          if (isMonsterName(name)) {
             return {
                ...acc,
-               [id]: monsters[name]({ level: 1 }).animation,
+               [id]: monsters[name]()({ level: 1 }).animation,
             };
          }
 

@@ -217,3 +217,5 @@ export const EXPERIENCE_TO_LEVEL = EXPERIENCE_TABLE.reduce(
    }),
    {} as Record<number, number>,
 );
+
+export const MAXIMUM_LEVEL = 200;

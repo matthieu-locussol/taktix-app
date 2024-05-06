@@ -1,6 +1,7 @@
 import { PaletteColor } from '@mui/material/styles';
 import { Channel } from 'shared/src/types/Channel';
 import { ItemRarity } from 'shared/src/types/Item';
+import { MonsterType } from 'shared/src/types/Monster';
 import { RealStatistic } from 'shared/src/types/Statistic';
 
 interface CustomPalette {
@@ -68,6 +69,7 @@ interface CustomPalette {
       select: string;
    };
    item: Record<ItemRarity, string>;
+   monster: Record<MonsterType, string>;
 }
 
 declare module '@mui/material/styles' {
