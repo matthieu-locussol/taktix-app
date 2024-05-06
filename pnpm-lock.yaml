@@ -57,8 +57,8 @@ importers:
         specifier: ^0.15.19
         version: 0.15.19
       grid-engine:
-        specifier: ^2.44.2
-        version: 2.44.2(phaser@3.70.0)
+        specifier: ^2.44.5
+        version: 2.44.5(phaser@3.70.0)
       i18next:
         specifier: ^23.11.3
         version: 23.11.3
@@ -2463,8 +2463,8 @@ packages:
   grapheme-splitter@1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
 
-  grid-engine@2.44.2:
-    resolution: {integrity: sha512-c1ZkODzD1qonq8Q9OhhEYeyWbOJxpOkmeYX4UKp3X+Vh22AGaER4mT2Kl8htgWATN71b40PkUQSNzimI4s66rQ==}
+  grid-engine@2.44.5:
+    resolution: {integrity: sha512-F95X811JhNvDy+P8+ibQ2bEbcsHsPxsVkkpBLSmV7p8bTAueWrbdEWJ5lSanE7Etx4BGsV08x2soKUFXGD9U/g==}
     peerDependencies:
       phaser: ~3.70.0
 
@@ -6785,7 +6785,7 @@ snapshots:
 
   grapheme-splitter@1.0.4: {}
 
-  grid-engine@2.44.2(phaser@3.70.0):
+  grid-engine@2.44.5(phaser@3.70.0):
     dependencies:
       mnemonist: 0.39.8
       phaser: 3.70.0

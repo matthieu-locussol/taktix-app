@@ -22,7 +22,7 @@
       "@tauri-apps/api": "^1.5.4",
       "@vitejs/plugin-react": "^4.2.1",
       "colyseus.js": "^0.15.19",
-      "grid-engine": "^2.44.2",
+      "grid-engine": "^2.44.5",
       "i18next": "^23.11.3",
       "mobx": "^6.12.3",
       "mobx-react-lite": "^4.0.7",
