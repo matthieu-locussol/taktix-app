@@ -69,6 +69,7 @@ interface CustomPalette {
       select: string;
    };
    item: Record<ItemRarity, string>;
+   itemGradient: Record<ItemRarity, string>;
    monster: Record<MonsterType, string>;
 }
 

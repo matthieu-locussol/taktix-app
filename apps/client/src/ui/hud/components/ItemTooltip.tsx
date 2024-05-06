@@ -1,4 +1,4 @@
-import { Box, Divider, TooltipProps, Typography, darken } from '@mui/material';
+import { Box, Divider, TooltipProps, Typography, darken, keyframes } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
 import { Affix, Item } from 'shared/src/types/Item';
@@ -61,6 +61,15 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                   >
                      {`${t(`${statistic}_value`, { value })}`}
                   </Typography>
+                  <Typography
+                     variant="body2"
+                     fontStyle="italic"
+                     fontWeight="bold"
+                     color="gray"
+                     sx={{ ml: 'auto', pl: 'min(0.5vw, 1vh)' }}
+                  >
+                     T{tier}
+                  </Typography>
                </Box>
             );
          })
@@ -72,15 +81,52 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
          arrow
          componentsProps={{
             tooltip: {
-               sx: (theme) => ({
-                  padding: 0,
-                  fontSize: '0.75rem',
-                  fontWeight: 500,
-                  color: 'white',
-                  border: `1px solid ${rarityColor}`,
-                  background: darken(`${theme.palette.paper.background}F6`, 0.15),
-                  minWidth: '20vw',
-               }),
+               sx: (theme) => {
+                  const glowKeyframes = glow();
+
+                  return {
+                     padding: 0,
+                     fontSize: '0.75rem',
+                     fontWeight: 500,
+                     color: 'white',
+                     border: `1px solid ${rarityColor}`,
+                     background: darken(`${theme.palette.paper.background}F6`, 0.15),
+                     minWidth: '20vw',
+                     ':before': {
+                        content: '""',
+                        background: theme.palette.itemGradient[rarity],
+                        position: 'absolute',
+                        top: '-2px',
+                        left: '-2px',
+                        backgroundSize: '400%',
+                        zIndex: -1,
+                        filter: 'blur(8px)',
+                        width: 'calc(100% + 4px)',
+                        height: 'calc(100% + 4px)',
+                        animation: `${glowKeyframes} 20s linear infinite`,
+                        opacity: 1,
+                        transition: 'opacity .3s ease-in-out',
+                        borderRadius: '10px',
+                     },
+                     ':active': {
+                        color: theme.palette.paper.background,
+                     },
+                     ':active:after': {
+                        background: 'transparent',
+                     },
+                     ':after': {
+                        zIndex: -1,
+                        content: '""',
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        background: darken(`${theme.palette.paper.background}F6`, 0.15),
+                        left: 0,
+                        top: 0,
+                        borderRadius: '10px',
+                     },
+                  };
+               },
             },
             arrow: {
                sx: () => ({
@@ -93,13 +139,15 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  pb: hasAffixes ? 0 : 'min(1vw, 2vh)',
+                  pb: !hasAffixes ? 'min(0.5vw, 1vh)' : 'min(0.125vw, 0.25vh)',
                }}
             >
                <Typography
                   variant="body1"
                   fontWeight="bold"
+                  lineHeight={1.2}
                   sx={{ px: 'min(1vw, 2vh)', pt: 'min(0.5vw, 1vh)' }}
+                  gutterBottom
                >
                   {name}
                </Typography>
@@ -120,9 +168,16 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                      {t(rarity)}
                   </Typography>
                </Box>
-               <Box sx={{ display: 'flex', width: '100%', px: 'min(1vw, 2vh)' }}>
+               <Box
+                  sx={{
+                     display: 'flex',
+                     width: '100%',
+                     px: 'min(1vw, 2vh)',
+                     pb: hasAffixes ? 'min(0.5vw, 1vh)' : 0,
+                  }}
+               >
                   <Typography variant="caption" color={hasRequiredLevel ? 'green' : 'red'}>
-                     Required level {item.requiredLevel}
+                     {t('requiredLevel', { level: item.requiredLevel })}
                   </Typography>
                   <Typography
                      variant="caption"
@@ -132,7 +187,7 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                         mr: 'min(1vw, 2vh)',
                      }}
                   >
-                     level {item.level}
+                     {t('level', { level: item.level })}
                   </Typography>
                </Box>
                {item.prefixes.length > 0 && (
@@ -140,7 +195,6 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                      <Divider
                         sx={() => ({
                            borderBottom: `1px solid ${rarityColor}`,
-                           marginTop: 'min(0.5vw, 1vh)',
                            marginBottom: 'min(0.5vw, 1vh)',
                         })}
                      />
@@ -152,7 +206,6 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                      <Divider
                         sx={() => ({
                            borderBottom: `1px solid ${rarityColor}`,
-                           marginTop: 'min(0.5vw, 1vh)',
                            marginBottom: 'min(0.5vw, 1vh)',
                         })}
                      />
@@ -165,3 +218,15 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
       />
    );
 });
+
+const glow = () => keyframes`
+   0% {
+      background-position: 0 0;
+   }
+   50% {
+      background-position: 400% 0;
+   }
+   100% {
+      background-position: 0 0;
+   }
+`;

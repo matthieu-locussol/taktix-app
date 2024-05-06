@@ -123,6 +123,14 @@ export const translationsJa: LanguageTranslations = {
    cost: 'コスト',
    creditsValue: '<b>クレジット</b>: {{value}}',
    inventory: 'インベントリ',
+   requiredLevel: '必要レベル: {{level}}',
+
+   // Rarities
+   common: 'コモン',
+   uncommon: 'アンコモン',
+   rare: 'レア',
+   epic: 'エピック',
+   unique: 'ユニーク',
 
    // Items
    helmetE: '兜',
