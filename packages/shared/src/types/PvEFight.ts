@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { zItem } from './Item';
 import { zMonsterType } from './Monster';
 import { zProfessionType } from './Profession';
 import { RealStatistic, isRealStatistic, zRealStatistic } from './Statistic';
@@ -77,6 +78,8 @@ export type PvEMonsterSimplified = z.infer<typeof zPvEMonsterSimplified>;
 const zPvEFightParameters = z.object({
    alliesInformations: z.array(zPvEFighterInformations),
    monstersInformations: z.array(zPvEFighterInformations),
+   areaExperienceBonus: z.number(),
+   areaLootBonus: z.number(),
 });
 
 export type PvEFightParameters = z.infer<typeof zPvEFightParameters>;
@@ -131,7 +134,7 @@ export const zPvEFightResults = z.object({
    monsters: z.array(zPvEMonsterSimplified),
    turns: z.array(zPvEFightTurn),
    experiences: z.array(z.number()),
-   loots: z.array(z.array(z.unknown())),
+   loots: z.array(z.array(zItem)),
    won: z.boolean(),
 });
 

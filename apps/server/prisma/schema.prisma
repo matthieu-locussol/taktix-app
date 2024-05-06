@@ -39,6 +39,8 @@ model Character {
   user   User @relation(fields: [userId], references: [id])
   userId Int
 
+  items Item[]
+
   @@index([userId], name: "userId")
 }
 
@@ -46,4 +48,19 @@ model Maintenance {
   id   Int      @id @default(autoincrement())
   date DateTime @default(now())
   done Boolean  @default(false)
+}
+
+model Item {
+  id            Int     @id @default(autoincrement())
+  isUnique      Boolean
+  type          String
+  level         Int
+  requiredLevel Int
+  prefixes      String
+  suffixes      String
+
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+
+  @@index([characterId], name: "characterId")
 }

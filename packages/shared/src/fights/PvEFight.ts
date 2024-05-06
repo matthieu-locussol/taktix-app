@@ -1,3 +1,5 @@
+import { MonsterName } from '../data/monsters';
+import { Item } from '../types/Item';
 import {
    PvEFightMove,
    PvEFightParameters,
@@ -10,6 +12,7 @@ import { WeaponDamagesType } from '../types/Weapon';
 import { _assert, _assertTrue } from '../utils/_assert';
 import { ArrayMgt } from '../utils/arrayMgt';
 import { LevelMgt } from '../utils/levelMgt';
+import { LootMgt } from '../utils/lootMgt';
 import { NumberMgt } from '../utils/numberMgt';
 import { StatisticMgt } from '../utils/statisticMgt';
 
@@ -264,19 +267,38 @@ export class PvEFight {
       return this.getAlliesHealth() > 0;
    }
 
+   private getExperienceMultiplier(): number {
+      return this.parameters.areaExperienceBonus / 100;
+   }
+
    private getExperiences(): number[] {
       return this.getAllies().map((ally) =>
          LevelMgt.computeExperienceGain(
             ally.level,
-            this.getMonsters().map(({ level, experience }) => ({ level, experience })),
+            this.getMonsters().map(({ level, experience }) => ({
+               level,
+               experience: experience * this.getExperienceMultiplier(),
+            })),
             this.getAllies().map(({ experience }) => ({ experience })),
             this.hasWon(),
          ),
       );
    }
 
-   private getLoots(): unknown[][] {
-      return this.getAllies().map(() => []);
+   private getLoots(): Item[][] {
+      return this.getAllies().map(({ statistics }) =>
+         LootMgt.computeMonstersLoot({
+            monsters: this.parameters.monstersInformations.map((monster) => {
+               const { monsterType, name, level } = monster;
+               const monsterName = name as MonsterName;
+               _assert(monsterType, 'monsterType should be defined!');
+
+               return { level, name: monsterName, type: monsterType };
+            }),
+            areaBonus: this.parameters.areaLootBonus,
+            prospect: statistics.prospect,
+         }),
+      );
    }
 
    private getResults(): PvEFightResults {

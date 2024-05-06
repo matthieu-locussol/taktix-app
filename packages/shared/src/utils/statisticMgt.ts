@@ -29,6 +29,7 @@ export namespace StatisticMgt {
          'precision_+f': 15,
          'evasion_+f': 15,
          'criticalStrikeDamages_+%': 50,
+         'prospect_+f': 100,
       });
 
    export const LEVEL_UP_STATISTICS = (): Record<ProfessionType, Statistics> => ({

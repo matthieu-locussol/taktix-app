@@ -65,7 +65,7 @@ export const zAffix = z.object({
 
 export type Affix = z.infer<typeof zAffix>;
 
-const zItem = z.object({
+export const zItem = z.object({
    id: z.number(),
    isUnique: z.boolean(),
    type: zItemType,

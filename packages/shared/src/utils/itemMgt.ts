@@ -1,6 +1,7 @@
+import { z } from 'zod';
 import { affixes } from '../data/affixes';
 import { MonsterName } from '../data/monsters';
-import { Item, ItemRarity, ItemType, zItemType } from '../types/Item';
+import { Affix, Item, ItemRarity, ItemType, zAffix, zItemType } from '../types/Item';
 import { Statistic } from '../types/Statistic';
 import { _assert, _assertTrue } from './_assert';
 import { NumberMgt } from './numberMgt';
@@ -327,5 +328,36 @@ export namespace ItemMgt {
 
    export const hasEnoughAffixes = (item: Item) => {
       return item.isUnique || getAffixesCount(item) >= MAXIMUM_AFFIXES;
+   };
+
+   export const serializeAffixes = (affixes: Affix[]): string => {
+      return z
+         .array(zAffix)
+         .parse(affixes)
+         .map(({ name, tier, statistics }) => {
+            const stats = Object.entries(statistics)
+               .map(([stat, value]) => `${stat}:${value}`)
+               .join(';');
+
+            return `${name}#${tier}#${stats}`;
+         })
+         .join('|');
+   };
+
+   export const deserializeAffixes = (affixes: string): Affix[] => {
+      return z.array(zAffix).parse(
+         affixes
+            .split('|')
+            .map((affix) => {
+               const [name, tier, stats] = affix.split('#');
+               const statistics = stats.split(';').reduce((acc, stat) => {
+                  const [key, value] = stat.split(':');
+                  return { ...acc, [key]: Number(value) };
+               }, {});
+
+               return { name, tier: Number(tier), statistics };
+            })
+            .filter(({ name }) => name !== ''),
+      );
    };
 }
