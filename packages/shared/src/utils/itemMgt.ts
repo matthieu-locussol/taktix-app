@@ -1,15 +1,16 @@
 import { affixes } from '../data/affixes';
-import { Item, ItemRarity, ItemType } from '../types/Item';
+import { MonsterName } from '../data/monsters';
+import { Item, ItemRarity, ItemType, zItemType } from '../types/Item';
 import { Statistic } from '../types/Statistic';
 import { _assert, _assertTrue } from './_assert';
 import { NumberMgt } from './numberMgt';
+import { StatisticMgt } from './statisticMgt';
 import { StringMgt } from './stringMgt';
 
 interface GenerateItemProps {
-   level: number;
-   type: ItemType;
+   monsterName: MonsterName;
+   itemLevel: number;
    rarity: ItemRarity;
-   uniqueId: number | null;
 }
 
 export namespace ItemMgt {
@@ -33,19 +34,98 @@ export namespace ItemMgt {
       epic: 3,
    };
 
+   export const ITEM_TYPE_WEIGHTS: Record<ItemType, number> = {
+      helmetE: 15,
+      helmetH: 15,
+      helmetM: 15,
+      helmetEH: 15,
+      helmetEM: 15,
+      helmetHM: 15,
+      chestplateE: 15,
+      chestplateH: 15,
+      chestplateM: 15,
+      chestplateEH: 15,
+      chestplateEM: 15,
+      chestplateHM: 15,
+      bootsE: 15,
+      bootsH: 15,
+      bootsM: 15,
+      bootsEH: 15,
+      bootsEM: 15,
+      bootsHM: 15,
+      glovesE: 15,
+      glovesH: 15,
+      glovesM: 15,
+      glovesEH: 15,
+      glovesEM: 15,
+      glovesHM: 15,
+      belt: 15,
+      shield: 15,
+      quiver: 15,
+      orb: 15,
+      sword1H: 8,
+      sword2H: 8,
+      axe1H: 8,
+      axe2H: 8,
+      mace1H: 8,
+      mace2H: 8,
+      dagger: 8,
+      staff: 8,
+      wand: 8,
+      bow: 8,
+      amulet: 4,
+      ring: 4,
+      relic: 2,
+   };
+
+   export const ITEM_TYPE_PROBABILITIES: Record<ItemType, number> = Object.keys(
+      ITEM_TYPE_WEIGHTS,
+   ).reduce(
+      (acc, typeStr) => {
+         const type = zItemType.parse(typeStr);
+         const weight = ITEM_TYPE_WEIGHTS[type];
+         const totalWeight = Object.values(ITEM_TYPE_WEIGHTS).reduce(
+            (acc, weight) => acc + weight,
+            0,
+         );
+         const probability = weight / totalWeight;
+         return { ...acc, [type]: probability };
+      },
+      {} as Record<ItemType, number>,
+   );
+
+   export const DEFAULT_ITEM_TYPE: ItemType = 'relic';
+
+   export const generateItemType = (): ItemType => {
+      const random = Math.random();
+      let accumulatedProbability = 0;
+
+      for (const type of Object.keys(ITEM_TYPE_PROBABILITIES) as ItemType[]) {
+         accumulatedProbability += ITEM_TYPE_PROBABILITIES[type];
+
+         if (random < accumulatedProbability) {
+            return type;
+         }
+      }
+
+      return DEFAULT_ITEM_TYPE;
+   };
+
    export const generateItem = (props: GenerateItemProps): Item => {
-      const { level, type, rarity, uniqueId } = props;
+      const { itemLevel, rarity, monsterName } = props;
+      const type = generateItemType();
 
       // TODO: implement unique items generation
+      // pickup random unique item from the list for a given monster
       if (rarity === 'unique') {
-         _assert(uniqueId, 'uniqueId must be provided for unique items');
+         console.log(monsterName);
 
          const uniqueItem: Item = {
             id: -1,
             isUnique: true,
             type,
-            level,
-            requiredLevel: 0,
+            level: itemLevel,
+            requiredLevel: 1,
             prefixes: [],
             suffixes: [],
          };
@@ -59,14 +139,16 @@ export namespace ItemMgt {
          id: -1,
          isUnique: false,
          type,
-         level,
+         level: itemLevel,
          requiredLevel: 1,
          prefixes: [],
          suffixes: [],
       };
 
-      while (getAffixesCount(item) < affixesCount) {
+      let count = 0;
+      while (count < affixesCount) {
          item = pickupRandomAffix(item);
+         count++;
       }
 
       return item;
@@ -150,13 +232,19 @@ export namespace ItemMgt {
    };
 
    export const pickupRandomPrefix = (item: Item): Item => {
-      const existingPrefixes = Object.keys(item.prefixes) as Statistic[];
+      const existingPrefixes = item.prefixes.flatMap(({ statistics }) =>
+         Object.keys(statistics),
+      ) as Statistic[];
       const prefixesPool = Object.keys(affixes[item.type].prefixes) as Statistic[];
       const eligiblePrefixesPool = prefixesPool.filter(
          (prefix) =>
             !existingPrefixes.includes(prefix) &&
             affixes[item.type].prefixes[prefix]?.some(({ level }) => item.level >= level),
       );
+
+      if (eligiblePrefixesPool.length === 0) {
+         return item;
+      }
 
       const prefixIdx = NumberMgt.random(0, eligiblePrefixesPool.length - 1);
       const prefix = eligiblePrefixesPool[prefixIdx];
@@ -169,7 +257,9 @@ export namespace ItemMgt {
 
       const prefixValueIdx = NumberMgt.random(0, eligiblePrefixValuesPool.length - 1);
       const { name, min, max, tier, level } = eligiblePrefixValuesPool[prefixValueIdx];
-      const prefixValue = NumberMgt.random(min, max);
+      const prefixValue = StatisticMgt.STATISTICS_WITH_DECIMALS.includes(prefix)
+         ? NumberMgt.randomFloat(min, max, 2)
+         : NumberMgt.random(min, max);
 
       item.prefixes.push({
          name,
@@ -185,13 +275,19 @@ export namespace ItemMgt {
    };
 
    export const pickupRandomSuffix = (item: Item): Item => {
-      const existingSuffixes = Object.keys(item.suffixes) as Statistic[];
+      const existingSuffixes = item.suffixes.flatMap(({ statistics }) =>
+         Object.keys(statistics),
+      ) as Statistic[];
       const suffixesPool = Object.keys(affixes[item.type].suffixes) as Statistic[];
       const eligibleSuffixesPool = suffixesPool.filter(
          (suffix) =>
             !existingSuffixes.includes(suffix) &&
             affixes[item.type].suffixes[suffix]?.some(({ level }) => item.level >= level),
       );
+
+      if (eligibleSuffixesPool.length === 0) {
+         return item;
+      }
 
       const suffixIdx = NumberMgt.random(0, eligibleSuffixesPool.length - 1);
       const suffix = eligibleSuffixesPool[suffixIdx];
@@ -204,7 +300,9 @@ export namespace ItemMgt {
 
       const suffixValueIdx = NumberMgt.random(0, eligibleSuffixValuesPool.length - 1);
       const { name, min, max, tier, level } = eligibleSuffixValuesPool[suffixValueIdx];
-      const suffixValue = NumberMgt.random(min, max);
+      const suffixValue = StatisticMgt.STATISTICS_WITH_DECIMALS.includes(suffix)
+         ? NumberMgt.randomFloat(min, max, 2)
+         : NumberMgt.random(min, max);
 
       item.suffixes.push({
          name,

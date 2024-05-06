@@ -6,7 +6,7 @@ export const makeCharacterName = (scene: Phaser.Scene, name: string, color: stri
          align: 'center',
          fontSize: 6,
          fontFamily: 'Orbitron',
-         resolution: 4,
+         resolution: 32,
          color,
          shadow: {
             offsetX: 0,

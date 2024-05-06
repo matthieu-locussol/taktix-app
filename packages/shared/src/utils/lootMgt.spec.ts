@@ -3,6 +3,13 @@ import { Monster } from '../data/monsters';
 import { LootMgt } from './lootMgt';
 
 describe('LootMgt', () => {
+   describe('BASE_PROBABILITIES', () => {
+      it('sum of probabilities should be 1', () => {
+         const sum = Object.values(LootMgt.BASE_PROBABILITIES).reduce((acc, val) => acc + val, 0);
+         expect(sum).toBe(1);
+      });
+   });
+
    describe('computeMoneyEarned', () => {
       const samples = [
          {

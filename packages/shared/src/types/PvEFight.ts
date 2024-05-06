@@ -1,10 +1,12 @@
 import { z } from 'zod';
+import { zMonsterType } from './Monster';
 import { zProfessionType } from './Profession';
 import { RealStatistic, isRealStatistic, zRealStatistic } from './Statistic';
 import { zWeaponDamages, zWeaponDamagesType, zWeaponType } from './Weapon';
 
 const zPvEFighterInformations = z.object({
    name: z.string(),
+   monsterType: zMonsterType.optional(),
 
    health: z.number(),
    magicShield: z.number(),
@@ -63,6 +65,7 @@ export type PvEAllySimplified = z.infer<typeof zPvEAllySimplified>;
 const zPvEMonsterSimplified = z.object({
    id: z.number(),
    name: z.string(),
+   monsterType: zMonsterType.optional(),
    type: z.union([z.literal('ally'), z.literal('monster')]),
    health: z.number(),
    magicShield: z.number(),

@@ -27,6 +27,7 @@
       "release": "standard-version -a && turbo run bumpversion",
       "studio": "turbo run studio",
       "generate_item": "turbo run generate_item",
+      "generate_loot": "turbo run generate_loot",
       "generate_maps": "turbo run generate_maps && pnpm biome format --write packages apps && pnpm biome lint --apply-unsafe packages apps && turbo run build --filter=shared"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",

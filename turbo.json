@@ -62,6 +62,9 @@
       "generate_item": {
          "cache": false
       },
+      "generate_loot": {
+         "cache": false
+      },
       "generate_maps": {
          "cache": false
       },

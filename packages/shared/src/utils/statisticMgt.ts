@@ -3,6 +3,7 @@ import { getTalents } from '../data/talents';
 import { ProfessionType } from '../types/Profession';
 import {
    RealStatistic,
+   Statistic,
    Statistics,
    statistics as allStatistics,
    isStatistic,
@@ -14,6 +15,13 @@ export namespace StatisticMgt {
    export const BASE_INITIATIVE = 100;
 
    export const MAX_RESISTANCE_PERCENT = 50;
+
+   export const STATISTICS_WITH_DECIMALS: Statistic[] = [
+      'thornsMagical_+%',
+      'thornsPhysical_+%',
+      'thornsMagical_-%',
+      'thornsPhysical_-%',
+   ];
 
    export const DEFAULT_CHARACTER_STATISTICS = (): Statistics =>
       StatisticMgt.makeMockedStatistics({
