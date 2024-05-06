@@ -124,6 +124,14 @@ export const translationsFr: LanguageTranslations = {
    cost: 'Coût',
    creditsValue: '<b>Crédits :</b> {{value}}',
    inventory: 'Inventaire',
+   requiredLevel: 'Niveau requis: {{level}}',
+
+   // Rarities
+   common: 'Commun',
+   uncommon: 'Peu commun',
+   rare: 'Rare',
+   epic: 'Épique',
+   unique: 'Unique',
 
    // Items
    helmetE: 'Casque',

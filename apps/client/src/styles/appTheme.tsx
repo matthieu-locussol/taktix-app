@@ -351,6 +351,16 @@ export const appTheme = createTheme({
          epic: ITEM_RARITY_COLORS.epic,
          unique: ITEM_RARITY_COLORS.unique,
       },
+      itemGradient: {
+         common: '',
+         // #4b5563, #4d4f5a, #57534e, #6b7280, #9ca3af, #6b7280, #57534e, #4d4f5a, #4b5563)',
+         uncommon:
+            'linear-gradient(45deg, #1e3a8a, #1e40af, #1d4ed8, #2563eb, #3b82f6, #2563eb, #1d4ed8, #1e40af, #1e3a8a)',
+         rare: 'linear-gradient(45deg, #b45309, #d97706, #f59e0b, #fbbf24, #fcd34d, #fbbf24, #f59e0b, #d97706, #b45309)',
+         epic: 'linear-gradient(45deg, #5b21b6, #6d28d9, #7c3aed, #8b5cf6, #9f7aea, #8b5cf6, #7c3aed, #6d28d9, #5b21b6)',
+         unique:
+            'linear-gradient(45deg, #442c1a, #593c1f, #6b4c24, #854d0e, #a16207, #854d0e, #6b4c24, #593c1f, #442c1a)',
+      },
       monster: {
          common: MONSTER_TYPE_COLORS.common,
          magic: MONSTER_TYPE_COLORS.magic,
