@@ -23,6 +23,7 @@ import { TranslationKey } from 'shared/src/data/translations';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { store, useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
+import { EquipmentSlot } from '../components/EquipmentSlot';
 
 export const FightResultsMenu = observer(() => {
    const nodeRef = useRef(null);
@@ -41,6 +42,20 @@ export const FightResultsMenu = observer(() => {
             const newLevel = LevelMgt.getLevel(experience + gainedExperience);
             const levelCell = oldLevel === newLevel ? newLevel : `${oldLevel} -> ${newLevel}`;
             const gainedMoney = pveFightStore.alliesMoney[name] ?? 0;
+            const loots = pveFightStore.fightResults.loots[idx];
+
+            const Items = () => (
+               <Box sx={{ display: 'flex', gap: 1 }}>
+                  {loots.map((loot, lootIdx) => (
+                     <EquipmentSlot
+                        key={`loot-${idx}-${lootIdx}`}
+                        size="tiny"
+                        item={loot}
+                        canBeHovered
+                     />
+                  ))}
+               </Box>
+            );
 
             return (
                <TableRow hover tabIndex={-1} key={`fight-results-value-${id}-${name}`}>
@@ -48,7 +63,9 @@ export const FightResultsMenu = observer(() => {
                   <StyledTableCell>{levelCell}</StyledTableCell>
                   <StyledTableCell>+{gainedExperience} XP</StyledTableCell>
                   <StyledTableCell>+{gainedMoney} Credits</StyledTableCell>
-                  <StyledTableCell>Loots...</StyledTableCell>
+                  <StyledTableCell>
+                     <Items />
+                  </StyledTableCell>
                </TableRow>
             );
          })}

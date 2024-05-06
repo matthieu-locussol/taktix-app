@@ -182,8 +182,8 @@ export namespace ItemMgt {
    };
 
    export const getName = (item: Item): string => {
-      const orderedPrefixes = item.prefixes.sort((a, b) => b.tier - a.tier);
-      const orderedSuffixes = item.suffixes.sort((a, b) => b.tier - a.tier);
+      const orderedPrefixes = item.prefixes.slice().sort((a, b) => b.tier - a.tier);
+      const orderedSuffixes = item.suffixes.slice().sort((a, b) => b.tier - a.tier);
 
       const prefix = orderedPrefixes.length > 0 ? orderedPrefixes[0].name : '';
       const suffix = orderedSuffixes.length > 0 ? orderedSuffixes[0].name : '';
