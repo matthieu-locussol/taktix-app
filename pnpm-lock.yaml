@@ -137,7 +137,7 @@ importers:
         version: 0.15.12(express@4.19.2)
       '@colyseus/ws-transport':
         specifier: ^0.15.1
-        version: 0.15.1(@colyseus/schema@2.0.31)
+        version: 0.15.1(@colyseus/schema@2.0.32)
       '@prisma/client':
         specifier: ^5.13.0
         version: 5.13.0(prisma@5.13.0)
@@ -273,8 +273,8 @@ importers:
         specifier: ^0.15.36
         version: 0.15.36
       '@colyseus/schema':
-        specifier: ^2.0.31
-        version: 2.0.31
+        specifier: ^2.0.32
+        version: 2.0.32
       vitest:
         specifier: ^1.5.3
         version: 1.5.3(@types/node@20.12.8)(happy-dom@14.7.1)
@@ -534,6 +534,10 @@ packages:
 
   '@colyseus/schema@2.0.31':
     resolution: {integrity: sha512-hXovnhT49HGutsktp8JOI9mJK3uCbwjuVEe9hsOYX6CXuVrlydBVCie1RgjGV8Z0fB1YinX8VMUNMMEHHwACrA==}
+    hasBin: true
+
+  '@colyseus/schema@2.0.32':
+    resolution: {integrity: sha512-Y5a3E4pjJK8tLPY4f0ur+/xeGBqysxKgMlumSR6JWXwX0SVIdk4o7IqFlKau8BkB6OVOwAP5SoPFSWO6/a2NwQ==}
     hasBin: true
 
   '@colyseus/ws-transport@0.15.1':
@@ -4655,10 +4659,12 @@ snapshots:
 
   '@colyseus/schema@2.0.31': {}
 
-  '@colyseus/ws-transport@0.15.1(@colyseus/schema@2.0.31)':
+  '@colyseus/schema@2.0.32': {}
+
+  '@colyseus/ws-transport@0.15.1(@colyseus/schema@2.0.32)':
     dependencies:
       '@colyseus/core': 0.15.36
-      '@colyseus/schema': 2.0.31
+      '@colyseus/schema': 2.0.32
       '@types/ws': 7.4.7
       ws: 7.5.9
     transitivePeerDependencies:
