@@ -286,6 +286,10 @@ export class PvEFight {
    }
 
    private getLoots(): Item[][] {
+      if (!this.hasWon()) {
+         return Array(this.getAllies().length).fill([]);
+      }
+
       return this.getAllies().map(({ statistics }) =>
          LootMgt.computeMonstersLoot({
             monsters: this.parameters.monstersInformations.map((monster) => {
