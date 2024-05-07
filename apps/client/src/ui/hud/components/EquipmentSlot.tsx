@@ -1,7 +1,7 @@
 import type { BoxProps } from '@mui/material';
 import { forwardRef, useMemo } from 'react';
 import { Item } from 'shared/src/types/Item';
-import { ItemMgt } from 'shared/src/utils/ItemMgt';
+import { ItemMgt } from 'shared/src/utils/itemMgt';
 import { ItemBaseIcon } from '../../components/items/ItemBaseIcon';
 import { ItemSlot } from './ItemSlot';
 import { ItemTooltip } from './ItemTooltip';
