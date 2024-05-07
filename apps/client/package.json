@@ -22,7 +22,7 @@
       "@tauri-apps/api": "^1.5.4",
       "@vitejs/plugin-react": "^4.2.1",
       "colyseus.js": "^0.15.19",
-      "grid-engine": "^2.44.2",
+      "grid-engine": "^2.44.5",
       "i18next": "^23.11.3",
       "mobx": "^6.12.3",
       "mobx-react-lite": "^4.0.7",
@@ -35,16 +35,16 @@
       "shared": "workspace:^",
       "ts-pattern": "^5.1.1",
       "vite": "^5.2.11",
-      "vitest": "^1.5.3",
+      "vitest": "^1.6.0",
       "zod": "^3.23.6"
    },
    "devDependencies": {
       "@babel/core": "^7.24.5",
-      "@tauri-apps/cli": "^1.5.12",
+      "@tauri-apps/cli": "^1.5.13",
       "@types/react": "^18.3.1",
       "@types/react-dom": "^18.3.0",
       "config-typescript": "workspace:^",
-      "happy-dom": "^14.7.1",
+      "happy-dom": "^14.10.1",
       "typescript": "^5.4.5"
    }
 }
