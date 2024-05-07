@@ -2,7 +2,7 @@
 id: 8k33d2axz3zvc8fiu2fmp1z
 title: Equipments
 desc: ''
-updated: 1714788960340
+updated: 1715072025435
 created: 1709598334670
 ---
 

@@ -14,3 +14,5 @@ export type ItemTemplate = Record<
    'prefixes' | 'suffixes',
    Partial<Record<Statistic, AffixTemplate[]>>
 >;
+
+export type BaseTemplate = Partial<Record<Statistic, AffixTemplate>>;

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { affixes } from '../data/affixes';
+import { baseAffixes } from '../data/baseAffixes';
 import { MonsterName } from '../data/monsters';
 import {
    Affix,
@@ -16,7 +17,7 @@ import {
    zItemPosition,
    zItemType,
 } from '../types/Item';
-import { Statistic } from '../types/Statistic';
+import { Statistic, zStatistic } from '../types/Statistic';
 import { isWeapon1HType, isWeapon2HType, isWeaponType } from '../types/Weapon';
 import { _assert, _assertTrue } from './_assert';
 import { NumberMgt } from './numberMgt';
@@ -128,29 +129,28 @@ export namespace ItemMgt {
    };
 
    export const generateItem = (props: GenerateItemProps): Item => {
-      const { itemLevel, rarity, monsterName } = props;
+      const { itemLevel, rarity /* monsterName */ } = props;
       const type = generateItemType();
 
       // TODO: implement unique items generation
       // pickup random unique item from the list for a given monster
       if (rarity === 'unique') {
-         console.log(monsterName);
-
-         const uniqueItem: Item = {
-            id: -1,
-            isUnique: true,
-            type,
-            level: itemLevel,
-            requiredLevel: 1,
-            prefixes: [],
-            suffixes: [],
-            position: ItemPosition.Inventory,
-         };
-
-         return uniqueItem;
+         // console.log(monsterName);
+         // const uniqueItem: Item = {
+         //    id: -1,
+         //    isUnique: true,
+         //    type,
+         //    level: itemLevel,
+         //    requiredLevel: 1,
+         //    baseAffixes: [],
+         //    prefixes: [],
+         //    suffixes: [],
+         //    position: ItemPosition.Inventory,
+         // };
+         // return uniqueItem;
       }
 
-      const affixesCount = pickupRandomAffixesCount(rarity);
+      const affixesCount = pickupRandomAffixesCount(rarity === 'unique' ? 'epic' : rarity); // TODO: implement unique items generation
 
       let item: Item = {
          id: -1,
@@ -158,6 +158,7 @@ export namespace ItemMgt {
          type,
          level: itemLevel,
          requiredLevel: 1,
+         baseAffixes: [],
          prefixes: [],
          suffixes: [],
          position: ItemPosition.Inventory,
@@ -168,6 +169,46 @@ export namespace ItemMgt {
          item = pickupRandomAffix(item);
          count++;
       }
+
+      item = getBaseAffixes(item);
+      return item;
+   };
+
+   export const getBaseAffixes = (item: Item): Item => {
+      const itemBaseAffixes = baseAffixes[item.type];
+      if (itemBaseAffixes.length === 0) {
+         return item;
+      }
+
+      const baseAffixesPool = itemBaseAffixes.filter((possibleBaseAffixes) => {
+         const keys = Object.keys(possibleBaseAffixes) as Statistic[];
+         return keys.every((key) => {
+            const value = possibleBaseAffixes[key];
+            return value !== undefined && value.level <= item.level;
+         });
+      });
+
+      if (baseAffixesPool.length === 0) {
+         return item;
+      }
+
+      const randomBaseAffixesIdx = NumberMgt.random(0, baseAffixesPool.length - 1);
+      const randomBaseAffixes = baseAffixesPool[randomBaseAffixesIdx];
+
+      Object.entries(randomBaseAffixes).forEach(([statisticStr, { level, min, max }]) => {
+         const statistic = zStatistic.parse(statisticStr);
+         const value = NumberMgt.random(min, max);
+
+         item.baseAffixes.push({
+            name: '',
+            tier: randomBaseAffixesIdx + 1,
+            statistics: { [statistic]: value },
+         });
+
+         if (level > item.requiredLevel) {
+            item.requiredLevel = level;
+         }
+      });
 
       return item;
    };
@@ -395,7 +436,8 @@ export namespace ItemMgt {
    };
 
    export const serializePrismaItem = (
-      item: Omit<Item, 'prefixes' | 'suffixes' | 'type'> & {
+      item: Omit<Item, 'baseAffixes' | 'prefixes' | 'suffixes' | 'type'> & {
+         baseAffixes: string;
          prefixes: string;
          suffixes: string;
          type: string;
@@ -407,6 +449,7 @@ export namespace ItemMgt {
          type: item.type,
          level: item.level,
          requiredLevel: item.requiredLevel,
+         baseAffixes: item.baseAffixes,
          prefixes: item.prefixes,
          suffixes: item.suffixes,
          position: item.position,
@@ -414,8 +457,17 @@ export namespace ItemMgt {
    };
 
    export const deserializeItem = (item: string): Item => {
-      const { id, isUnique, type, level, requiredLevel, prefixes, suffixes, position } =
-         JSON.parse(item);
+      const {
+         id,
+         isUnique,
+         type,
+         level,
+         requiredLevel,
+         baseAffixes,
+         prefixes,
+         suffixes,
+         position,
+      } = JSON.parse(item);
 
       return {
          id,
@@ -423,6 +475,7 @@ export namespace ItemMgt {
          type: zItemType.parse(type),
          level,
          requiredLevel,
+         baseAffixes: deserializeAffixes(baseAffixes),
          prefixes: deserializeAffixes(prefixes),
          suffixes: deserializeAffixes(suffixes),
          position: zItemPosition.parse(position),

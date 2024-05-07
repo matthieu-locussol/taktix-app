@@ -145,6 +145,7 @@ export class MapRoom extends Room<MapState> {
          items.map((item) => ({
             ...item,
             type: zItemType.parse(item.type),
+            baseAffixes: ItemMgt.deserializeAffixes(item.baseAffixes),
             prefixes: ItemMgt.deserializeAffixes(item.prefixes),
             suffixes: ItemMgt.deserializeAffixes(item.suffixes),
          })),
@@ -352,7 +353,7 @@ export class MapRoom extends Room<MapState> {
       try {
          const monstersInformations = getMonstersInformations(monsterGroupId);
          const parameters: PvEFightParameters = {
-            areaLootBonus: 100,
+            areaLootBonus: 1000,
             areaExperienceBonus: 100,
             alliesInformations: [
                {
@@ -403,11 +404,21 @@ export class MapRoom extends Room<MapState> {
 
                   return prisma.$transaction(
                      loots.map(
-                        ({ isUnique, level, prefixes, suffixes, requiredLevel, type, position }) =>
+                        ({
+                           isUnique,
+                           level,
+                           baseAffixes,
+                           prefixes,
+                           suffixes,
+                           requiredLevel,
+                           type,
+                           position,
+                        }) =>
                            prisma.item.create({
                               data: {
                                  isUnique,
                                  level,
+                                 baseAffixes: ItemMgt.serializeAffixes(baseAffixes),
                                  prefixes: ItemMgt.serializeAffixes(prefixes),
                                  suffixes: ItemMgt.serializeAffixes(suffixes),
                                  requiredLevel,

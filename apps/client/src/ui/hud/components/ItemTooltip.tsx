@@ -30,13 +30,13 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
    const hasAffixes = useMemo(() => item.prefixes.length > 0 || item.suffixes.length > 0, [item]);
    const rarityColor = useMemo(() => ITEM_RARITY_COLORS[rarity], [rarity]);
 
-   const tStatistics = ({ name, tier, statistics }: Affix) => {
+   const tStatistics = ({ name, tier, statistics }: Affix, type: 'P' | 'S' | 'T') => {
       return Object.entries(statistics)
-         .map<React.ReactNode>(([statisticStr, value]) => {
+         .map<React.ReactNode>(([statisticStr, value], idx) => {
             const statistic = zStatistic.parse(statisticStr);
             return (
                <Box
-                  key={`${name}-${tier}`}
+                  key={`${name}-${tier}-${type}-${idx}`}
                   sx={{
                      display: 'flex',
                      alignItems: 'center',
@@ -68,7 +68,8 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                      color="gray"
                      sx={{ ml: 'auto', pl: 'min(0.5vw, 1vh)' }}
                   >
-                     T{tier}
+                     {type}
+                     {tier}
                   </Typography>
                </Box>
             );
@@ -190,6 +191,17 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                      {t('level', { level: item.level })}
                   </Typography>
                </Box>
+               {item.baseAffixes.length > 0 && (
+                  <>
+                     <Divider
+                        sx={() => ({
+                           borderBottom: `1px solid ${rarityColor}`,
+                           marginBottom: 'min(0.5vw, 1vh)',
+                        })}
+                     />
+                     {item.baseAffixes.map((prefix) => tStatistics(prefix, 'T'))}
+                  </>
+               )}
                {item.prefixes.length > 0 && (
                   <>
                      <Divider
@@ -198,7 +210,7 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                            marginBottom: 'min(0.5vw, 1vh)',
                         })}
                      />
-                     {item.prefixes.map((prefix) => tStatistics(prefix))}
+                     {item.prefixes.map((prefix) => tStatistics(prefix, 'P'))}
                   </>
                )}
                {item.suffixes.length > 0 && (
@@ -209,7 +221,7 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                            marginBottom: 'min(0.5vw, 1vh)',
                         })}
                      />
-                     {item.suffixes.map((suffix) => tStatistics(suffix))}
+                     {item.suffixes.map((suffix) => tStatistics(suffix, 'S'))}
                   </>
                )}
             </Box>
