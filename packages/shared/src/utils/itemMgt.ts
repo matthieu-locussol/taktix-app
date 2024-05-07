@@ -1,8 +1,23 @@
 import { z } from 'zod';
 import { affixes } from '../data/affixes';
 import { MonsterName } from '../data/monsters';
-import { Affix, Item, ItemRarity, ItemType, zAffix, zItemType } from '../types/Item';
+import {
+   Affix,
+   Item,
+   ItemPosition,
+   ItemRarity,
+   ItemType,
+   isBootsType,
+   isChestplateType,
+   isGlovesType,
+   isHelmetType,
+   isOffhandType,
+   zAffix,
+   zItemPosition,
+   zItemType,
+} from '../types/Item';
 import { Statistic } from '../types/Statistic';
+import { isWeapon1HType, isWeapon2HType, isWeaponType } from '../types/Weapon';
 import { _assert, _assertTrue } from './_assert';
 import { NumberMgt } from './numberMgt';
 import { StatisticMgt } from './statisticMgt';
@@ -129,6 +144,7 @@ export namespace ItemMgt {
             requiredLevel: 1,
             prefixes: [],
             suffixes: [],
+            position: ItemPosition.Inventory,
          };
 
          return uniqueItem;
@@ -144,6 +160,7 @@ export namespace ItemMgt {
          requiredLevel: 1,
          prefixes: [],
          suffixes: [],
+         position: ItemPosition.Inventory,
       };
 
       let count = 0;
@@ -345,6 +362,10 @@ export namespace ItemMgt {
    };
 
    export const deserializeAffixes = (affixes: string): Affix[] => {
+      if (affixes === '') {
+         return [];
+      }
+
       return z.array(zAffix).parse(
          affixes
             .split('|')
@@ -359,5 +380,200 @@ export namespace ItemMgt {
             })
             .filter(({ name }) => name !== ''),
       );
+   };
+
+   export const serializeItem = (item: Item): string => {
+      return JSON.stringify({
+         id: item.id,
+         isUnique: item.isUnique,
+         type: item.type,
+         level: item.level,
+         requiredLevel: item.requiredLevel,
+         prefixes: serializeAffixes(item.prefixes),
+         suffixes: serializeAffixes(item.suffixes),
+      });
+   };
+
+   export const serializePrismaItem = (
+      item: Omit<Item, 'prefixes' | 'suffixes' | 'type'> & {
+         prefixes: string;
+         suffixes: string;
+         type: string;
+      },
+   ): string => {
+      return JSON.stringify({
+         id: item.id,
+         isUnique: item.isUnique,
+         type: item.type,
+         level: item.level,
+         requiredLevel: item.requiredLevel,
+         prefixes: item.prefixes,
+         suffixes: item.suffixes,
+         position: item.position,
+      });
+   };
+
+   export const deserializeItem = (item: string): Item => {
+      const { id, isUnique, type, level, requiredLevel, prefixes, suffixes, position } =
+         JSON.parse(item);
+
+      return {
+         id,
+         isUnique,
+         type: zItemType.parse(type),
+         level,
+         requiredLevel,
+         prefixes: deserializeAffixes(prefixes),
+         suffixes: deserializeAffixes(suffixes),
+         position: zItemPosition.parse(position),
+      };
+   };
+
+   export const getEquippedItemsMap = (equippedItems: Item[]) => {
+      const equippedWeapons = equippedItems.filter(({ type }) => isWeaponType(type));
+
+      const equippedWeapon1 = equippedWeapons.at(0) ?? null;
+      const equippedWeapon2 = equippedWeapons.at(1) ?? null;
+      const equippedOffhand =
+         equippedItems.find(({ type }) => isOffhandType(type)) ?? equippedWeapon2;
+
+      const equippedHelmet = equippedItems.find(({ type }) => isHelmetType(type));
+      const equippedChestplate = equippedItems.find(({ type }) => isChestplateType(type));
+      const equippedGloves = equippedItems.find(({ type }) => isGlovesType(type));
+      const equippedBoots = equippedItems.find(({ type }) => isBootsType(type));
+      const equippedRings = equippedItems.filter(({ type }) => type === 'ring');
+      const equippedRelics = equippedItems.filter(({ type }) => type === 'relic');
+      const equippedAmulet = equippedItems.find(({ type }) => type === 'amulet');
+      const equippedBelt = equippedItems.find(({ type }) => type === 'belt');
+
+      return {
+         weapon1: equippedWeapon1,
+         offhand: equippedOffhand,
+         helmet: equippedHelmet ?? null,
+         chestplate: equippedChestplate ?? null,
+         gloves: equippedGloves ?? null,
+         boots: equippedBoots ?? null,
+         ring1: equippedRings.at(0) ?? null,
+         ring2: equippedRings.at(1) ?? null,
+         relic1: equippedRelics.at(0) ?? null,
+         relic2: equippedRelics.at(1) ?? null,
+         relic3: equippedRelics.at(2) ?? null,
+         relic4: equippedRelics.at(3) ?? null,
+         relic5: equippedRelics.at(4) ?? null,
+         relic6: equippedRelics.at(5) ?? null,
+         amulet: equippedAmulet ?? null,
+         belt: equippedBelt ?? null,
+      } as const;
+   };
+
+   export const canEquipItem = (item: Item, level: number) => {
+      return level >= item.level;
+   };
+
+   export const itemsToRemoveAfterEquip = (
+      item: Item,
+      equippedItems: Item[],
+   ): { itemsToRemove: number[]; canEquip: boolean } => {
+      const equippedItemsMap = getEquippedItemsMap(equippedItems);
+      const itemsToRemove: Item[] = [];
+      let canEquip: boolean = true;
+
+      if (isWeapon2HType(item.type)) {
+         if (equippedItemsMap.weapon1 !== null) {
+            itemsToRemove.push(equippedItemsMap.weapon1);
+         }
+
+         if (
+            equippedItemsMap.offhand !== null &&
+            !(item.type === 'bow' && equippedItemsMap.offhand.type === 'quiver')
+         ) {
+            itemsToRemove.push(equippedItemsMap.offhand);
+         }
+      } else if (isOffhandType(item.type)) {
+         if (equippedItemsMap.weapon1 !== null && isWeapon2HType(equippedItemsMap.weapon1.type)) {
+            if (item.type === 'quiver') {
+               if (equippedItemsMap.weapon1.type !== 'bow') {
+                  canEquip = false;
+               } else if (equippedItemsMap.offhand !== null) {
+                  itemsToRemove.push(equippedItemsMap.offhand);
+               }
+            } else {
+               canEquip = false;
+            }
+         } else if (
+            equippedItemsMap.weapon1 !== null &&
+            isWeapon1HType(equippedItemsMap.weapon1.type)
+         ) {
+            if (item.type === 'quiver') {
+               canEquip = false;
+            } else if (equippedItemsMap.offhand !== null) {
+               itemsToRemove.push(equippedItemsMap.offhand);
+            }
+         }
+      } else if (isWeapon1HType(item.type)) {
+         if (equippedItemsMap.weapon1 !== null && isWeapon2HType(equippedItemsMap.weapon1.type)) {
+            itemsToRemove.push(equippedItemsMap.weapon1);
+
+            if (equippedItemsMap.offhand !== null) {
+               itemsToRemove.push(equippedItemsMap.offhand);
+            }
+         } else if (
+            equippedItemsMap.weapon1 !== null &&
+            isWeapon1HType(equippedItemsMap.weapon1.type) &&
+            equippedItemsMap.offhand !== null &&
+            (isWeapon1HType(equippedItemsMap.offhand.type) ||
+               isOffhandType(equippedItemsMap.offhand.type))
+         ) {
+            itemsToRemove.push(equippedItemsMap.weapon1);
+         }
+      } else if (isHelmetType(item.type)) {
+         if (equippedItemsMap.helmet !== null) {
+            itemsToRemove.push(equippedItemsMap.helmet);
+         }
+      } else if (isChestplateType(item.type)) {
+         if (equippedItemsMap.chestplate !== null) {
+            itemsToRemove.push(equippedItemsMap.chestplate);
+         }
+      } else if (isGlovesType(item.type)) {
+         if (equippedItemsMap.gloves !== null) {
+            itemsToRemove.push(equippedItemsMap.gloves);
+         }
+      } else if (isBootsType(item.type)) {
+         if (equippedItemsMap.boots !== null) {
+            itemsToRemove.push(equippedItemsMap.boots);
+         }
+      } else if (isOffhandType(item.type)) {
+         if (equippedItemsMap.offhand !== null) {
+            itemsToRemove.push(equippedItemsMap.offhand);
+         }
+      } else if (item.type === 'ring') {
+         if (equippedItemsMap.ring1 !== null && equippedItemsMap.ring2 !== null) {
+            itemsToRemove.push(equippedItemsMap.ring1);
+         }
+      } else if (item.type === 'relic') {
+         if (
+            equippedItemsMap.relic1 !== null &&
+            equippedItemsMap.relic2 !== null &&
+            equippedItemsMap.relic3 !== null &&
+            equippedItemsMap.relic4 !== null &&
+            equippedItemsMap.relic5 !== null &&
+            equippedItemsMap.relic6 !== null
+         ) {
+            itemsToRemove.push(equippedItemsMap.relic1);
+         }
+      } else if (item.type === 'amulet') {
+         if (equippedItemsMap.amulet !== null) {
+            itemsToRemove.push(equippedItemsMap.amulet);
+         }
+      } else if (item.type === 'belt') {
+         if (equippedItemsMap.belt !== null) {
+            itemsToRemove.push(equippedItemsMap.belt);
+         }
+      }
+
+      return {
+         itemsToRemove: itemsToRemove.map(({ id }) => id),
+         canEquip,
+      };
    };
 }

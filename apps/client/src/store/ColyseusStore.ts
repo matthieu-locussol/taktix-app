@@ -15,6 +15,7 @@ import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
 import { Statistics } from 'shared/src/types/Statistic';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { ArrayMgt } from 'shared/src/utils/arrayMgt';
+import { ItemMgt } from 'shared/src/utils/itemMgt';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { StringMgt } from 'shared/src/utils/stringMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
@@ -208,6 +209,7 @@ export class ColyseusStore {
                health,
                teleporters,
                money,
+               items,
             }) => {
                this.setUuid(uuid);
                await Promise.all([this.joinRoom(map), this.joinChatRoom()]);
@@ -241,6 +243,9 @@ export class ColyseusStore {
                   StringMgt.deserializeTeleporters(teleporters),
                );
                this._store.characterStore.setMoney(money);
+               this._store.characterStore.setItems(
+                  items.map((item) => ItemMgt.deserializeItem(item)),
+               );
 
                this._store.talentsMenuStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.talentsMenuStore.setTalentsPoints(talentsPoints);
@@ -342,6 +347,12 @@ export class ColyseusStore {
                })
                .with({ type: 'saveTeleporterResponse' }, ({ message: payloadMessage }) => {
                   this.onSaveTeleporterResponse(payloadMessage);
+               })
+               .with({ type: 'equipItemResponse' }, ({ message: payloadMessage }) => {
+                  this.onEquipItemResponse(payloadMessage);
+               })
+               .with({ type: 'unequipItemResponse' }, ({ message: payloadMessage }) => {
+                  this.onUnequipItemResponse(payloadMessage);
                })
                .exhaustive();
          }
@@ -454,6 +465,14 @@ export class ColyseusStore {
       this.gameRoom.send('saveTeleporter', { room });
    }
 
+   equipItem(id: number) {
+      this.gameRoom.send('equipItem', { id });
+   }
+
+   unequipItem(id: number) {
+      this.gameRoom.send('unequipItem', { id });
+   }
+
    async onChangeMap({
       map,
       x,
@@ -553,6 +572,30 @@ export class ColyseusStore {
             channel: Channel.SERVER,
             content: i18next.t('teleporterNotSaved' satisfies TranslationKey),
             author: 'Server',
+         });
+      }
+   }
+
+   async onEquipItemResponse({
+      success,
+   }: Extract<MapRoomResponse, { type: 'equipItemResponse' }>['message']) {
+      if (!success) {
+         this._store.chatStore.addMessage({
+            channel: Channel.SERVER,
+            content: i18next.t('itemNotEquipped'),
+            author: i18next.t('Server' satisfies TranslationKey),
+         });
+      }
+   }
+
+   async onUnequipItemResponse({
+      success,
+   }: Extract<MapRoomResponse, { type: 'unequipItemResponse' }>['message']) {
+      if (!success) {
+         this._store.chatStore.addMessage({
+            channel: Channel.SERVER,
+            content: i18next.t('itemNotUnequipped'),
+            author: i18next.t('Server' satisfies TranslationKey),
          });
       }
    }
