@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.53.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.52.0...v1.53.0) (2024-05-07)
+
+
+### Features
+
+* ability to equip items ([3f32969](https://github.com/matthieu-locussol/taktix-app/commit/3f3296948ffcccebfc6e17a98f6d2c9129dc1a96))
+* after-fight loots generation ([51c4513](https://github.com/matthieu-locussol/taktix-app/commit/51c45136b84f781042807411780286532cfda8ff))
+* inventory menu ([681880f](https://github.com/matthieu-locussol/taktix-app/commit/681880f15fb9e2cb6415c52c39e6b333bb8232c0))
+* item generation system ([16db345](https://github.com/matthieu-locussol/taktix-app/commit/16db3455fbed61dc42364aa4244b4a04c5349367))
+* item loot system ([845cd36](https://github.com/matthieu-locussol/taktix-app/commit/845cd367bb9799c57ab3204bbd29c9a6b8e0989c))
+* item tooltip ([6e9c84c](https://github.com/matthieu-locussol/taktix-app/commit/6e9c84cfe98332f8bb24d9199f08f08322eb8659))
+* items base affixes ([2c204bf](https://github.com/matthieu-locussol/taktix-app/commit/2c204bfb72d2b99c3d38da61afc50818bfa393c5))
+* loot display in fight results ([2086895](https://github.com/matthieu-locussol/taktix-app/commit/2086895469f9812c25df010aa46608bc7ce83b19))
+* weapons damages range ([b9bf940](https://github.com/matthieu-locussol/taktix-app/commit/b9bf940abfde4fa9bc4453ab4c8e4ff8b536a77b))
+
+
+### Bug Fixes
+
+* reset area loot bonus to 100% ([9b32c00](https://github.com/matthieu-locussol/taktix-app/commit/9b32c00e3fa0f79b027c2eddc3a925a08a8f229f))
+
 ## [1.52.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.51.0...v1.52.0) (2024-05-03)
 
 
