@@ -353,7 +353,7 @@ export class MapRoom extends Room<MapState> {
       try {
          const monstersInformations = getMonstersInformations(monsterGroupId);
          const parameters: PvEFightParameters = {
-            areaLootBonus: 1000,
+            areaLootBonus: 100,
             areaExperienceBonus: 100,
             alliesInformations: [
                {
