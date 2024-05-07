@@ -1,4 +1,4 @@
-import { BoxProps } from '@mui/material';
+import type { BoxProps } from '@mui/material';
 import { forwardRef, useMemo } from 'react';
 import { Item } from 'shared/src/types/Item';
 import { ItemMgt } from 'shared/src/utils/ItemMgt';
