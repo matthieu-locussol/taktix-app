@@ -12,7 +12,7 @@ interface EquipmentSlotProps extends BoxProps {
    canBeHovered?: boolean;
 }
 
-export const EquipmentSlot = forwardRef<unknown, EquipmentSlotProps>(
+export const EquipmentSlot = forwardRef<HTMLDivElement, EquipmentSlotProps>(
    ({ size, item, canBeHovered = false, ...rest }, ref) => {
       const { width, height } = {
          tiny: { width: 'min(2vw, 3vh)', height: 'min(2vw, 3vh)' },
