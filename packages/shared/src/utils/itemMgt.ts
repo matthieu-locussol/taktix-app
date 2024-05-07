@@ -1,13 +1,13 @@
 import { z } from 'zod';
 import { affixes } from '../data/affixes';
 import { baseAffixes } from '../data/baseAffixes';
-import { MonsterName } from '../data/monsters';
+import type { MonsterName } from '../data/monsters';
 import {
-   Affix,
-   Item,
+   type Affix,
+   type Item,
    ItemPosition,
-   ItemRarity,
-   ItemType,
+   type ItemRarity,
+   type ItemType,
    isBootsType,
    isChestplateType,
    isGlovesType,
@@ -17,9 +17,9 @@ import {
    zItemPosition,
    zItemType,
 } from '../types/Item';
-import { Statistic, zStatistic } from '../types/Statistic';
+import { type Statistic, zStatistic } from '../types/Statistic';
 import {
-   WeaponDamages,
+   type WeaponDamages,
    isWeapon1HType,
    isWeapon2HType,
    isWeaponType,
@@ -31,13 +31,13 @@ import { NumberMgt } from './numberMgt';
 import { StatisticMgt } from './statisticMgt';
 import { StringMgt } from './stringMgt';
 
-interface GenerateItemProps {
-   monsterName: MonsterName;
-   itemLevel: number;
-   rarity: ItemRarity;
-}
-
 export namespace ItemMgt {
+   interface GenerateItemProps {
+      monsterName: MonsterName;
+      itemLevel: number;
+      rarity: ItemRarity;
+   }
+
    export const MAXIMUM_PREFIXES = 3;
 
    export const MAXIMUM_SUFFIXES = 3;
