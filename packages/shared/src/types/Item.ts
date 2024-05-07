@@ -134,6 +134,7 @@ export const zItem = z.object({
    type: zItemType,
    level: z.number(),
    requiredLevel: z.number(),
+   baseAffixes: z.array(zAffix),
    prefixes: z.array(zAffix),
    suffixes: z.array(zAffix),
    position: zItemPosition,

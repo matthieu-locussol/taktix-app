@@ -71,7 +71,7 @@ export const InventoryMenu = observer(() => {
                         }
                      />
                   </Box>
-                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)' }}>
+                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)', py: 'min(0.25vw, 0.5vh)' }}>
                      <EquipmentSlot
                         size="large"
                         item={characterStore.equippedItemsMap.weapon1}
@@ -99,7 +99,7 @@ export const InventoryMenu = observer(() => {
                         }
                      />
                   </Box>
-                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)' }}>
+                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)', pb: 'min(0.25vw, 0.5vh)' }}>
                      <EquipmentSlot
                         size="small"
                         item={characterStore.equippedItemsMap.ring1}
@@ -125,7 +125,7 @@ export const InventoryMenu = observer(() => {
                         }
                      />
                   </Box>
-                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)' }}>
+                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)', pb: 'min(0.25vw, 0.5vh)' }}>
                      <EquipmentSlot
                         size="medium"
                         item={characterStore.equippedItemsMap.gloves}
@@ -250,7 +250,6 @@ const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
 const StyledDialogContent = styled(DialogContent)(() => ({
    [`&.${dialogContentClasses.root}`]: {
       padding: 0,
-      overflow: 'auto',
       display: 'flex',
       width: '100%',
    },
@@ -264,13 +263,16 @@ const Equipments = styled(Box)(({ theme }) => ({
    width: '59%',
    padding: theme.spacing(1),
    borderRight: `1px solid ${theme.palette.paper.border}`,
+   position: 'fixed',
 }));
 
 const Inventory = styled(Box)(({ theme }) => ({
    display: 'flex',
-   width: '41%',
+   width: '35%',
    padding: theme.spacing('min(1vw, 1.5vh)'),
    gap: theme.spacing('min(1vw, 1.5vh)'),
    flexWrap: 'wrap',
    marginBottom: 'auto',
+   overflow: 'scroll',
+   marginLeft: 'auto',
 }));
