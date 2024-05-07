@@ -59,6 +59,7 @@ model Item {
   baseAffixes   String
   prefixes      String
   suffixes      String
+  damages       String
   position      Int
 
   character   Character @relation(fields: [characterId], references: [id])

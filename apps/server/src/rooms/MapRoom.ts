@@ -28,11 +28,15 @@ import {
    zProfessionType,
 } from 'shared';
 import { zItemType } from 'shared/src/types/Item';
+import { WeaponDamages, WeaponType } from 'shared/src/types/Weapon';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
 import { usersMap } from './utils/usersMap';
 
 type Client = ColyseusClient<UserData, unknown>;
+
+const DEFAULT_WEAPON_TYPE: WeaponType = 'sword1H';
+const DEFAULT_WEAPON_DAMAGES: WeaponDamages[] = [{ type: 'strength', min: 1, max: 2 }];
 
 export class MapRoom extends Room<MapState> {
    name: TRoom;
@@ -148,6 +152,7 @@ export class MapRoom extends Room<MapState> {
             baseAffixes: ItemMgt.deserializeAffixes(item.baseAffixes),
             prefixes: ItemMgt.deserializeAffixes(item.prefixes),
             suffixes: ItemMgt.deserializeAffixes(item.suffixes),
+            damages: ItemMgt.deserializeDamages(item.damages),
          })),
       );
    }
@@ -367,13 +372,8 @@ export class MapRoom extends Room<MapState> {
                   items: player.getEquippedItems(),
                   talents: TalentMgt.deserializeTalents(characterInfos.talents),
                   uniquesPowers: [],
-                  // TODO: get weapon from character equipment
-                  weaponType: 'sword1H',
-                  weaponDamages: [
-                     { type: 'strength', min: 2, max: 6 },
-                     { type: 'luck', min: 2, max: 6 },
-                     { type: 'intelligence', min: 2, max: 6 },
-                  ],
+                  weaponType: player.getEquippedWeaponType() ?? DEFAULT_WEAPON_TYPE,
+                  weaponDamages: player.getEquippedWeaponDamages() ?? DEFAULT_WEAPON_DAMAGES,
                },
             ],
             monstersInformations,
@@ -410,6 +410,7 @@ export class MapRoom extends Room<MapState> {
                            baseAffixes,
                            prefixes,
                            suffixes,
+                           damages,
                            requiredLevel,
                            type,
                            position,
@@ -421,6 +422,7 @@ export class MapRoom extends Room<MapState> {
                                  baseAffixes: ItemMgt.serializeAffixes(baseAffixes),
                                  prefixes: ItemMgt.serializeAffixes(prefixes),
                                  suffixes: ItemMgt.serializeAffixes(suffixes),
+                                 damages: ItemMgt.serializeDamages(damages),
                                  requiredLevel,
                                  type,
                                  characterId,

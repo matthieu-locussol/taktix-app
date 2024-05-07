@@ -3,6 +3,7 @@ import { Channel } from 'shared/src/types/Channel';
 import { ItemRarity } from 'shared/src/types/Item';
 import { MonsterType } from 'shared/src/types/Monster';
 import { RealStatistic } from 'shared/src/types/Statistic';
+import { WeaponDamagesType } from 'shared/src/types/Weapon';
 
 interface CustomPalette {
    chalk: PaletteColor;
@@ -37,7 +38,7 @@ interface CustomPalette {
          hover: string;
       };
    };
-   statisticsColors: Record<RealStatistic, string>;
+   statisticsColors: Record<RealStatistic | 'elementalDamages' | 'elementalResistances', string>;
    statistics: {
       border: {
          clear: string;
@@ -71,6 +72,7 @@ interface CustomPalette {
    item: Record<ItemRarity, string>;
    itemGradient: Record<ItemRarity, string>;
    monster: Record<MonsterType, string>;
+   damages: Record<WeaponDamagesType, string>;
 }
 
 declare module '@mui/material/styles' {

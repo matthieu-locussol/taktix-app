@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
 import { Affix, Item } from 'shared/src/types/Item';
 import { zStatistic } from 'shared/src/types/Statistic';
+import { WeaponDamages } from 'shared/src/types/Weapon';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
 import { useStore } from '../../../store';
 import {
@@ -36,7 +37,7 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
             const statistic = zStatistic.parse(statisticStr);
             return (
                <Box
-                  key={`${name}-${tier}-${type}-${idx}`}
+                  key={`${name}-${tier}-${type}-${item.id}-${idx}`}
                   sx={{
                      display: 'flex',
                      alignItems: 'center',
@@ -75,6 +76,31 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
             );
          })
          .reduce((prev, curr) => [prev, ', ', curr]);
+   };
+
+   const tDamages = ({ min, max, type }: WeaponDamages) => {
+      return (
+         <Box
+            key={`${item.id}-${type}-${min}-${max}`}
+            sx={{
+               display: 'flex',
+               alignItems: 'center',
+               px: 'min(1vw, 2vh)',
+               pb: 'min(0.5vw, 1vh)',
+            }}
+         >
+            <Typography
+               variant="overline"
+               fontWeight="bold"
+               lineHeight={1.5}
+               sx={(theme) => ({
+                  color: theme.palette.damages[type],
+               })}
+            >
+               {t(`${type}DamagesRange`, { min, max })}
+            </Typography>
+         </Box>
+      );
    };
 
    return (
@@ -191,7 +217,7 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                      {t('level', { level: item.level })}
                   </Typography>
                </Box>
-               {item.baseAffixes.length > 0 && (
+               {(item.damages.length > 0 || item.baseAffixes.length > 0) && (
                   <>
                      <Divider
                         sx={() => ({
@@ -199,6 +225,7 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
                            marginBottom: 'min(0.5vw, 1vh)',
                         })}
                      />
+                     {item.damages.map((damages) => tDamages(damages))}
                      {item.baseAffixes.map((prefix) => tStatistics(prefix, 'T'))}
                   </>
                )}
