@@ -20,6 +20,7 @@ const zPvEFighterInformations = z.object({
    weaponDamages: z.array(zWeaponDamages),
    rawStatistics: z.string(),
 
+   items: z.array(zItem),
    talents: z.array(z.number()),
    // TODO: items powers from uniques
    uniquesPowers: z.array(z.unknown()),

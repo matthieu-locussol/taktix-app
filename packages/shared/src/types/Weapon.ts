@@ -1,18 +1,25 @@
 import { z } from 'zod';
 import { ZodMgt } from '../utils/zodMgt';
 
-export const weapons = [
-   'sword1H',
-   'axe1H',
-   'mace1H',
-   'dagger',
-   'wand',
-   'sword2H',
-   'axe2H',
-   'mace2H',
-   'bow',
-   'staff',
-] as const;
+export const weapons1H = ['sword1H', 'axe1H', 'mace1H', 'dagger', 'wand'] as const;
+
+const zWeapon1HType = ZodMgt.constructZodLiteralUnionType(weapons1H.map((type) => z.literal(type)));
+
+export type Weapon1HType = z.infer<typeof zWeapon1HType>;
+
+export const isWeapon1HType = (value: unknown): value is Weapon1HType =>
+   zWeapon1HType.safeParse(value).success;
+
+export const weapons2H = ['sword2H', 'axe2H', 'mace2H', 'bow', 'staff'] as const;
+
+const zWeapon2HType = ZodMgt.constructZodLiteralUnionType(weapons2H.map((type) => z.literal(type)));
+
+export type Weapon2HType = z.infer<typeof zWeapon2HType>;
+
+export const isWeapon2HType = (value: unknown): value is Weapon2HType =>
+   zWeapon2HType.safeParse(value).success;
+
+export const weapons = [...weapons1H, ...weapons2H] as const;
 
 export const zWeaponType = ZodMgt.constructZodLiteralUnionType(
    weapons.map((type) => z.literal(type)),

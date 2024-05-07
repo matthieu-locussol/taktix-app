@@ -58,6 +58,7 @@ model Item {
   requiredLevel Int
   prefixes      String
   suffixes      String
+  position      Int
 
   character   Character @relation(fields: [characterId], references: [id])
   characterId Int

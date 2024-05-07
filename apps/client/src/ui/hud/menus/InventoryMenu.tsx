@@ -13,7 +13,6 @@ import { Trans } from 'react-i18next';
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 import { EquipmentSlot } from '../components/EquipmentSlot';
-import { ItemSlot } from '../components/ItemSlot';
 
 export const InventoryMenu = observer(() => {
    const nodeRef = useRef(null);
@@ -53,19 +52,159 @@ export const InventoryMenu = observer(() => {
             </IconButton>
             <StyledDialogContent dividers>
                <Equipments>
-                  <EquipmentSlot size="small" />
-                  <EquipmentSlot size="medium" />
-                  <EquipmentSlot size="large" />
+                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)', alignItems: 'end' }}>
+                     <Box sx={{ width: 'min(3vw, 4.5vh)', height: 'min(3vw, 4.5vh)' }} />
+                     <EquipmentSlot
+                        size="medium"
+                        item={characterStore.equippedItemsMap.helmet}
+                        canBeHovered={characterStore.equippedItemsMap.helmet !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.helmet?.id)
+                        }
+                     />
+                     <EquipmentSlot
+                        size="small"
+                        item={characterStore.equippedItemsMap.amulet}
+                        canBeHovered={characterStore.equippedItemsMap.amulet !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.amulet?.id)
+                        }
+                     />
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)' }}>
+                     <EquipmentSlot
+                        size="large"
+                        item={characterStore.equippedItemsMap.weapon1}
+                        canBeHovered={characterStore.equippedItemsMap.weapon1 !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.weapon1?.id)
+                        }
+                     />
+                     <EquipmentSlot
+                        size="large"
+                        item={characterStore.equippedItemsMap.chestplate}
+                        canBeHovered={characterStore.equippedItemsMap.chestplate !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(
+                              characterStore.equippedItemsMap.chestplate?.id,
+                           )
+                        }
+                     />
+                     <EquipmentSlot
+                        size="large"
+                        item={characterStore.equippedItemsMap.offhand}
+                        canBeHovered={characterStore.equippedItemsMap.offhand !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.offhand?.id)
+                        }
+                     />
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)' }}>
+                     <EquipmentSlot
+                        size="small"
+                        item={characterStore.equippedItemsMap.ring1}
+                        canBeHovered={characterStore.equippedItemsMap.ring1 !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.ring1?.id)
+                        }
+                     />
+                     <EquipmentSlot
+                        size="wide"
+                        item={characterStore.equippedItemsMap.belt}
+                        canBeHovered={characterStore.equippedItemsMap.belt !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.belt?.id)
+                        }
+                     />
+                     <EquipmentSlot
+                        size="small"
+                        item={characterStore.equippedItemsMap.ring2}
+                        canBeHovered={characterStore.equippedItemsMap.ring2 !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.ring2?.id)
+                        }
+                     />
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)' }}>
+                     <EquipmentSlot
+                        size="medium"
+                        item={characterStore.equippedItemsMap.gloves}
+                        canBeHovered={characterStore.equippedItemsMap.gloves !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.gloves?.id)
+                        }
+                     />
+                     <Box sx={{ width: 'min(1vw, 1.5vh)', height: 'min(1vw, 1.5vh)' }} />
+                     <EquipmentSlot
+                        size="medium"
+                        item={characterStore.equippedItemsMap.boots}
+                        canBeHovered={characterStore.equippedItemsMap.boots !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.boots?.id)
+                        }
+                     />
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)' }}>
+                     <EquipmentSlot
+                        size="small"
+                        item={characterStore.equippedItemsMap.relic1}
+                        canBeHovered={characterStore.equippedItemsMap.relic1 !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.relic1?.id)
+                        }
+                     />
+                     <EquipmentSlot
+                        size="small"
+                        item={characterStore.equippedItemsMap.relic2}
+                        canBeHovered={characterStore.equippedItemsMap.relic2 !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.relic2?.id)
+                        }
+                     />
+                     <EquipmentSlot
+                        size="small"
+                        item={characterStore.equippedItemsMap.relic3}
+                        canBeHovered={characterStore.equippedItemsMap.relic3 !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.relic3?.id)
+                        }
+                     />
+                     <EquipmentSlot
+                        size="small"
+                        item={characterStore.equippedItemsMap.relic4}
+                        canBeHovered={characterStore.equippedItemsMap.relic4 !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.relic4?.id)
+                        }
+                     />
+                     <EquipmentSlot
+                        size="small"
+                        item={characterStore.equippedItemsMap.relic5}
+                        canBeHovered={characterStore.equippedItemsMap.relic5 !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.relic5?.id)
+                        }
+                     />
+                     <EquipmentSlot
+                        size="small"
+                        item={characterStore.equippedItemsMap.relic6}
+                        canBeHovered={characterStore.equippedItemsMap.relic6 !== null}
+                        onDoubleClick={() =>
+                           characterStore.unequipItem(characterStore.equippedItemsMap.relic6?.id)
+                        }
+                     />
+                  </Box>
                </Equipments>
                <Inventory>
-                  <ItemSlot canBeHovered />
-                  <ItemSlot canBeHovered />
-                  <ItemSlot canBeHovered />
-                  <ItemSlot canBeHovered />
-                  <ItemSlot canBeHovered />
-                  <ItemSlot canBeHovered />
-                  <ItemSlot canBeHovered />
-                  <ItemSlot canBeHovered />
+                  {characterStore.inventoryItems.map((item) => (
+                     <EquipmentSlot
+                        key={item.id}
+                        item={item}
+                        size="small"
+                        canBeHovered
+                        onDoubleClick={() => characterStore.equipItem(item.id)}
+                     />
+                  ))}
                </Inventory>
             </StyledDialogContent>
             <DialogActions>
@@ -119,6 +258,9 @@ const StyledDialogContent = styled(DialogContent)(() => ({
 
 const Equipments = styled(Box)(({ theme }) => ({
    display: 'flex',
+   flexDirection: 'column',
+   alignItems: 'center',
+   justifyContent: 'space-evenly',
    width: '59%',
    padding: theme.spacing(1),
    borderRight: `1px solid ${theme.palette.paper.border}`,

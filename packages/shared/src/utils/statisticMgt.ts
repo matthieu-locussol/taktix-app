@@ -1,5 +1,6 @@
 import { DEFAULT_HEALTH, STATISTICS_POINTS_PER_LEVEL } from '../config';
 import { getTalents } from '../data/talents';
+import { Item } from '../types/Item';
 import { ProfessionType } from '../types/Profession';
 import {
    RealStatistic,
@@ -52,14 +53,21 @@ export namespace StatisticMgt {
       experience: number,
       profession: ProfessionType,
       talents: number[],
+      items: Item[],
    ): Statistics =>
-      // TODO: Accumulate every stats from items
-      // return StatisticMgt.mergeStatistics(...[this.baseStatistics, ...this.items.map((item) => StatisticMgt.getItemStatistics(item.statistics))]);
       StatisticMgt.mergeStatistics(
          baseStatistics,
          DEFAULT_CHARACTER_STATISTICS(),
          ...new Array(LevelMgt.getLevel(experience) - 1).fill(LEVEL_UP_STATISTICS()[profession]),
          ...talents.map((talent) => getTalents()[talent].statistics),
+         StatisticMgt.mergeStatistics(
+            ...items.map(({ prefixes, suffixes }) => {
+               return StatisticMgt.mergeStatistics(
+                  ...prefixes.map((prefix) => StatisticMgt.makeMockedStatistics(prefix.statistics)),
+                  ...suffixes.map((suffix) => StatisticMgt.makeMockedStatistics(suffix.statistics)),
+               );
+            }),
+         ),
       );
 
    export const computeRealStatistics = (statistics: Statistics): Record<RealStatistic, number> => {

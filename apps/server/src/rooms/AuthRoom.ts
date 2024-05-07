@@ -14,6 +14,7 @@ import {
    DEFAULT_TELEPORTERS,
    DEFAULT_X,
    DEFAULT_Y,
+   ItemMgt,
    MAX_CHARACTERS_PER_ACCOUNT,
    AuthRoomOptions as Options,
    StatisticMgt,
@@ -182,7 +183,7 @@ export class AuthRoom extends Room {
 
       const character = await prisma.character.findUnique({
          where: { name: characterName },
-         include: { user: true },
+         include: { user: true, items: true },
       });
 
       let message:
@@ -225,6 +226,7 @@ export class AuthRoom extends Room {
             health: character.health,
             teleporters: character.teleporters,
             money: character.money,
+            items: character.items.map((item) => ItemMgt.serializePrismaItem(item)),
          };
 
          usersMap.set(uuid, {

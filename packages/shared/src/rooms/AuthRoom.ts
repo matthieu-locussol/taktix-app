@@ -68,6 +68,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
             health: z.number(),
             teleporters: z.string(),
             money: z.number(),
+            items: z.array(z.string()),
          }),
       ]),
    }),

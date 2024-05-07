@@ -365,6 +365,7 @@ export class PvEFight {
                   infos.experience,
                   infos.profession,
                   infos.talents,
+                  infos.items,
                ),
             ),
          };

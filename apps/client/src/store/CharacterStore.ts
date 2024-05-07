@@ -2,10 +2,12 @@ import type { Position } from 'grid-engine';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { DEFAULT_HEALTH_REGEN_MS } from 'shared/src/config';
 import { LEVEL_TO_EXPERIENCE } from 'shared/src/data/levels';
+import { Item, ItemPosition } from 'shared/src/types/Item';
 import { Player } from 'shared/src/types/Player';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { Room } from 'shared/src/types/Room';
 import { Statistics } from 'shared/src/types/Statistic';
+import { ItemMgt } from 'shared/src/utils/itemMgt';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { Store } from './Store';
@@ -38,6 +40,8 @@ export class CharacterStore {
    public teleporters: Room[] = [];
 
    public money: number = 0;
+
+   public items: Item[] = [];
 
    private _intervalTimeout: NodeJS.Timeout | null = null;
 
@@ -105,6 +109,10 @@ export class CharacterStore {
       this.money = money;
    }
 
+   public setItems(items: Item[]) {
+      this.items = [...items];
+   }
+
    public get healthPercentage() {
       return (this.currentHealth / this.maxHealth) * 100;
    }
@@ -141,7 +149,84 @@ export class CharacterStore {
          this.experience,
          this.profession,
          this.talents,
+         this.equippedItems,
       );
+   }
+
+   public get inventoryItems() {
+      return this.items.filter((item) => item.position === ItemPosition.Inventory);
+   }
+
+   public get equippedItems() {
+      return this.items.filter((item) => item.position === ItemPosition.Equipment);
+   }
+
+   public get equippedItemsTypes() {
+      return this.equippedItems.map((item) => item.type);
+   }
+
+   public addItems(items: Item[]) {
+      this.items = [...items, ...this.items];
+   }
+
+   public equipItem(id: number) {
+      this._store.colyseusStore.equipItem(id);
+
+      const item = this.items.find((item) => item.id === id);
+      if (item !== undefined) {
+         this._replaceItem(item);
+      }
+   }
+
+   public unequipItem(id?: number) {
+      if (id === undefined) {
+         return;
+      }
+
+      this._store.colyseusStore.unequipItem(id);
+
+      const item = this.items.find((item) => item.id === id);
+      if (item !== undefined) {
+         this.items = [
+            {
+               ...item,
+               position: ItemPosition.Inventory,
+            },
+            ...this.items.filter((i) => i.id !== id),
+         ];
+      }
+   }
+
+   public get equippedItemsMap() {
+      return ItemMgt.getEquippedItemsMap(this.equippedItems);
+   }
+
+   private _replaceItem(item: Item) {
+      const { itemsToRemove, canEquip } = ItemMgt.itemsToRemoveAfterEquip(item, this.equippedItems);
+
+      for (const id of itemsToRemove) {
+         const replacedItem = this.items.find((item) => item.id === id);
+
+         if (replacedItem !== undefined) {
+            this.items = [
+               { ...replacedItem, position: ItemPosition.Inventory },
+               ...this.items.filter((i) => i.id !== id),
+            ];
+         }
+      }
+
+      if (canEquip) {
+         this._equipItem(item);
+      }
+   }
+
+   private _equipItem(item: Item) {
+      if (this._store.characterStore.level >= item.requiredLevel) {
+         this.items = [
+            { ...item, position: ItemPosition.Equipment },
+            ...this.items.filter((i) => i.id !== item.id),
+         ];
+      }
    }
 
    private regenLifeIfNeeded() {

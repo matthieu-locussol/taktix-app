@@ -79,6 +79,7 @@ const monstersArray: (() => MonsterGenerator)[] = [
       withMonsterType([], (type) => ({ level }) => ({
          name: 'enemy-nono',
          type,
+         items: [],
          monsterType: type,
          animation: Animation.Flower,
          health: {

@@ -1,5 +1,5 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
-import { Character } from '@prisma/client';
+import { Character, Item } from '@prisma/client';
 import {
    FightMgt,
    ItemMgt,
@@ -27,6 +27,7 @@ import {
    isMapRoomMessage,
    zProfessionType,
 } from 'shared';
+import { zItemType } from 'shared/src/types/Item';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
 import { usersMap } from './utils/usersMap';
@@ -73,6 +74,8 @@ export class MapRoom extends Room<MapState> {
                .with({ type: 'saveTeleporter' }, (payload) =>
                   this.onSaveTeleporter(client, payload),
                )
+               .with({ type: 'equipItem' }, (payload) => this.onEquipItem(client, payload))
+               .with({ type: 'unequipItem' }, (payload) => this.onUnequipItem(client, payload))
                .exhaustive();
          } else {
             logger.error(
@@ -101,6 +104,7 @@ export class MapRoom extends Room<MapState> {
 
       const characterInfos = await prisma.character.findUnique({
          where: { name: characterName },
+         include: { items: true },
       });
       _assert(characterInfos, `Character infos for name '${characterName}' should be defined`);
       const { pos_x, pos_y, direction: savedDirection } = characterInfos;
@@ -130,6 +134,21 @@ export class MapRoom extends Room<MapState> {
       );
 
       this.updatePlayerHealth(client, characterInfos);
+      this.loadPlayerItems(client, characterInfos.items);
+   }
+
+   private loadPlayerItems(client: Client, items: Item[]) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      player.addItems(
+         items.map((item) => ({
+            ...item,
+            type: zItemType.parse(item.type),
+            prefixes: ItemMgt.deserializeAffixes(item.prefixes),
+            suffixes: ItemMgt.deserializeAffixes(item.suffixes),
+         })),
+      );
    }
 
    private updatePlayerHealth(
@@ -145,6 +164,7 @@ export class MapRoom extends Room<MapState> {
             infos.experience,
             zProfessionType.parse(infos.profession),
             TalentMgt.deserializeTalents(infos.talents),
+            player.items,
          ),
       );
 
@@ -325,6 +345,7 @@ export class MapRoom extends Room<MapState> {
             characterInfos.experience,
             zProfessionType.parse(characterInfos.profession),
             TalentMgt.deserializeTalents(characterInfos.talents),
+            player.items,
          ),
       );
 
@@ -341,12 +362,8 @@ export class MapRoom extends Room<MapState> {
                   experience: characterInfos.experience,
                   level: LevelMgt.getLevel(characterInfos.experience),
                   profession: zProfessionType.parse(characterInfos.profession),
-                  rawStatistics: StatisticMgt.serializeStatistics({
-                     ...StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
-                     'criticalStrikeChance_+f': 30,
-                     'criticalStrikeChance_+%': 25,
-                     'lifeSteal_+f': 5,
-                  }),
+                  rawStatistics: characterInfos.baseStatistics,
+                  items: player.getEquippedItems(),
                   talents: TalentMgt.deserializeTalents(characterInfos.talents),
                   uniquesPowers: [],
                   // TODO: get weapon from character equipment
@@ -385,18 +402,20 @@ export class MapRoom extends Room<MapState> {
                   );
 
                   return prisma.$transaction(
-                     loots.map(({ isUnique, level, prefixes, suffixes, requiredLevel, type }) =>
-                        prisma.item.create({
-                           data: {
-                              isUnique,
-                              level,
-                              prefixes: ItemMgt.serializeAffixes(prefixes),
-                              suffixes: ItemMgt.serializeAffixes(suffixes),
-                              requiredLevel,
-                              type,
-                              characterId,
-                           },
-                        }),
+                     loots.map(
+                        ({ isUnique, level, prefixes, suffixes, requiredLevel, type, position }) =>
+                           prisma.item.create({
+                              data: {
+                                 isUnique,
+                                 level,
+                                 prefixes: ItemMgt.serializeAffixes(prefixes),
+                                 suffixes: ItemMgt.serializeAffixes(suffixes),
+                                 requiredLevel,
+                                 type,
+                                 characterId,
+                                 position,
+                              },
+                           }),
                      ),
                   );
                }),
@@ -437,6 +456,7 @@ export class MapRoom extends Room<MapState> {
                      characterInfos.experience + experienceGained,
                      zProfessionType.parse(characterInfos.profession),
                      TalentMgt.deserializeTalents(characterInfos.talents),
+                     player.items,
                   ),
                );
 
@@ -585,6 +605,62 @@ export class MapRoom extends Room<MapState> {
       client.send(packet.type, packet.message);
    }
 
+   async onEquipItem(
+      client: Client,
+      { message: { id } }: Extract<MapRoomMessage, { type: 'equipItem' }>,
+   ) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      const item = player.items.find((item) => item.id === id);
+      if (item === undefined) {
+         return;
+      }
+
+      const characterInfos = await prisma.character.findUnique({
+         where: { name: player.name },
+         select: { experience: true },
+      });
+      _assert(characterInfos, `Character infos for name '${player.name}' should be defined`);
+
+      if (ItemMgt.canEquipItem(item, LevelMgt.getLevel(characterInfos.experience))) {
+         const { itemsToRemove, canEquip } = ItemMgt.itemsToRemoveAfterEquip(
+            item,
+            player.getEquippedItems(),
+         );
+         itemsToRemove.forEach((itemId) => {
+            player.unequipItem(itemId);
+         });
+
+         if (canEquip) {
+            player.equipItem(item.id);
+         }
+      }
+
+      logger.info(
+         `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) equipped item '${item.id}'`,
+      );
+   }
+
+   async onUnequipItem(
+      client: Client,
+      { message: { id } }: Extract<MapRoomMessage, { type: 'unequipItem' }>,
+   ) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      const item = player.items.find((item) => item.id === id);
+      if (item === undefined) {
+         return;
+      }
+
+      player.unequipItem(id);
+
+      logger.info(
+         `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) unequipped item '${item.id}'`,
+      );
+   }
+
    async onFightPvEResults(
       client: Client,
       results: PvEFightResults,
@@ -690,6 +766,12 @@ export class MapRoom extends Room<MapState> {
             pos_y: player.y,
             direction: player.direction,
             health: player.getHealth(),
+            items: {
+               updateMany: player.items.map(({ id, position }) => ({
+                  where: { id },
+                  data: { position },
+               })),
+            },
          },
       });
 

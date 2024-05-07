@@ -1,5 +1,6 @@
 import { Schema, type } from '@colyseus/schema';
 import { DEFAULT_HEALTH_REGEN_MS } from '../config';
+import { Item, ItemPosition } from '../types/Item';
 import { Room } from '../types/Room';
 
 export class PlayerState extends Schema {
@@ -35,6 +36,8 @@ export class PlayerState extends Schema {
    fightTurns = 0;
 
    teleporters: Room[] = [];
+
+   items: Item[] = [];
 
    constructor(
       name: string,
@@ -94,5 +97,29 @@ export class PlayerState extends Schema {
    getHealth() {
       const diff = Math.floor(Date.now() - this.healthTimestamp);
       return Math.floor(Math.min(this.health + diff / DEFAULT_HEALTH_REGEN_MS, this.maxHealth));
+   }
+
+   addItems(items: Item[]) {
+      this.items = [...items, ...this.items];
+   }
+
+   equipItem(itemId: number) {
+      const item = this.items.find((item) => item.id === itemId);
+
+      if (item) {
+         item.position = ItemPosition.Equipment;
+      }
+   }
+
+   unequipItem(itemId: number) {
+      const item = this.items.find((item) => item.id === itemId);
+
+      if (item) {
+         item.position = ItemPosition.Inventory;
+      }
+   }
+
+   getEquippedItems() {
+      return this.items.filter((item) => item.position === ItemPosition.Equipment);
    }
 }

@@ -237,6 +237,12 @@ export class PvEFightScene extends Phaser.Scene {
       await TimeMgt.wait(1000 / store.settingsMenuStore.speedFactor);
       store.pveFightStore.openFightResults();
 
+      const playerIdx = store.pveFightStore.fightResults.allies.findIndex(
+         ({ name }) => name === store.characterStore.name,
+      );
+      const items = store.pveFightStore.fightResults.loots[playerIdx];
+      store.characterStore.addItems(items);
+
       this.fadeOut(async (_, progress) => {
          if (progress === 1) {
             store.pveFightStore.endFight();
