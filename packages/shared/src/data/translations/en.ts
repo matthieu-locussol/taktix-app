@@ -120,6 +120,10 @@ export const translationsEn = {
    creditsValue: '<b>Credits:</b> {{value}}',
    inventory: 'Inventory',
    requiredLevel: 'Required level: {{level}}',
+   strengthDamagesRange: '{{min}} to {{max}} earth damages',
+   dexterityDamagesRange: '{{min}} to {{max}} wind damages',
+   intelligenceDamagesRange: '{{min}} to {{max}} fire damages',
+   luckDamagesRange: '{{min}} to {{max}} ice damages',
 
    // Rarities
    common: 'Common',

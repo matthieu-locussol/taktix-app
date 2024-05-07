@@ -22,7 +22,9 @@ export const npcsDialogs: Record<
          name,
          avatar,
          choices: [
-            { text: 'Oui', callback: () => store.colyseusStore.fightPvE(1) },
+            { text: 'Fight facile', callback: () => store.colyseusStore.fightPvE(1) },
+            { text: 'Fight moyen', callback: () => store.colyseusStore.fightPvE(2) },
+            { text: 'Fight difficile', callback: () => store.colyseusStore.fightPvE(3) },
             {
                text: 'Non',
                callback: () => {

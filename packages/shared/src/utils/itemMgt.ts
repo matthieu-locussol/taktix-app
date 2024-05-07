@@ -18,7 +18,14 @@ import {
    zItemType,
 } from '../types/Item';
 import { Statistic, zStatistic } from '../types/Statistic';
-import { isWeapon1HType, isWeapon2HType, isWeaponType } from '../types/Weapon';
+import {
+   WeaponDamages,
+   isWeapon1HType,
+   isWeapon2HType,
+   isWeaponType,
+   weaponDamagesTypes,
+   zWeaponDamages,
+} from '../types/Weapon';
 import { _assert, _assertTrue } from './_assert';
 import { NumberMgt } from './numberMgt';
 import { StatisticMgt } from './statisticMgt';
@@ -52,47 +59,47 @@ export namespace ItemMgt {
    };
 
    export const ITEM_TYPE_WEIGHTS: Record<ItemType, number> = {
-      helmetE: 15,
-      helmetH: 15,
-      helmetM: 15,
-      helmetEH: 15,
-      helmetEM: 15,
-      helmetHM: 15,
-      chestplateE: 15,
-      chestplateH: 15,
-      chestplateM: 15,
-      chestplateEH: 15,
-      chestplateEM: 15,
-      chestplateHM: 15,
-      bootsE: 15,
-      bootsH: 15,
-      bootsM: 15,
-      bootsEH: 15,
-      bootsEM: 15,
-      bootsHM: 15,
-      glovesE: 15,
-      glovesH: 15,
-      glovesM: 15,
-      glovesEH: 15,
-      glovesEM: 15,
-      glovesHM: 15,
-      belt: 15,
-      shield: 15,
-      quiver: 15,
-      orb: 15,
-      sword1H: 8,
-      sword2H: 8,
-      axe1H: 8,
-      axe2H: 8,
-      mace1H: 8,
-      mace2H: 8,
-      dagger: 8,
-      staff: 8,
-      wand: 8,
-      bow: 8,
-      amulet: 4,
-      ring: 4,
-      relic: 2,
+      helmetE: 10,
+      helmetH: 10,
+      helmetM: 10,
+      helmetEH: 10,
+      helmetEM: 10,
+      helmetHM: 10,
+      chestplateE: 10,
+      chestplateH: 10,
+      chestplateM: 10,
+      chestplateEH: 10,
+      chestplateEM: 10,
+      chestplateHM: 10,
+      bootsE: 10,
+      bootsH: 10,
+      bootsM: 10,
+      bootsEH: 10,
+      bootsEM: 10,
+      bootsHM: 10,
+      glovesE: 10,
+      glovesH: 10,
+      glovesM: 10,
+      glovesEH: 10,
+      glovesEM: 10,
+      glovesHM: 10,
+      belt: 10,
+      shield: 10,
+      quiver: 10,
+      orb: 10,
+      sword1H: 10,
+      sword2H: 10,
+      axe1H: 10,
+      axe2H: 10,
+      mace1H: 10,
+      mace2H: 10,
+      dagger: 10,
+      staff: 10,
+      wand: 10,
+      bow: 10,
+      amulet: 10,
+      ring: 10,
+      relic: 10,
    };
 
    export const ITEM_TYPE_PROBABILITIES: Record<ItemType, number> = Object.keys(
@@ -161,6 +168,7 @@ export namespace ItemMgt {
          baseAffixes: [],
          prefixes: [],
          suffixes: [],
+         damages: [],
          position: ItemPosition.Inventory,
       };
 
@@ -197,13 +205,34 @@ export namespace ItemMgt {
 
       Object.entries(randomBaseAffixes).forEach(([statisticStr, { level, min, max }]) => {
          const statistic = zStatistic.parse(statisticStr);
-         const value = NumberMgt.random(min, max);
 
-         item.baseAffixes.push({
-            name: '',
-            tier: randomBaseAffixesIdx + 1,
-            statistics: { [statistic]: value },
-         });
+         if (
+            [
+               'sword1HDamages_+f',
+               'axe1HDamages_+f',
+               'mace1HDamages_+f',
+               'daggerDamages_+f',
+               'wandDamages_+f',
+               'sword2HDamages_+f',
+               'axe2HDamages_+f',
+               'mace2HDamages_+f',
+               'bowDamages_+f',
+               'staffDamages_+f',
+            ].includes(statistic)
+         ) {
+            const typeIdx = NumberMgt.random(0, weaponDamagesTypes.length - 1);
+            const type = weaponDamagesTypes[typeIdx];
+
+            item.damages.push({ type, min, max });
+         } else {
+            const value = NumberMgt.random(min, max);
+
+            item.baseAffixes.push({
+               name: '',
+               tier: randomBaseAffixesIdx + 1,
+               statistics: { [statistic]: value },
+            });
+         }
 
          if (level > item.requiredLevel) {
             item.requiredLevel = level;
@@ -388,6 +417,27 @@ export namespace ItemMgt {
       return item.isUnique || getAffixesCount(item) >= MAXIMUM_AFFIXES;
    };
 
+   export const serializeDamages = (damages: WeaponDamages[]): string => {
+      return z
+         .array(zWeaponDamages)
+         .parse(damages)
+         .map(({ type, min, max }) => `${type}:${min}:${max}`)
+         .join('|');
+   };
+
+   export const deserializeDamages = (damages: string): WeaponDamages[] => {
+      if (damages === '') {
+         return [];
+      }
+
+      return z.array(zWeaponDamages).parse(
+         damages.split('|').map((damage) => {
+            const [type, min, max] = damage.split(':');
+            return { type, min: Number(min), max: Number(max) };
+         }),
+      );
+   };
+
    export const serializeAffixes = (affixes: Affix[]): string => {
       return z
          .array(zAffix)
@@ -408,18 +458,15 @@ export namespace ItemMgt {
       }
 
       return z.array(zAffix).parse(
-         affixes
-            .split('|')
-            .map((affix) => {
-               const [name, tier, stats] = affix.split('#');
-               const statistics = stats.split(';').reduce((acc, stat) => {
-                  const [key, value] = stat.split(':');
-                  return { ...acc, [key]: Number(value) };
-               }, {});
+         affixes.split('|').map((affix) => {
+            const [name, tier, stats] = affix.split('#');
+            const statistics = stats.split(';').reduce((acc, stat) => {
+               const [key, value] = stat.split(':');
+               return { ...acc, [key]: Number(value) };
+            }, {});
 
-               return { name, tier: Number(tier), statistics };
-            })
-            .filter(({ name }) => name !== ''),
+            return { name, tier: Number(tier), statistics };
+         }),
       );
    };
 
@@ -436,10 +483,11 @@ export namespace ItemMgt {
    };
 
    export const serializePrismaItem = (
-      item: Omit<Item, 'baseAffixes' | 'prefixes' | 'suffixes' | 'type'> & {
+      item: Omit<Item, 'baseAffixes' | 'prefixes' | 'suffixes' | 'damages' | 'type'> & {
          baseAffixes: string;
          prefixes: string;
          suffixes: string;
+         damages: string;
          type: string;
       },
    ): string => {
@@ -452,6 +500,7 @@ export namespace ItemMgt {
          baseAffixes: item.baseAffixes,
          prefixes: item.prefixes,
          suffixes: item.suffixes,
+         damages: item.damages,
          position: item.position,
       });
    };
@@ -466,6 +515,7 @@ export namespace ItemMgt {
          baseAffixes,
          prefixes,
          suffixes,
+         damages,
          position,
       } = JSON.parse(item);
 
@@ -478,6 +528,7 @@ export namespace ItemMgt {
          baseAffixes: deserializeAffixes(baseAffixes),
          prefixes: deserializeAffixes(prefixes),
          suffixes: deserializeAffixes(suffixes),
+         damages: deserializeDamages(damages),
          position: zItemPosition.parse(position),
       };
    };

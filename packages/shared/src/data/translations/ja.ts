@@ -124,6 +124,10 @@ export const translationsJa: LanguageTranslations = {
    creditsValue: '<b>クレジット</b>: {{value}}',
    inventory: 'インベントリ',
    requiredLevel: '必要レベル: {{level}}',
+   strengthDamagesRange: '{{min}} から {{max}} 地のダメージ',
+   dexterityDamagesRange: '{{min}} から {{max}} 風のダメージ',
+   intelligenceDamagesRange: '{{min}} から {{max}} 火のダメージ',
+   luckDamagesRange: '{{min}} から {{max}} 氷のダメージ',
 
    // Rarities
    common: 'コモン',

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { ZodMgt } from '../utils/zodMgt';
 import { zStatistic } from './Statistic';
-import { weapons } from './Weapon';
+import { weapons, zWeaponDamages } from './Weapon';
 
 export const helmetTypes = [
    'helmetE',
@@ -138,6 +138,7 @@ export const zItem = z.object({
    prefixes: z.array(zAffix),
    suffixes: z.array(zAffix),
    position: zItemPosition,
+   damages: z.array(zWeaponDamages),
 });
 
 export type Item = z.infer<typeof zItem>;

@@ -347,8 +347,23 @@ export const StatisticIcon = ({ id, ...rest }: StatisticIconProps) => {
       'thornsMagical_+%': (
          <StatisticBaseIcon {...rest} color="thornsMagical" type="percent" path="thornsMagical" />
       ),
-
       'prospect_+f': <StatisticBaseIcon {...rest} color="prospect" type="plus" path="prospect" />,
+      'elementalDamages_+f': (
+         <StatisticBaseIcon
+            {...rest}
+            color="elementalDamages"
+            type="plus"
+            path="elementalDamages"
+         />
+      ),
+      'elementalResistances_+f': (
+         <StatisticBaseIcon
+            {...rest}
+            color="elementalResistances"
+            type="resistances"
+            path="elementalResistances"
+         />
+      ),
    } satisfies Partial<Record<Statistic, React.ReactNode>>;
 
    return icons[id] || null;

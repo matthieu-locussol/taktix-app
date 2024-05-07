@@ -2,6 +2,7 @@ import { Schema, type } from '@colyseus/schema';
 import { DEFAULT_HEALTH_REGEN_MS } from '../config';
 import { Item, ItemPosition } from '../types/Item';
 import { Room } from '../types/Room';
+import { WeaponDamages, WeaponType, isWeaponType, zWeaponType } from '../types/Weapon';
 
 export class PlayerState extends Schema {
    @type('string')
@@ -121,5 +122,26 @@ export class PlayerState extends Schema {
 
    getEquippedItems() {
       return this.items.filter((item) => item.position === ItemPosition.Equipment);
+   }
+
+   getEquippedWeapon(): Item | undefined {
+      const weapon = this.getEquippedItems().find((item) => isWeaponType(item.type));
+      return weapon;
+   }
+
+   getEquippedWeaponType(): WeaponType | undefined {
+      const weapon = this.getEquippedWeapon();
+
+      if (weapon === undefined) {
+         return undefined;
+      }
+
+      return zWeaponType.parse(weapon.type);
+   }
+
+   // TODO: better handling of weapon damages
+   getEquippedWeaponDamages(): WeaponDamages[] {
+      const weapons = this.getEquippedItems().filter((item) => isWeaponType(item.type));
+      return weapons.flatMap((weapon) => weapon.damages);
    }
 }

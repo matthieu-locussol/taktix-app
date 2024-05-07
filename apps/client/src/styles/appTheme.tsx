@@ -313,6 +313,8 @@ export const appTheme = createTheme({
          criticalStrikeChance: '#dc2626',
          criticalStrikeChancePercent: '#dc2626',
          criticalStrikeDamages: '#dc2626',
+         elementalDamages: STATS_COLORS.magicShield,
+         elementalResistances: STATS_COLORS.magicShield,
       },
       statistics: {
          border: {
@@ -366,6 +368,12 @@ export const appTheme = createTheme({
          magic: MONSTER_TYPE_COLORS.magic,
          rare: MONSTER_TYPE_COLORS.rare,
          boss: MONSTER_TYPE_COLORS.boss,
+      },
+      damages: {
+         strength: '#854d0e',
+         dexterity: '#10b981',
+         intelligence: '#ef4444',
+         luck: '#06b6d4',
       },
       mode: 'light',
    },

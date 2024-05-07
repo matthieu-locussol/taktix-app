@@ -83,32 +83,32 @@ const monstersArray: (() => MonsterGenerator)[] = [
          monsterType: type,
          animation: Animation.Flower,
          health: {
-            common: 20 + level * 15,
-            magic: 30 + level * 20,
-            rare: 40 + level * 25,
+            common: 10 + level * 10,
+            magic: 20 + level * 15,
+            rare: 30 + level * 20,
          }[type],
          magicShield: {
-            common: 30 + level * 5,
-            magic: 50 + level * 10,
-            rare: 70 + level * 15,
+            common: 20 + level * 5,
+            magic: 30 + level * 10,
+            rare: 40 + level * 15,
          }[type],
          level,
          experience: {
-            common: 10 + level * 5,
-            magic: 15 + level * 7,
-            rare: 20 + level * 10,
+            common: 20 + level * 5,
+            magic: 30 + level * 7,
+            rare: 50 + level * 10,
          }[type],
          weaponType: 'axe1H',
          weaponDamages: (
             {
                common: [{ type: 'strength', min: level, max: level * 3 }],
                magic: [
-                  { type: 'strength', min: level * 2, max: level * 5 },
+                  { type: 'strength', min: level, max: level * 2 },
                   { type: 'intelligence', min: level, max: level * 3 },
                ],
                rare: [
-                  { type: 'strength', min: level * 3, max: level * 6 },
-                  { type: 'luck', min: level * 2, max: level * 4 },
+                  { type: 'strength', min: level * 2, max: level * 3 },
+                  { type: 'luck', min: level * 2, max: level * 2 },
                ],
             } as Record<MonsterType, WeaponDamages[]>
          )[type],
@@ -116,8 +116,8 @@ const monstersArray: (() => MonsterGenerator)[] = [
             StatisticMgt.makeMockedStatistics({
                'strength_+f': {
                   common: level * 8,
-                  magic: level * 10,
-                  rare: level * 12,
+                  magic: level * 9,
+                  rare: level * 10,
                }[type],
                'precision_+f': {
                   common: level * 5,

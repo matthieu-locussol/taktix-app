@@ -125,6 +125,10 @@ export const translationsFr: LanguageTranslations = {
    creditsValue: '<b>Crédits :</b> {{value}}',
    inventory: 'Inventaire',
    requiredLevel: 'Niveau requis: {{level}}',
+   strengthDamagesRange: '{{min}} à {{max}} dégâts de terre',
+   dexterityDamagesRange: '{{min}} à {{max}} dégâts de vent',
+   intelligenceDamagesRange: '{{min}} à {{max}} dégâts de feu',
+   luckDamagesRange: '{{min}} à {{max}} dégâts de glace',
 
    // Rarities
    common: 'Commun',
