@@ -136,8 +136,8 @@ importers:
         specifier: ^0.15.12
         version: 0.15.12(express@4.19.2)
       '@colyseus/ws-transport':
-        specifier: ^0.15.1
-        version: 0.15.1(@colyseus/schema@2.0.32)
+        specifier: ^0.15.2
+        version: 0.15.2(@colyseus/schema@2.0.32)
       '@prisma/client':
         specifier: ^5.13.0
         version: 5.13.0(prisma@5.13.0)
@@ -521,6 +521,10 @@ packages:
     resolution: {integrity: sha512-rlImiA+vQjHoG8mhHw0NUZvQBMfkmAMVqAMZQbrKukwfNvK/AhfYqXiWCaRiR31ZMoaMqwtOA2vHWsumqBm+Ng==}
     engines: {node: '>= 14.x'}
 
+  '@colyseus/core@0.15.38':
+    resolution: {integrity: sha512-wqYM/9fX/dvJPf0ancFg1TDmCLFgAjIE1IREaCuj/YvWCjf7fvQk2KPfaf0lP9j4zJ2rBgv+uWOZyasmS7MxFw==}
+    engines: {node: '>= 14.x'}
+
   '@colyseus/greeting-banner@2.0.2':
     resolution: {integrity: sha512-BjcOIiVUyPecK5U93TIi6O0QtrejGajitH1zRqHu6ytBhzKvR40GpKLuKfsUXrUWNEY7ytKRuEQLF9akBYRqMw==}
 
@@ -536,8 +540,8 @@ packages:
     resolution: {integrity: sha512-Y5a3E4pjJK8tLPY4f0ur+/xeGBqysxKgMlumSR6JWXwX0SVIdk4o7IqFlKau8BkB6OVOwAP5SoPFSWO6/a2NwQ==}
     hasBin: true
 
-  '@colyseus/ws-transport@0.15.1':
-    resolution: {integrity: sha512-9QWb0OeZHDF2+PVIJ9LY0GriItnOatJCgmAG31ygfeEn1+ApkG1Ds/+cU7aBnYE2SGGWF4sKGAM3XUvScCRq4w==}
+  '@colyseus/ws-transport@0.15.2':
+    resolution: {integrity: sha512-v83omTcAmU+vm3uqaaPFDXHxs4tYXUgJwR4IviZF0UMCm3OIQ85end+vsHaKGQf+wSfincCKGkA1etwxqlWTLQ==}
     peerDependencies:
       '@colyseus/schema': '>=1.0.0'
 
@@ -4633,6 +4637,21 @@ snapshots:
       - supports-color
       - utf-8-validate
 
+  '@colyseus/core@0.15.38':
+    dependencies:
+      '@colyseus/greeting-banner': 2.0.2
+      '@colyseus/schema': 2.0.32
+      '@gamestdio/timer': 1.4.1
+      '@types/redis': 2.8.32
+      debug: 4.3.4
+      msgpackr: 1.10.1
+      nanoid: 2.1.11
+      ws: 7.5.9
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   '@colyseus/greeting-banner@2.0.2': {}
 
   '@colyseus/monitor@0.15.6':
@@ -4655,9 +4674,9 @@ snapshots:
 
   '@colyseus/schema@2.0.32': {}
 
-  '@colyseus/ws-transport@0.15.1(@colyseus/schema@2.0.32)':
+  '@colyseus/ws-transport@0.15.2(@colyseus/schema@2.0.32)':
     dependencies:
-      '@colyseus/core': 0.15.37
+      '@colyseus/core': 0.15.38
       '@colyseus/schema': 2.0.32
       '@types/ws': 7.4.7
       ws: 7.5.9

@@ -19,7 +19,7 @@
       "@colyseus/core": "^0.15.37",
       "@colyseus/monitor": "^0.15.6",
       "@colyseus/playground": "^0.15.12",
-      "@colyseus/ws-transport": "^0.15.1",
+      "@colyseus/ws-transport": "^0.15.2",
       "@prisma/client": "^5.13.0",
       "@prisma/extension-accelerate": "^1.0.0",
       "cors": "^2.8.5",
