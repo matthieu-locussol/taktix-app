@@ -127,8 +127,8 @@ importers:
   apps/server:
     dependencies:
       '@colyseus/core':
-        specifier: ^0.15.37
-        version: 0.15.37
+        specifier: ^0.15.38
+        version: 0.15.38
       '@colyseus/monitor':
         specifier: ^0.15.6
         version: 0.15.6
@@ -270,8 +270,8 @@ importers:
   packages/shared:
     dependencies:
       '@colyseus/core':
-        specifier: ^0.15.37
-        version: 0.15.37
+        specifier: ^0.15.38
+        version: 0.15.38
       '@colyseus/schema':
         specifier: ^2.0.32
         version: 2.0.32
@@ -517,8 +517,8 @@ packages:
       '@colyseus/core': ^0.15.23
       express: ^4.17.1
 
-  '@colyseus/core@0.15.37':
-    resolution: {integrity: sha512-rlImiA+vQjHoG8mhHw0NUZvQBMfkmAMVqAMZQbrKukwfNvK/AhfYqXiWCaRiR31ZMoaMqwtOA2vHWsumqBm+Ng==}
+  '@colyseus/core@0.15.38':
+    resolution: {integrity: sha512-wqYM/9fX/dvJPf0ancFg1TDmCLFgAjIE1IREaCuj/YvWCjf7fvQk2KPfaf0lP9j4zJ2rBgv+uWOZyasmS7MxFw==}
     engines: {node: '>= 14.x'}
 
   '@colyseus/greeting-banner@2.0.2':
@@ -4605,9 +4605,9 @@ snapshots:
       human-id: 1.0.2
       prettier: 2.8.8
 
-  '@colyseus/auth@0.15.10(@colyseus/core@0.15.37)(express@4.19.2)':
+  '@colyseus/auth@0.15.10(@colyseus/core@0.15.38)(express@4.19.2)':
     dependencies:
-      '@colyseus/core': 0.15.37
+      '@colyseus/core': 0.15.38
       '@types/jsonwebtoken': 9.0.6
       connect-redis: 7.1.1(express-session@1.18.0)
       express: 4.19.2
@@ -4618,7 +4618,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@colyseus/core@0.15.37':
+  '@colyseus/core@0.15.38':
     dependencies:
       '@colyseus/greeting-banner': 2.0.2
       '@colyseus/schema': 2.0.32
@@ -4645,8 +4645,8 @@ snapshots:
 
   '@colyseus/playground@0.15.12(express@4.19.2)':
     dependencies:
-      '@colyseus/auth': 0.15.10(@colyseus/core@0.15.37)(express@4.19.2)
-      '@colyseus/core': 0.15.37
+      '@colyseus/auth': 0.15.10(@colyseus/core@0.15.38)(express@4.19.2)
+      '@colyseus/core': 0.15.38
       express: 4.19.2
     transitivePeerDependencies:
       - bufferutil
@@ -4657,7 +4657,7 @@ snapshots:
 
   '@colyseus/ws-transport@0.15.1(@colyseus/schema@2.0.32)':
     dependencies:
-      '@colyseus/core': 0.15.37
+      '@colyseus/core': 0.15.38
       '@colyseus/schema': 2.0.32
       '@types/ws': 7.4.7
       ws: 7.5.9

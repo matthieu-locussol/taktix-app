@@ -16,7 +16,7 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "dependencies": {
-      "@colyseus/core": "^0.15.37",
+      "@colyseus/core": "^0.15.38",
       "@colyseus/monitor": "^0.15.6",
       "@colyseus/playground": "^0.15.12",
       "@colyseus/ws-transport": "^0.15.1",
