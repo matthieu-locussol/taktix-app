@@ -1,4 +1,3 @@
-import { createServer } from 'http';
 import { Server } from '@colyseus/core';
 import { monitor } from '@colyseus/monitor';
 import { playground } from '@colyseus/playground';
@@ -6,6 +5,7 @@ import { WebSocketTransport } from '@colyseus/ws-transport';
 import cors from 'cors';
 import express, { json } from 'express';
 import basicAuth from 'express-basic-auth';
+import { createServer } from 'http';
 import { AuthRoom } from './rooms/AuthRoom';
 import { ChatRoom } from './rooms/ChatRoom';
 import { defineMapsRooms } from './rooms/utils/defineMapsRooms';
