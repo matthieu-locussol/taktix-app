@@ -1,18 +1,43 @@
-import { LinearProgress, linearProgressClasses, styled } from '@mui/material';
+import {
+   LinearProgress,
+   TooltipProps,
+   Typography,
+   linearProgressClasses,
+   styled,
+} from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { forwardRef } from 'react';
 import { useStore } from '../../../store';
+import { StatisticIcon } from '../../components/StatisticIcon';
+import { Tooltip } from './Tooltip';
 
-export const HealthBar = observer<{}, HTMLDivElement>(
-   forwardRef((props, ref) => {
+interface HealthBarProps {
+   placement?: TooltipProps['placement'];
+}
+
+export const HealthBar = observer<HealthBarProps, HTMLDivElement>(
+   forwardRef(({ placement = 'top-end', ...rest }, ref) => {
       const { characterStore } = useStore();
+
       return (
-         <StyledProgressBar
-            {...props}
-            ref={ref}
-            variant="determinate"
-            value={characterStore.healthPercentage}
-         />
+         <Tooltip
+            disableInteractive
+            title={
+               <Typography display="flex" alignItems="center">
+                  {characterStore.currentHealth} / {characterStore.maxHealth}
+                  <StatisticIcon id="vitality_+f" fontSize="small" sx={{ mx: 0.5 }} /> (
+                  {characterStore.healthPercentage.toFixed(1)}%)
+               </Typography>
+            }
+            placement={placement}
+         >
+            <StyledProgressBar
+               {...rest}
+               ref={ref}
+               variant="determinate"
+               value={characterStore.healthPercentage}
+            />
+         </Tooltip>
       );
    }),
 );

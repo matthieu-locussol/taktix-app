@@ -38,8 +38,8 @@ export const Character = observer(() => {
             </Typography>
          </Informations>
          <ProgressBars>
-            <HealthBar />
-            <ExperienceBar />
+            <HealthBar placement="top" />
+            <ExperienceBar placement="top" />
          </ProgressBars>
       </Root>
    );
