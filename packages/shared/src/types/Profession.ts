@@ -14,7 +14,7 @@ export const isProfessionType = (value: unknown): value is ProfessionType =>
 export const professions = Object.values(ProfessionType);
 
 export const CharacterSpritesheet: Record<ProfessionType, number> = {
-   [ProfessionType.Warrior]: 6,
+   [ProfessionType.Warrior]: 0,
    [ProfessionType.Mage]: 3,
    [ProfessionType.Archer]: 7,
 };

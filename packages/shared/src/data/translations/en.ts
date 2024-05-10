@@ -442,6 +442,7 @@ export const translationsEn = {
    DungeonRoom: 'Bloody Dungeon',
    ForestRoom: 'Magical Forest',
    HouseRoom: 'CrackHouse',
+   MoonshadowHamletRoom: 'Moonshadow Hamlet',
 
    // Channels
    Server: 'Server',

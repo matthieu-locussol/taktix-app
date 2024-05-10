@@ -1,5 +1,6 @@
 export * from './config';
 export * from './data/channelsInformations';
+export * from './data/charactersSprites';
 export * from './data/fights';
 export * from './data/githubReleases';
 export * from './data/levels';

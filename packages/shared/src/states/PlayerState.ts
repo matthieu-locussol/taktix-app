@@ -9,7 +9,7 @@ export class PlayerState extends Schema {
    name: string;
 
    @type('string')
-   profession: string;
+   spritesheet: string;
 
    @type('number')
    x: number;
@@ -42,7 +42,7 @@ export class PlayerState extends Schema {
 
    constructor(
       name: string,
-      profession: string,
+      spritesheet: string,
       x: number,
       y: number,
       direction: string,
@@ -51,7 +51,7 @@ export class PlayerState extends Schema {
       super();
 
       this.name = name;
-      this.profession = profession;
+      this.spritesheet = spritesheet;
       this.x = x;
       this.y = y;
       this.direction = direction;

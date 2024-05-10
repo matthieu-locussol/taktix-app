@@ -2,7 +2,6 @@ import i18next from 'i18next';
 import { animationFilesData, animationsData } from 'shared/src/data/animations';
 import { ANIMATION_TO_FILE } from 'shared/src/types/Animation';
 import { MonsterType } from 'shared/src/types/Monster';
-import { CharacterSpritesheet, ProfessionType } from 'shared/src/types/Profession';
 import { PvEFightMove } from 'shared/src/types/PvEFight';
 import { Room } from 'shared/src/types/Room';
 import { Position } from 'shared/src/types/SceneData';
@@ -12,13 +11,8 @@ import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { store } from '../../store';
 import { MONSTER_TYPE_COLORS, STATS_COLORS } from '../../styles/appTheme';
-import {
-   CHARACTER_HEIGHT,
-   CHARACTER_WIDTH,
-   FADE_IN_DURATION,
-   FADE_OUT_DURATION,
-   SCALE_FACTOR,
-} from '../Scene';
+import { CHARACTER_HEIGHT, FADE_IN_DURATION, FADE_OUT_DURATION, SCALE_FACTOR } from '../Scene';
+import { loadCharactersAssets } from '../utils/loadCharactersAssets';
 import { makeCharacterName } from '../utils/makeCharacterName';
 
 const HEALTH_MARGIN = 10;
@@ -65,11 +59,7 @@ export class PvEFightScene extends Phaser.Scene {
       this.load.image('mountain-far', '/assets/fights/mountains/mountain-far.png');
       this.load.image('mountains', '/assets/fights/mountains/mountains.png');
       this.load.image('trees', '/assets/fights/mountains/trees.png');
-
-      this.load.spritesheet('PlayerSpritesheet', '/assets/characters/characters.png', {
-         frameWidth: CHARACTER_WIDTH,
-         frameHeight: CHARACTER_HEIGHT,
-      });
+      loadCharactersAssets(this);
 
       store.pveFightStore.uniqueMonstersNames.forEach((name) => {
          this.load.spritesheet(name, `/assets/monsters/body/${name}.png`, {
@@ -131,14 +121,14 @@ export class PvEFightScene extends Phaser.Scene {
       const alliesCount = store.pveFightStore.fightResults.allies.length;
       const monstersCount = store.pveFightStore.fightResults.monsters.length;
 
-      store.pveFightStore.fightResults.allies.forEach(({ profession, id }, idx) => {
-         _assert(profession, 'profession must be set!');
+      store.pveFightStore.fightResults.allies.forEach(({ id, spritesheet }, idx) => {
+         _assert(spritesheet, 'spritesheet must be set');
 
-         const playerSprite = this.add.sprite(0, 0, 'PlayerSpritesheet');
+         const playerSprite = this.add.sprite(0, 0, spritesheet);
          playerSprite.anims.create({
             key: 'idle',
-            frames: playerSprite.anims.generateFrameNumbers('PlayerSpritesheet', {
-               frames: this.getAllyFrames(profession),
+            frames: playerSprite.anims.generateFrameNumbers(spritesheet, {
+               frames: this.getAllyFrames(),
             }),
             frameRate: 4,
             repeat: -1,
@@ -482,24 +472,8 @@ export class PvEFightScene extends Phaser.Scene {
       }[allyIdx];
    }
 
-   private getAllyFrames(profession: ProfessionType): number[] {
-      return [
-         Math.floor(CharacterSpritesheet[profession] / 4) * 36 +
-            CharacterSpritesheet[profession] * 3 +
-            4 * 3 * 2,
-         Math.floor(CharacterSpritesheet[profession] / 4) * 36 +
-            CharacterSpritesheet[profession] * 3 +
-            4 * 3 * 2 +
-            1,
-         Math.floor(CharacterSpritesheet[profession] / 4) * 36 +
-            CharacterSpritesheet[profession] * 3 +
-            4 * 3 * 2 +
-            2,
-         Math.floor(CharacterSpritesheet[profession] / 4) * 36 +
-            CharacterSpritesheet[profession] * 3 +
-            4 * 3 * 2 +
-            1,
-      ];
+   private getAllyFrames(): number[] {
+      return [8, 9, 10, 11];
    }
 
    private getMonsterPosition(

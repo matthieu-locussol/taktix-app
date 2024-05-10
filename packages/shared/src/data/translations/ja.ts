@@ -436,6 +436,7 @@ export const translationsJa: LanguageTranslations = {
    DungeonRoom: '血のダンジョン',
    ForestRoom: '魔法の森',
    HouseRoom: 'クラックハウス',
+   MoonshadowHamletRoom: '月影の集落',
 
    // Channels
    Server: 'サーバー',

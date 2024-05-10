@@ -26,4 +26,5 @@ export const NPC_SPOTS: Record<Room, NPCSpot[]> = {
    ],
    ForestRoom: [],
    HouseRoom: [],
+   MoonshadowHamletRoom: [],
 };

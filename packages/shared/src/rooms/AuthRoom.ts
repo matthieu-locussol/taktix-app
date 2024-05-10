@@ -1,6 +1,7 @@
 import { z } from 'zod';
+import { CharacterSprite, zCharacterSprite } from '../data/charactersSprites';
 import { zTranslationKey } from '../data/translations';
-import { ProfessionType, zProfessionType } from '../types/Profession';
+import { zProfessionType } from '../types/Profession';
 
 export interface AuthRoomOptions {
    username: string;
@@ -10,7 +11,7 @@ export interface AuthRoomOptions {
 export interface AuthRoomUserData {
    characters: {
       name: string;
-      profession: ProfessionType;
+      spritesheet: CharacterSprite;
       experience: number;
    }[];
 }
@@ -27,6 +28,7 @@ export const zAuthRoomMessage = z.discriminatedUnion('type', [
       message: z.object({
          characterName: z.string(),
          profession: zProfessionType,
+         spritesheet: zCharacterSprite,
       }),
    }),
    z.object({
@@ -65,6 +67,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
             baseStatisticsPoints: z.number(),
             experience: z.number(),
             profession: zProfessionType,
+            spritesheet: zCharacterSprite,
             health: z.number(),
             teleporters: z.string(),
             money: z.number(),
@@ -85,7 +88,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
             characters: z.array(
                z.object({
                   name: z.string(),
-                  profession: zProfessionType,
+                  spritesheet: zCharacterSprite,
                   experience: z.number(),
                }),
             ),
@@ -105,7 +108,7 @@ export const zAuthRoomResponse = z.discriminatedUnion('type', [
             characters: z.array(
                z.object({
                   name: z.string(),
-                  profession: zProfessionType,
+                  spritesheet: zCharacterSprite,
                   experience: z.number(),
                }),
             ),

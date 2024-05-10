@@ -1,3 +1,4 @@
+import { CharacterSprite } from 'shared/src/data/charactersSprites';
 import { EntityType } from '../../utils/phaser';
 import { SCALE_FACTOR, type Scene, TILE_SIZE } from '../Scene';
 import { makeCharacterName } from './makeCharacterName';
@@ -6,16 +7,17 @@ import { registerSpriteEvents } from './registerSpriteEvents';
 type CharacterType = 'player' | 'externalPlayer' | 'npc';
 interface MakeCharacterProps {
    scene: Scene;
+   spritesheet: CharacterSprite;
    name: string;
    characterType: CharacterType;
 }
 
-export const makeCharacter = ({ characterType, name, scene }: MakeCharacterProps) => {
+export const makeCharacter = ({ characterType, spritesheet, name, scene }: MakeCharacterProps) => {
    if (scene.gridEngine.getAllCharacters().find((playerName) => playerName === name)) {
       return null;
    }
 
-   const characterSprite = scene.add.sprite(0, 0, 'PlayerSpritesheet');
+   const characterSprite = scene.add.sprite(0, 0, spritesheet);
    characterSprite.setPipeline('Light2D');
    characterSprite.scale = SCALE_FACTOR;
    characterSprite.setName(name);

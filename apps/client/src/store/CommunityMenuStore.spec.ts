@@ -1,3 +1,5 @@
+import { charactersSprites } from 'shared/src/data/charactersSprites';
+import { ProfessionType } from 'shared/src/types/Profession';
 import { describe, expect, it, vi } from 'vitest';
 import { CommunityMenuStore } from './CommunityMenuStore';
 import { Store } from './Store';
@@ -17,10 +19,10 @@ global.fetch = vi.fn(
             Promise.resolve({
                players: [
                   {
-                     avatar: 'avatar',
+                     spritesheet: charactersSprites[0],
                      player: 'player',
                      level: 12,
-                     profession: 'profession',
+                     profession: ProfessionType.Warrior,
                      map: 'map',
                   },
                ],
@@ -44,10 +46,10 @@ describe('CommunityMenuStore', () => {
       expect(fetchSpy).toHaveBeenCalledOnce();
       expect(store.players).toEqual([
          {
-            avatar: 'avatar',
+            spritesheet: charactersSprites[0],
             player: 'player',
             level: 12,
-            profession: 'profession',
+            profession: ProfessionType.Warrior,
             map: 'map',
          },
       ]);

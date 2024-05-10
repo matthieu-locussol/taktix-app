@@ -318,7 +318,7 @@ export class PvEFight {
                magicShield,
                level,
                experience,
-               profession,
+               spritesheet,
                weaponType,
             }) => ({
                id,
@@ -329,7 +329,7 @@ export class PvEFight {
                magicShield,
                level,
                experience,
-               profession,
+               spritesheet,
                weaponType,
             }),
          ),

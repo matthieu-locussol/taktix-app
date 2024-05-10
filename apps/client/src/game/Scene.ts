@@ -5,10 +5,10 @@ import {
    PathBlockedStrategy,
    Position,
 } from 'grid-engine';
+import { CharacterSprite } from 'shared/src/data/charactersSprites';
 import { NPC_SPOTS } from 'shared/src/data/npcSpots';
 import { NPCS } from 'shared/src/data/npcs';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { CharacterSpritesheet, ProfessionType } from 'shared/src/types/Profession';
 import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
 import { _assert } from 'shared/src/utils/_assert';
@@ -28,8 +28,8 @@ export const SCALE_FACTOR = 2;
 export const PLAYER_LAYER = 'Player';
 export const PLAYER_GE_LAYER = 'player';
 export const PLAYER_SPEED = 2.5;
-export const CHARACTER_WIDTH = 26;
-export const CHARACTER_HEIGHT = 36;
+export const CHARACTER_WIDTH = 24;
+export const CHARACTER_HEIGHT = 24;
 export const CHARACTER_LETTER_WIDTH = 8;
 export const ZOOM_MIN = 1;
 export const ZOOM_MAX = 2;
@@ -246,6 +246,7 @@ export abstract class Scene extends Phaser.Scene {
          const npc = makeCharacter({
             scene: this,
             name,
+            spritesheet,
             characterType: 'npc',
          });
          _assert(npc, 'npc should be defined');
@@ -254,7 +255,7 @@ export abstract class Scene extends Phaser.Scene {
          this.gridEngine.addCharacter({
             id: `NPC@${name}`,
             sprite,
-            walkingAnimationMapping: spritesheet,
+            walkingAnimationMapping: 0,
             startPosition: { x, y },
             charLayer: PLAYER_GE_LAYER,
             speed: PLAYER_SPEED,
@@ -418,21 +419,23 @@ export abstract class Scene extends Phaser.Scene {
    }
 
    public createPlayer(nickname: string): void {
+      const { spritesheet } = store.characterStore;
+
       const character = makeCharacter({
          scene: this,
          name: nickname,
+         spritesheet,
          characterType: 'player',
       });
 
       if (character !== null) {
-         const { profession } = store.characterStore;
          const { sprite, wrapper } = character;
          this.playersWrappers.set(INTERNAL_PLAYER_NAME, wrapper);
 
          this.gridEngine.addCharacter({
             id: INTERNAL_PLAYER_NAME,
             sprite,
-            walkingAnimationMapping: CharacterSpritesheet[profession],
+            walkingAnimationMapping: 0,
             startPosition: this.entrancePosition,
             charLayer: PLAYER_GE_LAYER,
             speed: PLAYER_SPEED,
@@ -600,13 +603,14 @@ export abstract class Scene extends Phaser.Scene {
 
    public addExternalPlayer(
       name: string,
-      profession: ProfessionType,
+      spritesheet: CharacterSprite,
       position: Position,
       direction: Direction,
    ): void {
       const character = makeCharacter({
          scene: this,
          name,
+         spritesheet,
          characterType: 'externalPlayer',
       });
 
@@ -617,7 +621,7 @@ export abstract class Scene extends Phaser.Scene {
          this.gridEngine.addCharacter({
             id: name,
             sprite,
-            walkingAnimationMapping: CharacterSpritesheet[profession],
+            walkingAnimationMapping: 0,
             startPosition: position,
             charLayer: PLAYER_GE_LAYER,
             speed: PLAYER_SPEED,

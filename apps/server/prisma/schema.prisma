@@ -24,6 +24,7 @@ model Character {
   name                 String @unique
   map                  String
   profession           String
+  spritesheet          String
   pos_x                Int
   pos_y                Int
   direction            String

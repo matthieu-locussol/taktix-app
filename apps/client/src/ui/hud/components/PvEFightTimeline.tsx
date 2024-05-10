@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { TranslationKey } from 'shared/src/data/translations';
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
+import { CharacterSpriteStatic } from './CharacterSpriteStatic';
 import { Tooltip } from './Tooltip';
 
 export const PvEFightTimeline = observer(() => {
@@ -39,7 +40,15 @@ export const PvEFightTimeline = observer(() => {
                         p: 1.5,
                      }}
                   >
-                     <img src={fighter.avatar} alt="" width={32} height={32} />
+                     {fighter.type === 'ally' ? (
+                        <CharacterSpriteStatic
+                           sprite={fighter.spritesheet}
+                           scale={1.375}
+                           sx={{ pb: 0.5, mt: -0.5 }}
+                        />
+                     ) : (
+                        <img src={fighter.avatar} alt="" width={32} height={32} />
+                     )}
                   </Paper>
                   {fighter.id === pveFightStore.currentFighter && (
                      <PlayingIcon

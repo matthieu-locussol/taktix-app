@@ -1,4 +1,5 @@
 import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
+import { loadCharactersAssets } from '../utils/loadCharactersAssets';
 
 export class HouseScene extends Scene {
    constructor() {
@@ -10,10 +11,7 @@ export class HouseScene extends Scene {
       this.load.image('House_tileset', '/assets/tilesets/house_tileset.png');
       this.load.image('Clouds_tileset', '/assets/tilesets/cloud_tileset.png');
       this.load.tilemapTiledJSON('House_tiledmap', '/assets/maps/House.json');
-      this.load.spritesheet('PlayerSpritesheet', '/assets/characters/characters.png', {
-         frameWidth: CHARACTER_WIDTH,
-         frameHeight: CHARACTER_HEIGHT,
-      });
+      loadCharactersAssets(this);
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

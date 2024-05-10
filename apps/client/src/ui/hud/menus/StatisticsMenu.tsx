@@ -84,13 +84,9 @@ export const StatisticsMenu = observer(() => {
             </IconButton>
             <StyledDialogContent dividers>
                <Header>
-                  <Image
-                     src={`/assets/professions/face/${characterStore.profession}.png`}
-                     alt="Character"
-                  />
-                  <Stack sx={{ width: '60%' }}>
+                  <Stack sx={{ width: '100%' }}>
                      <Typography
-                        align="right"
+                        align="left"
                         color="text.primary"
                         variant="body2"
                         fontSize="1vw"
@@ -100,7 +96,7 @@ export const StatisticsMenu = observer(() => {
                         {characterStore.name}
                      </Typography>
                      <Typography
-                        align="right"
+                        align="left"
                         color="text.secondary"
                         variant="body2"
                         fontSize="1vw"
@@ -239,18 +235,4 @@ const Header = styled(Box)(({ theme }) => ({
    borderBottom: `1px solid ${theme.palette.paper.border}`,
    padding: theme.spacing(1),
    backgroundColor: darken(`${theme.palette.paper.background}C6`, 0.15),
-}));
-
-const Image = styled('img')(({ theme }) => ({
-   padding: 8,
-   overflowX: 'hidden',
-   overflowY: 'scroll',
-   color: 'white',
-   wordWrap: 'break-word',
-   textShadow: '1px 1px 2px #000000',
-   border: `1px solid ${theme.palette.paper.border}`,
-   background: darken(`${theme.palette.paper.background}C6`, 0.15),
-   borderRadius: 8,
-   width: 'min(4vw, 7.5vh)',
-   height: 'min(4vw, 7.5vh)',
 }));

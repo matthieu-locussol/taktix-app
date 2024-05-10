@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { zCharacterSprite } from '../data/charactersSprites';
 import { zItem } from './Item';
 import { zMonsterType } from './Monster';
 import { zProfessionType } from './Profession';
@@ -15,6 +16,7 @@ const zPvEFighterInformations = z.object({
    level: z.number(),
    experience: z.number(),
    profession: zProfessionType.optional(),
+   spritesheet: zCharacterSprite.optional(),
 
    weaponType: zWeaponType,
    weaponDamages: z.array(zWeaponDamages),
@@ -59,6 +61,7 @@ const zPvEAllySimplified = z.object({
    level: z.number(),
    experience: z.number(),
    profession: zProfessionType.optional(),
+   spritesheet: zCharacterSprite.optional(),
    weaponType: zWeaponType,
 });
 

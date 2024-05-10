@@ -1,4 +1,5 @@
-import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
+import { Scene } from '../Scene';
+import { loadCharactersAssets } from '../utils/loadCharactersAssets';
 
 export class DungeonScene extends Scene {
    constructor() {
@@ -10,10 +11,7 @@ export class DungeonScene extends Scene {
       this.load.image('Dungeon Indoor_tileset', '/assets/tilesets/dungeon_indoor.png');
       this.load.image('Dungeon Outdoor_tileset', '/assets/tilesets/dungeon_outdoor.png');
       this.load.tilemapTiledJSON('Dungeon_tiledmap', '/assets/maps/Dungeon.json');
-      this.load.spritesheet('PlayerSpritesheet', '/assets/characters/characters.png', {
-         frameWidth: CHARACTER_WIDTH,
-         frameHeight: CHARACTER_HEIGHT,
-      });
+      loadCharactersAssets(this);
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

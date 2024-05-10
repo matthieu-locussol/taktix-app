@@ -30,6 +30,7 @@ import {
    zItemType,
    zProfessionType,
 } from 'shared';
+import { zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
 import { usersMap } from './utils/usersMap';
@@ -131,7 +132,7 @@ export class MapRoom extends Room<MapState> {
       this.state.createPlayer(
          client.sessionId,
          characterName,
-         characterInfos.profession,
+         characterInfos.spritesheet,
          characterPosition.x,
          characterPosition.y,
          characterDirection,
@@ -369,6 +370,7 @@ export class MapRoom extends Room<MapState> {
                   experience: characterInfos.experience,
                   level: LevelMgt.getLevel(characterInfos.experience),
                   profession: zProfessionType.parse(characterInfos.profession),
+                  spritesheet: zCharacterSprite.parse(player.spritesheet),
                   rawStatistics: characterInfos.baseStatistics,
                   items: player.getEquippedItems(),
                   talents: TalentMgt.deserializeTalents(characterInfos.talents),
@@ -523,7 +525,7 @@ export class MapRoom extends Room<MapState> {
                x: player.x,
                y: player.y,
                direction: player.direction,
-               profession: zProfessionType.parse(player.profession),
+               spritesheet: zCharacterSprite.parse(player.spritesheet),
                isFight: player.isFight,
             })),
          },

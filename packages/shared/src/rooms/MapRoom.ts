@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { zProfessionType } from '../types/Profession';
+import { zCharacterSprite } from '../data/charactersSprites';
 import { zPvEFightResults } from '../types/PvEFight';
 import { zRoom } from '../types/Room';
 import { Direction, Position } from '../types/SceneData';
@@ -108,7 +108,7 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
                x: z.number(),
                y: z.number(),
                direction: z.string(),
-               profession: zProfessionType,
+               spritesheet: zCharacterSprite,
                isFight: z.boolean(),
             }),
          ),

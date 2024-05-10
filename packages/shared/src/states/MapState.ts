@@ -9,13 +9,13 @@ export class MapState extends Schema {
    createPlayer(
       sessionId: string,
       name: string,
-      profession: string,
+      spritesheet: string,
       x: number,
       y: number,
       direction: string,
       teleporters: Room[],
    ) {
-      const player = new PlayerState(name, profession, x, y, direction, teleporters);
+      const player = new PlayerState(name, spritesheet, x, y, direction, teleporters);
       this.players.set(sessionId, player);
    }
 
