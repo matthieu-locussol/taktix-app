@@ -20,4 +20,5 @@ export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = {
       price: 230,
    },
    HouseRoom: null,
+   MoonshadowHamletRoom: null,
 };

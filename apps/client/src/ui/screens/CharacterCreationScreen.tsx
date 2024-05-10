@@ -19,7 +19,11 @@ export const CharacterCreationScreen = observer(() => {
    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       characterCreationStore.setLoading(true);
-      colyseusStore.createCharacter(characterCreationStore.name, characterCreationStore.profession);
+      colyseusStore.createCharacter(
+         characterCreationStore.name,
+         characterCreationStore.profession,
+         characterCreationStore.spritesheet,
+      );
    };
 
    return (

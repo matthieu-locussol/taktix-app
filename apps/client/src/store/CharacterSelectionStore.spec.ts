@@ -1,4 +1,4 @@
-import { ProfessionType } from 'shared/src/types/Profession';
+import { charactersSprites } from 'shared/src/data/charactersSprites';
 import { describe, expect, it } from 'vitest';
 import { CharacterSelectionStore } from './CharacterSelectionStore';
 
@@ -53,14 +53,14 @@ describe('CharacterSelectionStore', () => {
       store.setCharacters([
          {
             name: 'John',
-            profession: ProfessionType.Archer,
+            spritesheet: charactersSprites[1],
             experience: 0,
          },
       ]);
       expect(store.characters).toEqual([
          {
             name: 'John',
-            profession: ProfessionType.Archer,
+            spritesheet: charactersSprites[1],
             experience: 0,
          },
       ]);
@@ -109,7 +109,7 @@ describe('CharacterSelectionStore', () => {
       store.setCharacters([
          {
             name: 'John',
-            profession: ProfessionType.Archer,
+            spritesheet: charactersSprites[1],
             experience: 0,
          },
       ]);

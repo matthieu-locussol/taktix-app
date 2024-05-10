@@ -3,7 +3,14 @@
 import { z } from 'zod';
 import { ZodMgt } from '../utils/zodMgt';
 
-const rooms = ['AAA_InitialRoom', 'CloudsRoom', 'DungeonRoom', 'ForestRoom', 'HouseRoom'] as const;
+const rooms = [
+   'AAA_InitialRoom',
+   'CloudsRoom',
+   'DungeonRoom',
+   'ForestRoom',
+   'HouseRoom',
+   'MoonshadowHamletRoom',
+] as const;
 
 export const zRoom = ZodMgt.constructZodLiteralUnionType(rooms.map((room) => z.literal(room)));
 

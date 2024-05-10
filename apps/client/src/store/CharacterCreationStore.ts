@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import { CharacterSprite, charactersSprites } from 'shared/src/data/charactersSprites';
 import { TranslationKey } from 'shared/src/data/translations';
 import { ProfessionType } from 'shared/src/types/Profession';
 
@@ -10,6 +11,8 @@ export class CharacterCreationStore {
    public name: string = '';
 
    public profession: ProfessionType = ProfessionType.Warrior;
+
+   public spritesheet: CharacterSprite = charactersSprites[0];
 
    public loading: boolean = false;
 
@@ -23,6 +26,17 @@ export class CharacterCreationStore {
 
    setProfession(professionType: ProfessionType) {
       this.profession = professionType;
+   }
+
+   setNextSpritesheet() {
+      const index = charactersSprites.findIndex((sprite) => sprite === this.spritesheet);
+      this.spritesheet = charactersSprites[(index + 1) % charactersSprites.length];
+   }
+
+   setPreviousSpritesheet() {
+      const index = charactersSprites.findIndex((sprite) => sprite === this.spritesheet);
+      this.spritesheet =
+         charactersSprites[(index - 1 + charactersSprites.length) % charactersSprites.length];
    }
 
    setLoading(loading: boolean) {
@@ -43,5 +57,9 @@ export class CharacterCreationStore {
 
    get canSubmit() {
       return this.name !== '' && !this.loading;
+   }
+
+   get skinNumber() {
+      return charactersSprites.findIndex((sprite) => sprite === this.spritesheet) + 1;
    }
 }

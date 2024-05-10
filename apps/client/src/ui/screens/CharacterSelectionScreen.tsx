@@ -19,6 +19,7 @@ import { MAX_CHARACTERS_PER_ACCOUNT } from 'shared/src/config';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
+import { CharacterSpriteStatic } from '../hud/components/CharacterSpriteStatic';
 
 export const CharacterSelectionScreen = observer(() => {
    const store = useStore();
@@ -97,15 +98,10 @@ export const CharacterSelectionScreen = observer(() => {
                               }),
                            })}
                         >
-                           <img
-                              src={`/assets/professions/face/${character.profession}.png`}
-                              alt=""
-                              width={32}
-                              height={32}
-                              style={{
-                                 imageRendering: 'pixelated',
-                                 marginRight: 12,
-                              }}
+                           <CharacterSpriteStatic
+                              sprite={character.spritesheet}
+                              scale={2}
+                              sx={{ mb: 1.5, mr: 1 }}
                            />
                            <Typography
                               fontWeight={

@@ -17,7 +17,6 @@ export const Character = observer(() => {
          heightPercent={hudStore.characterHeight}
          chatboxWidth={hudStore.chatboxWidth}
       >
-         <Image src={`/assets/professions/face/${characterStore.profession}.png`} alt="Character" />
          <Informations>
             <Typography
                align="right"
@@ -35,7 +34,7 @@ export const Character = observer(() => {
                fontSize="1vw"
                lineHeight="2.5vh"
             >
-               [{characterStore.position.x}, {characterStore.position.y}] - {t(characterStore.map)}
+               {t(characterStore.map)} - [{characterStore.position.x}, {characterStore.position.y}]
             </Typography>
          </Informations>
          <ProgressBars>
@@ -64,23 +63,6 @@ const Root = styled(Box, {
    width: `calc(${widthPercent}vw - 2px)`,
    height: `calc(${heightPercent}vh - 18px)`,
    borderRadius: 8,
-}));
-
-const Image = styled('img')(({ theme }) => ({
-   padding: 8,
-   overflowX: 'hidden',
-   overflowY: 'scroll',
-   color: 'white',
-   wordWrap: 'break-word',
-   textShadow: '1px 1px 2px #000000',
-   border: `1px solid ${theme.palette.paper.border}`,
-   background: darken(`${theme.palette.paper.background}C6`, 0.15),
-   position: 'absolute',
-   top: 8,
-   left: 8,
-   borderRadius: 8,
-   width: 'min(2.5vw, 5.5vh)',
-   height: 'min(2.5vw, 5.5vh)',
 }));
 
 const Informations = styled(Box)(() => ({

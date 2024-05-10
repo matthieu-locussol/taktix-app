@@ -437,6 +437,7 @@ export const translationsFr: LanguageTranslations = {
    DungeonRoom: 'Donjon sanglant',
    ForestRoom: 'Forêt enchantée',
    HouseRoom: 'Maison du crack',
+   MoonshadowHamletRoom: "Hameau d'Ombrelune",
 
    // Channels
    Server: 'Serveur',

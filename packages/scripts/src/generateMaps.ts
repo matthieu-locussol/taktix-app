@@ -138,6 +138,7 @@ const generateClientMapsScenes = (maps: string[]) => {
          `../../../apps/client/src/game/scenes/${map}Scene.ts`,
       );
       const mapSceneBlob = `import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
+import { loadCharactersAssets } from '../utils/loadCharactersAssets';
 
 export class ${map}Scene extends Scene {
    constructor() {
@@ -150,10 +151,7 @@ export class ${map}Scene extends Scene {
          .map((tileset) => `this.load.image('${tileset.name}_tileset', '${tileset.image}');`)
          .join('\n      ')}
       this.load.tilemapTiledJSON('${map}_tiledmap', '/assets/maps/${map}.json');
-      this.load.spritesheet('PlayerSpritesheet', '/assets/characters/characters.png', {
-         frameWidth: CHARACTER_WIDTH,
-         frameHeight: CHARACTER_HEIGHT,
-      });
+      loadCharactersAssets(this);
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

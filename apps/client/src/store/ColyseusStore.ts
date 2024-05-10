@@ -1,6 +1,7 @@
 import { Client, Room } from 'colyseus.js';
 import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
+import { CharacterSprite, zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { TranslationKey } from 'shared/src/data/translations';
 import { AuthRoomResponse, isAuthRoomResponse } from 'shared/src/rooms/AuthRoom';
 import { ChatRoomResponse, isChatRoomResponse } from 'shared/src/rooms/ChatRoom';
@@ -9,7 +10,7 @@ import { MapState } from 'shared/src/states/MapState';
 import { Channel } from 'shared/src/types/Channel';
 import { CustomProtocol, Protocol } from 'shared/src/types/Colyseus';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { ProfessionType, zProfessionType } from 'shared/src/types/Profession';
+import { ProfessionType } from 'shared/src/types/Profession';
 import { Room as TRoom } from 'shared/src/types/Room';
 import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
 import { Statistics } from 'shared/src/types/Statistic';
@@ -124,8 +125,12 @@ export class ColyseusStore {
       this.authRoom.send('selectCharacter', { characterName });
    }
 
-   createCharacter(characterName: string, profession: ProfessionType) {
-      this.authRoom.send('createCharacter', { characterName, profession });
+   createCharacter(
+      characterName: string,
+      profession: ProfessionType,
+      spritesheet: CharacterSprite,
+   ) {
+      this.authRoom.send('createCharacter', { characterName, profession, spritesheet });
    }
 
    deleteCharacter(characterName: string, password: string) {
@@ -201,6 +206,7 @@ export class ColyseusStore {
                direction,
                uuid,
                profession,
+               spritesheet,
                talents,
                talentsPoints,
                baseStatistics,
@@ -231,6 +237,7 @@ export class ColyseusStore {
                this._store.characterStore.setMap(map as TRoom);
                this._store.characterStore.setPosition({ x: posX, y: posY });
                this._store.characterStore.setProfession(profession);
+               this._store.characterStore.setSpritesheet(spritesheet);
                this._store.characterStore.setTalents(TalentMgt.deserializeTalents(talents));
                this._store.characterStore.setTalentsPoints(talentsPoints);
                this._store.characterStore.setBaseStatistics(
@@ -359,7 +366,7 @@ export class ColyseusStore {
       });
 
       this.gameRoom.state.players.onAdd(async (player) => {
-         const { name, profession, x, y, direction } = player;
+         const { name, spritesheet, x, y, direction } = player;
          const isPlayer = name === this._store.characterStore.name;
 
          if (!isPlayer) {
@@ -369,7 +376,7 @@ export class ColyseusStore {
                if (scene.getRoomType() === 'map' && !scene.doesPlayerExist(name)) {
                   scene.addExternalPlayer(
                      name,
-                     zProfessionType.parse(profession),
+                     zCharacterSprite.parse(spritesheet),
                      { x, y },
                      direction as Direction,
                   );
@@ -541,12 +548,12 @@ export class ColyseusStore {
 
       players
          .filter(({ name }) => name !== this._store.characterStore.name)
-         .forEach(({ name, x, y, direction, profession, isFight }) => {
+         .forEach(({ name, x, y, direction, spritesheet, isFight }) => {
             if (scene.doesPlayerExist(name)) {
                scene.deleteExternalPlayer(name);
             }
 
-            scene.addExternalPlayer(name, profession, { x, y }, direction as Direction);
+            scene.addExternalPlayer(name, spritesheet, { x, y }, direction as Direction);
             scene.setCharacterFighting(name, isFight);
          });
    }

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ZodMgt } from '../utils/zodMgt';
+import { CharacterSprite } from './charactersSprites';
 
 const npcs = ['Akara', 'Serge Dualé'] as const;
 
@@ -12,18 +13,18 @@ export const isNPC = (value: unknown): value is NPC => zNPC.safeParse(value).suc
 export interface NPCInformations {
    name: NPC;
    avatar: string;
-   spritesheet: number;
+   spritesheet: CharacterSprite;
 }
 
 export const NPCS: Record<NPC, NPCInformations> = {
    Akara: {
       name: 'Akara',
       avatar: 'akara.jpeg',
-      spritesheet: 1,
+      spritesheet: 'Character_002',
    },
    'Serge Dualé': {
       name: 'Serge Dualé',
       avatar: 'serge.jpeg',
-      spritesheet: 2,
+      spritesheet: 'Character_003',
    },
 };

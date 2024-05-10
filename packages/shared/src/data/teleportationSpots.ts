@@ -134,4 +134,5 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
          },
       },
    ],
+   MoonshadowHamletRoom: [],
 };

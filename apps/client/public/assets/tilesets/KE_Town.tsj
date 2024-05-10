@@ -1,0 +1,14 @@
+{ "columns":32,
+ "image":"KE_Town.png",
+ "imageheight":256,
+ "imagewidth":512,
+ "margin":0,
+ "name":"KE_Town",
+ "spacing":0,
+ "tilecount":512,
+ "tiledversion":"1.10.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

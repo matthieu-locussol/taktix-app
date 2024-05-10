@@ -1,6 +1,7 @@
 import type { Position } from 'grid-engine';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { DEFAULT_HEALTH_REGEN_MS } from 'shared/src/config';
+import { CharacterSprite, charactersSprites } from 'shared/src/data/charactersSprites';
 import { LEVEL_TO_EXPERIENCE } from 'shared/src/data/levels';
 import { Item, ItemPosition } from 'shared/src/types/Item';
 import { Player } from 'shared/src/types/Player';
@@ -20,6 +21,8 @@ export class CharacterStore {
    public name: string = '';
 
    public profession: ProfessionType = ProfessionType.Warrior;
+
+   public spritesheet: CharacterSprite = charactersSprites[0];
 
    public position: Position = { x: 0, y: 0 };
 
@@ -61,6 +64,10 @@ export class CharacterStore {
 
    public setProfession(profession: ProfessionType) {
       this.profession = profession;
+   }
+
+   public setSpritesheet(spritesheet: CharacterSprite) {
+      this.spritesheet = spritesheet;
    }
 
    public setPosition(position: Position) {

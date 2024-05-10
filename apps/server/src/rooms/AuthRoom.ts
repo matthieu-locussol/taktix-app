@@ -24,6 +24,7 @@ import {
    _assert,
    _assertTrue,
    isAuthRoomMessage,
+   zCharacterSprite,
    zProfessionType,
 } from 'shared';
 import { AuthRoomResponse } from 'shared/src/rooms/AuthRoom';
@@ -104,9 +105,9 @@ export class AuthRoom extends Room {
       }
 
       client.userData = {
-         characters: user.characters.map(({ name, profession, experience }) => ({
+         characters: user.characters.map(({ name, spritesheet, experience }) => ({
             name,
-            profession: zProfessionType.parse(profession),
+            spritesheet: zCharacterSprite.parse(spritesheet),
             experience,
          })),
       };
@@ -223,6 +224,7 @@ export class AuthRoom extends Room {
             baseStatisticsPoints: character.baseStatisticsPoints,
             experience: character.experience,
             profession: zProfessionType.parse(character.profession),
+            spritesheet: zCharacterSprite.parse(character.spritesheet),
             health: character.health,
             teleporters: character.teleporters,
             money: character.money,
@@ -250,7 +252,7 @@ export class AuthRoom extends Room {
    async onCreateCharacter(
       client: Client,
       {
-         message: { characterName, profession },
+         message: { characterName, profession, spritesheet },
       }: Extract<AuthRoomMessage, { type: 'createCharacter' }>,
    ) {
       const userInformations = this.users.get(client.id);
@@ -304,7 +306,8 @@ export class AuthRoom extends Room {
          await prisma.character.create({
             data: {
                name: characterName,
-               profession,
+               profession: zProfessionType.parse(profession),
+               spritesheet: zCharacterSprite.parse(spritesheet),
                pos_x: DEFAULT_X,
                pos_y: DEFAULT_Y,
                direction: DEFAULT_DIRECTION,
@@ -330,15 +333,17 @@ export class AuthRoom extends Room {
             characters: [
                ...userCharacters.map((entry) => ({
                   profession: zProfessionType.parse(entry.profession),
+                  spritesheet: zCharacterSprite.parse(entry.spritesheet),
                   name: entry.name,
                   experience: entry.experience,
                })),
                {
                   profession,
+                  spritesheet,
                   name: characterName,
                   experience: DEFAULT_EXPERIENCE,
                },
-            ],
+            ].sort((a, b) => b.experience - a.experience),
          };
       }
 
@@ -396,7 +401,7 @@ export class AuthRoom extends Room {
             characters: user.characters
                .filter((entry) => entry.name !== characterName)
                .map((entry) => ({
-                  profession: zProfessionType.parse(entry.profession),
+                  spritesheet: zCharacterSprite.parse(entry.spritesheet),
                   name: entry.name,
                   experience: entry.experience,
                })),

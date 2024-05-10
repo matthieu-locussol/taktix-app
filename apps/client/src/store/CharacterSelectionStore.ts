@@ -51,7 +51,7 @@ export class CharacterSelectionStore {
    }
 
    setCharacters(characters: AuthRoomUserData['characters']) {
-      this.characters = characters;
+      this.characters = characters.sort((a, b) => b.experience - a.experience);
    }
 
    setSelectedCharacter(selectedCharacter: string) {

@@ -22,14 +22,16 @@ import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
+import { zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { zProfessionType } from 'shared/src/types/Profession';
 import { isRoom } from 'shared/src/types/Room';
 import { useStore } from '../../../store';
 import { TFunctionWrapper, useTranslation } from '../../../types/react-i18next';
 import { StatusBadge } from '../../components/StatusBadge';
+import { CharacterSpriteStatic } from '../components/CharacterSpriteStatic';
 
 interface Column {
-   id: 'avatar' | 'player' | 'map' | 'level' | 'profession';
+   id: 'spritesheet' | 'player' | 'map' | 'level' | 'profession';
    label: (t: TFunctionWrapper) => string;
    minWidth?: number;
    align?: 'right';
@@ -38,9 +40,15 @@ interface Column {
 
 const columns: Column[] = [
    {
-      id: 'avatar',
+      id: 'spritesheet',
       label: () => '',
-      format: (value) => <img src={value} width={24} height={24} />,
+      format: (value) => (
+         <CharacterSpriteStatic
+            sprite={zCharacterSprite.parse(value)}
+            scale={1.5}
+            sx={{ mb: 1.5 }}
+         />
+      ),
    },
    {
       id: 'player',
