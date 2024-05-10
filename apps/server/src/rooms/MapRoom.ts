@@ -47,6 +47,7 @@ export class MapRoom extends Room<MapState> {
       super();
 
       this.name = name;
+      this.autoDispose = false;
    }
 
    onCreate(_options: Options) {
