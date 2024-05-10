@@ -1,4 +1,3 @@
-import ExperienceIcon from '@mui/icons-material/ArrowCircleUpRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOffRounded';
 import VisibilityIcon from '@mui/icons-material/VisibilityRounded';
@@ -24,7 +23,6 @@ import { StatisticIcon } from '../../components/StatisticIcon';
 import { ExperienceBar } from '../components/ExperienceBar';
 import { HealthBar } from '../components/HealthBar';
 import { Statistic } from '../components/Statistic';
-import { Tooltip } from '../components/Tooltip';
 
 export const StatisticsMenu = observer(() => {
    const nodeRef = useRef(null);
@@ -105,30 +103,8 @@ export const StatisticsMenu = observer(() => {
                         {t(characterStore.profession)} -{' '}
                         {t('level', { level: characterStore.level })}
                      </Typography>
-                     <Tooltip
-                        title={
-                           <Typography display="flex" alignItems="center">
-                              {characterStore.currentHealth} / {characterStore.maxHealth}
-                              <StatisticIcon id="vitality_+f" fontSize="small" sx={{ mx: 0.5 }} /> (
-                              {characterStore.healthPercentage.toFixed(1)}%)
-                           </Typography>
-                        }
-                        placement="right"
-                     >
-                        <HealthBar />
-                     </Tooltip>
-                     <Tooltip
-                        title={
-                           <Typography display="flex" alignItems="center">
-                              {characterStore.experience} / {characterStore.maxExperience}{' '}
-                              <ExperienceIcon fontSize="small" sx={{ mx: 0.5 }} /> (
-                              {characterStore.experiencePercentage.toFixed(1)}%)
-                           </Typography>
-                        }
-                        placement="right"
-                     >
-                        <ExperienceBar />
-                     </Tooltip>
+                     <HealthBar />
+                     <ExperienceBar />
                   </Stack>
                </Header>
                {statisticsMenuStore.statistics
