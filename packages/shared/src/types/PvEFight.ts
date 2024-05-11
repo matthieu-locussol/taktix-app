@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { zCharacterSprite } from '../data/charactersSprites';
+import { zMonsterSprite } from '../data/monstersSprites';
 import { zItem } from './Item';
 import { zMonsterType } from './Monster';
 import { zProfessionType } from './Profession';
@@ -16,7 +17,7 @@ const zPvEFighterInformations = z.object({
    level: z.number(),
    experience: z.number(),
    profession: zProfessionType.optional(),
-   spritesheet: zCharacterSprite.optional(),
+   spritesheet: z.union([zCharacterSprite, zMonsterSprite]).optional(),
 
    weaponType: zWeaponType,
    weaponDamages: z.array(zWeaponDamages),
@@ -61,7 +62,7 @@ const zPvEAllySimplified = z.object({
    level: z.number(),
    experience: z.number(),
    profession: zProfessionType.optional(),
-   spritesheet: zCharacterSprite.optional(),
+   spritesheet: zCharacterSprite,
    weaponType: zWeaponType,
 });
 
@@ -71,6 +72,7 @@ const zPvEMonsterSimplified = z.object({
    id: z.number(),
    name: z.string(),
    monsterType: zMonsterType.optional(),
+   spritesheet: zMonsterSprite,
    type: z.union([z.literal('ally'), z.literal('monster')]),
    health: z.number(),
    magicShield: z.number(),

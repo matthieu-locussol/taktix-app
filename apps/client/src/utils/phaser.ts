@@ -3,6 +3,7 @@ import { z } from 'zod';
 export enum EntityType {
    Character = 'Character',
    NPC = 'NPC',
+   Monster = 'Monster',
 }
 
 export const zEntityType = z.nativeEnum(EntityType);
@@ -11,7 +12,7 @@ export enum InteractiveObjectType {
    Teleporter = 'Teleporter',
    TeleporterCell = 'TeleporterCell',
    Bed = 'Bed',
-   Lootbox = 'Lootbox',
+   Well = 'Well',
 }
 
 export const zInteractiveObjectType = z.nativeEnum(InteractiveObjectType);

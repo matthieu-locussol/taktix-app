@@ -7,7 +7,7 @@ export const npcsDialogs: Record<
    NPC,
    (infos: NPCInformations, store: Store, t: TFunctionWrapper) => DialogItem[]
 > = {
-   Akara: ({ avatar, name }, store, _t) => [
+   Akara: ({ avatar, name }, _store, _t) => [
       {
          content: 'Sais-tu qui je suis...?',
          name: '???',
@@ -22,9 +22,6 @@ export const npcsDialogs: Record<
          name,
          avatar,
          choices: [
-            { text: 'Fight facile', callback: () => store.colyseusStore.fightPvE(1) },
-            { text: 'Fight moyen', callback: () => store.colyseusStore.fightPvE(2) },
-            { text: 'Fight difficile', callback: () => store.colyseusStore.fightPvE(3) },
             {
                text: 'Non',
                callback: () => {

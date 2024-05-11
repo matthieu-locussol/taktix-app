@@ -1,4 +1,6 @@
+import { isCharacterSprite } from '../data/charactersSprites';
 import { MonsterName } from '../data/monsters';
+import { isMonsterSprite } from '../data/monstersSprites';
 import { Item } from '../types/Item';
 import {
    PvEFightMove,
@@ -320,29 +322,42 @@ export class PvEFight {
                experience,
                spritesheet,
                weaponType,
-            }) => ({
-               id,
-               name,
-               type,
-               monsterType,
-               health,
-               magicShield,
-               level,
-               experience,
-               spritesheet,
-               weaponType,
-            }),
+            }) => {
+               if (isCharacterSprite(spritesheet)) {
+                  return {
+                     id,
+                     name,
+                     type,
+                     monsterType,
+                     health,
+                     magicShield,
+                     level,
+                     experience,
+                     spritesheet,
+                     weaponType,
+                  };
+               }
+
+               throw new Error('Invalid spritesheet');
+            },
          ),
          monsters: this.getMonsters().map(
-            ({ id, name, monsterType, type, health, magicShield, level }) => ({
-               id,
-               name,
-               monsterType,
-               type,
-               health,
-               magicShield,
-               level,
-            }),
+            ({ id, name, monsterType, spritesheet, type, health, magicShield, level }) => {
+               if (isMonsterSprite(spritesheet)) {
+                  return {
+                     id,
+                     name,
+                     monsterType,
+                     spritesheet,
+                     type,
+                     health,
+                     magicShield,
+                     level,
+                  };
+               }
+
+               throw new Error('Invalid spritesheet');
+            },
          ),
          experiences: this.getExperiences(),
          loots: this.getLoots(),

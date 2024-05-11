@@ -54,6 +54,7 @@ export class MapRoom extends Room<MapState> {
       logger.info(`[MapRoom][${this.name}] Room created`);
 
       this.setState(new MapState());
+      this.state.startFightsRegeneration(this.name);
 
       this.onMessage('*', (client: Client, type: unknown, message: unknown) => {
          logger.info(
@@ -315,7 +316,7 @@ export class MapRoom extends Room<MapState> {
 
    async onFightPvE(
       client: Client,
-      { message: { monsterGroupId } }: Extract<MapRoomMessage, { type: 'fightPvE' }>,
+      { message: { id, monsterGroupId } }: Extract<MapRoomMessage, { type: 'fightPvE' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
@@ -327,6 +328,14 @@ export class MapRoom extends Room<MapState> {
          return;
       }
 
+      if (!(this.state.fights.has(id) && this.state.fights.get(id)?.fightId === monsterGroupId)) {
+         logger.error(
+            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight with an invalid id or monsterGroupId | Might be a cheat attempt`,
+         );
+         return;
+      }
+
+      this.state.removeFight(id);
       this.state.startFight(client.sessionId);
 
       const characterInfos = await prisma.character.findUnique({

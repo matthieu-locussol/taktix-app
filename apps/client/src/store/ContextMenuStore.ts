@@ -96,10 +96,11 @@ export class ContextMenuStore {
       const subMenu = {
          [EntityType.Character]: this._makeCharacterMenu(sprite.name),
          [EntityType.NPC]: this._makeNpcMenu(sprite.name),
+         [EntityType.Monster]: this._makeMonsterMenu(sprite),
       }[type];
 
       return {
-         text: `[${i18next.t(type)}] ${sprite.name}`,
+         text: `[${i18next.t(type)}] ${i18next.t(sprite.name)}`,
          subMenu,
       };
    }
@@ -111,7 +112,7 @@ export class ContextMenuStore {
          [InteractiveObjectType.Teleporter]: this._makeTeleporterMenu(),
          [InteractiveObjectType.TeleporterCell]: [],
          [InteractiveObjectType.Bed]: this._makeBedMenu(),
-         [InteractiveObjectType.Lootbox]: this._makeLootboxMenu(),
+         [InteractiveObjectType.Well]: this._makeWellMenu(),
       }[type];
 
       return {
@@ -151,7 +152,7 @@ export class ContextMenuStore {
       ];
    }
 
-   private _makeLootboxMenu(): SubMenuItem[] {
+   private _makeWellMenu(): SubMenuItem[] {
       return [
          {
             text: i18next.t('gamble'),
@@ -205,12 +206,6 @@ export class ContextMenuStore {
                   );
                },
             },
-            {
-               text: i18next.t('startFight'),
-               callback: () => {
-                  this._store.colyseusStore.fightPvE(1);
-               },
-            },
          ];
       }
 
@@ -228,6 +223,20 @@ export class ContextMenuStore {
       }
 
       return [];
+   }
+
+   private _makeMonsterMenu(sprite: Phaser.GameObjects.Sprite): SubMenuItem[] {
+      const id = String(sprite.getData('id'));
+      const fightId = +sprite.getData('fightId');
+
+      return [
+         {
+            text: i18next.t('attack'),
+            callback: () => {
+               this._store.colyseusStore.fightPvE(id, fightId);
+            },
+         },
+      ];
    }
 
    public setCurrentSubMenu(title: string, subMenu: SubMenuItem[]): void {

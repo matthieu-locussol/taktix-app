@@ -1,5 +1,6 @@
 import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
 import { loadCharactersAssets } from '../utils/loadCharactersAssets';
+import { loadMonstersAssets } from '../utils/loadMonstersAssets';
 
 export class CloudsScene extends Scene {
    constructor() {
@@ -11,6 +12,7 @@ export class CloudsScene extends Scene {
       this.load.image('Cloud City_tileset', '/assets/tilesets/cloud_tileset.png');
       this.load.tilemapTiledJSON('Clouds_tiledmap', '/assets/maps/Clouds.json');
       loadCharactersAssets(this);
+      loadMonstersAssets(this);
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

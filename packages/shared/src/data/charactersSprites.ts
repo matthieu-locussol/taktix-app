@@ -89,3 +89,6 @@ export const zCharacterSprite = ZodMgt.constructZodLiteralUnionType(
 );
 
 export type CharacterSprite = z.infer<typeof zCharacterSprite>;
+
+export const isCharacterSprite = (value: unknown): value is CharacterSprite =>
+   zCharacterSprite.safeParse(value).success;

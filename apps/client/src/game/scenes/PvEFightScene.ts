@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import { animationFilesData, animationsData } from 'shared/src/data/animations';
+import { monstersSpritesData } from 'shared/src/data/monstersSprites';
 import { ANIMATION_TO_FILE } from 'shared/src/types/Animation';
 import { MonsterType } from 'shared/src/types/Monster';
 import { PvEFightMove } from 'shared/src/types/PvEFight';
@@ -13,6 +14,7 @@ import { store } from '../../store';
 import { MONSTER_TYPE_COLORS, STATS_COLORS } from '../../styles/appTheme';
 import { CHARACTER_HEIGHT, FADE_IN_DURATION, FADE_OUT_DURATION, SCALE_FACTOR } from '../Scene';
 import { loadCharactersAssets } from '../utils/loadCharactersAssets';
+import { loadMonstersAssets } from '../utils/loadMonstersAssets';
 import { makeCharacterName } from '../utils/makeCharacterName';
 
 const HEALTH_MARGIN = 10;
@@ -60,13 +62,7 @@ export class PvEFightScene extends Phaser.Scene {
       this.load.image('mountains', '/assets/fights/mountains/mountains.png');
       this.load.image('trees', '/assets/fights/mountains/trees.png');
       loadCharactersAssets(this);
-
-      store.pveFightStore.uniqueMonstersNames.forEach((name) => {
-         this.load.spritesheet(name, `/assets/monsters/body/${name}.png`, {
-            frameWidth: 32,
-            frameHeight: 32,
-         });
-      });
+      loadMonstersAssets(this);
 
       store.pveFightStore.uniqueAnimationFiles.forEach((animationFile) => {
          const { frameHeight, frameWidth, path, id } = animationFilesData[animationFile];
@@ -122,13 +118,11 @@ export class PvEFightScene extends Phaser.Scene {
       const monstersCount = store.pveFightStore.fightResults.monsters.length;
 
       store.pveFightStore.fightResults.allies.forEach(({ id, spritesheet }, idx) => {
-         _assert(spritesheet, 'spritesheet must be set');
-
          const playerSprite = this.add.sprite(0, 0, spritesheet);
          playerSprite.anims.create({
             key: 'idle',
             frames: playerSprite.anims.generateFrameNumbers(spritesheet, {
-               frames: this.getAllyFrames(),
+               frames: [8, 9, 10, 11],
             }),
             frameRate: 4,
             repeat: -1,
@@ -153,14 +147,14 @@ export class PvEFightScene extends Phaser.Scene {
          this.createFighterName(id);
       });
 
-      store.pveFightStore.fightResults.monsters.forEach(({ id, name, monsterType }, idx) => {
-         const monsterSprite = this.add.sprite(0, 0, name);
+      store.pveFightStore.fightResults.monsters.forEach(({ id, monsterType, spritesheet }, idx) => {
+         const monsterSprite = this.add.sprite(0, 0, spritesheet);
          monsterSprite.anims.create({
             key: 'idle',
-            frames: monsterSprite.anims.generateFrameNumbers(name, {
-               frames: [0, 1, 2, 3, 4, 5, 6, 7],
+            frames: monsterSprite.anims.generateFrameNumbers(spritesheet, {
+               frames: monstersSpritesData[spritesheet].frames,
             }),
-            frameRate: 8,
+            frameRate: 4,
             repeat: -1,
          });
          monsterSprite.setScale(SCALE_FACTOR);
@@ -470,10 +464,6 @@ export class PvEFightScene extends Phaser.Scene {
          2: { x: width / 6 - allyWidth / 2, y: height / 2 - allyHeight / 2 + 1 * allyHeight },
          3: { x: width / 8 - allyWidth / 2, y: height / 2 - allyHeight / 2 + 5 * allyHeight },
       }[allyIdx];
-   }
-
-   private getAllyFrames(): number[] {
-      return [8, 9, 10, 11];
    }
 
    private getMonsterPosition(
