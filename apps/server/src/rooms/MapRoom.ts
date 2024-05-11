@@ -345,6 +345,7 @@ export class MapRoom extends Room<MapState> {
          const parameters: PvEFightParameters = {
             areaLootBonus: 100,
             areaExperienceBonus: 100,
+            // TODO: handle multiple allies
             alliesInformations: [
                {
                   name: characterInfos.name,
@@ -421,6 +422,27 @@ export class MapRoom extends Room<MapState> {
             );
 
             createdItems.forEach((items, idx) => {
+               const { name } = results.allies[idx];
+               const user = [...usersMap.values()].find(
+                  ({ characterName }) => characterName === name,
+               );
+               if (user !== undefined && user.gameRoomClient !== null) {
+                  const player = this.state.players.get(user.gameRoomClient.sessionId);
+
+                  if (player !== undefined) {
+                     player.addItems(
+                        items.map((item) => ({
+                           ...item,
+                           type: zItemType.parse(item.type),
+                           baseAffixes: ItemMgt.deserializeAffixes(item.baseAffixes),
+                           prefixes: ItemMgt.deserializeAffixes(item.prefixes),
+                           suffixes: ItemMgt.deserializeAffixes(item.suffixes),
+                           damages: ItemMgt.deserializeDamages(item.damages),
+                        })),
+                     );
+                  }
+               }
+
                items.forEach((item, itemIdx) => {
                   results.loots[idx][itemIdx].id = item.id;
                });
