@@ -362,6 +362,9 @@ export class ColyseusStore {
                .with({ type: 'unequipItemResponse' }, ({ message: payloadMessage }) => {
                   this.onUnequipItemResponse(payloadMessage);
                })
+               .with({ type: 'sleepResponse' }, ({ message: payloadMessage }) => {
+                  this.onSleepResponse(payloadMessage);
+               })
                .exhaustive();
          }
       });
@@ -503,6 +506,10 @@ export class ColyseusStore {
       this.gameRoom.send('unequipItem', { id });
    }
 
+   sleep() {
+      this.gameRoom.send('sleep', {});
+   }
+
    async onChangeMap({
       map,
       x,
@@ -627,6 +634,20 @@ export class ColyseusStore {
             content: i18next.t('itemNotUnequipped'),
             author: i18next.t('Server' satisfies TranslationKey),
          });
+      }
+   }
+
+   async onSleepResponse({
+      success,
+   }: Extract<MapRoomResponse, { type: 'sleepResponse' }>['message']) {
+      if (!success) {
+         this._store.chatStore.addMessage({
+            channel: Channel.SERVER,
+            content: i18next.t('sleepNotPossible'),
+            author: i18next.t('Server' satisfies TranslationKey),
+         });
+      } else {
+         this._store.characterStore.setCurrentHealth(this._store.characterStore.maxHealth);
       }
    }
 

@@ -146,7 +146,7 @@ export class ContextMenuStore {
          {
             text: i18next.t('sleep'),
             callback: () => {
-               console.log('sleep...');
+               this._store.colyseusStore.sleep();
             },
          },
       ];
