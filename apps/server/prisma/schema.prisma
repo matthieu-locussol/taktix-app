@@ -63,7 +63,7 @@ model Item {
   damages       String
   position      Int
 
-  character   Character @relation(fields: [characterId], references: [id])
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
   characterId Int
 
   @@index([characterId], name: "characterId")
