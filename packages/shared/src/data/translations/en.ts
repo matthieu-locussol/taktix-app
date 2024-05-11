@@ -245,6 +245,7 @@ export const translationsEn = {
    'thornsPhysical_+%': 'Thorns physical (%)',
    'thornsMagical_+%': 'Thorns magical (%)',
    'prospect_+f': 'Prospect',
+   nonoclicker: 'Nono clicker | By EquimoX',
 
    'vitality_+f_value': '+{{value}} to vitality',
    'vitality_+%_value': '+{{value}}% increased vitality',
@@ -443,6 +444,8 @@ export const translationsEn = {
    ForestRoom: 'Magical Forest',
    HouseRoom: 'CrackHouse',
    MoonshadowHamletRoom: 'Moonshadow Hamlet',
+   MoonshadowInnRoom: 'Moonshadow Inn',
+   MoonshadowHotelRoom: 'Moonshadow Hotel',
 
    // Channels
    Server: 'Server',

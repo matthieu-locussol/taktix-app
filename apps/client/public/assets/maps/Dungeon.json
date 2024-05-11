@@ -674,31 +674,7 @@
          "draworder": "topdown",
          "id": 11,
          "name": "Npcs",
-         "objects": [
-            {
-               "height": 16,
-               "id": 21,
-               "name": "",
-               "properties": [
-                  {
-                     "name": "direction",
-                     "type": "string",
-                     "value": "left"
-                  },
-                  {
-                     "name": "id",
-                     "type": "string",
-                     "value": "Serge Dualé"
-                  }
-               ],
-               "rotation": 0,
-               "type": "",
-               "visible": true,
-               "width": 16,
-               "x": 128,
-               "y": 608
-            }
-         ],
+         "objects": [],
          "opacity": 1,
          "type": "objectgroup",
          "visible": true,

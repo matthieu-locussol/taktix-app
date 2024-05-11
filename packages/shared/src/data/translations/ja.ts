@@ -128,6 +128,8 @@ export const translationsJa: LanguageTranslations = {
    dexterityDamagesRange: '{{min}} から {{max}} 風のダメージ',
    intelligenceDamagesRange: '{{min}} から {{max}} 火のダメージ',
    luckDamagesRange: '{{min}} から {{max}} 氷のダメージ',
+   //  par EquimoX
+   nonoclicker: 'ノノクリッカー | エキモックス',
 
    // Rarities
    common: 'コモン',
@@ -437,6 +439,8 @@ export const translationsJa: LanguageTranslations = {
    ForestRoom: '魔法の森',
    HouseRoom: 'クラックハウス',
    MoonshadowHamletRoom: '月影の集落',
+   MoonshadowInnRoom: '月影の宿',
+   MoonshadowHotelRoom: '月影のホテル',
 
    // Channels
    Server: 'サーバー',

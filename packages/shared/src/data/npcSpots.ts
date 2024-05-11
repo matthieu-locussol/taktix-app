@@ -15,18 +15,18 @@ export const NPC_SPOTS: Record<Room, NPCSpot[]> = {
          direction: Direction.DOWN,
       },
    ],
-   DungeonRoom: [
-      {
-         x: 8,
-         y: 38,
-         npcName: 'Serge Dualé',
-         mapName: 'DungeonRoom',
-         direction: Direction.LEFT,
-      },
-   ],
+   DungeonRoom: [],
    ForestRoom: [],
    HouseRoom: [],
-   MoonshadowHamletRoom: [],
+   MoonshadowHamletRoom: [
+      {
+         x: 26,
+         y: 48,
+         npcName: 'Nono',
+         mapName: 'MoonshadowHamletRoom',
+         direction: Direction.RIGHT,
+      },
+   ],
    MoonshadowHotelRoom: [],
    MoonshadowInnRoom: [
       {

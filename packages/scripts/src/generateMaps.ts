@@ -3,13 +3,13 @@ import { existsSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from
 import { resolve } from 'path';
 import {
    type Direction,
+   NPC,
    type NPCSpot,
    type Room,
    TeleportationPlace,
    type TeleportationSpot,
    _assertTrue,
    zDirection,
-   zNPC,
 } from 'shared';
 
 interface TiledMapJson {
@@ -311,7 +311,7 @@ const regenerateNpcSpots = (maps: string[]) => {
          npcSpots[roomName].push({
             x: x / width,
             y: y / height,
-            npcName: zNPC.parse(id.value),
+            npcName: id.value as NPC,
             mapName: roomName,
             direction: zDirection.parse(direction.value),
          });
