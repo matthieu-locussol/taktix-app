@@ -1,5 +1,5 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
-import { Character, Item } from '@prisma/client';
+import { Item } from '@prisma/client';
 import {
    FightMgt,
    ItemMgt,
@@ -84,6 +84,7 @@ export class MapRoom extends Room<MapState> {
                )
                .with({ type: 'equipItem' }, (payload) => this.onEquipItem(client, payload))
                .with({ type: 'unequipItem' }, (payload) => this.onUnequipItem(client, payload))
+               .with({ type: 'sleep' }, (payload) => this.onSleep(client, payload))
                .exhaustive();
          } else {
             logger.error(
@@ -141,7 +142,10 @@ export class MapRoom extends Room<MapState> {
          StringMgt.deserializeTeleporters(characterInfos.teleporters),
       );
 
-      this.updatePlayerHealth(client, characterInfos);
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+      player.setHealth(characterInfos.health);
+
       this.loadPlayerItems(client, characterInfos.items);
    }
 
@@ -159,27 +163,6 @@ export class MapRoom extends Room<MapState> {
             damages: ItemMgt.deserializeDamages(item.damages),
          })),
       );
-   }
-
-   private updatePlayerHealth(
-      client: Client,
-      infos: Pick<Character, 'baseStatistics' | 'experience' | 'profession' | 'talents' | 'health'>,
-   ) {
-      const player = this.state.players.get(client.sessionId);
-      _assert(player, `Player for client '${client.sessionId}' should be defined`);
-
-      const realStatistics = StatisticMgt.computeRealStatistics(
-         StatisticMgt.aggregateStatistics(
-            StatisticMgt.deserializeStatistics(infos.baseStatistics),
-            infos.experience,
-            zProfessionType.parse(infos.profession),
-            TalentMgt.deserializeTalents(infos.talents),
-            player.items,
-         ),
-      );
-
-      player.setHealth(infos.health);
-      player.setMaxHealth(realStatistics.vitality);
    }
 
    onMove(client: Client, { message: { x, y } }: Extract<MapRoomMessage, { type: 'move' }>) {
@@ -246,11 +229,6 @@ export class MapRoom extends Room<MapState> {
             },
          });
 
-         this.updatePlayerHealth(client, {
-            ...characterInfos,
-            health: player.getHealth(),
-         });
-
          logger.info(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) updated talents successfully`,
          );
@@ -297,11 +275,6 @@ export class MapRoom extends Room<MapState> {
                baseStatistics: statistics,
                baseStatisticsPoints: results.remainingPoints,
             },
-         });
-
-         this.updatePlayerHealth(client, {
-            ...characterInfos,
-            health: player.getHealth(),
          });
 
          logger.info(
@@ -375,7 +348,7 @@ export class MapRoom extends Room<MapState> {
             alliesInformations: [
                {
                   name: characterInfos.name,
-                  health: player.getHealth(),
+                  health: player.health,
                   magicShield: realStatistics.magicShield,
                   experience: characterInfos.experience,
                   level: LevelMgt.getLevel(characterInfos.experience),
@@ -486,7 +459,6 @@ export class MapRoom extends Room<MapState> {
                   ),
                );
 
-               player.setMaxHealth(newRealStatistics.vitality);
                player.setHealth(newRealStatistics.vitality);
             } else {
                player.setHealth(Math.max(1, allyInfos.health));
@@ -687,6 +659,55 @@ export class MapRoom extends Room<MapState> {
       );
    }
 
+   async onSleep(client: Client, _message: Extract<MapRoomMessage, { type: 'sleep' }>) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      const characterInfos = await prisma.character.findUnique({
+         where: { name: player.name },
+         select: {
+            experience: true,
+            baseStatistics: true,
+            profession: true,
+            talents: true,
+         },
+      });
+
+      if (characterInfos === null) {
+         const packet: Extract<MapRoomResponse, { type: 'sleepResponse' }> = {
+            type: 'sleepResponse',
+            message: {
+               success: false,
+            },
+         };
+         client.send(packet.type, packet.message);
+         return;
+      }
+
+      const statistics = StatisticMgt.computeRealStatistics(
+         StatisticMgt.aggregateStatistics(
+            StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
+            characterInfos.experience,
+            zProfessionType.parse(characterInfos.profession),
+            TalentMgt.deserializeTalents(characterInfos.talents),
+            player.items,
+         ),
+      );
+
+      // TODO: make sure the player can sleep
+      player.setHealth(statistics.vitality);
+
+      const packet: Extract<MapRoomResponse, { type: 'sleepResponse' }> = {
+         type: 'sleepResponse',
+         message: {
+            success: true,
+         },
+      };
+      client.send(packet.type, packet.message);
+
+      logger.info(`[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) slept`);
+   }
+
    async onFightPvEResults(
       client: Client,
       results: PvEFightResults,
@@ -791,7 +812,7 @@ export class MapRoom extends Room<MapState> {
             pos_x: player.x,
             pos_y: player.y,
             direction: player.direction,
-            health: player.getHealth(),
+            health: player.health,
             items: {
                updateMany: player.items.map(({ id, position }) => ({
                   where: { id },

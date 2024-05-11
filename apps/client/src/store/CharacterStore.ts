@@ -1,6 +1,5 @@
 import type { Position } from 'grid-engine';
-import { makeAutoObservable, runInAction } from 'mobx';
-import { DEFAULT_HEALTH_REGEN_MS } from 'shared/src/config';
+import { makeAutoObservable } from 'mobx';
 import { CharacterSprite, charactersSprites } from 'shared/src/data/charactersSprites';
 import { LEVEL_TO_EXPERIENCE } from 'shared/src/data/levels';
 import { Item, ItemPosition } from 'shared/src/types/Item';
@@ -100,12 +99,10 @@ export class CharacterStore {
 
    public setExperience(experience: number) {
       this.experience = experience;
-      this.regenLifeIfNeeded();
    }
 
    public setCurrentHealth(currentHealth: number) {
       this.currentHealth = currentHealth;
-      this.regenLifeIfNeeded();
    }
 
    public setTeleporters(teleporters: Room[]) {
@@ -234,31 +231,5 @@ export class CharacterStore {
             ...this.items.filter((i) => i.id !== item.id),
          ];
       }
-   }
-
-   private regenLifeIfNeeded() {
-      if (this._intervalTimeout) {
-         return;
-      }
-
-      this._intervalTimeout = setInterval(() => {
-         if (this._store.pveFightStore.fightOngoing) {
-            if (this._intervalTimeout) {
-               clearInterval(this._intervalTimeout);
-               this._intervalTimeout = null;
-            }
-         } else {
-            runInAction(() => {
-               this.currentHealth = Math.min(this.currentHealth + 1, this.maxHealth);
-            });
-
-            if (this.currentHealth === this.maxHealth) {
-               if (this._intervalTimeout) {
-                  clearInterval(this._intervalTimeout);
-                  this._intervalTimeout = null;
-               }
-            }
-         }
-      }, DEFAULT_HEALTH_REGEN_MS);
    }
 }

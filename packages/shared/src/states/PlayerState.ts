@@ -1,5 +1,4 @@
 import { Schema, type } from '@colyseus/schema';
-import { DEFAULT_HEALTH_REGEN_MS } from '../config';
 import { Item, ItemPosition } from '../types/Item';
 import { Room } from '../types/Room';
 import { WeaponDamages, WeaponType, isWeaponType, zWeaponType } from '../types/Weapon';
@@ -27,10 +26,6 @@ export class PlayerState extends Schema {
    isFight = false;
 
    health = 0;
-
-   maxHealth = 0;
-
-   healthTimestamp = 0;
 
    fightTimestamp = 0;
 
@@ -79,7 +74,6 @@ export class PlayerState extends Schema {
 
    stopFight() {
       this.isFight = false;
-      this.healthTimestamp = Date.now();
    }
 
    setFightTurns(turns: number) {
@@ -88,16 +82,6 @@ export class PlayerState extends Schema {
 
    setHealth(health: number) {
       this.health = health;
-      this.healthTimestamp = Date.now();
-   }
-
-   setMaxHealth(maxHealth: number) {
-      this.maxHealth = maxHealth;
-   }
-
-   getHealth() {
-      const diff = Math.floor(Date.now() - this.healthTimestamp);
-      return Math.floor(Math.min(this.health + diff / DEFAULT_HEALTH_REGEN_MS, this.maxHealth));
    }
 
    addItems(items: Item[]) {

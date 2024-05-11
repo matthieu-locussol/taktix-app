@@ -75,6 +75,10 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
          id: z.number(),
       }),
    }),
+   z.object({
+      type: z.literal('sleep'),
+      message: z.object({}),
+   }),
 ]);
 
 export type MapRoomMessage = z.infer<typeof zMapRoomMessage>;
@@ -129,6 +133,12 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
    }),
    z.object({
       type: z.literal('unequipItemResponse'),
+      message: z.object({
+         success: z.boolean(),
+      }),
+   }),
+   z.object({
+      type: z.literal('sleepResponse'),
       message: z.object({
          success: z.boolean(),
       }),
