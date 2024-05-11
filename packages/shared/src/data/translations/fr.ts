@@ -129,6 +129,7 @@ export const translationsFr: LanguageTranslations = {
    dexterityDamagesRange: '{{min}} à {{max}} dégâts de vent',
    intelligenceDamagesRange: '{{min}} à {{max}} dégâts de feu',
    luckDamagesRange: '{{min}} à {{max}} dégâts de glace',
+   nonoclicker: 'Nono clicker | Par EquimoX',
 
    // Rarities
    common: 'Commun',
@@ -438,6 +439,8 @@ export const translationsFr: LanguageTranslations = {
    ForestRoom: 'Forêt enchantée',
    HouseRoom: 'Maison du crack',
    MoonshadowHamletRoom: "Hameau d'Ombrelune",
+   MoonshadowInnRoom: 'Auberge d’Ombrelune',
+   MoonshadowHotelRoom: 'Hôtel d’Ombrelune',
 
    // Channels
    Server: 'Serveur',

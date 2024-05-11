@@ -13,6 +13,7 @@ import { FightOverlay } from '../hud/menus/FightOverlay';
 import { FightResultsMenu } from '../hud/menus/FightResultsMenu';
 import { InventoryMenu } from '../hud/menus/InventoryMenu';
 import { MapMenu } from '../hud/menus/MapMenu';
+import { NonoClickerMenu } from '../hud/menus/NonoClickerMenu';
 import { SettingsMenu } from '../hud/menus/SettingsMenu';
 import { StatisticsMenu } from '../hud/menus/StatisticsMenu';
 import { TalentsMenu } from '../hud/menus/TalentsMenu';
@@ -90,6 +91,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          <MapMenu />
          <DialogMenu />
          <InventoryMenu />
+         <NonoClickerMenu />
          {children}
       </Box>
    );

@@ -209,7 +209,7 @@ export class ContextMenuStore {
          ];
       }
 
-      if (name === 'Serge Dualé') {
+      if (name === 'Nono') {
          return [
             {
                text: i18next.t('talk'),
