@@ -10,6 +10,7 @@ import { MapRoomResponse, isMapRoomResponse } from 'shared/src/rooms/MapRoom';
 import { MapState } from 'shared/src/states/MapState';
 import { Channel } from 'shared/src/types/Channel';
 import { CustomProtocol, Protocol } from 'shared/src/types/Colyseus';
+import { Interaction } from 'shared/src/types/Interaction';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { Room as TRoom } from 'shared/src/types/Room';
@@ -362,8 +363,8 @@ export class ColyseusStore {
                .with({ type: 'unequipItemResponse' }, ({ message: payloadMessage }) => {
                   this.onUnequipItemResponse(payloadMessage);
                })
-               .with({ type: 'sleepResponse' }, ({ message: payloadMessage }) => {
-                  this.onSleepResponse(payloadMessage);
+               .with({ type: 'interactResponse' }, ({ message: payloadMessage }) => {
+                  this.onInteractResponse(payloadMessage);
                })
                .exhaustive();
          }
@@ -507,7 +508,9 @@ export class ColyseusStore {
    }
 
    sleep() {
-      this.gameRoom.send('sleep', {});
+      this.gameRoom.send('interact', {
+         id: Interaction.Sleep,
+      });
    }
 
    async onChangeMap({
@@ -637,17 +640,26 @@ export class ColyseusStore {
       }
    }
 
-   async onSleepResponse({
+   async onInteractResponse({
+      id,
       success,
-   }: Extract<MapRoomResponse, { type: 'sleepResponse' }>['message']) {
+   }: Extract<MapRoomResponse, { type: 'interactResponse' }>['message']) {
       if (!success) {
          this._store.chatStore.addMessage({
             channel: Channel.SERVER,
-            content: i18next.t('sleepNotPossible'),
+            content: i18next.t('interactionImpossible'),
             author: i18next.t('Server' satisfies TranslationKey),
          });
       } else {
-         this._store.characterStore.setCurrentHealth(this._store.characterStore.maxHealth);
+         switch (id) {
+            case Interaction.Sleep:
+               {
+                  this._store.characterStore.setCurrentHealth(this._store.characterStore.maxHealth);
+               }
+               break;
+            default:
+               throw new Error(`Unknown interaction id: '${id}'`);
+         }
       }
    }
 

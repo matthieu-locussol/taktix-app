@@ -30,6 +30,7 @@ import {
    zItemType,
    zProfessionType,
 } from 'shared';
+import { Interaction } from 'shared/dist/types/Interaction';
 import { zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
@@ -84,7 +85,7 @@ export class MapRoom extends Room<MapState> {
                )
                .with({ type: 'equipItem' }, (payload) => this.onEquipItem(client, payload))
                .with({ type: 'unequipItem' }, (payload) => this.onUnequipItem(client, payload))
-               .with({ type: 'sleep' }, (payload) => this.onSleep(client, payload))
+               .with({ type: 'interact' }, (payload) => this.onInteract(client, payload))
                .exhaustive();
          } else {
             logger.error(
@@ -681,7 +682,36 @@ export class MapRoom extends Room<MapState> {
       );
    }
 
-   async onSleep(client: Client, _message: Extract<MapRoomMessage, { type: 'sleep' }>) {
+   async sleepInteraction(
+      client: Client,
+      player: PlayerState,
+      experience: number,
+      profession: string,
+      talents: string,
+      baseStatistics: string,
+   ) {
+      const statistics = StatisticMgt.computeRealStatistics(
+         StatisticMgt.aggregateStatistics(
+            StatisticMgt.deserializeStatistics(baseStatistics),
+            experience,
+            zProfessionType.parse(profession),
+            TalentMgt.deserializeTalents(talents),
+            player.items,
+         ),
+      );
+
+      // TODO: make sure the player can sleep
+      player.setHealth(statistics.vitality);
+
+      logger.info(`[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) slept`);
+
+      return true;
+   }
+
+   async onInteract(
+      client: Client,
+      { message: { id } }: Extract<MapRoomMessage, { type: 'interact' }>,
+   ) {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
@@ -696,38 +726,37 @@ export class MapRoom extends Room<MapState> {
       });
 
       if (characterInfos === null) {
-         const packet: Extract<MapRoomResponse, { type: 'sleepResponse' }> = {
-            type: 'sleepResponse',
-            message: {
-               success: false,
-            },
-         };
-         client.send(packet.type, packet.message);
          return;
       }
 
-      const statistics = StatisticMgt.computeRealStatistics(
-         StatisticMgt.aggregateStatistics(
-            StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
-            characterInfos.experience,
-            zProfessionType.parse(characterInfos.profession),
-            TalentMgt.deserializeTalents(characterInfos.talents),
-            player.items,
-         ),
-      );
+      let success = false;
 
-      // TODO: make sure the player can sleep
-      player.setHealth(statistics.vitality);
+      switch (id) {
+         case Interaction.Sleep:
+            {
+               success = await this.sleepInteraction(
+                  client,
+                  player,
+                  characterInfos.experience,
+                  characterInfos.profession,
+                  characterInfos.talents,
+                  characterInfos.baseStatistics,
+               );
+            }
+            break;
+         default:
+            throw new Error(`Unknown interaction id: '${id}'`);
+      }
 
-      const packet: Extract<MapRoomResponse, { type: 'sleepResponse' }> = {
-         type: 'sleepResponse',
+      const packet: Extract<MapRoomResponse, { type: 'interactResponse' }> = {
+         type: 'interactResponse',
          message: {
-            success: true,
+            id,
+            success,
          },
       };
-      client.send(packet.type, packet.message);
 
-      logger.info(`[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) slept`);
+      client.send(packet.type, packet.message);
    }
 
    async onFightPvEResults(

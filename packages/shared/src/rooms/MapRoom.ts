@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { zCharacterSprite } from '../data/charactersSprites';
+import { zInteraction } from '../types/Interaction';
 import { zPvEFightResults } from '../types/PvEFight';
 import { zRoom } from '../types/Room';
 import { Direction, Position } from '../types/SceneData';
@@ -76,8 +77,10 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
       }),
    }),
    z.object({
-      type: z.literal('sleep'),
-      message: z.object({}),
+      type: z.literal('interact'),
+      message: z.object({
+         id: zInteraction,
+      }),
    }),
 ]);
 
@@ -138,8 +141,9 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
       }),
    }),
    z.object({
-      type: z.literal('sleepResponse'),
+      type: z.literal('interactResponse'),
       message: z.object({
+         id: zInteraction,
          success: z.boolean(),
       }),
    }),
