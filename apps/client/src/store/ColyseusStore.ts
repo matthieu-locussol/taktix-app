@@ -2,6 +2,7 @@ import { Client, Room } from 'colyseus.js';
 import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
 import { CharacterSprite, zCharacterSprite } from 'shared/src/data/charactersSprites';
+import { zMonsterSprite } from 'shared/src/data/monstersSprites';
 import { TranslationKey } from 'shared/src/data/translations';
 import { AuthRoomResponse, isAuthRoomResponse } from 'shared/src/rooms/AuthRoom';
 import { ChatRoomResponse, isChatRoomResponse } from 'shared/src/rooms/ChatRoom';
@@ -436,6 +437,28 @@ export class ColyseusStore {
             scene.deleteExternalPlayer(name);
          }
       });
+
+      this.gameRoom.state.fights.onAdd(async (fight) => {
+         const { id, fightId, name, positionX, positionY, radius, spritesheet } = fight;
+         const scene = await this._store.gameStore.getCurrentScene();
+
+         scene.createMonster(
+            zMonsterSprite.parse(spritesheet),
+            id,
+            name,
+            radius,
+            positionX,
+            positionY,
+            fightId,
+         );
+      });
+
+      this.gameRoom.state.fights.onRemove(async (fight) => {
+         const { id } = fight;
+         const scene = await this._store.gameStore.getCurrentScene();
+
+         scene.deleteMonster(id);
+      });
    }
 
    movePlayer(x: number, y: number) {
@@ -456,8 +479,8 @@ export class ColyseusStore {
       });
    }
 
-   fightPvE(monsterGroupId: number) {
-      this.gameRoom.send('fightPvE', { monsterGroupId });
+   fightPvE(id: string, monsterGroupId: number) {
+      this.gameRoom.send('fightPvE', { id, monsterGroupId });
    }
 
    stopFighting() {

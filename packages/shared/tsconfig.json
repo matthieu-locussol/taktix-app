@@ -4,7 +4,8 @@
       "lib": ["ES2015"],
       "module": "CommonJS",
       "outDir": "./dist",
-      "rootDir": "./src"
+      "rootDir": "./src",
+      "downlevelIteration": true
    },
    "include": ["src"]
 }

@@ -3,6 +3,7 @@ import { MonsterType, zMonsterType } from '../types/Monster';
 import { PvEFighterInformations } from '../types/PvEFight';
 import { WeaponDamages } from '../types/Weapon';
 import { StatisticMgt } from '../utils/statisticMgt';
+import { MonsterSprite } from './monstersSprites';
 import { TranslationKey } from './translations';
 
 type FilterEnemy<T> = T extends `enemy-${infer EnemyName}` ? `enemy-${EnemyName}` : never;
@@ -11,6 +12,7 @@ type MonsterGenerator = (parameters: { level: number }) => Monster;
 
 export interface Monster extends PvEFighterInformations {
    name: MonsterName;
+   spritesheet: MonsterSprite;
    type: MonsterType;
    animation: Animation;
    money: { min: number; max: number };
@@ -78,6 +80,7 @@ const monstersArray: (() => MonsterGenerator)[] = [
    () =>
       withMonsterType([], (type) => ({ level }) => ({
          name: 'enemy-nono',
+         spritesheet: 'Boss_001',
          type,
          items: [],
          monsterType: type,

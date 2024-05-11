@@ -43,6 +43,7 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
    z.object({
       type: z.literal('fightPvE'),
       message: z.object({
+         id: z.string(),
          monsterGroupId: z.number(),
       }),
    }),

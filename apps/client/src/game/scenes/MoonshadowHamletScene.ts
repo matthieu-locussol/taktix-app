@@ -1,5 +1,6 @@
 import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
 import { loadCharactersAssets } from '../utils/loadCharactersAssets';
+import { loadMonstersAssets } from '../utils/loadMonstersAssets';
 
 export class MoonshadowHamletScene extends Scene {
    constructor() {
@@ -16,6 +17,7 @@ export class MoonshadowHamletScene extends Scene {
       this.load.image('RW_Graveyard_tileset', '/assets/tilesets/RW_Graveyard.png');
       this.load.tilemapTiledJSON('MoonshadowHamlet_tiledmap', '/assets/maps/MoonshadowHamlet.json');
       loadCharactersAssets(this);
+      loadMonstersAssets(this);
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

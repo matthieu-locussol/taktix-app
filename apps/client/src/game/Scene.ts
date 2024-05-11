@@ -6,6 +6,7 @@ import {
    Position,
 } from 'grid-engine';
 import { CharacterSprite } from 'shared/src/data/charactersSprites';
+import { MonsterSprite } from 'shared/src/data/monstersSprites';
 import { NPC_SPOTS } from 'shared/src/data/npcSpots';
 import { NPCS } from 'shared/src/data/npcs';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
@@ -22,6 +23,7 @@ import { makeInteractiveObject } from './utils/makeInteractiveObject';
 import { makeLight } from './utils/makeLight';
 import { makeMarker } from './utils/makeMarker';
 import { makeMinimap } from './utils/makeMinimap';
+import { makeMonster } from './utils/makeMonster';
 
 export const TILE_SIZE = 16;
 export const SCALE_FACTOR = 2;
@@ -77,6 +79,8 @@ export abstract class Scene extends Phaser.Scene {
    public interactiveObjects: InteractiveObject[] = [];
 
    public fightIcons: Record<string, Phaser.GameObjects.Image> = {};
+
+   public monstersSpritesMap = new Map<string, Phaser.GameObjects.Sprite>();
 
    constructor(config: Room | Phaser.Types.Scenes.SettingsConfig, sceneData?: SceneData) {
       super(config);
@@ -468,6 +472,40 @@ export abstract class Scene extends Phaser.Scene {
       }
    }
 
+   public createMonster(
+      spritesheet: MonsterSprite,
+      id: string,
+      name: string,
+      radius: number,
+      positionX: number,
+      positionY: number,
+      fightId: number,
+   ) {
+      const monsterSprite = makeMonster({
+         scene: this,
+         id,
+         name,
+         spritesheet,
+         fightId,
+      });
+
+      if (monsterSprite !== null) {
+         this.gridEngine.addCharacter({
+            id,
+            sprite: monsterSprite,
+            walkingAnimationMapping: 0,
+            startPosition: { x: positionX, y: positionY },
+            charLayer: PLAYER_GE_LAYER,
+            speed: 1.5,
+            collides: true,
+         });
+
+         this.gridEngine.moveRandomly(id, 3500, radius);
+
+         this.monstersSpritesMap.set(id, monsterSprite);
+      }
+   }
+
    public abstract createTilemap(): Phaser.Tilemaps.Tilemap;
 
    public initializeTilemap(tilesets: string[]) {
@@ -659,6 +697,20 @@ export abstract class Scene extends Phaser.Scene {
       if (fightIcon !== undefined) {
          fightIcon.destroy();
          delete this.fightIcons[name];
+      }
+   }
+
+   public deleteMonster(id: string): void {
+      try {
+         this.gridEngine.removeCharacter(id);
+      } catch (e) {
+         console.error(e);
+      }
+
+      const sprite = this.monstersSpritesMap.get(id);
+      if (sprite !== undefined) {
+         sprite.destroy();
+         this.monstersSpritesMap.delete(id);
       }
    }
 
