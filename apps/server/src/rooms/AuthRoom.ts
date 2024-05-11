@@ -16,6 +16,7 @@ import {
    DEFAULT_Y,
    ItemMgt,
    MAX_CHARACTERS_PER_ACCOUNT,
+   NumberMgt,
    AuthRoomOptions as Options,
    StatisticMgt,
    StringMgt,
@@ -28,6 +29,9 @@ import {
    zProfessionType,
 } from 'shared';
 import { AuthRoomResponse } from 'shared/src/rooms/AuthRoom';
+import { ItemPosition } from 'shared/src/types/Item';
+import { ProfessionType } from 'shared/src/types/Profession';
+import { WeaponType, weaponDamagesTypes } from 'shared/src/types/Weapon';
 import { match } from 'ts-pattern';
 import { v4 as uuidv4 } from 'uuid';
 import { hashPassword } from '../utils/hashPassword';
@@ -325,6 +329,31 @@ export class AuthRoom extends Room {
                      username,
                   },
                },
+               items: {
+                  create: {
+                     type: {
+                        [ProfessionType.Warrior]: 'sword1H' satisfies WeaponType,
+                        [ProfessionType.Mage]: 'wand' satisfies WeaponType,
+                        [ProfessionType.Archer]: 'bow' satisfies WeaponType,
+                     }[zProfessionType.parse(profession)],
+                     isUnique: false,
+                     position: ItemPosition.Equipment,
+                     level: 1,
+                     baseAffixes: '',
+                     prefixes: '',
+                     suffixes: '',
+                     requiredLevel: 1,
+                     damages: ItemMgt.serializeDamages([
+                        {
+                           type: weaponDamagesTypes[
+                              NumberMgt.random(0, weaponDamagesTypes.length - 1)
+                           ],
+                           min: 4,
+                           max: 10,
+                        },
+                     ]),
+                  },
+               },
             },
          });
 
@@ -394,6 +423,7 @@ export class AuthRoom extends Room {
       } else {
          await prisma.character.delete({
             where: { name: characterName },
+            include: { items: true },
          });
 
          message = {
