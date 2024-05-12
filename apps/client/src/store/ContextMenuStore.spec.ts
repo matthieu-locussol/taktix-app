@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { InteractiveObject } from '../game/Scene';
+import { InteractiveObjectPhaser } from '../game/Scene';
 import { EntityType } from '../utils/phaser';
 import { ContextMenuStore } from './ContextMenuStore';
 import { Store } from './Store';
@@ -83,7 +83,7 @@ describe('ContextMenuStore', () => {
                      // This is a mock
                   },
                },
-            } as unknown as InteractiveObject,
+            } as unknown as InteractiveObjectPhaser,
          ],
       );
 

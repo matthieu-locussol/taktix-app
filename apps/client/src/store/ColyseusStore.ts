@@ -354,9 +354,6 @@ export class ColyseusStore {
                .with({ type: 'stopFightingResponse' }, ({ message: payloadMessage }) => {
                   this.onStopFightingResponse(payloadMessage);
                })
-               .with({ type: 'saveTeleporterResponse' }, ({ message: payloadMessage }) => {
-                  this.onSaveTeleporterResponse(payloadMessage);
-               })
                .with({ type: 'equipItemResponse' }, ({ message: payloadMessage }) => {
                   this.onEquipItemResponse(payloadMessage);
                })
@@ -495,10 +492,6 @@ export class ColyseusStore {
       this.gameRoom.send('teleport', { room });
    }
 
-   saveTeleporter(room: TRoom) {
-      this.gameRoom.send('saveTeleporter', { room });
-   }
-
    equipItem(id: number) {
       this.gameRoom.send('equipItem', { id });
    }
@@ -507,10 +500,8 @@ export class ColyseusStore {
       this.gameRoom.send('unequipItem', { id });
    }
 
-   sleep() {
-      this.gameRoom.send('interact', {
-         id: Interaction.Sleep,
-      });
+   interact(interaction: Interaction) {
+      this.gameRoom.send('interact', { id: interaction });
    }
 
    async onChangeMap({
@@ -591,31 +582,6 @@ export class ColyseusStore {
          });
    }
 
-   async onSaveTeleporterResponse({
-      success,
-   }: Extract<MapRoomResponse, { type: 'saveTeleporterResponse' }>['message']) {
-      if (success) {
-         this._store.characterStore.setTeleporters(
-            ArrayMgt.makeUnique([
-               ...this._store.characterStore.teleporters,
-               this._store.characterStore.map,
-            ]),
-         );
-
-         this._store.chatStore.addMessage({
-            channel: Channel.SERVER,
-            content: i18next.t('teleporterSaved' satisfies TranslationKey),
-            author: 'Server',
-         });
-      } else {
-         this._store.chatStore.addMessage({
-            channel: Channel.SERVER,
-            content: i18next.t('teleporterNotSaved' satisfies TranslationKey),
-            author: 'Server',
-         });
-      }
-   }
-
    async onEquipItemResponse({
       success,
    }: Extract<MapRoomResponse, { type: 'equipItemResponse' }>['message']) {
@@ -652,9 +618,25 @@ export class ColyseusStore {
          });
       } else {
          switch (id) {
-            case Interaction.Sleep:
+            case 'Sleep':
                {
                   this._store.characterStore.setCurrentHealth(this._store.characterStore.maxHealth);
+               }
+               break;
+            case 'SaveTeleporter':
+               {
+                  this._store.characterStore.setTeleporters(
+                     ArrayMgt.makeUnique([
+                        ...this._store.characterStore.teleporters,
+                        this._store.characterStore.map,
+                     ]),
+                  );
+
+                  this._store.chatStore.addMessage({
+                     channel: Channel.SERVER,
+                     content: i18next.t('teleporterSaved' satisfies TranslationKey),
+                     author: 'Server',
+                  });
                }
                break;
             default:

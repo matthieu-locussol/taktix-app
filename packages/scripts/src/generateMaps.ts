@@ -3,12 +3,15 @@ import { existsSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from
 import { resolve } from 'path';
 import {
    type Direction,
+   InteractiveObject,
+   InteractiveObjectData,
    NPC,
    type NPCSpot,
    type Room,
    TeleportationPlace,
    type TeleportationSpot,
    _assertTrue,
+   interactiveObjectsKeys,
    zDirection,
 } from 'shared';
 
@@ -47,6 +50,7 @@ const generateMaps = () => {
    regenerateTeleportationSpots(maps);
    regenerateNpcSpots(maps);
    regenerateTeleportationPlaces(maps);
+   regenerateInteractiveObjects(maps);
 };
 
 const regenerateSharedRoom = (maps: string[]) => {
@@ -416,6 +420,76 @@ export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = ${J
 
    writeFileSync(teleportationPlacesPath, teleportationPlacesBlob, { flag: 'w' });
    console.log('[Shared] ✅  Regenerated teleportationPlaces.ts');
+};
+
+const regenerateInteractiveObjects = (maps: string[]) => {
+   const interactiveObjects: Record<Room, InteractiveObjectData[]> = {} as Record<
+      Room,
+      InteractiveObjectData[]
+   >;
+   const interactiveObjectsMap: Record<Room, Record<InteractiveObject, boolean>> = {} as Record<
+      Room,
+      Record<InteractiveObject, boolean>
+   >;
+
+   interactiveObjects.AAA_InitialRoom = [];
+   interactiveObjectsMap.AAA_InitialRoom = interactiveObjectsKeys.reduce(
+      (acc, key) => ({ ...acc, [key]: false }),
+      {} as Record<InteractiveObject, boolean>,
+   );
+
+   for (const map of maps) {
+      const tiledMapPath = resolve(
+         __dirname,
+         `../../../apps/client/public/assets/maps/${map}.json`,
+      );
+      const tiledMapBlob = readFileSync(tiledMapPath, { encoding: 'utf-8' });
+      const tiledMap: TiledMapJson = JSON.parse(tiledMapBlob);
+      const roomName = `${map}Room` as Room;
+
+      interactiveObjects[roomName] = [];
+      interactiveObjectsMap[roomName] = {
+         ...interactiveObjectsMap.AAA_InitialRoom,
+      };
+
+      const interactiveLayer = tiledMap.layers.find(({ name }) => name === 'Interactive');
+      if (interactiveLayer === undefined) {
+         continue;
+      }
+
+      interactiveLayer.objects.forEach(({ x, y, width, height, properties }) => {
+         const id = properties.find(({ name }) => name === 'id');
+         assert(id !== undefined, `id property not found in ${map}.json`);
+
+         interactiveObjects[roomName].push({
+            id: id.value as InteractiveObject,
+            x: x / width,
+            y: y / height,
+         });
+         interactiveObjectsMap[roomName][id.value as InteractiveObject] = true;
+      });
+   }
+
+   const interactiveObjectsPath = resolve(__dirname, '../../shared/src/data/interactiveObjects.ts');
+   const interactiveObjectsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
+import type { InteractiveObject, InteractiveObjectData } from '../types/InteractiveObject';
+import type { Room } from '../types/Room';
+
+export const INTERACTIVE_OBJECTS: Record<Room, InteractiveObjectData[]> = ${JSON.stringify(
+      interactiveObjects,
+      null,
+      3,
+   )};
+
+export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boolean>> = ${JSON.stringify(
+      interactiveObjectsMap,
+      null,
+      3,
+   )};
+`;
+
+   writeFileSync(interactiveObjectsPath, interactiveObjectsBlob, { flag: 'w' });
+   console.log('[Shared] ✅  Regenerated interactiveObjects.ts');
 };
 
 generateMaps();

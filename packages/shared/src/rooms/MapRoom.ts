@@ -59,12 +59,6 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
       }),
    }),
    z.object({
-      type: z.literal('saveTeleporter'),
-      message: z.object({
-         room: zRoom,
-      }),
-   }),
-   z.object({
       type: z.literal('equipItem'),
       message: z.object({
          id: z.number(),
@@ -120,12 +114,6 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
                isFight: z.boolean(),
             }),
          ),
-      }),
-   }),
-   z.object({
-      type: z.literal('saveTeleporterResponse'),
-      message: z.object({
-         success: z.boolean(),
       }),
    }),
    z.object({

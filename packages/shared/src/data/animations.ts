@@ -35,19 +35,19 @@ export const animationsData: Record<Animation, AnimationData> = {
    explosion: {
       id: Animation.Explosion,
       offset: 7,
-      frameRate: 16,
+      frameRate: 24,
       scale: 2,
    },
    smallExplosion: {
       id: Animation.SmallExplosion,
       offset: 11,
-      frameRate: 16,
+      frameRate: 24,
       scale: 3,
    },
    flower: {
       id: Animation.Flower,
       offset: 8,
-      frameRate: 16,
+      frameRate: 24,
       scale: 2,
    },
 };

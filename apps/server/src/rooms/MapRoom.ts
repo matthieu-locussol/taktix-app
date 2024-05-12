@@ -1,6 +1,7 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import {
    FightMgt,
+   INTERACTIVE_OBJECTS_MAP,
    ItemMgt,
    LootMgt,
    MINIMUM_TURN_TIME,
@@ -26,6 +27,8 @@ import {
 import { zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
+import { saveTeleporterInteraction } from './interactions/saveTeleporterInteraction';
+import { sleepInteraction } from './interactions/sleepInteraction';
 import { usersMap } from './utils/usersMap';
 
 type Client = ColyseusClient<UserData, unknown>;
@@ -73,9 +76,6 @@ export class MapRoom extends Room<MapState> {
                .with({ type: 'fightPvE' }, (payload) => this.onFightPvE(client, payload))
                .with({ type: 'stopFighting' }, (payload) => this.onStopFighting(client, payload))
                .with({ type: 'teleport' }, (payload) => this.onTeleport(client, payload))
-               .with({ type: 'saveTeleporter' }, (payload) =>
-                  this.onSaveTeleporter(client, payload),
-               )
                .with({ type: 'equipItem' }, (payload) => this.onEquipItem(client, payload))
                .with({ type: 'unequipItem' }, (payload) => this.onUnequipItem(client, payload))
                .with({ type: 'interact' }, (payload) => this.onInteract(client, payload))
@@ -470,38 +470,6 @@ export class MapRoom extends Room<MapState> {
       client.send(packet.type, packet.message);
    }
 
-   async onSaveTeleporter(
-      client: Client,
-      { message: { room } }: Extract<MapRoomMessage, { type: 'saveTeleporter' }>,
-   ) {
-      const player = this.state.players.get(client.sessionId);
-      _assert(player, `Player for client '${client.sessionId}' should be defined`);
-
-      const place = TELEPORTATION_PLACES[room];
-
-      if (room !== this.name || place === undefined) {
-         const packet: Extract<MapRoomResponse, { type: 'saveTeleporterResponse' }> = {
-            type: 'saveTeleporterResponse',
-            message: {
-               success: false,
-            },
-         };
-         client.send(packet.type, packet.message);
-         return;
-      }
-
-      player.addTeleporter(room);
-
-      const packet: Extract<MapRoomResponse, { type: 'saveTeleporterResponse' }> = {
-         type: 'saveTeleporterResponse',
-         message: {
-            success: true,
-         },
-      };
-
-      client.send(packet.type, packet.message);
-   }
-
    async onEquipItem(
       client: Client,
       { message: { id } }: Extract<MapRoomMessage, { type: 'equipItem' }>,
@@ -553,7 +521,10 @@ export class MapRoom extends Room<MapState> {
    }
 
    async sleepInteraction(client: Client, player: PlayerState) {
-      // TODO: make sure the player can sleep
+      if (INTERACTIVE_OBJECTS_MAP[this.name].Bed === false) {
+         return false;
+      }
+
       player.setHealthAtMax();
       logger.info(`[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) slept`);
       return true;
@@ -566,27 +537,28 @@ export class MapRoom extends Room<MapState> {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
-      let success = false;
+      const sendInteractResponsePacket = (success: boolean) => {
+         const packet: Extract<MapRoomResponse, { type: 'interactResponse' }> = {
+            type: 'interactResponse',
+            message: {
+               id,
+               success,
+            },
+         };
 
-      switch (id) {
-         case Interaction.Sleep:
-            {
-               success = await this.sleepInteraction(client, player);
-            }
-            break;
-         default:
-            throw new Error(`Unknown interaction id: '${id}'`);
-      }
-
-      const packet: Extract<MapRoomResponse, { type: 'interactResponse' }> = {
-         type: 'interactResponse',
-         message: {
-            id,
-            success,
-         },
+         client.send(packet.type, packet.message);
       };
 
-      client.send(packet.type, packet.message);
+      match(id)
+         .with('Sleep', async () => {
+            const success = await sleepInteraction(client, player, this.name);
+            sendInteractResponsePacket(success);
+         })
+         .with('SaveTeleporter', async () => {
+            const success = await saveTeleporterInteraction(client, player, this.name);
+            sendInteractResponsePacket(success);
+         })
+         .exhaustive();
    }
 
    checkTeleportationSpots(client: Client, player: PlayerState) {

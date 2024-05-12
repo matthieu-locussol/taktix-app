@@ -1,6 +1,7 @@
+import { TILE_SIZE } from 'shared/src/config';
 import { CharacterSprite } from 'shared/src/data/charactersSprites';
 import { EntityType } from '../../utils/phaser';
-import { SCALE_FACTOR, type Scene, TILE_SIZE } from '../Scene';
+import { SCALE_FACTOR, type Scene } from '../Scene';
 import { makeCharacterName } from './makeCharacterName';
 import { registerSpriteEvents } from './registerSpriteEvents';
 
