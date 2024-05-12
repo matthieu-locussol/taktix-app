@@ -228,9 +228,9 @@ export class PvEFightStore {
       }, {});
 
       const alliesAnimations = this.fightResults.allies.reduce(
-         (acc, { id, weaponType }) => ({
+         (acc, { id, weaponDamages }) => ({
             ...acc,
-            [id]: weaponsAnimations[weaponType],
+            [id]: weaponsAnimations[weaponDamages[0].weaponType],
          }),
          {},
       );

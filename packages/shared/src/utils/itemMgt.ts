@@ -422,7 +422,7 @@ export namespace ItemMgt {
       return z
          .array(zWeaponDamages)
          .parse(damages)
-         .map(({ type, min, max }) => `${type}:${min}:${max}`)
+         .map(({ weaponType, type, min, max }) => `${weaponType}:${type}:${min}:${max}`)
          .join('|');
    };
 
@@ -433,8 +433,8 @@ export namespace ItemMgt {
 
       return z.array(zWeaponDamages).parse(
          damages.split('|').map((damage) => {
-            const [type, min, max] = damage.split(':');
-            return { type, min: Number(min), max: Number(max) };
+            const [weaponType, type, min, max] = damage.split(':');
+            return { weaponType, type, min: Number(min), max: Number(max) };
          }),
       );
    };

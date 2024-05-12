@@ -25,6 +25,7 @@ export * from './schemas/RegisterSchema';
 export * from './schemas/StatusSchema';
 export * from './states/MapState';
 export * from './states/PlayerState';
+export * from './types/Animation';
 export * from './types/Channel';
 export * from './types/Colyseus';
 export * from './types/Item';
