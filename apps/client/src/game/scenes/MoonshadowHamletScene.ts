@@ -13,6 +13,7 @@ export class MoonshadowHamletScene extends Scene {
       this.load.image('RW_Forest_tileset', '/assets/tilesets/RW_Forest.png');
       this.load.image('RW_Plains_tileset', '/assets/tilesets/RW_Plains.png');
       this.load.image('KE_Water_Tiles_tileset', '/assets/tilesets/KE_Water_Tiles.png');
+      this.load.image('RW_Graveyard_tileset', '/assets/tilesets/RW_Graveyard.png');
       this.load.tilemapTiledJSON('MoonshadowHamlet_tiledmap', '/assets/maps/MoonshadowHamlet.json');
       loadCharactersAssets(this);
    }
@@ -28,12 +29,14 @@ export class MoonshadowHamletScene extends Scene {
       this.tilemap.addTilesetImage('RW_Forest', 'RW_Forest_tileset');
       this.tilemap.addTilesetImage('RW_Plains', 'RW_Plains_tileset');
       this.tilemap.addTilesetImage('KE_Water_Tiles', 'KE_Water_Tiles_tileset');
+      this.tilemap.addTilesetImage('RW_Graveyard', 'RW_Graveyard_tileset');
       this.initializeTilemap([
          'KE_Ground_Tiles',
          'KE_Town',
          'RW_Forest',
          'RW_Plains',
          'KE_Water_Tiles',
+         'RW_Graveyard',
       ]);
 
       return this.tilemap;

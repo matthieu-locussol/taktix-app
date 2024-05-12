@@ -27,4 +27,14 @@ export const NPC_SPOTS: Record<Room, NPCSpot[]> = {
    ForestRoom: [],
    HouseRoom: [],
    MoonshadowHamletRoom: [],
+   MoonshadowHotelRoom: [],
+   MoonshadowInnRoom: [
+      {
+         x: 29,
+         y: 26,
+         npcName: 'Akara',
+         mapName: 'MoonshadowInnRoom',
+         direction: Direction.DOWN,
+      },
+   ],
 };
