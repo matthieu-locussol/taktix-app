@@ -7,7 +7,7 @@ import {
 } from 'grid-engine';
 import { TILE_SIZE } from 'shared/src/config';
 import { CharacterSprite } from 'shared/src/data/charactersSprites';
-import { MonsterSprite } from 'shared/src/data/monstersSprites';
+import { MonsterSprite, zMonsterSprite } from 'shared/src/data/monstersSprites';
 import { NPC_SPOTS } from 'shared/src/data/npcSpots';
 import { NPCS } from 'shared/src/data/npcs';
 import { isInteractiveObject } from 'shared/src/types/InteractiveObject';
@@ -535,6 +535,35 @@ export abstract class Scene extends Phaser.Scene {
       this.gridEngine.update(time, delta);
       this.updateMoves();
       this.updatePlayersWrappers();
+      this.updateMonsters();
+   }
+
+   public updateMonsters(): void {
+      for (const fight of store.gameStore.fightsToAddQueue) {
+         const { id, positionX, positionY, radius, spritesheet, name, fightId } = fight;
+         if (!this.gridEngine.hasCharacter(id)) {
+            this.createMonster(
+               zMonsterSprite.parse(spritesheet),
+               id,
+               name,
+               radius,
+               positionX,
+               positionY,
+               fightId,
+            );
+         }
+      }
+
+      store.gameStore.fightsToAddQueue = [];
+
+      for (const fight of store.gameStore.fightsToRemoveQueue) {
+         const { id } = fight;
+         if (this.gridEngine.hasCharacter(id)) {
+            this.deleteMonster(id);
+         }
+      }
+
+      store.gameStore.fightsToRemoveQueue = [];
    }
 
    public updatePlayersWrappers(): void {

@@ -1,5 +1,6 @@
 import { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
+import { FightState } from 'shared/src/states/FightState';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
@@ -16,6 +17,10 @@ export class GameStore {
 
    private _store: Store;
 
+   public fightsToAddQueue: FightState[] = [];
+
+   public fightsToRemoveQueue: FightState[] = [];
+
    public zoom: number = ZOOM_MIN;
 
    constructor(store: Store) {
@@ -27,6 +32,15 @@ export class GameStore {
 
    initialize(game: Phaser.Game) {
       this._game = game;
+   }
+
+   addFightToQueue(fight: FightState) {
+      this.fightsToAddQueue.push(fight);
+   }
+
+   removeFightFromQueue(fight: FightState) {
+      this.fightsToAddQueue = this.fightsToAddQueue.filter(({ id }) => id !== fight.id);
+      this.fightsToRemoveQueue.push(fight);
    }
 
    get game() {
