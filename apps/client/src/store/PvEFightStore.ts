@@ -230,7 +230,10 @@ export class PvEFightStore {
       const alliesAnimations = this.fightResults.allies.reduce(
          (acc, { id, weaponDamages }) => ({
             ...acc,
-            [id]: weaponsAnimations[weaponDamages[0].weaponType],
+            [id]:
+               weaponDamages.length > 0
+                  ? weaponsAnimations[weaponDamages[0].weaponType]
+                  : weaponsAnimations.sword1H,
          }),
          {},
       );

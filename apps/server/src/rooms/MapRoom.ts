@@ -407,7 +407,7 @@ export class MapRoom extends Room<MapState> {
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight against an invalid monster group '${monsterGroupId}'`,
             error,
          );
-      } finally {
+
          this.state.stopFight(client.sessionId);
       }
    }
@@ -423,22 +423,6 @@ export class MapRoom extends Room<MapState> {
       }
 
       this.state.stopFight(client.sessionId);
-
-      const packet: Extract<MapRoomResponse, { type: 'stopFightingResponse' }> = {
-         type: 'stopFightingResponse',
-         message: {
-            players: [...this.state.players.values()].map((player) => ({
-               name: player.name,
-               x: player.x,
-               y: player.y,
-               direction: player.direction,
-               spritesheet: zCharacterSprite.parse(player.spritesheet),
-               isFight: player.isFight,
-            })),
-         },
-      };
-
-      client.send(packet.type, packet.message);
    }
 
    async onTeleport(
