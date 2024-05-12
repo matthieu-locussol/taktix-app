@@ -22,9 +22,9 @@ import {
    _assert,
    getMonstersInformations,
    isMapRoomMessage,
+   zCharacterSprite,
    zItemType,
 } from 'shared';
-import { zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
 import { saveTeleporterInteraction } from './interactions/saveTeleporterInteraction';

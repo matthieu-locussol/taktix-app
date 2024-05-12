@@ -534,8 +534,15 @@ export abstract class Scene extends Phaser.Scene {
    public override update(time: number, delta: number): void {
       this.gridEngine.update(time, delta);
       this.updateMoves();
-      this.updatePlayers();
-      this.updateMonsters();
+
+      if (store.gameStore.shouldProcessPlayerQueue) {
+         this.updatePlayers();
+      }
+
+      if (store.gameStore.shouldProcessFightQueue) {
+         this.updateMonsters();
+      }
+
       this.updatePlayersWrappers();
    }
 
