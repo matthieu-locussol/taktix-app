@@ -98,7 +98,9 @@ const Name = styled(Typography)(({ theme }) => ({
    fontWeight: 'bold',
 }));
 
-const Content = styled(Box)<{ hasAvatar: boolean }>(({ hasAvatar, theme }) => ({
+const Content = styled(Box, {
+   shouldForwardProp: (prop) => prop !== 'hasAvatar',
+})<{ hasAvatar: boolean }>(({ hasAvatar, theme }) => ({
    display: 'flex',
    width: hasAvatar ? '36vw' : '45vw',
    height: '8vw',
