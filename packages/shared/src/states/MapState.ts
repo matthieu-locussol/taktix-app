@@ -1,10 +1,9 @@
-import { logger } from '@colyseus/core';
 import { MapSchema, Schema, type } from '@colyseus/schema';
 import { mapsFights } from '../data/mapsFights';
 import { Room } from '../types/Room';
 import { NumberMgt } from '../utils/numberMgt';
 import { FightState } from './FightState';
-import { PlayerState } from './PlayerState';
+import { PlayerState, PlayerStateConstructor } from './PlayerState';
 
 export class MapState extends Schema {
    @type({ map: PlayerState })
@@ -13,16 +12,8 @@ export class MapState extends Schema {
    @type({ map: FightState })
    fights = new MapSchema<FightState, string>();
 
-   createPlayer(
-      sessionId: string,
-      name: string,
-      spritesheet: string,
-      x: number,
-      y: number,
-      direction: string,
-      teleporters: Room[],
-   ) {
-      const player = new PlayerState(name, spritesheet, x, y, direction, teleporters);
+   createPlayer(sessionId: string, parameters: PlayerStateConstructor) {
+      const player = new PlayerState(parameters);
       this.players.set(sessionId, player);
    }
 
@@ -71,8 +62,8 @@ export class MapState extends Schema {
       this.generateAllFights(room);
 
       const { timeoutRegeneration } = mapFightData;
-      setInterval(() => {
-         logger.info(`Regenerating fights for room: ${room}...`);
+      setInterval(async () => {
+         console.log(`[MapRoom][${room}] Regenerating fights...`);
          this.generateAllFights(room);
       }, timeoutRegeneration);
    }

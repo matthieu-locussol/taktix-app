@@ -31,13 +31,13 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
    const hasAffixes = useMemo(() => item.prefixes.length > 0 || item.suffixes.length > 0, [item]);
    const rarityColor = useMemo(() => ITEM_RARITY_COLORS[rarity], [rarity]);
 
-   const tStatistics = ({ name, tier, statistics }: Affix, type: 'P' | 'S' | 'T') => {
+   const tStatistics = ({ tier, statistics }: Affix, type: 'P' | 'S' | 'T') => {
       return Object.entries(statistics)
          .map<React.ReactNode>(([statisticStr, value], idx) => {
             const statistic = zStatistic.parse(statisticStr);
             return (
                <Box
-                  key={`${name}-${tier}-${type}-${item.id}-${idx}`}
+                  key={`${statistic}-${tier}-${type}-${item.id}-${idx}`}
                   sx={{
                      display: 'flex',
                      alignItems: 'center',

@@ -19,7 +19,7 @@ export const mapsFights: Partial<Record<Room, MapFightData>> = {
    MoonshadowHamletRoom: {
       fights: [
          {
-            fightsIds: [1, 2],
+            fightsIds: [1],
             positionX: 31,
             positionY: 38,
             radius: 1,

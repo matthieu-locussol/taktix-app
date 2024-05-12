@@ -31,7 +31,7 @@ import {
 import { AuthRoomResponse } from 'shared/src/rooms/AuthRoom';
 import { ItemPosition } from 'shared/src/types/Item';
 import { ProfessionType } from 'shared/src/types/Profession';
-import { WeaponType, weaponDamagesTypes } from 'shared/src/types/Weapon';
+import { WeaponType, weaponDamagesTypes, zWeaponType } from 'shared/src/types/Weapon';
 import { match } from 'ts-pattern';
 import { v4 as uuidv4 } from 'uuid';
 import { hashPassword } from '../utils/hashPassword';
@@ -345,6 +345,13 @@ export class AuthRoom extends Room {
                      requiredLevel: 1,
                      damages: ItemMgt.serializeDamages([
                         {
+                           weaponType: zWeaponType.parse(
+                              {
+                                 [ProfessionType.Warrior]: 'sword1H' satisfies WeaponType,
+                                 [ProfessionType.Mage]: 'wand' satisfies WeaponType,
+                                 [ProfessionType.Archer]: 'bow' satisfies WeaponType,
+                              }[zProfessionType.parse(profession)],
+                           ),
                            type: weaponDamagesTypes[
                               NumberMgt.random(0, weaponDamagesTypes.length - 1)
                            ],

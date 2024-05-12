@@ -101,17 +101,16 @@ const monstersArray: (() => MonsterGenerator)[] = [
             magic: 30 + level * 7,
             rare: 50 + level * 10,
          }[type],
-         weaponType: 'axe1H',
          weaponDamages: (
             {
-               common: [{ type: 'strength', min: level, max: level * 3 }],
+               common: [{ weaponType: 'axe1H', type: 'strength', min: level, max: level * 3 }],
                magic: [
-                  { type: 'strength', min: level, max: level * 2 },
-                  { type: 'intelligence', min: level, max: level * 3 },
+                  { weaponType: 'axe1H', type: 'strength', min: level, max: level * 2 },
+                  { weaponType: 'axe1H', type: 'intelligence', min: level, max: level * 3 },
                ],
                rare: [
-                  { type: 'strength', min: level * 2, max: level * 3 },
-                  { type: 'luck', min: level * 2, max: level * 2 },
+                  { weaponType: 'axe1H', type: 'strength', min: level * 2, max: level * 3 },
+                  { weaponType: 'axe1H', type: 'luck', min: level * 2, max: level * 2 },
                ],
             } as Record<MonsterType, WeaponDamages[]>
          )[type],

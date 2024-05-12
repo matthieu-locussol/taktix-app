@@ -1,9 +1,7 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
-import { Item } from '@prisma/client';
 import {
    FightMgt,
    ItemMgt,
-   LevelMgt,
    LootMgt,
    MINIMUM_TURN_TIME,
    MapRoomMessage,
@@ -12,11 +10,8 @@ import {
    MapRoomOptions as Options,
    PlayerState,
    PvEFightParameters,
-   PvEFightResults,
-   STATISTICS_POINTS_PER_LEVEL,
    StatisticMgt,
    StringMgt,
-   TALENTS_POINTS_PER_LEVEL,
    TELEPORTATION_PLACES,
    TELEPORTATION_SPOTS,
    Room as TRoom,
@@ -27,7 +22,6 @@ import {
    getMonstersInformations,
    isMapRoomMessage,
    zItemType,
-   zProfessionType,
 } from 'shared';
 import { zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { match } from 'ts-pattern';
@@ -120,6 +114,32 @@ export class MapRoom extends Room<MapState> {
       const characterPosition = position ?? { x: pos_x, y: pos_y };
       const characterDirection = direction ?? savedDirection;
 
+      this.state.createPlayer(client.sessionId, {
+         id: characterInfos.id,
+         name: characterName,
+         spritesheet: characterInfos.spritesheet,
+         x: characterPosition.x,
+         y: characterPosition.y,
+         direction: characterDirection,
+         profession: characterInfos.profession,
+         talents: characterInfos.talents,
+         talentsPoints: characterInfos.talentsPoints,
+         baseStatistics: characterInfos.baseStatistics,
+         baseStatisticsPoints: characterInfos.baseStatisticsPoints,
+         experience: characterInfos.experience,
+         health: characterInfos.health,
+         teleporters: characterInfos.teleporters,
+         money: characterInfos.money,
+         items: characterInfos.items.map((item) => ({
+            ...item,
+            type: zItemType.parse(item.type),
+            baseAffixes: ItemMgt.deserializeAffixes(item.baseAffixes),
+            prefixes: ItemMgt.deserializeAffixes(item.prefixes),
+            suffixes: ItemMgt.deserializeAffixes(item.suffixes),
+            damages: ItemMgt.deserializeDamages(item.damages),
+         })),
+      });
+
       if (position !== undefined && direction !== undefined) {
          await prisma.character.update({
             where: { name: characterName },
@@ -131,38 +151,6 @@ export class MapRoom extends Room<MapState> {
             },
          });
       }
-
-      this.state.createPlayer(
-         client.sessionId,
-         characterName,
-         characterInfos.spritesheet,
-         characterPosition.x,
-         characterPosition.y,
-         characterDirection,
-         StringMgt.deserializeTeleporters(characterInfos.teleporters),
-      );
-
-      const player = this.state.players.get(client.sessionId);
-      _assert(player, `Player for client '${client.sessionId}' should be defined`);
-      player.setHealth(characterInfos.health);
-
-      this.loadPlayerItems(client, characterInfos.items);
-   }
-
-   private loadPlayerItems(client: Client, items: Item[]) {
-      const player = this.state.players.get(client.sessionId);
-      _assert(player, `Player for client '${client.sessionId}' should be defined`);
-
-      player.addItems(
-         items.map((item) => ({
-            ...item,
-            type: zItemType.parse(item.type),
-            baseAffixes: ItemMgt.deserializeAffixes(item.baseAffixes),
-            prefixes: ItemMgt.deserializeAffixes(item.prefixes),
-            suffixes: ItemMgt.deserializeAffixes(item.suffixes),
-            damages: ItemMgt.deserializeDamages(item.damages),
-         })),
-      );
    }
 
    onMove(client: Client, { message: { x, y } }: Extract<MapRoomMessage, { type: 'move' }>) {
@@ -198,36 +186,16 @@ export class MapRoom extends Room<MapState> {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
-      const characterInfos = await prisma.character.findUnique({
-         where: { name: player.name },
-         select: {
-            talents: true,
-            talentsPoints: true,
-            experience: true,
-            baseStatistics: true,
-            profession: true,
-         },
-      });
-
-      if (characterInfos === null) {
-         return;
-      }
-
       const results = TalentMgt.isProgressionValid(
-         TalentMgt.deserializeTalents(characterInfos.talents),
+         player.talents,
          TalentMgt.deserializeTalents(talents),
-         characterInfos.talentsPoints,
-         characterInfos.experience,
+         player.talentsPoints,
+         player.experience,
       );
 
       if (results.valid) {
-         await prisma.character.update({
-            where: { name: player.name },
-            data: {
-               talents,
-               talentsPoints: results.remainingPoints,
-            },
-         });
+         player.setTalents(talents);
+         player.setTalentsPoints(results.remainingPoints);
 
          logger.info(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) updated talents successfully`,
@@ -246,36 +214,16 @@ export class MapRoom extends Room<MapState> {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
-      const characterInfos = await prisma.character.findUnique({
-         where: { name: player.name },
-         select: {
-            baseStatistics: true,
-            baseStatisticsPoints: true,
-            experience: true,
-            talents: true,
-            profession: true,
-         },
-      });
-
-      if (characterInfos === null) {
-         return;
-      }
-
       const results = StatisticMgt.isProgressionValid(
          StatisticMgt.deserializeStatistics(statistics),
-         StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
-         characterInfos.baseStatisticsPoints,
-         characterInfos.experience,
+         player.baseStatistics,
+         player.baseStatisticsPoints,
+         player.experience,
       );
 
       if (results.valid) {
-         await prisma.character.update({
-            where: { name: player.name },
-            data: {
-               baseStatistics: statistics,
-               baseStatisticsPoints: results.remainingPoints,
-            },
-         });
+         player.setBaseStatistics(statistics);
+         player.setBaseStatisticsPoints(results.remainingPoints);
 
          logger.info(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) updated statistics successfully`,
@@ -311,34 +259,7 @@ export class MapRoom extends Room<MapState> {
       this.state.removeFight(id);
       this.state.startFight(client.sessionId);
 
-      const characterInfos = await prisma.character.findUnique({
-         where: { name: player.name },
-         select: {
-            baseStatistics: true,
-            talents: true,
-            map: true,
-            experience: true,
-            profession: true,
-            name: true,
-         },
-      });
-
-      if (characterInfos === null) {
-         logger.error(
-            `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight but failed because character infos were not found`,
-         );
-         return;
-      }
-
-      const realStatistics = StatisticMgt.computeRealStatistics(
-         StatisticMgt.aggregateStatistics(
-            StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
-            characterInfos.experience,
-            zProfessionType.parse(characterInfos.profession),
-            TalentMgt.deserializeTalents(characterInfos.talents),
-            player.items,
-         ),
-      );
+      const realStatistics = player.getRealStatistics();
 
       try {
          const monstersInformations = getMonstersInformations(monsterGroupId);
@@ -348,16 +269,16 @@ export class MapRoom extends Room<MapState> {
             // TODO: handle multiple allies
             alliesInformations: [
                {
-                  name: characterInfos.name,
+                  name: player.name,
                   health: player.health,
                   magicShield: realStatistics.magicShield,
-                  experience: characterInfos.experience,
-                  level: LevelMgt.getLevel(characterInfos.experience),
-                  profession: zProfessionType.parse(characterInfos.profession),
+                  experience: player.experience,
+                  level: player.getLevel(),
+                  profession: player.profession,
                   spritesheet: zCharacterSprite.parse(player.spritesheet),
-                  rawStatistics: characterInfos.baseStatistics,
+                  rawStatistics: StatisticMgt.serializeStatistics(player.baseStatistics),
                   items: player.getEquippedItems(),
-                  talents: TalentMgt.deserializeTalents(characterInfos.talents),
+                  talents: player.talents,
                   uniquesPowers: [],
                   weaponDamages: player.getEquippedWeaponDamages() ?? DEFAULT_WEAPON_DAMAGES,
                },
@@ -368,25 +289,23 @@ export class MapRoom extends Room<MapState> {
          const results = FightMgt.computePvEFight(parameters);
 
          if (results.won) {
-            const charactersInfos = await prisma.character.findMany({
-               where: { name: { in: results.allies.map(({ name }) => name) } },
-               select: {
-                  id: true,
-                  name: true,
-               },
-            });
-
             const createdItems = await Promise.all(
                results.loots.map((loots, idx) => {
                   const characterName = results.allies[idx].name;
-                  const characterId = charactersInfos.find(
-                     ({ name }) => name === characterName,
-                  )?.id;
-
-                  _assert(
-                     characterId,
-                     `Character id for name '${characterName}' should be defined`,
+                  const characterInfos = [...usersMap.values()].find(
+                     (user) => user.characterName === characterName,
                   );
+
+                  if (characterInfos === undefined || characterInfos.gameRoomClient === null) {
+                     return;
+                  }
+
+                  const { gameRoomClient } = characterInfos;
+
+                  const allyPlayer = this.state.players.get(gameRoomClient.sessionId);
+                  if (allyPlayer === undefined) {
+                     return;
+                  }
 
                   return prisma.$transaction(
                      loots.map(
@@ -411,7 +330,7 @@ export class MapRoom extends Room<MapState> {
                                  damages: ItemMgt.serializeDamages(damages),
                                  requiredLevel,
                                  type,
-                                 characterId,
+                                 characterId: allyPlayer.id,
                                  position,
                               },
                            }),
@@ -425,11 +344,11 @@ export class MapRoom extends Room<MapState> {
                const user = [...usersMap.values()].find(
                   ({ characterName }) => characterName === name,
                );
-               if (user !== undefined && user.gameRoomClient !== null) {
-                  const player = this.state.players.get(user.gameRoomClient.sessionId);
 
-                  if (player !== undefined) {
-                     player.addItems(
+               if (user !== undefined && user.gameRoomClient !== null) {
+                  const allyPlayer = this.state.players.get(user.gameRoomClient.sessionId);
+                  if (allyPlayer !== undefined && items !== undefined) {
+                     allyPlayer.addItems(
                         items.map((item) => ({
                            ...item,
                            type: zItemType.parse(item.type),
@@ -442,9 +361,11 @@ export class MapRoom extends Room<MapState> {
                   }
                }
 
-               items.forEach((item, itemIdx) => {
-                  results.loots[idx][itemIdx].id = item.id;
-               });
+               if (items !== undefined) {
+                  items.forEach((item, itemIdx) => {
+                     results.loots[idx][itemIdx].id = item.id;
+                  });
+               }
             });
          }
 
@@ -466,27 +387,12 @@ export class MapRoom extends Room<MapState> {
             const allyInfos = results.allies[allyInfosIdx];
             const experienceGained = results.experiences[allyInfosIdx];
 
-            const newLevel = LevelMgt.getLevel(characterInfos.experience + experienceGained);
-            const oldLevel = LevelMgt.getLevel(characterInfos.experience);
-
-            if (newLevel > oldLevel) {
-               const newRealStatistics = StatisticMgt.computeRealStatistics(
-                  StatisticMgt.aggregateStatistics(
-                     StatisticMgt.deserializeStatistics(characterInfos.baseStatistics),
-                     characterInfos.experience + experienceGained,
-                     zProfessionType.parse(characterInfos.profession),
-                     TalentMgt.deserializeTalents(characterInfos.talents),
-                     player.items,
-                  ),
-               );
-
-               player.setHealth(newRealStatistics.vitality);
-            } else {
-               player.setHealth(Math.max(1, allyInfos.health));
-            }
+            player.setHealth(Math.max(1, allyInfos.health));
+            player.addExperience(experienceGained);
          }
 
-         this.state.setFightTurns(client.sessionId, results.turns.length);
+         player.setMoney(player.money + alliesMoney[player.name]);
+         player.setFightTurns(results.turns.length);
          client.send(packet.type, packet.message);
 
          logger.info(
@@ -496,14 +402,12 @@ export class MapRoom extends Room<MapState> {
                results.won ? 'won' : 'lost'
             }`,
          );
-
-         this.onFightPvEResults(client, results, alliesMoney);
       } catch (error) {
          logger.error(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight against an invalid monster group '${monsterGroupId}'`,
             error,
          );
-
+      } finally {
          this.state.stopFight(client.sessionId);
       }
    }
@@ -544,11 +448,7 @@ export class MapRoom extends Room<MapState> {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
-      if (room === this.name) {
-         return;
-      }
-
-      if (!player.teleporters.includes(room)) {
+      if (room === this.name || !player.teleporters.includes(room)) {
          return;
       }
 
@@ -556,32 +456,15 @@ export class MapRoom extends Room<MapState> {
       _assert(place, `Teleportation place for room '${room}' should be defined`);
       const { direction, x, y } = place;
 
-      const characterInfos = await prisma.character.findUnique({
-         where: { name: player.name },
-         select: { money: true },
-      });
-      _assert(characterInfos, `Character infos for name '${player.name}' should be defined`);
-
-      if (characterInfos.money < place.price) {
+      if (player.money < place.price) {
          return;
       }
 
-      await prisma.character.update({
-         where: { name: player.name },
-         data: {
-            money: { decrement: place.price },
-         },
-      });
+      player.setMoney(player.money - place.price);
 
       const packet: Extract<MapRoomResponse, { type: 'changeMap' }> = {
          type: 'changeMap',
-         message: {
-            map: room,
-            x,
-            y,
-            direction,
-            money: place.price,
-         },
+         message: { map: room, x, y, direction, money: place.price },
       };
 
       client.send(packet.type, packet.message);
@@ -607,12 +490,7 @@ export class MapRoom extends Room<MapState> {
          return;
       }
 
-      await prisma.character.update({
-         where: { name: player.name },
-         data: {
-            teleporters: StringMgt.serializeTeleporters([...player.teleporters, room]),
-         },
-      });
+      player.addTeleporter(room);
 
       const packet: Extract<MapRoomResponse, { type: 'saveTeleporterResponse' }> = {
          type: 'saveTeleporterResponse',
@@ -636,13 +514,7 @@ export class MapRoom extends Room<MapState> {
          return;
       }
 
-      const characterInfos = await prisma.character.findUnique({
-         where: { name: player.name },
-         select: { experience: true },
-      });
-      _assert(characterInfos, `Character infos for name '${player.name}' should be defined`);
-
-      if (ItemMgt.canEquipItem(item, LevelMgt.getLevel(characterInfos.experience))) {
+      if (ItemMgt.canEquipItem(item, player.getLevel())) {
          const { itemsToRemove, canEquip } = ItemMgt.itemsToRemoveAfterEquip(
             item,
             player.getEquippedItems(),
@@ -680,29 +552,10 @@ export class MapRoom extends Room<MapState> {
       );
    }
 
-   async sleepInteraction(
-      client: Client,
-      player: PlayerState,
-      experience: number,
-      profession: string,
-      talents: string,
-      baseStatistics: string,
-   ) {
-      const statistics = StatisticMgt.computeRealStatistics(
-         StatisticMgt.aggregateStatistics(
-            StatisticMgt.deserializeStatistics(baseStatistics),
-            experience,
-            zProfessionType.parse(profession),
-            TalentMgt.deserializeTalents(talents),
-            player.items,
-         ),
-      );
-
+   async sleepInteraction(client: Client, player: PlayerState) {
       // TODO: make sure the player can sleep
-      player.setHealth(statistics.vitality);
-
+      player.setHealthAtMax();
       logger.info(`[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) slept`);
-
       return true;
    }
 
@@ -713,33 +566,12 @@ export class MapRoom extends Room<MapState> {
       const player = this.state.players.get(client.sessionId);
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
-      const characterInfos = await prisma.character.findUnique({
-         where: { name: player.name },
-         select: {
-            experience: true,
-            baseStatistics: true,
-            profession: true,
-            talents: true,
-         },
-      });
-
-      if (characterInfos === null) {
-         return;
-      }
-
       let success = false;
 
       switch (id) {
          case Interaction.Sleep:
             {
-               success = await this.sleepInteraction(
-                  client,
-                  player,
-                  characterInfos.experience,
-                  characterInfos.profession,
-                  characterInfos.talents,
-                  characterInfos.baseStatistics,
-               );
+               success = await this.sleepInteraction(client, player);
             }
             break;
          default:
@@ -755,65 +587,6 @@ export class MapRoom extends Room<MapState> {
       };
 
       client.send(packet.type, packet.message);
-   }
-
-   async onFightPvEResults(
-      client: Client,
-      results: PvEFightResults,
-      alliesMoney: Record<string, number>,
-   ) {
-      const player = this.state.players.get(client.sessionId);
-      _assert(player, `Player for client '${client.sessionId}' should be defined`);
-
-      if (results.won) {
-         const charactersInfos = (
-            await prisma.character.findMany({
-               where: { name: { in: results.allies.map(({ name }) => name) } },
-               select: {
-                  name: true,
-                  baseStatisticsPoints: true,
-                  talentsPoints: true,
-                  money: true,
-               },
-            })
-         ).reduce<
-            Record<string, { baseStatisticsPoints: number; talentsPoints: number; money: number }>
-         >((acc, { name, ...rest }) => ({ ...acc, [name]: rest }), {});
-
-         const updates = results.allies.map(({ name, experience }, idx) => {
-            const experienceGained = results.experiences[idx];
-            const newExperience = experience + experienceGained;
-
-            const levelGained = LevelMgt.computeGainedLevels(experience, newExperience);
-            const baseStatisticsPointsGained = levelGained * STATISTICS_POINTS_PER_LEVEL;
-            const talentsPointsGained = levelGained * TALENTS_POINTS_PER_LEVEL;
-
-            return {
-               name: results.allies[idx].name,
-               experience: newExperience,
-               talentsPoints: charactersInfos[name].talentsPoints + talentsPointsGained,
-               baseStatisticsPoints:
-                  charactersInfos[name].baseStatisticsPoints + baseStatisticsPointsGained,
-               money: charactersInfos[name].money + alliesMoney[name],
-            };
-         });
-
-         prisma.$transaction(
-            updates.map(({ name, experience, talentsPoints, baseStatisticsPoints, money }) =>
-               prisma.character.update({
-                  where: { name },
-                  data: {
-                     experience,
-                     talentsPoints,
-                     baseStatisticsPoints,
-                     money,
-                  },
-               }),
-            ),
-         );
-      }
-
-      logger.info(`[MapRoom][${this.name}] Updated characters after the fight`);
    }
 
    checkTeleportationSpots(client: Client, player: PlayerState) {
@@ -842,7 +615,6 @@ export class MapRoom extends Room<MapState> {
 
    async onLeave(client: Client, _consented: boolean) {
       const player = this.state.players.get(client.sessionId);
-
       if (player === undefined) {
          logger.error(
             `[MapRoom][${this.name}] Client '${client.sessionId}' left the room but was not in it`,
@@ -858,14 +630,33 @@ export class MapRoom extends Room<MapState> {
          where: { name: player.name },
          data: {
             map: this.name,
+            profession: player.profession,
+            spritesheet: player.spritesheet,
             pos_x: player.x,
             pos_y: player.y,
             direction: player.direction,
+            talents: TalentMgt.serializeTalents(player.talents),
+            talentsPoints: player.talentsPoints,
+            baseStatistics: StatisticMgt.serializeStatistics(player.getBaseStatistics()),
+            baseStatisticsPoints: player.baseStatisticsPoints,
+            experience: player.experience,
             health: player.health,
+            teleporters: StringMgt.serializeTeleporters(player.teleporters),
+            money: player.money,
             items: {
-               updateMany: player.items.map(({ id, position }) => ({
-                  where: { id },
-                  data: { position },
+               updateMany: player.items.map((item) => ({
+                  where: { id: item.id },
+                  data: {
+                     isUnique: item.isUnique,
+                     type: item.type,
+                     level: item.level,
+                     requiredLevel: item.requiredLevel,
+                     baseAffixes: ItemMgt.serializeAffixes(item.baseAffixes),
+                     prefixes: ItemMgt.serializeAffixes(item.prefixes),
+                     suffixes: ItemMgt.serializeAffixes(item.suffixes),
+                     damages: ItemMgt.serializeDamages(item.damages),
+                     position: item.position,
+                  },
                })),
             },
          },
