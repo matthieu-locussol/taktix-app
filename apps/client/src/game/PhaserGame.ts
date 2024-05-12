@@ -5,8 +5,6 @@ import { getVersion } from '../utils/version';
 import { mapsScenes } from './mapsScenes';
 import { PvEFightScene } from './scenes/PvEFightScene';
 
-const FPS = 60;
-
 export const config: Phaser.Types.Core.GameConfig = {
    type: Phaser.AUTO,
    backgroundColor: '#1f2937',
@@ -20,18 +18,15 @@ export const config: Phaser.Types.Core.GameConfig = {
    title: 'Taktix',
    url: 'https://taktix.vercel.app',
    version: getVersion(''),
-   fps: {
-      min: FPS,
-      limit: FPS,
-      target: FPS,
-      smoothStep: true,
-   },
    scale: {
       mode: Phaser.Scale.ScaleModes.FIT,
       autoCenter: Phaser.Scale.Center.CENTER_BOTH,
    },
    audio: {
       noAudio: process.env.NODE_ENV === 'development',
+   },
+   fps: {
+      smoothStep: true,
    },
    disableContextMenu: true,
    plugins: {
