@@ -23,14 +23,12 @@ import {
    TalentMgt,
    MapRoomUserData as UserData,
    WeaponDamages,
-   WeaponType,
    _assert,
    getMonstersInformations,
    isMapRoomMessage,
    zItemType,
    zProfessionType,
 } from 'shared';
-import { Interaction } from 'shared/dist/types/Interaction';
 import { zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
@@ -38,8 +36,9 @@ import { usersMap } from './utils/usersMap';
 
 type Client = ColyseusClient<UserData, unknown>;
 
-const DEFAULT_WEAPON_TYPE: WeaponType = 'sword1H';
-const DEFAULT_WEAPON_DAMAGES: WeaponDamages[] = [{ type: 'strength', min: 1, max: 2 }];
+const DEFAULT_WEAPON_DAMAGES: WeaponDamages[] = [
+   { weaponType: 'sword1H', type: 'strength', min: 1, max: 2 },
+];
 
 export class MapRoom extends Room<MapState> {
    name: TRoom;
@@ -360,7 +359,6 @@ export class MapRoom extends Room<MapState> {
                   items: player.getEquippedItems(),
                   talents: TalentMgt.deserializeTalents(characterInfos.talents),
                   uniquesPowers: [],
-                  weaponType: player.getEquippedWeaponType() ?? DEFAULT_WEAPON_TYPE,
                   weaponDamages: player.getEquippedWeaponDamages() ?? DEFAULT_WEAPON_DAMAGES,
                },
             ],
