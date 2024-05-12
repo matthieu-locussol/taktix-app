@@ -3,7 +3,6 @@ import { makeAutoObservable } from 'mobx';
 import { CharacterSprite, charactersSprites } from 'shared/src/data/charactersSprites';
 import { LEVEL_TO_EXPERIENCE } from 'shared/src/data/levels';
 import { Item, ItemPosition } from 'shared/src/types/Item';
-import { Player } from 'shared/src/types/Player';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { Room } from 'shared/src/types/Room';
 import { Statistics } from 'shared/src/types/Statistic';
@@ -25,8 +24,6 @@ export class CharacterStore {
 
    public position: Position = { x: 0, y: 0 };
 
-   public players: Player[] = [];
-
    public talents: number[] = [];
 
    public talentsPoints: number = 0;
@@ -44,8 +41,6 @@ export class CharacterStore {
    public money: number = 0;
 
    public items: Item[] = [];
-
-   private _intervalTimeout: NodeJS.Timeout | null = null;
 
    constructor(store: Store) {
       makeAutoObservable(this);
