@@ -110,6 +110,8 @@ export class ContextMenuStore {
       const subMenu = {
          [InteractiveObjectType.Teleporter]: this._makeTeleporterMenu(),
          [InteractiveObjectType.TeleporterCell]: [],
+         [InteractiveObjectType.Bed]: this._makeBedMenu(),
+         [InteractiveObjectType.Lootbox]: this._makeLootboxMenu(),
       }[type];
 
       return {
@@ -133,6 +135,28 @@ export class ContextMenuStore {
             text: i18next.t('use'),
             callback: () => {
                this._store.mapMenuStore.open();
+            },
+         },
+      ];
+   }
+
+   private _makeBedMenu(): SubMenuItem[] {
+      return [
+         {
+            text: i18next.t('sleep'),
+            callback: () => {
+               console.log('sleep...');
+            },
+         },
+      ];
+   }
+
+   private _makeLootboxMenu(): SubMenuItem[] {
+      return [
+         {
+            text: i18next.t('gamble'),
+            callback: () => {
+               console.log('gamble...');
             },
          },
       ];
