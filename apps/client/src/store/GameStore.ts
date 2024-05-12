@@ -63,6 +63,14 @@ export class GameStore {
       }
    }
 
+   get shouldProcessFightQueue() {
+      return this.fightsToAddQueue.length > 0 || this.fightsToRemoveQueue.length > 0;
+   }
+
+   get shouldProcessPlayerQueue() {
+      return this.playersToAddQueue.length > 0 || this.playersToRemoveQueue.length > 0;
+   }
+
    get game() {
       _assert(this._game);
       return this._game;

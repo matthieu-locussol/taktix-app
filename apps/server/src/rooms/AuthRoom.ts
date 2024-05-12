@@ -1,6 +1,7 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
 import {
    AuthRoomMessage,
+   AuthRoomResponse,
    CustomProtocol,
    DEFAULT_BASE_STATISTICS,
    DEFAULT_BASE_STATISTICS_POINTS,
@@ -15,23 +16,24 @@ import {
    DEFAULT_X,
    DEFAULT_Y,
    ItemMgt,
+   ItemPosition,
    MAX_CHARACTERS_PER_ACCOUNT,
    NumberMgt,
    AuthRoomOptions as Options,
+   ProfessionType,
    StatisticMgt,
    StringMgt,
    TalentMgt,
    AuthRoomUserData as UserData,
+   WeaponType,
    _assert,
    _assertTrue,
    isAuthRoomMessage,
+   weaponDamagesTypes,
    zCharacterSprite,
    zProfessionType,
+   zWeaponType,
 } from 'shared';
-import { AuthRoomResponse } from 'shared/src/rooms/AuthRoom';
-import { ItemPosition } from 'shared/src/types/Item';
-import { ProfessionType } from 'shared/src/types/Profession';
-import { WeaponType, weaponDamagesTypes, zWeaponType } from 'shared/src/types/Weapon';
 import { match } from 'ts-pattern';
 import { v4 as uuidv4 } from 'uuid';
 import { hashPassword } from '../utils/hashPassword';
