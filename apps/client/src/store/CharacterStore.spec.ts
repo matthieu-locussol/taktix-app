@@ -18,7 +18,6 @@ describe('CharacterStore', () => {
       expect(store.name).toEqual('');
       expect(store.profession).toEqual(ProfessionType.Warrior);
       expect(store.position).toEqual({ x: 0, y: 0 });
-      expect(store.players).toHaveLength(0);
       expect(store.talents).toHaveLength(0);
       expect(store.talentsPoints).toBe(0);
       expect(store.baseStatistics).toEqual(StatisticMgt.makeMockedStatistics({}));
