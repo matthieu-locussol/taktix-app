@@ -8,18 +8,6 @@ export enum EntityType {
 
 export const zEntityType = z.nativeEnum(EntityType);
 
-export enum InteractiveObjectType {
-   Teleporter = 'Teleporter',
-   TeleporterCell = 'TeleporterCell',
-   Bed = 'Bed',
-   Well = 'Well',
-}
-
-export const zInteractiveObjectType = z.nativeEnum(InteractiveObjectType);
-
-export const isInteractiveObjectType = (value: unknown): value is InteractiveObjectType =>
-   zInteractiveObjectType.safeParse(value).success;
-
 export const zObjectProperties = z.array(
    z.object({
       name: z.string(),

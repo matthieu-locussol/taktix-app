@@ -1,5 +1,6 @@
+import { TILE_SIZE } from 'shared/src/config';
 import { _assert } from 'shared/src/utils/_assert';
-import { SCALE_FACTOR, type Scene, TILE_SIZE } from '../Scene';
+import { SCALE_FACTOR, type Scene } from '../Scene';
 
 export const makeGrid = (scene: Scene) => {
    _assert(scene.tilemap, 'Tilemap should be defined!');

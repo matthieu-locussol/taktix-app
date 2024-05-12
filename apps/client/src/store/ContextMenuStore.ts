@@ -2,10 +2,11 @@ import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
 import { NPCS, isNPC, zNPC } from 'shared/src/data/npcs';
 import { Channel } from 'shared/src/types/Channel';
+import { zInteractiveObject } from 'shared/src/types/InteractiveObject';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
-import { InteractiveObject } from '../game/Scene';
+import { InteractiveObjectPhaser } from '../game/Scene';
 import { npcsDialogs } from '../utils/npcsDialogs';
-import { EntityType, InteractiveObjectType, zInteractiveObjectType } from '../utils/phaser';
+import { EntityType } from '../utils/phaser';
 import { Store } from './Store';
 
 interface MenuItem {
@@ -30,7 +31,7 @@ export class ContextMenuStore {
 
    public sprites: Phaser.GameObjects.Sprite[] = [];
 
-   public interactiveObjects: InteractiveObject[] = [];
+   public interactiveObjects: InteractiveObjectPhaser[] = [];
 
    public currentSubMenu: SubMenuItem[] = [];
 
@@ -46,7 +47,7 @@ export class ContextMenuStore {
       x: number,
       y: number,
       sprites: Phaser.GameObjects.Sprite[],
-      interactiveObjects: InteractiveObject[],
+      interactiveObjects: InteractiveObjectPhaser[],
    ): void {
       this.isOpened = true;
       this.positionX = x;
@@ -106,13 +107,13 @@ export class ContextMenuStore {
    }
 
    private _makePolygonSubMenu(polygon: Phaser.GameObjects.Polygon) {
-      const type = zInteractiveObjectType.parse(polygon.name);
+      const type = zInteractiveObject.parse(polygon.name);
 
       const subMenu = {
-         [InteractiveObjectType.Teleporter]: this._makeTeleporterMenu(),
-         [InteractiveObjectType.TeleporterCell]: [],
-         [InteractiveObjectType.Bed]: this._makeBedMenu(),
-         [InteractiveObjectType.Well]: this._makeWellMenu(),
+         Teleporter: this._makeTeleporterMenu(),
+         TeleporterCell: [],
+         Bed: this._makeBedMenu(),
+         Well: this._makeWellMenu(),
       }[type];
 
       return {
@@ -126,7 +127,7 @@ export class ContextMenuStore {
          {
             text: i18next.t('save'),
             callback: () => {
-               this._store.colyseusStore.saveTeleporter(this._store.characterStore.map);
+               this._store.colyseusStore.interact('SaveTeleporter');
             },
             disabled: this._store.characterStore.teleporters.includes(
                this._store.characterStore.map,
@@ -146,7 +147,7 @@ export class ContextMenuStore {
          {
             text: i18next.t('sleep'),
             callback: () => {
-               this._store.colyseusStore.sleep();
+               this._store.colyseusStore.interact('Sleep');
             },
          },
       ];

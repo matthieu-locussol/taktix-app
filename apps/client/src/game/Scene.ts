@@ -5,10 +5,12 @@ import {
    PathBlockedStrategy,
    Position,
 } from 'grid-engine';
+import { TILE_SIZE } from 'shared/src/config';
 import { CharacterSprite } from 'shared/src/data/charactersSprites';
 import { MonsterSprite } from 'shared/src/data/monstersSprites';
 import { NPC_SPOTS } from 'shared/src/data/npcSpots';
 import { NPCS } from 'shared/src/data/npcs';
+import { isInteractiveObject } from 'shared/src/types/InteractiveObject';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { Room } from 'shared/src/types/Room';
 import { SceneData } from 'shared/src/types/SceneData';
@@ -16,7 +18,7 @@ import { _assert } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { AnimatedTiles } from '../plugins/AnimatedTiles';
 import { store } from '../store';
-import { isInteractiveObjectType, isObjectProperties } from '../utils/phaser';
+import { isObjectProperties } from '../utils/phaser';
 import { makeCharacter } from './utils/makeCharacter';
 import { makeGrid } from './utils/makeGrid';
 import { makeInteractiveObject } from './utils/makeInteractiveObject';
@@ -25,7 +27,6 @@ import { makeMarker } from './utils/makeMarker';
 import { makeMinimap } from './utils/makeMinimap';
 import { makeMonster } from './utils/makeMonster';
 
-export const TILE_SIZE = 16;
 export const SCALE_FACTOR = 2;
 export const PLAYER_LAYER = 'Player';
 export const PLAYER_GE_LAYER = 'player';
@@ -41,7 +42,7 @@ export const FADE_OUT_DURATION = 300;
 export const TRANSPARENCY_FACTOR = 0.75;
 export const INTERACTIVE_OBJECT_DEPTH = 999;
 
-export interface InteractiveObject {
+export interface InteractiveObjectPhaser {
    polygon: Phaser.GameObjects.Polygon;
    geometry: Phaser.Geom.Polygon;
 }
@@ -76,7 +77,7 @@ export abstract class Scene extends Phaser.Scene {
 
    public minimap: Phaser.Cameras.Scene2D.Camera | null = null;
 
-   public interactiveObjects: InteractiveObject[] = [];
+   public interactiveObjects: InteractiveObjectPhaser[] = [];
 
    public fightIcons: Record<string, Phaser.GameObjects.Image> = {};
 
@@ -182,7 +183,7 @@ export abstract class Scene extends Phaser.Scene {
          if (object.polygon !== undefined && isObjectProperties(object.properties)) {
             const idProperty = object.properties.find(({ name }) => name === 'id');
 
-            if (idProperty !== undefined && isInteractiveObjectType(idProperty.value)) {
+            if (idProperty !== undefined && isInteractiveObject(idProperty.value)) {
                const interactiveObject = makeInteractiveObject(this, idProperty.value, object);
                this.interactiveObjects.push(interactiveObject);
             }

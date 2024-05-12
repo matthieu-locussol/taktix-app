@@ -1,5 +1,5 @@
+import { InteractiveObject } from 'shared/src/types/InteractiveObject';
 import { _assert } from 'shared/src/utils/_assert';
-import { InteractiveObjectType } from '../../utils/phaser';
 import { SCALE_FACTOR } from '../Scene';
 import { registerInteractiveObjectEvents } from './registerInteractiveObjectEvents';
 
@@ -7,7 +7,7 @@ const INTERACTIVE_OBJECT_DEPTH = 999;
 
 export const makeInteractiveObject = (
    scene: Phaser.Scene,
-   type: InteractiveObjectType,
+   type: InteractiveObject,
    object: Phaser.Types.Tilemaps.TiledObject,
 ) => {
    _assert(object.polygon, 'Interactive object must have a polygon');
