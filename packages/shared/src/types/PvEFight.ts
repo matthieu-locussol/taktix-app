@@ -5,7 +5,7 @@ import { zItem } from './Item';
 import { zMonsterType } from './Monster';
 import { zProfessionType } from './Profession';
 import { RealStatistic, isRealStatistic, zRealStatistic } from './Statistic';
-import { zWeaponDamages, zWeaponDamagesType, zWeaponType } from './Weapon';
+import { zWeaponDamages, zWeaponDamagesType } from './Weapon';
 
 const zPvEFighterInformations = z.object({
    name: z.string(),
@@ -19,7 +19,6 @@ const zPvEFighterInformations = z.object({
    profession: zProfessionType.optional(),
    spritesheet: z.union([zCharacterSprite, zMonsterSprite]).optional(),
 
-   weaponType: zWeaponType,
    weaponDamages: z.array(zWeaponDamages),
    rawStatistics: z.string(),
 
@@ -63,7 +62,7 @@ const zPvEAllySimplified = z.object({
    experience: z.number(),
    profession: zProfessionType.optional(),
    spritesheet: zCharacterSprite,
-   weaponType: zWeaponType,
+   weaponDamages: z.array(zWeaponDamages),
 });
 
 export type PvEAllySimplified = z.infer<typeof zPvEAllySimplified>;

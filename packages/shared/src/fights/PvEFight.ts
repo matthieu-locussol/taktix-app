@@ -139,11 +139,11 @@ export class PvEFight {
       value: number;
       isCriticalStrike: boolean;
    }[] {
-      return fighter.weaponDamages.map(({ type, min, max }) => {
+      return fighter.weaponDamages.map(({ weaponType, type, min, max }) => {
          const { finalDamages, isCriticalStrike } = StatisticMgt.computeDamages(
             min,
             max,
-            fighter.statistics[`${fighter.weaponType}Damages`],
+            fighter.statistics[`${weaponType}Damages`],
             fighter.statistics[type],
             {
                strength: target.statistics.earthResistance,
@@ -321,7 +321,7 @@ export class PvEFight {
                level,
                experience,
                spritesheet,
-               weaponType,
+               weaponDamages,
             }) => {
                if (isCharacterSprite(spritesheet)) {
                   return {
@@ -334,7 +334,7 @@ export class PvEFight {
                      level,
                      experience,
                      spritesheet,
-                     weaponType,
+                     weaponDamages,
                   };
                }
 

@@ -25,6 +25,7 @@ import {
    isWeaponType,
    weaponDamagesTypes,
    zWeaponDamages,
+   zWeaponType,
 } from '../types/Weapon';
 import { _assert, _assertTrue } from './_assert';
 import { NumberMgt } from './numberMgt';
@@ -223,7 +224,7 @@ export namespace ItemMgt {
             const typeIdx = NumberMgt.random(0, weaponDamagesTypes.length - 1);
             const type = weaponDamagesTypes[typeIdx];
 
-            item.damages.push({ type, min, max });
+            item.damages.push({ weaponType: zWeaponType.parse(item.type), type, min, max });
          } else {
             const value = NumberMgt.random(min, max);
 
