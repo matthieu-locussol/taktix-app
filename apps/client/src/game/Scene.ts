@@ -6,7 +6,7 @@ import {
    Position,
 } from 'grid-engine';
 import { TILE_SIZE } from 'shared/src/config';
-import { CharacterSprite } from 'shared/src/data/charactersSprites';
+import { CharacterSprite, zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { MonsterSprite, zMonsterSprite } from 'shared/src/data/monstersSprites';
 import { NPC_SPOTS } from 'shared/src/data/npcSpots';
 import { NPCS } from 'shared/src/data/npcs';
@@ -534,13 +534,59 @@ export abstract class Scene extends Phaser.Scene {
    public override update(time: number, delta: number): void {
       this.gridEngine.update(time, delta);
       this.updateMoves();
-      this.updatePlayersWrappers();
+      this.updatePlayers();
       this.updateMonsters();
+      this.updatePlayersWrappers();
+   }
+
+   public updatePlayers(): void {
+      for (const player of store.gameStore.playersToAddQueue) {
+         const { spritesheet, name, x, y, direction } = player;
+
+         if (!this.gridEngine.hasCharacter(name)) {
+            this.addExternalPlayer(
+               name,
+               zCharacterSprite.parse(spritesheet),
+               { x, y },
+               direction as Direction,
+            );
+
+            player.listen('x', (newX) => {
+               console.log('newX', newX);
+               this.setNextX(name, newX);
+            });
+
+            player.listen('y', (newY) => {
+               console.log('newY', newY);
+               this.setNextY(name, newY);
+            });
+
+            player.listen('direction', (newDirection) => {
+               console.log('newDirection', newDirection);
+               this.setPlayerDirection(name, newDirection as Direction);
+            });
+
+            player.listen('isFight', (isFight) => {
+               console.log('isFight', isFight);
+               this.setCharacterFighting(name, isFight);
+            });
+         }
+      }
+
+      store.gameStore.playersToAddQueue = [];
+
+      for (const { name } of store.gameStore.playersToRemoveQueue) {
+         if (this.gridEngine.hasCharacter(name)) {
+            this.deleteExternalPlayer(name);
+         }
+      }
+
+      store.gameStore.playersToRemoveQueue = [];
    }
 
    public updateMonsters(): void {
-      for (const fight of store.gameStore.fightsToAddQueue) {
-         const { id, positionX, positionY, radius, spritesheet, name, fightId } = fight;
+      for (const { id, positionX, positionY, radius, spritesheet, name, fightId } of store.gameStore
+         .fightsToAddQueue) {
          if (!this.gridEngine.hasCharacter(id)) {
             this.createMonster(
                zMonsterSprite.parse(spritesheet),
@@ -556,8 +602,7 @@ export abstract class Scene extends Phaser.Scene {
 
       store.gameStore.fightsToAddQueue = [];
 
-      for (const fight of store.gameStore.fightsToRemoveQueue) {
-         const { id } = fight;
+      for (const { id } of store.gameStore.fightsToRemoveQueue) {
          if (this.gridEngine.hasCharacter(id)) {
             this.deleteMonster(id);
          }

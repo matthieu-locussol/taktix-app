@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { zCharacterSprite } from '../data/charactersSprites';
 import { zInteraction } from '../types/Interaction';
 import { zPvEFightResults } from '../types/PvEFight';
 import { zRoom } from '../types/Room';
@@ -99,21 +98,6 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
       message: z.object({
          results: zPvEFightResults,
          alliesMoney: z.record(z.string(), z.number()),
-      }),
-   }),
-   z.object({
-      type: z.literal('stopFightingResponse'),
-      message: z.object({
-         players: z.array(
-            z.object({
-               name: z.string(),
-               x: z.number(),
-               y: z.number(),
-               direction: z.string(),
-               spritesheet: zCharacterSprite,
-               isFight: z.boolean(),
-            }),
-         ),
       }),
    }),
    z.object({

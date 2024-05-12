@@ -1,7 +1,7 @@
 import { Client, Room } from 'colyseus.js';
 import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
-import { CharacterSprite, zCharacterSprite } from 'shared/src/data/charactersSprites';
+import { CharacterSprite } from 'shared/src/data/charactersSprites';
 import { TranslationKey } from 'shared/src/data/translations';
 import { AuthRoomResponse, isAuthRoomResponse } from 'shared/src/rooms/AuthRoom';
 import { ChatRoomResponse, isChatRoomResponse } from 'shared/src/rooms/ChatRoom';
@@ -350,9 +350,6 @@ export class ColyseusStore {
                .with({ type: 'fightPvE' }, ({ message: payloadMessage }) => {
                   this.onFightPvE(payloadMessage);
                })
-               .with({ type: 'stopFightingResponse' }, ({ message: payloadMessage }) => {
-                  this.onStopFightingResponse(payloadMessage);
-               })
                .with({ type: 'equipItemResponse' }, ({ message: payloadMessage }) => {
                   this.onEquipItemResponse(payloadMessage);
                })
@@ -367,75 +364,11 @@ export class ColyseusStore {
       });
 
       this.gameRoom.state.players.onAdd(async (player) => {
-         const { name, spritesheet, x, y, direction } = player;
-         const isPlayer = name === this._store.characterStore.name;
-
-         if (!isPlayer) {
-            const createExternalPlayerIfNeeded = async () => {
-               const scene = await this._store.gameStore.getCurrentScene();
-
-               if (scene.getRoomType() === 'map' && !scene.doesPlayerExist(name)) {
-                  scene.addExternalPlayer(
-                     name,
-                     zCharacterSprite.parse(spritesheet),
-                     { x, y },
-                     direction as Direction,
-                  );
-               }
-            };
-
-            createExternalPlayerIfNeeded();
-
-            player.listen('x', (newX) => {
-               createExternalPlayerIfNeeded().then(() => {
-                  this._store.gameStore.getCurrentScene().then((scene) => {
-                     if (scene.getRoomType() === 'map') {
-                        scene.setNextX(name, newX);
-                     }
-                  });
-               });
-            });
-
-            player.listen('y', (newY) => {
-               createExternalPlayerIfNeeded().then(() => {
-                  this._store.gameStore.getCurrentScene().then((scene) => {
-                     if (scene.getRoomType() === 'map') {
-                        scene.setNextY(name, newY);
-                     }
-                  });
-               });
-            });
-
-            player.listen('direction', (newDirection) => {
-               createExternalPlayerIfNeeded().then(() => {
-                  this._store.gameStore.getCurrentScene().then((scene) => {
-                     if (scene.getRoomType() === 'map') {
-                        scene.setPlayerDirection(name, newDirection as Direction);
-                     }
-                  });
-               });
-            });
-
-            player.listen('isFight', (isFight) => {
-               createExternalPlayerIfNeeded().then(() => {
-                  this._store.gameStore.getCurrentScene().then((scene) => {
-                     if (scene.getRoomType() === 'map') {
-                        scene.setCharacterFighting(name, isFight);
-                     }
-                  });
-               });
-            });
-         }
+         this._store.gameStore.addPlayerToQueue(player);
       });
 
       this.gameRoom.state.players.onRemove(async (player) => {
-         const { name } = player;
-         const isPlayer = name === this._store.characterStore.name;
-
-         if (!isPlayer) {
-            const scene = await this._store.gameStore.getCurrentScene();
-            scene.deleteExternalPlayer(name);
-         }
+         this._store.gameStore.removePlayerFromQueue(player);
       });
 
       this.gameRoom.state.fights.onAdd(async (fight) => {
@@ -548,23 +481,6 @@ export class ColyseusStore {
             scene.scene.launch('PvEFightScene');
          }
       });
-   }
-
-   async onStopFightingResponse({
-      players,
-   }: Extract<MapRoomResponse, { type: 'stopFightingResponse' }>['message']) {
-      const scene = await this._store.gameStore.getCurrentScene();
-
-      players
-         .filter(({ name }) => name !== this._store.characterStore.name)
-         .forEach(({ name, x, y, direction, spritesheet, isFight }) => {
-            if (scene.doesPlayerExist(name)) {
-               scene.deleteExternalPlayer(name);
-            }
-
-            scene.addExternalPlayer(name, spritesheet, { x, y }, direction as Direction);
-            scene.setCharacterFighting(name, isFight);
-         });
    }
 
    async onEquipItemResponse({

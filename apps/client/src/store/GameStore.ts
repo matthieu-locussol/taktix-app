@@ -1,6 +1,7 @@
 import { Position } from 'grid-engine';
 import { makeAutoObservable } from 'mobx';
 import { FightState } from 'shared/src/states/FightState';
+import { PlayerState } from 'shared/src/states/PlayerState';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
@@ -20,6 +21,10 @@ export class GameStore {
    public fightsToAddQueue: FightState[] = [];
 
    public fightsToRemoveQueue: FightState[] = [];
+
+   public playersToAddQueue: PlayerState[] = [];
+
+   public playersToRemoveQueue: PlayerState[] = [];
 
    public zoom: number = ZOOM_MIN;
 
@@ -41,6 +46,21 @@ export class GameStore {
    removeFightFromQueue(fight: FightState) {
       this.fightsToAddQueue = this.fightsToAddQueue.filter(({ id }) => id !== fight.id);
       this.fightsToRemoveQueue.push(fight);
+   }
+
+   addPlayerToQueue(player: PlayerState) {
+      const isPlayer = player.name === this._store.characterStore.name;
+      if (!isPlayer) {
+         this.playersToAddQueue.push(player);
+      }
+   }
+
+   removePlayerFromQueue(player: PlayerState) {
+      const isPlayer = player.name === this._store.characterStore.name;
+      if (!isPlayer) {
+         this.playersToAddQueue = this.playersToAddQueue.filter(({ name }) => name !== player.name);
+         this.playersToRemoveQueue.push(player);
+      }
    }
 
    get game() {
