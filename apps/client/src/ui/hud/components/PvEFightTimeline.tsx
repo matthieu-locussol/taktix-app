@@ -1,10 +1,13 @@
 import PlayingIcon from '@mui/icons-material/ArrowDropUpRounded';
 import { Box, Paper } from '@mui/material';
 import { observer } from 'mobx-react-lite';
+import { zCharacterSprite } from 'shared/src/data/charactersSprites';
+import { zMonsterSprite } from 'shared/src/data/monstersSprites';
 import { TranslationKey } from 'shared/src/data/translations';
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 import { CharacterSpriteStatic } from './CharacterSpriteStatic';
+import { MonsterSpriteStatic } from './MonsterSpriteStatic';
 import { Tooltip } from './Tooltip';
 
 export const PvEFightTimeline = observer(() => {
@@ -42,12 +45,15 @@ export const PvEFightTimeline = observer(() => {
                   >
                      {fighter.type === 'ally' ? (
                         <CharacterSpriteStatic
-                           sprite={fighter.spritesheet}
+                           sprite={zCharacterSprite.parse(fighter.spritesheet)}
                            scale={1.375}
                            sx={{ pb: 0.5, mt: -0.5 }}
                         />
                      ) : (
-                        <img src={fighter.avatar} alt="" width={32} height={32} />
+                        <MonsterSpriteStatic
+                           sprite={zMonsterSprite.parse(fighter.spritesheet)}
+                           sx={{ pb: 0.5, mt: -0.5 }}
+                        />
                      )}
                   </Paper>
                   {fighter.id === pveFightStore.currentFighter && (
