@@ -104,4 +104,106 @@ export class InventoryMenuStore {
    public setObtainedGachix(gachix: number): void {
       this.obtainedGachix = gachix;
    }
+
+   public get areAllCommonItemsSelectedToRecycle(): boolean {
+      return (
+         this._store.characterStore.commonInventoryItems.length > 0 &&
+         this._store.characterStore.commonInventoryItems.every(({ id }) =>
+            this.itemsToRecycle.includes(id),
+         )
+      );
+   }
+
+   public selectAllCommonItemsToRecycle(): void {
+      this._store.characterStore.commonInventoryItems.map(({ id }) => this.addItemToRecycle(id));
+   }
+
+   public deselectAllCommonItemsToRecycle(): void {
+      this._store.characterStore.commonInventoryItems.map(({ id }) => this.removeItemToRecycle(id));
+   }
+
+   public toggleAllCommonItemsToRecycle(): void {
+      if (this.areAllCommonItemsSelectedToRecycle) {
+         this.deselectAllCommonItemsToRecycle();
+      } else {
+         this.selectAllCommonItemsToRecycle();
+      }
+   }
+
+   public get areAllUncommonItemsSelectedToRecycle(): boolean {
+      return (
+         this._store.characterStore.uncommonInventoryItems.length > 0 &&
+         this._store.characterStore.uncommonInventoryItems.every(({ id }) =>
+            this.itemsToRecycle.includes(id),
+         )
+      );
+   }
+
+   public selectAllUncommonItemsToRecycle(): void {
+      this._store.characterStore.uncommonInventoryItems.map(({ id }) => this.addItemToRecycle(id));
+   }
+
+   public deselectAllUncommonItemsToRecycle(): void {
+      this._store.characterStore.uncommonInventoryItems.map(({ id }) =>
+         this.removeItemToRecycle(id),
+      );
+   }
+
+   public toggleAllUncommonItemsToRecycle(): void {
+      if (this.areAllUncommonItemsSelectedToRecycle) {
+         this.deselectAllUncommonItemsToRecycle();
+      } else {
+         this.selectAllUncommonItemsToRecycle();
+      }
+   }
+
+   public get areAllRareItemsSelectedToRecycle(): boolean {
+      return (
+         this._store.characterStore.rareInventoryItems.length > 0 &&
+         this._store.characterStore.rareInventoryItems.every(({ id }) =>
+            this.itemsToRecycle.includes(id),
+         )
+      );
+   }
+
+   public selectAllRareItemsToRecycle(): void {
+      this._store.characterStore.rareInventoryItems.map(({ id }) => this.addItemToRecycle(id));
+   }
+
+   public deselectAllRareItemsToRecycle(): void {
+      this._store.characterStore.rareInventoryItems.map(({ id }) => this.removeItemToRecycle(id));
+   }
+
+   public toggleAllRareItemsToRecycle(): void {
+      if (this.areAllRareItemsSelectedToRecycle) {
+         this.deselectAllRareItemsToRecycle();
+      } else {
+         this.selectAllRareItemsToRecycle();
+      }
+   }
+
+   public get areAllEpicItemsSelectedToRecycle(): boolean {
+      return (
+         this._store.characterStore.epicInventoryItems.length > 0 &&
+         this._store.characterStore.epicInventoryItems.every(({ id }) =>
+            this.itemsToRecycle.includes(id),
+         )
+      );
+   }
+
+   public selectAllEpicItemsToRecycle(): void {
+      this._store.characterStore.epicInventoryItems.map(({ id }) => this.addItemToRecycle(id));
+   }
+
+   public deselectAllEpicItemsToRecycle(): void {
+      this._store.characterStore.epicInventoryItems.map(({ id }) => this.removeItemToRecycle(id));
+   }
+
+   public toggleAllEpicItemsToRecycle(): void {
+      if (this.areAllEpicItemsSelectedToRecycle) {
+         this.deselectAllEpicItemsToRecycle();
+      } else {
+         this.selectAllEpicItemsToRecycle();
+      }
+   }
 }
