@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+import { Item, ItemType } from 'shared/src/types/Item';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
 import { SortOption } from '../ui/hud/components/ItemsSortSelector';
 import { Store } from './Store';
@@ -243,6 +244,60 @@ export class InventoryMenuStore {
                return 0;
          }
       });
+   }
+
+   public get equippedItemsByType(): Record<ItemType, Item | null> {
+      return {
+         sword1H: this._store.characterStore.equippedItemsMap.weapon1,
+         mace1H: this._store.characterStore.equippedItemsMap.weapon1,
+         axe1H: this._store.characterStore.equippedItemsMap.weapon1,
+         sword2H: this._store.characterStore.equippedItemsMap.weapon1,
+         mace2H: this._store.characterStore.equippedItemsMap.weapon1,
+         axe2H: this._store.characterStore.equippedItemsMap.weapon1,
+         wand: this._store.characterStore.equippedItemsMap.weapon1,
+         bow: this._store.characterStore.equippedItemsMap.weapon1,
+         dagger: this._store.characterStore.equippedItemsMap.weapon1,
+         staff: this._store.characterStore.equippedItemsMap.weapon1,
+
+         helmetE: this._store.characterStore.equippedItemsMap.helmet,
+         helmetEH: this._store.characterStore.equippedItemsMap.helmet,
+         helmetEM: this._store.characterStore.equippedItemsMap.helmet,
+         helmetH: this._store.characterStore.equippedItemsMap.helmet,
+         helmetHM: this._store.characterStore.equippedItemsMap.helmet,
+         helmetM: this._store.characterStore.equippedItemsMap.helmet,
+
+         chestplateE: this._store.characterStore.equippedItemsMap.chestplate,
+         chestplateEH: this._store.characterStore.equippedItemsMap.chestplate,
+         chestplateEM: this._store.characterStore.equippedItemsMap.chestplate,
+         chestplateH: this._store.characterStore.equippedItemsMap.chestplate,
+         chestplateHM: this._store.characterStore.equippedItemsMap.chestplate,
+         chestplateM: this._store.characterStore.equippedItemsMap.chestplate,
+
+         glovesE: this._store.characterStore.equippedItemsMap.gloves,
+         glovesEH: this._store.characterStore.equippedItemsMap.gloves,
+         glovesEM: this._store.characterStore.equippedItemsMap.gloves,
+         glovesH: this._store.characterStore.equippedItemsMap.gloves,
+         glovesHM: this._store.characterStore.equippedItemsMap.gloves,
+         glovesM: this._store.characterStore.equippedItemsMap.gloves,
+
+         bootsE: this._store.characterStore.equippedItemsMap.boots,
+         bootsEH: this._store.characterStore.equippedItemsMap.boots,
+         bootsEM: this._store.characterStore.equippedItemsMap.boots,
+         bootsH: this._store.characterStore.equippedItemsMap.boots,
+         bootsHM: this._store.characterStore.equippedItemsMap.boots,
+         bootsM: this._store.characterStore.equippedItemsMap.boots,
+
+         belt: this._store.characterStore.equippedItemsMap.belt,
+
+         amulet: this._store.characterStore.equippedItemsMap.amulet,
+         ring: this._store.characterStore.equippedItemsMap.ring1,
+
+         quiver: this._store.characterStore.equippedItemsMap.offhand,
+         orb: this._store.characterStore.equippedItemsMap.offhand,
+         shield: this._store.characterStore.equippedItemsMap.offhand,
+
+         relic: this._store.characterStore.equippedItemsMap.relic1,
+      };
    }
 
    public openSortMenu(): void {

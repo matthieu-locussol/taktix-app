@@ -10,12 +10,13 @@ import { ItemTooltip } from './ItemTooltip';
 interface EquipmentSlotProps extends BoxProps {
    size: 'tiny' | 'small' | 'medium' | 'large' | 'wide';
    item: Item | null;
+   equippedItem?: Item | null;
    canBeHovered?: boolean;
    highlightColor?: (theme: Theme) => string;
 }
 
 export const EquipmentSlot = forwardRef<HTMLDivElement, EquipmentSlotProps>(
-   ({ size, item, canBeHovered = false, ...rest }, ref) => {
+   ({ size, item, equippedItem, canBeHovered = false, ...rest }, ref) => {
       const { width, height } = {
          tiny: { width: 'min(2vw, 3vh)', height: 'min(2vw, 3vh)' },
          small: { width: 'min(3vw, 4.5vh)', height: 'min(3vw, 4.5vh)' },
@@ -45,6 +46,7 @@ export const EquipmentSlot = forwardRef<HTMLDivElement, EquipmentSlotProps>(
       return (
          <ItemTooltip
             item={item}
+            equippedItem={equippedItem}
             placement="top"
             enterDelay={300}
             enterNextDelay={300}
