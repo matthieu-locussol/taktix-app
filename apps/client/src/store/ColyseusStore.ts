@@ -216,6 +216,7 @@ export class ColyseusStore {
                health,
                teleporters,
                money,
+               gachix,
                items,
             }) => {
                this.setUuid(uuid);
@@ -251,6 +252,7 @@ export class ColyseusStore {
                   StringMgt.deserializeTeleporters(teleporters),
                );
                this._store.characterStore.setMoney(money);
+               this._store.characterStore.setGachix(gachix);
                this._store.characterStore.setItems(
                   items.map((item) => ItemMgt.deserializeItem(item)),
                );
@@ -359,6 +361,9 @@ export class ColyseusStore {
                .with({ type: 'interactResponse' }, ({ message: payloadMessage }) => {
                   this.onInteractResponse(payloadMessage);
                })
+               .with({ type: 'recycleResponse' }, ({ message: payloadMessage }) => {
+                  this.onRecycleResponse(payloadMessage);
+               })
                .exhaustive();
          }
       });
@@ -420,6 +425,10 @@ export class ColyseusStore {
 
    interact(interaction: Interaction) {
       this.gameRoom.send('interact', { id: interaction });
+   }
+
+   recycle(itemsIds: number[]) {
+      this.gameRoom.send('recycle', { itemsIds });
    }
 
    async onChangeMap({
@@ -543,6 +552,28 @@ export class ColyseusStore {
             default:
                throw new Error(`Unknown interaction id: '${id}'`);
          }
+      }
+   }
+
+   async onRecycleResponse({
+      success,
+      gachix,
+      itemsDestroyed,
+   }: Extract<MapRoomResponse, { type: 'recycleResponse' }>['message']) {
+      if (success) {
+         this._store.characterStore.addGachix(gachix);
+         this._store.characterStore.setItems(
+            this._store.characterStore.items.filter((item) => !itemsDestroyed.includes(item.id)),
+         );
+         this._store.inventoryMenuStore.setObtainedGachix(gachix);
+         this._store.inventoryMenuStore.openGachixGainedDialog();
+         this._store.inventoryMenuStore.closeRecycleDialog();
+      } else {
+         this._store.chatStore.addMessage({
+            channel: Channel.SERVER,
+            content: i18next.t('recycleImpossible'),
+            author: i18next.t('Server' satisfies TranslationKey),
+         });
       }
    }
 

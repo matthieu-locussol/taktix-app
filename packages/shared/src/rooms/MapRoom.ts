@@ -75,6 +75,12 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
          id: zInteraction,
       }),
    }),
+   z.object({
+      type: z.literal('recycle'),
+      message: z.object({
+         itemsIds: z.array(z.number()),
+      }),
+   }),
 ]);
 
 export type MapRoomMessage = z.infer<typeof zMapRoomMessage>;
@@ -117,6 +123,14 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
       message: z.object({
          id: zInteraction,
          success: z.boolean(),
+      }),
+   }),
+   z.object({
+      type: z.literal('recycleResponse'),
+      message: z.object({
+         success: z.boolean(),
+         gachix: z.number(),
+         itemsDestroyed: z.array(z.number()),
       }),
    }),
 ]);

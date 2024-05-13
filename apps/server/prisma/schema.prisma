@@ -36,6 +36,7 @@ model Character {
   health               Int
   teleporters          String
   money                Int
+  gachix               Int
 
   user   User @relation(fields: [userId], references: [id])
   userId Int

@@ -1,4 +1,4 @@
-import type { BoxProps } from '@mui/material';
+import type { BoxProps, Theme } from '@mui/material';
 import { forwardRef, useMemo } from 'react';
 import { Item } from 'shared/src/types/Item';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
@@ -10,6 +10,7 @@ interface EquipmentSlotProps extends BoxProps {
    size: 'tiny' | 'small' | 'medium' | 'large' | 'wide';
    item: Item | null;
    canBeHovered?: boolean;
+   highlightColor?: (theme: Theme) => string;
 }
 
 export const EquipmentSlot = forwardRef<HTMLDivElement, EquipmentSlotProps>(

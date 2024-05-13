@@ -23,6 +23,7 @@ export const DEFAULT_HEALTH = 50;
 export const DEFAULT_HEALTH_REGEN_MS = 1000;
 export const DEFAULT_TELEPORTERS: Room[] = [];
 export const DEFAULT_MONEY = 0;
+export const DEFAULT_GACHIX = 0;
 
 export const STATISTICS_POINTS_PER_LEVEL = 5;
 export const TALENTS_POINTS_PER_LEVEL = 1;

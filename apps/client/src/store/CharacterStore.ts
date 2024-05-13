@@ -40,6 +40,8 @@ export class CharacterStore {
 
    public money: number = 0;
 
+   public gachix: number = 0;
+
    public items: Item[] = [];
 
    constructor(store: Store) {
@@ -106,6 +108,14 @@ export class CharacterStore {
 
    public setMoney(money: number) {
       this.money = money;
+   }
+
+   public setGachix(gachix: number) {
+      this.gachix = gachix;
+   }
+
+   public addGachix(gachix: number) {
+      this.gachix += gachix;
    }
 
    public setItems(items: Item[]) {
