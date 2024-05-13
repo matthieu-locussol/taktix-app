@@ -52,11 +52,12 @@ export namespace ItemMgt {
       epic: 6,
    };
 
-   export const RARITY_ORDER: Record<Exclude<ItemRarity, 'unique'>, number> = {
+   export const RARITY_ORDER: Record<ItemRarity, number> = {
       common: 0,
       uncommon: 1,
       rare: 2,
       epic: 3,
+      unique: 4,
    };
 
    export const ITEM_TYPE_WEIGHTS: Record<ItemType, number> = {

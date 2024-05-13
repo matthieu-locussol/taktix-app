@@ -140,6 +140,14 @@ export const translationsFr: LanguageTranslations = {
    fight: 'Combattre',
    sleep: 'Dormir',
    gamble: 'Jeter un gachix',
+   typeAsc: 'Type (A-Z)',
+   typeDesc: 'Type (Z-A)',
+   rarityAsc: 'Rareté (Commun -> Unique)',
+   rarityDesc: 'Rareté (Unique -> Commun)',
+   levelAsc: 'Niveau (1 -> 200)',
+   levelDesc: 'Niveau (200 -> 1)',
+   noSort: 'Aucun tri',
+   sortItems: 'Trier les objets',
 
    // Rarities
    common: 'Commun',

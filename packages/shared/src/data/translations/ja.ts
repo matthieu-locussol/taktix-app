@@ -139,6 +139,14 @@ export const translationsJa: LanguageTranslations = {
    fight: '戦う',
    sleep: '寝る',
    gamble: 'ガチックスを投げる',
+   typeAsc: 'タイプ (A-Z)',
+   typeDesc: 'タイプ (Z-A)',
+   rarityAsc: 'レアリティ (コモン -> ユニーク)',
+   rarityDesc: 'レアリティ (ユニーク -> コモン)',
+   levelAsc: 'レベル (1 -> 200)',
+   levelDesc: 'レベル (200 -> 1)',
+   noSort: 'ソートなし',
+   sortItems: 'アイテムをソート',
 
    // Rarities
    common: 'コモン',

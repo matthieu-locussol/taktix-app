@@ -1,5 +1,6 @@
 import CloseIcon from '@mui/icons-material/CloseRounded';
 import RecycleIcon from '@mui/icons-material/RecyclingRounded';
+import SortIcon from '@mui/icons-material/SortByAlphaRounded';
 import {
    Badge,
    Box,
@@ -19,7 +20,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
@@ -27,10 +28,12 @@ import { useStore } from '../../../store';
 import { ITEM_RARITY_COLORS } from '../../../styles/appTheme';
 import { useTranslation } from '../../../types/react-i18next';
 import { EquipmentSlot } from '../components/EquipmentSlot';
+import { ItemsSortSelector } from '../components/ItemsSortSelector';
 import { Tooltip } from '../components/Tooltip';
 
 export const InventoryMenu = observer(() => {
    const nodeRef = useRef(null);
+   const [sortByAnchor, setSortByAnchor] = useState<null | HTMLElement>(null);
    const { characterStore, inventoryMenuStore } = useStore();
    const { t } = useTranslation();
 
@@ -222,7 +225,7 @@ export const InventoryMenu = observer(() => {
                      </Box>
                   </Equipments>
                   <Inventory>
-                     {characterStore.inventoryItems.map((item) => (
+                     {inventoryMenuStore.sortedInventoryItems.map((item) => (
                         <Badge
                            variant="dot"
                            color={
@@ -350,6 +353,39 @@ export const InventoryMenu = observer(() => {
                         />
                      </ToggleButton>
                   </Tooltip>
+                  <Tooltip title={t('sortItems')} disableInteractive>
+                     <ToggleButton
+                        size="small"
+                        value="check"
+                        id="items-sort-selector"
+                        aria-controls={
+                           inventoryMenuStore.isSortMenuOpened ? 'items-sort-selector' : undefined
+                        }
+                        aria-haspopup="true"
+                        aria-expanded={inventoryMenuStore.isSortMenuOpened ? 'true' : undefined}
+                        onClick={(e) => {
+                           setSortByAnchor(e.currentTarget);
+                           inventoryMenuStore.openSortMenu();
+                        }}
+                        sx={{
+                           borderColor: (theme) =>
+                              inventoryMenuStore.isSortMenuOpened
+                                 ? theme.palette.link.hover
+                                 : undefined,
+                        }}
+                     >
+                        <SortIcon
+                           fontSize="small"
+                           sx={{
+                              transition: 'all 0.3s',
+                              color: (theme) =>
+                                 inventoryMenuStore.isSortMenuOpened
+                                    ? theme.palette.link.hover
+                                    : 'inherit',
+                           }}
+                        />
+                     </ToggleButton>
+                  </Tooltip>
                   <Button
                      variant="contained"
                      onClick={() => inventoryMenuStore.close()}
@@ -399,6 +435,14 @@ export const InventoryMenu = observer(() => {
                </Button>
             </DialogActions>
          </Dialog>
+         <ItemsSortSelector
+            anchorEl={sortByAnchor}
+            open={inventoryMenuStore.isSortMenuOpened}
+            handleClose={() => {
+               setSortByAnchor(null);
+               inventoryMenuStore.closeSortMenu();
+            }}
+         />
       </>
    );
 });
