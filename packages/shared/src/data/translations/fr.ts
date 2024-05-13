@@ -130,6 +130,16 @@ export const translationsFr: LanguageTranslations = {
    intelligenceDamagesRange: '{{min}} à {{max}} dégâts de feu',
    luckDamagesRange: '{{min}} à {{max}} dégâts de glace',
    nonoclicker: 'Nono clicker | Par EquimoX',
+   gachixValue: '<b>Gachix :</b> {{value}}',
+   recycle: 'Recycler',
+   recycleMode: 'Mode recyclage',
+   inventoryRecycle_title: 'Êtes vous-sûr ?',
+   inventoryRecycle_content: 'Voulez-vous vraiment recycler ces objets ?',
+   inventoryGachix_title: 'Recyclage terminé',
+   inventoryGachix_content: 'Vous avez obtenu {{value}} Gachix.',
+   fight: 'Combattre',
+   sleep: 'Dormir',
+   gamble: 'Jeter un gachix',
 
    // Rarities
    common: 'Commun',
@@ -461,10 +471,14 @@ export const translationsFr: LanguageTranslations = {
 
    // Interactive objects
    Teleporter: 'Téléporteur',
+   TeleporterCell: 'Cellule de téléportation',
+   Bed: 'Lit',
+   Well: 'Puits',
 
    // Entities
    Character: 'Joueur',
    NPC: 'PNJ',
+   Monster: 'Monstre',
 
    // Talents
    'talent-1': 'Force',

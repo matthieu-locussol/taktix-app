@@ -1,14 +1,17 @@
-import { Box, BoxProps, styled } from '@mui/material';
+import { Box, BoxProps, Theme, styled } from '@mui/material';
 import { forwardRef } from 'react';
 
 interface ItemSlotProps extends BoxProps, StyleProps {
    width?: number | string;
    height?: number | string;
+   highlightColor?: (theme: Theme) => string;
 }
 
 export const ItemSlot = forwardRef<unknown, ItemSlotProps>(
-   ({ width = 'min(3vw, 4.5vh)', height = 'min(3vw, 4.5vh)', ...rest }, ref) => {
-      return <Root draggable sx={{ width, height }} {...rest} ref={ref} />;
+   ({ width = 'min(3vw, 4.5vh)', height = 'min(3vw, 4.5vh)', highlightColor, ...rest }, ref) => {
+      return (
+         <Root draggable sx={{ width, height, borderColor: highlightColor }} {...rest} ref={ref} />
+      );
    },
 );
 

@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
 import { NPCS, isNPC, zNPC } from 'shared/src/data/npcs';
+import { TranslationKey } from 'shared/src/data/translations';
 import { Channel } from 'shared/src/types/Channel';
 import { zInteractiveObject } from 'shared/src/types/InteractiveObject';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
@@ -101,7 +102,7 @@ export class ContextMenuStore {
       }[type];
 
       return {
-         text: `[${i18next.t(type)}] ${i18next.t(sprite.name)}`,
+         text: `[${i18next.t(type satisfies TranslationKey)}] ${i18next.t(sprite.name)}`,
          subMenu,
       };
    }
@@ -117,7 +118,9 @@ export class ContextMenuStore {
       }[type];
 
       return {
-         text: `[${i18next.t('object')}] ${i18next.t(type)}`,
+         text: `[${i18next.t('object' satisfies TranslationKey)}] ${i18next.t(
+            type satisfies TranslationKey,
+         )}`,
          subMenu,
       };
    }
@@ -125,7 +128,7 @@ export class ContextMenuStore {
    private _makeTeleporterMenu(): SubMenuItem[] {
       return [
          {
-            text: i18next.t('save'),
+            text: i18next.t('save' satisfies TranslationKey),
             callback: () => {
                this._store.colyseusStore.interact('SaveTeleporter');
             },
@@ -134,7 +137,7 @@ export class ContextMenuStore {
             ),
          },
          {
-            text: i18next.t('use'),
+            text: i18next.t('use' satisfies TranslationKey),
             callback: () => {
                this._store.mapMenuStore.open();
             },
@@ -145,7 +148,7 @@ export class ContextMenuStore {
    private _makeBedMenu(): SubMenuItem[] {
       return [
          {
-            text: i18next.t('sleep'),
+            text: i18next.t('sleep' satisfies TranslationKey),
             callback: () => {
                this._store.colyseusStore.interact('Sleep');
             },
@@ -156,7 +159,7 @@ export class ContextMenuStore {
    private _makeWellMenu(): SubMenuItem[] {
       return [
          {
-            text: i18next.t('gamble'),
+            text: i18next.t('gamble' satisfies TranslationKey),
             callback: () => {
                console.log('gamble...');
             },
@@ -169,10 +172,15 @@ export class ContextMenuStore {
 
       return [
          {
-            text: isCurrentCharacter ? i18next.t('slap') : i18next.t('sendMessage'),
+            text: isCurrentCharacter
+               ? i18next.t('slap' satisfies TranslationKey)
+               : i18next.t('sendMessage' satisfies TranslationKey),
             callback: () => {
                if (isCurrentCharacter) {
-                  this._store.colyseusStore.sendMessage(Channel.GENERAL, i18next.t('ouch'));
+                  this._store.colyseusStore.sendMessage(
+                     Channel.GENERAL,
+                     i18next.t('ouch' satisfies TranslationKey),
+                  );
                   this._store.chatStore.setInput('');
                } else {
                   this._store.chatStore.setInput(`/w ${characterName} `);
@@ -200,7 +208,7 @@ export class ContextMenuStore {
       if (name === 'Akara') {
          return [
             {
-               text: i18next.t('talk'),
+               text: i18next.t('talk' satisfies TranslationKey),
                callback: () => {
                   this._store.dialogMenuStore.openDialog(
                      npcsDialogs[parsedNpcName](npcInfos, this._store, i18next.t),
@@ -213,7 +221,7 @@ export class ContextMenuStore {
       if (name === 'Nono') {
          return [
             {
-               text: i18next.t('talk'),
+               text: i18next.t('talk' satisfies TranslationKey),
                callback: () => {
                   this._store.dialogMenuStore.openDialog(
                      npcsDialogs[parsedNpcName](npcInfos, this._store, i18next.t),
@@ -232,7 +240,7 @@ export class ContextMenuStore {
 
       return [
          {
-            text: i18next.t('attack'),
+            text: i18next.t('fight' satisfies TranslationKey),
             callback: () => {
                this._store.colyseusStore.fightPvE(id, fightId);
             },

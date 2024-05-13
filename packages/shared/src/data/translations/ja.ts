@@ -128,8 +128,17 @@ export const translationsJa: LanguageTranslations = {
    dexterityDamagesRange: '{{min}} から {{max}} 風のダメージ',
    intelligenceDamagesRange: '{{min}} から {{max}} 火のダメージ',
    luckDamagesRange: '{{min}} から {{max}} 氷のダメージ',
-   //  par EquimoX
    nonoclicker: 'ノノクリッカー | エキモックス',
+   gachixValue: '<b>ガチックス</b>: {{value}}',
+   recycle: 'リサイクル',
+   recycleMode: 'リサイクルモード',
+   inventoryRecycle_title: 'アイテムをリサイクル',
+   inventoryRecycle_content: '選択したアイテムをリサイクルしてもよろしいですか？',
+   inventoryGachix_title: 'ガチックスを獲得',
+   inventoryGachix_content: 'あなたは {{gachix}} ガチックスを獲得しました。',
+   fight: '戦う',
+   sleep: '寝る',
+   gamble: 'ガチックスを投げる',
 
    // Rarities
    common: 'コモン',
@@ -461,10 +470,14 @@ export const translationsJa: LanguageTranslations = {
 
    // Interactive objects
    Teleporter: 'テレポーター',
+   TeleporterCell: 'テレポーターセル',
+   Bed: 'ベッド',
+   Well: '井戸',
 
    // Entities
    Character: 'プレイヤー',
    NPC: 'NPC',
+   Monster: 'モンスター',
 
    // Talents
    'talent-1': '力',

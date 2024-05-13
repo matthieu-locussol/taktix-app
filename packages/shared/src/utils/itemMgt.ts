@@ -121,6 +121,14 @@ export namespace ItemMgt {
 
    export const DEFAULT_ITEM_TYPE: ItemType = 'relic';
 
+   export const ITEM_TYPE_GACHIX_WEIGHTS: Record<ItemRarity, number> = {
+      common: 0.05,
+      uncommon: 0.1,
+      rare: 0.25,
+      epic: 0.5,
+      unique: 0.75,
+   };
+
    export const generateItemType = (): ItemType => {
       const random = Math.random();
       let accumulatedProbability = 0;
@@ -680,5 +688,21 @@ export namespace ItemMgt {
          itemsToRemove: itemsToRemove.map(({ id }) => id),
          canEquip,
       };
+   };
+
+   export const recycleItem = (item: Item): number => {
+      const random = Math.random();
+      const rarity = getRarity(item);
+
+      if (random < ITEM_TYPE_GACHIX_WEIGHTS[rarity]) {
+         const gachix = NumberMgt.random(1, Math.ceil(0.03 * item.level * 2));
+         return gachix;
+      }
+
+      return 0;
+   };
+
+   export const recycleItems = (items: Item[]): number => {
+      return items.reduce((acc, item) => acc + recycleItem(item), 0);
    };
 }

@@ -79,6 +79,7 @@ export class MapRoom extends Room<MapState> {
                .with({ type: 'equipItem' }, (payload) => this.onEquipItem(client, payload))
                .with({ type: 'unequipItem' }, (payload) => this.onUnequipItem(client, payload))
                .with({ type: 'interact' }, (payload) => this.onInteract(client, payload))
+               .with({ type: 'recycle' }, (payload) => this.onRecycle(client, payload))
                .exhaustive();
          } else {
             logger.error(
@@ -130,6 +131,7 @@ export class MapRoom extends Room<MapState> {
          health: characterInfos.health,
          teleporters: characterInfos.teleporters,
          money: characterInfos.money,
+         gachix: characterInfos.gachix,
          items: characterInfos.items.map((item) => ({
             ...item,
             type: zItemType.parse(item.type),
@@ -545,6 +547,42 @@ export class MapRoom extends Room<MapState> {
          .exhaustive();
    }
 
+   async onRecycle(
+      client: Client,
+      { message: { itemsIds } }: Extract<MapRoomMessage, { type: 'recycle' }>,
+   ) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      const items = player.items.filter((item) => itemsIds.includes(item.id));
+      if (items.length !== itemsIds.length) {
+         const packet: Extract<MapRoomResponse, { type: 'recycleResponse' }> = {
+            type: 'recycleResponse',
+            message: {
+               success: false,
+               gachix: 0,
+               itemsDestroyed: [],
+            },
+         };
+         client.send(packet.type, packet.message);
+         return;
+      }
+
+      const gachixGained = ItemMgt.recycleItems(items);
+      player.addGachix(gachixGained);
+      player.removeItems(itemsIds);
+
+      const packet: Extract<MapRoomResponse, { type: 'recycleResponse' }> = {
+         type: 'recycleResponse',
+         message: {
+            success: true,
+            gachix: gachixGained,
+            itemsDestroyed: itemsIds,
+         },
+      };
+      client.send(packet.type, packet.message);
+   }
+
    checkTeleportationSpots(client: Client, player: PlayerState) {
       const teleportationSpots = TELEPORTATION_SPOTS[this.name];
 
@@ -599,7 +637,9 @@ export class MapRoom extends Room<MapState> {
             health: player.health,
             teleporters: StringMgt.serializeTeleporters(player.teleporters),
             money: player.money,
+            gachix: player.gachix,
             items: {
+               deleteMany: player.itemsToRemove.map((id) => ({ id })),
                updateMany: player.items.map((item) => ({
                   where: { id: item.id },
                   data: {

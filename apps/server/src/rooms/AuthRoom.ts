@@ -7,6 +7,7 @@ import {
    DEFAULT_BASE_STATISTICS_POINTS,
    DEFAULT_DIRECTION,
    DEFAULT_EXPERIENCE,
+   DEFAULT_GACHIX,
    DEFAULT_HEALTH,
    DEFAULT_MAP,
    DEFAULT_MONEY,
@@ -234,6 +235,7 @@ export class AuthRoom extends Room {
             health: character.health,
             teleporters: character.teleporters,
             money: character.money,
+            gachix: character.gachix,
             items: character.items.map((item) => ItemMgt.serializePrismaItem(item)),
          };
 
@@ -326,6 +328,7 @@ export class AuthRoom extends Room {
                health: DEFAULT_HEALTH,
                teleporters: StringMgt.serializeTeleporters(DEFAULT_TELEPORTERS),
                money: DEFAULT_MONEY,
+               gachix: DEFAULT_GACHIX,
                user: {
                   connect: {
                      username,

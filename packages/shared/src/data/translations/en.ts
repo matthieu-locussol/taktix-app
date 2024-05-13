@@ -124,6 +124,17 @@ export const translationsEn = {
    dexterityDamagesRange: '{{min}} to {{max}} wind damages',
    intelligenceDamagesRange: '{{min}} to {{max}} fire damages',
    luckDamagesRange: '{{min}} to {{max}} ice damages',
+   nonoclicker: 'Nono clicker | By EquimoX',
+   gachixValue: '<b>Gachix:</b> {{value}}',
+   recycle: 'Recycle',
+   recycleMode: 'Recycle mode',
+   inventoryRecycle_title: 'Are you sure?',
+   inventoryRecycle_content: 'Are you sure you want to recycle these items?',
+   inventoryGachix_title: 'Recycling done',
+   inventoryGachix_content: 'You have earned {{gachix}} gachix.',
+   fight: 'Fight',
+   sleep: 'Sleep',
+   gamble: 'Throw a gachix',
 
    // Rarities
    common: 'Common',
@@ -245,7 +256,6 @@ export const translationsEn = {
    'thornsPhysical_+%': 'Thorns physical (%)',
    'thornsMagical_+%': 'Thorns magical (%)',
    'prospect_+f': 'Prospect',
-   nonoclicker: 'Nono clicker | By EquimoX',
 
    'vitality_+f_value': '+{{value}} to vitality',
    'vitality_+%_value': '+{{value}}% increased vitality',
@@ -466,10 +476,14 @@ export const translationsEn = {
 
    // Interactive objects
    Teleporter: 'Teleporter',
+   TeleporterCell: 'Teleporter Cell',
+   Bed: 'Bed',
+   Well: 'Well',
 
    // Entities
    Character: 'Player',
    NPC: 'NPC',
+   Monster: 'Monster',
 
    // Talents
    'talent-1': 'Strength',

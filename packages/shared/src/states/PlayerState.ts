@@ -26,6 +26,7 @@ export interface PlayerStateConstructor {
    health: number;
    teleporters: string;
    money: number;
+   gachix: number;
    items: Item[];
 }
 
@@ -82,7 +83,11 @@ export class PlayerState extends Schema {
 
    money = 0;
 
+   gachix = 0;
+
    items: Item[] = [];
+
+   itemsToRemove: number[] = [];
 
    constructor({
       id,
@@ -100,6 +105,7 @@ export class PlayerState extends Schema {
       health,
       teleporters,
       money,
+      gachix,
       items,
    }: PlayerStateConstructor) {
       super();
@@ -119,6 +125,7 @@ export class PlayerState extends Schema {
       this.health = health;
       this.teleporters = StringMgt.deserializeTeleporters(teleporters);
       this.money = money;
+      this.gachix = gachix;
       this.items = items;
    }
 
@@ -200,12 +207,21 @@ export class PlayerState extends Schema {
       this.money = money;
    }
 
+   addGachix(gachix: number) {
+      this.gachix += gachix;
+   }
+
    addTeleporter(teleporter: Room) {
       this.teleporters.push(teleporter);
    }
 
    addItems(items: Item[]) {
       this.items = [...items, ...this.items];
+   }
+
+   removeItems(itemIds: number[]) {
+      this.items = this.items.filter((item) => !itemIds.includes(item.id));
+      this.itemsToRemove = [...itemIds, ...this.itemsToRemove];
    }
 
    equipItem(itemId: number) {
