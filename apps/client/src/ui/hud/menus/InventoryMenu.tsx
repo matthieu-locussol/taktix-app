@@ -236,12 +236,10 @@ export const InventoryMenu = observer(() => {
                               })}
                               {...(inventoryMenuStore.mode === 'recycle' && {
                                  onClick: () => inventoryMenuStore.toggleItemToRecycle(item.id),
+                                 highlightColor: inventoryMenuStore.itemsToRecycle.includes(item.id)
+                                    ? (theme) => theme.palette.link.hover
+                                    : undefined,
                               })}
-                              highlightColor={(theme) =>
-                                 inventoryMenuStore.itemsToRecycle.includes(item.id)
-                                    ? theme.palette.link.hover
-                                    : 'inherit'
-                              }
                            />
                         </Badge>
                      ))}

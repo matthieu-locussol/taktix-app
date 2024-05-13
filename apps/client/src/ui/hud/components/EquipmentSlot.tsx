@@ -2,6 +2,7 @@ import type { BoxProps, Theme } from '@mui/material';
 import { forwardRef, useMemo } from 'react';
 import { Item } from 'shared/src/types/Item';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
+import { ITEM_RARITY_COLORS } from '../../../styles/appTheme';
 import { ItemBaseIcon } from '../../components/items/ItemBaseIcon';
 import { ItemSlot } from './ItemSlot';
 import { ItemTooltip } from './ItemTooltip';
@@ -49,7 +50,14 @@ export const EquipmentSlot = forwardRef<HTMLDivElement, EquipmentSlotProps>(
             enterNextDelay={300}
             disableInteractive
          >
-            <ItemSlot ref={ref} canBeHovered={canBeHovered} {...rest} width={width} height={height}>
+            <ItemSlot
+               ref={ref}
+               canBeHovered={canBeHovered}
+               highlightColor={() => ITEM_RARITY_COLORS[rarity!]}
+               {...rest}
+               width={width}
+               height={height}
+            >
                <ItemBaseIcon
                   path={item.type}
                   color={rarity}
