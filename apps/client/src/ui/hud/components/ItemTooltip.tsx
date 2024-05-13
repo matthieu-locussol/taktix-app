@@ -16,22 +16,16 @@ import { Tooltip } from './Tooltip';
 
 interface ItemTooltipProps extends Omit<TooltipProps, 'title'> {
    item: Item;
+   equippedItem?: Item | null;
 }
 
-export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
+export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemTooltipProps) => {
    const { t } = useTranslation();
    const { characterStore } = useStore();
+   const itemRarity = useMemo(() => ItemMgt.getRarity(item), [item]);
+   const itemRarityColor = useMemo(() => ITEM_RARITY_COLORS[itemRarity], [itemRarity]);
 
-   const name = useMemo(() => ItemMgt.getName(item), [item]);
-   const rarity = useMemo(() => ItemMgt.getRarity(item), [item]);
-   const hasRequiredLevel = useMemo(
-      () => characterStore.level >= item.level,
-      [item, characterStore],
-   );
-   const hasAffixes = useMemo(() => item.prefixes.length > 0 || item.suffixes.length > 0, [item]);
-   const rarityColor = useMemo(() => ITEM_RARITY_COLORS[rarity], [rarity]);
-
-   const tStatistics = ({ tier, statistics }: Affix, type: 'P' | 'S' | 'T') => {
+   const tStatistics = (item: Item, { tier, statistics }: Affix, type: 'P' | 'S' | 'T') => {
       return Object.entries(statistics)
          .map<React.ReactNode>(([statisticStr, value], idx) => {
             const statistic = zStatistic.parse(statisticStr);
@@ -78,7 +72,7 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
          .reduce((prev, curr) => [prev, ', ', curr]);
    };
 
-   const tDamages = ({ min, max, type }: WeaponDamages) => {
+   const tDamages = (item: Item, { min, max, type }: WeaponDamages) => {
       return (
          <Box
             key={`${item.id}-${type}-${min}-${max}`}
@@ -103,155 +97,186 @@ export const ItemTooltip = observer(({ item, ...rest }: ItemTooltipProps) => {
       );
    };
 
+   interface ItemContentProps {
+      itemToRender: Item;
+      isEquipped?: boolean;
+   }
+
+   const ItemContent = ({ itemToRender, isEquipped }: ItemContentProps) => {
+      const rarity = useMemo(() => ItemMgt.getRarity(itemToRender), [itemToRender]);
+      const rarityColor = useMemo(() => ITEM_RARITY_COLORS[rarity], [rarity]);
+      const hasAffixes = useMemo(
+         () => itemToRender.prefixes.length > 0 || itemToRender.suffixes.length > 0,
+         [itemToRender],
+      );
+      const name = useMemo(() => ItemMgt.getName(itemToRender), [itemToRender]);
+      const hasRequiredLevel = useMemo(
+         () => characterStore.level >= itemToRender.level,
+         [itemToRender, characterStore],
+      );
+
+      return (
+         <Box
+            sx={(theme) => {
+               const glowKeyframes = glow();
+
+               return {
+                  display: 'flex',
+                  flexDirection: 'column',
+                  pb: !hasAffixes ? 'min(0.5vw, 1vh)' : 'min(0.125vw, 0.25vh)',
+                  fontSize: '0.75rem',
+                  fontWeight: 500,
+                  color: 'white',
+                  border: `1px solid ${rarityColor}`,
+                  borderRadius: 1,
+                  background: darken(`${theme.palette.paper.background}F6`, 0.15),
+                  minWidth: '20vw',
+                  ':before': {
+                     content: '""',
+                     background: theme.palette.itemGradient[rarity],
+                     position: 'absolute',
+                     top: '-2px',
+                     ...(!isEquipped && { left: '-2px' }),
+                     ...(isEquipped && { marginLeft: '-10px' }),
+                     backgroundSize: '400%',
+                     zIndex: -1,
+                     filter: 'blur(8px)',
+                     width: 'calc(100% + 4px)',
+                     height: 'calc(100% + 4px)',
+                     animation: `${glowKeyframes} 20s linear infinite`,
+                     opacity: 1,
+                     transition: 'opacity .3s ease-in-out',
+                     borderRadius: '10px',
+                  },
+                  ':active': {
+                     color: theme.palette.paper.background,
+                  },
+                  ':active:after': {
+                     background: 'transparent',
+                  },
+                  ':after': {
+                     zIndex: -1,
+                     content: '""',
+                     position: 'absolute',
+                     width: '100%',
+                     height: '100%',
+                     left: 0,
+                     top: 0,
+                     borderRadius: '10px',
+                  },
+               };
+            }}
+         >
+            <Typography
+               variant="body1"
+               fontWeight="bold"
+               lineHeight={1.2}
+               sx={{ px: 'min(1vw, 2vh)', pt: 'min(0.5vw, 1vh)' }}
+               gutterBottom
+            >
+               {name}
+            </Typography>
+            <Box sx={{ display: 'flex', width: '100%', px: 'min(1vw, 2vh)' }}>
+               <Typography variant="caption" color="lightgrey">
+                  {t(itemToRender.type)}
+               </Typography>
+               <Typography
+                  variant="caption"
+                  fontWeight="bold"
+                  color={ITEM_RARITY_COLORS[rarity]}
+                  sx={{
+                     ml: 'auto',
+                     px: 'min(1vw, 2vh)',
+                     mr: 'min(1vw, 2vh)',
+                  }}
+               >
+                  {t(rarity)}
+               </Typography>
+            </Box>
+            <Box
+               sx={{
+                  display: 'flex',
+                  width: '100%',
+                  px: 'min(1vw, 2vh)',
+                  pb: hasAffixes ? 'min(0.5vw, 1vh)' : 0,
+               }}
+            >
+               <Typography variant="caption" color={hasRequiredLevel ? 'green' : 'red'}>
+                  {t('requiredLevel', { level: itemToRender.requiredLevel })}
+               </Typography>
+               <Typography
+                  variant="caption"
+                  sx={{
+                     ml: 'auto',
+                     px: 'min(1vw, 2vh)',
+                     mr: 'min(1vw, 2vh)',
+                  }}
+               >
+                  {t('level', { level: itemToRender.level })}
+               </Typography>
+            </Box>
+            {(itemToRender.damages.length > 0 || itemToRender.baseAffixes.length > 0) && (
+               <>
+                  <Divider
+                     sx={() => ({
+                        borderBottom: `1px solid ${rarityColor}`,
+                        marginBottom: 'min(0.5vw, 1vh)',
+                     })}
+                  />
+                  {itemToRender.damages.map((damages) => tDamages(itemToRender, damages))}
+                  {itemToRender.baseAffixes.map((prefix) => tStatistics(itemToRender, prefix, 'T'))}
+               </>
+            )}
+            {itemToRender.prefixes.length > 0 && (
+               <>
+                  <Divider
+                     sx={() => ({
+                        borderBottom: `1px solid ${rarityColor}`,
+                        marginBottom: 'min(0.5vw, 1vh)',
+                     })}
+                  />
+                  {itemToRender.prefixes.map((prefix) => tStatistics(itemToRender, prefix, 'P'))}
+               </>
+            )}
+            {itemToRender.suffixes.length > 0 && (
+               <>
+                  <Divider
+                     sx={() => ({
+                        borderBottom: `1px solid ${rarityColor}`,
+                        marginBottom: 'min(0.5vw, 1vh)',
+                     })}
+                  />
+                  {itemToRender.suffixes.map((suffix) => tStatistics(itemToRender, suffix, 'S'))}
+               </>
+            )}
+         </Box>
+      );
+   };
+
    return (
       <Tooltip
          arrow
          componentsProps={{
             tooltip: {
-               sx: (theme) => {
-                  const glowKeyframes = glow();
-
-                  return {
-                     padding: 0,
-                     fontSize: '0.75rem',
-                     fontWeight: 500,
-                     color: 'white',
-                     border: `1px solid ${rarityColor}`,
-                     background: darken(`${theme.palette.paper.background}F6`, 0.15),
-                     minWidth: '20vw',
-                     ':before': {
-                        content: '""',
-                        background: theme.palette.itemGradient[rarity],
-                        position: 'absolute',
-                        top: '-2px',
-                        left: '-2px',
-                        backgroundSize: '400%',
-                        zIndex: -1,
-                        filter: 'blur(8px)',
-                        width: 'calc(100% + 4px)',
-                        height: 'calc(100% + 4px)',
-                        animation: `${glowKeyframes} 20s linear infinite`,
-                        opacity: 1,
-                        transition: 'opacity .3s ease-in-out',
-                        borderRadius: '10px',
-                     },
-                     ':active': {
-                        color: theme.palette.paper.background,
-                     },
-                     ':active:after': {
-                        background: 'transparent',
-                     },
-                     ':after': {
-                        zIndex: -1,
-                        content: '""',
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        background: darken(`${theme.palette.paper.background}F6`, 0.15),
-                        left: 0,
-                        top: 0,
-                        borderRadius: '10px',
-                     },
-                  };
+               sx: {
+                  background: 'transparent',
                },
             },
             arrow: {
                sx: () => ({
-                  color: rarityColor,
+                  color: itemRarityColor,
                }),
             },
          }}
          title={
-            <Box
-               sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  pb: !hasAffixes ? 'min(0.5vw, 1vh)' : 'min(0.125vw, 0.25vh)',
-               }}
-            >
-               <Typography
-                  variant="body1"
-                  fontWeight="bold"
-                  lineHeight={1.2}
-                  sx={{ px: 'min(1vw, 2vh)', pt: 'min(0.5vw, 1vh)' }}
-                  gutterBottom
-               >
-                  {name}
-               </Typography>
-               <Box sx={{ display: 'flex', width: '100%', px: 'min(1vw, 2vh)' }}>
-                  <Typography variant="caption" color="lightgrey">
-                     {t(item.type)}
-                  </Typography>
-                  <Typography
-                     variant="caption"
-                     fontWeight="bold"
-                     color={ITEM_RARITY_COLORS[rarity]}
-                     sx={{
-                        ml: 'auto',
-                        px: 'min(1vw, 2vh)',
-                        mr: 'min(1vw, 2vh)',
-                     }}
-                  >
-                     {t(rarity)}
-                  </Typography>
+            equippedItem ? (
+               <Box display="flex" gap={2} justifyContent="end">
+                  <ItemContent itemToRender={equippedItem} isEquipped />
+                  <ItemContent itemToRender={item} />
                </Box>
-               <Box
-                  sx={{
-                     display: 'flex',
-                     width: '100%',
-                     px: 'min(1vw, 2vh)',
-                     pb: hasAffixes ? 'min(0.5vw, 1vh)' : 0,
-                  }}
-               >
-                  <Typography variant="caption" color={hasRequiredLevel ? 'green' : 'red'}>
-                     {t('requiredLevel', { level: item.requiredLevel })}
-                  </Typography>
-                  <Typography
-                     variant="caption"
-                     sx={{
-                        ml: 'auto',
-                        px: 'min(1vw, 2vh)',
-                        mr: 'min(1vw, 2vh)',
-                     }}
-                  >
-                     {t('level', { level: item.level })}
-                  </Typography>
-               </Box>
-               {(item.damages.length > 0 || item.baseAffixes.length > 0) && (
-                  <>
-                     <Divider
-                        sx={() => ({
-                           borderBottom: `1px solid ${rarityColor}`,
-                           marginBottom: 'min(0.5vw, 1vh)',
-                        })}
-                     />
-                     {item.damages.map((damages) => tDamages(damages))}
-                     {item.baseAffixes.map((prefix) => tStatistics(prefix, 'T'))}
-                  </>
-               )}
-               {item.prefixes.length > 0 && (
-                  <>
-                     <Divider
-                        sx={() => ({
-                           borderBottom: `1px solid ${rarityColor}`,
-                           marginBottom: 'min(0.5vw, 1vh)',
-                        })}
-                     />
-                     {item.prefixes.map((prefix) => tStatistics(prefix, 'P'))}
-                  </>
-               )}
-               {item.suffixes.length > 0 && (
-                  <>
-                     <Divider
-                        sx={() => ({
-                           borderBottom: `1px solid ${rarityColor}`,
-                           marginBottom: 'min(0.5vw, 1vh)',
-                        })}
-                     />
-                     {item.suffixes.map((suffix) => tStatistics(suffix, 'S'))}
-                  </>
-               )}
-            </Box>
+            ) : (
+               <ItemContent itemToRender={item} />
+            )
          }
          {...rest}
       />

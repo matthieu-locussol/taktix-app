@@ -238,6 +238,7 @@ export const InventoryMenu = observer(() => {
                            <EquipmentSlot
                               key={item.id}
                               item={item}
+                              equippedItem={inventoryMenuStore.equippedItemsByType[item.type]}
                               size="small"
                               canBeHovered
                               {...(inventoryMenuStore.mode === 'normal' && {
