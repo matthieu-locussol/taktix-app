@@ -227,6 +227,7 @@ export const InventoryMenu = observer(() => {
                   <Inventory>
                      {inventoryMenuStore.sortedInventoryItems.map((item) => (
                         <Badge
+                           key={`${item.id}-badge`}
                            variant="dot"
                            color={
                               inventoryMenuStore.itemsToRecycle.includes(item.id)
