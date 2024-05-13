@@ -135,6 +135,14 @@ export const translationsEn = {
    fight: 'Fight',
    sleep: 'Sleep',
    gamble: 'Throw a gachix',
+   typeAsc: 'Type (A-Z)',
+   typeDesc: 'Type (Z-A)',
+   rarityAsc: 'Rarity (Common -> Unique)',
+   rarityDesc: 'Rarity (Unique -> Common)',
+   levelAsc: 'Level (1 -> 200)',
+   levelDesc: 'Level (200 -> 1)',
+   noSort: 'No sort',
+   sortItems: 'Sort items',
 
    // Rarities
    common: 'Common',

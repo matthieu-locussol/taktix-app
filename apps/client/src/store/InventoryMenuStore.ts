@@ -1,4 +1,6 @@
 import { makeAutoObservable } from 'mobx';
+import { ItemMgt } from 'shared/src/utils/itemMgt';
+import { SortOption } from '../ui/hud/components/ItemsSortSelector';
 import { Store } from './Store';
 
 type InventoryMode = 'normal' | 'recycle';
@@ -19,6 +21,10 @@ export class InventoryMenuStore {
    public obtainedGachix: number = 0;
 
    public gachixGainedDialogOpened: boolean = false;
+
+   public sortOption: SortOption = 'noSort';
+
+   public isSortMenuOpened: boolean = false;
 
    constructor(store: Store) {
       makeAutoObservable(this);
@@ -205,5 +211,45 @@ export class InventoryMenuStore {
       } else {
          this.selectAllEpicItemsToRecycle();
       }
+   }
+
+   public sortBy(sortOption: SortOption): void {
+      this.sortOption = sortOption;
+   }
+
+   public get sortedInventoryItems() {
+      if (this.sortOption === null) {
+         return this._store.characterStore.inventoryItems;
+      }
+
+      return this._store.characterStore.inventoryItems.slice().sort((a, b) => {
+         const aRarity = ItemMgt.RARITY_ORDER[ItemMgt.getRarity(a)];
+         const bRarity = ItemMgt.RARITY_ORDER[ItemMgt.getRarity(b)];
+
+         switch (this.sortOption) {
+            case 'typeAsc':
+               return a.type.localeCompare(b.type);
+            case 'typeDesc':
+               return b.type.localeCompare(a.type);
+            case 'rarityAsc':
+               return aRarity - bRarity;
+            case 'rarityDesc':
+               return bRarity - aRarity;
+            case 'levelAsc':
+               return a.level - b.level;
+            case 'levelDesc':
+               return b.level - a.level;
+            default:
+               return 0;
+         }
+      });
+   }
+
+   public openSortMenu(): void {
+      this.isSortMenuOpened = true;
+   }
+
+   public closeSortMenu(): void {
+      this.isSortMenuOpened = false;
    }
 }
