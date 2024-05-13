@@ -4,9 +4,12 @@ import {
    Badge,
    Box,
    Button,
+   Checkbox,
    CircularProgress,
    DialogContentText,
+   Grow,
    ToggleButton,
+   checkboxClasses,
    styled,
 } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
@@ -19,7 +22,9 @@ import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
+import { ItemMgt } from 'shared/src/utils/itemMgt';
 import { useStore } from '../../../store';
+import { ITEM_RARITY_COLORS } from '../../../styles/appTheme';
 import { useTranslation } from '../../../types/react-i18next';
 import { EquipmentSlot } from '../components/EquipmentSlot';
 import { Tooltip } from '../components/Tooltip';
@@ -238,7 +243,7 @@ export const InventoryMenu = observer(() => {
                                  onClick: () => inventoryMenuStore.toggleItemToRecycle(item.id),
                                  highlightColor: inventoryMenuStore.itemsToRecycle.includes(item.id)
                                     ? (theme) => theme.palette.link.hover
-                                    : undefined,
+                                    : () => ITEM_RARITY_COLORS[ItemMgt.getRarity(item)],
                               })}
                            />
                         </Badge>
@@ -262,13 +267,62 @@ export const InventoryMenu = observer(() => {
                      />
                   </Typography>
                   {inventoryMenuStore.mode === 'recycle' && (
-                     <Button
-                        variant="contained"
-                        onClick={() => inventoryMenuStore.openRecycleDialog()}
-                        disabled={inventoryMenuStore.itemsToRecycle.length === 0}
-                     >
-                        {t('recycle')}
-                     </Button>
+                     <Grow in={inventoryMenuStore.mode === 'recycle'} mountOnEnter={false}>
+                        <Box display="flex" alignItems="center">
+                           <Checkbox
+                              checked={inventoryMenuStore.areAllEpicItemsSelectedToRecycle}
+                              onChange={() => inventoryMenuStore.toggleAllEpicItemsToRecycle()}
+                              size="small"
+                              sx={{
+                                 color: (theme) => theme.palette.item.epic,
+                                 [`&.${checkboxClasses.checked}`]: {
+                                    color: (theme) => theme.palette.item.epic,
+                                 },
+                              }}
+                           />
+                           <Checkbox
+                              checked={inventoryMenuStore.areAllRareItemsSelectedToRecycle}
+                              onChange={() => inventoryMenuStore.toggleAllRareItemsToRecycle()}
+                              size="small"
+                              sx={{
+                                 color: (theme) => theme.palette.item.rare,
+                                 [`&.${checkboxClasses.checked}`]: {
+                                    color: (theme) => theme.palette.item.rare,
+                                 },
+                              }}
+                           />
+                           <Checkbox
+                              checked={inventoryMenuStore.areAllUncommonItemsSelectedToRecycle}
+                              onChange={() => inventoryMenuStore.toggleAllUncommonItemsToRecycle()}
+                              size="small"
+                              sx={{
+                                 color: (theme) => theme.palette.item.uncommon,
+                                 [`&.${checkboxClasses.checked}`]: {
+                                    color: (theme) => theme.palette.item.uncommon,
+                                 },
+                              }}
+                           />
+                           <Checkbox
+                              checked={inventoryMenuStore.areAllCommonItemsSelectedToRecycle}
+                              onChange={() => inventoryMenuStore.toggleAllCommonItemsToRecycle()}
+                              size="small"
+                              sx={{
+                                 mr: 1.5,
+                                 color: (theme) => theme.palette.item.common,
+                                 [`&.${checkboxClasses.checked}`]: {
+                                    color: (theme) => theme.palette.item.common,
+                                 },
+                              }}
+                           />
+                           <Button
+                              variant="contained"
+                              onClick={() => inventoryMenuStore.openRecycleDialog()}
+                              disabled={inventoryMenuStore.itemsToRecycle.length === 0}
+                           >
+                              {t('recycle')}
+                           </Button>
+                        </Box>
+                     </Grow>
                   )}
                   <Tooltip title={t('recycleMode')} disableInteractive>
                      <ToggleButton
@@ -296,7 +350,11 @@ export const InventoryMenu = observer(() => {
                         />
                      </ToggleButton>
                   </Tooltip>
-                  <Button variant="contained" onClick={() => inventoryMenuStore.close()}>
+                  <Button
+                     variant="contained"
+                     onClick={() => inventoryMenuStore.close()}
+                     sx={{ my: 0.25 }}
+                  >
                      {t('close')}
                   </Button>
                </DialogActions>

@@ -166,6 +166,22 @@ export class CharacterStore {
       return this.items.filter((item) => item.position === ItemPosition.Inventory);
    }
 
+   public get commonInventoryItems() {
+      return this.inventoryItems.filter((item) => ItemMgt.getRarity(item) === 'common');
+   }
+
+   public get uncommonInventoryItems() {
+      return this.inventoryItems.filter((item) => ItemMgt.getRarity(item) === 'uncommon');
+   }
+
+   public get rareInventoryItems() {
+      return this.inventoryItems.filter((item) => ItemMgt.getRarity(item) === 'rare');
+   }
+
+   public get epicInventoryItems() {
+      return this.inventoryItems.filter((item) => ItemMgt.getRarity(item) === 'epic');
+   }
+
    public get equippedItems() {
       return this.items.filter((item) => item.position === ItemPosition.Equipment);
    }
