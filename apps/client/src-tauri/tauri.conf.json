@@ -21,6 +21,13 @@
          },
          "window": {
             "setFullscreen": true
+         },
+         "shell": {
+            "all": false,
+            "execute": false,
+            "open": true,
+            "scope": [],
+            "sidecar": false
          }
       },
       "bundle": {
