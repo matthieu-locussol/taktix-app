@@ -80,7 +80,7 @@ const monstersArray: (() => MonsterGenerator)[] = [
    () =>
       withMonsterType([], (type) => ({ level }) => ({
          name: 'enemy-nono',
-         spritesheet: 'Boss_001',
+         spritesheet: 'Enemy_001',
          type,
          items: [],
          monsterType: type,

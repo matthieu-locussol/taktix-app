@@ -3,6 +3,7 @@ import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from 'shared/sr
 import { weaponsAnimations } from 'shared/src/data/animations';
 import { CharacterSprite, charactersSprites } from 'shared/src/data/charactersSprites';
 import { isMonsterName, monsters } from 'shared/src/data/monsters';
+import { MonsterSprite, monstersSprites } from 'shared/src/data/monstersSprites';
 import { ANIMATION_TO_FILE, Animation, AnimationFile } from 'shared/src/types/Animation';
 import { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
@@ -133,8 +134,7 @@ export class PvEFightStore {
 
    public get fightersOrder(): (PvEFighterSimplified & {
       name: string;
-      avatar: string;
-      spritesheet: CharacterSprite;
+      spritesheet: CharacterSprite | MonsterSprite;
    })[] {
       if (this._fightResults === null) {
          return [];
@@ -150,28 +150,19 @@ export class PvEFightStore {
          return monster?.name ?? 'Unknown';
       });
 
-      const avatars = this.fightResults.turns[0].fighters.map((fighter, index) => {
-         if (fighter.type === 'ally') {
-            const ally = this.fightResults.allies.find((ally) => ally.id === fighter.id);
-            return `/assets/characters/${ally?.spritesheet ?? charactersSprites[0]}.png`;
-         }
-
-         return `/assets/monsters/face/${names[index]}.png`;
-      });
-
       const spritesheets = this.fightResults.turns[0].fighters.map((fighter) => {
          if (fighter.type === 'ally') {
             const ally = this.fightResults.allies.find((ally) => ally.id === fighter.id);
             return ally?.spritesheet ?? charactersSprites[0];
          }
 
-         return charactersSprites[0];
+         const monster = this.fightResults.monsters.find((monster) => monster.id === fighter.id);
+         return monster?.spritesheet ?? monstersSprites[0];
       });
 
       return this.fightResults.turns[0].fighters.map((fighter, index) => ({
          ...fighter,
          name: names[index],
-         avatar: avatars[index],
          spritesheet: spritesheets[index],
       }));
    }
