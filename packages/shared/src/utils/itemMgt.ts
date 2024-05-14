@@ -581,7 +581,7 @@ export namespace ItemMgt {
    };
 
    export const canEquipItem = (item: Item, level: number) => {
-      return level >= item.level;
+      return level >= item.requiredLevel;
    };
 
    export const itemsToRemoveAfterEquip = (
