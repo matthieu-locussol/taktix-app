@@ -39,7 +39,6 @@ export const ZOOM_MAX = 2;
 export const ZOOM_STEP = 0.1;
 export const FADE_IN_DURATION = 1000;
 export const FADE_OUT_DURATION = 300;
-export const TRANSPARENCY_FACTOR = 0.75;
 export const INTERACTIVE_OBJECT_DEPTH = 999;
 
 export interface InteractiveObjectPhaser {
@@ -278,7 +277,6 @@ export abstract class Scene extends Phaser.Scene {
 
       this.setGridVisibility(hudStore.isGridVisible);
       this.setMinimapVisibility(hudStore.isMinimapVisible);
-      this.setTransparency(hudStore.isTransparencyEnabled);
    }
 
    public setGridVisibility(isVisible: boolean): void {
@@ -290,22 +288,6 @@ export abstract class Scene extends Phaser.Scene {
    public setMinimapVisibility(isVisible: boolean): void {
       if (this.minimap !== null) {
          this.minimap.setVisible(isVisible);
-      }
-   }
-
-   public setTransparency(isEnabled: boolean): void {
-      if (this.tilemap !== null) {
-         const playerLayer = this.tilemap.getLayer(PLAYER_LAYER);
-
-         if (playerLayer !== null) {
-            for (const layer of this.tilemap.layers) {
-               layer.tilemapLayer.setAlpha(
-                  isEnabled
-                     ? layer.tilemapLayer.alpha * TRANSPARENCY_FACTOR
-                     : layer.tilemapLayer.alpha / TRANSPARENCY_FACTOR,
-               );
-            }
-         }
       }
    }
 
