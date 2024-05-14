@@ -38,7 +38,7 @@ export class SettingsMenuStore {
 
    public defaultState: SettingsMenuState = {
       keyboardLayout: 'arrows',
-      volume: 50,
+      volume: 10,
       fullScreen: false,
       language: 'en',
       fullScreenMenus: {
