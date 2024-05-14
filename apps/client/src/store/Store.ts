@@ -9,6 +9,7 @@ import { ContextMenuStore } from './ContextMenuStore';
 import { DialogMenuStore } from './DialogMenuStore';
 import { DiscordStore } from './DiscordStore';
 import { GameStore } from './GameStore';
+import { GatchaMenuStore } from './GatchaMenuStore';
 import { HudStore } from './HudStore';
 import { InventoryMenuStore } from './InventoryMenuStore';
 import { LoadingScreenStore } from './LoadingScreenStore';
@@ -44,6 +45,8 @@ export class Store {
    public discordStore: DiscordStore;
 
    public gameStore: GameStore;
+
+   public gatchaMenuStore: GatchaMenuStore;
 
    public hudStore: HudStore;
 
@@ -86,6 +89,7 @@ export class Store {
       this.dialogMenuStore = new DialogMenuStore(this);
       this.discordStore = new DiscordStore(this);
       this.gameStore = new GameStore(this);
+      this.gatchaMenuStore = new GatchaMenuStore(this);
       this.hudStore = new HudStore(this);
       this.inventoryMenuStore = new InventoryMenuStore(this);
       this.loadingScreenStore = new LoadingScreenStore();

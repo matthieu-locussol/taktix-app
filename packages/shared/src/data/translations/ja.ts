@@ -147,6 +147,8 @@ export const translationsJa: LanguageTranslations = {
    levelDesc: 'レベル (200 -> 1)',
    noSort: 'ソートなし',
    sortItems: 'アイテムをソート',
+   lootBonus: '戦利品ボーナス',
+   spin: 'ルーレットを回す',
 
    // Rarities
    common: 'コモン',

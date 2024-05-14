@@ -148,6 +148,8 @@ export const translationsFr: LanguageTranslations = {
    levelDesc: 'Niveau (200 -> 1)',
    noSort: 'Aucun tri',
    sortItems: 'Trier les objets',
+   lootBonus: 'Bonus de butin',
+   spin: 'Tourner la roue',
 
    // Rarities
    common: 'Commun',

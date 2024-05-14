@@ -143,6 +143,8 @@ export const translationsEn = {
    levelDesc: 'Level (200 -> 1)',
    noSort: 'No sort',
    sortItems: 'Sort items',
+   lootBonus: 'Loot bonus',
+   spin: 'Spin the wheel',
 
    // Rarities
    common: 'Common',

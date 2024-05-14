@@ -3,11 +3,13 @@ import {
    FightMgt,
    INTERACTIVE_OBJECTS_MAP,
    ItemMgt,
+   ItemPosition,
    LootMgt,
    MINIMUM_TURN_TIME,
    MapRoomMessage,
    MapRoomResponse,
    MapState,
+   NumberMgt,
    MapRoomOptions as Options,
    PlayerState,
    PvEFightParameters,
@@ -80,6 +82,7 @@ export class MapRoom extends Room<MapState> {
                .with({ type: 'unequipItem' }, (payload) => this.onUnequipItem(client, payload))
                .with({ type: 'interact' }, (payload) => this.onInteract(client, payload))
                .with({ type: 'recycle' }, (payload) => this.onRecycle(client, payload))
+               .with({ type: 'spinWheel' }, (payload) => this.onSpinWheel(client, payload))
                .exhaustive();
          } else {
             logger.error(
@@ -580,6 +583,66 @@ export class MapRoom extends Room<MapState> {
             itemsDestroyed: itemsIds,
          },
       };
+      client.send(packet.type, packet.message);
+   }
+
+   async onSpinWheel(client: Client, _: Extract<MapRoomMessage, { type: 'spinWheel' }>) {
+      const player = this.state.players.get(client.sessionId);
+      _assert(player, `Player for client '${client.sessionId}' should be defined`);
+
+      if (player.gachix <= 0) {
+         const packet: Extract<MapRoomResponse, { type: 'spinWheelResponse' }> = {
+            type: 'spinWheelResponse',
+            message: {
+               success: false,
+               item: null,
+               itemRarity: null,
+               lootBonus: null,
+            },
+         };
+         client.send(packet.type, packet.message);
+         return;
+      }
+
+      const lootBonus = NumberMgt.random(50, 500);
+      const item = LootMgt.computeOneLoot({
+         areaBonus: lootBonus,
+         monsterLevel: player.getLevel(),
+         monsterName: 'enemy-nono',
+         monsterType: 'common',
+         prospect: player.getRealStatistics().prospect,
+      });
+      const itemRarity = ItemMgt.getRarity(item);
+
+      const { id } = await prisma.item.create({
+         data: {
+            isUnique: item.isUnique,
+            level: item.level,
+            baseAffixes: ItemMgt.serializeAffixes(item.baseAffixes),
+            prefixes: ItemMgt.serializeAffixes(item.prefixes),
+            suffixes: ItemMgt.serializeAffixes(item.suffixes),
+            damages: ItemMgt.serializeDamages(item.damages),
+            requiredLevel: item.requiredLevel,
+            type: item.type,
+            characterId: player.id,
+            position: ItemPosition.Inventory,
+         },
+      });
+
+      const createdItem = { ...item, id };
+      player.removeGachix(1);
+      player.addItems([createdItem]);
+
+      const packet: Extract<MapRoomResponse, { type: 'spinWheelResponse' }> = {
+         type: 'spinWheelResponse',
+         message: {
+            success: true,
+            item: createdItem,
+            itemRarity,
+            lootBonus,
+         },
+      };
+
       client.send(packet.type, packet.message);
    }
 

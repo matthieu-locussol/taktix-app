@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { zInteraction } from '../types/Interaction';
+import { zItem, zItemRarity } from '../types/Item';
 import { zPvEFightResults } from '../types/PvEFight';
 import { zRoom } from '../types/Room';
 import { Direction, Position } from '../types/SceneData';
@@ -81,6 +82,10 @@ export const zMapRoomMessage = z.discriminatedUnion('type', [
          itemsIds: z.array(z.number()),
       }),
    }),
+   z.object({
+      type: z.literal('spinWheel'),
+      message: z.object({}),
+   }),
 ]);
 
 export type MapRoomMessage = z.infer<typeof zMapRoomMessage>;
@@ -131,6 +136,15 @@ export const zMapRoomResponse = z.discriminatedUnion('type', [
          success: z.boolean(),
          gachix: z.number(),
          itemsDestroyed: z.array(z.number()),
+      }),
+   }),
+   z.object({
+      type: z.literal('spinWheelResponse'),
+      message: z.object({
+         success: z.boolean(),
+         item: zItem.nullable(),
+         itemRarity: zItemRarity.nullable(),
+         lootBonus: z.number().nullable(),
       }),
    }),
 ]);

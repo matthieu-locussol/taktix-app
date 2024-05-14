@@ -211,6 +211,10 @@ export class PlayerState extends Schema {
       this.gachix += gachix;
    }
 
+   removeGachix(gachix: number) {
+      this.gachix -= gachix;
+   }
+
    addTeleporter(teleporter: Room) {
       this.teleporters.push(teleporter);
    }
