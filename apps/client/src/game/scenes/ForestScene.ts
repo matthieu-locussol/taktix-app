@@ -20,7 +20,7 @@ export class ForestScene extends Scene {
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
-      this.sound.play('Forest_music', { loop: true, volume: 0.5 });
+      this.sound.play('Forest_music', { loop: true, volume: 0.25 });
       this.sound.pauseOnBlur = false;
 
       this.tilemap = this.make.tilemap({ key: 'Forest_tiledmap' });
