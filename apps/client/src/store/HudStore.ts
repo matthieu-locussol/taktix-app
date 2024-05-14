@@ -10,8 +10,6 @@ export class HudStore {
 
    public isMinimapVisible: boolean = true;
 
-   public isTransparencyEnabled: boolean = false;
-
    /** Width in vw */
    public chatboxWidth: number = 40;
 
@@ -57,13 +55,6 @@ export class HudStore {
 
       const scene = await this._store.gameStore.getCurrentScene();
       scene.setMinimapVisibility(this.isMinimapVisible);
-   }
-
-   public async toggleTransparency(): Promise<void> {
-      this.isTransparencyEnabled = !this.isTransparencyEnabled;
-
-      const scene = await this._store.gameStore.getCurrentScene();
-      scene.setTransparency(this.isTransparencyEnabled);
    }
 
    public setChatboxWidth(width: number): void {
