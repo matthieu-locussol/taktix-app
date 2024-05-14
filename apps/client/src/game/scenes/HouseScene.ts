@@ -18,7 +18,7 @@ export class HouseScene extends Scene {
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
-      this.sound.play('House_music', { loop: true, volume: 0.5 });
+      this.sound.play('House_music', { loop: true, volume: 0.25 });
       this.sound.pauseOnBlur = false;
 
       this.tilemap = this.make.tilemap({ key: 'House_tiledmap' });
