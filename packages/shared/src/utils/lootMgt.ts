@@ -175,4 +175,100 @@ export namespace LootMgt {
          return [...acc, ...monsterLoot];
       }, [] as Item[]);
    };
+
+   const normalizeProbabilities = (
+      probabilities: Record<ItemRarity, number>,
+   ): Record<ItemRarity, number> => {
+      let accumulatedSum = 0;
+      const normalizedProbabilities: Record<ItemRarity, number> = {
+         common: 0,
+         uncommon: 0,
+         rare: 0,
+         epic: 0,
+         unique: 0,
+      };
+      const orderedRarities = [...rarities].sort(
+         (a, b) => ItemMgt.RARITY_ORDER[b] - ItemMgt.RARITY_ORDER[a],
+      );
+
+      for (let i = 0; i < orderedRarities.length; i++) {
+         const rarity = orderedRarities[i];
+         const probability = probabilities[rarity];
+
+         if (accumulatedSum + probability >= 1) {
+            normalizedProbabilities[rarity] = 1 - accumulatedSum;
+            accumulatedSum = 1;
+            break;
+         }
+
+         normalizedProbabilities[rarity] = probability;
+         accumulatedSum += probability;
+      }
+
+      if (accumulatedSum < 1) {
+         const lastRarity = orderedRarities[orderedRarities.length - 1];
+         normalizedProbabilities[lastRarity] =
+            (normalizedProbabilities[lastRarity] || 0) + (1 - accumulatedSum);
+      }
+
+      for (const rarity of orderedRarities) {
+         if (!(rarity in normalizedProbabilities)) {
+            normalizedProbabilities[rarity] = probabilities[rarity];
+         }
+      }
+
+      return normalizedProbabilities;
+   };
+
+   const computeOneLootProbabilities = (
+      props: ComputeLootRarityProps,
+   ): Record<ItemRarity, number> => {
+      const probabilities = rarities.reduce(
+         (acc, rarity) => ({
+            ...acc,
+            [rarity]: computeLootProbability({ ...props, rarity }),
+         }),
+         {} as Record<ItemRarity, number>,
+      );
+
+      const normalizedProbabilities = normalizeProbabilities(probabilities);
+      return normalizedProbabilities;
+   };
+
+   const generateOneLootRarity = (props: ComputeLootRarityProps): ItemRarity => {
+      const probabilities = computeOneLootProbabilities(props);
+      const orderedRarities = [...rarities].sort(
+         (a, b) => ItemMgt.RARITY_ORDER[b] - ItemMgt.RARITY_ORDER[a],
+      );
+      const random = Math.random();
+      let accumulatedProbability = 0;
+
+      for (const type of orderedRarities) {
+         accumulatedProbability += probabilities[type];
+
+         if (random < accumulatedProbability) {
+            return type;
+         }
+      }
+
+      return 'common';
+   };
+
+   export const computeOneLoot = (props: ComputeLootRarityProps): Item => {
+      const { monsterLevel, monsterName } = props;
+
+      const rarity = generateOneLootRarity(props);
+      const levelBonus: Record<ItemRarity, MonsterType> = {
+         common: 'common',
+         uncommon: 'magic',
+         rare: 'magic',
+         epic: 'rare',
+         unique: 'common',
+      };
+
+      const rawItemLevel = monsterLevel + MONSTER_TYPE_ITEM_LEVEL_BONUS[levelBonus[rarity]];
+      const itemLevel = Math.min(rawItemLevel, MAXIMUM_LEVEL);
+
+      return ItemMgt.generateItem({ rarity, monsterName, itemLevel });
+   };
 }

@@ -161,7 +161,7 @@ export class ContextMenuStore {
          {
             text: i18next.t('gamble' satisfies TranslationKey),
             callback: () => {
-               console.log('gamble...');
+               this._store.gatchaMenuStore.open();
             },
          },
       ];

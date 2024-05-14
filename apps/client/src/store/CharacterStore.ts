@@ -118,6 +118,10 @@ export class CharacterStore {
       this.gachix += gachix;
    }
 
+   public removeGachix(gachix: number) {
+      this.gachix -= gachix;
+   }
+
    public setItems(items: Item[]) {
       this.items = [...items];
    }
@@ -128,6 +132,10 @@ export class CharacterStore {
 
    public get maxHealth() {
       return StatisticMgt.computeVitality(this.statistics);
+   }
+
+   public get prospect() {
+      return StatisticMgt.computeProspect(this.statistics);
    }
 
    public get experiencePercentage() {

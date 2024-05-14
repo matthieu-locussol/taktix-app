@@ -1,4 +1,4 @@
-import { Box, Divider, TooltipProps, Typography, darken, keyframes } from '@mui/material';
+import { Box, Divider, TooltipProps, Typography, darken } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
 import { Affix, Item } from 'shared/src/types/Item';
@@ -99,10 +99,9 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
 
    interface ItemContentProps {
       itemToRender: Item;
-      isEquipped?: boolean;
    }
 
-   const ItemContent = ({ itemToRender, isEquipped }: ItemContentProps) => {
+   const ItemContent = ({ itemToRender }: ItemContentProps) => {
       const rarity = useMemo(() => ItemMgt.getRarity(itemToRender), [itemToRender]);
       const rarityColor = useMemo(() => ITEM_RARITY_COLORS[rarity], [rarity]);
       const hasAffixes = useMemo(
@@ -111,61 +110,24 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
       );
       const name = useMemo(() => ItemMgt.getName(itemToRender), [itemToRender]);
       const hasRequiredLevel = useMemo(
-         () => characterStore.level >= itemToRender.level,
+         () => characterStore.level >= itemToRender.requiredLevel,
          [itemToRender, characterStore],
       );
 
       return (
          <Box
-            sx={(theme) => {
-               const glowKeyframes = glow();
-
-               return {
-                  display: 'flex',
-                  flexDirection: 'column',
-                  pb: !hasAffixes ? 'min(0.5vw, 1vh)' : 'min(0.125vw, 0.25vh)',
-                  fontSize: '0.75rem',
-                  fontWeight: 500,
-                  color: 'white',
-                  border: `1px solid ${rarityColor}`,
-                  borderRadius: 1,
-                  background: darken(`${theme.palette.paper.background}F6`, 0.15),
-                  minWidth: '20vw',
-                  ':before': {
-                     content: '""',
-                     background: theme.palette.itemGradient[rarity],
-                     position: 'absolute',
-                     top: '-2px',
-                     ...(!isEquipped && { left: '-2px' }),
-                     ...(isEquipped && { marginLeft: '-10px' }),
-                     backgroundSize: '400%',
-                     zIndex: -1,
-                     filter: 'blur(8px)',
-                     width: 'calc(100% + 4px)',
-                     height: 'calc(100% + 4px)',
-                     animation: `${glowKeyframes} 20s linear infinite`,
-                     opacity: 1,
-                     transition: 'opacity .3s ease-in-out',
-                     borderRadius: '10px',
-                  },
-                  ':active': {
-                     color: theme.palette.paper.background,
-                  },
-                  ':active:after': {
-                     background: 'transparent',
-                  },
-                  ':after': {
-                     zIndex: -1,
-                     content: '""',
-                     position: 'absolute',
-                     width: '100%',
-                     height: '100%',
-                     left: 0,
-                     top: 0,
-                     borderRadius: '10px',
-                  },
-               };
-            }}
+            sx={(theme) => ({
+               display: 'flex',
+               flexDirection: 'column',
+               pb: !hasAffixes ? 'min(0.5vw, 1vh)' : 'min(0.125vw, 0.25vh)',
+               fontSize: '0.75rem',
+               fontWeight: 500,
+               color: 'white',
+               border: `1px solid ${rarityColor}`,
+               borderRadius: 1,
+               background: darken(`${theme.palette.paper.background}F6`, 0.15),
+               minWidth: '20vw',
+            })}
          >
             <Typography
                variant="body1"
@@ -259,6 +221,7 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
          componentsProps={{
             tooltip: {
                sx: {
+                  p: 0,
                   background: 'transparent',
                },
             },
@@ -271,7 +234,7 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
          title={
             equippedItem ? (
                <Box display="flex" gap={2} justifyContent="end">
-                  <ItemContent itemToRender={equippedItem} isEquipped />
+                  <ItemContent itemToRender={equippedItem} />
                   <ItemContent itemToRender={item} />
                </Box>
             ) : (
@@ -282,15 +245,3 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
       />
    );
 });
-
-const glow = () => keyframes`
-   0% {
-      background-position: 0 0;
-   }
-   50% {
-      background-position: 400% 0;
-   }
-   100% {
-      background-position: 0 0;
-   }
-`;

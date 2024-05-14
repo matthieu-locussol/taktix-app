@@ -364,6 +364,9 @@ export class ColyseusStore {
                .with({ type: 'recycleResponse' }, ({ message: payloadMessage }) => {
                   this.onRecycleResponse(payloadMessage);
                })
+               .with({ type: 'spinWheelResponse' }, ({ message: payloadMessage }) => {
+                  this.onSpinWheelResponse(payloadMessage);
+               })
                .exhaustive();
          }
       });
@@ -429,6 +432,10 @@ export class ColyseusStore {
 
    recycle(itemsIds: number[]) {
       this.gameRoom.send('recycle', { itemsIds });
+   }
+
+   spinWheel() {
+      this.gameRoom.send('spinWheel', {});
    }
 
    async onChangeMap({
@@ -572,6 +579,31 @@ export class ColyseusStore {
          this._store.chatStore.addMessage({
             channel: Channel.SERVER,
             content: i18next.t('recycleImpossible'),
+            author: i18next.t('Server' satisfies TranslationKey),
+         });
+      }
+   }
+
+   async onSpinWheelResponse({
+      success,
+      item,
+      itemRarity,
+      lootBonus,
+   }: Extract<MapRoomResponse, { type: 'spinWheelResponse' }>['message']) {
+      if (success) {
+         _assert(item, 'Item should be defined');
+         _assert(itemRarity, 'Item rarity should be defined');
+         _assert(lootBonus, 'Loot bonus should be defined');
+
+         this._store.gatchaMenuStore.setLootBonus(lootBonus);
+         this._store.gatchaMenuStore.setGainedRarity(itemRarity);
+         this._store.gatchaMenuStore.startSpin(item);
+         this._store.characterStore.removeGachix(1);
+         this._store.characterStore.addItems([item]);
+      } else {
+         this._store.chatStore.addMessage({
+            channel: Channel.SERVER,
+            content: i18next.t('spinWheelImpossible'),
             author: i18next.t('Server' satisfies TranslationKey),
          });
       }
