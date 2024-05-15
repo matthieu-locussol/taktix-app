@@ -213,19 +213,6 @@ export class ContextMenuStore {
       const npcInfos = NPCS[parsedNpcName];
       const { name } = npcInfos;
 
-      if (name === 'Akara') {
-         return [
-            {
-               text: i18next.t('talk' satisfies TranslationKey),
-               callback: () => {
-                  this._store.dialogMenuStore.openDialog(
-                     npcsDialogs[parsedNpcName](npcInfos, this._store, i18next.t),
-                  );
-               },
-            },
-         ];
-      }
-
       if (name === 'Nono') {
          return [
             {

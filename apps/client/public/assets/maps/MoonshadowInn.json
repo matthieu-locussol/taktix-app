@@ -1086,31 +1086,7 @@
          "draworder": "topdown",
          "id": 7,
          "name": "Npcs",
-         "objects": [
-            {
-               "height": 16,
-               "id": 5,
-               "name": "",
-               "properties": [
-                  {
-                     "name": "direction",
-                     "type": "string",
-                     "value": "down"
-                  },
-                  {
-                     "name": "id",
-                     "type": "string",
-                     "value": "Akara"
-                  }
-               ],
-               "rotation": 0,
-               "type": "",
-               "visible": true,
-               "width": 16,
-               "x": 464,
-               "y": 416
-            }
-         ],
+         "objects": [],
          "opacity": 1,
          "type": "objectgroup",
          "visible": true,

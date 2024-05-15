@@ -5,10 +5,6 @@ import type { Room } from '../types/Room';
 
 export const mapsFights: Record<Room, MapFightData | null> = {
    AAA_InitialRoom: null,
-   CloudsRoom: null,
-   DungeonRoom: null,
-   ForestRoom: null,
-   HouseRoom: null,
    MoonshadowHamletRoom: {
       fights: [
          {

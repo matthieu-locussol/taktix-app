@@ -6,20 +6,6 @@ import type { TeleportationPlace } from '../types/TeleportationPlace';
 
 export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = {
    AAA_InitialRoom: null,
-   CloudsRoom: {
-      x: 10,
-      y: 11,
-      direction: Direction.LEFT,
-      price: 120,
-   },
-   DungeonRoom: null,
-   ForestRoom: {
-      x: 13,
-      y: 39,
-      direction: Direction.DOWN,
-      price: 230,
-   },
-   HouseRoom: null,
    MoonshadowHamletRoom: {
       x: 35,
       y: 33,
