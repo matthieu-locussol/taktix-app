@@ -102,6 +102,7 @@ export class PvEFightStore {
 
    public closeFightResults(): void {
       this.isFightResultsMenuOpened = false;
+      this._store.soundsStore.play('check');
    }
 
    public setFighterHealth(fighterId: number, health: number): void {
