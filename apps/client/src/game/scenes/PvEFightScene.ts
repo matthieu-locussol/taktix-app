@@ -409,8 +409,11 @@ export class PvEFightScene extends Phaser.Scene {
    }
 
    private stopOnLastMove(turnId: number, moveId: number): void {
-      if (turnId === store.pveFightStore.fightResults.turns.length - 1) {
-         if (moveId === store.pveFightStore.fightResults.turns[turnId].moves.length - 1) {
+      const { turns } = store.pveFightStore.fightResults;
+      const { moves } = turns[turnId];
+
+      if (turnId === turns.length - 1) {
+         if (moveId === moves.length - 1) {
             this.stop();
          }
       }
@@ -621,6 +624,7 @@ export class PvEFightScene extends Phaser.Scene {
                      );
                   hitAnimation.postFX.addGlow(0x111827, 16, 0, false, 1, 10);
                   hitAnimation.play(animationId);
+                  store.soundsStore.play('attack');
                   hitAnimation.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
                      hitAnimation.destroy();
                   });
@@ -645,6 +649,7 @@ export class PvEFightScene extends Phaser.Scene {
                         },
                      });
                      dodgeAnimation.play();
+                     store.soundsStore.play('evade');
                      this.displayDodge(targetContainer);
                      return;
                   }
@@ -950,6 +955,7 @@ export class PvEFightScene extends Phaser.Scene {
          onComplete: () => {
             enemySprite.destroy();
             tween.destroy();
+            store.soundsStore.play('death');
          },
       });
    }
