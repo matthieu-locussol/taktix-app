@@ -17,12 +17,17 @@ export class MapMenuStore {
       this._store = store;
    }
 
+   public setIsOpened(isOpened: boolean): void {
+      this.isOpened = isOpened;
+      this._store.soundsStore.play('check');
+   }
+
    public open(): void {
-      this.isOpened = true;
+      this.setIsOpened(true);
    }
 
    public close(): void {
-      this.isOpened = false;
+      this.setIsOpened(false);
       this.selectedRoom = null;
    }
 
@@ -51,7 +56,7 @@ export class MapMenuStore {
          return;
       }
 
-      this.isOpened = false;
+      this.setIsOpened(false);
       this._store.colyseusStore.teleport(this.selectedRoom);
       this.selectedRoom = null;
    }

@@ -63,7 +63,7 @@ export const Menu = observer(() => {
          <ShortcutIcon
             active={settingsMenuStore.isOpened}
             icon={<SettingsIcon />}
-            onClick={() => settingsMenuStore.open()}
+            onClick={() => settingsMenuStore.toggle()}
          />
          {/* Bottom line */}
          <ShortcutIcon

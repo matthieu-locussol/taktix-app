@@ -22,12 +22,17 @@ export class TalentsMenuStore {
       this._store = store;
    }
 
+   public setIsOpened(isOpened: boolean): void {
+      this.isOpened = isOpened;
+      this._store.soundsStore.play('check');
+   }
+
    public open(): void {
-      this.isOpened = true;
+      this.setIsOpened(true);
    }
 
    public close(): void {
-      this.isOpened = false;
+      this.setIsOpened(false);
 
       this.talents = [...this._store.characterStore.talents];
       this.talentsPoints = this._store.characterStore.talentsPoints;
