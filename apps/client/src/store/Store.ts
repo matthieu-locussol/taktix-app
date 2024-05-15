@@ -21,6 +21,7 @@ import { PvEFightStore } from './PvEFightStore';
 import { RegisterStore } from './RegisterStore';
 import { ScreenStore } from './ScreenStore';
 import { SettingsMenuStore } from './SettingsMenuStore';
+import { SoundsStore } from './SoundsStore';
 import { StatisticsMenuStore } from './StatisticsMenuStore';
 import { TalentsMenuStore } from './TalentsMenuStore';
 import { UpdaterStore } from './UpdaterStore';
@@ -70,6 +71,8 @@ export class Store {
 
    public settingsMenuStore: SettingsMenuStore;
 
+   public soundsStore: SoundsStore;
+
    public statisticsMenuStore: StatisticsMenuStore;
 
    public talentsMenuStore: TalentsMenuStore;
@@ -101,6 +104,7 @@ export class Store {
       this.registerStore = new RegisterStore();
       this.screenStore = new ScreenStore(this);
       this.settingsMenuStore = new SettingsMenuStore(this);
+      this.soundsStore = new SoundsStore(this);
       this.statisticsMenuStore = new StatisticsMenuStore(this);
       this.talentsMenuStore = new TalentsMenuStore(this);
       this.updaterStore = new UpdaterStore(this);

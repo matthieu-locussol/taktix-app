@@ -40,13 +40,18 @@ export class CommunityMenuStore {
       }
    }
 
+   public setIsOpened(isOpened: boolean): void {
+      this.isOpened = isOpened;
+      this._store.soundsStore.play('check');
+   }
+
    public open(): void {
-      this.isOpened = true;
+      this.setIsOpened(true);
       this.fetchPlayers();
    }
 
    public close(): void {
-      this.isOpened = false;
+      this.setIsOpened(false);
    }
 
    public toggle(): void {

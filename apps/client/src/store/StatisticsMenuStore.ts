@@ -40,12 +40,17 @@ export class StatisticsMenuStore {
       this._store = store;
    }
 
+   public setIsOpened(isOpened: boolean): void {
+      this.isOpened = isOpened;
+      this._store.soundsStore.play('check');
+   }
+
    public open(): void {
-      this.isOpened = true;
+      this.setIsOpened(true);
    }
 
    public close(): void {
-      this.isOpened = false;
+      this.setIsOpened(false);
 
       this.vitality = this._store.characterStore.baseStatistics['vitality_+f'];
       this.magicShield = this._store.characterStore.baseStatistics['magicShield_+f'];

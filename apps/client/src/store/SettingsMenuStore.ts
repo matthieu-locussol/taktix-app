@@ -93,12 +93,25 @@ export class SettingsMenuStore {
          });
    }
 
+   public setIsOpened(isOpened: boolean): void {
+      this.isOpened = isOpened;
+      this._store.soundsStore.play('check');
+   }
+
    public open(): void {
-      this.isOpened = true;
+      this.setIsOpened(true);
    }
 
    public close(): void {
-      this.isOpened = false;
+      this.setIsOpened(false);
+   }
+
+   public toggle(): void {
+      if (this.isOpened) {
+         this.close();
+      } else {
+         this.open();
+      }
    }
 
    public toggleFullScreenMenu(menu: keyof SettingsMenuState['fullScreenMenus']): void {
@@ -113,6 +126,7 @@ export class SettingsMenuStore {
       this.volume = volume;
 
       try {
+         this._store.soundsStore.adjustSoundsVolume(volume / 100);
          this._store.gameStore.game.sound.volume = volume / 100;
       } catch (_e) {
          // Not a problem as the sound will be set when the game is initialized

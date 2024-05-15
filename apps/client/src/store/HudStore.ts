@@ -45,6 +45,7 @@ export class HudStore {
 
    public async toggleGrid(): Promise<void> {
       this.isGridVisible = !this.isGridVisible;
+      this._store.soundsStore.play('check');
 
       const scene = await this._store.gameStore.getCurrentScene();
       scene.setGridVisibility(this.isGridVisible);
@@ -52,6 +53,7 @@ export class HudStore {
 
    public async toggleMinimap(): Promise<void> {
       this.isMinimapVisible = !this.isMinimapVisible;
+      this._store.soundsStore.play('check');
 
       const scene = await this._store.gameStore.getCurrentScene();
       scene.setMinimapVisibility(this.isMinimapVisible);
@@ -74,6 +76,8 @@ export class HudStore {
          this.setChatboxHeight(
             CHATBOX_HEIGHT_STEPS[CHATBOX_HEIGHT_STEPS.indexOf(this.chatboxHeight) + 1],
          );
+
+         this._store.soundsStore.play('check');
       }
    }
 
@@ -86,6 +90,8 @@ export class HudStore {
          this.setChatboxHeight(
             CHATBOX_HEIGHT_STEPS[CHATBOX_HEIGHT_STEPS.indexOf(this.chatboxHeight) - 1],
          );
+
+         this._store.soundsStore.play('check');
       }
    }
 

@@ -33,12 +33,17 @@ export class InventoryMenuStore {
       this._store = store;
    }
 
+   public setIsOpened(isOpened: boolean): void {
+      this.isOpened = isOpened;
+      this._store.soundsStore.play('check');
+   }
+
    public open(): void {
-      this.isOpened = true;
+      this.setIsOpened(true);
    }
 
    public close(): void {
-      this.isOpened = false;
+      this.setIsOpened(false);
    }
 
    public toggle(): void {
