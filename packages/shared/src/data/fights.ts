@@ -13,7 +13,7 @@ export const getMonstersInformations = (monsterGroupId: number): Monster[] => {
 
    if (monsterGroupId === 2) {
       const monstersCount = NumberMgt.random(1, 2);
-      const getLevel = () => NumberMgt.random(1, 3);
+      const getLevel = () => NumberMgt.random(2, 4);
 
       return [
          monsters['enemy-red-slime']()({ level: getLevel() }),
@@ -25,7 +25,7 @@ export const getMonstersInformations = (monsterGroupId: number): Monster[] => {
 
    if (monsterGroupId === 3) {
       const monstersCount = NumberMgt.random(1, 2);
-      const getLevel = () => NumberMgt.random(1, 3);
+      const getLevel = () => NumberMgt.random(2, 4);
 
       return [
          monsters['enemy-blue-slime']()({ level: getLevel() }),
@@ -37,7 +37,7 @@ export const getMonstersInformations = (monsterGroupId: number): Monster[] => {
 
    if (monsterGroupId === 4) {
       const monstersCount = NumberMgt.random(1, 3);
-      const getLevel = () => NumberMgt.random(2, 5);
+      const getLevel = () => NumberMgt.random(3, 6);
       const getName = (): MonsterName =>
          (
             [

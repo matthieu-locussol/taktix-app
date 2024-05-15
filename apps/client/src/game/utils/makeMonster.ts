@@ -23,6 +23,7 @@ export const makeMonster = ({ spritesheet, id, name, scene, fightId }: MakeMonst
    monsterSprite.setData('fightId', fightId);
    monsterSprite.setData('type', EntityType.Monster);
    monsterSprite.setName(name);
+   monsterSprite.postFX?.addGlow(0xffffff, 2, 0, false, 0.1, 10);
    registerSpriteEvents(monsterSprite);
 
    if (scene.minimap !== null) {

@@ -94,7 +94,7 @@ export const mapsFights: Record<Room, MapFightData | null> = {
          {
             fightsIds: [4],
             positionX: 35,
-            positionY: 10,
+            positionY: 9,
             name: 'enemy-pink-slime',
             radius: 2,
          },

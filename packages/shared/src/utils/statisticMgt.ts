@@ -30,7 +30,7 @@ export namespace StatisticMgt {
          'precision_+f': 15,
          'evasion_+f': 15,
          'criticalStrikeDamages_+%': 50,
-         'prospect_+f': 100,
+         'prospect_+f': 30,
       });
 
    export const LEVEL_UP_STATISTICS = (): Record<ProfessionType, Statistics> => ({
@@ -61,8 +61,9 @@ export namespace StatisticMgt {
          ...new Array(LevelMgt.getLevel(experience) - 1).fill(LEVEL_UP_STATISTICS()[profession]),
          ...talents.map((talent) => getTalents()[talent].statistics),
          StatisticMgt.mergeStatistics(
-            ...items.map(({ prefixes, suffixes }) => {
+            ...items.map(({ baseAffixes, prefixes, suffixes }) => {
                return StatisticMgt.mergeStatistics(
+                  ...baseAffixes.map((base) => StatisticMgt.makeMockedStatistics(base.statistics)),
                   ...prefixes.map((prefix) => StatisticMgt.makeMockedStatistics(prefix.statistics)),
                   ...suffixes.map((suffix) => StatisticMgt.makeMockedStatistics(suffix.statistics)),
                );

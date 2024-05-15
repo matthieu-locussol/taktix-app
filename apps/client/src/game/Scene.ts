@@ -483,7 +483,7 @@ export abstract class Scene extends Phaser.Scene {
             collides: true,
          });
 
-         this.gridEngine.moveRandomly(id, 3500, radius);
+         this.gridEngine.moveRandomly(id, NumberMgt.random(3500, 6000), radius);
 
          this.monstersSpritesMap.set(id, monsterSprite);
       }
