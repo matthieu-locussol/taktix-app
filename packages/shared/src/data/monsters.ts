@@ -87,9 +87,9 @@ const monstersArray: (() => MonsterGenerator)[] = [
          monsterType: type,
          animation: Animation.Flower,
          health: {
-            common: MonsterMgt.scaleMonsterLife(level, 2),
-            magic: MonsterMgt.scaleMonsterLife(level, 3),
-            rare: MonsterMgt.scaleMonsterLife(level, 4),
+            common: MonsterMgt.scaleMonsterLife(level, 3),
+            magic: MonsterMgt.scaleMonsterLife(level, 6),
+            rare: MonsterMgt.scaleMonsterLife(level, 8),
          }[type],
          magicShield: 0,
          level,
@@ -99,7 +99,7 @@ const monstersArray: (() => MonsterGenerator)[] = [
                common: [
                   {
                      weaponType: 'axe1H',
-                     type: 'strength',
+                     type: 'dexterity',
                      min: 1 + Math.floor(level / 2),
                      max: 3 + level,
                   },
@@ -107,7 +107,7 @@ const monstersArray: (() => MonsterGenerator)[] = [
                magic: [
                   {
                      weaponType: 'axe1H',
-                     type: 'strength',
+                     type: 'dexterity',
                      min: 3 + Math.floor(level / 2),
                      max: 5 + level,
                   },
@@ -115,7 +115,7 @@ const monstersArray: (() => MonsterGenerator)[] = [
                rare: [
                   {
                      weaponType: 'axe1H',
-                     type: 'strength',
+                     type: 'dexterity',
                      min: 3 + level,
                      max: 5 + level * 2,
                   },
@@ -169,9 +169,9 @@ const monstersArray: (() => MonsterGenerator)[] = [
          monsterType: type,
          animation: Animation.Flower,
          health: {
-            common: MonsterMgt.scaleMonsterLife(level, 2),
-            magic: MonsterMgt.scaleMonsterLife(level, 3),
-            rare: MonsterMgt.scaleMonsterLife(level, 4),
+            common: MonsterMgt.scaleMonsterLife(level, 4),
+            magic: MonsterMgt.scaleMonsterLife(level, 8),
+            rare: MonsterMgt.scaleMonsterLife(level, 10),
          }[type],
          magicShield:
             MonsterMgt.scaleMonsterStatistic(
@@ -255,9 +255,9 @@ const monstersArray: (() => MonsterGenerator)[] = [
          monsterType: type,
          animation: Animation.Flower,
          health: {
-            common: MonsterMgt.scaleMonsterLife(level, 2),
-            magic: MonsterMgt.scaleMonsterLife(level, 3),
-            rare: MonsterMgt.scaleMonsterLife(level, 4),
+            common: MonsterMgt.scaleMonsterLife(level, 4),
+            magic: MonsterMgt.scaleMonsterLife(level, 8),
+            rare: MonsterMgt.scaleMonsterLife(level, 10),
          }[type],
          magicShield:
             MonsterMgt.scaleMonsterStatistic(
@@ -341,9 +341,9 @@ const monstersArray: (() => MonsterGenerator)[] = [
          monsterType: type,
          animation: Animation.Flower,
          health: {
-            common: MonsterMgt.scaleMonsterLife(level, 2),
-            magic: MonsterMgt.scaleMonsterLife(level, 3),
-            rare: MonsterMgt.scaleMonsterLife(level, 4),
+            common: MonsterMgt.scaleMonsterLife(level, 6),
+            magic: MonsterMgt.scaleMonsterLife(level, 10),
+            rare: MonsterMgt.scaleMonsterLife(level, 14),
          }[type],
          magicShield: MonsterMgt.scaleMonsterStatistic(
             level,
@@ -427,7 +427,7 @@ const monstersArray: (() => MonsterGenerator)[] = [
                      level,
                      MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
                   ),
-               'criticalStrikeChance_+f': 5,
+               'criticalStrikeChance_+f': 10,
                'criticalStrikeDamages_+%': 30,
             }),
          ),
