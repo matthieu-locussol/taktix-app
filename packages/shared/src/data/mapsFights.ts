@@ -159,7 +159,6 @@ export const mapsFights: Record<Room, MapFightData | null> = {
             radius: 3,
          },
       ],
-      maxFights: 10,
       timeoutRegeneration: 60000,
    },
    MoonshadowHotelRoom: null,

@@ -8,6 +8,5 @@ export interface MapFightData {
       radius: number;
       name: MonsterName;
    }[];
-   maxFights: number;
    timeoutRegeneration: number;
 }

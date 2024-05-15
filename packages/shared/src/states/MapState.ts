@@ -84,8 +84,8 @@ export class MapState extends Schema {
          return false;
       }
 
-      const { fights, maxFights } = mapFightData;
-      if (this.fights.size >= maxFights) {
+      const { fights } = mapFightData;
+      if (this.fights.size >= fights.length) {
          return false;
       }
 

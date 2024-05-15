@@ -543,9 +543,6 @@ const regenerateFights = (maps: string[]) => {
          });
 
          if (fights.length > 0) {
-            const maxFights = fightsLayer.properties.find(({ name }) => name === 'maxFights');
-            assert(maxFights !== undefined, `maxFights property not found in ${map}.json`);
-
             const timeoutRegenerationInMns = fightsLayer.properties.find(
                ({ name }) => name === 'timeoutRegenerationInMns',
             );
@@ -556,7 +553,6 @@ const regenerateFights = (maps: string[]) => {
 
             mapsFights[roomName] = {
                fights,
-               maxFights: Number(maxFights.value),
                timeoutRegeneration: 1_000 * 60 * Number(timeoutRegenerationInMns.value),
             };
          }
