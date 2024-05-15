@@ -4,7 +4,7 @@ import { Store } from './Store';
 
 vi.mock('./Store', () => {
    const characterStoreMock = {
-      teleporters: ['CloudsRoom', 'ForestRoom'],
+      teleporters: ['MoonshadowHamletRoom'],
       map: 'ForestRoom',
       money: 999_999,
    };
@@ -51,13 +51,13 @@ describe('MapMenuStore', () => {
       const store = new MapMenuStore(new Store());
       expect(store.selectedRoom).toEqual(null);
 
-      store.setSelectedRoom('CloudsRoom');
-      expect(store.selectedRoom).toEqual('CloudsRoom');
+      store.setSelectedRoom('MoonshadowHamletRoom');
+      expect(store.selectedRoom).toEqual('MoonshadowHamletRoom');
 
-      store.setSelectedRoom('HouseRoom');
-      expect(store.selectedRoom).toEqual('CloudsRoom');
+      store.setSelectedRoom('MoonshadowHotelRoom');
+      expect(store.selectedRoom).toEqual('MoonshadowHamletRoom');
 
-      store.setSelectedRoom('ForestRoom');
-      expect(store.selectedRoom).toEqual('CloudsRoom');
+      store.setSelectedRoom('MoonshadowInnRoom');
+      expect(store.selectedRoom).toEqual('MoonshadowHamletRoom');
    });
 });

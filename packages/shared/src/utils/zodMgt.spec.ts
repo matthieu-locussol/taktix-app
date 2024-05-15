@@ -4,13 +4,13 @@ import { ZodMgt } from './zodMgt';
 
 describe('ZodMgt', () => {
    describe('isValidZodLiteralUnion', () => {
-      it('should return true if the literals array has at least 2 elements', () => {
-         const literals = [z.literal('a'), z.literal('b')];
+      it('should return true if the literals array has at least 1 element', () => {
+         const literals = [z.literal('a')];
          expect(ZodMgt.isValidZodLiteralUnion(literals)).toBe(true);
       });
 
-      it('should return false if the literals array has less than 2 elements', () => {
-         const literals = [z.literal('a')];
+      it('should return false if the literals array has less than 1 element', () => {
+         const literals: z.ZodLiteral<''>[] = [];
          expect(ZodMgt.isValidZodLiteralUnion(literals)).toBe(false);
       });
    });
@@ -25,11 +25,9 @@ describe('ZodMgt', () => {
          );
       });
 
-      it('should throw an error if the literals array has less than 2 elements', () => {
-         const literals = [z.literal('a')];
-         expect(() => ZodMgt.constructZodLiteralUnionType(literals)).toThrowError(
-            'Literals passed do not meet the criteria for constructing a union schema, the minimum length is 2',
-         );
+      it('should throw an error if the literals array has less than 1 element', () => {
+         const literals: z.ZodLiteral<''>[] = [];
+         expect(() => ZodMgt.constructZodLiteralUnionType(literals)).toThrow();
       });
    });
 });

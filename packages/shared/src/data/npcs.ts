@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { ZodMgt } from '../utils/zodMgt';
 import { CharacterSprite } from './charactersSprites';
 
-const npcs = ['Akara', 'Nono'] as const;
+const npcs = ['Nono'] as const;
 
 export const zNPC = ZodMgt.constructZodLiteralUnionType(npcs.map((npc) => z.literal(npc)));
 
@@ -17,11 +17,6 @@ export interface NPCInformations {
 }
 
 export const NPCS: Record<NPC, NPCInformations> = {
-   Akara: {
-      name: 'Akara',
-      avatar: 'akara.jpeg',
-      spritesheet: 'Character_002',
-   },
    Nono: {
       name: 'Nono',
       avatar: 'nono.png',

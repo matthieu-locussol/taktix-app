@@ -5,10 +5,6 @@ import { ZodMgt } from '../utils/zodMgt';
 
 const rooms = [
    'AAA_InitialRoom',
-   'CloudsRoom',
-   'DungeonRoom',
-   'ForestRoom',
-   'HouseRoom',
    'MoonshadowHamletRoom',
    'MoonshadowHotelRoom',
    'MoonshadowInnRoom',

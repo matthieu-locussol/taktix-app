@@ -6,18 +6,6 @@ import { Direction } from '../types/SceneData';
 
 export const NPC_SPOTS: Record<Room, NPCSpot[]> = {
    AAA_InitialRoom: [],
-   CloudsRoom: [
-      {
-         x: 14,
-         y: 7,
-         npcName: 'Akara',
-         mapName: 'CloudsRoom',
-         direction: Direction.DOWN,
-      },
-   ],
-   DungeonRoom: [],
-   ForestRoom: [],
-   HouseRoom: [],
    MoonshadowHamletRoom: [
       {
          x: 26,
@@ -28,13 +16,5 @@ export const NPC_SPOTS: Record<Room, NPCSpot[]> = {
       },
    ],
    MoonshadowHotelRoom: [],
-   MoonshadowInnRoom: [
-      {
-         x: 29,
-         y: 26,
-         npcName: 'Akara',
-         mapName: 'MoonshadowInnRoom',
-         direction: Direction.DOWN,
-      },
-   ],
+   MoonshadowInnRoom: [],
 };

@@ -5,32 +5,6 @@ import type { Room } from '../types/Room';
 
 export const INTERACTIVE_OBJECTS: Record<Room, InteractiveObjectData[]> = {
    AAA_InitialRoom: [],
-   CloudsRoom: [
-      {
-         id: 'Teleporter',
-         x: null,
-         y: null,
-      },
-      {
-         id: 'TeleporterCell',
-         x: 10,
-         y: 11,
-      },
-   ],
-   DungeonRoom: [],
-   ForestRoom: [
-      {
-         id: 'Teleporter',
-         x: null,
-         y: null,
-      },
-      {
-         id: 'TeleporterCell',
-         x: 13,
-         y: 39,
-      },
-   ],
-   HouseRoom: [],
    MoonshadowHamletRoom: [
       {
          id: 'TeleporterCell',
@@ -75,30 +49,6 @@ export const INTERACTIVE_OBJECTS: Record<Room, InteractiveObjectData[]> = {
 
 export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boolean>> = {
    AAA_InitialRoom: {
-      Teleporter: false,
-      TeleporterCell: false,
-      Bed: false,
-      Well: false,
-   },
-   CloudsRoom: {
-      Teleporter: true,
-      TeleporterCell: true,
-      Bed: false,
-      Well: false,
-   },
-   DungeonRoom: {
-      Teleporter: false,
-      TeleporterCell: false,
-      Bed: false,
-      Well: false,
-   },
-   ForestRoom: {
-      Teleporter: true,
-      TeleporterCell: true,
-      Bed: false,
-      Well: false,
-   },
-   HouseRoom: {
       Teleporter: false,
       TeleporterCell: false,
       Bed: false,
