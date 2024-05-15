@@ -127,6 +127,7 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
                borderRadius: 1,
                background: darken(`${theme.palette.paper.background}F6`, 0.15),
                minWidth: '20vw',
+               mb: 'auto',
             })}
          >
             <Typography
