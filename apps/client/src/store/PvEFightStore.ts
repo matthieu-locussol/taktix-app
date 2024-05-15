@@ -44,7 +44,7 @@ export class PvEFightStore {
 
    public setFightResults(fightResults: PvEFightResults): void {
       this._fightResults = fightResults;
-      this.closeFightResults();
+      this.isFightResultsMenuOpened = false;
    }
 
    public setAlliesMoney(alliesMoney: Record<string, number>): void {
