@@ -44,7 +44,15 @@ export const ContextMenu = observer(() => {
          }}
       >
          {contextMenuStore.currentSubMenu.length > 0 && (
-            <Typography variant="body2" align="center" fontWeight="bold" sx={{ py: 0.75, px: 1 }}>
+            <Typography
+               variant="body2"
+               fontWeight="bold"
+               sx={{
+                  py: 0.75,
+                  px: 1,
+                  color: (theme) => theme.palette.link.hover,
+               }}
+            >
                {contextMenuStore.currentSubMenuTitle}
             </Typography>
          )}
