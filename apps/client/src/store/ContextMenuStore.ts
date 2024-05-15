@@ -102,7 +102,7 @@ export class ContextMenuStore {
       }[type];
 
       return {
-         text: `[${i18next.t(type satisfies TranslationKey)}] ${i18next.t(sprite.name)}`,
+         text: i18next.t(sprite.name),
          subMenu,
       };
    }
@@ -118,9 +118,7 @@ export class ContextMenuStore {
       }[type];
 
       return {
-         text: `[${i18next.t('object' satisfies TranslationKey)}] ${i18next.t(
-            type satisfies TranslationKey,
-         )}`,
+         text: i18next.t(type satisfies TranslationKey),
          subMenu,
       };
    }

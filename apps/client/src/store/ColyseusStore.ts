@@ -537,6 +537,7 @@ export class ColyseusStore {
          switch (id) {
             case 'Sleep':
                {
+                  this._store.soundsStore.play('sleep');
                   this._store.characterStore.setCurrentHealth(this._store.characterStore.maxHealth);
                }
                break;
