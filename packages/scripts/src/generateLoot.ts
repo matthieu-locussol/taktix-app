@@ -1,7 +1,7 @@
 import { LootMgt, NumberMgt, monsters } from 'shared';
 
 const AREA_BONUS = 100;
-const MONSTER_NAME = 'enemy-nono';
+const MONSTER_NAME = 'enemy-green-slime';
 const MONSTER_TYPE = 'common';
 const MONSTER_LEVEL = 2;
 const PROSPECT = 40;
@@ -76,7 +76,7 @@ const generateLoot = () => {
 
    const monstersCount = NumberMgt.random(1, 3);
    const generatedMonsters = Array.from({ length: monstersCount }).map(() =>
-      monsters['enemy-nono']()({ level: NumberMgt.random(1, 3) }),
+      monsters['enemy-green-slime']()({ level: NumberMgt.random(1, 3) }),
    );
    const loots = LootMgt.computeMonstersLoot({
       areaBonus: AREA_BONUS,

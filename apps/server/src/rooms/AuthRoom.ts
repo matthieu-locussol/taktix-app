@@ -360,8 +360,8 @@ export class AuthRoom extends Room {
                            type: weaponDamagesTypes[
                               NumberMgt.random(0, weaponDamagesTypes.length - 1)
                            ],
-                           min: 4,
-                           max: 10,
+                           min: 1,
+                           max: 2,
                         },
                      ]),
                   },

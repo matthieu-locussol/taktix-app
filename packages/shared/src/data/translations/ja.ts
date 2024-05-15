@@ -201,7 +201,10 @@ export const translationsJa: LanguageTranslations = {
    staff: 'スタッフ',
 
    // Enemies
-   'enemy-nono': 'ノノ、小さなロボット',
+   'enemy-green-slime': 'グリーンスライム',
+   'enemy-red-slime': 'レッドスライム',
+   'enemy-blue-slime': 'ブルースライム',
+   'enemy-pink-slime': 'ピンクスライム',
 
    // Statistics
    'earthDamages_+f': '地のダメージ',

@@ -5,6 +5,7 @@ import {
    type Direction,
    InteractiveObject,
    InteractiveObjectData,
+   MapFightData,
    NPC,
    type NPCSpot,
    type Room,
@@ -12,6 +13,7 @@ import {
    type TeleportationSpot,
    _assertTrue,
    interactiveObjectsKeys,
+   isMonsterName,
    zDirection,
 } from 'shared';
 
@@ -29,6 +31,11 @@ interface TiledMapJson {
          height: number;
          x: number;
          y: number;
+      }[];
+      properties: {
+         name: string;
+         type: string;
+         value: string;
       }[];
    }[];
    tilesets: {
@@ -51,6 +58,7 @@ const generateMaps = () => {
    regenerateNpcSpots(maps);
    regenerateTeleportationPlaces(maps);
    regenerateInteractiveObjects(maps);
+   regenerateFights(maps);
 };
 
 const regenerateSharedRoom = (maps: string[]) => {
@@ -490,6 +498,81 @@ export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boo
 
    writeFileSync(interactiveObjectsPath, interactiveObjectsBlob, { flag: 'w' });
    console.log('[Shared] ✅  Regenerated interactiveObjects.ts');
+};
+
+const regenerateFights = (maps: string[]) => {
+   const mapsFights: Record<Room, MapFightData | null> = {} as Record<Room, MapFightData | null>;
+
+   mapsFights.AAA_InitialRoom = null;
+
+   for (const map of maps) {
+      const tiledMapPath = resolve(
+         __dirname,
+         `../../../apps/client/public/assets/maps/${map}.json`,
+      );
+      const tiledMapBlob = readFileSync(tiledMapPath, { encoding: 'utf-8' });
+      const tiledMap: TiledMapJson = JSON.parse(tiledMapBlob);
+
+      const roomName = `${map}Room` as Room;
+      mapsFights[roomName] = null;
+
+      const fightsLayer = tiledMap.layers.find(({ name }) => name === 'Fights');
+      if (fightsLayer !== undefined) {
+         const fights: MapFightData['fights'] = [];
+
+         fightsLayer.objects.forEach(({ properties, x, y, width, height }) => {
+            const fightIds = properties.find(({ name }) => name === 'fightIds');
+            const name = properties.find(({ name }) => name === 'name');
+            const radius = properties.find(({ name }) => name === 'radius');
+
+            assert(fightIds !== undefined, `fightIds property not found in ${map}.json`);
+            assert(name !== undefined, `name property not found in ${map}.json`);
+            assert(radius !== undefined, `radius property not found in ${map}.json`);
+
+            if (!isMonsterName(name.value)) {
+               throw new Error(`Unknown monster name: '${name.value}'`);
+            }
+
+            fights.push({
+               fightsIds: fightIds.value.split(',').map(Number),
+               positionX: x / width,
+               positionY: y / height,
+               name: name.value,
+               radius: Number(radius.value),
+            });
+         });
+
+         if (fights.length > 0) {
+            const maxFights = fightsLayer.properties.find(({ name }) => name === 'maxFights');
+            assert(maxFights !== undefined, `maxFights property not found in ${map}.json`);
+
+            const timeoutRegenerationInMns = fightsLayer.properties.find(
+               ({ name }) => name === 'timeoutRegenerationInMns',
+            );
+            assert(
+               timeoutRegenerationInMns !== undefined,
+               `timeoutRegenerationInMns property not found in ${map}.json`,
+            );
+
+            mapsFights[roomName] = {
+               fights,
+               maxFights: Number(maxFights.value),
+               timeoutRegeneration: 1_000 * 60 * Number(timeoutRegenerationInMns.value),
+            };
+         }
+      }
+   }
+
+   const mapsFightsPath = resolve(__dirname, '../../shared/src/data/mapsFights.ts');
+   const mapsFightsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
+import type { MapFightData } from '../types/MapFight';
+import type { Room } from '../types/Room';
+
+export const mapsFights: Record<Room, MapFightData | null> = ${JSON.stringify(mapsFights, null, 3)};
+`;
+
+   writeFileSync(mapsFightsPath, mapsFightsBlob, { flag: 'w' });
+   console.log('[Shared] ✅  Regenerated mapsFights.ts');
 };
 
 generateMaps();

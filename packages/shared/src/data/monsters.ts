@@ -2,6 +2,7 @@ import { Animation } from '../types/Animation';
 import { MonsterType, zMonsterType } from '../types/Monster';
 import { PvEFighterInformations } from '../types/PvEFight';
 import { WeaponDamages } from '../types/Weapon';
+import { MonsterMgt } from '../utils/monsterMgt';
 import { StatisticMgt } from '../utils/statisticMgt';
 import { MonsterSprite } from './monstersSprites';
 import { TranslationKey } from './translations';
@@ -79,75 +80,360 @@ export const withMonsterType = (
 const monstersArray: (() => MonsterGenerator)[] = [
    () =>
       withMonsterType([], (type) => ({ level }) => ({
-         name: 'enemy-nono',
+         name: 'enemy-green-slime',
          spritesheet: 'Enemy_001',
          type,
          items: [],
          monsterType: type,
          animation: Animation.Flower,
          health: {
-            common: 10 + level * 10,
-            magic: 20 + level * 15,
-            rare: 30 + level * 20,
+            common: MonsterMgt.scaleMonsterLife(level, 2),
+            magic: MonsterMgt.scaleMonsterLife(level, 3),
+            rare: MonsterMgt.scaleMonsterLife(level, 4),
          }[type],
-         magicShield: {
-            common: 20 + level * 5,
-            magic: 30 + level * 10,
-            rare: 40 + level * 15,
-         }[type],
+         magicShield: 0,
          level,
-         experience: {
-            common: 20 + level * 5,
-            magic: 30 + level * 7,
-            rare: 50 + level * 10,
-         }[type],
+         experience: MonsterMgt.scaleMonsterExperience(level, type),
          weaponDamages: (
             {
-               common: [{ weaponType: 'axe1H', type: 'strength', min: level, max: level * 3 }],
+               common: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'strength',
+                     min: 1 + Math.floor(level / 2),
+                     max: 3 + level,
+                  },
+               ],
                magic: [
-                  { weaponType: 'axe1H', type: 'strength', min: level, max: level * 2 },
-                  { weaponType: 'axe1H', type: 'intelligence', min: level, max: level * 3 },
+                  {
+                     weaponType: 'axe1H',
+                     type: 'strength',
+                     min: 3 + Math.floor(level / 2),
+                     max: 5 + level,
+                  },
                ],
                rare: [
-                  { weaponType: 'axe1H', type: 'strength', min: level * 2, max: level * 3 },
-                  { weaponType: 'axe1H', type: 'luck', min: level * 2, max: level * 2 },
+                  {
+                     weaponType: 'axe1H',
+                     type: 'strength',
+                     min: 3 + level,
+                     max: 5 + level * 2,
+                  },
                ],
             } as Record<MonsterType, WeaponDamages[]>
          )[type],
          rawStatistics: StatisticMgt.serializeStatistics(
             StatisticMgt.makeMockedStatistics({
-               'strength_+f': {
-                  common: level * 8,
-                  magic: level * 9,
-                  rare: level * 10,
-               }[type],
-               'precision_+f': {
-                  common: level * 5,
-                  magic: level * 6,
-                  rare: level * 7,
-               }[type],
-               'evasion_+f': {
-                  common: 35 + level * 2,
-                  magic: 35 + level * 3,
-                  rare: 35 + level * 4,
-               }[type],
+               'strength_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'dexterity_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'intelligence_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'luck_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'precision_+f':
+                  2 *
+                  MonsterMgt.scaleMonsterStatistic(
+                     level,
+                     MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                  ),
+               'evasion_+f':
+                  2 *
+                  MonsterMgt.scaleMonsterStatistic(
+                     level,
+                     MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                  ),
+               'criticalStrikeChance_+f': 5,
+               'criticalStrikeDamages_+%': 10,
+            }),
+         ),
+         talents: [],
+         uniquesPowers: [],
+         money: { min: 30, max: 70 },
+      })),
+   () =>
+      withMonsterType([], (type) => ({ level }) => ({
+         name: 'enemy-red-slime',
+         spritesheet: 'Enemy_002',
+         type,
+         items: [],
+         monsterType: type,
+         animation: Animation.Flower,
+         health: {
+            common: MonsterMgt.scaleMonsterLife(level, 2),
+            magic: MonsterMgt.scaleMonsterLife(level, 3),
+            rare: MonsterMgt.scaleMonsterLife(level, 4),
+         }[type],
+         magicShield:
+            MonsterMgt.scaleMonsterStatistic(
+               level,
+               MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+            ) / 2,
+         level,
+         experience: MonsterMgt.scaleMonsterExperience(level, type),
+         weaponDamages: (
+            {
+               common: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'intelligence',
+                     min: 2 + Math.floor(level / 2),
+                     max: 3 + level,
+                  },
+               ],
+               magic: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'intelligence',
+                     min: 3 + Math.floor(level / 2),
+                     max: 6 + level,
+                  },
+               ],
+               rare: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'intelligence',
+                     min: 3 + level,
+                     max: 6 + level * 2,
+                  },
+               ],
+            } as Record<MonsterType, WeaponDamages[]>
+         )[type],
+         rawStatistics: StatisticMgt.serializeStatistics(
+            StatisticMgt.makeMockedStatistics({
+               'strength_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'dexterity_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'intelligence_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'luck_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'precision_+f':
+                  2 *
+                  MonsterMgt.scaleMonsterStatistic(
+                     level,
+                     MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                  ),
+               'evasion_+f':
+                  2 *
+                  MonsterMgt.scaleMonsterStatistic(
+                     level,
+                     MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                  ),
+               'criticalStrikeChance_+f': 5,
                'criticalStrikeDamages_+%': 30,
             }),
          ),
          talents: [],
          uniquesPowers: [],
-         money: {
-            min: {
-               common: 20,
-               magic: 25,
-               rare: 40,
-            }[type],
-            max: {
-               common: 60,
-               magic: 70,
-               rare: 100,
-            }[type],
-         },
+         money: { min: 30, max: 70 },
+      })),
+   () =>
+      withMonsterType([], (type) => ({ level }) => ({
+         name: 'enemy-blue-slime',
+         spritesheet: 'Enemy_003',
+         type,
+         items: [],
+         monsterType: type,
+         animation: Animation.Flower,
+         health: {
+            common: MonsterMgt.scaleMonsterLife(level, 2),
+            magic: MonsterMgt.scaleMonsterLife(level, 3),
+            rare: MonsterMgt.scaleMonsterLife(level, 4),
+         }[type],
+         magicShield:
+            MonsterMgt.scaleMonsterStatistic(
+               level,
+               MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+            ) / 2,
+         level,
+         experience: MonsterMgt.scaleMonsterExperience(level, type),
+         weaponDamages: (
+            {
+               common: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'luck',
+                     min: 2 + Math.floor(level / 2),
+                     max: 3 + level,
+                  },
+               ],
+               magic: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'luck',
+                     min: 3 + Math.floor(level / 2),
+                     max: 6 + level,
+                  },
+               ],
+               rare: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'luck',
+                     min: 3 + level,
+                     max: 6 + level * 2,
+                  },
+               ],
+            } as Record<MonsterType, WeaponDamages[]>
+         )[type],
+         rawStatistics: StatisticMgt.serializeStatistics(
+            StatisticMgt.makeMockedStatistics({
+               'strength_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'dexterity_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'intelligence_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'luck_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'precision_+f':
+                  2 *
+                  MonsterMgt.scaleMonsterStatistic(
+                     level,
+                     MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                  ),
+               'evasion_+f':
+                  2 *
+                  MonsterMgt.scaleMonsterStatistic(
+                     level,
+                     MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                  ),
+               'criticalStrikeChance_+f': 5,
+               'criticalStrikeDamages_+%': 30,
+            }),
+         ),
+         talents: [],
+         uniquesPowers: [],
+         money: { min: 30, max: 70 },
+      })),
+   () =>
+      withMonsterType([], (type) => ({ level }) => ({
+         name: 'enemy-pink-slime',
+         spritesheet: 'Enemy_004',
+         type,
+         items: [],
+         monsterType: type,
+         animation: Animation.Flower,
+         health: {
+            common: MonsterMgt.scaleMonsterLife(level, 2),
+            magic: MonsterMgt.scaleMonsterLife(level, 3),
+            rare: MonsterMgt.scaleMonsterLife(level, 4),
+         }[type],
+         magicShield: MonsterMgt.scaleMonsterStatistic(
+            level,
+            MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type] / 2,
+         ),
+         level,
+         experience: MonsterMgt.scaleMonsterExperience(level, type),
+         weaponDamages: (
+            {
+               common: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'intelligence',
+                     min: 2 + Math.floor(level / 2),
+                     max: 3 + level,
+                  },
+                  {
+                     weaponType: 'axe1H',
+                     type: 'luck',
+                     min: 2 + Math.floor(level / 2),
+                     max: 3 + level,
+                  },
+               ],
+               magic: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'intelligence',
+                     min: 3 + Math.floor(level / 2),
+                     max: 5 + level,
+                  },
+                  {
+                     weaponType: 'axe1H',
+                     type: 'luck',
+                     min: 3 + Math.floor(level / 2),
+                     max: 5 + level,
+                  },
+               ],
+               rare: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'intelligence',
+                     min: 3 + level,
+                     max: 5 + level * 2,
+                  },
+                  {
+                     weaponType: 'axe1H',
+                     type: 'luck',
+                     min: 3 + level,
+                     max: 5 + level * 2,
+                  },
+               ],
+            } as Record<MonsterType, WeaponDamages[]>
+         )[type],
+         rawStatistics: StatisticMgt.serializeStatistics(
+            StatisticMgt.makeMockedStatistics({
+               'strength_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'dexterity_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'intelligence_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'luck_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'precision_+f':
+                  2 *
+                  MonsterMgt.scaleMonsterStatistic(
+                     level,
+                     MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                  ),
+               'evasion_+f':
+                  2 *
+                  MonsterMgt.scaleMonsterStatistic(
+                     level,
+                     MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                  ),
+               'criticalStrikeChance_+f': 5,
+               'criticalStrikeDamages_+%': 30,
+            }),
+         ),
+         talents: [],
+         uniquesPowers: [],
+         money: { min: 30, max: 70 },
       })),
 ] as const;
 
