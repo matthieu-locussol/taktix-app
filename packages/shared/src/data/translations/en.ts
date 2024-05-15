@@ -145,6 +145,7 @@ export const translationsEn = {
    sortItems: 'Sort items',
    lootBonus: 'Loot bonus',
    spin: 'Spin the wheel',
+   gatcha_title: 'Wishing well',
 
    // Rarities
    common: 'Common',

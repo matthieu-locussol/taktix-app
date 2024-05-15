@@ -150,6 +150,7 @@ export const translationsFr: LanguageTranslations = {
    sortItems: 'Trier les objets',
    lootBonus: 'Bonus de butin',
    spin: 'Tourner la roue',
+   gatcha_title: 'Puits à vœux',
 
    // Rarities
    common: 'Commun',

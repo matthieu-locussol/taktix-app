@@ -149,6 +149,7 @@ export const translationsJa: LanguageTranslations = {
    sortItems: 'アイテムをソート',
    lootBonus: '戦利品ボーナス',
    spin: 'ルーレットを回す',
+   gatcha_title: '願いの井戸',
 
    // Rarities
    common: 'コモン',
