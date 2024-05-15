@@ -13,7 +13,6 @@ vi.mock('./Store', () => {
       getCurrentScene: vi.fn().mockResolvedValue({
          setGridVisibility: mocks.setGridVisibility,
          setMinimapVisibility: mocks.setMinimapVisibility,
-         setTransparency: mocks.setTransparency,
       }),
    };
 
@@ -31,7 +30,6 @@ describe('HudStore', () => {
       expect(store).toBeDefined();
       expect(store.isGridVisible).toBe(false);
       expect(store.isMinimapVisible).toBe(true);
-      expect(store.isTransparencyEnabled).toBe(false);
       expect(store.chatboxWidth).toBe(40);
       expect(store.chatboxHeight).toBe(15);
       expect(store.chatboxInputHeight).toBe(12);
@@ -60,15 +58,6 @@ describe('HudStore', () => {
 
       expect(store.isMinimapVisible).toBe(false);
       expect(mocks.setMinimapVisibility).toHaveBeenCalledWith(false);
-   });
-
-   it('should toggle transparency', async () => {
-      const store = new HudStore(new Store());
-
-      await store.toggleTransparency();
-
-      expect(store.isTransparencyEnabled).toBe(true);
-      expect(mocks.setTransparency).toHaveBeenCalledWith(true);
    });
 
    it('setChatboxWidth', () => {

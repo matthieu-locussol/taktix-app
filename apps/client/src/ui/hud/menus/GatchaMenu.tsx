@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/CloseRounded';
 import {
    Box,
    Button,
+   CircularProgress,
    Dialog,
    DialogActions,
    DialogContent,
@@ -175,7 +176,11 @@ export const GatchaMenu = observer(() => {
                   onClick={() => gatchaMenuStore.start()}
                   disabled={!gatchaMenuStore.canSpin}
                >
-                  {t('spin')}
+                  {gatchaMenuStore.loading ? (
+                     <CircularProgress color="inherit" size={24} />
+                  ) : (
+                     t('spin')
+                  )}
                </Button>
             </DialogActions>
          </StyledDialog>

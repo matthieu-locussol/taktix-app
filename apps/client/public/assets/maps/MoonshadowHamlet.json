@@ -2259,10 +2259,622 @@
          "visible": true,
          "x": 0,
          "y": 0
+      },
+      {
+         "draworder": "topdown",
+         "id": 15,
+         "name": "Fights",
+         "objects": [
+            {
+               "height": 16,
+               "id": 10,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 592,
+               "y": 912
+            },
+            {
+               "height": 16,
+               "id": 11,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 608,
+               "y": 944
+            },
+            {
+               "height": 16,
+               "id": 12,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 464,
+               "y": 864
+            },
+            {
+               "height": 16,
+               "id": 13,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "2"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-red-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 3
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 512,
+               "y": 896
+            },
+            {
+               "height": 16,
+               "id": 14,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "3"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-blue-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 368,
+               "y": 832
+            },
+            {
+               "height": 16,
+               "id": 15,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 3
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 832,
+               "y": 928
+            },
+            {
+               "height": 16,
+               "id": 16,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "2"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-red-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 880,
+               "y": 928
+            },
+            {
+               "height": 16,
+               "id": 17,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "2"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-red-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 896,
+               "y": 960
+            },
+            {
+               "height": 16,
+               "id": 18,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "3"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-blue-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 3
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 928,
+               "y": 912
+            },
+            {
+               "height": 16,
+               "id": 19,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "4"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-pink-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 3
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 960,
+               "y": 784
+            },
+            {
+               "height": 16,
+               "id": 20,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 368,
+               "y": 336
+            },
+            {
+               "height": 16,
+               "id": 21,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "3"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-blue-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 464,
+               "y": 352
+            },
+            {
+               "height": 16,
+               "id": 22,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "4"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-pink-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 560,
+               "y": 160
+            },
+            {
+               "height": 16,
+               "id": 23,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 496,
+               "y": 128
+            },
+            {
+               "height": 16,
+               "id": 24,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 3
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 592,
+               "y": 432
+            },
+            {
+               "height": 16,
+               "id": 25,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "2"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-red-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 848,
+               "y": 448
+            },
+            {
+               "height": 16,
+               "id": 26,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "2"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-red-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 816,
+               "y": 336
+            },
+            {
+               "height": 16,
+               "id": 27,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 2
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 864,
+               "y": 960
+            },
+            {
+               "height": 16,
+               "id": 28,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 3
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 560,
+               "y": 464
+            },
+            {
+               "height": 16,
+               "id": 29,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "2"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-red-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 3
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 624,
+               "y": 320
+            },
+            {
+               "height": 16,
+               "id": 30,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "fightIds",
+                     "type": "string",
+                     "value": "1"
+                  },
+                  {
+                     "name": "name",
+                     "type": "string",
+                     "value": "enemy-green-slime"
+                  },
+                  {
+                     "name": "radius",
+                     "type": "int",
+                     "value": 3
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 608,
+               "y": 336
+            }
+         ],
+         "opacity": 1,
+         "properties": [
+            {
+               "name": "maxFights",
+               "type": "int",
+               "value": 10
+            },
+            {
+               "name": "timeoutRegenerationInMns",
+               "type": "int",
+               "value": 1
+            }
+         ],
+         "type": "objectgroup",
+         "visible": true,
+         "x": 0,
+         "y": 0
       }
    ],
-   "nextlayerid": 15,
-   "nextobjectid": 9,
+   "nextlayerid": 16,
+   "nextobjectid": 31,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.10.2",

@@ -541,22 +541,18 @@ export abstract class Scene extends Phaser.Scene {
             );
 
             player.listen('x', (newX) => {
-               console.log('newX', newX);
                this.setNextX(name, newX);
             });
 
             player.listen('y', (newY) => {
-               console.log('newY', newY);
                this.setNextY(name, newY);
             });
 
             player.listen('direction', (newDirection) => {
-               console.log('newDirection', newDirection);
                this.setPlayerDirection(name, newDirection as Direction);
             });
 
             player.listen('isFight', (isFight) => {
-               console.log('isFight', isFight);
                this.setCharacterFighting(name, isFight);
             });
          }
@@ -831,7 +827,14 @@ export abstract class Scene extends Phaser.Scene {
       const spriteName = store.characterStore.name === name ? INTERNAL_PLAYER_NAME : name;
       const characterSprite = this.gridEngine.getSprite(spriteName);
 
-      if (characterSprite !== undefined) {
+      if (this.gridEngine.isMoving(spriteName)) {
+         const subscription = this.gridEngine.movementStopped().subscribe(({ charId }) => {
+            if (charId === spriteName) {
+               this.setCharacterFighting(name, isFighting);
+               subscription.unsubscribe();
+            }
+         });
+      } else if (characterSprite !== undefined) {
          const fightIconSprite = this.fightIcons[spriteName];
          if (fightIconSprite !== undefined) {
             fightIconSprite.destroy();

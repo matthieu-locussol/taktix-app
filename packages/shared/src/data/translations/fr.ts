@@ -202,7 +202,10 @@ export const translationsFr: LanguageTranslations = {
    staff: 'Bâton',
 
    // Enemies
-   'enemy-nono': 'Nono, le petit robot',
+   'enemy-green-slime': 'Slime vert',
+   'enemy-red-slime': 'Slime rouge',
+   'enemy-blue-slime': 'Slime bleu',
+   'enemy-pink-slime': 'Slime rose',
 
    // Statistics
    'earthDamages_+f': 'Dégâts de terre',

@@ -23,6 +23,18 @@ vi.mock('i18next', () => ({
    },
 }));
 
+vi.mock('../utils/phaser', () => {
+   const moveToShape = vi.fn().mockImplementation(() => {
+      // This is a mock
+   });
+
+   const EntityTypeMock = {
+      Character: 'Character',
+   };
+
+   return { EntityType: EntityTypeMock, moveToShape };
+});
+
 describe('ContextMenuStore', () => {
    it('should be initialize', () => {
       const contextMenuStore = new ContextMenuStore(new Store());

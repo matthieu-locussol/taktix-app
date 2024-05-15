@@ -608,7 +608,7 @@ export class MapRoom extends Room<MapState> {
       const item = LootMgt.computeOneLoot({
          areaBonus: lootBonus,
          monsterLevel: player.getLevel(),
-         monsterName: 'enemy-nono',
+         monsterName: 'enemy-green-slime',
          monsterType: 'common',
          prospect: player.getRealStatistics().prospect,
       });

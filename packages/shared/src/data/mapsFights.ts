@@ -1,41 +1,167 @@
+// This file has been automatically generated. DO NOT edit it manually.
+
+import type { MapFightData } from '../types/MapFight';
 import type { Room } from '../types/Room';
-import { MonsterName } from './monsters';
-import { MonsterSprite } from './monstersSprites';
 
-interface MapFightData {
-   fights: {
-      fightsIds: number[];
-      positionX: number;
-      positionY: number;
-      radius: number;
-      spritesheet: MonsterSprite;
-      name: MonsterName;
-   }[];
-   maxFights: number;
-   timeoutRegeneration: number;
-}
-
-export const mapsFights: Partial<Record<Room, MapFightData>> = {
+export const mapsFights: Record<Room, MapFightData | null> = {
+   AAA_InitialRoom: null,
+   CloudsRoom: null,
+   DungeonRoom: null,
+   ForestRoom: null,
+   HouseRoom: null,
    MoonshadowHamletRoom: {
       fights: [
          {
             fightsIds: [1],
-            positionX: 31,
-            positionY: 38,
-            radius: 1,
-            spritesheet: 'Enemy_008',
-            name: 'enemy-nono',
+            positionX: 37,
+            positionY: 57,
+            name: 'enemy-green-slime',
+            radius: 2,
          },
          {
             fightsIds: [1],
-            positionX: 24,
-            positionY: 38,
+            positionX: 38,
+            positionY: 59,
+            name: 'enemy-green-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [1],
+            positionX: 29,
+            positionY: 54,
+            name: 'enemy-green-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [2],
+            positionX: 32,
+            positionY: 56,
+            name: 'enemy-red-slime',
             radius: 3,
-            spritesheet: 'Enemy_010',
-            name: 'enemy-nono',
+         },
+         {
+            fightsIds: [3],
+            positionX: 23,
+            positionY: 52,
+            name: 'enemy-blue-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [1],
+            positionX: 52,
+            positionY: 58,
+            name: 'enemy-green-slime',
+            radius: 3,
+         },
+         {
+            fightsIds: [2],
+            positionX: 55,
+            positionY: 58,
+            name: 'enemy-red-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [2],
+            positionX: 56,
+            positionY: 60,
+            name: 'enemy-red-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [3],
+            positionX: 58,
+            positionY: 57,
+            name: 'enemy-blue-slime',
+            radius: 3,
+         },
+         {
+            fightsIds: [4],
+            positionX: 60,
+            positionY: 49,
+            name: 'enemy-pink-slime',
+            radius: 3,
+         },
+         {
+            fightsIds: [1],
+            positionX: 23,
+            positionY: 21,
+            name: 'enemy-green-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [3],
+            positionX: 29,
+            positionY: 22,
+            name: 'enemy-blue-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [4],
+            positionX: 35,
+            positionY: 10,
+            name: 'enemy-pink-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [1],
+            positionX: 31,
+            positionY: 8,
+            name: 'enemy-green-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [1],
+            positionX: 37,
+            positionY: 27,
+            name: 'enemy-green-slime',
+            radius: 3,
+         },
+         {
+            fightsIds: [2],
+            positionX: 53,
+            positionY: 28,
+            name: 'enemy-red-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [2],
+            positionX: 51,
+            positionY: 21,
+            name: 'enemy-red-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [1],
+            positionX: 54,
+            positionY: 60,
+            name: 'enemy-green-slime',
+            radius: 2,
+         },
+         {
+            fightsIds: [1],
+            positionX: 35,
+            positionY: 29,
+            name: 'enemy-green-slime',
+            radius: 3,
+         },
+         {
+            fightsIds: [2],
+            positionX: 39,
+            positionY: 20,
+            name: 'enemy-red-slime',
+            radius: 3,
+         },
+         {
+            fightsIds: [1],
+            positionX: 38,
+            positionY: 21,
+            name: 'enemy-green-slime',
+            radius: 3,
          },
       ],
-      maxFights: 3,
-      timeoutRegeneration: 1000 * 60 * 1,
+      maxFights: 10,
+      timeoutRegeneration: 60000,
    },
+   MoonshadowHotelRoom: null,
+   MoonshadowInnRoom: null,
 };

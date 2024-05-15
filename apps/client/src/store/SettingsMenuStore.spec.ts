@@ -10,7 +10,7 @@ vi.mock('./Store', () => {
             stopFullscreen: vi.fn(),
          },
          sound: {
-            volume: 50,
+            volume: 10,
          },
       },
    };
@@ -35,7 +35,7 @@ describe('SettingsMenuStore', () => {
          fullScreen: false,
          keyboardLayout: 'arrows',
          language: 'en',
-         volume: 50,
+         volume: 10,
          fullScreenMenus: {
             community: true,
             settings: true,
@@ -48,7 +48,7 @@ describe('SettingsMenuStore', () => {
       expect(store.defaultState).toEqual(defaults);
       expect(store.savedState).toEqual(defaults);
       expect(store.keyboardLayout).toBe('arrows');
-      expect(store.volume).toBe(50);
+      expect(store.volume).toBe(10);
       expect(store.fullScreen).toBe(false);
       expect(store.language).toBe('en');
       expect(store.speedFactor).toBe(1);
@@ -178,7 +178,7 @@ describe('SettingsMenuStore', () => {
       store.setVolume(100);
       expect(store.canSave()).toBe(true);
 
-      store.setVolume(50);
+      store.setVolume(10);
       expect(store.canSave()).toBe(false);
    });
 });

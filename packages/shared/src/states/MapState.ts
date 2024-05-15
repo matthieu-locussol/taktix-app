@@ -1,5 +1,6 @@
 import { MapSchema, Schema, type } from '@colyseus/schema';
 import { mapsFights } from '../data/mapsFights';
+import { monsters } from '../data/monsters';
 import { Room } from '../types/Room';
 import { NumberMgt } from '../utils/numberMgt';
 import { FightState } from './FightState';
@@ -55,7 +56,7 @@ export class MapState extends Schema {
 
    startFightsRegeneration(room: Room) {
       const mapFightData = mapsFights[room];
-      if (mapFightData === undefined) {
+      if (mapFightData === null) {
          return;
       }
 
@@ -63,7 +64,6 @@ export class MapState extends Schema {
 
       const { timeoutRegeneration } = mapFightData;
       setInterval(async () => {
-         console.log(`[MapRoom][${room}] Regenerating fights...`);
          this.generateAllFights(room);
       }, timeoutRegeneration);
    }
@@ -74,13 +74,13 @@ export class MapState extends Schema {
 
    private generateAllFights(room: Room) {
       while (this.generateFightsIfNeeded(room)) {
-         // Keep generating fights until the max fights is reached
+         console.log(`[MapRoom][${room}] Regenerating fights...`);
       }
    }
 
    private generateFightsIfNeeded(room: Room): boolean {
       const mapFightData = mapsFights[room];
-      if (mapFightData === undefined) {
+      if (mapFightData === null) {
          return false;
       }
 
@@ -116,7 +116,7 @@ export class MapState extends Schema {
          randomFight.positionX,
          randomFight.positionY,
          randomFight.radius,
-         randomFight.spritesheet,
+         monsters[randomFight.name]()({ level: 1 }).spritesheet,
       );
 
       this.fights.set(fight.id, fight);

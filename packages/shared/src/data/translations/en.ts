@@ -197,7 +197,10 @@ export const translationsEn = {
    staff: 'Staff',
 
    // Enemies
-   'enemy-nono': 'Nono, the little Robot',
+   'enemy-green-slime': 'Green Slime',
+   'enemy-red-slime': 'Red Slime',
+   'enemy-blue-slime': 'Blue Slime',
+   'enemy-pink-slime': 'Pink Slime',
 
    // Statistics
    'earthDamages_+f': 'Earth damages',

@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import { _assert } from 'shared/src/utils/_assert';
 
 export interface AnimationTileDataFrame {

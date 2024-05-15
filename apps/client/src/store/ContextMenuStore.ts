@@ -7,7 +7,7 @@ import { zInteractiveObject } from 'shared/src/types/InteractiveObject';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { InteractiveObjectPhaser } from '../game/Scene';
 import { npcsDialogs } from '../utils/npcsDialogs';
-import { EntityType } from '../utils/phaser';
+import { EntityType, moveToShape } from '../utils/phaser';
 import { Store } from './Store';
 
 interface MenuItem {
@@ -111,10 +111,10 @@ export class ContextMenuStore {
       const type = zInteractiveObject.parse(polygon.name);
 
       const subMenu = {
-         Teleporter: this._makeTeleporterMenu(),
+         Teleporter: this._makeTeleporterMenu(polygon),
          TeleporterCell: [],
-         Bed: this._makeBedMenu(),
-         Well: this._makeWellMenu(),
+         Bed: this._makeBedMenu(polygon),
+         Well: this._makeWellMenu(polygon),
       }[type];
 
       return {
@@ -125,12 +125,14 @@ export class ContextMenuStore {
       };
    }
 
-   private _makeTeleporterMenu(): SubMenuItem[] {
+   private _makeTeleporterMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
       return [
          {
             text: i18next.t('save' satisfies TranslationKey),
             callback: () => {
-               this._store.colyseusStore.interact('SaveTeleporter');
+               moveToShape(this._store, polygon, () => {
+                  this._store.colyseusStore.interact('SaveTeleporter');
+               });
             },
             disabled: this._store.characterStore.teleporters.includes(
                this._store.characterStore.map,
@@ -139,29 +141,35 @@ export class ContextMenuStore {
          {
             text: i18next.t('use' satisfies TranslationKey),
             callback: () => {
-               this._store.mapMenuStore.open();
+               moveToShape(this._store, polygon, () => {
+                  this._store.mapMenuStore.open();
+               });
             },
          },
       ];
    }
 
-   private _makeBedMenu(): SubMenuItem[] {
+   private _makeBedMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
       return [
          {
             text: i18next.t('sleep' satisfies TranslationKey),
             callback: () => {
-               this._store.colyseusStore.interact('Sleep');
+               moveToShape(this._store, polygon, () => {
+                  this._store.colyseusStore.interact('Sleep');
+               });
             },
          },
       ];
    }
 
-   private _makeWellMenu(): SubMenuItem[] {
+   private _makeWellMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
       return [
          {
             text: i18next.t('gamble' satisfies TranslationKey),
             callback: () => {
-               this._store.gatchaMenuStore.open();
+               moveToShape(this._store, polygon, () => {
+                  this._store.gatchaMenuStore.open();
+               });
             },
          },
       ];
@@ -242,7 +250,9 @@ export class ContextMenuStore {
          {
             text: i18next.t('fight' satisfies TranslationKey),
             callback: () => {
-               this._store.colyseusStore.fightPvE(id, fightId);
+               moveToShape(this._store, sprite, () => {
+                  this._store.colyseusStore.fightPvE(id, fightId);
+               });
             },
          },
       ];
