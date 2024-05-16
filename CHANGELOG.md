@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.55.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.53.0...v1.55.0) (2024-05-16)
+
+
+### Features
+
+* better players loading system ([1255b82](https://github.com/matthieu-locussol/taktix-app/commit/1255b825f004f9cf07dac44b78e22874e88c624f))
+* equipped item tooltip comparison ([02b392d](https://github.com/matthieu-locussol/taktix-app/commit/02b392d309dbcb345b584ef5bad53c55c798bf5c))
+* gatcha wheel ([e5695c4](https://github.com/matthieu-locussol/taktix-app/commit/e5695c4d5a4e338605d107ac5af65176af05025e))
+* Graveyard ([df509e4](https://github.com/matthieu-locussol/taktix-app/commit/df509e467cdb015862ad89ee1e722b8a49d2969a))
+* inventory sorting system ([a1549d5](https://github.com/matthieu-locussol/taktix-app/commit/a1549d5e3805b92cc01175c2efe38ed123c8e32e))
+* menu sounds ([e4f81bc](https://github.com/matthieu-locussol/taktix-app/commit/e4f81bcd163fd1288471172419348998d345e793))
+* monsters sprites ([e89680b](https://github.com/matthieu-locussol/taktix-app/commit/e89680b38801ad9f6a277087a27994b8405ddf58))
+* Moonshadow Bar ([f437fae](https://github.com/matthieu-locussol/taktix-app/commit/f437faedd194a07b8e90eeee1a6fcd26ffda338c))
+* Moonshadow Hamlet ([2bee270](https://github.com/matthieu-locussol/taktix-app/commit/2bee2703714cb955e5eb5b6cbbb3656e619e317b))
+* Moonshadow Inn & Hotel ([22d606f](https://github.com/matthieu-locussol/taktix-app/commit/22d606f7689a5f7e83bdfbf2ca462bb93b5f808b))
+* Moonshadow shop ([af9da6c](https://github.com/matthieu-locussol/taktix-app/commit/af9da6c58a04b932cd5a3466fbaa5a6924097308))
+* more enemies ([6f9729c](https://github.com/matthieu-locussol/taktix-app/commit/6f9729ca1d2dc9024f793db1417d5c0af6939236))
+* new musics ([7ebc179](https://github.com/matthieu-locussol/taktix-app/commit/7ebc179aa39c1b22de67e63e07843c0e2c8243b1))
+* Nono NPC ([ad5eeab](https://github.com/matthieu-locussol/taktix-app/commit/ad5eeabf616e02780c6fad20ec8b93b868860711))
+* rarity recycling selectors ([7d79bd5](https://github.com/matthieu-locussol/taktix-app/commit/7d79bd56a599904f911a0584a5e936a905792131))
+* recycling system for gachix ([99aef64](https://github.com/matthieu-locussol/taktix-app/commit/99aef649a74f8f8350584f2fe8d18f5588423596))
+* sleep system ([14c1b1e](https://github.com/matthieu-locussol/taktix-app/commit/14c1b1eafcae0380748e9328938bfc760c3ef5df))
+* wild battle system ([0f61d8a](https://github.com/matthieu-locussol/taktix-app/commit/0f61d8a9f6b39a683598e524a5d84a2bba4127a7))
+
+
+### Bug Fixes
+
+* 2H affixes on shield ([553e10e](https://github.com/matthieu-locussol/taktix-app/commit/553e10e7f442ce4469bf21edd40e91c455bc8359))
+* base affixes not considered in calculations ([c017e7f](https://github.com/matthieu-locussol/taktix-app/commit/c017e7fbcd9d69923d879e8e0f257eae2a9ad2c3))
+* FPS limit ([c6fc0f6](https://github.com/matthieu-locussol/taktix-app/commit/c6fc0f6e6d8504d651ab246196da7ef6d0c35e11))
+* items can be equipped based on the required level, not item level ([233fc12](https://github.com/matthieu-locussol/taktix-app/commit/233fc120f3d1d0dc8b2ba90403f3161f6ed8b68a))
+* launcher links ([a34a6a6](https://github.com/matthieu-locussol/taktix-app/commit/a34a6a614e8fc5cdfde79d728b4749917a0c17d5))
+* no default weapon when creating character ([23c4dea](https://github.com/matthieu-locussol/taktix-app/commit/23c4dea94c0e357989d4c9771c69e3ac1c296cd5))
+* not being able to equip dropped items without reconnecting ([03ac310](https://github.com/matthieu-locussol/taktix-app/commit/03ac31003e40d457efa7d795a312b04db879eced))
+* show tooltip on health/experience bars ([0863b71](https://github.com/matthieu-locussol/taktix-app/commit/0863b71a0553084d428d9fc92b23d6c8778ec6ec))
+* wild battles are not invisible anymore ([dcfd01f](https://github.com/matthieu-locussol/taktix-app/commit/dcfd01fdaa324a7744a937ccd10c8b940d3441b3))
+
 ## [1.54.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.21.0...v1.54.0) (2024-05-07)
 
 
