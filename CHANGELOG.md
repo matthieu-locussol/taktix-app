@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.56.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.55.0...v1.56.0) (2024-05-16)
+
+
+### Features
+
+* faster statistics boost & uncapped maximum level ([f7ea773](https://github.com/matthieu-locussol/taktix-app/commit/f7ea773053afe19c930797b81745528ba052f8df))
+
 ## [1.55.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.53.0...v1.55.0) (2024-05-16)
 
 
