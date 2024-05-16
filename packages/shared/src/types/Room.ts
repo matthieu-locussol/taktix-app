@@ -9,6 +9,7 @@ const rooms = [
    'MoonshadowHamletRoom',
    'MoonshadowHotelRoom',
    'MoonshadowInnRoom',
+   'MoonshadowShopRoom',
 ] as const;
 
 export const zRoom = ZodMgt.constructZodLiteralUnionType(rooms.map((room) => z.literal(room)));

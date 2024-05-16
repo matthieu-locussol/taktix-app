@@ -57,6 +57,18 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
             },
          },
       },
+      {
+         x: 15,
+         y: 31,
+         destinationMapName: 'MoonshadowShopRoom',
+         destinationMapData: {
+            entranceDirection: Direction.LEFT,
+            entrancePosition: {
+               x: 26,
+               y: 27,
+            },
+         },
+      },
    ],
    MoonshadowHotelRoom: [
       {
@@ -118,6 +130,20 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
             entrancePosition: {
                x: 24,
                y: 22,
+            },
+         },
+      },
+   ],
+   MoonshadowShopRoom: [
+      {
+         x: 27,
+         y: 27,
+         destinationMapName: 'MoonshadowHamletRoom',
+         destinationMapData: {
+            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 15,
+               y: 32,
             },
          },
       },

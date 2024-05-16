@@ -57,6 +57,7 @@ export const INTERACTIVE_OBJECTS: Record<Room, InteractiveObjectData[]> = {
       },
    ],
    MoonshadowInnRoom: [],
+   MoonshadowShopRoom: [],
 };
 
 export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boolean>> = {
@@ -89,6 +90,13 @@ export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boo
       WineBottle: false,
    },
    MoonshadowInnRoom: {
+      Teleporter: false,
+      TeleporterCell: false,
+      Bed: false,
+      Well: false,
+      WineBottle: false,
+   },
+   MoonshadowShopRoom: {
       Teleporter: false,
       TeleporterCell: false,
       Bed: false,

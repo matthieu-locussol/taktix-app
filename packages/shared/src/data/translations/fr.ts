@@ -467,6 +467,7 @@ export const translationsFr: LanguageTranslations = {
    MoonshadowInnRoom: 'Auberge d’Ombrelune',
    MoonshadowHotelRoom: 'Hôtel d’Ombrelune',
    MoonshadowBarRoom: 'Bar d’Ombrelune',
+   MoonshadowShopRoom: 'Boutique d’Ombrelune',
 
    // Channels
    Server: 'Serveur',

@@ -15,4 +15,5 @@ export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = {
    },
    MoonshadowHotelRoom: null,
    MoonshadowInnRoom: null,
+   MoonshadowShopRoom: null,
 };

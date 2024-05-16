@@ -472,6 +472,7 @@ export const translationsEn = {
    MoonshadowInnRoom: 'Moonshadow Inn',
    MoonshadowHotelRoom: 'Moonshadow Hotel',
    MoonshadowBarRoom: 'Moonshadow Bar',
+   MoonshadowShopRoom: 'Moonshadow Shop',
 
    // Channels
    Server: 'Server',

@@ -160,4 +160,5 @@ export const mapsFights: Record<Room, MapFightData | null> = {
    },
    MoonshadowHotelRoom: null,
    MoonshadowInnRoom: null,
+   MoonshadowShopRoom: null,
 };

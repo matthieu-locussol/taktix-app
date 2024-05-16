@@ -18,4 +18,5 @@ export const NPC_SPOTS: Record<Room, NPCSpot[]> = {
    ],
    MoonshadowHotelRoom: [],
    MoonshadowInnRoom: [],
+   MoonshadowShopRoom: [],
 };

@@ -466,6 +466,7 @@ export const translationsJa: LanguageTranslations = {
    MoonshadowInnRoom: '月影の宿',
    MoonshadowHotelRoom: '月影のホテル',
    MoonshadowBarRoom: '月影のバー',
+   MoonshadowShopRoom: '月影の店',
 
    // Channels
    Server: 'サーバー',
