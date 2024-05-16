@@ -2272,6 +2272,72 @@
                "width": 16,
                "x": 240,
                "y": 496
+            },
+            {
+               "height": 16,
+               "id": 33,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "destinationMapName",
+                     "type": "string",
+                     "value": "GraveyardRoom"
+                  },
+                  {
+                     "name": "entranceDirection",
+                     "type": "string",
+                     "value": "up"
+                  },
+                  {
+                     "name": "entrancePositionX",
+                     "type": "int",
+                     "value": 14
+                  },
+                  {
+                     "name": "entrancePositionY",
+                     "type": "int",
+                     "value": 23
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 736,
+               "y": 240
+            },
+            {
+               "height": 16,
+               "id": 34,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "destinationMapName",
+                     "type": "string",
+                     "value": "GraveyardRoom"
+                  },
+                  {
+                     "name": "entranceDirection",
+                     "type": "string",
+                     "value": "up"
+                  },
+                  {
+                     "name": "entrancePositionX",
+                     "type": "int",
+                     "value": 15
+                  },
+                  {
+                     "name": "entrancePositionY",
+                     "type": "int",
+                     "value": 23
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 752,
+               "y": 240
             }
          ],
          "opacity": 1,
@@ -2923,14 +2989,9 @@
          "opacity": 1,
          "properties": [
             {
-               "name": "maxFights",
-               "type": "int",
-               "value": 10
-            },
-            {
                "name": "timeoutRegenerationInMns",
                "type": "int",
-               "value": 1
+               "value": 2
             }
          ],
          "type": "objectgroup",
@@ -2940,7 +3001,7 @@
       }
    ],
    "nextlayerid": 16,
-   "nextobjectid": 33,
+   "nextobjectid": 35,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.10.2",

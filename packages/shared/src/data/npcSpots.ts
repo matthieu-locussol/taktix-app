@@ -6,6 +6,7 @@ import { Direction } from '../types/SceneData';
 
 export const NPC_SPOTS: Record<Room, NPCSpot[]> = {
    AAA_InitialRoom: [],
+   GraveyardRoom: [],
    MoonshadowBarRoom: [],
    MoonshadowHamletRoom: [
       {

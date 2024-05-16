@@ -117,6 +117,7 @@ export class ContextMenuStore {
          Bed: this._makeBedMenu(polygon),
          Well: this._makeWellMenu(polygon),
          WineBottle: this._makeWineBottleMenu(polygon),
+         GraveyardLadder: this._makeGraveyardLadderMenu(polygon),
       }[type];
 
       return {
@@ -185,6 +186,24 @@ export class ContextMenuStore {
             callback: () => {
                moveToShape(this._store, polygon, () => {
                   this._store.colyseusStore.interact('DrinkWine');
+               });
+            },
+         },
+      ];
+   }
+
+   private _makeGraveyardLadderMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
+      return [
+         {
+            text: i18next.t('use' satisfies TranslationKey),
+            callback: () => {
+               moveToShape(this._store, polygon, () => {
+                  this._store.dialogMenuStore.openDialog([
+                     {
+                        name: i18next.t('developer' satisfies TranslationKey),
+                        content: i18next.t('graveyardLadder_dialog' satisfies TranslationKey),
+                     },
+                  ]);
                });
             },
          },

@@ -5,6 +5,23 @@ import type { Room } from '../types/Room';
 
 export const INTERACTIVE_OBJECTS: Record<Room, InteractiveObjectData[]> = {
    AAA_InitialRoom: [],
+   GraveyardRoom: [
+      {
+         id: 'GraveyardLadder',
+         x: null,
+         y: null,
+      },
+      {
+         id: 'Teleporter',
+         x: null,
+         y: null,
+      },
+      {
+         id: 'TeleporterCell',
+         x: 15,
+         y: 21,
+      },
+   ],
    MoonshadowBarRoom: [
       {
          id: 'WineBottle',
@@ -67,6 +84,15 @@ export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boo
       Bed: false,
       Well: false,
       WineBottle: false,
+      GraveyardLadder: false,
+   },
+   GraveyardRoom: {
+      Teleporter: true,
+      TeleporterCell: true,
+      Bed: false,
+      Well: false,
+      WineBottle: false,
+      GraveyardLadder: true,
    },
    MoonshadowBarRoom: {
       Teleporter: false,
@@ -74,6 +100,7 @@ export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boo
       Bed: false,
       Well: false,
       WineBottle: true,
+      GraveyardLadder: false,
    },
    MoonshadowHamletRoom: {
       Teleporter: true,
@@ -81,6 +108,7 @@ export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boo
       Bed: false,
       Well: true,
       WineBottle: false,
+      GraveyardLadder: false,
    },
    MoonshadowHotelRoom: {
       Teleporter: false,
@@ -88,6 +116,7 @@ export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boo
       Bed: true,
       Well: false,
       WineBottle: false,
+      GraveyardLadder: false,
    },
    MoonshadowInnRoom: {
       Teleporter: false,
@@ -95,6 +124,7 @@ export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boo
       Bed: false,
       Well: false,
       WineBottle: false,
+      GraveyardLadder: false,
    },
    MoonshadowShopRoom: {
       Teleporter: false,
@@ -102,5 +132,6 @@ export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boo
       Bed: false,
       Well: false,
       WineBottle: false,
+      GraveyardLadder: false,
    },
 };

@@ -152,6 +152,9 @@ export const translationsFr: LanguageTranslations = {
    spin: 'Tourner la roue',
    gatcha_title: 'Puits à vœux',
    drinkWine: 'Boire un coup ({{value}} {{type}})',
+   developer: 'Développeur',
+   graveyardLadder_dialog:
+      'Cette échelle semble mener quelque part, mais vous devrez attendre la prochaine mise à jour...',
 
    // Rarities
    common: 'Commun',
@@ -208,6 +211,7 @@ export const translationsFr: LanguageTranslations = {
    'enemy-red-slime': 'Slime rouge',
    'enemy-blue-slime': 'Slime bleu',
    'enemy-pink-slime': 'Slime rose',
+   'enemy-eyeboros': 'Oeilloboros',
 
    // Statistics
    'earthDamages_+f': 'Dégâts de terre',
@@ -468,6 +472,7 @@ export const translationsFr: LanguageTranslations = {
    MoonshadowHotelRoom: 'Hôtel d’Ombrelune',
    MoonshadowBarRoom: 'Bar d’Ombrelune',
    MoonshadowShopRoom: 'Boutique d’Ombrelune',
+   GraveyardRoom: 'Cimetière',
 
    // Channels
    Server: 'Serveur',
@@ -492,6 +497,7 @@ export const translationsFr: LanguageTranslations = {
    Bed: 'Lit',
    Well: 'Puits',
    WineBottle: 'Bouteille de vin',
+   GraveyardLadder: 'Échelle',
 
    // Entities
    Character: 'Joueur',

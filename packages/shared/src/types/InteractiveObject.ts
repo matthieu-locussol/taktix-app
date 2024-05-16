@@ -7,6 +7,7 @@ export const interactiveObjectsKeys = [
    'Bed',
    'Well',
    'WineBottle',
+   'GraveyardLadder',
 ] as const;
 
 export const zInteractiveObject = ZodMgt.constructZodLiteralUnionType(
