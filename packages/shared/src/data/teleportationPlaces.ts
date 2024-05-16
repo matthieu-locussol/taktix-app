@@ -6,6 +6,7 @@ import type { TeleportationPlace } from '../types/TeleportationPlace';
 
 export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = {
    AAA_InitialRoom: null,
+   MoonshadowBarRoom: null,
    MoonshadowHamletRoom: {
       x: 35,
       y: 33,

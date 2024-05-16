@@ -29,6 +29,7 @@ import {
 } from 'shared';
 import { match } from 'ts-pattern';
 import { prisma } from '../utils/prisma';
+import { drinkWineInteraction } from './interactions/drinkWineInteraction';
 import { saveTeleporterInteraction } from './interactions/saveTeleporterInteraction';
 import { sleepInteraction } from './interactions/sleepInteraction';
 import { usersMap } from './utils/usersMap';
@@ -545,6 +546,10 @@ export class MapRoom extends Room<MapState> {
          })
          .with('SaveTeleporter', async () => {
             const success = await saveTeleporterInteraction(client, player, this.name);
+            sendInteractResponsePacket(success);
+         })
+         .with('DrinkWine', async () => {
+            const success = await drinkWineInteraction(client, player, this.name);
             sendInteractResponsePacket(success);
          })
          .exhaustive();

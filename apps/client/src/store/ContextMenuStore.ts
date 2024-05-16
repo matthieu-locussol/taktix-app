@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
+import { INTERACTION_DRINK_WINE_COST } from 'shared/src/config';
 import { NPCS, isNPC, zNPC } from 'shared/src/data/npcs';
 import { TranslationKey } from 'shared/src/data/translations';
 import { Channel } from 'shared/src/types/Channel';
@@ -115,6 +116,7 @@ export class ContextMenuStore {
          TeleporterCell: [],
          Bed: this._makeBedMenu(polygon),
          Well: this._makeWellMenu(polygon),
+         WineBottle: this._makeWineBottleMenu(polygon),
       }[type];
 
       return {
@@ -167,6 +169,22 @@ export class ContextMenuStore {
             callback: () => {
                moveToShape(this._store, polygon, () => {
                   this._store.gatchaMenuStore.open();
+               });
+            },
+         },
+      ];
+   }
+
+   private _makeWineBottleMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
+      return [
+         {
+            text: i18next.t('drinkWine' satisfies TranslationKey, {
+               value: INTERACTION_DRINK_WINE_COST,
+               type: i18next.t('credits' satisfies TranslationKey).toLocaleLowerCase(),
+            }),
+            callback: () => {
+               moveToShape(this._store, polygon, () => {
+                  this._store.colyseusStore.interact('DrinkWine');
                });
             },
          },

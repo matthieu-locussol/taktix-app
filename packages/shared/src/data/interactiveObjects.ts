@@ -5,6 +5,18 @@ import type { Room } from '../types/Room';
 
 export const INTERACTIVE_OBJECTS: Record<Room, InteractiveObjectData[]> = {
    AAA_InitialRoom: [],
+   MoonshadowBarRoom: [
+      {
+         id: 'WineBottle',
+         x: null,
+         y: null,
+      },
+      {
+         id: 'WineBottle',
+         x: null,
+         y: null,
+      },
+   ],
    MoonshadowHamletRoom: [
       {
          id: 'TeleporterCell',
@@ -53,23 +65,34 @@ export const INTERACTIVE_OBJECTS_MAP: Record<Room, Record<InteractiveObject, boo
       TeleporterCell: false,
       Bed: false,
       Well: false,
+      WineBottle: false,
+   },
+   MoonshadowBarRoom: {
+      Teleporter: false,
+      TeleporterCell: false,
+      Bed: false,
+      Well: false,
+      WineBottle: true,
    },
    MoonshadowHamletRoom: {
       Teleporter: true,
       TeleporterCell: true,
       Bed: false,
       Well: true,
+      WineBottle: false,
    },
    MoonshadowHotelRoom: {
       Teleporter: false,
       TeleporterCell: false,
       Bed: true,
       Well: false,
+      WineBottle: false,
    },
    MoonshadowInnRoom: {
       Teleporter: false,
       TeleporterCell: false,
       Bed: false,
       Well: false,
+      WineBottle: false,
    },
 };

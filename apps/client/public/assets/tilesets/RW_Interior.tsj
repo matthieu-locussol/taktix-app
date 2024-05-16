@@ -1,0 +1,14 @@
+{ "columns":48,
+ "image":"RW_Interior.png",
+ "imageheight":256,
+ "imagewidth":768,
+ "margin":0,
+ "name":"RW_Interior",
+ "spacing":0,
+ "tilecount":768,
+ "tiledversion":"1.10.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

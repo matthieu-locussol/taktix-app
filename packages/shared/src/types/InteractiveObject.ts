@@ -1,7 +1,13 @@
 import { z } from 'zod';
 import { ZodMgt } from '../utils/zodMgt';
 
-export const interactiveObjectsKeys = ['Teleporter', 'TeleporterCell', 'Bed', 'Well'] as const;
+export const interactiveObjectsKeys = [
+   'Teleporter',
+   'TeleporterCell',
+   'Bed',
+   'Well',
+   'WineBottle',
+] as const;
 
 export const zInteractiveObject = ZodMgt.constructZodLiteralUnionType(
    interactiveObjectsKeys.map((value) => z.literal(value)),
