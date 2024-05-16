@@ -59,6 +59,7 @@ export class MapMenuStore {
       this.setIsOpened(false);
       this._store.colyseusStore.teleport(this.selectedRoom);
       this.selectedRoom = null;
+      this._store.soundsStore.play('teleport');
    }
 
    public isTeleportationPlaceDisabled(room: Room): boolean {
