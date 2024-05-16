@@ -2239,6 +2239,39 @@
                "width": 16,
                "x": 752,
                "y": 640
+            },
+            {
+               "height": 16,
+               "id": 32,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "destinationMapName",
+                     "type": "string",
+                     "value": "MoonshadowShopRoom"
+                  },
+                  {
+                     "name": "entranceDirection",
+                     "type": "string",
+                     "value": "left"
+                  },
+                  {
+                     "name": "entrancePositionX",
+                     "type": "int",
+                     "value": 26
+                  },
+                  {
+                     "name": "entrancePositionY",
+                     "type": "int",
+                     "value": 27
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 240,
+               "y": 496
             }
          ],
          "opacity": 1,
@@ -2907,7 +2940,7 @@
       }
    ],
    "nextlayerid": 16,
-   "nextobjectid": 32,
+   "nextobjectid": 33,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.10.2",
