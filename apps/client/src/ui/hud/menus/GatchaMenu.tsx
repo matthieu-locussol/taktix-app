@@ -45,7 +45,9 @@ export const GatchaMenu = observer(() => {
                }),
             }}
          >
-            <StyledDialogTitle className="gatcha-menu-handle">Gatcha gatcha</StyledDialogTitle>
+            <StyledDialogTitle className="gatcha-menu-handle">
+               {t('gatcha_title')}
+            </StyledDialogTitle>
             <IconButton
                aria-label="close"
                onClick={() => gatchaMenuStore.close()}
