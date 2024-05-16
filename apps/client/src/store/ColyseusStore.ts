@@ -1,6 +1,7 @@
 import { Client, Room } from 'colyseus.js';
 import i18next from 'i18next';
 import { makeAutoObservable } from 'mobx';
+import { INTERACTION_DRINK_WINE_COST } from 'shared/src/config';
 import { CharacterSprite } from 'shared/src/data/charactersSprites';
 import { TranslationKey } from 'shared/src/data/translations';
 import { AuthRoomResponse, isAuthRoomResponse } from 'shared/src/rooms/AuthRoom';
@@ -555,6 +556,15 @@ export class ColyseusStore {
                      content: i18next.t('teleporterSaved' satisfies TranslationKey),
                      author: 'Server',
                   });
+               }
+               break;
+            case 'DrinkWine':
+               {
+                  this._store.soundsStore.play('sleep');
+                  this._store.characterStore.setCurrentHealth(this._store.characterStore.maxHealth);
+                  this._store.characterStore.setMoney(
+                     this._store.characterStore.money - INTERACTION_DRINK_WINE_COST,
+                  );
                }
                break;
             default:

@@ -2206,6 +2206,39 @@
                "width": 16,
                "x": 496,
                "y": 512
+            },
+            {
+               "height": 16,
+               "id": 31,
+               "name": "",
+               "properties": [
+                  {
+                     "name": "destinationMapName",
+                     "type": "string",
+                     "value": "MoonshadowBarRoom"
+                  },
+                  {
+                     "name": "entranceDirection",
+                     "type": "string",
+                     "value": "up"
+                  },
+                  {
+                     "name": "entrancePositionX",
+                     "type": "int",
+                     "value": 28
+                  },
+                  {
+                     "name": "entrancePositionY",
+                     "type": "int",
+                     "value": 22
+                  }
+               ],
+               "rotation": 0,
+               "type": "",
+               "visible": true,
+               "width": 16,
+               "x": 752,
+               "y": 640
             }
          ],
          "opacity": 1,
@@ -2874,7 +2907,7 @@
       }
    ],
    "nextlayerid": 16,
-   "nextobjectid": 31,
+   "nextobjectid": 32,
    "orientation": "orthogonal",
    "renderorder": "right-down",
    "tiledversion": "1.10.2",

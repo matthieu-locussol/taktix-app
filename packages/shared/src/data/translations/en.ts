@@ -146,6 +146,7 @@ export const translationsEn = {
    lootBonus: 'Loot bonus',
    spin: 'Spin the wheel',
    gatcha_title: 'Wishing well',
+   drinkWine: 'Drink wine ({{value}} {{type}})',
 
    // Rarities
    common: 'Common',
@@ -470,6 +471,7 @@ export const translationsEn = {
    MoonshadowHamletRoom: 'Moonshadow Hamlet',
    MoonshadowInnRoom: 'Moonshadow Inn',
    MoonshadowHotelRoom: 'Moonshadow Hotel',
+   MoonshadowBarRoom: 'Moonshadow Bar',
 
    // Channels
    Server: 'Server',
@@ -493,6 +495,7 @@ export const translationsEn = {
    TeleporterCell: 'Teleporter Cell',
    Bed: 'Bed',
    Well: 'Well',
+   WineBottle: 'Wine Bottle',
 
    // Entities
    Character: 'Player',

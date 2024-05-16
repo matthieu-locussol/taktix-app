@@ -151,6 +151,7 @@ export const translationsFr: LanguageTranslations = {
    lootBonus: 'Bonus de butin',
    spin: 'Tourner la roue',
    gatcha_title: 'Puits à vœux',
+   drinkWine: 'Boire un coup ({{value}} {{type}})',
 
    // Rarities
    common: 'Commun',
@@ -465,6 +466,7 @@ export const translationsFr: LanguageTranslations = {
    MoonshadowHamletRoom: "Hameau d'Ombrelune",
    MoonshadowInnRoom: 'Auberge d’Ombrelune',
    MoonshadowHotelRoom: 'Hôtel d’Ombrelune',
+   MoonshadowBarRoom: 'Bar d’Ombrelune',
 
    // Channels
    Server: 'Serveur',
@@ -488,6 +490,7 @@ export const translationsFr: LanguageTranslations = {
    TeleporterCell: 'Cellule de téléportation',
    Bed: 'Lit',
    Well: 'Puits',
+   WineBottle: 'Bouteille de vin',
 
    // Entities
    Character: 'Joueur',

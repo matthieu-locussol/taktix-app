@@ -150,6 +150,7 @@ export const translationsJa: LanguageTranslations = {
    lootBonus: '戦利品ボーナス',
    spin: 'ルーレットを回す',
    gatcha_title: '願いの井戸',
+   drinkWine: 'ワインを飲む ({{value}} {{type}})',
 
    // Rarities
    common: 'コモン',
@@ -464,6 +465,7 @@ export const translationsJa: LanguageTranslations = {
    MoonshadowHamletRoom: '月影の集落',
    MoonshadowInnRoom: '月影の宿',
    MoonshadowHotelRoom: '月影のホテル',
+   MoonshadowBarRoom: '月影のバー',
 
    // Channels
    Server: 'サーバー',
@@ -487,6 +489,7 @@ export const translationsJa: LanguageTranslations = {
    TeleporterCell: 'テレポーターセル',
    Bed: 'ベッド',
    Well: '井戸',
+   WineBottle: 'ワインボトル',
 
    // Entities
    Character: 'プレイヤー',
