@@ -14,6 +14,8 @@ export interface StatisticProps extends StyleProps {
    label: TranslationKey;
    onIncrease?: () => void;
    onDecrease?: () => void;
+   onIncrease10x?: () => void;
+   onDecrease10x?: () => void;
    canIncrease?: boolean;
    canDecrease?: boolean;
 }
@@ -25,6 +27,8 @@ export const Statistic = observer(
       label,
       onIncrease,
       onDecrease,
+      onIncrease10x,
+      onDecrease10x,
       canIncrease,
       canDecrease,
       size,
@@ -47,13 +51,19 @@ export const Statistic = observer(
             >
                {value}
             </Typography>
-            {onIncrease && onDecrease && (
+            {onIncrease && onDecrease && onIncrease10x && onDecrease10x && (
                <>
                   <StyledPlusIconButton
                      size="small"
                      color="inherit"
                      disabled={!canIncrease}
-                     onClick={() => onIncrease()}
+                     onClick={(e) => {
+                        if (e.shiftKey) {
+                           onIncrease10x();
+                        } else {
+                           onIncrease();
+                        }
+                     }}
                      sx={{ mr: 1 }}
                   >
                      <IncreaseIcon />
@@ -62,7 +72,13 @@ export const Statistic = observer(
                      size="small"
                      color="inherit"
                      disabled={!canDecrease}
-                     onClick={() => onDecrease()}
+                     onClick={(e) => {
+                        if (e.shiftKey) {
+                           onDecrease10x();
+                        } else {
+                           onDecrease();
+                        }
+                     }}
                   >
                      <DecreaseIcon />
                   </StyledMinusIconButton>

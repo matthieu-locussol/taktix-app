@@ -117,6 +117,8 @@ export const StatisticsMenu = observer(() => {
                         label={statistic.label}
                         onIncrease={statistic.onIncrease}
                         onDecrease={statistic.onDecrease}
+                        onIncrease10x={statistic.onIncrease10x}
+                        onDecrease10x={statistic.onDecrease10x}
                         canIncrease={statistic.canIncrease}
                         canDecrease={statistic.canDecrease}
                         size={statistic.advanced ? 'small' : 'medium'}
