@@ -76,10 +76,28 @@ export class StatisticsMenuStore {
       }
    }
 
+   public increase10x(statistic: (typeof this._boostableStatistics)[number]): void {
+      const points = Math.min(this.statisticsPoints, 10);
+
+      if (points > 0) {
+         this[statistic] += points;
+         this.statisticsPoints -= points;
+      }
+   }
+
    public decrease(statistic: (typeof this._boostableStatistics)[number]): void {
       if (this[statistic] > 0) {
          this[statistic] -= 1;
          this.statisticsPoints += 1;
+      }
+   }
+
+   public decrease10x(statistic: (typeof this._boostableStatistics)[number]): void {
+      const points = Math.min(this[statistic], 10);
+
+      if (points > 0) {
+         this[statistic] -= points;
+         this.statisticsPoints += points;
       }
    }
 
@@ -155,6 +173,8 @@ export class StatisticsMenuStore {
       label: TranslationKey;
       onIncrease?: () => void;
       onDecrease?: () => void;
+      onIncrease10x?: () => void;
+      onDecrease10x?: () => void;
       canIncrease?: boolean;
       canDecrease?: boolean;
       advanced: boolean;
@@ -169,6 +189,8 @@ export class StatisticsMenuStore {
             label: 'vitality',
             onIncrease: () => this.increase('vitality'),
             onDecrease: () => this.decrease('vitality'),
+            onIncrease10x: () => this.increase10x('vitality'),
+            onDecrease10x: () => this.decrease10x('vitality'),
             canIncrease: this.canIncrease,
             canDecrease: this.canDecrease.vitality,
             advanced: false,
@@ -181,6 +203,8 @@ export class StatisticsMenuStore {
             label: 'magicShield',
             onIncrease: () => this.increase('magicShield'),
             onDecrease: () => this.decrease('magicShield'),
+            onIncrease10x: () => this.increase10x('magicShield'),
+            onDecrease10x: () => this.decrease10x('magicShield'),
             canIncrease: this.canIncrease,
             canDecrease: this.canDecrease.magicShield,
             advanced: false,
@@ -194,6 +218,8 @@ export class StatisticsMenuStore {
             label: 'strength',
             onIncrease: () => this.increase('strength'),
             onDecrease: () => this.decrease('strength'),
+            onIncrease10x: () => this.increase10x('strength'),
+            onDecrease10x: () => this.decrease10x('strength'),
             canIncrease: this.canIncrease,
             canDecrease: this.canDecrease.strength,
             advanced: false,
@@ -207,6 +233,8 @@ export class StatisticsMenuStore {
             label: 'dexterity',
             onIncrease: () => this.increase('dexterity'),
             onDecrease: () => this.decrease('dexterity'),
+            onIncrease10x: () => this.increase10x('dexterity'),
+            onDecrease10x: () => this.decrease10x('dexterity'),
             canIncrease: this.canIncrease,
             canDecrease: this.canDecrease.dexterity,
             advanced: false,
@@ -220,6 +248,8 @@ export class StatisticsMenuStore {
             label: 'intelligence',
             onIncrease: () => this.increase('intelligence'),
             onDecrease: () => this.decrease('intelligence'),
+            onIncrease10x: () => this.increase10x('intelligence'),
+            onDecrease10x: () => this.decrease10x('intelligence'),
             canIncrease: this.canIncrease,
             canDecrease: this.canDecrease.intelligence,
             advanced: false,
@@ -233,6 +263,8 @@ export class StatisticsMenuStore {
             label: 'luck',
             onIncrease: () => this.increase('luck'),
             onDecrease: () => this.decrease('luck'),
+            onIncrease10x: () => this.increase10x('luck'),
+            onDecrease10x: () => this.decrease10x('luck'),
             canIncrease: this.canIncrease,
             canDecrease: this.canDecrease.luck,
             advanced: false,
