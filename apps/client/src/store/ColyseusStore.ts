@@ -565,6 +565,7 @@ export class ColyseusStore {
                   this._store.characterStore.setMoney(
                      this._store.characterStore.money - INTERACTION_DRINK_WINE_COST,
                   );
+                  this._store.gameStore.currentScene.setAlcoholEffect();
                }
                break;
             default:

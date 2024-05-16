@@ -873,4 +873,85 @@ export abstract class Scene extends Phaser.Scene {
    public getRoomType(): 'map' | 'fight' {
       return 'map';
    }
+
+   public setAlcoholEffect(): void {
+      this.time.delayedCall(1000, () => {
+         const tiltFx = this.cameras.main.postFX.addTiltShift(0.6);
+         const tweenTilt = this.tweens
+            .add({
+               targets: tiltFx,
+               amount: 1.6,
+               radius: 1,
+               contrast: 0.4,
+               strength: {
+                  from: 0.8,
+                  to: 1.2,
+               },
+               yoyo: true,
+               loop: -1,
+               ease: 'sine.inout',
+               duration: 10_000,
+            })
+            .play();
+
+         this.time.delayedCall(9_000, () => {
+            tweenTilt.stop();
+            tweenTilt.destroy();
+            tiltFx.setActive(false);
+            tiltFx.destroy();
+            this.cameras.main.postFX.remove(tiltFx);
+         });
+      });
+
+      this.time.delayedCall(3000, () => {
+         const barrelFx = this.cameras.main.postFX.addBarrel(1);
+         const tweenBarrel = this.tweens
+            .add({
+               targets: barrelFx,
+               amount: {
+                  from: 0.9,
+                  to: 1.2,
+               },
+               yoyo: true,
+               loop: -1,
+               ease: 'sine.inout',
+            })
+            .play();
+
+         this.time.delayedCall(6_000, () => {
+            tweenBarrel.stop();
+            tweenBarrel.destroy();
+            barrelFx.setActive(false);
+            barrelFx.destroy();
+            this.cameras.main.postFX.remove(barrelFx);
+         });
+      });
+
+      this.time.delayedCall(5_000, () => {
+         const tweenZoom = this.tweens
+            .add({
+               targets: this.cameras.main,
+               zoom: 2,
+               duration: 2000,
+               ease: 'Linear',
+               yoyo: true,
+               loop: -1,
+            })
+            .play();
+
+         this.time.delayedCall(3_000, () => {
+            tweenZoom.stop();
+            tweenZoom.destroy();
+            this.cameras.main.zoomTo(1, 500, 'Linear');
+         });
+      });
+
+      this.time.delayedCall(4000, () => {
+         this.cameras.main.shake(2000, 0.001);
+
+         this.time.delayedCall(2000, () => {
+            this.cameras.main.shake(0, 0);
+         });
+      });
+   }
 }
