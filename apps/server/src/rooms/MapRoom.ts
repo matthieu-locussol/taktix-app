@@ -1,4 +1,5 @@
 import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
+import { Prisma } from '@prisma/client';
 import {
    FightMgt,
    INTERACTIVE_OBJECTS_MAP,
@@ -688,45 +689,47 @@ export class MapRoom extends Room<MapState> {
          `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) left the room`,
       );
 
-      await prisma.character.update({
-         where: { name: player.name },
-         data: {
-            map: this.name,
-            profession: player.profession,
-            spritesheet: player.spritesheet,
-            pos_x: player.x,
-            pos_y: player.y,
-            direction: player.direction,
-            talents: TalentMgt.serializeTalents(player.talents),
-            talentsPoints: player.talentsPoints,
-            baseStatistics: StatisticMgt.serializeStatistics(player.getBaseStatistics()),
-            baseStatisticsPoints: player.baseStatisticsPoints,
-            experience: player.experience,
-            health: player.health,
-            teleporters: StringMgt.serializeTeleporters(player.teleporters),
-            money: player.money,
-            gachix: player.gachix,
-            items: {
-               deleteMany: player.itemsToRemove.map((id) => ({ id })),
-               updateMany: player.items.map((item) => ({
-                  where: { id: item.id },
-                  data: {
-                     isUnique: item.isUnique,
-                     type: item.type,
-                     level: item.level,
-                     requiredLevel: item.requiredLevel,
-                     baseAffixes: ItemMgt.serializeAffixes(item.baseAffixes),
-                     prefixes: ItemMgt.serializeAffixes(item.prefixes),
-                     suffixes: ItemMgt.serializeAffixes(item.suffixes),
-                     damages: ItemMgt.serializeDamages(item.damages),
-                     position: item.position,
-                  },
-               })),
-            },
+      const data: Prisma.CharacterUpdateInput = {
+         map: this.name,
+         profession: player.profession,
+         spritesheet: player.spritesheet,
+         pos_x: player.x,
+         pos_y: player.y,
+         direction: player.direction,
+         talents: TalentMgt.serializeTalents(player.talents),
+         talentsPoints: player.talentsPoints,
+         baseStatistics: StatisticMgt.serializeStatistics(player.getBaseStatistics()),
+         baseStatisticsPoints: player.baseStatisticsPoints,
+         experience: player.experience,
+         health: player.health,
+         teleporters: StringMgt.serializeTeleporters(player.teleporters),
+         money: player.money,
+         gachix: player.gachix,
+         items: {
+            deleteMany: player.itemsToRemove.map((id) => ({ id })),
+            updateMany: player.items.map((item) => ({
+               where: { id: item.id },
+               data: {
+                  isUnique: item.isUnique,
+                  type: item.type,
+                  level: item.level,
+                  requiredLevel: item.requiredLevel,
+                  baseAffixes: ItemMgt.serializeAffixes(item.baseAffixes),
+                  prefixes: ItemMgt.serializeAffixes(item.prefixes),
+                  suffixes: ItemMgt.serializeAffixes(item.suffixes),
+                  damages: ItemMgt.serializeDamages(item.damages),
+                  position: item.position,
+               },
+            })),
          },
-      });
+      };
 
       this.state.removePlayer(client.sessionId);
+
+      await prisma.character.update({
+         where: { name: player.name },
+         data,
+      });
    }
 
    onDispose() {

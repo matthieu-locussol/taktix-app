@@ -561,9 +561,7 @@ export abstract class Scene extends Phaser.Scene {
       store.gameStore.playersToAddQueue = [];
 
       for (const { name } of store.gameStore.playersToRemoveQueue) {
-         if (this.gridEngine.hasCharacter(name)) {
-            this.deleteExternalPlayer(name);
-         }
+         this.deleteExternalPlayer(name);
       }
 
       store.gameStore.playersToRemoveQueue = [];
