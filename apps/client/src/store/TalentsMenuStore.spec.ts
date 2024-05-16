@@ -8,8 +8,13 @@ vi.mock('./Store', () => {
       talentsPoints: 0,
    };
 
+   const soundsStoreMock = {
+      play: () => ({}),
+   };
+
    const MockedStore = vi.fn().mockImplementation(() => ({
       characterStore: characterStoreMock,
+      soundsStore: soundsStoreMock,
    }));
 
    return { Store: MockedStore };

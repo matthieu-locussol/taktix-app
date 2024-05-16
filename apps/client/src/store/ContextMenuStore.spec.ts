@@ -10,8 +10,13 @@ vi.mock('./Store', () => {
       teleporters: [],
    };
 
+   const soundsStoreMock = {
+      play: () => ({}),
+   };
+
    const MockedStore = vi.fn().mockImplementation(() => ({
       characterStore: characterStoreMock,
+      soundsStore: soundsStoreMock,
    }));
 
    return { Store: MockedStore };
@@ -101,7 +106,7 @@ describe('ContextMenuStore', () => {
 
       expect(contextMenuStore.menu).toEqual([
          {
-            text: '[Character] External Player',
+            text: 'External Player',
             subMenu: [
                {
                   callback: expect.any(Function),
@@ -110,7 +115,7 @@ describe('ContextMenuStore', () => {
             ],
          },
          {
-            text: '[object] Teleporter',
+            text: 'Teleporter',
             subMenu: [
                {
                   callback: expect.any(Function),

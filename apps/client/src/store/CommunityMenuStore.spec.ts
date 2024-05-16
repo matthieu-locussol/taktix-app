@@ -5,7 +5,13 @@ import { CommunityMenuStore } from './CommunityMenuStore';
 import { Store } from './Store';
 
 vi.mock('./Store', () => {
-   const MockedStore = vi.fn().mockImplementation(() => ({}));
+   const soundsStoreMock = {
+      play: () => ({}),
+   };
+
+   const MockedStore = vi.fn().mockImplementation(() => ({
+      soundsStore: soundsStoreMock,
+   }));
 
    return { Store: MockedStore };
 });

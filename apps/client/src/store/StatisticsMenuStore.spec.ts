@@ -22,9 +22,14 @@ vi.mock('./Store', () => {
       updateStatistics: vi.fn(),
    };
 
+   const soundsStoreMock = {
+      play: () => ({}),
+   };
+
    const MockedStore = vi.fn().mockImplementation(() => ({
       characterStore: characterStoreMock,
       colyseusStore: colyseusStoreMock,
+      soundsStore: soundsStoreMock,
    }));
 
    return { Store: MockedStore };

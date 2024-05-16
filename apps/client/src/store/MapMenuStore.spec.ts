@@ -9,8 +9,13 @@ vi.mock('./Store', () => {
       money: 999_999,
    };
 
+   const soundsStoreMock = {
+      play: () => ({}),
+   };
+
    const MockedStore = vi.fn().mockImplementation(() => ({
       characterStore: characterStoreMock,
+      soundsStore: soundsStoreMock,
    }));
 
    return { Store: MockedStore };
