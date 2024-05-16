@@ -151,6 +151,9 @@ export const translationsJa: LanguageTranslations = {
    spin: 'ルーレットを回す',
    gatcha_title: '願いの井戸',
    drinkWine: 'ワインを飲む ({{value}} {{type}})',
+   developer: '開発者',
+   graveyardLadder_dialog:
+      'この梯子はどこかに続いているようですが、次のアップデートまで待たなければなりません…',
 
    // Rarities
    common: 'コモン',
@@ -207,6 +210,7 @@ export const translationsJa: LanguageTranslations = {
    'enemy-red-slime': 'レッドスライム',
    'enemy-blue-slime': 'ブルースライム',
    'enemy-pink-slime': 'ピンクスライム',
+   'enemy-eyeboros': 'アイボロス',
 
    // Statistics
    'earthDamages_+f': '地のダメージ',
@@ -467,6 +471,7 @@ export const translationsJa: LanguageTranslations = {
    MoonshadowHotelRoom: '月影のホテル',
    MoonshadowBarRoom: '月影のバー',
    MoonshadowShopRoom: '月影の店',
+   GraveyardRoom: '墓地',
 
    // Channels
    Server: 'サーバー',
@@ -491,6 +496,7 @@ export const translationsJa: LanguageTranslations = {
    Bed: 'ベッド',
    Well: '井戸',
    WineBottle: 'ワインボトル',
+   GraveyardLadder: '梯子',
 
    // Entities
    Character: 'プレイヤー',

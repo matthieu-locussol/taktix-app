@@ -147,6 +147,9 @@ export const translationsEn = {
    spin: 'Spin the wheel',
    gatcha_title: 'Wishing well',
    drinkWine: 'Drink wine ({{value}} {{type}})',
+   developer: 'Developer',
+   graveyardLadder_dialog:
+      "This ladder seems to leads somewhere, but you'll have to wait until the next update...",
 
    // Rarities
    common: 'Common',
@@ -203,6 +206,7 @@ export const translationsEn = {
    'enemy-red-slime': 'Red Slime',
    'enemy-blue-slime': 'Blue Slime',
    'enemy-pink-slime': 'Pink Slime',
+   'enemy-eyeboros': 'Eyeboros',
 
    // Statistics
    'earthDamages_+f': 'Earth damages',
@@ -473,6 +477,7 @@ export const translationsEn = {
    MoonshadowHotelRoom: 'Moonshadow Hotel',
    MoonshadowBarRoom: 'Moonshadow Bar',
    MoonshadowShopRoom: 'Moonshadow Shop',
+   GraveyardRoom: 'Graveyard',
 
    // Channels
    Server: 'Server',
@@ -497,6 +502,7 @@ export const translationsEn = {
    Bed: 'Bed',
    Well: 'Well',
    WineBottle: 'Wine Bottle',
+   GraveyardLadder: 'Ladder',
 
    // Entities
    Character: 'Player',

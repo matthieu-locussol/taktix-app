@@ -6,6 +6,32 @@ import type { TeleportationSpot } from '../types/TeleportationSpot';
 
 export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
    AAA_InitialRoom: [],
+   GraveyardRoom: [
+      {
+         x: 14,
+         y: 24,
+         destinationMapName: 'MoonshadowHamletRoom',
+         destinationMapData: {
+            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 46,
+               y: 16,
+            },
+         },
+      },
+      {
+         x: 15,
+         y: 24,
+         destinationMapName: 'MoonshadowHamletRoom',
+         destinationMapData: {
+            entranceDirection: Direction.DOWN,
+            entrancePosition: {
+               x: 47,
+               y: 16,
+            },
+         },
+      },
+   ],
    MoonshadowBarRoom: [
       {
          x: 29,
@@ -66,6 +92,30 @@ export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
             entrancePosition: {
                x: 26,
                y: 27,
+            },
+         },
+      },
+      {
+         x: 46,
+         y: 15,
+         destinationMapName: 'GraveyardRoom',
+         destinationMapData: {
+            entranceDirection: Direction.UP,
+            entrancePosition: {
+               x: 14,
+               y: 23,
+            },
+         },
+      },
+      {
+         x: 47,
+         y: 15,
+         destinationMapName: 'GraveyardRoom',
+         destinationMapData: {
+            entranceDirection: Direction.UP,
+            entrancePosition: {
+               x: 15,
+               y: 23,
             },
          },
       },

@@ -6,6 +6,12 @@ import type { TeleportationPlace } from '../types/TeleportationPlace';
 
 export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = {
    AAA_InitialRoom: null,
+   GraveyardRoom: {
+      x: 15,
+      y: 21,
+      direction: Direction.RIGHT,
+      price: 200,
+   },
    MoonshadowBarRoom: null,
    MoonshadowHamletRoom: {
       x: 35,

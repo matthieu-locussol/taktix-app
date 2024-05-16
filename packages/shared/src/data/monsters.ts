@@ -435,6 +435,112 @@ const monstersArray: (() => MonsterGenerator)[] = [
          uniquesPowers: [],
          money: { min: 30, max: 70 },
       })),
+   () =>
+      withMonsterType([], (type) => ({ level }) => ({
+         name: 'enemy-eyeboros',
+         spritesheet: 'Enemy_051',
+         type,
+         items: [],
+         monsterType: type,
+         animation: Animation.Explosion,
+         health: {
+            common: 10 + MonsterMgt.scaleMonsterLife(level, 8),
+            magic: 15 + MonsterMgt.scaleMonsterLife(level, 12),
+            rare: 20 + MonsterMgt.scaleMonsterLife(level, 15),
+         }[type],
+         magicShield: MonsterMgt.scaleMonsterStatistic(
+            level,
+            MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type] / 2,
+         ),
+         level,
+         experience: MonsterMgt.scaleMonsterExperience(level, type),
+         weaponDamages: (
+            {
+               common: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'intelligence',
+                     min: 4 + Math.floor(level / 2),
+                     max: 7 + level,
+                  },
+                  {
+                     weaponType: 'axe1H',
+                     type: 'luck',
+                     min: 2 + Math.floor(level / 2),
+                     max: 9 + level,
+                  },
+               ],
+               magic: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'intelligence',
+                     min: 4 + Math.floor(level / 2),
+                     max: 7 + level,
+                  },
+                  {
+                     weaponType: 'axe1H',
+                     type: 'luck',
+                     min: 2 + Math.floor(level / 2),
+                     max: 9 + level,
+                  },
+               ],
+               rare: [
+                  {
+                     weaponType: 'axe1H',
+                     type: 'intelligence',
+                     min: 4 + level,
+                     max: 7 + level * 2,
+                  },
+                  {
+                     weaponType: 'axe1H',
+                     type: 'luck',
+                     min: 2 + level,
+                     max: 9 + level * 2,
+                  },
+               ],
+            } as Record<MonsterType, WeaponDamages[]>
+         )[type],
+         rawStatistics: StatisticMgt.serializeStatistics(
+            StatisticMgt.makeMockedStatistics({
+               'strength_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'dexterity_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'intelligence_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'luck_+f': MonsterMgt.scaleMonsterStatistic(
+                  level,
+                  MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+               ),
+               'precision_+f':
+                  2 *
+                  MonsterMgt.scaleMonsterStatistic(
+                     level,
+                     MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                  ),
+               'evasion_+f':
+                  15 +
+                  2 *
+                     MonsterMgt.scaleMonsterStatistic(
+                        level,
+                        MonsterMgt.MONSTER_TYPE_STATS_COEFFICIENTS[type],
+                     ),
+               'criticalStrikeChance_+f': 10,
+               'criticalStrikeDamages_+%': 30,
+               'windResistance_+%': 15,
+               'fireResistance_-%': 10,
+            }),
+         ),
+         talents: [],
+         uniquesPowers: [],
+         money: { min: 50, max: 100 },
+      })),
 ] as const;
 
 export const monsters = monstersArray.reduce<Record<MonsterName, () => MonsterGenerator>>(
