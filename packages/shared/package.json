@@ -13,7 +13,7 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "dependencies": {
-      "@colyseus/core": "^0.15.37",
+      "@colyseus/core": "^0.15.39",
       "@colyseus/schema": "^2.0.32",
       "vitest": "^1.6.0",
       "zod": "^3.23.6"
