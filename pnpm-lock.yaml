@@ -16,7 +16,7 @@ importers:
         version: 1.7.3
       '@commitlint/cli':
         specifier: ^19.3.0
-        version: 19.3.0(@types/node@20.12.10)(typescript@5.4.5)
+        version: 19.3.0(@types/node@20.12.13)(typescript@5.4.5)
       '@commitlint/config-conventional':
         specifier: ^19.2.2
         version: 19.2.2
@@ -52,7 +52,7 @@ importers:
         version: 1.5.4
       '@vitejs/plugin-react':
         specifier: ^4.2.1
-        version: 4.2.1(vite@5.2.11(@types/node@20.12.10))
+        version: 4.2.1(vite@5.2.11(@types/node@20.12.13))
       colyseus.js:
         specifier: ^0.15.19
         version: 0.15.19
@@ -97,10 +97,10 @@ importers:
         version: 5.1.1
       vite:
         specifier: ^5.2.11
-        version: 5.2.11(@types/node@20.12.10)
+        version: 5.2.11(@types/node@20.12.13)
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.12.10)(happy-dom@14.10.1)
+        version: 1.6.0(@types/node@20.12.13)(happy-dom@14.10.1)
       zod:
         specifier: ^3.23.6
         version: 3.23.6
@@ -173,7 +173,7 @@ importers:
         version: 9.0.1
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.12.10)(happy-dom@14.10.1)
+        version: 1.6.0(@types/node@20.12.13)(happy-dom@14.10.1)
       ws:
         specifier: ^8.17.0
         version: 8.17.0
@@ -188,8 +188,8 @@ importers:
         specifier: ^4.19.0
         version: 4.19.0
       '@types/node':
-        specifier: ^20.12.10
-        version: 20.12.10
+        specifier: ^20.12.13
+        version: 20.12.13
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -201,7 +201,7 @@ importers:
         version: link:../../packages/config-typescript
       ts-node-dev:
         specifier: ^2.0.0
-        version: 2.0.0(@types/node@20.12.10)(typescript@5.4.5)
+        version: 2.0.0(@types/node@20.12.13)(typescript@5.4.5)
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -258,14 +258,14 @@ importers:
         version: link:../shared
     devDependencies:
       '@types/node':
-        specifier: ^20.12.10
-        version: 20.12.10
+        specifier: ^20.12.13
+        version: 20.12.13
       config-typescript:
         specifier: workspace:^
         version: link:../config-typescript
       ts-node-dev:
         specifier: ^2.0.0
-        version: 2.0.0(@types/node@20.12.10)(typescript@5.4.5)
+        version: 2.0.0(@types/node@20.12.13)(typescript@5.4.5)
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -280,7 +280,7 @@ importers:
         version: 2.0.32
       vitest:
         specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.12.10)(happy-dom@14.10.1)
+        version: 1.6.0(@types/node@20.12.13)(happy-dom@14.10.1)
       zod:
         specifier: ^3.23.6
         version: 3.23.6
@@ -1446,8 +1446,8 @@ packages:
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
 
-  '@types/node@20.12.10':
-    resolution: {integrity: sha512-Eem5pH9pmWBHoGAT8Dr5fdc5rYA+4NAovdM4EktRPVAAiJhmWWfQrA0cFhAbOsQdSfIHjAud6YdkbL69+zSKjw==}
+  '@types/node@20.12.13':
+    resolution: {integrity: sha512-gBGeanV41c1L171rR7wjbMiEpEI/l5XFQdLLfhr/REwpgDy/4U8y89+i8kRiLzDyZdOkXh+cRaTetUnCYutoXA==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -2436,6 +2436,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   global-directory@4.0.1:
     resolution: {integrity: sha512-wHTUcDUoZ1H5/0iVqEudYW4/kAlN5cZ3j/bXn0Dpbizl9iaUVeWSHqiOjsgk6OW2bkLclbBjzewBz6weQ1zA2Q==}
@@ -2577,6 +2578,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -3530,6 +3532,7 @@ packages:
 
   rimraf@2.7.1:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rollup@4.17.2:
@@ -4675,11 +4678,11 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@commitlint/cli@19.3.0(@types/node@20.12.10)(typescript@5.4.5)':
+  '@commitlint/cli@19.3.0(@types/node@20.12.13)(typescript@5.4.5)':
     dependencies:
       '@commitlint/format': 19.3.0
       '@commitlint/lint': 19.2.2
-      '@commitlint/load': 19.2.0(@types/node@20.12.10)(typescript@5.4.5)
+      '@commitlint/load': 19.2.0(@types/node@20.12.13)(typescript@5.4.5)
       '@commitlint/read': 19.2.1
       '@commitlint/types': 19.0.3
       execa: 8.0.1
@@ -4726,7 +4729,7 @@ snapshots:
       '@commitlint/rules': 19.0.3
       '@commitlint/types': 19.0.3
 
-  '@commitlint/load@19.2.0(@types/node@20.12.10)(typescript@5.4.5)':
+  '@commitlint/load@19.2.0(@types/node@20.12.13)(typescript@5.4.5)':
     dependencies:
       '@commitlint/config-validator': 19.0.3
       '@commitlint/execute-rule': 19.0.0
@@ -4734,7 +4737,7 @@ snapshots:
       '@commitlint/types': 19.0.3
       chalk: 5.3.0
       cosmiconfig: 9.0.0(typescript@5.4.5)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.12.10)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.12.13)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -5401,19 +5404,19 @@ snapshots:
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
 
   '@types/conventional-commits-parser@5.0.0':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
 
   '@types/cors@2.8.17':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
 
   '@types/d3-array@3.2.1': {}
 
@@ -5536,7 +5539,7 @@ snapshots:
 
   '@types/express-serve-static-core@4.19.0':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
       '@types/qs': 6.9.15
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -5554,7 +5557,7 @@ snapshots:
 
   '@types/jsonwebtoken@9.0.6':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
 
   '@types/mime@1.3.5': {}
 
@@ -5562,7 +5565,7 @@ snapshots:
 
   '@types/node@12.20.55': {}
 
-  '@types/node@20.12.10':
+  '@types/node@20.12.13':
     dependencies:
       undici-types: 5.26.5
 
@@ -5591,19 +5594,19 @@ snapshots:
 
   '@types/redis@2.8.32':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
 
   '@types/semver@7.5.8': {}
 
   '@types/send@0.17.4':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
 
   '@types/serve-static@1.15.7':
     dependencies:
       '@types/http-errors': 2.0.4
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
       '@types/send': 0.17.4
 
   '@types/strip-bom@3.0.0': {}
@@ -5614,20 +5617,20 @@ snapshots:
 
   '@types/ws@7.4.7':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
 
   '@types/ws@8.5.10':
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
 
-  '@vitejs/plugin-react@4.2.1(vite@5.2.11(@types/node@20.12.10))':
+  '@vitejs/plugin-react@4.2.1(vite@5.2.11(@types/node@20.12.13))':
     dependencies:
       '@babel/core': 7.24.5
       '@babel/plugin-transform-react-jsx-self': 7.24.5(@babel/core@7.24.5)
       '@babel/plugin-transform-react-jsx-source': 7.24.1(@babel/core@7.24.5)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.2.11(@types/node@20.12.10)
+      vite: 5.2.11(@types/node@20.12.13)
     transitivePeerDependencies:
       - supports-color
 
@@ -6146,9 +6149,9 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
-  cosmiconfig-typescript-loader@5.0.0(@types/node@20.12.10)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5):
+  cosmiconfig-typescript-loader@5.0.0(@types/node@20.12.13)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5):
     dependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
       cosmiconfig: 9.0.0(typescript@5.4.5)
       jiti: 1.21.0
       typescript: 5.4.5
@@ -8202,7 +8205,7 @@ snapshots:
 
   trim-newlines@3.0.1: {}
 
-  ts-node-dev@2.0.0(@types/node@20.12.10)(typescript@5.4.5):
+  ts-node-dev@2.0.0(@types/node@20.12.13)(typescript@5.4.5):
     dependencies:
       chokidar: 3.6.0
       dynamic-dedupe: 0.3.0
@@ -8212,7 +8215,7 @@ snapshots:
       rimraf: 2.7.1
       source-map-support: 0.5.21
       tree-kill: 1.2.2
-      ts-node: 10.9.2(@types/node@20.12.10)(typescript@5.4.5)
+      ts-node: 10.9.2(@types/node@20.12.13)(typescript@5.4.5)
       tsconfig: 7.0.0
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -8220,14 +8223,14 @@ snapshots:
       - '@swc/wasm'
       - '@types/node'
 
-  ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5):
+  ts-node@10.9.2(@types/node@20.12.13)(typescript@5.4.5):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
       acorn: 8.11.3
       acorn-walk: 8.3.2
       arg: 4.1.3
@@ -8396,13 +8399,13 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite-node@1.6.0(@types/node@20.12.10):
+  vite-node@1.6.0(@types/node@20.12.13):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.11(@types/node@20.12.10)
+      vite: 5.2.11(@types/node@20.12.13)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -8413,16 +8416,16 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.2.11(@types/node@20.12.10):
+  vite@5.2.11(@types/node@20.12.13):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.17.2
     optionalDependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
       fsevents: 2.3.3
 
-  vitest@1.6.0(@types/node@20.12.10)(happy-dom@14.10.1):
+  vitest@1.6.0(@types/node@20.12.13)(happy-dom@14.10.1):
     dependencies:
       '@vitest/expect': 1.6.0
       '@vitest/runner': 1.6.0
@@ -8441,11 +8444,11 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.2.11(@types/node@20.12.10)
-      vite-node: 1.6.0(@types/node@20.12.10)
+      vite: 5.2.11(@types/node@20.12.13)
+      vite-node: 1.6.0(@types/node@20.12.13)
       why-is-node-running: 2.2.2
     optionalDependencies:
-      '@types/node': 20.12.10
+      '@types/node': 20.12.13
       happy-dom: 14.10.1
     transitivePeerDependencies:
       - less
