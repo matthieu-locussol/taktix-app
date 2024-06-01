@@ -42,25 +42,37 @@ existing naming convention.**
 
 Make sure to place the object layers on top of the tile layers. Some layers have a reserved name:
 
--  `Player`: this tile layer is used to set the collisions for the player.
+-  `Player`: this tile layer is used to set the collisions for the player. Make sure to set the 
 -  `Lights`: this object layer is used to set the lights in the map. Each object in this layer can
    define [lights properties](#lights).
 -  `Interactive`: this object layer is used to set the interactive objects in the map. For each
    interactive object, [make sure to add it in the game](#interactive-objects). Each object in this
    layer should have an `id` property that matches the `id` of the interactive object in the game.
 -  `TeleportationSpots`: this object layer is used to set the teleportation spots in the map.
+-  `Fights`: this object layer is used to set the fights in the map.
+-  `Npcs`: this object layer is used to set NPCs on the map.
 
-Once the map is added to the project, you can use the following command to generate the map data:
+> Layers **Player**, **TeleportationSpots** are mandatory. If these are not present, the map generation script will throw an error.
+
+Make sure to follow the layers guidelines to make sure the map can be correctly generated in the game.
+Once the map is added to the project and ready, you can use the following command to generate the map data:
 
 ```bash
 pnpm generate_maps
 ```
 
+### Player
+
+The fights layer defines a specific layer property (global):
+
+- `ge_charLayer` (string): set the value to `player`. (**Mandatory**)
+
+
 ### Interactive objects
 
 To add an interactive object in the game, you need to add a new value in the enum
 `InteractiveObjectType`. This value needs to match the `id` property of the object in the
-`Interactive` layer of the map.
+`Interactive` layer of the map (case-sensitive).
 
 Once you add a value in this enum, you can check where it is used to add the corresponding logic for
 your new interactive object, such as the context menu that appears when you click on the object.
@@ -84,3 +96,22 @@ can define the following properties:
 
 You can find a light object template under the `public/assets/maps/templates` directory in the
 `apps/client` project.
+
+### Npcs
+
+To add an NPC in the game, you can place it in the `Npcs` object layer. Each object in this layer can define the following properties:
+
+-  `id` (string): the id of the NPC (case-sensitive).
+-  `direction` (string): the direction the NPC is facing. Can be `up`, `down`, `left`, or `right` (case-sensitive).
+
+### Fights
+
+The fights layer defines a specific layer property (global):
+
+- `timeoutRegenerationInMns` (integer): the time in minutes before the fights will be regenerated on the map.
+
+To add a fight in the game, you can place it in the `Fights` object layer. Each object in this layer can define the following properties:
+
+- `fightIds` (string): the ids of the monster groups (as in `fights.ts`) that can spawn when the map regenerate monster groups. If multiple ids are provided, they should be separated by a comma.
+- `name` (string): the name of the monster that will represent the monster group on the map.
+- `radius` (integer): the monster's radius of movement on the map.
