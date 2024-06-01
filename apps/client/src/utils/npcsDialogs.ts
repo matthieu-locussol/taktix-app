@@ -7,9 +7,9 @@ export const npcsDialogs: Record<
    NPC,
    (infos: NPCInformations, store: Store, t: TFunctionWrapper) => DialogItem[]
 > = {
-   Nono: ({ avatar, name }, store, _t) => [
+   Nono: ({ avatar, name }, _store, t) => [
       {
-         content: 'Bordel il est passé où mon pinard ?',
+         content: t('nono_dialog'),
          name,
          avatar,
       },
@@ -17,25 +17,6 @@ export const npcsDialogs: Record<
          content: '...',
          name,
          avatar,
-      },
-      {
-         content: "Eh, toi ! Tu veux pas m'aider à retrouver mes bouteilles ?",
-         name,
-         avatar,
-         choices: [
-            {
-               text: 'Oui',
-               callback: () => {
-                  store.nonoClickerMenuStore.open();
-               },
-            },
-            {
-               text: 'Non',
-               callback: () => {
-                  // Nothing to do
-               },
-            },
-         ],
       },
    ],
 };

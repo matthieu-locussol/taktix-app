@@ -150,6 +150,7 @@ export const translationsEn = {
    developer: 'Developer',
    graveyardLadder_dialog:
       "This ladder seems to leads somewhere, but you'll have to wait until the next update...",
+   nono_dialog: 'Damn, where did my wine go?',
 
    // Rarities
    common: 'Common',
