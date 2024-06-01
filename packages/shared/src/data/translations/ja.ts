@@ -154,6 +154,7 @@ export const translationsJa: LanguageTranslations = {
    developer: '開発者',
    graveyardLadder_dialog:
       'この梯子はどこかに続いているようですが、次のアップデートまで待たなければなりません…',
+   nono_dialog: 'くそっ、俺のワインはどこに行ったんだ？',
 
    // Rarities
    common: 'コモン',
@@ -346,6 +347,12 @@ export const translationsJa: LanguageTranslations = {
    'iceDamages_-f_value': '-{{value}} 氷のダメージ',
    'iceDamages_-%_value': '-{{value}}% 氷のダメージ増加率',
    'iceDamages_-x%_value': '-{{value}}% 氷のダメージ倍率',
+   'elementalDamages_+f_value': '属性ダメージ +{{value}}',
+   'elementalDamages_+%_value': '属性ダメージ +{{value}}%',
+   'elementalDamages_+x%_value': '属性ダメージ +{{value}}%',
+   'elementalDamages_-f_value': '属性ダメージ -{{value}}',
+   'elementalDamages_-%_value': '属性ダメージ -{{value}}%',
+   'elementalDamages_-x%_value': '属性ダメージ -{{value}}%',
    'sword1HDamages_+f_value': '+{{value}} 片手剣のダメージ',
    'sword1HDamages_+%_value': '+{{value}}% 片手剣のダメージ増加率',
    'sword1HDamages_+x%_value': '+{{value}}% 片手剣のダメージ倍率',
@@ -422,6 +429,10 @@ export const translationsJa: LanguageTranslations = {
    'iceResistance_+%_value': '+{{value}}% 氷の耐性',
    'iceResistance_-f_value': '-{{value}} 氷の耐性',
    'iceResistance_-%_value': '-{{value}}% 氷の耐性',
+   'elementalResistances_+f_value': '属性耐性 +{{value}}',
+   'elementalResistances_+%_value': '属性耐性 +{{value}}%',
+   'elementalResistances_-f_value': '属性耐性 -{{value}}',
+   'elementalResistances_-%_value': '属性耐性 -{{value}}%',
    'initiative_+f_value': '+{{value}} イニシアチブ',
    'initiative_-f_value': '-{{value}} イニシアチブ',
    'precision_+f_value': '+{{value}} 精度',

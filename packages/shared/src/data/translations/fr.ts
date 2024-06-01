@@ -155,6 +155,7 @@ export const translationsFr: LanguageTranslations = {
    developer: 'Développeur',
    graveyardLadder_dialog:
       'Cette échelle semble mener quelque part, mais vous devrez attendre la prochaine mise à jour...',
+   nono_dialog: 'Bordel il est passé où mon pinard ?',
 
    // Rarities
    common: 'Commun',
@@ -347,6 +348,12 @@ export const translationsFr: LanguageTranslations = {
    'iceDamages_-f_value': '-{{value}} dégâts de glace',
    'iceDamages_-%_value': '-{{value}}% dégâts de glace',
    'iceDamages_-x%_value': '-{{value}}% multiplicateur des dégâts de glace',
+   'elementalDamages_+f_value': '+{{value}} dégâts élémentaires',
+   'elementalDamages_+%_value': '+{{value}}% dégâts élémentaires',
+   'elementalDamages_+x%_value': '+{{value}}% multiplicateur des dégâts élémentaires',
+   'elementalDamages_-f_value': '-{{value}} dégâts élémentaires',
+   'elementalDamages_-%_value': '-{{value}}% dégâts élémentaires',
+   'elementalDamages_-x%_value': '-{{value}}% multiplicateur des dégâts élémentaires',
    'sword1HDamages_+f_value': '+{{value}} dégâts d’épée à une main',
    'sword1HDamages_+%_value': '+{{value}}% dégâts d’épée à une main',
    'sword1HDamages_+x%_value': '+{{value}}% multiplicateur des dégâts d’épée à une main',
@@ -423,6 +430,10 @@ export const translationsFr: LanguageTranslations = {
    'iceResistance_+%_value': '+{{value}}% résistance à la glace',
    'iceResistance_-f_value': '-{{value}} résistance à la glace',
    'iceResistance_-%_value': '-{{value}}% résistance à la glace',
+   'elementalResistances_+f_value': '+{{value}} aux résistances élémentaires',
+   'elementalResistances_+%_value': '+{{value}}% aux résistances élémentaires',
+   'elementalResistances_-f_value': '-{{value}} aux résistances élémentaires',
+   'elementalResistances_-%_value': '-{{value}}% aux résistances élémentaires',
    'initiative_+f_value': '+{{value}} initiative',
    'initiative_-f_value': '-{{value}} initiative',
    'precision_+f_value': '+{{value}} précision',
