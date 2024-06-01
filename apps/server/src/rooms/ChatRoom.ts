@@ -179,7 +179,9 @@ export class ChatRoom extends Room {
          message: {
             author: 'Server',
             channel: Channel.SERVER,
-            content: `Connected to server {{SERVER_URL}}!`,
+            content: `Connected to ${
+               process.env.NODE_ENV === 'production' ? 'production' : 'development'
+            } server!`,
          },
       };
 
