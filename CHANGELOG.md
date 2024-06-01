@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.56.2](https://github.com/matthieu-locussol/taktix-app/compare/v1.56.1...v1.56.2) (2024-06-01)
+
+
+### Bug Fixes
+
+* elemental res/damages i18n ([e573239](https://github.com/matthieu-locussol/taktix-app/commit/e573239227382e2fc627a1d86c37a085936707ed))
+* welcome message ([022b59f](https://github.com/matthieu-locussol/taktix-app/commit/022b59f3567df5953b8d30f0454673d69074bf44))
+
 ### [1.56.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.56.0...v1.56.1) (2024-05-16)
 
 ## [1.56.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.55.0...v1.56.0) (2024-05-16)
