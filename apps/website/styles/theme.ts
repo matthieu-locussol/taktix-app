@@ -3,10 +3,11 @@ import { createTheme } from '@mui/material/styles';
 export const theme = createTheme({
    palette: {
       primary: {
-         main: '#236348',
+         main: '#115E59',
+         light: '#14B8A6',
       },
       secondary: {
-         main: '#333333',
+         main: '#111827',
       },
       error: {
          main: '#EF4444',
@@ -19,14 +20,5 @@ export const theme = createTheme({
    },
    typography: {
       fontFamily: ['Open Sans'].join(','),
-   },
-   components: {
-      MuiButton: {
-         styleOverrides: {
-            root: {
-               textTransform: 'none',
-            },
-         },
-      },
    },
 });
