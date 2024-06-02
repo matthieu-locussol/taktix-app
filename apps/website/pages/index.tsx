@@ -258,6 +258,7 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
                   <StyledTab value={1} label="About" />
                   <StyledTab value={2} label="Screenshots" />
+                  <StyledTab value={3} label="Credits" />
                </StyledTabs>
             </Box>
             <Container
@@ -388,6 +389,80 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                         />
                      ))}
                   </Box>
+               )}
+               {value === 3 && (
+                  <>
+                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                        Tilesets:{' '}
+                        <Link
+                           rel="noopener noreferrer"
+                           target="_blank"
+                           href="https://twitter.com/ElvGames"
+                        >
+                           ElvGames
+                        </Link>
+                     </Typography>
+                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                        Animations Spritesheets:{' '}
+                        <Link
+                           rel="noopener noreferrer"
+                           target="_blank"
+                           href="https://bdragon1727.itch.io/"
+                        >
+                           BDragon1727
+                        </Link>
+                     </Typography>
+                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                        Characters Spritesheets:{' '}
+                        <Link
+                           rel="noopener noreferrer"
+                           target="_blank"
+                           href="https://twitter.com/ElvGames"
+                        >
+                           ElvGames
+                        </Link>
+                     </Typography>
+                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                        Fight music:{' '}
+                        <Link
+                           rel="noopener noreferrer"
+                           target="_blank"
+                           href="https://opengameart.org/users/flixberry-entertainment"
+                        >
+                           Flixberry Entertainment
+                        </Link>
+                     </Typography>
+                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                        Musics:{' '}
+                        <Link
+                           rel="noopener noreferrer"
+                           target="_blank"
+                           href="https://sonatina.itch.io/"
+                        >
+                           Sara Garrard
+                        </Link>
+                     </Typography>
+                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                        Font:{' '}
+                        <Link
+                           rel="noopener noreferrer"
+                           target="_blank"
+                           href="https://fonts.google.com/?query=Matt+McInerney"
+                        >
+                           Matt McInerney
+                        </Link>
+                     </Typography>
+                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                        Icons:{' '}
+                        <Link
+                           rel="noopener noreferrer"
+                           target="_blank"
+                           href="https://game-icons.net/"
+                        >
+                           Game-icons
+                        </Link>
+                     </Typography>
+                  </>
                )}
             </Container>
          </Box>
