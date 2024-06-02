@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.57.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.56.1...v1.57.0) (2024-06-02)
+
+
+### Features
+
+* game credits on the website ([16e1df5](https://github.com/matthieu-locussol/taktix-app/commit/16e1df5e029d3a89e40fccafc28316b0f85b25ca))
+* website informations ([00d78e5](https://github.com/matthieu-locussol/taktix-app/commit/00d78e5d44a51bb91f225cd1e08122c8c7a04689))
+
+
+### Bug Fixes
+
+* elemental res/damages i18n ([6754e0a](https://github.com/matthieu-locussol/taktix-app/commit/6754e0ac937504e88b39bc15c230ee42483cc447))
+* welcome message ([8922df9](https://github.com/matthieu-locussol/taktix-app/commit/8922df9bffcf21cfd9e7da27c84a11a03d921af9))
+
 ### [1.56.2](https://github.com/matthieu-locussol/taktix-app/compare/v1.56.1...v1.56.2) (2024-06-01)
 
 
