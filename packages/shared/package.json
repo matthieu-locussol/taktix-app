@@ -19,7 +19,7 @@
       "zod": "^3.23.8"
    },
    "devDependencies": {
-      "@biomejs/biome": "1.7.3",
+      "@biomejs/biome": "1.8.0",
       "config-typescript": "workspace:^",
       "typescript": "^5.4.5"
    }
