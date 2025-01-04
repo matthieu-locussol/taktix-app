@@ -1,9 +1,11 @@
+import type { Direction, Position } from '../types/SceneData';
+
 import { z } from 'zod';
+
 import { zInteraction } from '../types/Interaction';
 import { zItem, zItemRarity } from '../types/Item';
 import { zPvEFightResults } from '../types/PvEFight';
 import { zRoom } from '../types/Room';
-import { Direction, Position } from '../types/SceneData';
 
 export interface MapRoomOptions {
    uuid: string;

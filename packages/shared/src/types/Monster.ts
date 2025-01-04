@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { ZodMgt } from '../utils/zodMgt';
 
 export const monstersTypes = ['common', 'magic', 'rare', 'boss'] as const;

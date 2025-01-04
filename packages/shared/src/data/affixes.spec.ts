@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
+
 import { statistics } from '../types/Statistic';
+
 import { affixes } from './affixes';
 
 describe('affixes', () => {

@@ -1,6 +1,9 @@
+import type { Language } from '../types/Language';
+
 import { z } from 'zod';
-import { Language } from '../types/Language';
+
 import { ZodMgt } from '../utils/zodMgt';
+
 import { translationsEn } from './translations/en';
 import { translationsFr } from './translations/fr';
 import { translationsJa } from './translations/ja';

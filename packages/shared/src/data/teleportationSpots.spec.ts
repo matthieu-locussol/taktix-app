@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { TELEPORTATION_SPOTS } from './teleportationSpots';
 
 describe('teleportationSpots', () => {

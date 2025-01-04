@@ -1,4 +1,5 @@
 import type { LanguageTranslations } from '../translations';
+
 import { translationsEn } from './en';
 
 export const translationsJa: LanguageTranslations = {

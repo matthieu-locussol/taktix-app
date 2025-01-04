@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { NumberMgt } from './numberMgt';
 
 describe('NumberMgt', () => {
@@ -146,6 +147,7 @@ describe('NumberMgt', () => {
       samples.forEach(({ title, min, max }) => {
          it(title, () => {
             const value = NumberMgt.random(min, max);
+
             expect(value).toBeGreaterThanOrEqual(min);
             expect(value).toBeLessThanOrEqual(max);
          });
@@ -194,6 +196,7 @@ describe('NumberMgt', () => {
       samples.forEach(({ title, min, max }) => {
          it(title, () => {
             const value = NumberMgt.randomFloat(min, max);
+
             expect(value).toBeGreaterThanOrEqual(min);
             expect(value).toBeLessThanOrEqual(max);
          });

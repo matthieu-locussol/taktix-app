@@ -1,5 +1,7 @@
+import type { MonsterType } from '../types/Monster';
+
 import { describe, expect, it } from 'vitest';
-import { MonsterType } from '../types/Monster';
+
 import { MonsterMgt } from './monsterMgt';
 
 describe('MonsterMgt', () => {

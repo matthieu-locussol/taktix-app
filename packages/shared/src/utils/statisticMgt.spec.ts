@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { StatisticMgt } from './statisticMgt';
 
 describe('StatisticMgt', () => {
@@ -98,6 +99,7 @@ describe('StatisticMgt', () => {
                sample.decreased,
                sample.less,
             );
+
             expect(result).toBe(sample.expected);
          },
       );
@@ -237,6 +239,7 @@ describe('StatisticMgt', () => {
                sample.defenderVitality,
                sample.defenderMagicShield,
             );
+
             expect(result).toEqual(sample.expected);
          },
       );
@@ -288,6 +291,7 @@ describe('StatisticMgt', () => {
                sample.attackerHitChance,
                sample.defenderDodgeChance,
             );
+
             expect(result).toEqual(sample.expected);
          },
       );
@@ -353,6 +357,7 @@ describe('StatisticMgt', () => {
                sample.areaOfEffect,
                sample.distance,
             );
+
             expect(result).toEqual(sample.expected);
          },
       );
@@ -769,6 +774,7 @@ describe('StatisticMgt', () => {
                sample.realCriticalStrikeDamages,
                sample.defenderRealCriticalResistance,
             );
+
             expect(result).toEqual(sample.expected);
          },
       );
@@ -901,6 +907,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeRealStatistics(sample.partialStatistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -950,6 +957,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeAttribute(sample.attribute, sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1008,6 +1016,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeVitality(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1066,6 +1075,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeMagicShield(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1113,6 +1123,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeElementalDamages(sample.element, sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1156,6 +1167,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeWeaponDamages(sample.weapon, sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1200,6 +1212,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeElementalResistance(sample.element, sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1256,6 +1269,7 @@ describe('StatisticMgt', () => {
             sample.element,
             sample.statistics,
          );
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1286,6 +1300,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeLifeSteal(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1316,6 +1331,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeLifeStealPercent(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1346,6 +1362,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computePrecision(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1376,6 +1393,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeEvasion(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1421,6 +1439,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeProspect(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1468,6 +1487,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeInitiative(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1492,6 +1512,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeThornsDamages(sample.type, sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1515,6 +1536,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeAreaOfEffect(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1547,6 +1569,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeCriticalStrikeResistance(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1580,6 +1603,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeCriticalStrikeChance(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1613,6 +1637,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeCriticalStrikeChancePercent(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1636,6 +1661,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.computeCriticalStrikeDamages(sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1753,6 +1779,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.mergeStatistics(...sample.statistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1803,6 +1830,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.serializeStatistics(sample.baseStatistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1853,6 +1881,7 @@ describe('StatisticMgt', () => {
 
       it.each(samples)('$title', (sample) => {
          const result = StatisticMgt.deserializeStatistics(sample.serializedBaseStatistics);
+
          expect(result).toEqual(sample.expected);
       });
    });
@@ -1950,6 +1979,7 @@ describe('StatisticMgt', () => {
             sample.oldStatisticsPoints,
             sample.experience,
          );
+
          expect(result).toEqual(sample.expected);
       });
    });

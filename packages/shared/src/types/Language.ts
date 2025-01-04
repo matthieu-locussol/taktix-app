@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { ZodMgt } from '../utils/zodMgt';
 
 export const languages = ['en', 'fr', 'ja'] as const;

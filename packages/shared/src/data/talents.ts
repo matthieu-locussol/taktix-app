@@ -1,6 +1,8 @@
 import { z } from 'zod';
+
 import { zStatistics } from '../types/Statistic';
 import { StatisticMgt } from '../utils/statisticMgt';
+
 import { zTranslationKey } from './translations';
 
 export const zTalent = z.object({

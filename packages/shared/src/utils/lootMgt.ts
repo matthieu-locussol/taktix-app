@@ -1,7 +1,10 @@
+import type { Monster, MonsterName } from '../data/monsters';
+import type { Item, ItemRarity } from '../types/Item';
+import type { MonsterType } from '../types/Monster';
+
+import { rarities } from '../types/Item';
 import { MAXIMUM_LEVEL } from '../data/levels';
-import { Monster, MonsterName } from '../data/monsters';
-import { Item, ItemRarity, rarities } from '../types/Item';
-import { MonsterType } from '../types/Monster';
+
 import { ArrayMgt } from './arrayMgt';
 import { ItemMgt } from './itemMgt';
 import { NumberMgt } from './numberMgt';
@@ -207,6 +210,7 @@ export namespace LootMgt {
 
       if (accumulatedSum < 1) {
          const lastRarity = orderedRarities[orderedRarities.length - 1];
+
          normalizedProbabilities[lastRarity] =
             (normalizedProbabilities[lastRarity] || 0) + (1 - accumulatedSum);
       }
@@ -232,6 +236,7 @@ export namespace LootMgt {
       );
 
       const normalizedProbabilities = normalizeProbabilities(probabilities);
+
       return normalizedProbabilities;
    };
 

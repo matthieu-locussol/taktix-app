@@ -1,7 +1,9 @@
+import type { Role } from '../types/Role';
+
 import { channelsInformations } from '../data/channelsInformations';
 import { rolesInformations } from '../data/rolesInformations';
 import { Channel } from '../types/Channel';
-import type { Role } from '../types/Role';
+
 import { PermissionMgt } from './permissionMgt';
 
 export namespace ChannelMgt {

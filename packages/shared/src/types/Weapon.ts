@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { ZodMgt } from '../utils/zodMgt';
 
 export const weapons1H = ['sword1H', 'axe1H', 'mace1H', 'dagger', 'wand'] as const;

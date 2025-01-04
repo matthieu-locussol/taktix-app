@@ -1,8 +1,6 @@
-import { isCharacterSprite } from '../data/charactersSprites';
-import { MonsterName } from '../data/monsters';
-import { isMonsterSprite } from '../data/monstersSprites';
-import { Item } from '../types/Item';
-import {
+import type { MonsterName } from '../data/monsters';
+import type { Item } from '../types/Item';
+import type {
    PvEFightMove,
    PvEFightParameters,
    PvEFightResults,
@@ -10,7 +8,10 @@ import {
    PvEFighter,
    PvEInitialConditions,
 } from '../types/PvEFight';
-import { WeaponDamagesType } from '../types/Weapon';
+import type { WeaponDamagesType } from '../types/Weapon';
+
+import { isMonsterSprite } from '../data/monstersSprites';
+import { isCharacterSprite } from '../data/charactersSprites';
 import { _assert, _assertTrue } from '../utils/_assert';
 import { ArrayMgt } from '../utils/arrayMgt';
 import { LevelMgt } from '../utils/levelMgt';
@@ -40,6 +41,7 @@ export class PvEFight {
    public run(): PvEFightResults {
       while (!this.isDone() && this.turns.length < PvEFight.MAX_TURNS) {
          const turn = this.computeTurn();
+
          this.turns.push(turn);
       }
 
@@ -69,11 +71,13 @@ export class PvEFight {
 
    private computeMove(fighter: PvEFighter): PvEFightMove | null {
       const target = this.getRandomAliveTarget(fighter);
+
       if (target === null) {
          return null;
       }
 
       const hasDodged = this.computeHasDodged(fighter, target);
+
       if (hasDodged) {
          return {
             fighterId: fighter.id,
@@ -88,6 +92,7 @@ export class PvEFight {
       }
 
       const fighterInfos = this.initialConditions.find(({ fighterId }) => fighterId === fighter.id);
+
       _assert(fighterInfos, 'fighterInfos should be defined!');
       const { maxHealth } = fighterInfos;
 
@@ -112,6 +117,7 @@ export class PvEFight {
          totalThornsDamages - thornsDamagesOnShield,
          fighter.health,
       );
+
       fighter.magicShield -= thornsDamagesOnShield;
       fighter.health = Math.max(0, fighter.health - thornsDamagesOnHealth);
       fighter.health = Math.min(maxHealth, fighter.health + lifeStolen);
@@ -227,6 +233,7 @@ export class PvEFight {
       );
 
       const cappedLifeStolen = Math.min(missingLife, lifeStolen);
+
       if (cappedLifeStolen <= 0) {
          return 0;
       }
@@ -297,6 +304,7 @@ export class PvEFight {
             monsters: this.parameters.monstersInformations.map((monster) => {
                const { monsterType, name, level } = monster;
                const monsterName = name as MonsterName;
+
                _assert(monsterType, 'monsterType should be defined!');
 
                return { level, name: monsterName, type: monsterType };

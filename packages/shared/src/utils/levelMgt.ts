@@ -11,6 +11,7 @@ export namespace LevelMgt {
 
       while (left < right) {
          const mid = Math.floor((left + right) / 2);
+
          if (EXPERIENCE_TABLE[mid].experience <= experience) {
             left = mid + 1;
          } else {
@@ -67,6 +68,7 @@ export namespace LevelMgt {
    export const computeGainedLevels = (oldExperience: number, newExperience: number): number => {
       const oldLevel = getLevel(oldExperience);
       const newLevel = getLevel(newExperience);
+
       return newLevel - oldLevel;
    };
 }

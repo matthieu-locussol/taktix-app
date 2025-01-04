@@ -1,4 +1,4 @@
-import { MonsterType } from '../types/Monster';
+import type { MonsterType } from '../types/Monster';
 
 export namespace MonsterMgt {
    const MONSTER_LIFE_COEFFICIENT = 1.625;
@@ -22,11 +22,13 @@ export namespace MonsterMgt {
    const roundToNearest = (n: number, decimalCount: number = 0): number => {
       const offset = 10 ** decimalCount;
       let res = n * offset;
+
       if (res % 1 >= 0.5) {
          res = Math.ceil(res);
       } else {
          res = Math.floor(res);
       }
+
       return res / offset;
    };
 
@@ -35,16 +37,19 @@ export namespace MonsterMgt {
          return 0;
       }
       const d = Math.ceil(Math.log10(Math.abs(num)));
+
       if (d <= n) {
          return num;
       }
       const power = d - n;
       const magnitude = Math.floor(10 ** power);
+
       return roundToNearest(num / magnitude) * magnitude;
    };
 
    export const scaleMonsterLife = (monsterLevel: number, ratio: number): number => {
       const value = Math.floor(ratio * monsterLevel ** MONSTER_LIFE_COEFFICIENT);
+
       return Math.max(1, roundToSignificantFigures(value, MONSTER_LIFE_SIGNIFICANT_NUMBERS));
    };
 
@@ -71,6 +76,7 @@ export namespace MonsterMgt {
    export const scaleMonsterExperience = (level: number, monsterType: MonsterType): number => {
       const coefficient = MONSTER_EXPERIENCE_COEFFICIENT * MONSTER_TYPE_COEFFICIENTS[monsterType];
       const experience = computeMonsterExperience(level, monsterType);
+
       return Math.floor(experience * coefficient);
    };
 }

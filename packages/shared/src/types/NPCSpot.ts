@@ -1,6 +1,6 @@
-import { NPC } from '../data/npcs';
 import type { Room } from './Room';
-import { Direction } from './SceneData';
+import type { Direction } from './SceneData';
+import type { NPC } from '../data/npcs';
 
 export interface NPCSpot {
    x: number;

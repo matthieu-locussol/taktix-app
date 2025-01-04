@@ -1,6 +1,7 @@
 // This file has been automatically generated. DO NOT edit it manually.
 
 import { z } from 'zod';
+
 import { ZodMgt } from '../utils/zodMgt';
 
 const rooms = [

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { StringMgt } from './stringMgt';
 
 describe('stringMgt', () => {
@@ -8,6 +9,7 @@ describe('stringMgt', () => {
          const results = validCharacterNames.map((characterName) =>
             StringMgt.isCharacterNameValid(characterName),
          );
+
          results.forEach((result) => expect(result).toBe(true));
       });
 
@@ -16,6 +18,7 @@ describe('stringMgt', () => {
          const results = invalidCharacterNames.map((characterName) =>
             StringMgt.isCharacterNameValid(characterName),
          );
+
          results.forEach((result) => expect(result).toBe(false));
       });
    });
@@ -34,6 +37,7 @@ describe('stringMgt', () => {
          ];
 
          const results = strings.map((str) => StringMgt.toUpperCaseFirst(str));
+
          results.forEach((result, index) => expect(result).toBe(expectedResults[index]));
       });
    });

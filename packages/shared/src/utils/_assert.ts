@@ -1,9 +1,9 @@
 import assert from 'assert';
 
-export type AssertMessage = string | Error | Function | undefined | Object;
+export type AssertMessage = string | Error | (() => void) | undefined | object;
 
 const throwError = (message: AssertMessage): never => {
-   let error: Error | Object;
+   let error: Error | object;
    const messageProcessed = typeof message === 'function' ? message() : message;
 
    switch (typeof messageProcessed) {

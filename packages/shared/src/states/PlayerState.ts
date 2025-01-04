@@ -1,10 +1,14 @@
+import type { Item } from '../types/Item';
+import type { Room } from '../types/Room';
+import type { RealStatistic, Statistic } from '../types/Statistic';
+import type { WeaponDamages, WeaponType } from '../types/Weapon';
+
 import { Schema, type } from '@colyseus/schema';
+
 import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from '../config';
-import { Item, ItemPosition } from '../types/Item';
+import { ItemPosition } from '../types/Item';
 import { ProfessionType, zProfessionType } from '../types/Profession';
-import { Room } from '../types/Room';
-import { RealStatistic, Statistic } from '../types/Statistic';
-import { WeaponDamages, WeaponType, isWeaponType, zWeaponType } from '../types/Weapon';
+import { isWeaponType, zWeaponType } from '../types/Weapon';
 import { LevelMgt } from '../utils/levelMgt';
 import { StatisticMgt } from '../utils/statisticMgt';
 import { StringMgt } from '../utils/stringMgt';
@@ -167,6 +171,7 @@ export class PlayerState extends Schema {
    setBaseStatistics(baseStatistics: string) {
       this.baseStatistics = StatisticMgt.deserializeStatistics(baseStatistics);
       const newRealStatistics = this.getRealStatistics();
+
       this.setHealth(Math.min(this.health, newRealStatistics.vitality));
    }
 
@@ -250,11 +255,13 @@ export class PlayerState extends Schema {
 
    getEquippedWeapon(): Item | undefined {
       const weapon = this.getEquippedItems().find((item) => isWeaponType(item.type));
+
       return weapon;
    }
 
    getEquippedWeaponType(): WeaponType | undefined {
       const weapon = this.getEquippedWeapon();
+
       if (weapon === undefined) {
          return undefined;
       }
@@ -264,6 +271,7 @@ export class PlayerState extends Schema {
 
    getEquippedWeaponDamages(): WeaponDamages[] {
       const weapons = this.getEquippedItems().filter((item) => isWeaponType(item.type));
+
       return weapons.flatMap((weapon) => weapon.damages);
    }
 

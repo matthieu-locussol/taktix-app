@@ -1,11 +1,13 @@
-import { Animation } from '../types/Animation';
-import { MonsterType, zMonsterType } from '../types/Monster';
-import { PvEFighterInformations } from '../types/PvEFight';
-import { WeaponDamages } from '../types/Weapon';
+import type { MonsterType } from '../types/Monster';
+import type { PvEFighterInformations } from '../types/PvEFight';
+import type { WeaponDamages } from '../types/Weapon';
+import type { MonsterSprite } from './monstersSprites';
+import type { TranslationKey } from './translations';
+
 import { MonsterMgt } from '../utils/monsterMgt';
 import { StatisticMgt } from '../utils/statisticMgt';
-import { MonsterSprite } from './monstersSprites';
-import { TranslationKey } from './translations';
+import { zMonsterType } from '../types/Monster';
+import { Animation } from '../types/Animation';
 
 type FilterEnemy<T> = T extends `enemy-${infer EnemyName}` ? `enemy-${EnemyName}` : never;
 export type MonsterName = FilterEnemy<TranslationKey>;
@@ -41,6 +43,7 @@ const MONSTER_TYPE_PROBABILITIES: Record<MonsterType, number> = Object.keys(
          0,
       );
       const probability = weight / totalWeight;
+
       return { ...acc, [type]: probability };
    },
    {} as Record<MonsterType, number>,

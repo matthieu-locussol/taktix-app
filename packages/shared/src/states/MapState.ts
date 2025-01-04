@@ -1,10 +1,14 @@
+import type { Room } from '../types/Room';
+import type { PlayerStateConstructor } from './PlayerState';
+
 import { MapSchema, Schema, type } from '@colyseus/schema';
+
 import { mapsFights } from '../data/mapsFights';
 import { monsters } from '../data/monsters';
-import { Room } from '../types/Room';
 import { NumberMgt } from '../utils/numberMgt';
+
 import { FightState } from './FightState';
-import { PlayerState, PlayerStateConstructor } from './PlayerState';
+import { PlayerState } from './PlayerState';
 
 export class MapState extends Schema {
    @type({ map: PlayerState })
@@ -15,6 +19,7 @@ export class MapState extends Schema {
 
    createPlayer(sessionId: string, parameters: PlayerStateConstructor) {
       const player = new PlayerState(parameters);
+
       this.players.set(sessionId, player);
    }
 
@@ -56,6 +61,7 @@ export class MapState extends Schema {
 
    startFightsRegeneration(room: Room) {
       const mapFightData = mapsFights[room];
+
       if (mapFightData === null) {
          return;
       }
@@ -63,6 +69,7 @@ export class MapState extends Schema {
       this.generateAllFights(room);
 
       const { timeoutRegeneration } = mapFightData;
+
       setInterval(async () => {
          this.generateAllFights(room);
       }, timeoutRegeneration);
@@ -80,11 +87,13 @@ export class MapState extends Schema {
 
    private generateFightsIfNeeded(room: Room): boolean {
       const mapFightData = mapsFights[room];
+
       if (mapFightData === null) {
          return false;
       }
 
       const { fights } = mapFightData;
+
       if (this.fights.size >= fights.length) {
          return false;
       }
@@ -102,6 +111,7 @@ export class MapState extends Schema {
 
       const randomFightIdx = NumberMgt.random(0, eligibleFights.length - 1);
       const randomFight = eligibleFights[randomFightIdx];
+
       if (randomFight === undefined) {
          return false;
       }

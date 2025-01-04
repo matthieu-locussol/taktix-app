@@ -8,7 +8,12 @@ import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
 export const config = [
-   { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
+   {
+      ignores: ['**/dist/**', '**/node_modules/**'],
+   },
+   {
+      files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+   },
    {
       languageOptions: {
          globals: { ...globals.browser, ...globals.node },
@@ -23,6 +28,12 @@ export const config = [
    pluginReactRefresh.configs.recommended,
    {
       rules: {
+         // TODO: remove these rules one by one
+         '@typescript-eslint/no-namespace': 'off',
+         'import/no-unresolved': 'off',
+         // 'import/extensions': ['.ts', '.tsx'],
+
+         '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
          'no-console': 'off',
          'react/prop-types': 'off',
          'react/jsx-uses-react': 'off',
@@ -39,10 +50,9 @@ export const config = [
                args: 'after-used',
                ignoreRestSiblings: false,
                argsIgnorePattern: '^_.*?$',
+               varsIgnorePattern: '^z',
             },
          ],
-         'import/no-unresolved': 'off',
-         // 'import/extensions': ['.ts', '.tsx'],
          'import/order': [
             'warn',
             {

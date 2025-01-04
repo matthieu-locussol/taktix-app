@@ -1,4 +1,7 @@
-import { STARTING_TALENTS, Talent, getTalents } from '../data/talents';
+import type { Talent } from '../data/talents';
+
+import { STARTING_TALENTS, getTalents } from '../data/talents';
+
 import { ArrayMgt } from './arrayMgt';
 import { LevelMgt } from './levelMgt';
 
@@ -118,6 +121,7 @@ export namespace TalentMgt {
       }
 
       const level = LevelMgt.getLevel(experience);
+
       if (newTalents.length + remainingPoints !== level - 1) {
          return { valid: false };
       }

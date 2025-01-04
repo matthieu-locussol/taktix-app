@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { zCharacterSprite } from '../data/charactersSprites';
 import { zProfessionType } from '../types/Profession';
 

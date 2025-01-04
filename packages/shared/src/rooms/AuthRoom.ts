@@ -1,5 +1,8 @@
+import type { CharacterSprite } from '../data/charactersSprites';
+
 import { z } from 'zod';
-import { CharacterSprite, zCharacterSprite } from '../data/charactersSprites';
+
+import { zCharacterSprite } from '../data/charactersSprites';
 import { zTranslationKey } from '../data/translations';
 import { zProfessionType } from '../types/Profession';
 

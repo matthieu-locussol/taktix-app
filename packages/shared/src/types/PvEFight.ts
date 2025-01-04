@@ -1,10 +1,14 @@
+import type { RealStatistic } from './Statistic';
+
 import { z } from 'zod';
+
 import { zCharacterSprite } from '../data/charactersSprites';
 import { zMonsterSprite } from '../data/monstersSprites';
+
 import { zItem } from './Item';
 import { zMonsterType } from './Monster';
 import { zProfessionType } from './Profession';
-import { RealStatistic, isRealStatistic, zRealStatistic } from './Statistic';
+import { isRealStatistic, zRealStatistic } from './Statistic';
 import { zWeaponDamages, zWeaponDamagesType } from './Weapon';
 
 const zPvEFighterInformations = z.object({

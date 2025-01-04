@@ -1,16 +1,19 @@
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
+
 import { ZodMgt } from './zodMgt';
 
 describe('ZodMgt', () => {
    describe('isValidZodLiteralUnion', () => {
       it('should return true if the literals array has at least 1 element', () => {
          const literals = [z.literal('a')];
+
          expect(ZodMgt.isValidZodLiteralUnion(literals)).toBe(true);
       });
 
       it('should return false if the literals array has less than 1 element', () => {
          const literals: z.ZodLiteral<''>[] = [];
+
          expect(ZodMgt.isValidZodLiteralUnion(literals)).toBe(false);
       });
    });
@@ -27,6 +30,7 @@ describe('ZodMgt', () => {
 
       it('should throw an error if the literals array has less than 1 element', () => {
          const literals: z.ZodLiteral<''>[] = [];
+
          expect(() => ZodMgt.constructZodLiteralUnionType(literals)).toThrow();
       });
    });

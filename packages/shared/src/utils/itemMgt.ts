@@ -1,7 +1,9 @@
+import type { MonsterName } from '../data/monsters';
+
 import { z } from 'zod';
+
 import { affixes } from '../data/affixes';
 import { baseAffixes } from '../data/baseAffixes';
-import type { MonsterName } from '../data/monsters';
 import {
    type Affix,
    type Item,
@@ -27,6 +29,7 @@ import {
    zWeaponDamages,
    zWeaponType,
 } from '../types/Weapon';
+
 import { _assert, _assertTrue } from './_assert';
 import { NumberMgt } from './numberMgt';
 import { StatisticMgt } from './statisticMgt';
@@ -115,6 +118,7 @@ export namespace ItemMgt {
             0,
          );
          const probability = weight / totalWeight;
+
          return { ...acc, [type]: probability };
       },
       {} as Record<ItemType, number>,
@@ -183,25 +187,30 @@ export namespace ItemMgt {
       };
 
       let count = 0;
+
       while (count < affixesCount) {
          item = pickupRandomAffix(item);
          count++;
       }
 
       item = getBaseAffixes(item);
+
       return item;
    };
 
    export const getBaseAffixes = (item: Item): Item => {
       const itemBaseAffixes = baseAffixes[item.type];
+
       if (itemBaseAffixes.length === 0) {
          return item;
       }
 
       const baseAffixesPool = itemBaseAffixes.filter((possibleBaseAffixes) => {
          const keys = Object.keys(possibleBaseAffixes) as Statistic[];
+
          return keys.every((key) => {
             const value = possibleBaseAffixes[key];
+
             return value !== undefined && value.level <= item.level;
          });
       });
@@ -321,11 +330,13 @@ export namespace ItemMgt {
       }
 
       const isPrefix = NumberMgt.random(0, 1) === 0 && !hasEnoughPrefixes(item);
+
       if (isPrefix || hasEnoughSuffixes(item)) {
          return pickupRandomPrefix(item);
       }
 
       _assertTrue(!hasEnoughSuffixes(item), 'Item has enough suffixes');
+
       return pickupRandomSuffix(item);
    };
 
@@ -348,6 +359,7 @@ export namespace ItemMgt {
       const prefix = eligiblePrefixesPool[prefixIdx];
 
       const prefixValuesPool = affixes[item.type].prefixes[prefix];
+
       _assert(prefixValuesPool, 'Prefix values pool is not defined');
       const eligiblePrefixValuesPool = prefixValuesPool
          .map((item, idx) => ({ ...item, tier: idx + 1 }))
@@ -391,6 +403,7 @@ export namespace ItemMgt {
       const suffix = eligibleSuffixesPool[suffixIdx];
 
       const suffixValuesPool = affixes[item.type].suffixes[suffix];
+
       _assert(suffixValuesPool, 'Suffix values pool is not defined');
       const eligibleSuffixValuesPool = suffixValuesPool
          .map((item, idx) => ({ ...item, tier: idx + 1 }))
@@ -443,6 +456,7 @@ export namespace ItemMgt {
       return z.array(zWeaponDamages).parse(
          damages.split('|').map((damage) => {
             const [weaponType, type, min, max] = damage.split(':');
+
             return { weaponType, type, min: Number(min), max: Number(max) };
          }),
       );
@@ -472,6 +486,7 @@ export namespace ItemMgt {
             const [name, tier, stats] = affix.split('#');
             const statistics = stats.split(';').reduce((acc, stat) => {
                const [key, value] = stat.split(':');
+
                return { ...acc, [key]: Number(value) };
             }, {});
 
@@ -656,10 +671,6 @@ export namespace ItemMgt {
          if (equippedItemsMap.boots !== null) {
             itemsToRemove.push(equippedItemsMap.boots);
          }
-      } else if (isOffhandType(item.type)) {
-         if (equippedItemsMap.offhand !== null) {
-            itemsToRemove.push(equippedItemsMap.offhand);
-         }
       } else if (item.type === 'ring') {
          if (equippedItemsMap.ring1 !== null && equippedItemsMap.ring2 !== null) {
             itemsToRemove.push(equippedItemsMap.ring1);
@@ -697,6 +708,7 @@ export namespace ItemMgt {
 
       if (random < ITEM_TYPE_GACHIX_WEIGHTS[rarity]) {
          const gachix = NumberMgt.random(1, Math.ceil(0.03 * item.level * 2));
+
          return gachix;
       }
 

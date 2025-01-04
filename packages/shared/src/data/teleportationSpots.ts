@@ -1,8 +1,9 @@
 // This file has been automatically generated. DO NOT edit it manually.
 
 import type { Room } from '../types/Room';
-import { Direction } from '../types/SceneData';
 import type { TeleportationSpot } from '../types/TeleportationSpot';
+
+import { Direction } from '../types/SceneData';
 
 export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = {
    AAA_InitialRoom: [],

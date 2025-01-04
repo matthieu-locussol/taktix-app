@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import {
    _assert,
    _assertDeepStrictEqual,
@@ -24,6 +25,7 @@ describe('_assert', () => {
       expect(() => _assert(undefined)).to.throw();
 
       const variable: string | null = 'value';
+
       expect(() => _assert(variable)).not.to.throw();
    });
 

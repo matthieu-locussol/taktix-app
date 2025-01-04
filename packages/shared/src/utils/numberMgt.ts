@@ -9,11 +9,13 @@ export namespace NumberMgt {
 
    export const randomFloat = (min: number, max: number, decimals?: number) => {
       const value = Math.random() * (max - min) + min;
+
       return decimals ? Number(value.toFixed(decimals)) : value;
    };
 
    export const hexStringToNumber = (hexString: string): number => {
       _assertTrue(/^#[0-9A-Fa-f]{6}$/.test(hexString), `Invalid hex string: '${hexString}'`);
+
       return Number.parseInt(hexString.slice(1), 16);
    };
 }

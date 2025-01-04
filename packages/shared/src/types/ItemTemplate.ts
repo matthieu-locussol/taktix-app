@@ -1,5 +1,6 @@
+import type { Statistic } from './Statistic';
+
 import { z } from 'zod';
-import { Statistic } from './Statistic';
 
 const zAffixTemplate = z.object({
    name: z.string(),

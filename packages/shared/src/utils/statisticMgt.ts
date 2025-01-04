@@ -1,14 +1,11 @@
+import type { Item } from '../types/Item';
+import type { RealStatistic, Statistic, Statistics } from '../types/Statistic';
+
 import { DEFAULT_HEALTH, STATISTICS_POINTS_PER_LEVEL } from '../config';
 import { getTalents } from '../data/talents';
-import { Item } from '../types/Item';
 import { ProfessionType } from '../types/Profession';
-import {
-   RealStatistic,
-   Statistic,
-   Statistics,
-   statistics as allStatistics,
-   isStatistic,
-} from '../types/Statistic';
+import { statistics as allStatistics, isStatistic } from '../types/Statistic';
+
 import { LevelMgt } from './levelMgt';
 import { NumberMgt } from './numberMgt';
 
@@ -290,6 +287,7 @@ export namespace StatisticMgt {
 
    export const computeLifeStealPercent = (statistics: Statistics) => {
       const lifeStealPercent = statistics['lifeSteal_+%'] - statistics['lifeSteal_-%'];
+
       return NumberMgt.clamp(lifeStealPercent, 0, 100);
    };
 
@@ -354,11 +352,13 @@ export namespace StatisticMgt {
       statistics: Statistics,
    ) => {
       const thornsDamages = statistics[`${damages}_+%`] - statistics[`${damages}_-%`];
+
       return thornsDamages;
    };
 
    export const computeAreaOfEffect = (statistics: Statistics) => {
       const areaOfEffect = statistics['areaOfEffect_+%'] - statistics['areaOfEffect_-%'];
+
       return areaOfEffect;
    };
 
@@ -378,18 +378,21 @@ export namespace StatisticMgt {
    export const computeCriticalStrikeChance = (statistics: Statistics) => {
       const criticalStrikeChance =
          statistics['criticalStrikeChance_+f'] - statistics['criticalStrikeChance_-f'];
+
       return criticalStrikeChance;
    };
 
    export const computeCriticalStrikeChancePercent = (statistics: Statistics) => {
       const criticalStrikeChancePercent =
          statistics['criticalStrikeChance_+%'] - statistics['criticalStrikeChance_-%'];
+
       return criticalStrikeChancePercent;
    };
 
    export const computeCriticalStrikeDamages = (statistics: Statistics) => {
       const criticalStrikeDamages =
          statistics['criticalStrikeDamages_+%'] - statistics['criticalStrikeDamages_-%'];
+
       return criticalStrikeDamages;
    };
 
@@ -397,6 +400,7 @@ export namespace StatisticMgt {
       const numerator = 1.25 * attackerPrecision;
       const denominator = attackerPrecision + (defenderEvasion * 0.2) ** 0.9;
       const result = denominator === 0 ? 0 : numerator / denominator;
+
       return Math.min(Math.max(result, 0.05), 1);
    };
 
@@ -460,6 +464,7 @@ export namespace StatisticMgt {
       defenderRealCriticalResistance: number,
    ): number => {
       const criticalStrikeDamages = finalDamages * (1 + realCriticalStrikeDamages / 100);
+
       return Math.floor(criticalStrikeDamages - defenderRealCriticalResistance);
    };
 
@@ -476,6 +481,7 @@ export namespace StatisticMgt {
          damagesAfterMagicShield,
       );
       const lifeStolen = Math.min(lifeSteal, defenderVitality);
+
       return Math.floor(lifeStolen);
    };
 
@@ -536,11 +542,13 @@ export namespace StatisticMgt {
          0,
       );
       const remainingPoints = oldTotalPoints - statisticsPointsSpent;
+
       if (remainingPoints < 0) {
          return { valid: false };
       }
 
       const level = LevelMgt.getLevel(experience);
+
       if (statisticsPointsSpent + remainingPoints !== (level - 1) * STATISTICS_POINTS_PER_LEVEL) {
          return { valid: false };
       }
