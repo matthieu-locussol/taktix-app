@@ -4,7 +4,7 @@ import { Badge, darken, svgIconClasses } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { forwardRef } from 'react';
 
-import { Tooltip } from './Tooltip';
+import { Tooltip } from './Tooltip.tsx';
 
 export interface ShortcutIconProps extends IconButtonProps {
    icon: React.ReactNode;

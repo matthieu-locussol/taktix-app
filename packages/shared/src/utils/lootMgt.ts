@@ -1,13 +1,13 @@
-import type { Monster, MonsterName } from '../data/monsters';
-import type { Item, ItemRarity } from '../types/Item';
-import type { MonsterType } from '../types/Monster';
+import type { Monster, MonsterName } from '../data/monsters.ts';
+import type { Item, ItemRarity } from '../types/Item.ts';
+import type { MonsterType } from '../types/Monster.ts';
 
-import { rarities } from '../types/Item';
-import { MAXIMUM_LEVEL } from '../data/levels';
+import { MAXIMUM_LEVEL } from '../data/levels.ts';
+import { rarities } from '../types/Item.ts';
 
-import { ArrayMgt } from './arrayMgt';
-import { ItemMgt } from './itemMgt';
-import { NumberMgt } from './numberMgt';
+import { ArrayMgt } from './arrayMgt.ts';
+import { ItemMgt } from './itemMgt.ts';
+import { NumberMgt } from './numberMgt.ts';
 
 export namespace LootMgt {
    export const BASE_PROBABILITIES: Record<ItemRarity, number> = {

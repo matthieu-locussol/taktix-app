@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { isTauri } from './tauri';
+import { isTauri } from './tauri.ts';
 
 describe('tauri', () => {
    describe('isTauri', () => {

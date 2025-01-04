@@ -1,23 +1,23 @@
-import type { MonsterType } from 'shared/src/types/Monster';
-import type { PvEFightMove } from 'shared/src/types/PvEFight';
-import type { Room } from 'shared/src/types/Room';
-import type { Position } from 'shared/src/types/SceneData';
-import type { WeaponDamagesType } from 'shared/src/types/Weapon';
+import type { MonsterType } from 'shared/src/types/Monster.ts';
+import type { PvEFightMove } from 'shared/src/types/PvEFight.ts';
+import type { Room } from 'shared/src/types/Room.ts';
+import type { Position } from 'shared/src/types/SceneData.ts';
+import type { WeaponDamagesType } from 'shared/src/types/Weapon.ts';
 
 import { t } from 'i18next';
-import { animationFilesData, animationsData } from 'shared/src/data/animations';
-import { monstersSpritesData } from 'shared/src/data/monstersSprites';
-import { ANIMATION_TO_FILE } from 'shared/src/types/Animation';
-import { _assert, _assertTrue } from 'shared/src/utils/_assert';
-import { NumberMgt } from 'shared/src/utils/numberMgt';
-import { TimeMgt } from 'shared/src/utils/timeMgt';
+import { animationFilesData, animationsData } from 'shared/src/data/animations.ts';
+import { monstersSpritesData } from 'shared/src/data/monstersSprites.ts';
+import { ANIMATION_TO_FILE } from 'shared/src/types/Animation.ts';
+import { _assert, _assertTrue } from 'shared/src/utils/_assert.ts';
+import { NumberMgt } from 'shared/src/utils/numberMgt.ts';
+import { TimeMgt } from 'shared/src/utils/timeMgt.ts';
 
-import { store } from '../../store';
-import { MONSTER_TYPE_COLORS, STATS_COLORS } from '../../styles/appTheme';
-import { CHARACTER_HEIGHT, FADE_IN_DURATION, FADE_OUT_DURATION, SCALE_FACTOR } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
-import { loadMonstersAssets } from '../utils/loadMonstersAssets';
-import { makeCharacterName } from '../utils/makeCharacterName';
+import { store } from '../../store/index.tsx';
+import { MONSTER_TYPE_COLORS, STATS_COLORS } from '../../styles/appTheme.tsx';
+import { CHARACTER_HEIGHT, FADE_IN_DURATION, FADE_OUT_DURATION, SCALE_FACTOR } from '../Scene.ts';
+import { loadCharactersAssets } from '../utils/loadCharactersAssets.ts';
+import { loadMonstersAssets } from '../utils/loadMonstersAssets.ts';
+import { makeCharacterName } from '../utils/makeCharacterName.ts';
 
 const HEALTH_MARGIN = 10;
 const HEALTH_HEIGHT = 8;

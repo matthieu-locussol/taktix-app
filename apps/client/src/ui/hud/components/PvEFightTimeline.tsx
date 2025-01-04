@@ -1,17 +1,17 @@
-import type { TranslationKey } from 'shared/src/data/translations';
+import type { TranslationKey } from 'shared/src/data/translations.ts';
 
 import PlayingIcon from '@mui/icons-material/ArrowDropUpRounded';
 import { Box, Paper } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { zCharacterSprite } from 'shared/src/data/charactersSprites';
-import { zMonsterSprite } from 'shared/src/data/monstersSprites';
+import { zCharacterSprite } from 'shared/src/data/charactersSprites.ts';
+import { zMonsterSprite } from 'shared/src/data/monstersSprites.ts';
 
-import { useStore } from '../../../store';
-import { useTranslation } from '../../../types/react-i18next';
+import { useStore } from '../../../store/index.tsx';
+import { useTranslation } from '../../../types/react-i18next.ts';
 
-import { CharacterSpriteStatic } from './CharacterSpriteStatic';
-import { MonsterSpriteStatic } from './MonsterSpriteStatic';
-import { Tooltip } from './Tooltip';
+import { CharacterSpriteStatic } from './CharacterSpriteStatic.tsx';
+import { MonsterSpriteStatic } from './MonsterSpriteStatic.tsx';
+import { Tooltip } from './Tooltip.tsx';
 
 export const PvEFightTimeline = observer(() => {
    const { t } = useTranslation();

@@ -65,7 +65,7 @@ const regenerateSharedRoom = (maps: string[]) => {
    const roomDefinitionBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
 import { z } from 'zod';
 
-import { ZodMgt } from '../utils/zodMgt';
+import { ZodMgt } from '../utils/zodMgt.ts';
 
 const rooms = [
    'AAA_InitialRoom',
@@ -86,7 +86,8 @@ export type Room = z.infer<typeof zRoom>;
 const generateServerMapsRooms = (maps: string[]) => {
    for (const map of maps) {
       const mapRoomPath = resolve(__dirname, `../../../apps/server/src/rooms/maps/${map}Room.ts`);
-      const mapRoomBlob = `import { MapRoom } from '../MapRoom';
+      const mapRoomBlob = `// This file has been automatically generated. DO NOT edit it manually.\n      
+import { MapRoom } from '../MapRoom.ts';
 
 export class ${map}Room extends MapRoom {
    constructor() {
@@ -123,7 +124,7 @@ export class ${map}Room extends MapRoom {
    const defineMapsRoomsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
 import type { Server } from '@colyseus/core';
 
-${maps.map((map) => `import { ${map}Room } from '../maps/${map}Room';`).join('\n')}
+${maps.map((map) => `import { ${map}Room } from '../maps/${map}Room.ts';`).join('\n')}
 
 export const defineMapsRooms = (gameServer: Server) => {
    ${maps.map((map) => `gameServer.define('${map}Room', ${map}Room);`).join('\n   ')}
@@ -153,9 +154,9 @@ const generateClientMapsScenes = (maps: string[]) => {
          __dirname,
          `../../../apps/client/src/game/scenes/${map}Scene.ts`,
       );
-      const mapSceneBlob = `import { Scene } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
-import { loadMonstersAssets } from '../utils/loadMonstersAssets';
+      const mapSceneBlob = `import { Scene } from '../Scene.ts';
+import { loadCharactersAssets } from '../utils/loadCharactersAssets.ts';
+import { loadMonstersAssets } from '../utils/loadMonstersAssets.ts';
 
 export class ${map}Scene extends Scene {
    constructor() {
@@ -199,8 +200,8 @@ export class ${map}Scene extends Scene {
 
    const mapsScenesFilePath = resolve(__dirname, '../../../apps/client/src/game/mapsScenes.ts');
    const mapsScenesBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-import { AAA_InitialScene } from './scenes/AAA_InitialScene';
-${maps.map((map) => `import { ${map}Scene } from './scenes/${map}Scene';`).join('\n')}
+import { AAA_InitialScene } from './scenes/AAA_InitialScene.ts';
+${maps.map((map) => `import { ${map}Scene } from './scenes/${map}Scene.ts';`).join('\n')}
 
 export const mapsScenes: Phaser.Types.Scenes.SceneType[] = [
    AAA_InitialScene,
@@ -281,10 +282,10 @@ const regenerateTeleportationSpots = (maps: string[]) => {
 
    const teleportationSpotsPath = resolve(__dirname, '../../shared/src/data/teleportationSpots.ts');
    const teleportationSpotsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-import type { Room } from '../types/Room';
-import type { TeleportationSpot } from '../types/TeleportationSpot';
+import type { Room } from '../types/Room.ts';
+import type { TeleportationSpot } from '../types/TeleportationSpot.ts';
 
-import { Direction } from '../types/SceneData';
+import { Direction } from '../types/SceneData.ts';
 
 export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = ${JSON.stringify(
       teleportationSpots,
@@ -341,10 +342,10 @@ const regenerateNpcSpots = (maps: string[]) => {
 
    const npcSpotsPath = resolve(__dirname, '../../shared/src/data/npcSpots.ts');
    const npcSpotsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-import type { NPCSpot } from '../types/NPCSpot';
-import type { Room } from '../types/Room';
+import type { NPCSpot } from '../types/NPCSpot.ts';
+import type { Room } from '../types/Room.ts';
 
-import { Direction } from '../types/SceneData';
+import { Direction } from '../types/SceneData.ts';
 
 export const NPC_SPOTS: Record<Room, NPCSpot[]> = ${JSON.stringify(npcSpots, null, 3)
       .replace(/"UP"/gi, 'Direction.UP')
@@ -429,10 +430,10 @@ const regenerateTeleportationPlaces = (maps: string[]) => {
       '../../shared/src/data/teleportationPlaces.ts',
    );
    const teleportationPlacesBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-import type { Room } from '../types/Room';
-import type { TeleportationPlace } from '../types/TeleportationPlace';
+import type { Room } from '../types/Room.ts';
+import type { TeleportationPlace } from '../types/TeleportationPlace.ts';
 
-import { Direction } from '../types/SceneData';
+import { Direction } from '../types/SceneData.ts';
 
 export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = ${JSON.stringify(
       teleportationPlaces,
@@ -501,8 +502,8 @@ const regenerateInteractiveObjects = (maps: string[]) => {
 
    const interactiveObjectsPath = resolve(__dirname, '../../shared/src/data/interactiveObjects.ts');
    const interactiveObjectsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-import type { InteractiveObject, InteractiveObjectData } from '../types/InteractiveObject';
-import type { Room } from '../types/Room';
+import type { InteractiveObject, InteractiveObjectData } from '../types/InteractiveObject.ts';
+import type { Room } from '../types/Room.ts';
 
 export const INTERACTIVE_OBJECTS: Record<Room, InteractiveObjectData[]> = ${JSON.stringify(
       interactiveObjects,
@@ -585,8 +586,8 @@ const regenerateFights = (maps: string[]) => {
 
    const mapsFightsPath = resolve(__dirname, '../../shared/src/data/mapsFights.ts');
    const mapsFightsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-import type { MapFightData } from '../types/MapFight';
-import type { Room } from '../types/Room';
+import type { MapFightData } from '../types/MapFight.ts';
+import type { Room } from '../types/Room.ts';
 
 export const mapsFights: Record<Room, MapFightData | null> = ${JSON.stringify(mapsFights, null, 3)};
 `;

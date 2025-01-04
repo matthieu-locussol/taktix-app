@@ -3,8 +3,8 @@ import type { CommunitySchema } from 'shared';
 
 import { LevelMgt, zCharacterSprite, zProfessionType } from 'shared';
 
-import { usersMap } from '../rooms/utils/usersMap';
-import { prisma } from '../utils/prisma';
+import { usersMap } from '../rooms/utils/usersMap.ts';
+import { prisma } from '../utils/prisma.ts';
 
 export const communityRouter: RequestHandler = async (_, res) => {
    const usersInformations = await prisma.character.findMany({

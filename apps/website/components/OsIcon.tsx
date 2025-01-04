@@ -1,6 +1,6 @@
-import { AppleIcon } from './AppleIcon';
-import { LinuxIcon } from './LinuxIcon';
-import { WindowsIcon } from './WindowsIcon';
+import { AppleIcon } from './AppleIcon.tsx';
+import { LinuxIcon } from './LinuxIcon.tsx';
+import { WindowsIcon } from './WindowsIcon.tsx';
 
 export const OsIcons = {
    Linux: <LinuxIcon sx={{ fontSize: 20 }} />,

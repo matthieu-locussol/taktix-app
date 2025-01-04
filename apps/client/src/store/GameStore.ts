@@ -1,17 +1,17 @@
 import type { Position } from 'grid-engine';
-import type { FightState } from 'shared/src/states/FightState';
-import type { PlayerState } from 'shared/src/states/PlayerState';
-import type { SceneData } from 'shared/src/types/SceneData';
-import type { Scene } from '../game/Scene';
-import type { Store } from './Store';
+import type { FightState } from 'shared/src/states/FightState.ts';
+import type { PlayerState } from 'shared/src/states/PlayerState.ts';
+import type { SceneData } from 'shared/src/types/SceneData.ts';
+import type { Scene } from '../game/Scene.ts';
+import type { Store } from './Store.ts';
 
 import { makeAutoObservable } from 'mobx';
-import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { _assert, _assertTrue } from 'shared/src/utils/_assert';
-import { NumberMgt } from 'shared/src/utils/numberMgt';
-import { TimeMgt } from 'shared/src/utils/timeMgt';
+import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player.ts';
+import { _assert, _assertTrue } from 'shared/src/utils/_assert.ts';
+import { NumberMgt } from 'shared/src/utils/numberMgt.ts';
+import { TimeMgt } from 'shared/src/utils/timeMgt.ts';
 
-import { PLAYER_GE_LAYER, ZOOM_MAX, ZOOM_MIN } from '../game/Scene';
+import { PLAYER_GE_LAYER, ZOOM_MAX, ZOOM_MIN } from '../game/Scene.ts';
 
 const CHECK_INTERVAL = 10;
 const MAX_CHECK_ATTEMPTS = 1_000;

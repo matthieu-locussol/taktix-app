@@ -1,4 +1,4 @@
-import type { InteractionFn } from './InteractionFn';
+import type { InteractionFn } from './InteractionFn.ts';
 
 import { logger } from '@colyseus/core';
 import { INTERACTIVE_OBJECTS_MAP } from 'shared';

@@ -1,7 +1,7 @@
-import type { Store } from './Store';
+import type { Store } from './Store.ts';
 
 import { makeAutoObservable } from 'mobx';
-import { ZodMgt } from 'shared/src/utils/zodMgt';
+import { ZodMgt } from 'shared/src/utils/zodMgt.ts';
 import { z } from 'zod';
 
 const sounds = ['attack', 'check', 'death', 'evade', 'sleep', 'teleport'] as const;

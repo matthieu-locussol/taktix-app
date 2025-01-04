@@ -1,8 +1,8 @@
 import { Paper, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../../store';
-import { useTranslation } from '../../../types/react-i18next';
+import { useStore } from '../../../store/index.tsx';
+import { useTranslation } from '../../../types/react-i18next.ts';
 
 export const PvEFightTurn = observer(() => {
    const { t } = useTranslation();

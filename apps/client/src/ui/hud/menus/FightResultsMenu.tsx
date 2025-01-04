@@ -1,4 +1,4 @@
-import type { TranslationKey } from 'shared/src/data/translations';
+import type { TranslationKey } from 'shared/src/data/translations.ts';
 
 import LosersIcon from '@mui/icons-material/BlockRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
@@ -21,11 +21,11 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
-import { LevelMgt } from 'shared/src/utils/levelMgt';
+import { LevelMgt } from 'shared/src/utils/levelMgt.ts';
 
-import { store, useStore } from '../../../store';
-import { useTranslation } from '../../../types/react-i18next';
-import { EquipmentSlot } from '../components/EquipmentSlot';
+import { store, useStore } from '../../../store/index.tsx';
+import { useTranslation } from '../../../types/react-i18next.ts';
+import { EquipmentSlot } from '../components/EquipmentSlot.tsx';
 
 export const FightResultsMenu = observer(() => {
    const nodeRef = useRef(null);

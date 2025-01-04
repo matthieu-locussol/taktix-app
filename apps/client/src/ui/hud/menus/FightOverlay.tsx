@@ -2,10 +2,10 @@ import { Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../../store';
-import { PvEFightSpeedSelector } from '../components/PvEFightSpeedSelector';
-import { PvEFightTimeline } from '../components/PvEFightTimeline';
-import { PvEFightTurn } from '../components/PvEFightTurn';
+import { useStore } from '../../../store/index.tsx';
+import { PvEFightSpeedSelector } from '../components/PvEFightSpeedSelector.tsx';
+import { PvEFightTimeline } from '../components/PvEFightTimeline.tsx';
+import { PvEFightTurn } from '../components/PvEFightTurn.tsx';
 
 export const FightOverlay = observer(() => {
    const { pveFightStore, hudStore } = useStore();

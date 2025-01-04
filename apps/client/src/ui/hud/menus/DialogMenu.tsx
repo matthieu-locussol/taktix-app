@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 
-import { useStore } from '../../../store';
-import { DialogChoices } from '../components/DialogChoices';
+import { useStore } from '../../../store/index.tsx';
+import { DialogChoices } from '../components/DialogChoices.tsx';
 
 export const DialogMenu = observer(() => {
    const dialogRef = useRef<HTMLDivElement | null>(null);

@@ -1,19 +1,19 @@
-import type { CharacterSprite } from 'shared/src/data/charactersSprites';
-import type { MonsterSprite } from 'shared/src/data/monstersSprites';
-import type { AnimationFile } from 'shared/src/types/Animation';
-import type { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight';
-import type { Store } from './Store';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites.ts';
+import type { MonsterSprite } from 'shared/src/data/monstersSprites.ts';
+import type { AnimationFile } from 'shared/src/types/Animation.ts';
+import type { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight.ts';
+import type { Store } from './Store.ts';
 
 import { makeAutoObservable } from 'mobx';
-import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from 'shared/src/config';
-import { weaponsAnimations } from 'shared/src/data/animations';
-import { charactersSprites } from 'shared/src/data/charactersSprites';
-import { isMonsterName, monsters } from 'shared/src/data/monsters';
-import { monstersSprites } from 'shared/src/data/monstersSprites';
-import { ANIMATION_TO_FILE, Animation } from 'shared/src/types/Animation';
-import { _assert, _assertTrue } from 'shared/src/utils/_assert';
-import { ArrayMgt } from 'shared/src/utils/arrayMgt';
-import { LevelMgt } from 'shared/src/utils/levelMgt';
+import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from 'shared/src/config.ts';
+import { weaponsAnimations } from 'shared/src/data/animations.ts';
+import { charactersSprites } from 'shared/src/data/charactersSprites.ts';
+import { isMonsterName, monsters } from 'shared/src/data/monsters.ts';
+import { monstersSprites } from 'shared/src/data/monstersSprites.ts';
+import { ANIMATION_TO_FILE, Animation } from 'shared/src/types/Animation.ts';
+import { _assert, _assertTrue } from 'shared/src/utils/_assert.ts';
+import { ArrayMgt } from 'shared/src/utils/arrayMgt.ts';
+import { LevelMgt } from 'shared/src/utils/levelMgt.ts';
 
 type PvEFightMode = 'fight' | 'spectate';
 

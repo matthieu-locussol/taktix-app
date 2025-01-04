@@ -5,13 +5,13 @@ import Box from '@mui/material/Box';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { observer } from 'mobx-react-lite';
-import { professions } from 'shared/src/types/Profession';
+import { professions } from 'shared/src/types/Profession.ts';
 
-import { useStore } from '../../../store';
-import { useTranslation } from '../../../types/react-i18next';
-import { RoundButton } from '../../components/RoundButton';
+import { useStore } from '../../../store/index.tsx';
+import { useTranslation } from '../../../types/react-i18next.ts';
+import { RoundButton } from '../../components/RoundButton.tsx';
 
-import { CharacterSpriteRenderer } from './CharacterSpriteRenderer';
+import { CharacterSpriteRenderer } from './CharacterSpriteRenderer.tsx';
 
 export const CharacterSelector = observer(() => {
    const { characterCreationStore } = useStore();

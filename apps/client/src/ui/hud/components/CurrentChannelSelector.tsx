@@ -8,11 +8,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { observer } from 'mobx-react-lite';
-import { channelsInformations } from 'shared/src/data/channelsInformations';
-import { Channel } from 'shared/src/types/Channel';
+import { channelsInformations } from 'shared/src/data/channelsInformations.ts';
+import { Channel } from 'shared/src/types/Channel.ts';
 
-import { useStore } from '../../../store';
-import { useTranslation } from '../../../types/react-i18next';
+import { useStore } from '../../../store/index.tsx';
+import { useTranslation } from '../../../types/react-i18next.ts';
 
 interface CurrentChannelSelectorProps extends MenuProps {
    handleClose: () => void;

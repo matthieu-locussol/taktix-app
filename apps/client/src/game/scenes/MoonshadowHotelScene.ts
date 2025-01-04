@@ -1,6 +1,6 @@
-import { Scene } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
-import { loadMonstersAssets } from '../utils/loadMonstersAssets';
+import { Scene } from '../Scene.ts';
+import { loadCharactersAssets } from '../utils/loadCharactersAssets.ts';
+import { loadMonstersAssets } from '../utils/loadMonstersAssets.ts';
 
 export class MoonshadowHotelScene extends Scene {
    constructor() {

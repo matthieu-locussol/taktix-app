@@ -1,8 +1,8 @@
-import { StatisticMgt } from 'shared/src/utils/statisticMgt';
+import { StatisticMgt } from 'shared/src/utils/statisticMgt.ts';
 import { describe, expect, it, vi } from 'vitest';
 
-import { StatisticsMenuStore } from './StatisticsMenuStore';
-import { Store } from './Store';
+import { StatisticsMenuStore } from './StatisticsMenuStore.ts';
+import { Store } from './Store.ts';
 
 vi.mock('./Store', () => {
    const characterStoreMock = {

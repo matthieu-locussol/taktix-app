@@ -1,8 +1,8 @@
-import type { CharacterSprite } from './charactersSprites';
+import type { CharacterSprite } from './charactersSprites.ts';
 
 import { z } from 'zod';
 
-import { ZodMgt } from '../utils/zodMgt';
+import { ZodMgt } from '../utils/zodMgt.ts';
 
 const npcs = ['Nono'] as const;
 

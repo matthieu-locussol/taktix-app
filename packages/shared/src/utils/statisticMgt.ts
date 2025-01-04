@@ -1,13 +1,13 @@
-import type { Item } from '../types/Item';
-import type { RealStatistic, Statistic, Statistics } from '../types/Statistic';
+import type { Item } from '../types/Item.ts';
+import type { RealStatistic, Statistic, Statistics } from '../types/Statistic.ts';
 
-import { DEFAULT_HEALTH, STATISTICS_POINTS_PER_LEVEL } from '../config';
-import { getTalents } from '../data/talents';
-import { ProfessionType } from '../types/Profession';
-import { statistics as allStatistics, isStatistic } from '../types/Statistic';
+import { DEFAULT_HEALTH, STATISTICS_POINTS_PER_LEVEL } from '../config.ts';
+import { getTalents } from '../data/talents.ts';
+import { ProfessionType } from '../types/Profession.ts';
+import { statistics as allStatistics, isStatistic } from '../types/Statistic.ts';
 
-import { LevelMgt } from './levelMgt';
-import { NumberMgt } from './numberMgt';
+import { LevelMgt } from './levelMgt.ts';
+import { NumberMgt } from './numberMgt.ts';
 
 export namespace StatisticMgt {
    export const BASE_INITIATIVE = 100;

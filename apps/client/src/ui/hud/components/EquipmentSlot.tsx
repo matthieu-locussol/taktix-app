@@ -1,14 +1,14 @@
 import type { BoxProps, Theme } from '@mui/material';
-import type { Item } from 'shared/src/types/Item';
+import type { Item } from 'shared/src/types/Item.ts';
 
 import { forwardRef, useMemo } from 'react';
-import { ItemMgt } from 'shared/src/utils/itemMgt';
+import { ItemMgt } from 'shared/src/utils/itemMgt.ts';
 
-import { ITEM_RARITY_COLORS } from '../../../styles/appTheme';
-import { ItemBaseIcon } from '../../components/items/ItemBaseIcon';
+import { ITEM_RARITY_COLORS } from '../../../styles/appTheme.tsx';
+import { ItemBaseIcon } from '../../components/items/ItemBaseIcon.tsx';
 
-import { ItemSlot } from './ItemSlot';
-import { ItemTooltip } from './ItemTooltip';
+import { ItemSlot } from './ItemSlot.tsx';
+import { ItemTooltip } from './ItemTooltip.tsx';
 
 interface EquipmentSlotProps extends BoxProps {
    size: 'tiny' | 'small' | 'medium' | 'large' | 'wide';

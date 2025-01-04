@@ -1,14 +1,14 @@
-import type { Room } from '../types/Room';
-import type { PlayerStateConstructor } from './PlayerState';
+import type { Room } from '../types/Room.ts';
+import type { PlayerStateConstructor } from './PlayerState.ts';
 
 import { MapSchema, Schema, type } from '@colyseus/schema';
 
-import { mapsFights } from '../data/mapsFights';
-import { monsters } from '../data/monsters';
-import { NumberMgt } from '../utils/numberMgt';
+import { mapsFights } from '../data/mapsFights.ts';
+import { monsters } from '../data/monsters.ts';
+import { NumberMgt } from '../utils/numberMgt.ts';
 
-import { FightState } from './FightState';
-import { PlayerState } from './PlayerState';
+import { FightState } from './FightState.ts';
+import { PlayerState } from './PlayerState.ts';
 
 export class MapState extends Schema {
    @type({ map: PlayerState })

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getTalents } from './talents';
+import { getTalents } from './talents.ts';
 
 describe('talents', () => {
    const nodesIds = Object.values(getTalents()).map(({ id }) => id);

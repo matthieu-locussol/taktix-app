@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import type { ARCHITECTURES } from '../../types/architectures';
+import type { ARCHITECTURES } from '../../types/architectures.ts';
 
 import { fetchLatestGitHubRelease } from 'shared';
 

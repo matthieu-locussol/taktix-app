@@ -34,12 +34,12 @@ import {
 } from 'shared';
 import { match } from 'ts-pattern';
 
-import { prisma } from '../utils/prisma';
+import { prisma } from '../utils/prisma.ts';
 
-import { drinkWineInteraction } from './interactions/drinkWineInteraction';
-import { saveTeleporterInteraction } from './interactions/saveTeleporterInteraction';
-import { sleepInteraction } from './interactions/sleepInteraction';
-import { usersMap } from './utils/usersMap';
+import { drinkWineInteraction } from './interactions/drinkWineInteraction.ts';
+import { saveTeleporterInteraction } from './interactions/saveTeleporterInteraction.ts';
+import { sleepInteraction } from './interactions/sleepInteraction.ts';
+import { usersMap } from './utils/usersMap.ts';
 
 type Client = ColyseusClient<UserData, unknown>;
 

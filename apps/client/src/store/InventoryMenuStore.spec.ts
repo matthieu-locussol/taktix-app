@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { InventoryMenuStore } from './InventoryMenuStore';
-import { Store } from './Store';
+import { InventoryMenuStore } from './InventoryMenuStore.ts';
+import { Store } from './Store.ts';
 
 vi.mock('./Store', () => {
    const soundsStoreMock = {

@@ -1,5 +1,5 @@
-import type { ItemType } from '../types/Item';
-import type { BaseTemplate } from '../types/ItemTemplate';
+import type { ItemType } from '../types/Item.ts';
+import type { BaseTemplate } from '../types/ItemTemplate.ts';
 
 export const baseAffixes: Record<ItemType, BaseTemplate[]> = {
    helmetE: [

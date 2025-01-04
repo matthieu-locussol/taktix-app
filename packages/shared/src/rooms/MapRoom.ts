@@ -1,11 +1,11 @@
-import type { Direction, Position } from '../types/SceneData';
+import type { Direction, Position } from '../types/SceneData.ts';
 
 import { z } from 'zod';
 
-import { zInteraction } from '../types/Interaction';
-import { zItem, zItemRarity } from '../types/Item';
-import { zPvEFightResults } from '../types/PvEFight';
-import { zRoom } from '../types/Room';
+import { zInteraction } from '../types/Interaction.ts';
+import { zItem, zItemRarity } from '../types/Item.ts';
+import { zPvEFightResults } from '../types/PvEFight.ts';
+import { zRoom } from '../types/Room.ts';
 
 export interface MapRoomOptions {
    uuid: string;

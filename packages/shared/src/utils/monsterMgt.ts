@@ -1,4 +1,4 @@
-import type { MonsterType } from '../types/Monster';
+import type { MonsterType } from '../types/Monster.ts';
 
 export namespace MonsterMgt {
    const MONSTER_LIFE_COEFFICIENT = 1.625;

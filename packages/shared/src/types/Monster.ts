@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { ZodMgt } from '../utils/zodMgt';
+import { ZodMgt } from '../utils/zodMgt.ts';
 
 export const monstersTypes = ['common', 'magic', 'rare', 'boss'] as const;
 

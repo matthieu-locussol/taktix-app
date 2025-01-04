@@ -1,10 +1,10 @@
 import { GridEngine } from 'grid-engine';
 
-import { store } from '../store';
-import { getVersion } from '../utils/version';
+import { store } from '../store/index.tsx';
+import { getVersion } from '../utils/version.ts';
 
-import { mapsScenes } from './mapsScenes';
-import { PvEFightScene } from './scenes/PvEFightScene';
+import { mapsScenes } from './mapsScenes.ts';
+import { PvEFightScene } from './scenes/PvEFightScene.ts';
 
 export const config: Phaser.Types.Core.GameConfig = {
    type: Phaser.AUTO,

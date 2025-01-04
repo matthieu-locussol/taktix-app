@@ -11,9 +11,9 @@ import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
 
-import { useStore } from '../../../store';
-import { useTranslation } from '../../../types/react-i18next';
-import TalentTree from '../../components/TalentTree';
+import { useStore } from '../../../store/index.tsx';
+import { useTranslation } from '../../../types/react-i18next.ts';
+import TalentTree from '../../components/TalentTree.tsx';
 
 export const TalentsMenu = observer(() => {
    const nodeRef = useRef(null);

@@ -8,9 +8,9 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../store';
-import { useTranslation } from '../../types/react-i18next';
-import { CharacterSelector } from '../hud/components/CharacterSelector';
+import { useStore } from '../../store/index.tsx';
+import { useTranslation } from '../../types/react-i18next.ts';
+import { CharacterSelector } from '../hud/components/CharacterSelector.tsx';
 
 export const CharacterCreationScreen = observer(() => {
    const store = useStore();

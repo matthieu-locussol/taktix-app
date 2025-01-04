@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { StringMgt } from './stringMgt';
+import { StringMgt } from './stringMgt.ts';
 
 describe('stringMgt', () => {
    describe('isCharacterNameValid', () => {

@@ -10,7 +10,7 @@ import { Room, logger } from '@colyseus/core';
 import { Channel, ChannelMgt, _assert, isChatRoomMessage } from 'shared';
 import { match } from 'ts-pattern';
 
-import { removeDanglingUsers, usersMap } from './utils/usersMap';
+import { removeDanglingUsers, usersMap } from './utils/usersMap.ts';
 
 export let notifyMaintenance: (() => void) | null = null;
 

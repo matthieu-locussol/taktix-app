@@ -2,10 +2,10 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../store';
-import { useTranslation } from '../../types/react-i18next';
+import { useStore } from '../../store/index.tsx';
+import { useTranslation } from '../../types/react-i18next.ts';
 
-import { LauncherLinks } from './LauncherLinks';
+import { LauncherLinks } from './LauncherLinks.tsx';
 
 export const LauncherFormFooter = observer(() => {
    const { screenStore } = useStore();

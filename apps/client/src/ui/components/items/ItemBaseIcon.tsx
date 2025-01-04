@@ -1,10 +1,10 @@
 import type { SvgIconProps } from '@mui/material';
-import type { ItemRarity, ItemType } from 'shared/src/types/Item';
+import type { ItemRarity, ItemType } from 'shared/src/types/Item.ts';
 
 import { useTheme } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 
-import { itemsPaths } from './itemsPaths';
+import { itemsPaths } from './itemsPaths.ts';
 
 interface ItemBaseIconProps extends Omit<SvgIconProps, 'color'> {
    color?: ItemRarity;

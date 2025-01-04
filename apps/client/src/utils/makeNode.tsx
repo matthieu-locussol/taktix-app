@@ -1,7 +1,7 @@
 import type { Edge, Node } from 'reactflow';
-import type { Talent } from 'shared/src/data/talents';
+import type { Talent } from 'shared/src/data/talents.ts';
 
-import { TalentIcon } from '../ui/components/TalentIcon';
+import { TalentIcon } from '../ui/components/TalentIcon.tsx';
 
 export const initialEdges: Edge[] = [];
 

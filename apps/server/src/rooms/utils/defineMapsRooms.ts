@@ -2,12 +2,12 @@
 
 import type { Server } from '@colyseus/core';
 
-import { GraveyardRoom } from '../maps/GraveyardRoom';
-import { MoonshadowBarRoom } from '../maps/MoonshadowBarRoom';
-import { MoonshadowHamletRoom } from '../maps/MoonshadowHamletRoom';
-import { MoonshadowHotelRoom } from '../maps/MoonshadowHotelRoom';
-import { MoonshadowInnRoom } from '../maps/MoonshadowInnRoom';
-import { MoonshadowShopRoom } from '../maps/MoonshadowShopRoom';
+import { GraveyardRoom } from '../maps/GraveyardRoom.ts';
+import { MoonshadowBarRoom } from '../maps/MoonshadowBarRoom.ts';
+import { MoonshadowHamletRoom } from '../maps/MoonshadowHamletRoom.ts';
+import { MoonshadowHotelRoom } from '../maps/MoonshadowHotelRoom.ts';
+import { MoonshadowInnRoom } from '../maps/MoonshadowInnRoom.ts';
+import { MoonshadowShopRoom } from '../maps/MoonshadowShopRoom.ts';
 
 export const defineMapsRooms = (gameServer: Server) => {
    gameServer.define('GraveyardRoom', GraveyardRoom);

@@ -1,8 +1,8 @@
-import { Channel } from 'shared/src/types/Channel';
+import { Channel } from 'shared/src/types/Channel.ts';
 import { describe, expect, it, vi } from 'vitest';
 
-import { ChatStore } from './ChatStore';
-import { Store } from './Store';
+import { ChatStore } from './ChatStore.ts';
+import { Store } from './Store.ts';
 
 vi.mock('./Store', () => {
    const characterStoreMock = {

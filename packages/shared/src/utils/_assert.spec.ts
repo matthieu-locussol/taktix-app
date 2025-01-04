@@ -7,7 +7,7 @@ import {
    _assertStrictEqual,
    _assertTrue,
    _throw,
-} from './_assert';
+} from './_assert.ts';
 
 describe('_assert', () => {
    beforeEach(() => {

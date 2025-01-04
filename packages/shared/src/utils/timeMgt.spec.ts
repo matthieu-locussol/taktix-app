@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { TimeMgt } from './timeMgt';
+import { TimeMgt } from './timeMgt.ts';
 
 describe('TimeMgt', () => {
    describe('wait', async () => {

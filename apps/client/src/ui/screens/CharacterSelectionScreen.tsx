@@ -15,12 +15,12 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Trans } from 'react-i18next';
-import { MAX_CHARACTERS_PER_ACCOUNT } from 'shared/src/config';
-import { LevelMgt } from 'shared/src/utils/levelMgt';
+import { MAX_CHARACTERS_PER_ACCOUNT } from 'shared/src/config.ts';
+import { LevelMgt } from 'shared/src/utils/levelMgt.ts';
 
-import { useStore } from '../../store';
-import { useTranslation } from '../../types/react-i18next';
-import { CharacterSpriteStatic } from '../hud/components/CharacterSpriteStatic';
+import { useStore } from '../../store/index.tsx';
+import { useTranslation } from '../../types/react-i18next.ts';
+import { CharacterSpriteStatic } from '../hud/components/CharacterSpriteStatic.tsx';
 
 export const CharacterSelectionScreen = observer(() => {
    const store = useStore();

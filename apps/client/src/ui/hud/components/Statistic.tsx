@@ -1,5 +1,5 @@
 import type { Theme } from '@mui/material';
-import type { TranslationKey } from 'shared/src/data/translations';
+import type { TranslationKey } from 'shared/src/data/translations.ts';
 
 import IncreaseIcon from '@mui/icons-material/AddRounded';
 import DecreaseIcon from '@mui/icons-material/RemoveRounded';
@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 
-import { useTranslation } from '../../../types/react-i18next';
+import { useTranslation } from '../../../types/react-i18next.ts';
 
 export interface StatisticProps extends StyleProps {
    icon: React.ReactNode;

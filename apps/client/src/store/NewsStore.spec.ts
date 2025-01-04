@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { NewsStore } from './NewsStore';
-import { Store } from './Store';
+import { NewsStore } from './NewsStore.ts';
+import { Store } from './Store.ts';
 
 vi.mock('./Store', () => {
    const updaterStore = {

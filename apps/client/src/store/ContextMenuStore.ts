@@ -1,17 +1,17 @@
-import type { TranslationKey } from 'shared/src/data/translations';
-import type { InteractiveObjectPhaser } from '../game/Scene';
-import type { Store } from './Store';
+import type { TranslationKey } from 'shared/src/data/translations.ts';
+import type { InteractiveObjectPhaser } from '../game/Scene.ts';
+import type { Store } from './Store.ts';
 
 import { t } from 'i18next';
 import { makeAutoObservable } from 'mobx';
-import { INTERACTION_DRINK_WINE_COST } from 'shared/src/config';
-import { NPCS, isNPC, zNPC } from 'shared/src/data/npcs';
-import { Channel } from 'shared/src/types/Channel';
-import { zInteractiveObject } from 'shared/src/types/InteractiveObject';
-import { TimeMgt } from 'shared/src/utils/timeMgt';
+import { INTERACTION_DRINK_WINE_COST } from 'shared/src/config.ts';
+import { NPCS, isNPC, zNPC } from 'shared/src/data/npcs.ts';
+import { Channel } from 'shared/src/types/Channel.ts';
+import { zInteractiveObject } from 'shared/src/types/InteractiveObject.ts';
+import { TimeMgt } from 'shared/src/utils/timeMgt.ts';
 
-import { npcsDialogs } from '../utils/npcsDialogs';
-import { EntityType, moveToShape } from '../utils/phaser';
+import { npcsDialogs } from '../utils/npcsDialogs.ts';
+import { EntityType, moveToShape } from '../utils/phaser.ts';
 
 interface MenuItem {
    text: string;

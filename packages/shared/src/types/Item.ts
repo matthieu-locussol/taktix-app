@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { ZodMgt } from '../utils/zodMgt';
+import { ZodMgt } from '../utils/zodMgt.ts';
 
-import { zStatistic } from './Statistic';
-import { weapons, zWeaponDamages } from './Weapon';
+import { zStatistic } from './Statistic.ts';
+import { weapons, zWeaponDamages } from './Weapon.ts';
 
 export const helmetTypes = [
    'helmetE',

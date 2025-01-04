@@ -3,15 +3,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 
-import { useStore } from '../store';
+import { useStore } from '../store/index.tsx';
 
-import { GameBackground } from './GameBackground';
-import { GameLayout } from './layouts/GameLayout';
-import { CharacterCreationScreen } from './screens/CharacterCreationScreen';
-import { CharacterSelectionScreen } from './screens/CharacterSelectionScreen';
-import { LoadingAssetsScreen } from './screens/LoadingAssetsScreen';
-import { LoginScreen } from './screens/LoginScreen';
-import { RegisterScreen } from './screens/RegisterScreen';
+import { GameBackground } from './GameBackground.tsx';
+import { GameLayout } from './layouts/GameLayout.tsx';
+import { CharacterCreationScreen } from './screens/CharacterCreationScreen.tsx';
+import { CharacterSelectionScreen } from './screens/CharacterSelectionScreen.tsx';
+import { LoadingAssetsScreen } from './screens/LoadingAssetsScreen.tsx';
+import { LoginScreen } from './screens/LoginScreen.tsx';
+import { RegisterScreen } from './screens/RegisterScreen.tsx';
 
 export const Game = observer(() => {
    const {

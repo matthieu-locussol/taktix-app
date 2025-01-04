@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { TELEPORTATION_SPOTS } from './teleportationSpots';
+import { TELEPORTATION_SPOTS } from './teleportationSpots.ts';
 
 describe('teleportationSpots', () => {
    it('all teleportation spots have a destinationMapName different from the key of the scene', () => {

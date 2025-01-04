@@ -2,7 +2,7 @@ import CurrentIcon from '@mui/icons-material/ArrowRightRounded';
 import { Box, darken, keyframes, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../../store';
+import { useStore } from '../../../store/index.tsx';
 
 export const DialogChoices = observer(() => {
    const { dialogMenuStore, hudStore } = useStore();

@@ -1,4 +1,4 @@
-import { SCALE_FACTOR } from '../Scene';
+import { SCALE_FACTOR } from '../Scene.ts';
 
 export const makeCharacterName = (scene: Phaser.Scene, name: string, color: string) => {
    const characterName = scene.add

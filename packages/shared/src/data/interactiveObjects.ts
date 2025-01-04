@@ -1,7 +1,7 @@
 // This file has been automatically generated. DO NOT edit it manually.
 
-import type { InteractiveObject, InteractiveObjectData } from '../types/InteractiveObject';
-import type { Room } from '../types/Room';
+import type { InteractiveObject, InteractiveObjectData } from '../types/InteractiveObject.ts';
+import type { Room } from '../types/Room.ts';
 
 export const INTERACTIVE_OBJECTS: Record<Room, InteractiveObjectData[]> = {
    AAA_InitialRoom: [],

@@ -1,8 +1,8 @@
 import type { BoxProps } from '@mui/material';
-import type { MonsterSprite } from 'shared/src/data/monstersSprites';
+import type { MonsterSprite } from 'shared/src/data/monstersSprites.ts';
 
 import { Box, styled } from '@mui/material';
-import { monstersSpritesData } from 'shared/src/data/monstersSprites';
+import { monstersSpritesData } from 'shared/src/data/monstersSprites.ts';
 
 interface MonsterSpriteStaticProps extends BoxProps, StyleProps {}
 

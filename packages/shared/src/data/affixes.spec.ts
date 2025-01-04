@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { statistics } from '../types/Statistic';
+import { statistics } from '../types/Statistic.ts';
 
-import { affixes } from './affixes';
+import { affixes } from './affixes.ts';
 
 describe('affixes', () => {
    describe('should have correctly set prefixes', () => {

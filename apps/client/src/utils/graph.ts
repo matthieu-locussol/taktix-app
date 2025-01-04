@@ -1,7 +1,7 @@
 import type { Node, XYPosition } from 'reactflow';
 
 import { Position } from 'reactflow';
-import { _assert } from 'shared/src/utils/_assert';
+import { _assert } from 'shared/src/utils/_assert.ts';
 
 function getNodeIntersection(intersectionNode: Node, targetNode: Node) {
    const {

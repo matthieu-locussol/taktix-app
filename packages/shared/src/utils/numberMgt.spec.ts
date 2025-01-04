@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { NumberMgt } from './numberMgt';
+import { NumberMgt } from './numberMgt.ts';
 
 describe('NumberMgt', () => {
    describe('clamp', () => {

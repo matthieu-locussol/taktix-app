@@ -1,31 +1,31 @@
 import type { GridEngine, Position } from 'grid-engine';
-import type { CharacterSprite } from 'shared/src/data/charactersSprites';
-import type { MonsterSprite } from 'shared/src/data/monstersSprites';
-import type { Room } from 'shared/src/types/Room';
-import type { SceneData } from 'shared/src/types/SceneData';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites.ts';
+import type { MonsterSprite } from 'shared/src/data/monstersSprites.ts';
+import type { Room } from 'shared/src/types/Room.ts';
+import type { SceneData } from 'shared/src/types/SceneData.ts';
 
 import { Direction, NoPathFoundStrategy, PathBlockedStrategy } from 'grid-engine';
-import { TILE_SIZE } from 'shared/src/config';
-import { zCharacterSprite } from 'shared/src/data/charactersSprites';
-import { zMonsterSprite } from 'shared/src/data/monstersSprites';
-import { NPC_SPOTS } from 'shared/src/data/npcSpots';
-import { NPCS } from 'shared/src/data/npcs';
-import { isInteractiveObject } from 'shared/src/types/InteractiveObject';
-import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { _assert } from 'shared/src/utils/_assert';
-import { NumberMgt } from 'shared/src/utils/numberMgt';
+import { TILE_SIZE } from 'shared/src/config.ts';
+import { zCharacterSprite } from 'shared/src/data/charactersSprites.ts';
+import { zMonsterSprite } from 'shared/src/data/monstersSprites.ts';
+import { NPC_SPOTS } from 'shared/src/data/npcSpots.ts';
+import { NPCS } from 'shared/src/data/npcs.ts';
+import { isInteractiveObject } from 'shared/src/types/InteractiveObject.ts';
+import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player.ts';
+import { _assert } from 'shared/src/utils/_assert.ts';
+import { NumberMgt } from 'shared/src/utils/numberMgt.ts';
 
-import { AnimatedTiles } from '../plugins/AnimatedTiles';
-import { store } from '../store';
-import { isObjectProperties } from '../utils/phaser';
+import { AnimatedTiles } from '../plugins/AnimatedTiles.ts';
+import { store } from '../store/index.tsx';
+import { isObjectProperties } from '../utils/phaser.ts';
 
-import { makeCharacter } from './utils/makeCharacter';
-import { makeGrid } from './utils/makeGrid';
-import { makeInteractiveObject } from './utils/makeInteractiveObject';
-import { makeLight } from './utils/makeLight';
-import { makeMarker } from './utils/makeMarker';
-import { makeMinimap } from './utils/makeMinimap';
-import { makeMonster } from './utils/makeMonster';
+import { makeCharacter } from './utils/makeCharacter.ts';
+import { makeGrid } from './utils/makeGrid.ts';
+import { makeInteractiveObject } from './utils/makeInteractiveObject.ts';
+import { makeLight } from './utils/makeLight.ts';
+import { makeMarker } from './utils/makeMarker.ts';
+import { makeMinimap } from './utils/makeMinimap.ts';
+import { makeMonster } from './utils/makeMonster.ts';
 
 export const SCALE_FACTOR = 2;
 export const PLAYER_LAYER = 'Player';

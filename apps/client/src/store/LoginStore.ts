@@ -1,4 +1,4 @@
-import type { TranslationKey } from 'shared/src/data/translations';
+import type { TranslationKey } from 'shared/src/data/translations.ts';
 
 import { makeAutoObservable } from 'mobx';
 

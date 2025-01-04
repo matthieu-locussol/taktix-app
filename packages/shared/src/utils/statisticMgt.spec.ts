@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { StatisticMgt } from './statisticMgt';
+import { StatisticMgt } from './statisticMgt.ts';
 
 describe('StatisticMgt', () => {
    describe('computeTotalStatistic', () => {

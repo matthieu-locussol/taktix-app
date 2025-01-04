@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
 import { Handle, Position } from 'reactflow';
 
-import { useStore } from '../../store';
+import { useStore } from '../../store/index.tsx';
 
 export const CustomNode = observer(({ data, selected, ...rest }: NodeProps) => {
    const ref = useRef<HTMLDivElement>(null);

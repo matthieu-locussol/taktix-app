@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { MapMenuStore } from './MapMenuStore';
-import { Store } from './Store';
+import { MapMenuStore } from './MapMenuStore.ts';
+import { Store } from './Store.ts';
 
 vi.mock('./Store', () => {
    const characterStoreMock = {

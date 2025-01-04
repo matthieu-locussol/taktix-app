@@ -1,5 +1,5 @@
-import { Scene } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
+import { Scene } from '../Scene.ts';
+import { loadCharactersAssets } from '../utils/loadCharactersAssets.ts';
 
 export class AAA_InitialScene extends Scene {
    constructor() {

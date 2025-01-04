@@ -1,7 +1,7 @@
 import type { RequestHandler } from 'express';
 import type { StatusSchema } from 'shared';
 
-import { prisma } from '../utils/prisma';
+import { prisma } from '../utils/prisma.ts';
 
 export const statusRouter: RequestHandler = async (_, res) => {
    const maintenance = await prisma.maintenance.findFirst({

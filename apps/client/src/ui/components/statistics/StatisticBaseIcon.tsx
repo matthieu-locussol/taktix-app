@@ -1,13 +1,13 @@
 import type { SvgIconProps, Theme } from '@mui/material';
-import type { Badge } from '../badges/Badges';
-import type { StatisticPath } from './statisticsPaths';
+import type { Badge } from '../badges/Badges.tsx';
+import type { StatisticPath } from './statisticsPaths.tsx';
 
 import { useTheme } from '@mui/material';
 import SvgIcon from '@mui/material/SvgIcon';
 
-import { Badges } from '../badges/Badges';
+import { Badges } from '../badges/Badges.tsx';
 
-import { statisticsPaths } from './statisticsPaths';
+import { statisticsPaths } from './statisticsPaths.ts';
 
 interface StatisticBaseIconProps extends Omit<SvgIconProps, 'type' | 'color'> {
    color?: keyof Theme['palette']['statisticsColors'];

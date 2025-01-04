@@ -6,9 +6,9 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../../store';
-import { useTranslation } from '../../../types/react-i18next';
-import { sortOptions } from '../../../utils/sort';
+import { useStore } from '../../../store/index.tsx';
+import { useTranslation } from '../../../types/react-i18next.ts';
+import { sortOptions } from '../../../utils/sort.ts';
 
 interface ItemsSortSelectorProps extends MenuProps {
    handleClose: () => void;

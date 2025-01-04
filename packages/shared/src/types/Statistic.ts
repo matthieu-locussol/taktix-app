@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { ArrayMgt } from '../utils/arrayMgt';
-import { ZodMgt } from '../utils/zodMgt';
+import { ArrayMgt } from '../utils/arrayMgt.ts';
+import { ZodMgt } from '../utils/zodMgt.ts';
 
 const makeStatistic = <T extends string>(
    name: T,

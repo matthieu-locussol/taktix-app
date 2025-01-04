@@ -5,8 +5,8 @@ import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
 import { getStraightPath, useStore as useReactflowStore } from 'reactflow';
 
-import { useStore } from '../../store';
-import { getEdgeParams } from '../../utils/graph';
+import { useStore } from '../../store/index.tsx';
+import { getEdgeParams } from '../../utils/graph.ts';
 
 export const CustomEdge = observer(({ id, source, target, style }: EdgeProps) => {
    const theme = useTheme();

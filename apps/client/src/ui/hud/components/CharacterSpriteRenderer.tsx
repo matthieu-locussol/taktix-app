@@ -1,9 +1,9 @@
 import type { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
-import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites.ts';
 
 import { keyframes, styled } from '@mui/material';
 
-import { CHARACTER_HEIGHT, CHARACTER_WIDTH } from '../../../game/Scene';
+import { CHARACTER_HEIGHT, CHARACTER_WIDTH } from '../../../game/Scene.ts';
 
 interface CharacterSpriteRendererProps
    extends DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>,

@@ -1,11 +1,11 @@
-import type { InteractiveObjectPhaser } from '../game/Scene';
+import type { InteractiveObjectPhaser } from '../game/Scene.ts';
 
 import { describe, expect, it, vi } from 'vitest';
 
-import { EntityType } from '../utils/phaser';
+import { EntityType } from '../utils/phaser.ts';
 
-import { ContextMenuStore } from './ContextMenuStore';
-import { Store } from './Store';
+import { ContextMenuStore } from './ContextMenuStore.ts';
+import { Store } from './Store.ts';
 
 vi.mock('./Store', () => {
    const characterStoreMock = {

@@ -6,7 +6,6 @@
       "outDir": "./dist",
       "rootDir": "./src",
       "downlevelIteration": true,
-      "allowImportingTsExtensions": true,
       "noEmit": true
    },
    "include": ["src"]

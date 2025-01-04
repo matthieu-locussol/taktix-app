@@ -1,11 +1,11 @@
 import type { UpdateManifest } from '@tauri-apps/api/updater';
-import type { Store } from './Store';
+import type { Store } from './Store.ts';
 
 import { relaunch } from '@tauri-apps/api/process';
 import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
 import { makeAutoObservable, runInAction } from 'mobx';
 
-import { isTauri } from '../utils/tauri';
+import { isTauri } from '../utils/tauri.ts';
 
 export class UpdaterStore {
    private _store: Store;

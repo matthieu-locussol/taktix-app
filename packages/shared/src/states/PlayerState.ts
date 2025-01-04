@@ -1,18 +1,18 @@
-import type { Item } from '../types/Item';
-import type { Room } from '../types/Room';
-import type { RealStatistic, Statistic } from '../types/Statistic';
-import type { WeaponDamages, WeaponType } from '../types/Weapon';
+import type { Item } from '../types/Item.ts';
+import type { Room } from '../types/Room.ts';
+import type { RealStatistic, Statistic } from '../types/Statistic.ts';
+import type { WeaponDamages, WeaponType } from '../types/Weapon.ts';
 
 import { Schema, type } from '@colyseus/schema';
 
-import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from '../config';
-import { ItemPosition } from '../types/Item';
-import { ProfessionType, zProfessionType } from '../types/Profession';
-import { isWeaponType, zWeaponType } from '../types/Weapon';
-import { LevelMgt } from '../utils/levelMgt';
-import { StatisticMgt } from '../utils/statisticMgt';
-import { StringMgt } from '../utils/stringMgt';
-import { TalentMgt } from '../utils/talentMgt';
+import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from '../config.ts';
+import { ItemPosition } from '../types/Item.ts';
+import { ProfessionType, zProfessionType } from '../types/Profession.ts';
+import { isWeaponType, zWeaponType } from '../types/Weapon.ts';
+import { LevelMgt } from '../utils/levelMgt.ts';
+import { StatisticMgt } from '../utils/statisticMgt.ts';
+import { StringMgt } from '../utils/stringMgt.ts';
+import { TalentMgt } from '../utils/talentMgt.ts';
 
 export interface PlayerStateConstructor {
    id: number;

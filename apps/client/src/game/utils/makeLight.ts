@@ -1,9 +1,9 @@
-import type { Scene } from '../Scene';
+import type { Scene } from '../Scene.ts';
 
-import { _assertTrue } from 'shared/src/utils/_assert';
+import { _assertTrue } from 'shared/src/utils/_assert.ts';
 import { z } from 'zod';
 
-import { SCALE_FACTOR } from '../Scene';
+import { SCALE_FACTOR } from '../Scene.ts';
 
 const zLightObject = z.object({
    x: z.number(),

@@ -1,9 +1,9 @@
-import type { Talent } from '../data/talents';
+import type { Talent } from '../data/talents.ts';
 
-import { STARTING_TALENTS, getTalents } from '../data/talents';
+import { STARTING_TALENTS, getTalents } from '../data/talents.ts';
 
-import { ArrayMgt } from './arrayMgt';
-import { LevelMgt } from './levelMgt';
+import { ArrayMgt } from './arrayMgt.ts';
+import { LevelMgt } from './levelMgt.ts';
 
 export namespace TalentMgt {
    export const canAllocateTalent = (

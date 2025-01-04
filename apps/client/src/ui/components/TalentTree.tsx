@@ -3,15 +3,15 @@ import { observer } from 'mobx-react-lite';
 import { memo } from 'react';
 import ReactFlow, { ReactFlowProvider, useEdgesState, useNodesState } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { getTalents } from 'shared/src/data/talents';
+import { getTalents } from 'shared/src/data/talents.ts';
 
-import { useStore } from '../../store';
-import { useTranslation } from '../../types/react-i18next';
-import { initialEdges, makeNode } from '../../utils/makeNode';
-import { Tooltip } from '../hud/components/Tooltip';
+import { useStore } from '../../store/index.tsx';
+import { useTranslation } from '../../types/react-i18next.ts';
+import { initialEdges, makeNode } from '../../utils/makeNode.tsx';
+import { Tooltip } from '../hud/components/Tooltip.tsx';
 
-import { CustomEdge } from './CustomEdge';
-import { CustomNode } from './CustomNode';
+import { CustomEdge } from './CustomEdge.tsx';
+import { CustomNode } from './CustomNode.tsx';
 
 const edgeTypes = {
    'custom-edge': CustomEdge,

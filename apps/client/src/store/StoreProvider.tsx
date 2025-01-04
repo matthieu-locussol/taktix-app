@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-import { StoreContext, store } from './index';
+import { StoreContext, store } from './index.tsx';
 
 interface StoreProviderProps {
    children: React.ReactNode;

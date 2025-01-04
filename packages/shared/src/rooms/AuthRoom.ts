@@ -1,10 +1,10 @@
-import type { CharacterSprite } from '../data/charactersSprites';
+import type { CharacterSprite } from '../data/charactersSprites.ts';
 
 import { z } from 'zod';
 
-import { zCharacterSprite } from '../data/charactersSprites';
-import { zTranslationKey } from '../data/translations';
-import { zProfessionType } from '../types/Profession';
+import { zCharacterSprite } from '../data/charactersSprites.ts';
+import { zTranslationKey } from '../data/translations.ts';
+import { zProfessionType } from '../types/Profession.ts';
 
 export interface AuthRoomOptions {
    username: string;

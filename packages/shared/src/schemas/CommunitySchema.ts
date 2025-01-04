@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { zCharacterSprite } from '../data/charactersSprites';
-import { zProfessionType } from '../types/Profession';
+import { zCharacterSprite } from '../data/charactersSprites.ts';
+import { zProfessionType } from '../types/Profession.ts';
 
 export const zCommunitySchema = z.object({
    players: z.array(

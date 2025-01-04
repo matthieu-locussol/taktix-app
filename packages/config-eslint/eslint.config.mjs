@@ -26,9 +26,12 @@ export const config = [
       rules: {
          // TODO: remove these rules one by one
          '@typescript-eslint/no-namespace': 'off',
-         'import/no-unresolved': 'off',
-         // 'import/extensions': ['.ts', '.tsx'],
 
+         'import/no-unresolved': [
+            'error',
+            { caseSensitive: true, ignore: ['@prisma/extension-accelerate'] },
+         ],
+         'import/extensions': ['error', 'ignorePackages', { checkTypeImports: true }],
          'import/named': 'off',
          'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 0, maxBOF: 0 }],
          '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'always' }],

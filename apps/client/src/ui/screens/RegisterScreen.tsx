@@ -13,14 +13,14 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../store';
-import { useTranslation } from '../../types/react-i18next';
-import { getVersion } from '../../utils/version';
-import { LanguageSelector } from '../components/LanguageSelector';
-import { LauncherFormFooter } from '../components/LauncherFormFooter';
-import { ServerStatus } from '../components/ServerStatus';
-import { Changelog } from '../hud/components/Changelog';
-import { ProgressBar } from '../hud/components/ProgressBar';
+import { useStore } from '../../store/index.tsx';
+import { useTranslation } from '../../types/react-i18next.ts';
+import { getVersion } from '../../utils/version.ts';
+import { LanguageSelector } from '../components/LanguageSelector.tsx';
+import { LauncherFormFooter } from '../components/LauncherFormFooter.tsx';
+import { ServerStatus } from '../components/ServerStatus.tsx';
+import { Changelog } from '../hud/components/Changelog.tsx';
+import { ProgressBar } from '../hud/components/ProgressBar.tsx';
 
 export const RegisterScreen = observer(() => {
    const store = useStore();

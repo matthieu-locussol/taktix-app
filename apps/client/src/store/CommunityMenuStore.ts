@@ -1,9 +1,9 @@
-import type { CommunitySchema } from 'shared/src/schemas/CommunitySchema';
-import type { Store } from './Store';
+import type { CommunitySchema } from 'shared/src/schemas/CommunitySchema.ts';
+import type { Store } from './Store.ts';
 
 import { makeAutoObservable, runInAction } from 'mobx';
-import { zCommunitySchema } from 'shared/src/schemas/CommunitySchema';
-import { TimeMgt } from 'shared/src/utils/timeMgt';
+import { zCommunitySchema } from 'shared/src/schemas/CommunitySchema.ts';
+import { TimeMgt } from 'shared/src/utils/timeMgt.ts';
 
 export class CommunityMenuStore {
    private _store: Store;

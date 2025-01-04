@@ -1,4 +1,4 @@
-import { EXPERIENCE_TABLE } from '../data/levels';
+import { EXPERIENCE_TABLE } from '../data/levels.ts';
 
 export namespace LevelMgt {
    export const MIN_LEVEL = EXPERIENCE_TABLE[0].level;

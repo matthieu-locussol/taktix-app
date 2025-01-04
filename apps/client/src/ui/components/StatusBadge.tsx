@@ -1,4 +1,4 @@
-import type { StatusSchema } from 'shared/src/schemas/StatusSchema';
+import type { StatusSchema } from 'shared/src/schemas/StatusSchema.ts';
 
 import { styled } from '@mui/material';
 

@@ -1,15 +1,15 @@
-import type { RealStatistic } from './Statistic';
+import type { RealStatistic } from './Statistic.ts';
 
 import { z } from 'zod';
 
-import { zCharacterSprite } from '../data/charactersSprites';
-import { zMonsterSprite } from '../data/monstersSprites';
+import { zCharacterSprite } from '../data/charactersSprites.ts';
+import { zMonsterSprite } from '../data/monstersSprites.ts';
 
-import { zItem } from './Item';
-import { zMonsterType } from './Monster';
-import { zProfessionType } from './Profession';
-import { isRealStatistic, zRealStatistic } from './Statistic';
-import { zWeaponDamages, zWeaponDamagesType } from './Weapon';
+import { zItem } from './Item.ts';
+import { zMonsterType } from './Monster.ts';
+import { zProfessionType } from './Profession.ts';
+import { isRealStatistic, zRealStatistic } from './Statistic.ts';
+import { zWeaponDamages, zWeaponDamagesType } from './Weapon.ts';
 
 const zPvEFighterInformations = z.object({
    name: z.string(),

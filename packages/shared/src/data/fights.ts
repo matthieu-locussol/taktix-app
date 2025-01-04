@@ -1,8 +1,8 @@
-import type { Monster, MonsterName } from './monsters';
+import type { Monster, MonsterName } from './monsters.ts';
 
-import { NumberMgt } from '../utils/numberMgt';
+import { NumberMgt } from '../utils/numberMgt.ts';
 
-import { monsters } from './monsters';
+import { monsters } from './monsters.ts';
 
 export const getMonstersInformations = (monsterGroupId: number): Monster[] => {
    if (monsterGroupId === 1) {

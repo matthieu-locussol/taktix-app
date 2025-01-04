@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import { Channel } from '../types/Channel';
-import { Role } from '../types/Role';
+import { Channel } from '../types/Channel.ts';
+import { Role } from '../types/Role.ts';
 
-import { ChannelMgt } from './channelMgt';
+import { ChannelMgt } from './channelMgt.ts';
 
 describe('ChannelMgt', () => {
    describe('getPrefixedChannelName', () => {

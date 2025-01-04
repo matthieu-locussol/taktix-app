@@ -2,8 +2,8 @@ import type { RequestHandler } from 'express';
 
 import { zRegisterSchema } from 'shared';
 
-import { hashPassword } from '../utils/hashPassword';
-import { prisma } from '../utils/prisma';
+import { hashPassword } from '../utils/hashPassword.ts';
+import { prisma } from '../utils/prisma.ts';
 
 export const registerRouter: RequestHandler = async (req, res) => {
    const { email, password, username } = zRegisterSchema.parse(req.body);

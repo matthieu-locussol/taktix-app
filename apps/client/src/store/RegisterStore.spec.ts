@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { RegisterStore } from './RegisterStore';
+import { RegisterStore } from './RegisterStore.ts';
 
 describe('RegisterStore', () => {
    it('should be initialized', () => {

@@ -42,10 +42,10 @@ import {
 import { match } from 'ts-pattern';
 import { v4 as uuidv4 } from 'uuid';
 
-import { hashPassword } from '../utils/hashPassword';
-import { prisma } from '../utils/prisma';
+import { hashPassword } from '../utils/hashPassword.ts';
+import { prisma } from '../utils/prisma.ts';
 
-import { removeDanglingUsers, usersMap } from './utils/usersMap';
+import { removeDanglingUsers, usersMap } from './utils/usersMap.ts';
 
 type Client = ColyseusClient<UserData, unknown>;
 

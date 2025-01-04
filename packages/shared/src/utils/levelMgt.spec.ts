@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { LevelMgt } from './levelMgt';
+import { LevelMgt } from './levelMgt.ts';
 
 describe('LevelMgt', () => {
    describe('getLevel', () => {

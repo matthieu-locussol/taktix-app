@@ -1,7 +1,7 @@
 import type { SvgIconProps } from '@mui/material';
-import type { Statistic } from 'shared/src/types/Statistic';
+import type { Statistic } from 'shared/src/types/Statistic.ts';
 
-import { StatisticBaseIcon } from './statistics/StatisticBaseIcon';
+import { StatisticBaseIcon } from './statistics/StatisticBaseIcon.tsx';
 
 interface StatisticIconProps extends Omit<SvgIconProps, 'type'> {
    id: Statistic;

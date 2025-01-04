@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 
-import { ZodMgt } from '../utils/zodMgt';
+import { ZodMgt } from '../utils/zodMgt.ts';
 
 const rooms = [
    'AAA_InitialRoom',

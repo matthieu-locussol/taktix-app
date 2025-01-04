@@ -1,9 +1,9 @@
 // This file has been automatically generated. DO NOT edit it manually.
 
-import type { NPCSpot } from '../types/NPCSpot';
-import type { Room } from '../types/Room';
+import type { NPCSpot } from '../types/NPCSpot.ts';
+import type { Room } from '../types/Room.ts';
 
-import { Direction } from '../types/SceneData';
+import { Direction } from '../types/SceneData.ts';
 
 export const NPC_SPOTS: Record<Room, NPCSpot[]> = {
    AAA_InitialRoom: [],

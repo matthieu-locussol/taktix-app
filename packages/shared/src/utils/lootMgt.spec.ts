@@ -1,8 +1,8 @@
-import type { Monster } from '../data/monsters';
+import type { Monster } from '../data/monsters.ts';
 
 import { describe, expect, it } from 'vitest';
 
-import { LootMgt } from './lootMgt';
+import { LootMgt } from './lootMgt.ts';
 
 describe('LootMgt', () => {
    describe('BASE_PROBABILITIES', () => {
