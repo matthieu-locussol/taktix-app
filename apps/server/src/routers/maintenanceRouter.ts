@@ -1,5 +1,7 @@
-import { RequestHandler } from 'express';
+import type { RequestHandler } from 'express';
+
 import { zMaintenanceSchema } from 'shared';
+
 import { notifyMaintenance } from '../rooms/ChatRoom';
 import { prisma } from '../utils/prisma';
 
@@ -8,6 +10,7 @@ export const maintenanceRouter: RequestHandler = async (req, res) => {
 
    if (token !== process.env.MAINTENANCE_TOKEN) {
       res.status(401).send({ error: 'Unauthorized' });
+
       return;
    }
 
@@ -28,6 +31,7 @@ export const maintenanceRouter: RequestHandler = async (req, res) => {
       });
    } else {
       res.status(400).send({ error: 'Impossible to perform this action' });
+
       return;
    }
 

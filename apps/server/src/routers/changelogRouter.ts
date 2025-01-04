@@ -1,5 +1,8 @@
-import { RequestHandler } from 'express';
-import { ChangelogSchema, fetchGitHubReleases } from 'shared';
+import type { RequestHandler } from 'express';
+import type { ChangelogSchema } from 'shared';
+
+import { logger } from '@colyseus/core';
+import { fetchGitHubReleases } from 'shared';
 
 const CHANGELOG_DEFAULT_MESSAGE = 'See the assets to download this version and install it.';
 
@@ -22,7 +25,9 @@ export const changelogRouter: RequestHandler = async (_, res) => {
       };
 
       res.send(payload);
-   } catch (_e) {
+   } catch (error) {
+      logger.error(error);
+
       const payload: ChangelogSchema = {
          changelogs: [],
       };

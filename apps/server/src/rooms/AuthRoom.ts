@@ -1,7 +1,14 @@
-import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
-import {
+import type { Client as ColyseusClient } from '@colyseus/core';
+import type {
    AuthRoomMessage,
    AuthRoomResponse,
+   AuthRoomOptions as Options,
+   AuthRoomUserData as UserData,
+   WeaponType,
+} from 'shared';
+
+import { Room, logger } from '@colyseus/core';
+import {
    CustomProtocol,
    DEFAULT_BASE_STATISTICS,
    DEFAULT_BASE_STATISTICS_POINTS,
@@ -20,13 +27,10 @@ import {
    ItemPosition,
    MAX_CHARACTERS_PER_ACCOUNT,
    NumberMgt,
-   AuthRoomOptions as Options,
    ProfessionType,
    StatisticMgt,
    StringMgt,
    TalentMgt,
-   AuthRoomUserData as UserData,
-   WeaponType,
    _assert,
    _assertTrue,
    isAuthRoomMessage,
@@ -37,8 +41,10 @@ import {
 } from 'shared';
 import { match } from 'ts-pattern';
 import { v4 as uuidv4 } from 'uuid';
+
 import { hashPassword } from '../utils/hashPassword';
 import { prisma } from '../utils/prisma';
+
 import { removeDanglingUsers, usersMap } from './utils/usersMap';
 
 type Client = ColyseusClient<UserData, unknown>;
@@ -95,6 +101,7 @@ export class AuthRoom extends Room {
          logger.info(
             `[AuthRoom] Client '${client.sessionId}' failed to authenticate because of the maintenance`,
          );
+
          return false;
       }
 
@@ -108,6 +115,7 @@ export class AuthRoom extends Room {
 
       if (user === null) {
          logger.error(`[AuthRoom] Client '${client.sessionId}' failed to authenticate`);
+
          return false;
       }
 
@@ -127,6 +135,7 @@ export class AuthRoom extends Room {
       }
 
       logger.info(`[AuthRoom] Client '${client.sessionId}' successfully authenticated`);
+
       return true;
    }
 
@@ -186,6 +195,7 @@ export class AuthRoom extends Room {
       { message: { characterName } }: Extract<AuthRoomMessage, { type: 'selectCharacter' }>,
    ) {
       const userInformations = this.users.get(client.id);
+
       _assert(userInformations, 'userInformations should be defined');
       const { username } = userInformations;
 
@@ -264,6 +274,7 @@ export class AuthRoom extends Room {
       }: Extract<AuthRoomMessage, { type: 'createCharacter' }>,
    ) {
       const userInformations = this.users.get(client.id);
+
       _assert(userInformations, 'userInformations should be defined');
       const { username } = userInformations;
 
@@ -403,6 +414,7 @@ export class AuthRoom extends Room {
       }: Extract<AuthRoomMessage, { type: 'deleteCharacter' }>,
    ) {
       const userInformations = this.users.get(client.id);
+
       _assert(userInformations, 'userInformations should be defined');
       const { username } = userInformations;
 

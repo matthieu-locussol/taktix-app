@@ -1,4 +1,5 @@
-import { Client } from '@colyseus/core';
+import type { Client } from '@colyseus/core';
+
 import { ReadyState, type Role } from 'shared';
 
 interface User {

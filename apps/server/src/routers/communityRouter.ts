@@ -1,5 +1,8 @@
-import { RequestHandler } from 'express';
-import { CommunitySchema, LevelMgt, zCharacterSprite, zProfessionType } from 'shared';
+import type { RequestHandler } from 'express';
+import type { CommunitySchema } from 'shared';
+
+import { LevelMgt, zCharacterSprite, zProfessionType } from 'shared';
+
 import { usersMap } from '../rooms/utils/usersMap';
 import { prisma } from '../utils/prisma';
 

@@ -1,5 +1,6 @@
-import { RequestHandler } from 'express';
-import { StatusSchema } from 'shared';
+import type { RequestHandler } from 'express';
+import type { StatusSchema } from 'shared';
+
 import { prisma } from '../utils/prisma';
 
 export const statusRouter: RequestHandler = async (_, res) => {

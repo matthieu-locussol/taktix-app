@@ -1,15 +1,15 @@
-import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
-import {
-   Channel,
-   ChannelMgt,
+import type { Client as ColyseusClient } from '@colyseus/core';
+import type {
    ChatRoomMessage,
    ChatRoomResponse,
    ChatRoomOptions as Options,
    ChatRoomUserData as UserData,
-   _assert,
-   isChatRoomMessage,
 } from 'shared';
+
+import { Room, logger } from '@colyseus/core';
+import { Channel, ChannelMgt, _assert, isChatRoomMessage } from 'shared';
 import { match } from 'ts-pattern';
+
 import { removeDanglingUsers, usersMap } from './utils/usersMap';
 
 export let notifyMaintenance: (() => void) | null = null;
@@ -71,10 +71,12 @@ export class ChatRoom extends Room {
       message: Extract<ChatRoomMessage, { type: 'message' }>['message'],
    ) {
       const characterInfos = this.characterInfosByClientId.get(client.id);
+
       _assert(characterInfos, 'character should be defined');
       const { name, uuid } = characterInfos;
       const { channel, content } = message;
       const userInfos = usersMap.get(uuid);
+
       _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
       const { role } = userInfos;
 
@@ -108,6 +110,7 @@ export class ChatRoom extends Room {
 
    onPrivateMessage(client: Client, message: string) {
       const characterInfos = this.characterInfosByClientId.get(client.id);
+
       _assert(characterInfos, 'character should be defined');
       const { name } = characterInfos;
       const { target, content } = ChannelMgt.extractPrivateMessage(message);
@@ -156,6 +159,7 @@ export class ChatRoom extends Room {
       logger.info(`[ChatRoom] Client '${client.sessionId}' joined the room`);
 
       const userInfos = usersMap.get(uuid);
+
       _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
       usersMap.set(uuid, { ...userInfos, chatRoomClient: client });
       const { characterName } = userInfos;
@@ -192,10 +196,12 @@ export class ChatRoom extends Room {
       logger.info(`[AuthRoom] Client '${client.sessionId}' left the room`);
 
       const characterInfos = this.characterInfosByClientId.get(client.id);
+
       _assert(characterInfos, 'character should be defined');
       this.characterInfosByClientId.delete(client.id);
 
       const clientEntry = this.clientIdByCharacterName.get(characterInfos.name);
+
       _assert(clientEntry, 'clientId should be defined');
       this.clientIdByCharacterName.delete(characterInfos.name);
 

@@ -1,5 +1,7 @@
-import { RequestHandler } from 'express';
+import type { RequestHandler } from 'express';
+
 import { zRegisterSchema } from 'shared';
+
 import { hashPassword } from '../utils/hashPassword';
 import { prisma } from '../utils/prisma';
 
@@ -26,16 +28,19 @@ export const registerRouter: RequestHandler = async (req, res) => {
 
    if (maintenance) {
       res.status(503).send({ error: 'serverInMaintenance' });
+
       return;
    }
 
    if (userByEmail) {
       res.status(400).send({ error: 'emailAlreadyInUse' });
+
       return;
    }
 
    if (userByUsername) {
       res.status(400).send({ error: 'usernameAlreadyInUse' });
+
       return;
    }
 

@@ -1,5 +1,17 @@
-import { Client as ColyseusClient, Room, logger } from '@colyseus/core';
-import { Prisma } from '@prisma/client';
+import type { Client as ColyseusClient } from '@colyseus/core';
+import type { Prisma } from '@prisma/client';
+import type {
+   MapRoomMessage,
+   MapRoomResponse,
+   MapRoomOptions as Options,
+   PlayerState,
+   PvEFightParameters,
+   Room as TRoom,
+   MapRoomUserData as UserData,
+   WeaponDamages,
+} from 'shared';
+
+import { Room, logger } from '@colyseus/core';
 import {
    FightMgt,
    INTERACTIVE_OBJECTS_MAP,
@@ -7,21 +19,13 @@ import {
    ItemPosition,
    LootMgt,
    MINIMUM_TURN_TIME,
-   MapRoomMessage,
-   MapRoomResponse,
    MapState,
    NumberMgt,
-   MapRoomOptions as Options,
-   PlayerState,
-   PvEFightParameters,
    StatisticMgt,
    StringMgt,
    TELEPORTATION_PLACES,
    TELEPORTATION_SPOTS,
-   Room as TRoom,
    TalentMgt,
-   MapRoomUserData as UserData,
-   WeaponDamages,
    _assert,
    getMonstersInformations,
    isMapRoomMessage,
@@ -29,7 +33,9 @@ import {
    zItemType,
 } from 'shared';
 import { match } from 'ts-pattern';
+
 import { prisma } from '../utils/prisma';
+
 import { drinkWineInteraction } from './interactions/drinkWineInteraction';
 import { saveTeleporterInteraction } from './interactions/saveTeleporterInteraction';
 import { sleepInteraction } from './interactions/sleepInteraction';
@@ -96,12 +102,14 @@ export class MapRoom extends Room<MapState> {
 
    async onJoin(client: Client, { uuid, position, direction }: Options) {
       const userInfos = usersMap.get(uuid);
+
       _assert(userInfos, `User infos for uuid '${uuid}' should be defined`);
       usersMap.set(uuid, { ...userInfos, gameRoomClient: client });
       const { characterName } = userInfos;
 
       if (position !== undefined) {
          const { x, y } = position;
+
          logger.info(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${characterName}) joined the room at (${x}, ${y}) - ${direction}`,
          );
@@ -115,6 +123,7 @@ export class MapRoom extends Room<MapState> {
          where: { name: characterName },
          include: { items: true },
       });
+
       _assert(characterInfos, `Character infos for name '${characterName}' should be defined`);
       const { pos_x, pos_y, direction: savedDirection } = characterInfos;
       const characterPosition = position ?? { x: pos_x, y: pos_y };
@@ -162,6 +171,7 @@ export class MapRoom extends Room<MapState> {
 
    onMove(client: Client, { message: { x, y } }: Extract<MapRoomMessage, { type: 'move' }>) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       logger.info(
@@ -176,6 +186,7 @@ export class MapRoom extends Room<MapState> {
       { message: { direction, x, y } }: Extract<MapRoomMessage, { type: 'stopMoving' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       logger.info(
@@ -191,6 +202,7 @@ export class MapRoom extends Room<MapState> {
       { message: { talents } }: Extract<MapRoomMessage, { type: 'updateTalents' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       const results = TalentMgt.isProgressionValid(
@@ -219,6 +231,7 @@ export class MapRoom extends Room<MapState> {
       { message: { statistics } }: Extract<MapRoomMessage, { type: 'updateStatistics' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       const results = StatisticMgt.isProgressionValid(
@@ -247,12 +260,14 @@ export class MapRoom extends Room<MapState> {
       { message: { id, monsterGroupId } }: Extract<MapRoomMessage, { type: 'fightPvE' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       if (player.isFight) {
          logger.error(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight while already in a fight | Might be a cheat attempt`,
          );
+
          return;
       }
 
@@ -260,6 +275,7 @@ export class MapRoom extends Room<MapState> {
          logger.error(
             `[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) tried to start a PvE fight with an invalid id or monsterGroupId | Might be a cheat attempt`,
          );
+
          return;
       }
 
@@ -310,6 +326,7 @@ export class MapRoom extends Room<MapState> {
                   const { gameRoomClient } = characterInfos;
 
                   const allyPlayer = this.state.players.get(gameRoomClient.sessionId);
+
                   if (allyPlayer === undefined) {
                      return;
                   }
@@ -354,6 +371,7 @@ export class MapRoom extends Room<MapState> {
 
                if (user !== undefined && user.gameRoomClient !== null) {
                   const allyPlayer = this.state.players.get(user.gameRoomClient.sessionId);
+
                   if (allyPlayer !== undefined && items !== undefined) {
                      allyPlayer.addItems(
                         items.map((item) => ({
@@ -390,6 +408,7 @@ export class MapRoom extends Room<MapState> {
          };
 
          const allyInfosIdx = results.allies.findIndex(({ name }) => name === player.name);
+
          if (allyInfosIdx !== -1) {
             const allyInfos = results.allies[allyInfosIdx];
             const experienceGained = results.experiences[allyInfosIdx];
@@ -421,6 +440,7 @@ export class MapRoom extends Room<MapState> {
 
    async onStopFighting(client: Client, _: Extract<MapRoomMessage, { type: 'stopFighting' }>) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       if (Date.now() - player.fightTimestamp < player.fightTurns * MINIMUM_TURN_TIME) {
@@ -437,6 +457,7 @@ export class MapRoom extends Room<MapState> {
       { message: { room } }: Extract<MapRoomMessage, { type: 'teleport' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       if (room === this.name || !player.teleporters.includes(room)) {
@@ -444,6 +465,7 @@ export class MapRoom extends Room<MapState> {
       }
 
       const place = TELEPORTATION_PLACES[room];
+
       _assert(place, `Teleportation place for room '${room}' should be defined`);
       const { direction, x, y } = place;
 
@@ -466,9 +488,11 @@ export class MapRoom extends Room<MapState> {
       { message: { id } }: Extract<MapRoomMessage, { type: 'equipItem' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       const item = player.items.find((item) => item.id === id);
+
       if (item === undefined) {
          return;
       }
@@ -478,6 +502,7 @@ export class MapRoom extends Room<MapState> {
             item,
             player.getEquippedItems(),
          );
+
          itemsToRemove.forEach((itemId) => {
             player.unequipItem(itemId);
          });
@@ -497,9 +522,11 @@ export class MapRoom extends Room<MapState> {
       { message: { id } }: Extract<MapRoomMessage, { type: 'unequipItem' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       const item = player.items.find((item) => item.id === id);
+
       if (item === undefined) {
          return;
       }
@@ -518,6 +545,7 @@ export class MapRoom extends Room<MapState> {
 
       player.setHealthAtMax();
       logger.info(`[MapRoom][${this.name}] Client '${client.sessionId}' (${player.name}) slept`);
+
       return true;
    }
 
@@ -526,6 +554,7 @@ export class MapRoom extends Room<MapState> {
       { message: { id } }: Extract<MapRoomMessage, { type: 'interact' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       const sendInteractResponsePacket = (success: boolean) => {
@@ -543,14 +572,17 @@ export class MapRoom extends Room<MapState> {
       match(id)
          .with('Sleep', async () => {
             const success = await sleepInteraction(client, player, this.name);
+
             sendInteractResponsePacket(success);
          })
          .with('SaveTeleporter', async () => {
             const success = await saveTeleporterInteraction(client, player, this.name);
+
             sendInteractResponsePacket(success);
          })
          .with('DrinkWine', async () => {
             const success = await drinkWineInteraction(client, player, this.name);
+
             sendInteractResponsePacket(success);
          })
          .exhaustive();
@@ -561,9 +593,11 @@ export class MapRoom extends Room<MapState> {
       { message: { itemsIds } }: Extract<MapRoomMessage, { type: 'recycle' }>,
    ) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       const items = player.items.filter((item) => itemsIds.includes(item.id));
+
       if (items.length !== itemsIds.length) {
          const packet: Extract<MapRoomResponse, { type: 'recycleResponse' }> = {
             type: 'recycleResponse',
@@ -573,11 +607,14 @@ export class MapRoom extends Room<MapState> {
                itemsDestroyed: [],
             },
          };
+
          client.send(packet.type, packet.message);
+
          return;
       }
 
       const gachixGained = ItemMgt.recycleItems(items);
+
       player.addGachix(gachixGained);
       player.removeItems(itemsIds);
 
@@ -589,11 +626,13 @@ export class MapRoom extends Room<MapState> {
             itemsDestroyed: itemsIds,
          },
       };
+
       client.send(packet.type, packet.message);
    }
 
    async onSpinWheel(client: Client, _: Extract<MapRoomMessage, { type: 'spinWheel' }>) {
       const player = this.state.players.get(client.sessionId);
+
       _assert(player, `Player for client '${client.sessionId}' should be defined`);
 
       if (player.gachix <= 0) {
@@ -606,7 +645,9 @@ export class MapRoom extends Room<MapState> {
                lootBonus: null,
             },
          };
+
          client.send(packet.type, packet.message);
+
          return;
       }
 
@@ -636,6 +677,7 @@ export class MapRoom extends Room<MapState> {
       });
 
       const createdItem = { ...item, id };
+
       player.removeGachix(1);
       player.addItems([createdItem]);
 
@@ -658,6 +700,7 @@ export class MapRoom extends Room<MapState> {
       for (const { x, y, destinationMapName, destinationMapData } of teleportationSpots) {
          if (player.x === x && player.y === y) {
             const { entrancePosition, entranceDirection } = destinationMapData;
+
             _assert(entrancePosition);
             _assert(entranceDirection);
 
@@ -678,10 +721,12 @@ export class MapRoom extends Room<MapState> {
 
    async onLeave(client: Client, _consented: boolean) {
       const player = this.state.players.get(client.sessionId);
+
       if (player === undefined) {
          logger.error(
             `[MapRoom][${this.name}] Client '${client.sessionId}' left the room but was not in it`,
          );
+
          return;
       }
 
