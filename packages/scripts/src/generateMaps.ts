@@ -1,21 +1,20 @@
-import assert = require('assert');
-import { existsSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
-import {
-   type Direction,
+import type {
+   Direction,
    InteractiveObject,
    InteractiveObjectData,
    MapFightData,
    NPC,
-   type NPCSpot,
-   type Room,
+   NPCSpot,
+   Room,
    TeleportationPlace,
-   type TeleportationSpot,
-   _assertTrue,
-   interactiveObjectsKeys,
-   isMonsterName,
-   zDirection,
+   TeleportationSpot,
 } from 'shared';
+
+import assert from 'assert';
+import { existsSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'fs';
+import { resolve } from 'path';
+
+import { _assertTrue, interactiveObjectsKeys, isMonsterName, zDirection } from 'shared';
 
 interface TiledMapJson {
    name: string;
@@ -78,6 +77,7 @@ export const isRoom = (value: unknown): value is Room => zRoom.safeParse(value).
 
 export type Room = z.infer<typeof zRoom>;
 `;
+
    writeFileSync(roomDefinitionPath, roomDefinitionBlob, { flag: 'w' });
    console.log('[Shared] ✅  Regenerated Room.ts');
 };
@@ -109,6 +109,7 @@ export class ${map}Room extends MapRoom {
 
       if (!maps.includes(mapName)) {
          const mapRoomPath = resolve(__dirname, `../../../apps/server/src/rooms/maps/${mapRoom}`);
+
          unlinkSync(mapRoomPath);
          console.log(`[Server] 🧹  Deleted ${mapRoom}`);
       }
@@ -227,12 +228,14 @@ const regenerateTeleportationSpots = (maps: string[]) => {
       const teleportationSpotsLayer = tiledMap.layers.find(
          ({ name }) => name === 'TeleportationSpots',
       );
+
       assert(
          teleportationSpotsLayer !== undefined,
          `TeleportationSpots layer not found in ${map}.json`,
       );
 
       const roomName = `${map}Room` as Room;
+
       teleportationSpots[roomName] = [];
 
       teleportationSpotsLayer.objects.forEach(({ properties, x, y, width, height }) => {
@@ -308,9 +311,11 @@ const regenerateNpcSpots = (maps: string[]) => {
       const tiledMap: TiledMapJson = JSON.parse(tiledMapBlob);
 
       const npcSpotsLayer = tiledMap.layers.find(({ name }) => name === 'Npcs');
+
       assert(npcSpotsLayer !== undefined, `Npcs layer not found in ${map}.json`);
 
       const roomName = `${map}Room` as Room;
+
       npcSpots[roomName] = [];
 
       npcSpotsLayer.objects.forEach(({ properties, x, y, width, height }) => {
@@ -364,9 +369,11 @@ const regenerateTeleportationPlaces = (maps: string[]) => {
       const tiledMap: TiledMapJson = JSON.parse(tiledMapBlob);
 
       const roomName = `${map}Room` as Room;
+
       teleportationPlaces[roomName] = null;
 
       const interactiveLayer = tiledMap.layers.find(({ name }) => name === 'Interactive');
+
       if (interactiveLayer === undefined) {
          continue;
       }
@@ -374,7 +381,9 @@ const regenerateTeleportationPlaces = (maps: string[]) => {
       interactiveLayer.objects
          .filter(({ properties }) => {
             const id = properties.find(({ name }) => name === 'id');
+
             assert(id !== undefined, `id property not found in ${map}.json`);
+
             return id.value === 'Teleporter';
          })
          .forEach(() => {
@@ -385,7 +394,9 @@ const regenerateTeleportationPlaces = (maps: string[]) => {
 
             const teleporterCell = interactiveLayer.objects.find(({ properties }) => {
                const id = properties.find(({ name }) => name === 'id');
+
                assert(id !== undefined, `id property not found in ${map}.json`);
+
                return id.value === 'TeleporterCell';
             });
 
@@ -393,8 +404,10 @@ const regenerateTeleportationPlaces = (maps: string[]) => {
             const { x, y, width, height, properties } = teleporterCell;
 
             const direction = properties.find(({ name }) => name === 'direction');
+
             assert(direction !== undefined, `direction property not found in ${map}.json`);
             const price = properties.find(({ name }) => name === 'price');
+
             assert(price !== undefined, `price property not found in ${map}.json`);
 
             teleportationPlaces[roomName] = {
@@ -461,12 +474,14 @@ const regenerateInteractiveObjects = (maps: string[]) => {
       };
 
       const interactiveLayer = tiledMap.layers.find(({ name }) => name === 'Interactive');
+
       if (interactiveLayer === undefined) {
          continue;
       }
 
       interactiveLayer.objects.forEach(({ x, y, width, height, properties }) => {
          const id = properties.find(({ name }) => name === 'id');
+
          assert(id !== undefined, `id property not found in ${map}.json`);
 
          interactiveObjects[roomName].push({
@@ -514,9 +529,11 @@ const regenerateFights = (maps: string[]) => {
       const tiledMap: TiledMapJson = JSON.parse(tiledMapBlob);
 
       const roomName = `${map}Room` as Room;
+
       mapsFights[roomName] = null;
 
       const fightsLayer = tiledMap.layers.find(({ name }) => name === 'Fights');
+
       if (fightsLayer !== undefined) {
          const fights: MapFightData['fights'] = [];
 
@@ -546,6 +563,7 @@ const regenerateFights = (maps: string[]) => {
             const timeoutRegenerationInMns = fightsLayer.properties.find(
                ({ name }) => name === 'timeoutRegenerationInMns',
             );
+
             assert(
                timeoutRegenerationInMns !== undefined,
                `timeoutRegenerationInMns property not found in ${map}.json`,

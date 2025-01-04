@@ -1,4 +1,6 @@
-import { Item, ItemMgt, NumberMgt, rarities } from 'shared';
+import type { Item } from 'shared';
+
+import { ItemMgt, NumberMgt, rarities } from 'shared';
 
 const generateItem = () => {
    const ITEMS: Item[] = [];
@@ -14,6 +16,7 @@ const generateItem = () => {
       });
 
       const computedName = ItemMgt.getName(item);
+
       if (!computedName) {
          throw new Error(`Name is empty`);
       }
