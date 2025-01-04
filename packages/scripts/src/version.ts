@@ -28,6 +28,7 @@ const bumpVersion = () => {
       '../../../apps/client/package.json',
       '../../../apps/server/package.json',
       '../../../apps/website/package.json',
+      '../../config-eslint/package.json',
       '../../config-typescript/package.json',
       '../package.json',
       '../../shared/package.json',
