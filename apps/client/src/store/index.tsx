@@ -1,19 +1,10 @@
-import { observer } from 'mobx-react-lite';
 import { createContext, useContext } from 'react';
 
 import { Store } from './Store';
 
 export const store = new Store();
 
-const StoreContext = createContext<{ store: Store }>({ store });
-
-interface StoreProviderProps {
-   children: React.ReactNode;
-}
-
-export const StoreProvider: React.FC<StoreProviderProps> = observer(({ children }) => (
-   <StoreContext.Provider value={{ store }}>{children}</StoreContext.Provider>
-));
+export const StoreContext = createContext<{ store: Store }>({ store });
 
 export const useStore = () => {
    const storeObject = useContext(StoreContext);
