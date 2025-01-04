@@ -1,4 +1,4 @@
-import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
+import { Scene } from '../Scene';
 import { loadCharactersAssets } from '../utils/loadCharactersAssets';
 import { loadMonstersAssets } from '../utils/loadMonstersAssets';
 

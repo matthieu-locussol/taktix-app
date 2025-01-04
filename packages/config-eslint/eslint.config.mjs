@@ -29,7 +29,7 @@ export const config = [
          'import/no-unresolved': 'off',
          // 'import/extensions': ['.ts', '.tsx'],
 
-         'import/named': ['error', { commonjs: true }],
+         'import/named': 'off',
          'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 0, maxBOF: 0 }],
          '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
          'no-console': 'off',
