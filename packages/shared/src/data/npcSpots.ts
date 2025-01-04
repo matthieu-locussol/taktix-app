@@ -1,7 +1,7 @@
 // This file has been automatically generated. DO NOT edit it manually.
 
-import type { Room } from '../types/Room';
 import type { NPCSpot } from '../types/NPCSpot';
+import type { Room } from '../types/Room';
 
 import { Direction } from '../types/SceneData';
 

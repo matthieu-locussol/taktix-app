@@ -64,6 +64,7 @@ const regenerateSharedRoom = (maps: string[]) => {
    const roomDefinitionPath = resolve(__dirname, '../../shared/src/types/Room.ts');
    const roomDefinitionBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
 import { z } from 'zod';
+
 import { ZodMgt } from '../utils/zodMgt';
 
 const rooms = [
@@ -279,8 +280,9 @@ const regenerateTeleportationSpots = (maps: string[]) => {
    const teleportationSpotsPath = resolve(__dirname, '../../shared/src/data/teleportationSpots.ts');
    const teleportationSpotsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
 import type { Room } from '../types/Room';
-import { Direction } from '../types/SceneData';
 import type { TeleportationSpot } from '../types/TeleportationSpot';
+
+import { Direction } from '../types/SceneData';
 
 export const TELEPORTATION_SPOTS: Record<Room, TeleportationSpot[]> = ${JSON.stringify(
       teleportationSpots,
@@ -337,8 +339,9 @@ const regenerateNpcSpots = (maps: string[]) => {
 
    const npcSpotsPath = resolve(__dirname, '../../shared/src/data/npcSpots.ts');
    const npcSpotsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-import { NPCSpot } from '../types/NPCSpot';
+import type { NPCSpot } from '../types/NPCSpot';
 import type { Room } from '../types/Room';
+
 import { Direction } from '../types/SceneData';
 
 export const NPC_SPOTS: Record<Room, NPCSpot[]> = ${JSON.stringify(npcSpots, null, 3)
@@ -425,8 +428,9 @@ const regenerateTeleportationPlaces = (maps: string[]) => {
    );
    const teleportationPlacesBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
 import type { Room } from '../types/Room';
-import { Direction } from '../types/SceneData';
 import type { TeleportationPlace } from '../types/TeleportationPlace';
+
+import { Direction } from '../types/SceneData';
 
 export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = ${JSON.stringify(
       teleportationPlaces,
