@@ -8,12 +8,8 @@ import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
 export const config = [
-   {
-      ignores: ['**/dist/**', '**/node_modules/**'],
-   },
-   {
-      files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-   },
+   { ignores: ['**/.next/**', '**/dist/**', '**/node_modules/**'] },
+   { files: ['**/*.{js,mjs,cjs,ts,mts,jsx,tsx}'] },
    {
       languageOptions: {
          globals: { ...globals.browser, ...globals.node },
@@ -33,6 +29,7 @@ export const config = [
          'import/no-unresolved': 'off',
          // 'import/extensions': ['.ts', '.tsx'],
 
+         'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 0, maxBOF: 0 }],
          '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
          'no-console': 'off',
          'react/prop-types': 'off',
@@ -92,7 +89,13 @@ export const config = [
             { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
             { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
          ],
-         'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+         'react-refresh/only-export-components': [
+            'warn',
+            {
+               allowConstantExport: true,
+               allowExportNames: ['getServerSideProps'],
+            },
+         ],
       },
    },
 ];

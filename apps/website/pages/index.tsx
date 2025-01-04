@@ -1,17 +1,20 @@
+import type { GetServerSideProps } from 'next';
+import type { OsIconType } from '../components/OsIcon';
+import type { Version } from './api/version';
+
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useState } from 'react';
+
 import { ConditionalWrapper } from '../components/ConditionalWrapper';
 import { CustomButton } from '../components/CustomButton';
 import { StyledTab, StyledTabs } from '../components/CustomTabs';
 import { DiscordIcon } from '../components/DiscordIcon';
-import { OsIconType, OsIcons } from '../components/OsIcon';
-import { Version } from './api/version';
+import { OsIcons } from '../components/OsIcon';
 
 const features = [
    'Launcher with auto-update',
@@ -151,28 +154,28 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                }}
             >
                <Box display="flex">
-                  <Typography variant="h3" fontWeight="bold" color="white" sx={{ mb: 2 }}>
+                  <Typography color="white" fontWeight="bold" sx={{ mb: 2 }} variant="h3">
                      Taktix
                   </Typography>
-                  <Typography variant="overline" color="white" sx={{ mb: 2, ml: 2, mt: 'auto' }}>
+                  <Typography color="white" sx={{ mb: 2, ml: 2, mt: 'auto' }} variant="overline">
                      {version}
                   </Typography>
                </Box>
-               <Typography variant="h6" color="white" sx={{ opacity: 0.7 }}>
+               <Typography color="white" sx={{ opacity: 0.7 }} variant="h6">
                   The crapiest MMORPG ever.
                </Typography>
                <Typography
-                  variant="subtitle1"
-                  fontStyle="italic"
                   color="white"
+                  fontStyle="italic"
                   sx={{ opacity: 0.7, mb: 4 }}
+                  variant="subtitle1"
                >
                   Last release: {new Date(date).toUTCString()}
                </Typography>
                <Box
                   display="grid"
-                  gridTemplateColumns={{ md: '1fr 1fr 1fr', sm: '1fr' }}
                   gap={4}
+                  gridTemplateColumns={{ md: '1fr 1fr 1fr', sm: '1fr' }}
                   justifyItems="center"
                >
                   {platforms.map(
@@ -187,11 +190,11 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                            )}
                         >
                            <CustomButton
-                              disabled={updating}
-                              variant="contained"
-                              size="large"
                               color="secondary"
+                              disabled={updating}
+                              size="large"
                               startIcon={OsIcons[name]}
+                              variant="contained"
                            >
                               <Typography fontStyle={updating ? 'italic' : 'normal'}>
                                  {updating ? updatingText : `${availableText} (${extension})`}
@@ -203,8 +206,8 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                </Box>
                <Box
                   display="grid"
-                  gridTemplateColumns="1fr 1fr"
                   gap={2}
+                  gridTemplateColumns="1fr 1fr"
                   justifyItems="center"
                   sx={{ position: 'fixed', bottom: 16, right: 16 }}
                >
@@ -214,7 +217,6 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                      target="_blank"
                   >
                      <CustomButton
-                        variant="contained"
                         sx={{
                            p: 1,
                            minWidth: 0,
@@ -225,6 +227,7 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                               backgroundColor: '#181717AA',
                            },
                         }}
+                        variant="contained"
                      >
                         <GitHubIcon />
                      </CustomButton>
@@ -235,7 +238,6 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                      target="_blank"
                   >
                      <CustomButton
-                        variant="contained"
                         sx={{
                            p: 1,
                            minWidth: 0,
@@ -246,6 +248,7 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                               backgroundColor: '#5865F2AA',
                            },
                         }}
+                        variant="contained"
                      >
                         <DiscordIcon />
                      </CustomButton>
@@ -255,10 +258,10 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
          </Box>
          <Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
-               <StyledTabs value={value} onChange={handleChange} aria-label="styled tabs example">
-                  <StyledTab value={1} label="About" />
-                  <StyledTab value={2} label="Screenshots" />
-                  <StyledTab value={3} label="Credits" />
+               <StyledTabs aria-label="styled tabs example" value={value} onChange={handleChange}>
+                  <StyledTab label="About" value={1} />
+                  <StyledTab label="Screenshots" value={2} />
+                  <StyledTab label="Credits" value={3} />
                </StyledTabs>
             </Box>
             <Container
@@ -275,93 +278,93 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
             >
                {value === 1 && (
                   <>
-                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                     <Typography sx={{ mb: 2, width: '100%' }} textAlign="justify">
                         Taktix is an attempt to create a web-based MMORPG using TypeScript and
                         Phaser 3. The game is open source under the{' '}
                         <Link
+                           href="https://github.com/matthieu-locussol/taktix-app?tab=GPL-3.0-1-ov-file"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://github.com/matthieu-locussol/taktix-app?tab=GPL-3.0-1-ov-file"
                         >
                            <b>GPL-3.0 licence</b>
                         </Link>{' '}
                         and still in development.
                      </Typography>
-                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                     <Typography sx={{ mb: 2, width: '100%' }} textAlign="justify">
                         I developed this project to learn more about game development and to have
                         fun. The game is not meant to be taken seriously and probably contains some
                         bugs and glitches. The non exhaustive list of technologies used in this game
                         is:{' '}
                         <Link
+                           href="https://www.typescriptlang.org/"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://www.typescriptlang.org/"
                         >
                            TypeScript
                         </Link>
                         ,{' '}
-                        <Link rel="noopener noreferrer" target="_blank" href="https://phaser.io/">
+                        <Link href="https://phaser.io/" rel="noopener noreferrer" target="_blank">
                            Phaser 3
                         </Link>
                         ,{' '}
                         <Link
+                           href="https://annoraaq.github.io/grid-engine/"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://annoraaq.github.io/grid-engine/"
                         >
                            Grid-Engine
                         </Link>
                         ,{' '}
-                        <Link rel="noopener noreferrer" target="_blank" href="https://react.dev/">
+                        <Link href="https://react.dev/" rel="noopener noreferrer" target="_blank">
                            React
                         </Link>
                         ,{' '}
-                        <Link rel="noopener noreferrer" target="_blank" href="https://colyseus.io/">
+                        <Link href="https://colyseus.io/" rel="noopener noreferrer" target="_blank">
                            Colyseus
                         </Link>
                         ,{' '}
-                        <Link rel="noopener noreferrer" target="_blank" href="https://mobx.js.org/">
+                        <Link href="https://mobx.js.org/" rel="noopener noreferrer" target="_blank">
                            MobX
                         </Link>
                         ,{' '}
                         <Link
+                           href="https://www.i18next.com/"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://www.i18next.com/"
                         >
                            i18next
                         </Link>
                         ,{' '}
-                        <Link rel="noopener noreferrer" target="_blank" href="https://zod.dev/">
+                        <Link href="https://zod.dev/" rel="noopener noreferrer" target="_blank">
                            Zod
                         </Link>
                         ,{' '}
-                        <Link rel="noopener noreferrer" target="_blank" href="https://tauri.app/">
+                        <Link href="https://tauri.app/" rel="noopener noreferrer" target="_blank">
                            Tauri
                         </Link>
                         ,{' '}
-                        <Link rel="noopener noreferrer" target="_blank" href="https://mui.com/">
+                        <Link href="https://mui.com/" rel="noopener noreferrer" target="_blank">
                            Material UI
                         </Link>
                         ,{' '}
                         <Link
+                           href="https://www.prisma.io/"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://www.prisma.io/"
                         >
                            Prisma
                         </Link>{' '}
                         and{' '}
                         <Link
+                           href="https://www.mapeditor.org/"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://www.mapeditor.org/"
                         >
                            Tiled
                         </Link>
                         .
                      </Typography>
-                     <Typography textAlign="justify" sx={{ width: '100%' }}>
+                     <Typography sx={{ width: '100%' }} textAlign="justify">
                         Here is a non-exhaustive list of features that are implemented:
                      </Typography>
                      <ul style={{ width: '100%' }}>
@@ -374,90 +377,90 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                   </>
                )}
                {value === 2 && (
-                  <Box display="grid" gridTemplateColumns={{ xs: '1fr', lg: '1fr 1fr' }} gap={4}>
+                  <Box display="grid" gap={4} gridTemplateColumns={{ xs: '1fr', lg: '1fr 1fr' }}>
                      {screens.map(({ src, alt, width, height }) => (
                         <Image
                            key={src}
-                           src={src}
                            alt={alt}
-                           width={SCREENSHOT_WIDTH}
                            height={SCREENSHOT_WIDTH * (height / width)}
+                           src={src}
                            style={{
                               border: '2px solid #111827',
                               borderRadius: 8,
                            }}
+                           width={SCREENSHOT_WIDTH}
                         />
                      ))}
                   </Box>
                )}
                {value === 3 && (
                   <>
-                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                     <Typography sx={{ mb: 2, width: '100%' }} textAlign="justify">
                         Tilesets:{' '}
                         <Link
+                           href="https://twitter.com/ElvGames"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://twitter.com/ElvGames"
                         >
                            ElvGames
                         </Link>
                      </Typography>
-                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                     <Typography sx={{ mb: 2, width: '100%' }} textAlign="justify">
                         Animations Spritesheets:{' '}
                         <Link
+                           href="https://bdragon1727.itch.io/"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://bdragon1727.itch.io/"
                         >
                            BDragon1727
                         </Link>
                      </Typography>
-                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                     <Typography sx={{ mb: 2, width: '100%' }} textAlign="justify">
                         Characters Spritesheets:{' '}
                         <Link
+                           href="https://twitter.com/ElvGames"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://twitter.com/ElvGames"
                         >
                            ElvGames
                         </Link>
                      </Typography>
-                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                     <Typography sx={{ mb: 2, width: '100%' }} textAlign="justify">
                         Fight music:{' '}
                         <Link
+                           href="https://opengameart.org/users/flixberry-entertainment"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://opengameart.org/users/flixberry-entertainment"
                         >
                            Flixberry Entertainment
                         </Link>
                      </Typography>
-                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                     <Typography sx={{ mb: 2, width: '100%' }} textAlign="justify">
                         Musics:{' '}
                         <Link
+                           href="https://sonatina.itch.io/"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://sonatina.itch.io/"
                         >
                            Sara Garrard
                         </Link>
                      </Typography>
-                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                     <Typography sx={{ mb: 2, width: '100%' }} textAlign="justify">
                         Font:{' '}
                         <Link
+                           href="https://fonts.google.com/?query=Matt+McInerney"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://fonts.google.com/?query=Matt+McInerney"
                         >
                            Matt McInerney
                         </Link>
                      </Typography>
-                     <Typography textAlign="justify" sx={{ mb: 2, width: '100%' }}>
+                     <Typography sx={{ mb: 2, width: '100%' }} textAlign="justify">
                         Icons:{' '}
                         <Link
+                           href="https://game-icons.net/"
                            rel="noopener noreferrer"
                            target="_blank"
-                           href="https://game-icons.net/"
                         >
                            Game-icons
                         </Link>

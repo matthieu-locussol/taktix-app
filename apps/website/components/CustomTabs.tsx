@@ -1,5 +1,7 @@
-import { StyledComponent } from '@emotion/styled';
-import { Tab, TabProps, Tabs, TabsProps, styled } from '@mui/material';
+import type { StyledComponent } from '@emotion/styled';
+import type { TabProps, TabsProps } from '@mui/material';
+
+import { Tab, Tabs, styled } from '@mui/material';
 
 interface StyledTabsProps extends TabsProps {
    children?: React.ReactNode;
@@ -7,14 +9,9 @@ interface StyledTabsProps extends TabsProps {
    onChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-export const StyledTabs: StyledComponent<StyledTabsProps, {}, {}> = styled(
-   (props: StyledTabsProps) => (
-      <Tabs
-         {...props}
-         TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
-      />
-   ),
-)(({ theme }) => ({
+export const StyledTabs: StyledComponent<StyledTabsProps> = styled((props: StyledTabsProps) => (
+   <Tabs {...props} TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }} />
+))(({ theme }) => ({
    '& .MuiTabs-indicator': {
       display: 'flex',
       justifyContent: 'center',
@@ -31,9 +28,9 @@ interface StyledTabProps extends TabProps {
    label: string;
 }
 
-export const StyledTab: StyledComponent<StyledTabProps, {}, {}> = styled(
-   (props: StyledTabProps) => <Tab disableRipple {...props} />,
-)(({ theme }) => ({
+export const StyledTab: StyledComponent<StyledTabProps> = styled((props: StyledTabProps) => (
+   <Tab disableRipple {...props} />
+))(({ theme }) => ({
    textTransform: 'none',
    fontWeight: theme.typography.fontWeightRegular,
    fontSize: theme.typography.pxToRem(20),

@@ -1,4 +1,6 @@
-import { SvgIcon, SvgIconProps } from '@mui/material';
+import type { SvgIconProps } from '@mui/material';
+
+import { SvgIcon } from '@mui/material';
 
 export const AppleIcon = (props: SvgIconProps) => {
    return (

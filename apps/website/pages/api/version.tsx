@@ -1,16 +1,11 @@
 import type { NextRequest } from 'next/server';
+import type { ARCHITECTURES } from '../../types/architectures';
+
 import { fetchLatestGitHubRelease } from 'shared';
 
 export const config = {
    runtime: 'edge',
 };
-
-const ARCHITECTURES = [
-   'darwin-aarch64',
-   'darwin-x86_64',
-   'linux-x86_64',
-   'windows-x86_64',
-] as const;
 
 const ARCHITECTURES_EXTENSION = {
    '.app.tar.gz': ['darwin-aarch64', 'darwin-x86_64'],
@@ -38,6 +33,7 @@ const handler = async (_: NextRequest) => {
       const computeSignature = async (url: string) => {
          const signatureData = await fetch(url);
          const signatureContent = await signatureData.text();
+
          return signatureContent;
       };
 
@@ -83,7 +79,9 @@ const handler = async (_: NextRequest) => {
             },
          },
       );
-   } catch (_e) {
+   } catch (error) {
+      console.error(error);
+
       return new Response(
          JSON.stringify({
             updating: true,
