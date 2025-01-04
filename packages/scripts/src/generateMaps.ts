@@ -120,7 +120,9 @@ export class ${map}Room extends MapRoom {
       __dirname,
       '../../../apps/server/src/rooms/utils/defineMapsRooms.ts',
    );
-   const defineMapsRoomsBlob = `import { Server } from '@colyseus/core';
+   const defineMapsRoomsBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
+import type { Server } from '@colyseus/core';
+
 ${maps.map((map) => `import { ${map}Room } from '../maps/${map}Room';`).join('\n')}
 
 export const defineMapsRooms = (gameServer: Server) => {

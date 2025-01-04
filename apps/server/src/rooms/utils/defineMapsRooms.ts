@@ -1,4 +1,7 @@
-import { Server } from '@colyseus/core';
+// This file has been automatically generated. DO NOT edit it manually.
+
+import type { Server } from '@colyseus/core';
+
 import { GraveyardRoom } from '../maps/GraveyardRoom';
 import { MoonshadowBarRoom } from '../maps/MoonshadowBarRoom';
 import { MoonshadowHamletRoom } from '../maps/MoonshadowHamletRoom';
