@@ -1,0 +1,19 @@
+{
+   "name": "@packages/config-eslint",
+   "version": "1.57.2",
+   "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
+   "license": "MIT",
+   "scripts": {
+      "clean": "rm -rf node_modules"
+   },
+   "devDependencies": {
+      "@eslint/js": "^9.17.0",
+      "eslint": "^9.17.0",
+      "eslint-plugin-import": "^2.31.0",
+      "eslint-plugin-jsx-a11y": "^6.10.2",
+      "eslint-plugin-react": "^7.37.3",
+      "eslint-plugin-react-refresh": "^0.4.16",
+      "globals": "^15.14.0",
+      "typescript-eslint": "^8.19.0"
+   }
+}

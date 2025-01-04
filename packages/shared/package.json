@@ -7,7 +7,7 @@
       "build": "tsc",
       "build:noci": "tsc",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-      "lint": "biome check *",
+      "lint": "eslint",
       "test": "vitest --run"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
@@ -19,7 +19,7 @@
       "zod": "^3.23.8"
    },
    "devDependencies": {
-      "@biomejs/biome": "1.7.3",
+      "@packages/config-eslint": "workspace:^",
       "config-typescript": "workspace:^",
       "typescript": "^5.4.5"
    }

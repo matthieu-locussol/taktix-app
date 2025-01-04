@@ -28,18 +28,18 @@
       "studio": "turbo run studio",
       "generate_item": "turbo run generate_item",
       "generate_loot": "turbo run generate_loot",
-      "generate_maps": "turbo run generate_maps && pnpm biome format --write packages apps && pnpm biome lint --apply-unsafe packages apps && turbo run build --filter=shared"
+      "generate_maps": "turbo run generate_maps && turbo run build --filter=shared"
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "devDependencies": {
-      "@biomejs/biome": "1.7.3",
       "@commitlint/cli": "^19.3.0",
       "@commitlint/config-conventional": "^19.2.2",
       "husky": "^9.0.11",
       "lint-staged": "^15.2.5",
+      "prettier": "^3.4.2",
       "standard-version": "^9.5.0",
-      "turbo": "^1.13.3"
+      "turbo": "^2.3.3"
    },
    "packageManager": "pnpm@9.3.0"
 }

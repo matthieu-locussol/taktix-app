@@ -9,12 +9,13 @@
       "generate_loot": "ts-node-dev src/generateLoot.ts",
       "generate_maps": "ts-node-dev src/generateMaps.ts",
       "clean": "rm -rf .turbo && rm -rf node_modules",
-      "lint": "biome lint src/*.ts"
+      "lint": "eslint"
    },
    "dependencies": {
       "shared": "workspace:^"
    },
    "devDependencies": {
+      "@packages/config-eslint": "workspace:^",
       "@types/node": "^20.13.0",
       "config-typescript": "workspace:^",
       "ts-node-dev": "^2.0.0",

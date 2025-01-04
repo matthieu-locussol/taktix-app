@@ -5,7 +5,9 @@
       "module": "CommonJS",
       "outDir": "./dist",
       "rootDir": "./src",
-      "downlevelIteration": true
+      "downlevelIteration": true,
+      "allowImportingTsExtensions": true,
+      "noEmit": true
    },
    "include": ["src"]
 }
