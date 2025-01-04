@@ -13,7 +13,9 @@ import SettingsIcon from '@mui/icons-material/SettingsTwoTone';
 import { darken, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../store';
+
 import { ShortcutIcon } from './components/ShortcutIcon';
 
 export const Menu = observer(() => {
@@ -29,19 +31,19 @@ export const Menu = observer(() => {
    } = useStore();
 
    return (
-      <Root widthPercent={hudStore.menuWidth} heightPercent={hudStore.menuHeight}>
+      <Root heightPercent={hudStore.menuHeight} widthPercent={hudStore.menuWidth}>
          {/* Top line */}
          <ShortcutIcon
             active={statisticsMenuStore.isOpened}
+            count={characterStore.baseStatisticsPoints}
             icon={<StatsIcon />}
             onClick={() => statisticsMenuStore.toggle()}
-            count={characterStore.baseStatisticsPoints}
          />
          <ShortcutIcon
             active={talentsMenuStore.isOpened}
+            count={characterStore.talentsPoints}
             icon={<TalentsIcon />}
             onClick={() => talentsMenuStore.toggle()}
-            count={characterStore.talentsPoints}
          />
          <ShortcutIcon
             active={inventoryMenuStore.isOpened}

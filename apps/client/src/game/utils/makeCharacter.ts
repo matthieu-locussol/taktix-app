@@ -1,7 +1,10 @@
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+
 import { TILE_SIZE } from 'shared/src/config';
-import { CharacterSprite } from 'shared/src/data/charactersSprites';
+
 import { EntityType } from '../../utils/phaser';
 import { SCALE_FACTOR, type Scene } from '../Scene';
+
 import { makeCharacterName } from './makeCharacterName';
 import { registerSpriteEvents } from './registerSpriteEvents';
 
@@ -19,6 +22,7 @@ export const makeCharacter = ({ characterType, spritesheet, name, scene }: MakeC
    }
 
    const characterSprite = scene.add.sprite(0, 0, spritesheet);
+
    characterSprite.setPipeline('Light2D');
    characterSprite.scale = SCALE_FACTOR;
    characterSprite.setName(name);

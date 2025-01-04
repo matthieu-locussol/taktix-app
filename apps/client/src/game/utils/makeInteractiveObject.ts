@@ -1,6 +1,9 @@
-import { InteractiveObject } from 'shared/src/types/InteractiveObject';
+import type { InteractiveObject } from 'shared/src/types/InteractiveObject';
+
 import { _assert } from 'shared/src/utils/_assert';
+
 import { SCALE_FACTOR } from '../Scene';
+
 import { registerInteractiveObjectEvents } from './registerInteractiveObjectEvents';
 
 const INTERACTIVE_OBJECT_DEPTH = 999;

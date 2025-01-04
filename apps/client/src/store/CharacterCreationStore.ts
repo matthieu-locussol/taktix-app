@@ -1,6 +1,8 @@
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+import type { TranslationKey } from 'shared/src/data/translations';
+
 import { makeAutoObservable } from 'mobx';
-import { CharacterSprite, charactersSprites } from 'shared/src/data/charactersSprites';
-import { TranslationKey } from 'shared/src/data/translations';
+import { charactersSprites } from 'shared/src/data/charactersSprites';
 import { ProfessionType } from 'shared/src/types/Profession';
 
 export class CharacterCreationStore {
@@ -30,11 +32,13 @@ export class CharacterCreationStore {
 
    setNextSpritesheet() {
       const index = charactersSprites.findIndex((sprite) => sprite === this.spritesheet);
+
       this.spritesheet = charactersSprites[(index + 1) % charactersSprites.length];
    }
 
    setPreviousSpritesheet() {
       const index = charactersSprites.findIndex((sprite) => sprite === this.spritesheet);
+
       this.spritesheet =
          charactersSprites[(index - 1 + charactersSprites.length) % charactersSprites.length];
    }

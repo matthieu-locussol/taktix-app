@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { SettingsMenuStore } from './SettingsMenuStore';
 import { Store } from './Store';
 
@@ -178,6 +179,7 @@ describe('SettingsMenuStore', () => {
 
    it('can save changes', () => {
       const store = new SettingsMenuStore(new Store());
+
       expect(store.canSave()).toBe(false);
 
       store.setVolume(100);

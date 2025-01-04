@@ -17,6 +17,7 @@ export class AAA_InitialScene extends Scene {
       this.sound.pauseOnBlur = false;
 
       this.tilemap = this.make.tilemap();
+
       return this.tilemap;
    }
 }

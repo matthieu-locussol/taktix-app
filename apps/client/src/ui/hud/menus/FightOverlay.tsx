@@ -1,6 +1,7 @@
 import { Backdrop } from '@mui/material';
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../../store';
 import { PvEFightSpeedSelector } from '../components/PvEFightSpeedSelector';
 import { PvEFightTimeline } from '../components/PvEFightTimeline';

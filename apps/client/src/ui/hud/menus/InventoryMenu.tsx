@@ -24,6 +24,7 @@ import { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
+
 import { useStore } from '../../../store';
 import { ITEM_RARITY_COLORS } from '../../../styles/appTheme';
 import { useTranslation } from '../../../types/react-i18next';
@@ -42,30 +43,30 @@ export const InventoryMenu = observer(() => {
          <Draggable handle=".inventory-menu-handle" nodeRef={nodeRef}>
             <StyledDialog
                ref={nodeRef}
+               disableEnforceFocus
                fullScreen
                hideBackdrop
-               disableEnforceFocus
-               onClose={() => inventoryMenuStore.close()}
-               open={inventoryMenuStore.isOpened}
                PaperProps={{
                   sx: (theme) => ({
                      borderRadius: theme.spacing(0.5),
                      transition: 'all 0.3s',
                   }),
                }}
+               open={inventoryMenuStore.isOpened}
+               onClose={() => inventoryMenuStore.close()}
             >
                <StyledDialogTitle className="inventory-menu-handle">
                   {t('inventory')}
                </StyledDialogTitle>
                <IconButton
                   aria-label="close"
-                  onClick={() => inventoryMenuStore.close()}
                   sx={{
                      position: 'absolute',
                      right: 8,
                      top: 12,
                      color: (theme) => theme.palette.text.primary,
                   }}
+                  onClick={() => inventoryMenuStore.close()}
                >
                   <CloseIcon />
                </IconButton>
@@ -74,17 +75,17 @@ export const InventoryMenu = observer(() => {
                      <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)', alignItems: 'end' }}>
                         <Box sx={{ width: 'min(3vw, 4.5vh)', height: 'min(3vw, 4.5vh)' }} />
                         <EquipmentSlot
-                           size="medium"
-                           item={characterStore.equippedItemsMap.helmet}
                            canBeHovered={characterStore.equippedItemsMap.helmet !== null}
+                           item={characterStore.equippedItemsMap.helmet}
+                           size="medium"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.helmet?.id)
                            }
                         />
                         <EquipmentSlot
-                           size="small"
-                           item={characterStore.equippedItemsMap.amulet}
                            canBeHovered={characterStore.equippedItemsMap.amulet !== null}
+                           item={characterStore.equippedItemsMap.amulet}
+                           size="small"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.amulet?.id)
                            }
@@ -94,9 +95,9 @@ export const InventoryMenu = observer(() => {
                         sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)', py: 'min(0.25vw, 0.5vh)' }}
                      >
                         <EquipmentSlot
-                           size="large"
-                           item={characterStore.equippedItemsMap.weapon1}
                            canBeHovered={characterStore.equippedItemsMap.weapon1 !== null}
+                           item={characterStore.equippedItemsMap.weapon1}
+                           size="large"
                            onDoubleClick={() =>
                               characterStore.unequipItem(
                                  characterStore.equippedItemsMap.weapon1?.id,
@@ -104,9 +105,9 @@ export const InventoryMenu = observer(() => {
                            }
                         />
                         <EquipmentSlot
-                           size="large"
-                           item={characterStore.equippedItemsMap.chestplate}
                            canBeHovered={characterStore.equippedItemsMap.chestplate !== null}
+                           item={characterStore.equippedItemsMap.chestplate}
+                           size="large"
                            onDoubleClick={() =>
                               characterStore.unequipItem(
                                  characterStore.equippedItemsMap.chestplate?.id,
@@ -114,9 +115,9 @@ export const InventoryMenu = observer(() => {
                            }
                         />
                         <EquipmentSlot
-                           size="large"
-                           item={characterStore.equippedItemsMap.offhand}
                            canBeHovered={characterStore.equippedItemsMap.offhand !== null}
+                           item={characterStore.equippedItemsMap.offhand}
+                           size="large"
                            onDoubleClick={() =>
                               characterStore.unequipItem(
                                  characterStore.equippedItemsMap.offhand?.id,
@@ -128,25 +129,25 @@ export const InventoryMenu = observer(() => {
                         sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)', pb: 'min(0.25vw, 0.5vh)' }}
                      >
                         <EquipmentSlot
-                           size="small"
-                           item={characterStore.equippedItemsMap.ring1}
                            canBeHovered={characterStore.equippedItemsMap.ring1 !== null}
+                           item={characterStore.equippedItemsMap.ring1}
+                           size="small"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.ring1?.id)
                            }
                         />
                         <EquipmentSlot
-                           size="wide"
-                           item={characterStore.equippedItemsMap.belt}
                            canBeHovered={characterStore.equippedItemsMap.belt !== null}
+                           item={characterStore.equippedItemsMap.belt}
+                           size="wide"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.belt?.id)
                            }
                         />
                         <EquipmentSlot
-                           size="small"
-                           item={characterStore.equippedItemsMap.ring2}
                            canBeHovered={characterStore.equippedItemsMap.ring2 !== null}
+                           item={characterStore.equippedItemsMap.ring2}
+                           size="small"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.ring2?.id)
                            }
@@ -156,18 +157,18 @@ export const InventoryMenu = observer(() => {
                         sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)', pb: 'min(0.25vw, 0.5vh)' }}
                      >
                         <EquipmentSlot
-                           size="medium"
-                           item={characterStore.equippedItemsMap.gloves}
                            canBeHovered={characterStore.equippedItemsMap.gloves !== null}
+                           item={characterStore.equippedItemsMap.gloves}
+                           size="medium"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.gloves?.id)
                            }
                         />
                         <Box sx={{ width: 'min(1vw, 1.5vh)', height: 'min(1vw, 1.5vh)' }} />
                         <EquipmentSlot
-                           size="medium"
-                           item={characterStore.equippedItemsMap.boots}
                            canBeHovered={characterStore.equippedItemsMap.boots !== null}
+                           item={characterStore.equippedItemsMap.boots}
+                           size="medium"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.boots?.id)
                            }
@@ -175,49 +176,49 @@ export const InventoryMenu = observer(() => {
                      </Box>
                      <Box sx={{ display: 'flex', gap: 'min(1vw, 1.5vh)' }}>
                         <EquipmentSlot
-                           size="small"
-                           item={characterStore.equippedItemsMap.relic1}
                            canBeHovered={characterStore.equippedItemsMap.relic1 !== null}
+                           item={characterStore.equippedItemsMap.relic1}
+                           size="small"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.relic1?.id)
                            }
                         />
                         <EquipmentSlot
-                           size="small"
-                           item={characterStore.equippedItemsMap.relic2}
                            canBeHovered={characterStore.equippedItemsMap.relic2 !== null}
+                           item={characterStore.equippedItemsMap.relic2}
+                           size="small"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.relic2?.id)
                            }
                         />
                         <EquipmentSlot
-                           size="small"
-                           item={characterStore.equippedItemsMap.relic3}
                            canBeHovered={characterStore.equippedItemsMap.relic3 !== null}
+                           item={characterStore.equippedItemsMap.relic3}
+                           size="small"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.relic3?.id)
                            }
                         />
                         <EquipmentSlot
-                           size="small"
-                           item={characterStore.equippedItemsMap.relic4}
                            canBeHovered={characterStore.equippedItemsMap.relic4 !== null}
+                           item={characterStore.equippedItemsMap.relic4}
+                           size="small"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.relic4?.id)
                            }
                         />
                         <EquipmentSlot
-                           size="small"
-                           item={characterStore.equippedItemsMap.relic5}
                            canBeHovered={characterStore.equippedItemsMap.relic5 !== null}
+                           item={characterStore.equippedItemsMap.relic5}
+                           size="small"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.relic5?.id)
                            }
                         />
                         <EquipmentSlot
-                           size="small"
-                           item={characterStore.equippedItemsMap.relic6}
                            canBeHovered={characterStore.equippedItemsMap.relic6 !== null}
+                           item={characterStore.equippedItemsMap.relic6}
+                           size="small"
                            onDoubleClick={() =>
                               characterStore.unequipItem(characterStore.equippedItemsMap.relic6?.id)
                            }
@@ -228,19 +229,19 @@ export const InventoryMenu = observer(() => {
                      {inventoryMenuStore.sortedInventoryItems.map((item) => (
                         <Badge
                            key={`${item.id}-badge`}
-                           variant="dot"
                            color={
                               inventoryMenuStore.itemsToRecycle.includes(item.id)
                                  ? 'error'
                                  : undefined
                            }
+                           variant="dot"
                         >
                            <EquipmentSlot
                               key={item.id}
-                              item={item}
-                              equippedItem={inventoryMenuStore.equippedItemsByType[item.type]}
-                              size="small"
                               canBeHovered
+                              equippedItem={inventoryMenuStore.equippedItemsByType[item.type]}
+                              item={item}
+                              size="small"
                               {...(inventoryMenuStore.mode === 'normal' && {
                                  onDoubleClick: () => characterStore.equipItem(item.id),
                               })}
@@ -258,25 +259,24 @@ export const InventoryMenu = observer(() => {
                <DialogActions>
                   <Typography align="center" sx={{ mr: 1 }}>
                      <Trans
-                        i18nKey="creditsValue"
                         components={{ b: <b /> }}
+                        i18nKey="creditsValue"
                         values={{ value: characterStore.money }}
                      />
                   </Typography>
                   •
                   <Typography align="center" sx={{ ml: 1, mr: 'auto' }}>
                      <Trans
-                        i18nKey="gachixValue"
                         components={{ b: <b /> }}
+                        i18nKey="gachixValue"
                         values={{ value: characterStore.gachix }}
                      />
                   </Typography>
                   {inventoryMenuStore.mode === 'recycle' && (
                      <Grow in={inventoryMenuStore.mode === 'recycle'} mountOnEnter={false}>
-                        <Box display="flex" alignItems="center">
+                        <Box alignItems="center" display="flex">
                            <Checkbox
                               checked={inventoryMenuStore.areAllEpicItemsSelectedToRecycle}
-                              onChange={() => inventoryMenuStore.toggleAllEpicItemsToRecycle()}
                               size="small"
                               sx={{
                                  color: (theme) => theme.palette.item.epic,
@@ -284,10 +284,10 @@ export const InventoryMenu = observer(() => {
                                     color: (theme) => theme.palette.item.epic,
                                  },
                               }}
+                              onChange={() => inventoryMenuStore.toggleAllEpicItemsToRecycle()}
                            />
                            <Checkbox
                               checked={inventoryMenuStore.areAllRareItemsSelectedToRecycle}
-                              onChange={() => inventoryMenuStore.toggleAllRareItemsToRecycle()}
                               size="small"
                               sx={{
                                  color: (theme) => theme.palette.item.rare,
@@ -295,10 +295,10 @@ export const InventoryMenu = observer(() => {
                                     color: (theme) => theme.palette.item.rare,
                                  },
                               }}
+                              onChange={() => inventoryMenuStore.toggleAllRareItemsToRecycle()}
                            />
                            <Checkbox
                               checked={inventoryMenuStore.areAllUncommonItemsSelectedToRecycle}
-                              onChange={() => inventoryMenuStore.toggleAllUncommonItemsToRecycle()}
                               size="small"
                               sx={{
                                  color: (theme) => theme.palette.item.uncommon,
@@ -306,10 +306,10 @@ export const InventoryMenu = observer(() => {
                                     color: (theme) => theme.palette.item.uncommon,
                                  },
                               }}
+                              onChange={() => inventoryMenuStore.toggleAllUncommonItemsToRecycle()}
                            />
                            <Checkbox
                               checked={inventoryMenuStore.areAllCommonItemsSelectedToRecycle}
-                              onChange={() => inventoryMenuStore.toggleAllCommonItemsToRecycle()}
                               size="small"
                               sx={{
                                  mr: 1.5,
@@ -318,23 +318,22 @@ export const InventoryMenu = observer(() => {
                                     color: (theme) => theme.palette.item.common,
                                  },
                               }}
+                              onChange={() => inventoryMenuStore.toggleAllCommonItemsToRecycle()}
                            />
                            <Button
+                              disabled={inventoryMenuStore.itemsToRecycle.length === 0}
                               variant="contained"
                               onClick={() => inventoryMenuStore.openRecycleDialog()}
-                              disabled={inventoryMenuStore.itemsToRecycle.length === 0}
                            >
                               {t('recycle')}
                            </Button>
                         </Box>
                      </Grow>
                   )}
-                  <Tooltip title={t('recycleMode')} disableInteractive>
+                  <Tooltip disableInteractive title={t('recycleMode')}>
                      <ToggleButton
-                        size="small"
-                        value="check"
                         selected={inventoryMenuStore.mode === 'recycle'}
-                        onChange={() => inventoryMenuStore.toggleMode('recycle')}
+                        size="small"
                         sx={{
                            transition: 'all 0.3s',
                            border: (theme) =>
@@ -342,6 +341,8 @@ export const InventoryMenu = observer(() => {
                                  ? `1px solid ${theme.palette.link.hover}`
                                  : '1px solid inherit',
                         }}
+                        value="check"
+                        onChange={() => inventoryMenuStore.toggleMode('recycle')}
                      >
                         <RecycleIcon
                            fontSize="small"
@@ -355,25 +356,25 @@ export const InventoryMenu = observer(() => {
                         />
                      </ToggleButton>
                   </Tooltip>
-                  <Tooltip title={t('sortItems')} disableInteractive>
+                  <Tooltip disableInteractive title={t('sortItems')}>
                      <ToggleButton
-                        size="small"
-                        value="check"
-                        id="items-sort-selector"
                         aria-controls={
                            inventoryMenuStore.isSortMenuOpened ? 'items-sort-selector' : undefined
                         }
-                        aria-haspopup="true"
                         aria-expanded={inventoryMenuStore.isSortMenuOpened ? 'true' : undefined}
-                        onClick={(e) => {
-                           setSortByAnchor(e.currentTarget);
-                           inventoryMenuStore.openSortMenu();
-                        }}
+                        aria-haspopup="true"
+                        id="items-sort-selector"
+                        size="small"
                         sx={{
                            borderColor: (theme) =>
                               inventoryMenuStore.isSortMenuOpened
                                  ? theme.palette.link.hover
                                  : undefined,
+                        }}
+                        value="check"
+                        onClick={(e) => {
+                           setSortByAnchor(e.currentTarget);
+                           inventoryMenuStore.openSortMenu();
                         }}
                      >
                         <SortIcon
@@ -389,9 +390,9 @@ export const InventoryMenu = observer(() => {
                      </ToggleButton>
                   </Tooltip>
                   <Button
+                     sx={{ my: 0.25 }}
                      variant="contained"
                      onClick={() => inventoryMenuStore.close()}
-                     sx={{ my: 0.25 }}
                   >
                      {t('close')}
                   </Button>
@@ -405,8 +406,8 @@ export const InventoryMenu = observer(() => {
             </DialogContent>
             <DialogActions>
                <Button
-                  variant="text"
                   color="chalk"
+                  variant="text"
                   onClick={() => inventoryMenuStore.closeRecycleDialog()}
                >
                   {t('cancel')}
@@ -429,8 +430,8 @@ export const InventoryMenu = observer(() => {
             </DialogContent>
             <DialogActions>
                <Button
-                  variant="contained"
                   color="primary"
+                  variant="contained"
                   onClick={() => inventoryMenuStore.closeGachixGainedDialog()}
                >
                   {t('close')}
@@ -439,11 +440,11 @@ export const InventoryMenu = observer(() => {
          </Dialog>
          <ItemsSortSelector
             anchorEl={sortByAnchor}
-            open={inventoryMenuStore.isSortMenuOpened}
             handleClose={() => {
                setSortByAnchor(null);
                inventoryMenuStore.closeSortMenu();
             }}
+            open={inventoryMenuStore.isSortMenuOpened}
          />
       </>
    );

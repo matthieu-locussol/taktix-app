@@ -9,25 +9,25 @@ export const PlusBadge = () => {
             <circle
                cx="128"
                cy="128"
+               fill={theme.palette.badges.background}
+               fillOpacity="1"
                r="128"
-               fill={theme.palette.badges.background}
-               fillOpacity="1"
-            ></circle>
+            />
             <circle
-               stroke={theme.palette.badges.color}
-               strokeOpacity="1"
-               fill={theme.palette.badges.background}
-               fillOpacity="1"
-               strokeWidth="18"
                cx="128"
                cy="128"
+               fill={theme.palette.badges.background}
+               fillOpacity="1"
                r="101"
-            ></circle>
+               stroke={theme.palette.badges.color}
+               strokeOpacity="1"
+               strokeWidth="18"
+            />
             <path
+               d="M119 64v55H64v18h55v55h18v-55h55v-18h-55V64h-18z"
                fill={theme.palette.badges.color}
                fillOpacity="1"
-               d="M119 64v55H64v18h55v55h18v-55h55v-18h-55V64h-18z"
-            ></path>
+            />
          </g>
       </g>
    );

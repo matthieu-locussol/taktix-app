@@ -12,8 +12,8 @@ export const GameBackground = () => (
          background: 'radial-gradient(ellipse at bottom,#1f2937 0,#111827 100%)',
       }}
    >
-      <div id="bg-stars-sm" className="animate-stars-sm"></div>
-      <div id="bg-stars-md" className="animate-stars-md"></div>
-      <div id="bg-stars-lg" className="animate-stars-lg"></div>
+      <div className="animate-stars-sm" id="bg-stars-sm" />
+      <div className="animate-stars-md" id="bg-stars-md" />
+      <div className="animate-stars-lg" id="bg-stars-lg" />
    </Box>
 );

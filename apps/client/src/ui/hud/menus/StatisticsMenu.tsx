@@ -17,6 +17,7 @@ import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
+
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 import { StatisticIcon } from '../../components/StatisticIcon';
@@ -33,31 +34,31 @@ export const StatisticsMenu = observer(() => {
       <Draggable handle=".statistics-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
             ref={nodeRef}
+            disableEnforceFocus
             fullScreen
             hideBackdrop
-            disableEnforceFocus
-            onClose={() => statisticsMenuStore.close()}
-            open={statisticsMenuStore.isOpened}
             PaperProps={{
                sx: (theme) => ({
                   borderRadius: theme.spacing(0.5),
                   transition: 'all 0.3s',
                }),
             }}
+            open={statisticsMenuStore.isOpened}
+            onClose={() => statisticsMenuStore.close()}
          >
             <StyledDialogTitle className="statistics-menu-handle">
                {t('statistics')}
                <Button
-                  variant="contained"
                   size="small"
+                  variant="contained"
                   onClick={() => statisticsMenuStore.toggleAdvanced()}
                >
                   <Typography
-                     fontWeight="bold"
-                     variant="overline"
-                     lineHeight={1.5}
-                     display="flex"
                      alignItems="center"
+                     display="flex"
+                     fontWeight="bold"
+                     lineHeight={1.5}
+                     variant="overline"
                   >
                      {t('advanced')}
                      {statisticsMenuStore.showAdvanced ? (
@@ -70,13 +71,13 @@ export const StatisticsMenu = observer(() => {
             </StyledDialogTitle>
             <IconButton
                aria-label="close"
-               onClick={() => statisticsMenuStore.close()}
                sx={{
                   position: 'absolute',
                   right: 8,
                   top: 12,
                   color: (theme) => theme.palette.text.primary,
                }}
+               onClick={() => statisticsMenuStore.close()}
             >
                <CloseIcon />
             </IconButton>
@@ -86,19 +87,19 @@ export const StatisticsMenu = observer(() => {
                      <Typography
                         align="left"
                         color="text.primary"
-                        variant="body2"
                         fontSize="1vw"
-                        lineHeight="2.5vh"
                         fontWeight="bold"
+                        lineHeight="2.5vh"
+                        variant="body2"
                      >
                         {characterStore.name}
                      </Typography>
                      <Typography
                         align="left"
                         color="text.secondary"
-                        variant="body2"
                         fontSize="1vw"
                         lineHeight="2.5vh"
+                        variant="body2"
                      >
                         {t(characterStore.profession)} -{' '}
                         {t('level', { level: characterStore.level })}
@@ -112,16 +113,16 @@ export const StatisticsMenu = observer(() => {
                   .map((statistic) => (
                      <Statistic
                         key={statistic.label}
-                        icon={<StatisticIcon id={statistic.icon} sx={{ mr: 2 }} />}
-                        value={statistic.value}
-                        label={statistic.label}
-                        onIncrease={statistic.onIncrease}
-                        onDecrease={statistic.onDecrease}
-                        onIncrease10x={statistic.onIncrease10x}
-                        onDecrease10x={statistic.onDecrease10x}
-                        canIncrease={statistic.canIncrease}
                         canDecrease={statistic.canDecrease}
+                        canIncrease={statistic.canIncrease}
+                        icon={<StatisticIcon id={statistic.icon} sx={{ mr: 2 }} />}
+                        label={statistic.label}
                         size={statistic.advanced ? 'small' : 'medium'}
+                        value={statistic.value}
+                        onDecrease={statistic.onDecrease}
+                        onDecrease10x={statistic.onDecrease10x}
+                        onIncrease={statistic.onIncrease}
+                        onIncrease10x={statistic.onIncrease10x}
                      />
                   ))}
                <Collapse in={statisticsMenuStore.showAdvanced}>
@@ -133,14 +134,14 @@ export const StatisticsMenu = observer(() => {
                      .map((statistic) => (
                         <Statistic
                            key={statistic.label}
-                           icon={<StatisticIcon id={statistic.icon} sx={{ mr: 2 }} />}
-                           value={statistic.value}
-                           label={statistic.label}
-                           onIncrease={statistic.onIncrease}
-                           onDecrease={statistic.onDecrease}
-                           canIncrease={statistic.canIncrease}
                            canDecrease={statistic.canDecrease}
+                           canIncrease={statistic.canIncrease}
+                           icon={<StatisticIcon id={statistic.icon} sx={{ mr: 2 }} />}
+                           label={statistic.label}
                            size={statistic.advanced ? 'small' : 'medium'}
+                           value={statistic.value}
+                           onDecrease={statistic.onDecrease}
+                           onIncrease={statistic.onIncrease}
                         />
                      ))}
                </Collapse>
@@ -148,15 +149,15 @@ export const StatisticsMenu = observer(() => {
             <DialogActions>
                <Typography align="center" sx={{ mr: 'auto' }}>
                   <Trans
+                     components={{ b: <b /> }}
                      i18nKey="statisticPointsAvailable"
                      values={{ count: statisticsMenuStore.statisticsPoints }}
-                     components={{ b: <b /> }}
                   />
                </Typography>
                <Button
                   color="chalk"
-                  onClick={() => statisticsMenuStore.close()}
                   sx={{ ml: 'auto' }}
+                  onClick={() => statisticsMenuStore.close()}
                >
                   {t('cancel')}
                </Button>

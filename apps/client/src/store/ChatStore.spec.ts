@@ -1,5 +1,6 @@
 import { Channel } from 'shared/src/types/Channel';
 import { describe, expect, it, vi } from 'vitest';
+
 import { ChatStore } from './ChatStore';
 import { Store } from './Store';
 
@@ -26,12 +27,14 @@ describe('ChatStore', () => {
 
    it('should set the input', () => {
       const store = new ChatStore(new Store());
+
       store.setInput('John');
       expect(store.input).toBe('John');
    });
 
    it('should add a new message', () => {
       const store = new ChatStore(new Store());
+
       store.addMessage({ author: 'player1', channel: Channel.GENERAL, content: 'content' });
       expect(store.messages).toHaveLength(1);
    });

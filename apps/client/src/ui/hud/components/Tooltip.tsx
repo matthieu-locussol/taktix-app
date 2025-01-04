@@ -1,4 +1,6 @@
-import { TooltipProps, darken } from '@mui/material';
+import type { TooltipProps } from '@mui/material';
+
+import { darken } from '@mui/material';
 import MuiTooltip from '@mui/material/Tooltip';
 
 export const Tooltip = (props: TooltipProps) => (

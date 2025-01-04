@@ -1,15 +1,18 @@
 import type { Position } from 'grid-engine';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+import type { Item } from 'shared/src/types/Item';
+import type { Room } from 'shared/src/types/Room';
+import type { Statistics } from 'shared/src/types/Statistic';
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
-import { CharacterSprite, charactersSprites } from 'shared/src/data/charactersSprites';
+import { charactersSprites } from 'shared/src/data/charactersSprites';
 import { LEVEL_TO_EXPERIENCE } from 'shared/src/data/levels';
-import { Item, ItemPosition } from 'shared/src/types/Item';
+import { ItemPosition } from 'shared/src/types/Item';
 import { ProfessionType } from 'shared/src/types/Profession';
-import { Room } from 'shared/src/types/Room';
-import { Statistics } from 'shared/src/types/Statistic';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
-import { Store } from './Store';
 
 export class CharacterStore {
    private _store: Store;
@@ -206,6 +209,7 @@ export class CharacterStore {
       this._store.colyseusStore.equipItem(id);
 
       const item = this.items.find((item) => item.id === id);
+
       if (item !== undefined) {
          this._replaceItem(item);
       }
@@ -219,6 +223,7 @@ export class CharacterStore {
       this._store.colyseusStore.unequipItem(id);
 
       const item = this.items.find((item) => item.id === id);
+
       if (item !== undefined) {
          this.items = [
             {

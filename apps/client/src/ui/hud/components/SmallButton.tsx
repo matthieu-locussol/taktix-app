@@ -1,4 +1,6 @@
-import { ButtonProps, darken, styled } from '@mui/material';
+import type { ButtonProps } from '@mui/material';
+
+import { darken, styled } from '@mui/material';
 import Button from '@mui/material/Button';
 
 export const SmallButton = (props: ButtonProps) => <StyledButton size="small" {...props} />;

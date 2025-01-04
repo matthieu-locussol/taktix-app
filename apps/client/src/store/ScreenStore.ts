@@ -1,5 +1,6 @@
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
-import { Store } from './Store';
 
 export type Screen = 'login' | 'register' | 'characterSelection' | 'characterCreation';
 

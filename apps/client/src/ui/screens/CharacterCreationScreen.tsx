@@ -7,6 +7,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
 import { CharacterSelector } from '../hud/components/CharacterSelector';
@@ -28,9 +29,8 @@ export const CharacterCreationScreen = observer(() => {
 
    return (
       <Box
-         component="form"
-         onSubmit={onSubmit}
          noValidate
+         component="form"
          sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -42,14 +42,15 @@ export const CharacterCreationScreen = observer(() => {
                zIndex: 1,
             },
          }}
+         onSubmit={onSubmit}
       >
-         <Card variant="outlined" sx={{ display: 'flex' }}>
+         <Card sx={{ display: 'flex' }} variant="outlined">
             <CardContent>
-               <Typography variant="h1" align="center" gutterBottom sx={{ mb: 2 }}>
+               <Typography gutterBottom align="center" sx={{ mb: 2 }} variant="h1">
                   {t(screenStore.screen)}
                </Typography>
                {characterCreationStore.errorMessage && (
-                  <Typography variant="body1" align="center" color="error" sx={{ mb: 2 }}>
+                  <Typography align="center" color="error" sx={{ mb: 2 }} variant="body1">
                      {t(
                         characterCreationStore.errorMessage,
                         characterCreationStore.errorMessageOptions,
@@ -59,28 +60,28 @@ export const CharacterCreationScreen = observer(() => {
                <Box display="grid" gap={2}>
                   <CharacterSelector />
                   <TextField
-                     type="text"
                      placeholder={t('characterName')}
+                     type="text"
                      value={characterCreationStore.name}
                      onChange={(e) => characterCreationStore.setName(e.target.value)}
                   />
                </Box>
                <Button
+                  color="primary"
                   disabled={!characterCreationStore.canSubmit}
+                  sx={{ mt: 2 }}
                   type="submit"
                   variant="contained"
-                  color="primary"
-                  sx={{ mt: 2 }}
                >
                   {characterCreationStore.loading ? (
-                     <CircularProgress size={24} color="inherit" />
+                     <CircularProgress color="inherit" size={24} />
                   ) : (
                      t('create')
                   )}
                </Button>
                <Link
-                  onClick={() => screenStore.setScreen('characterSelection')}
                   sx={{ mt: 2, mr: 'auto' }}
+                  onClick={() => screenStore.setScreen('characterSelection')}
                >
                   {t('back')}
                </Link>

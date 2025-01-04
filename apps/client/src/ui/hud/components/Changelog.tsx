@@ -3,6 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
+
 import { useStore } from '../../../store';
 
 const NEWS_HEIGHT = 240;
@@ -27,7 +28,6 @@ export const Changelog = observer(() => {
                {newsStore.changelogs.map(({ id, date, text }) => (
                   <Typography
                      key={`news-${id}`}
-                     variant="body1"
                      color="textSecondary"
                      dangerouslySetInnerHTML={{
                         __html: `<b>${TimeMgt.formatDatetime(
@@ -35,6 +35,7 @@ export const Changelog = observer(() => {
                         )}</b><br />${text}<br />`,
                      }}
                      mb={2}
+                     variant="body1"
                   />
                ))}
             </>

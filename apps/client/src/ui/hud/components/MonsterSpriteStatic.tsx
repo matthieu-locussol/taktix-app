@@ -1,5 +1,8 @@
-import { Box, BoxProps, styled } from '@mui/material';
-import { MonsterSprite, monstersSpritesData } from 'shared/src/data/monstersSprites';
+import type { BoxProps } from '@mui/material';
+import type { MonsterSprite } from 'shared/src/data/monstersSprites';
+
+import { Box, styled } from '@mui/material';
+import { monstersSpritesData } from 'shared/src/data/monstersSprites';
 
 interface MonsterSpriteStaticProps extends BoxProps, StyleProps {}
 
@@ -8,11 +11,11 @@ export const MonsterSpriteStatic = ({ sprite, ...rest }: MonsterSpriteStaticProp
 
    return (
       <StyledBox
-         sprite={sprite}
          framesCount={frames.length}
-         framesWidth={frameWidth}
          framesHeight={frameHeight}
+         framesWidth={frameWidth}
          scale={scale}
+         sprite={sprite}
          {...rest}
       />
    );

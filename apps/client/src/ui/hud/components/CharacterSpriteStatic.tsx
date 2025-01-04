@@ -1,5 +1,8 @@
-import { Box, BoxProps, styled } from '@mui/material';
-import { CharacterSprite } from 'shared/src/data/charactersSprites';
+import type { BoxProps } from '@mui/material';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+
+import { Box, styled } from '@mui/material';
+
 import { CHARACTER_HEIGHT, CHARACTER_WIDTH } from '../../../game/Scene';
 
 interface CharacterSpriteStaticProps extends BoxProps, StyleProps {}

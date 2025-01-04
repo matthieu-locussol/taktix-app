@@ -1,3 +1,5 @@
+import type { TranslationKey } from 'shared/src/data/translations';
+
 import LosersIcon from '@mui/icons-material/BlockRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
 import WinnersIcon from '@mui/icons-material/EmojiEventsRounded';
@@ -19,8 +21,8 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
-import { TranslationKey } from 'shared/src/data/translations';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
+
 import { store, useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 import { EquipmentSlot } from '../components/EquipmentSlot';
@@ -49,16 +51,16 @@ export const FightResultsMenu = observer(() => {
                   {loots.map((loot, lootIdx) => (
                      <EquipmentSlot
                         key={`loot-${idx}-${lootIdx}`}
-                        size="tiny"
-                        item={loot}
                         canBeHovered
+                        item={loot}
+                        size="tiny"
                      />
                   ))}
                </Box>
             );
 
             return (
-               <TableRow hover tabIndex={-1} key={`fight-results-value-${id}-${name}`}>
+               <TableRow key={`fight-results-value-${id}-${name}`} hover tabIndex={-1}>
                   <StyledTableCell>{name}</StyledTableCell>
                   <StyledTableCell>{levelCell}</StyledTableCell>
                   <StyledTableCell>+{gainedExperience} XP</StyledTableCell>
@@ -75,7 +77,7 @@ export const FightResultsMenu = observer(() => {
    const EnemiesComponent = () => (
       <>
          {pveFightStore.fightResults?.monsters.map(({ id, name, level }) => (
-            <TableRow hover tabIndex={-1} key={`fight-results-value-${id}-${name}`}>
+            <TableRow key={`fight-results-value-${id}-${name}`} hover tabIndex={-1}>
                <StyledTableCell>{t(name as TranslationKey)}</StyledTableCell>
                <StyledTableCell>{level}</StyledTableCell>
                <StyledTableCell />
@@ -90,8 +92,6 @@ export const FightResultsMenu = observer(() => {
       <Draggable handle=".fight-results-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
             ref={nodeRef}
-            onClose={() => pveFightStore.closeFightResults()}
-            open={pveFightStore.isFightResultsMenuOpened}
             fullScreen
             PaperProps={{
                sx: (theme) => ({
@@ -99,6 +99,8 @@ export const FightResultsMenu = observer(() => {
                   transition: 'all 0.3s',
                }),
             }}
+            open={pveFightStore.isFightResultsMenuOpened}
+            onClose={() => pveFightStore.closeFightResults()}
          >
             <StyledDialogTitle className="fight-results-menu-handle">
                {store.pveFightStore.fightResults?.won ? t('victory') : t('defeat')} -{' '}
@@ -106,13 +108,13 @@ export const FightResultsMenu = observer(() => {
             </StyledDialogTitle>
             <IconButton
                aria-label="close"
-               onClick={() => pveFightStore.closeFightResults()}
                sx={{
                   position: 'absolute',
                   right: 8,
                   top: 12,
                   color: (theme) => theme.palette.text.primary,
                }}
+               onClick={() => pveFightStore.closeFightResults()}
             >
                <CloseIcon />
             </IconButton>
@@ -144,7 +146,7 @@ export const FightResultsMenu = observer(() => {
                            >
                               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                  <WinnersIcon fontSize="small" sx={{ mr: 2 }} />
-                                 <Typography variant="overline" fontWeight="bold" lineHeight={1}>
+                                 <Typography fontWeight="bold" lineHeight={1} variant="overline">
                                     {t('winners')}
                                  </Typography>
                               </Box>
@@ -164,7 +166,7 @@ export const FightResultsMenu = observer(() => {
                            >
                               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                  <LosersIcon fontSize="small" sx={{ mr: 2 }} />
-                                 <Typography variant="overline" fontWeight="bold" lineHeight={1}>
+                                 <Typography fontWeight="bold" lineHeight={1} variant="overline">
                                     {t('losers')}
                                  </Typography>
                               </Box>

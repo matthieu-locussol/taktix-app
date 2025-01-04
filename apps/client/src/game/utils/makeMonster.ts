@@ -1,6 +1,8 @@
-import { MonsterSprite } from 'shared/src/data/monstersSprites';
+import type { MonsterSprite } from 'shared/src/data/monstersSprites';
+
 import { EntityType } from '../../utils/phaser';
 import { SCALE_FACTOR, type Scene } from '../Scene';
+
 import { registerSpriteEvents } from './registerSpriteEvents';
 
 interface MakeMonsterProps {
@@ -17,6 +19,7 @@ export const makeMonster = ({ spritesheet, id, name, scene, fightId }: MakeMonst
    }
 
    const monsterSprite = scene.add.sprite(0, 0, spritesheet);
+
    monsterSprite.setPipeline('Light2D');
    monsterSprite.scale = SCALE_FACTOR;
    monsterSprite.setData('id', id);

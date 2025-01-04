@@ -1,5 +1,6 @@
 import { charactersSprites } from 'shared/src/data/charactersSprites';
 import { describe, expect, it } from 'vitest';
+
 import { CharacterSelectionStore } from './CharacterSelectionStore';
 
 describe('CharacterSelectionStore', () => {
@@ -20,36 +21,42 @@ describe('CharacterSelectionStore', () => {
 
    it('should set the password', () => {
       const store = new CharacterSelectionStore();
+
       store.setPassword('password');
       expect(store.password).toBe('password');
    });
 
    it('should set the error message', () => {
       const store = new CharacterSelectionStore();
+
       store.setErrorMessage('invalidPassword');
       expect(store.errorMessage).toBe('invalidPassword');
    });
 
    it('should set the success message', () => {
       const store = new CharacterSelectionStore();
+
       store.setSuccessMessage('accountCreated');
       expect(store.successMessage).toBe('accountCreated');
    });
 
    it('should set the loading', () => {
       const store = new CharacterSelectionStore();
+
       store.setLoading(true);
       expect(store.loading).toBe(true);
    });
 
    it('should set the loading delete character', () => {
       const store = new CharacterSelectionStore();
+
       store.setLoadingDeleteCharacter(true);
       expect(store.loadingDeleteCharacter).toBe(true);
    });
 
    it('should set the characters', () => {
       const store = new CharacterSelectionStore();
+
       store.setCharacters([
          {
             name: 'John',
@@ -68,18 +75,21 @@ describe('CharacterSelectionStore', () => {
 
    it('should set the selected character', () => {
       const store = new CharacterSelectionStore();
+
       store.setSelectedCharacter('John');
       expect(store.selectedCharacter).toBe('John');
    });
 
    it('should set the character to delete', () => {
       const store = new CharacterSelectionStore();
+
       store.setCharacterToDelete('John');
       expect(store.characterToDelete).toBe('John');
    });
 
    it('should check if the character is selected', () => {
       const store = new CharacterSelectionStore();
+
       store.setSelectedCharacter('John');
       expect(store.isSelectedCharacter('John')).toBe(true);
       expect(store.isSelectedCharacter('Jane')).toBe(false);
@@ -87,6 +97,7 @@ describe('CharacterSelectionStore', () => {
 
    it('should open the delete character dialog', () => {
       const store = new CharacterSelectionStore();
+
       store.openDeleteCharacterDialog('Jane');
       expect(store.openDeleteDialog).toBe(true);
       expect(store.characterToDelete).toBe('Jane');
@@ -94,6 +105,7 @@ describe('CharacterSelectionStore', () => {
 
    it('should close the delete character dialog', () => {
       const store = new CharacterSelectionStore();
+
       store.closeDeleteCharacterDialog();
       expect(store.openDeleteDialog).toBe(false);
    });

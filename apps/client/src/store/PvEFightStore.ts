@@ -1,15 +1,19 @@
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+import type { MonsterSprite } from 'shared/src/data/monstersSprites';
+import type { AnimationFile } from 'shared/src/types/Animation';
+import type { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight';
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
 import { STATISTICS_POINTS_PER_LEVEL, TALENTS_POINTS_PER_LEVEL } from 'shared/src/config';
 import { weaponsAnimations } from 'shared/src/data/animations';
-import { CharacterSprite, charactersSprites } from 'shared/src/data/charactersSprites';
+import { charactersSprites } from 'shared/src/data/charactersSprites';
 import { isMonsterName, monsters } from 'shared/src/data/monsters';
-import { MonsterSprite, monstersSprites } from 'shared/src/data/monstersSprites';
-import { ANIMATION_TO_FILE, Animation, AnimationFile } from 'shared/src/types/Animation';
-import { PvEFightResults, PvEFighterSimplified } from 'shared/src/types/PvEFight';
+import { monstersSprites } from 'shared/src/data/monstersSprites';
+import { ANIMATION_TO_FILE, Animation } from 'shared/src/types/Animation';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
-import { Store } from './Store';
 
 type PvEFightMode = 'fight' | 'spectate';
 
@@ -66,6 +70,7 @@ export class PvEFightStore {
       const allyInfosIdx = this.fightResults.allies.findIndex(
          ({ name }) => name === this._store.characterStore.name,
       );
+
       _assertTrue(allyInfosIdx !== -1, 'Ally infos should be defined');
 
       const allyInfos = this.fightResults.allies[allyInfosIdx];
@@ -81,6 +86,7 @@ export class PvEFightStore {
       }
 
       const moneyEarned = this.alliesMoney[this._store.characterStore.name] ?? 0;
+
       this._store.characterStore.setMoney(this._store.characterStore.money + moneyEarned);
    }
 
@@ -144,20 +150,24 @@ export class PvEFightStore {
       const names = this.fightResults.turns[0].fighters.map((fighter) => {
          if (fighter.type === 'ally') {
             const ally = this.fightResults.allies.find((ally) => ally.id === fighter.id);
+
             return ally?.name ?? 'Unknown';
          }
 
          const monster = this.fightResults.monsters.find((monster) => monster.id === fighter.id);
+
          return monster?.name ?? 'Unknown';
       });
 
       const spritesheets = this.fightResults.turns[0].fighters.map((fighter) => {
          if (fighter.type === 'ally') {
             const ally = this.fightResults.allies.find((ally) => ally.id === fighter.id);
+
             return ally?.spritesheet ?? charactersSprites[0];
          }
 
          const monster = this.fightResults.monsters.find((monster) => monster.id === fighter.id);
+
          return monster?.spritesheet ?? monstersSprites[0];
       });
 
@@ -170,6 +180,7 @@ export class PvEFightStore {
 
    public get fightResults(): PvEFightResults {
       _assert(this._fightResults, 'fightResults should be defined');
+
       return this._fightResults;
    }
 

@@ -1,5 +1,6 @@
+import type { TranslationKey } from 'shared/src/data/translations';
+
 import { makeAutoObservable } from 'mobx';
-import { TranslationKey } from 'shared/src/data/translations';
 
 export class RegisterStore {
    public email: string = '';

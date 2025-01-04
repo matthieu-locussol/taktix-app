@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { ScreenStore } from './ScreenStore';
 import { Store } from './Store';
 
@@ -8,8 +9,10 @@ const mocks = vi.hoisted(() => ({
 
 vi.mock('./Store', () => {
    const MockedStore = vi.fn();
+
    MockedStore.prototype.discordStore = vi.fn();
    MockedStore.prototype.discordStore.updateDiscordRichPresence = mocks.updateDiscordRichPresence;
+
    return { Store: MockedStore };
 });
 
@@ -23,12 +26,14 @@ describe('ScreenStore', () => {
 
    it('should set screen', () => {
       const store = new ScreenStore(new Store());
+
       store.setScreen('register');
       expect(store.screen).toEqual('register');
    });
 
    it('should set loggedIn', () => {
       const store = new ScreenStore(new Store());
+
       store.setLoggedIn(true);
       expect(store.loggedIn).toEqual(true);
    });

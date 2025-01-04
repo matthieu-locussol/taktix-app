@@ -1,6 +1,9 @@
+import type { Scene } from '../Scene';
+
 import { _assertTrue } from 'shared/src/utils/_assert';
 import { z } from 'zod';
-import { SCALE_FACTOR, Scene } from '../Scene';
+
+import { SCALE_FACTOR } from '../Scene';
 
 const zLightObject = z.object({
    x: z.number(),
@@ -36,6 +39,7 @@ export const makeLight = (scene: Scene, object: Phaser.Types.Tilemaps.TiledObjec
          {},
       ),
    };
+
    _assertTrue(isLightObject(rawObject), JSON.stringify(rawObject));
 
    const lightObject: LightObject = rawObject;

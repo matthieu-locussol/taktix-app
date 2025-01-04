@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import { Plugins } from 'phaser';
 import { _assert } from 'shared/src/utils/_assert';
 
 export interface AnimationTileDataFrame {
@@ -23,7 +23,7 @@ export interface AnimatedTile {
    activeLayer: boolean[];
 }
 
-export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
+export class AnimatedTiles extends Plugins.ScenePlugin {
    animatedTiles: AnimatedTile[];
 
    rate: number;
@@ -55,6 +55,7 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
    boot() {
       if (this.systems !== null) {
          const eventEmitter = this.systems.events;
+
          eventEmitter.on('postupdate', this.postUpdate, this);
          eventEmitter.on('shutdown', this.shutdown, this);
          eventEmitter.on('destroy', this.destroy, this);
@@ -123,12 +124,10 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
    }
 
    resume(layerIndex: number | null = null) {
-      const scope = this;
-
       if (layerIndex === null) {
-         scope.active = true;
+         this.active = true;
       } else {
-         scope.activeLayer[layerIndex] = true;
+         this.activeLayer[layerIndex] = true;
       }
    }
 
@@ -154,6 +153,7 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
 
       const globalElapsedTime =
          delta * this.rate * (this.followTimeScale ? this.scene.time.timeScale : 1);
+
       this.animatedTiles.forEach((mapAnimData) => {
          if (!mapAnimData.active) {
             return;
@@ -173,6 +173,7 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
                }
 
                let newIndex = currentIndex + 1;
+
                if (newIndex > animatedTile.frames.length - 1) {
                   newIndex = 0;
                }
@@ -236,14 +237,16 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
    getAnimatedTiles(map: Phaser.Tilemaps.Tilemap) {
       // this.animatedTiles is an array of objects with information on how to animate and which tiles.
       const animatedTiles: AnimatedTileData[] = [];
+
       // loop through all tilesets
       map.tilesets.forEach(
          // Go through the data stored on each tile (not tile on the tilemap but tile in the tileset)
          (tileset) => {
             const { tileData } = tileset;
+
             Object.keys(tileData).forEach((indexStr) => {
                const index = parseInt(indexStr, 10);
-               const tileDataObject = (tileData as Record<number, Object>)[index];
+               const tileDataObject = (tileData as Record<number, object>)[index];
 
                if (Object.prototype.hasOwnProperty.call(tileDataObject, 'animation')) {
                   const animatedTileData: AnimatedTileData = {
@@ -261,6 +264,7 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
                            duration: frameData.duration,
                            tileid: frameData.tileid + tileset.firstgid,
                         };
+
                         animatedTileData.frames.push(frame);
                      });
                   }
@@ -274,6 +278,7 @@ export class AnimatedTiles extends Phaser.Plugins.ScenePlugin {
                      if (layer.tilemapLayer && layer.tilemapLayer.type) {
                         if (layer.tilemapLayer.type === 'StaticTilemapLayer') {
                            animatedTileData.tiles.push([]);
+
                            return;
                         }
                      }

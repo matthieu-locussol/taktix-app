@@ -1,7 +1,7 @@
-import { NPC, NPCInformations } from 'shared/src/data/npcs';
-import { DialogItem } from '../store/DialogMenuStore';
-import { Store } from '../store/Store';
-import { TFunctionWrapper } from '../types/react-i18next';
+import type { NPC, NPCInformations } from 'shared/src/data/npcs';
+import type { DialogItem } from '../store/DialogMenuStore';
+import type { Store } from '../store/Store';
+import type { TFunctionWrapper } from '../types/react-i18next';
 
 export const npcsDialogs: Record<
    NPC,

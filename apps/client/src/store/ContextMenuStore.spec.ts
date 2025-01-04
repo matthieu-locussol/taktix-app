@@ -1,6 +1,9 @@
+import type { InteractiveObjectPhaser } from '../game/Scene';
+
 import { describe, expect, it, vi } from 'vitest';
-import { InteractiveObjectPhaser } from '../game/Scene';
+
 import { EntityType } from '../utils/phaser';
+
 import { ContextMenuStore } from './ContextMenuStore';
 import { Store } from './Store';
 

@@ -1,46 +1,48 @@
-import {
-   LinearProgress,
-   TooltipProps,
-   Typography,
-   linearProgressClasses,
-   styled,
-} from '@mui/material';
+import type { TooltipProps } from '@mui/material';
+
+import { LinearProgress, Typography, linearProgressClasses, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { forwardRef } from 'react';
+
 import { useStore } from '../../../store';
 import { StatisticIcon } from '../../components/StatisticIcon';
+
 import { Tooltip } from './Tooltip';
 
 interface HealthBarProps {
    placement?: TooltipProps['placement'];
 }
 
-export const HealthBar = observer<HealthBarProps, HTMLDivElement>(
-   forwardRef(({ placement = 'top-end', ...rest }, ref) => {
+const InnerHealthBar = forwardRef<HTMLDivElement, HealthBarProps>(
+   ({ placement = 'top-end', ...rest }, ref) => {
       const { characterStore } = useStore();
 
       return (
          <Tooltip
             disableInteractive
+            placement={placement}
             title={
-               <Typography display="flex" alignItems="center">
+               <Typography alignItems="center" display="flex">
                   {characterStore.currentHealth} / {characterStore.maxHealth}
-                  <StatisticIcon id="vitality_+f" fontSize="small" sx={{ mx: 0.5 }} /> (
+                  <StatisticIcon fontSize="small" id="vitality_+f" sx={{ mx: 0.5 }} /> (
                   {characterStore.healthPercentage.toFixed(1)}%)
                </Typography>
             }
-            placement={placement}
          >
             <StyledProgressBar
                {...rest}
                ref={ref}
-               variant="determinate"
                value={characterStore.healthPercentage}
+               variant="determinate"
             />
          </Tooltip>
       );
-   }),
+   },
 );
+
+InnerHealthBar.displayName = 'Inner HealthBar';
+
+export const HealthBar = observer<HealthBarProps, HTMLDivElement>(InnerHealthBar);
 
 const ProgressBar = styled(LinearProgress)(({ theme }) => ({
    width: '100%',

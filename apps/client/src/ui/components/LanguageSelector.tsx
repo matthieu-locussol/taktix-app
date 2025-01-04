@@ -1,8 +1,11 @@
+import type { SelectProps } from '@mui/material/Select';
+import type { Language } from 'shared/src/types/Language';
+
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectProps } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { observer } from 'mobx-react-lite';
 import { LANGUAGES_NAMES } from 'shared/src/data/translations';
-import { Language } from 'shared/src/types/Language';
+
 import { useStore } from '../../store';
 
 export const LanguageSelector = observer((props: SelectProps<Language>) => {
@@ -10,7 +13,6 @@ export const LanguageSelector = observer((props: SelectProps<Language>) => {
 
    return (
       <Select<Language>
-         size="small"
          MenuProps={{
             slotProps: {
                paper: {
@@ -19,6 +21,7 @@ export const LanguageSelector = observer((props: SelectProps<Language>) => {
                },
             },
          }}
+         size="small"
          sx={{ ml: 2 }}
          {...props}
          value={settingsMenuStore.language}

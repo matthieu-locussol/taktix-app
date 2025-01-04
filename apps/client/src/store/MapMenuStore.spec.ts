@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { MapMenuStore } from './MapMenuStore';
 import { Store } from './Store';
 
@@ -32,12 +33,14 @@ describe('MapMenuStore', () => {
 
    it('should open', () => {
       const store = new MapMenuStore(new Store());
+
       store.open();
       expect(store.isOpened).toBe(true);
    });
 
    it('should close', () => {
       const store = new MapMenuStore(new Store());
+
       store.close();
       expect(store.isOpened).toBe(false);
    });
@@ -54,6 +57,7 @@ describe('MapMenuStore', () => {
 
    it('should set selected room', () => {
       const store = new MapMenuStore(new Store());
+
       expect(store.selectedRoom).toEqual(null);
 
       store.setSelectedRoom('MoonshadowHamletRoom');

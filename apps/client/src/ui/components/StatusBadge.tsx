@@ -1,5 +1,6 @@
+import type { StatusSchema } from 'shared/src/schemas/StatusSchema';
+
 import { styled } from '@mui/material';
-import { StatusSchema } from 'shared/src/schemas/StatusSchema';
 
 interface StatusBadgeProps {
    status: StatusSchema['status'];

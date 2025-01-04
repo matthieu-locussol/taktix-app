@@ -17,6 +17,7 @@ import React from 'react';
 import { Trans } from 'react-i18next';
 import { MAX_CHARACTERS_PER_ACCOUNT } from 'shared/src/config';
 import { LevelMgt } from 'shared/src/utils/levelMgt';
+
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
 import { CharacterSpriteStatic } from '../hud/components/CharacterSpriteStatic';
@@ -42,9 +43,8 @@ export const CharacterSelectionScreen = observer(() => {
 
    return (
       <Box
-         component="form"
-         onSubmit={onSubmit}
          noValidate
+         component="form"
          sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -56,14 +56,15 @@ export const CharacterSelectionScreen = observer(() => {
                zIndex: 1,
             },
          }}
+         onSubmit={onSubmit}
       >
-         <Card variant="outlined" sx={{ display: 'flex' }}>
+         <Card sx={{ display: 'flex' }} variant="outlined">
             <CardContent>
-               <Typography variant="h1" align="center" gutterBottom sx={{ mb: 2 }}>
+               <Typography gutterBottom align="center" sx={{ mb: 2 }} variant="h1">
                   {t(screenStore.screen)}
                </Typography>
                {characterSelectionStore.errorMessage && (
-                  <Typography variant="body1" align="center" color="error" sx={{ mb: 2 }}>
+                  <Typography align="center" color="error" sx={{ mb: 2 }} variant="body1">
                      {t(
                         characterSelectionStore.errorMessage,
                         characterSelectionStore.errorMessageOptions,
@@ -72,9 +73,9 @@ export const CharacterSelectionScreen = observer(() => {
                )}
                {characterSelectionStore.successMessage && (
                   <Typography
-                     variant="body1"
                      align="center"
                      sx={(theme) => ({ color: theme.palette.success.main, mb: 2 })}
+                     variant="body1"
                   >
                      {t(characterSelectionStore.successMessage)}
                   </Typography>
@@ -83,10 +84,6 @@ export const CharacterSelectionScreen = observer(() => {
                   {characterSelectionStore.characters.map((character) => (
                      <Box key={character.name} display="flex">
                         <Card
-                           variant="clickable"
-                           onClick={() =>
-                              characterSelectionStore.setSelectedCharacter(character.name)
-                           }
                            sx={(theme) => ({
                               width: '100%',
                               display: 'flex',
@@ -97,10 +94,14 @@ export const CharacterSelectionScreen = observer(() => {
                                  opacity: 1,
                               }),
                            })}
+                           variant="clickable"
+                           onClick={() =>
+                              characterSelectionStore.setSelectedCharacter(character.name)
+                           }
                         >
                            <CharacterSpriteStatic
-                              sprite={character.spritesheet}
                               scale={2}
+                              sprite={character.spritesheet}
                               sx={{ mb: 1.5, mr: 1 }}
                            />
                            <Typography
@@ -113,38 +114,38 @@ export const CharacterSelectionScreen = observer(() => {
                            >
                               {character.name}
                            </Typography>
-                           <Typography variant="body1" sx={{ ml: 'auto' }}>
+                           <Typography sx={{ ml: 'auto' }} variant="body1">
                               {t('level', { level: LevelMgt.getLevel(character.experience) })}
                            </Typography>
                         </Card>
                         <IconButton
+                           color="error"
+                           sx={{ mx: 1, my: 'auto' }}
                            onClick={() =>
                               characterSelectionStore.openDeleteCharacterDialog(character.name)
                            }
-                           color="error"
-                           sx={{ mx: 1, my: 'auto' }}
                         >
-                           <DeleteIcon fontSize="small" color="error" />
+                           <DeleteIcon color="error" fontSize="small" />
                         </IconButton>
                      </Box>
                   ))}
                   {characterSelectionStore.characters.length === 0 && (
                      <Card variant="outlined">
-                        <Typography variant="body1" align="center" sx={{ py: 2 }}>
+                        <Typography align="center" sx={{ py: 2 }} variant="body1">
                            {t('noCharacters')}
                         </Typography>
                      </Card>
                   )}
                   {characterSelectionStore.characters.length < MAX_CHARACTERS_PER_ACCOUNT && (
                      <Card
-                        variant="clickable"
-                        onClick={() => screenStore.setScreen('characterCreation')}
                         sx={{
                            display: 'flex',
                            borderStyle: 'dashed',
                            alignItems: 'center',
                            justifyContent: 'space-between',
                         }}
+                        variant="clickable"
+                        onClick={() => screenStore.setScreen('characterCreation')}
                      >
                         <Typography>{t('createNewCharacter')}</Typography>
                         <AddIcon fontSize="small" />
@@ -153,14 +154,14 @@ export const CharacterSelectionScreen = observer(() => {
                </Box>
                {characterSelectionStore.characters.length !== 0 && (
                   <Button
+                     color="primary"
                      disabled={!characterSelectionStore.canSubmit}
+                     sx={{ mt: 2 }}
                      type="submit"
                      variant="contained"
-                     color="primary"
-                     sx={{ mt: 2 }}
                   >
                      {characterSelectionStore.loading ? (
-                        <CircularProgress size={24} color="inherit" />
+                        <CircularProgress color="inherit" size={24} />
                      ) : (
                         t('play')
                      )}
@@ -175,21 +176,21 @@ export const CharacterSelectionScreen = observer(() => {
             >
                <DialogTitle>{t('deleteCharacter_title')}</DialogTitle>
                <DialogContent>
-                  <Typography color="error" gutterBottom>
+                  <Typography gutterBottom color="error">
                      <Trans
+                        components={{ b: <b /> }}
                         i18nKey="deleteCharacter_content"
                         values={{ name: characterSelectionStore.characterToDelete }}
-                        components={{ b: <b /> }}
                      />
                   </Typography>
                   <Typography>{t('deleteCharacter_confirm')}</Typography>
                   <TextField
                      fullWidth
-                     type="password"
                      placeholder={t('password')}
+                     sx={{ mt: 2 }}
+                     type="password"
                      value={characterSelectionStore.password}
                      onChange={(e) => characterSelectionStore.setPassword(e.target.value)}
-                     sx={{ mt: 2 }}
                   />
                </DialogContent>
                <DialogActions sx={{ width: '100%', justifyContent: 'center', pb: 2 }}>
@@ -199,7 +200,7 @@ export const CharacterSelectionScreen = observer(() => {
                      onClick={() => deleteCharacter()}
                   >
                      {characterSelectionStore.loadingDeleteCharacter ? (
-                        <CircularProgress size={24} color="inherit" />
+                        <CircularProgress color="inherit" size={24} />
                      ) : (
                         t('delete')
                      )}

@@ -1,11 +1,14 @@
+import type { MenuProps } from '@mui/material/Menu';
+import type { Channel } from 'shared/src/types/Channel';
+
 import { svgIconClasses, useTheme } from '@mui/material';
 import Checkbox, { checkboxClasses } from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Menu, { MenuProps } from '@mui/material/Menu';
+import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { observer } from 'mobx-react-lite';
 import { channelsInformations } from 'shared/src/data/channelsInformations';
-import { Channel } from 'shared/src/types/Channel';
+
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 
@@ -20,6 +23,15 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
 
    return (
       <Menu
+         MenuListProps={{
+            'aria-labelledby': 'open-channels-selector',
+            dense: true,
+            sx: { padding: 0 },
+         }}
+         anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+         }}
          id="open-channels-selector"
          slotProps={{
             root: {},
@@ -28,33 +40,23 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
                elevation: 0,
             },
          }}
-         MenuListProps={{
-            'aria-labelledby': 'open-channels-selector',
-            dense: true,
-            sx: { padding: 0 },
-         }}
-         onClose={handleClose}
-         anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-         }}
          transformOrigin={{
             vertical: 'bottom',
             horizontal: 'right',
          }}
+         onClose={handleClose}
          {...rest}
       >
          {Object.keys(channelsInformations)
             .map((channelIdStr) => parseInt(channelIdStr, 10) as Channel)
             .filter((channelId) => !chatStore.isSystemChannel(channelId))
             .map((channelId) => (
-               <MenuItem disableRipple key={channelId}>
+               <MenuItem key={channelId} disableRipple>
                   <FormControlLabel
                      control={
                         <Checkbox
-                           size="small"
                            checked={chatStore.isChannelDisplayed(channelId)}
-                           onChange={() => chatStore.toggleChannelDisplay(channelId)}
+                           size="small"
                            sx={{
                               p: 'min(0.5vw, 0.75vh)',
                               color: theme.palette.channels[channelId],
@@ -65,6 +67,7 @@ export const ChannelsSelector = observer(({ handleClose, ...rest }: ChannelsSele
                                  fontSize: 'min(1.5vw, 2.25vh)',
                               },
                            }}
+                           onChange={() => chatStore.toggleChannelDisplay(channelId)}
                         />
                      }
                      label={`${t(channelsInformations[channelId].name)} (${

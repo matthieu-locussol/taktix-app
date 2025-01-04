@@ -1,5 +1,6 @@
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { describe, expect, it, vi } from 'vitest';
+
 import { StatisticsMenuStore } from './StatisticsMenuStore';
 import { Store } from './Store';
 

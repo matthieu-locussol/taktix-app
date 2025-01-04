@@ -4,10 +4,12 @@ import { memo } from 'react';
 import ReactFlow, { ReactFlowProvider, useEdgesState, useNodesState } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { getTalents } from 'shared/src/data/talents';
+
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
 import { initialEdges, makeNode } from '../../utils/makeNode';
 import { Tooltip } from '../hud/components/Tooltip';
+
 import { CustomEdge } from './CustomEdge';
 import { CustomNode } from './CustomNode';
 
@@ -23,7 +25,7 @@ const initialNodes = Object.values(getTalents()).map(({ id, edges, x, y, type })
    makeNode(id, edges, x, y, type),
 );
 
-const Flow = observer(() => {
+const InnerFlow = observer(() => {
    const { t } = useTranslation();
    const { talentsMenuStore } = useStore();
    const [nodes, , onNodesChange] = useNodesState(initialNodes);
@@ -31,26 +33,26 @@ const Flow = observer(() => {
 
    return (
       <Tooltip
-         open={talentsMenuStore.tooltipOpened}
          followCursor
-         arrow={false}
          TransitionProps={{ timeout: 0 }}
+         arrow={false}
+         open={talentsMenuStore.tooltipOpened}
          title={
             <>
-               <Typography variant="overline" fontWeight="bold" lineHeight={1.5}>
+               <Typography fontWeight="bold" lineHeight={1.5} variant="overline">
                   {t(talentsMenuStore.hoveredTalentData.name)}
                </Typography>
                <Typography
-                  variant="body2"
-                  sx={{ mt: 0.5 }}
                   dangerouslySetInnerHTML={{
                      __html: talentsMenuStore.hoveredTalentStatistics
                         .map(([statistic, value]) => `${t(`${statistic}_value`, { value })}`)
                         .join('<br />'),
                   }}
+                  sx={{ mt: 0.5 }}
+                  variant="body2"
                />
                {talentsMenuStore.hoveredTalentData.description !== undefined && (
-                  <Typography variant="body2" fontStyle="italic" color="gray" sx={{ mt: 0.5 }}>
+                  <Typography color="gray" fontStyle="italic" sx={{ mt: 0.5 }} variant="body2">
                      {t(
                         talentsMenuStore.hoveredTalentData.description,
                         talentsMenuStore.hoveredTalentData.options,
@@ -62,27 +64,31 @@ const Flow = observer(() => {
       >
          <ReactFlow
             fitView
+            panOnDrag
+            edgeTypes={edgeTypes}
+            edges={edges}
             fitViewOptions={{
                duration: 0,
             }}
+            nodeTypes={nodeTypes}
             nodes={nodes}
-            edges={edges}
+            nodesDraggable={false}
+            proOptions={{ hideAttribution: true }}
+            zoomOnDoubleClick={false}
+            onEdgesChange={onEdgesChange}
             onNodeClick={(_, node) => talentsMenuStore.toggleNode(+node.id)}
             onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            proOptions={{ hideAttribution: true }}
-            edgeTypes={edgeTypes}
-            nodeTypes={nodeTypes}
-            zoomOnDoubleClick={false}
-            panOnDrag
-            nodesDraggable={false}
          />
       </Tooltip>
    );
 });
 
-export default memo(() => (
+const FlowWrapper = memo(() => (
    <ReactFlowProvider>
-      <Flow />
+      <InnerFlow />
    </ReactFlowProvider>
 ));
+
+FlowWrapper.displayName = 'FlowWrapper';
+
+export default FlowWrapper;

@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { LoginStore } from './LoginStore';
 
 describe('LoginStore', () => {
@@ -24,42 +25,49 @@ describe('LoginStore', () => {
 
    it('should set the username', () => {
       const store = new LoginStore();
+
       store.setUsername('username');
       expect(store.username).toBe('username');
    });
 
    it('should set the password', () => {
       const store = new LoginStore();
+
       store.setPassword('password');
       expect(store.password).toBe('password');
    });
 
    it('should set the error message', () => {
       const store = new LoginStore();
+
       store.setErrorMessage('incorrectCredentials', { username: 'username' });
       expect(store.errorMessage).toBe('incorrectCredentials');
    });
 
    it('should set the success message', () => {
       const store = new LoginStore();
+
       store.setSuccessMessage('accountCreated');
       expect(store.successMessage).toBe('accountCreated');
    });
 
    it('should set the loading', () => {
       const store = new LoginStore();
+
       store.setLoading(true);
       expect(store.loading).toBe(true);
    });
 
    it('should set the memorize credentials', () => {
       const store = new LoginStore();
+
       store.setMemorizeCredentials(true);
       expect(store.memorizeCredentials).toBe(true);
    });
 
    it('should set the open memorize credentials', () => {
       const store = new LoginStore();
+
       store.setOpenMemorizeCredentials(true);
       expect(store.openMemorizeCredentials).toBe(true);
    });

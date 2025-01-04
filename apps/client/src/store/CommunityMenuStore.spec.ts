@@ -1,6 +1,7 @@
 import { charactersSprites } from 'shared/src/data/charactersSprites';
 import { ProfessionType } from 'shared/src/types/Profession';
 import { describe, expect, it, vi } from 'vitest';
+
 import { CommunityMenuStore } from './CommunityMenuStore';
 import { Store } from './Store';
 
@@ -64,12 +65,14 @@ describe('CommunityMenuStore', () => {
 
    it('should open', () => {
       const store = new CommunityMenuStore(new Store());
+
       store.open();
       expect(store.isOpened).toBe(true);
    });
 
    it('should close', () => {
       const store = new CommunityMenuStore(new Store());
+
       store.close();
       expect(store.isOpened).toBe(false);
    });

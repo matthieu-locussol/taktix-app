@@ -150,7 +150,7 @@ const generateClientMapsScenes = (maps: string[]) => {
          __dirname,
          `../../../apps/client/src/game/scenes/${map}Scene.ts`,
       );
-      const mapSceneBlob = `import { CHARACTER_HEIGHT, CHARACTER_WIDTH, Scene } from '../Scene';
+      const mapSceneBlob = `import { Scene } from '../Scene';
 import { loadCharactersAssets } from '../utils/loadCharactersAssets';
 import { loadMonstersAssets } from '../utils/loadMonstersAssets';
 

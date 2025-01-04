@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { InventoryMenuStore } from './InventoryMenuStore';
 import { Store } from './Store';
 
@@ -24,12 +25,14 @@ describe('InventoryMenuStore', () => {
 
    it('should open', () => {
       const store = new InventoryMenuStore(new Store());
+
       store.open();
       expect(store.isOpened).toBe(true);
    });
 
    it('should close', () => {
       const store = new InventoryMenuStore(new Store());
+
       store.close();
       expect(store.isOpened).toBe(false);
    });

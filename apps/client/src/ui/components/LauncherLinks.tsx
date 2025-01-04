@@ -2,6 +2,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import WebsiteIcon from '@mui/icons-material/LanguageRounded';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+
 import { DiscordIcon } from './DiscordIcon';
 
 const LINKS = [
@@ -27,14 +28,14 @@ export const LauncherLinks = () => (
       {LINKS.map(({ href, icon, color }) => (
          <IconButton
             key={href}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
             color="inherit"
+            href={href}
+            rel="noopener noreferrer"
             sx={{
                transition: 'color 0.2s',
                '&:hover': { color },
             }}
+            target="_blank"
          >
             {icon}
          </IconButton>

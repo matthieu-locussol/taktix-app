@@ -20,6 +20,7 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
+
 import { useStore } from '../../../store';
 import { keyboardLayouts } from '../../../store/SettingsMenuStore';
 import { useTranslation } from '../../../types/react-i18next';
@@ -34,28 +35,28 @@ export const SettingsMenu = observer(() => {
       <Draggable handle=".settings-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
             ref={nodeRef}
-            hideBackdrop
             disableEnforceFocus
-            onClose={() => settingsMenuStore.cancelChanges()}
-            open={settingsMenuStore.isOpened}
-            fullScreen={settingsMenuStore.fullScreenMenus.settings}
+            hideBackdrop
             PaperProps={{
                sx: (theme) => ({
                   borderRadius: theme.spacing(0.5),
                   transition: 'all 0.3s',
                }),
             }}
+            fullScreen={settingsMenuStore.fullScreenMenus.settings}
+            open={settingsMenuStore.isOpened}
+            onClose={() => settingsMenuStore.cancelChanges()}
          >
             <StyledDialogTitle className="settings-menu-handle">{t('settings')}</StyledDialogTitle>
             <IconButton
                aria-label="fullscreen"
-               onClick={() => settingsMenuStore.toggleFullScreenMenu('settings')}
                sx={{
                   position: 'absolute',
                   right: 48,
                   top: 12,
                   color: (theme) => theme.palette.text.primary,
                }}
+               onClick={() => settingsMenuStore.toggleFullScreenMenu('settings')}
             >
                {settingsMenuStore.fullScreenMenus.settings ? (
                   <FullscreenOffIcon />
@@ -65,18 +66,18 @@ export const SettingsMenu = observer(() => {
             </IconButton>
             <IconButton
                aria-label="close"
-               onClick={() => settingsMenuStore.cancelChanges()}
                sx={{
                   position: 'absolute',
                   right: 8,
                   top: 12,
                   color: (theme) => theme.palette.text.primary,
                }}
+               onClick={() => settingsMenuStore.cancelChanges()}
             >
                <CloseIcon />
             </IconButton>
             <DialogContent dividers>
-               <Stack direction="row" alignItems="center" m={2}>
+               <Stack alignItems="center" direction="row" m={2}>
                   <Typography
                      sx={{
                         minWidth: 200,
@@ -85,16 +86,16 @@ export const SettingsMenu = observer(() => {
                      {t('keyboardLayout')}
                   </Typography>
                   <ToggleButtonGroup
-                     size="small"
-                     color="primary"
-                     value={settingsMenuStore.keyboardLayout}
                      exclusive
+                     color="primary"
+                     size="small"
+                     sx={{ ml: 2 }}
+                     value={settingsMenuStore.keyboardLayout}
                      onChange={(_e, value) => {
                         if (value !== null) {
                            settingsMenuStore.setKeyboardLayout(value);
                         }
                      }}
-                     sx={{ ml: 2 }}
                   >
                      {keyboardLayouts.map(({ label, value }) => (
                         <ToggleButton key={value} value={value}>
@@ -104,12 +105,6 @@ export const SettingsMenu = observer(() => {
                   </ToggleButtonGroup>
                </Stack>
                <FormControlLabel
-                  sx={{ m: 2 }}
-                  slotProps={{
-                     typography: {
-                        minWidth: 200,
-                     },
-                  }}
                   control={
                      <LanguageSelector
                         variant="outlined"
@@ -118,6 +113,12 @@ export const SettingsMenu = observer(() => {
                   }
                   label={t('displayLanguage')}
                   labelPlacement="start"
+                  slotProps={{
+                     typography: {
+                        minWidth: 200,
+                     },
+                  }}
+                  sx={{ m: 2 }}
                />
                <br />
                <FormControlLabel
@@ -136,18 +137,18 @@ export const SettingsMenu = observer(() => {
                   }}
                   sx={{ my: 2 }}
                />
-               <Stack spacing={2} direction="row" sx={{ m: 2 }} alignItems="center">
+               <Stack alignItems="center" direction="row" spacing={2} sx={{ m: 2 }}>
                   <VolumeDown />
                   <Slider
-                     step={1}
                      marks={[...new Array(11)].map((_, index) => ({
                         value: index * 10,
                         label: index % 2 === 0 ? `${index * 10}%` : '',
                      }))}
-                     min={0}
                      max={100}
-                     valueLabelDisplay="auto"
+                     min={0}
+                     step={1}
                      value={settingsMenuStore.volume}
+                     valueLabelDisplay="auto"
                      onChange={(_e, value) => {
                         if (typeof value === 'number') {
                            settingsMenuStore.setVolume(value);
@@ -159,10 +160,10 @@ export const SettingsMenu = observer(() => {
             </DialogContent>
             <DialogActions>
                <Button
-                  variant="text"
                   color="error"
-                  onClick={() => settingsMenuStore.resetToDefaults()}
                   sx={{ mr: 'auto' }}
+                  variant="text"
+                  onClick={() => settingsMenuStore.resetToDefaults()}
                >
                   {t('resetDefaults')}
                </Button>
@@ -170,8 +171,8 @@ export const SettingsMenu = observer(() => {
                   {t('cancel')}
                </Button>
                <Button
-                  variant="contained"
                   disabled={!settingsMenuStore.canSave()}
+                  variant="contained"
                   onClick={() => settingsMenuStore.saveChanges()}
                >
                   {t('saveChanges')}

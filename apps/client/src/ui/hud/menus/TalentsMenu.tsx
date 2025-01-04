@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
+
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 import TalentTree from '../../components/TalentTree';
@@ -23,28 +24,28 @@ export const TalentsMenu = observer(() => {
       <Draggable handle=".talents-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
             ref={nodeRef}
+            disableEnforceFocus
             fullScreen
             hideBackdrop
-            disableEnforceFocus
-            onClose={() => talentsMenuStore.close()}
-            open={talentsMenuStore.isOpened}
             PaperProps={{
                sx: (theme) => ({
                   borderRadius: theme.spacing(0.5),
                   transition: 'all 0.3s',
                }),
             }}
+            open={talentsMenuStore.isOpened}
+            onClose={() => talentsMenuStore.close()}
          >
             <StyledDialogTitle className="talents-menu-handle">{t('talentTree')}</StyledDialogTitle>
             <IconButton
                aria-label="close"
-               onClick={() => talentsMenuStore.close()}
                sx={{
                   position: 'absolute',
                   right: 8,
                   top: 12,
                   color: (theme) => theme.palette.text.primary,
                }}
+               onClick={() => talentsMenuStore.close()}
             >
                <CloseIcon />
             </IconButton>
@@ -59,9 +60,9 @@ export const TalentsMenu = observer(() => {
                   {t('cancel')}
                </Button>
                <Button
+                  disabled={!talentsMenuStore.canApply}
                   variant="contained"
                   onClick={() => talentsMenuStore.save()}
-                  disabled={!talentsMenuStore.canApply}
                >
                   {t('apply')}
                </Button>

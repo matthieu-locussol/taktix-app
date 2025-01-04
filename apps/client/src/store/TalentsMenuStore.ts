@@ -1,9 +1,12 @@
+import type { Talent } from 'shared/src/data/talents';
+import type { Statistic } from 'shared/src/types/Statistic';
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
-import { Talent, UNKNOWN_TALENT, getTalents } from 'shared/src/data/talents';
-import { Statistic, zStatistic } from 'shared/src/types/Statistic';
+import { UNKNOWN_TALENT, getTalents } from 'shared/src/data/talents';
+import { zStatistic } from 'shared/src/types/Statistic';
 import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
-import { Store } from './Store';
 
 export class TalentsMenuStore {
    private _store: Store;
@@ -94,6 +97,7 @@ export class TalentsMenuStore {
       return this.talents.reduce(
          (acc, talent) => {
             acc[talent] = true;
+
             return acc;
          },
          {} as Record<number, boolean>,
@@ -126,9 +130,11 @@ export class TalentsMenuStore {
 
    public get adjacentTalentsMap(): Record<number, boolean> {
       const adjacentTalents = TalentMgt.getAdjacentTalentsExcludingAllocated(this.talents);
+
       return adjacentTalents.reduce(
          (acc, talent) => {
             acc[talent] = true;
+
             return acc;
          },
          {} as Record<number, boolean>,

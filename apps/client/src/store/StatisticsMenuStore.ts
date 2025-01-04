@@ -1,8 +1,9 @@
-import { makeAutoObservable } from 'mobx';
-import { TranslationKey } from 'shared/src/data/translations';
-import { Statistic, Statistics } from 'shared/src/types/Statistic';
+import type { TranslationKey } from 'shared/src/data/translations';
+import type { Statistic, Statistics } from 'shared/src/types/Statistic';
+import type { Store } from './Store';
+
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
-import { Store } from './Store';
+import { makeAutoObservable } from 'mobx';
 
 export class StatisticsMenuStore {
    private _boostableStatistics = [

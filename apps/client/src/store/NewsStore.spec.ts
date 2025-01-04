@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { NewsStore } from './NewsStore';
 import { Store } from './Store';
 
@@ -26,6 +27,7 @@ describe('NewsStore', () => {
 
    it('should set the server online', () => {
       const store = new NewsStore(new Store());
+
       store.setStatus('online');
       expect(store.status).toBe('online');
    });

@@ -1,46 +1,48 @@
+import type { TooltipProps } from '@mui/material';
+
 import ExperienceIcon from '@mui/icons-material/ArrowCircleUpRounded';
-import {
-   LinearProgress,
-   TooltipProps,
-   Typography,
-   linearProgressClasses,
-   styled,
-} from '@mui/material';
+import { LinearProgress, Typography, linearProgressClasses, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { forwardRef } from 'react';
+
 import { useStore } from '../../../store';
+
 import { Tooltip } from './Tooltip';
 
 interface ExperienceBarProps {
    placement?: TooltipProps['placement'];
 }
 
-export const ExperienceBar = observer<ExperienceBarProps, HTMLDivElement>(
-   forwardRef(({ placement = 'top-end', ...rest }, ref) => {
+const InnerExperienceBar = forwardRef<HTMLDivElement, ExperienceBarProps>(
+   ({ placement = 'top-end', ...rest }, ref) => {
       const { characterStore } = useStore();
 
       return (
          <Tooltip
             disableInteractive
+            placement={placement}
             title={
-               <Typography display="flex" alignItems="center">
+               <Typography alignItems="center" display="flex">
                   {characterStore.experience} / {characterStore.maxExperience}{' '}
                   <ExperienceIcon fontSize="small" sx={{ mx: 0.5 }} /> (
                   {characterStore.experiencePercentage.toFixed(1)}%)
                </Typography>
             }
-            placement={placement}
          >
             <StyledProgressBar
                {...rest}
                ref={ref}
-               variant="determinate"
                value={characterStore.experiencePercentage}
+               variant="determinate"
             />
          </Tooltip>
       );
-   }),
+   },
 );
+
+InnerExperienceBar.displayName = 'InnerExperienceBar';
+
+export const ExperienceBar = observer<ExperienceBarProps, HTMLDivElement>(InnerExperienceBar);
 
 const ProgressBar = styled(LinearProgress)(({ theme }) => ({
    width: '100%',

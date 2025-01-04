@@ -21,6 +21,7 @@ import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
 import { TELEPORTATION_PLACES } from 'shared/src/data/teleportationPlaces';
+
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 
@@ -33,28 +34,28 @@ export const MapMenu = observer(() => {
       <Draggable handle=".map-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
             ref={nodeRef}
-            hideBackdrop
             disableEnforceFocus
-            onClose={() => mapMenuStore.close()}
-            open={mapMenuStore.isOpened}
-            fullScreen={settingsMenuStore.fullScreenMenus.community}
+            hideBackdrop
             PaperProps={{
                sx: (theme) => ({
                   borderRadius: theme.spacing(0.5),
                   transition: 'all 0.3s',
                }),
             }}
+            fullScreen={settingsMenuStore.fullScreenMenus.community}
+            open={mapMenuStore.isOpened}
+            onClose={() => mapMenuStore.close()}
          >
             <StyledDialogTitle className="map-menu-handle">{t('mapMenu')}</StyledDialogTitle>
             <IconButton
                aria-label="fullscreen"
-               onClick={() => settingsMenuStore.toggleFullScreenMenu('community')}
                sx={{
                   position: 'absolute',
                   right: 48,
                   top: 12,
                   color: (theme) => theme.palette.text.primary,
                }}
+               onClick={() => settingsMenuStore.toggleFullScreenMenu('community')}
             >
                {settingsMenuStore.fullScreenMenus.community ? (
                   <FullscreenOffIcon />
@@ -64,13 +65,13 @@ export const MapMenu = observer(() => {
             </IconButton>
             <IconButton
                aria-label="close"
-               onClick={() => mapMenuStore.close()}
                sx={{
                   position: 'absolute',
                   right: 8,
                   top: 12,
                   color: (theme) => theme.palette.text.primary,
                }}
+               onClick={() => mapMenuStore.close()}
             >
                <CloseIcon />
             </IconButton>
@@ -98,11 +99,11 @@ export const MapMenu = observer(() => {
                         ) : (
                            mapMenuStore.teleportationPlaces.map((transferSpot) => (
                               <StyledTableRow
+                                 key={`map-value-${transferSpot}`}
                                  active={transferSpot === mapMenuStore.selectedRoom}
                                  hover={!mapMenuStore.isTeleportationPlaceDisabled(transferSpot)}
-                                 onClick={() => mapMenuStore.setSelectedRoom(transferSpot)}
                                  tabIndex={-1}
-                                 key={`map-value-${transferSpot}`}
+                                 onClick={() => mapMenuStore.setSelectedRoom(transferSpot)}
                               >
                                  <StyledTableCell
                                     align="left"
@@ -157,27 +158,27 @@ export const MapMenu = observer(() => {
                </TableContainer>
             </StyledDialogContent>
             <StyledDialogActions>
-               <Box display="flex" alignItems="center" gap={1}>
-                  <Typography display="flex" alignItems="center" gap={1}>
+               <Box alignItems="center" display="flex" gap={1}>
+                  <Typography alignItems="center" display="flex" gap={1}>
                      <Trans
-                        i18nKey="creditsValue"
                         components={{ b: <b /> }}
+                        i18nKey="creditsValue"
                         values={{ value: characterStore.money }}
                      />
                   </Typography>
                </Box>
                <Button
-                  variant="text"
                   color="chalk"
-                  onClick={() => mapMenuStore.close()}
                   sx={{ display: 'flex', ml: 'auto !important' }}
+                  variant="text"
+                  onClick={() => mapMenuStore.close()}
                >
                   {t('close')}
                </Button>
                <Button
+                  disabled={mapMenuStore.selectedRoom === null || !mapMenuStore.hasEnoughMoney}
                   variant="contained"
                   onClick={() => mapMenuStore.teleport()}
-                  disabled={mapMenuStore.selectedRoom === null || !mapMenuStore.hasEnoughMoney}
                >
                   {t('teleport')}
                </Button>

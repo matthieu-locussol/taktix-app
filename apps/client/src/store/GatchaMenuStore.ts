@@ -1,9 +1,12 @@
+import type { WheelDataType } from 'react-custom-roulette';
+import type { Item, ItemRarity } from 'shared/src/types/Item';
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
-import { WheelDataType } from 'react-custom-roulette';
-import { Item, ItemRarity, rarities } from 'shared/src/types/Item';
+import { rarities } from 'shared/src/types/Item';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
+
 import { ITEM_RARITY_COLORS } from '../styles/appTheme';
-import { Store } from './Store';
 
 export class GatchaMenuStore {
    private _store: Store;

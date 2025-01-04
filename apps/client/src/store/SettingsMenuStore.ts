@@ -1,12 +1,15 @@
+import type { TranslationKey } from 'shared/src/data/translations';
+import type { Store } from './Store';
+
 import { appWindow } from '@tauri-apps/api/window';
-import i18n from 'i18next';
+import { changeLanguage, use } from 'i18next';
 import { makeAutoObservable } from 'mobx';
 import { initReactI18next } from 'react-i18next';
-import { DEFAULT_LANGUAGE, TranslationKey, translations } from 'shared/src/data/translations';
+import { DEFAULT_LANGUAGE, translations } from 'shared/src/data/translations';
 import { isLanguage, zLanguage } from 'shared/src/types/Language';
 import { z } from 'zod';
+
 import { isTauri } from '../utils/tauri';
-import { Store } from './Store';
 
 export const keyboardLayouts: {
    value: string;
@@ -71,15 +74,16 @@ export class SettingsMenuStore {
       if (savedState) {
          try {
             this.savedState = zSettingsMenuState.parse(JSON.parse(savedState));
-         } catch (_e) {
+         } catch (error) {
+            console.error(error);
+
             this.savedState = this.defaultState;
          }
       } else {
          this.savedState = this.defaultState;
       }
 
-      i18n
-         .use(initReactI18next)
+      use(initReactI18next)
          .init({
             resources: translations,
             lng: this.savedState.language,
@@ -128,7 +132,9 @@ export class SettingsMenuStore {
       try {
          this._store.soundsStore.adjustSoundsVolume(volume / 100);
          this._store.gameStore.game.sound.volume = volume / 100;
-      } catch (_e) {
+      } catch (error) {
+         console.error(error);
+
          // Not a problem as the sound will be set when the game is initialized
       }
    }
@@ -200,7 +206,7 @@ export class SettingsMenuStore {
          speedFactor: this.speedFactor,
       };
 
-      i18n.changeLanguage(this.language);
+      changeLanguage(this.language);
       this._store.discordStore.updateDiscordRichPresence();
 
       localStorage.setItem('settings', JSON.stringify(this.savedState));

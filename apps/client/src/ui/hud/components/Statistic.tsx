@@ -1,11 +1,14 @@
+import type { Theme } from '@mui/material';
+import type { TranslationKey } from 'shared/src/data/translations';
+
 import IncreaseIcon from '@mui/icons-material/AddRounded';
 import DecreaseIcon from '@mui/icons-material/RemoveRounded';
-import { Theme, keyframes, styled } from '@mui/material';
+import { keyframes, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
-import { TranslationKey } from 'shared/src/data/translations';
+
 import { useTranslation } from '../../../types/react-i18next';
 
 export interface StatisticProps extends StyleProps {
@@ -54,9 +57,10 @@ export const Statistic = observer(
             {onIncrease && onDecrease && onIncrease10x && onDecrease10x && (
                <>
                   <StyledPlusIconButton
-                     size="small"
                      color="inherit"
                      disabled={!canIncrease}
+                     size="small"
+                     sx={{ mr: 1 }}
                      onClick={(e) => {
                         if (e.shiftKey) {
                            onIncrease10x();
@@ -64,14 +68,13 @@ export const Statistic = observer(
                            onIncrease();
                         }
                      }}
-                     sx={{ mr: 1 }}
                   >
                      <IncreaseIcon />
                   </StyledPlusIconButton>
                   <StyledMinusIconButton
-                     size="small"
                      color="inherit"
                      disabled={!canDecrease}
+                     size="small"
                      onClick={(e) => {
                         if (e.shiftKey) {
                            onDecrease10x();

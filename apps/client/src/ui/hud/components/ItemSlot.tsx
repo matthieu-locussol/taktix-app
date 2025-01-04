@@ -1,4 +1,6 @@
-import { Box, BoxProps, Theme, styled } from '@mui/material';
+import type { BoxProps, Theme } from '@mui/material';
+
+import { Box, styled } from '@mui/material';
 import { forwardRef } from 'react';
 
 interface ItemSlotProps extends BoxProps, StyleProps {
@@ -14,6 +16,8 @@ export const ItemSlot = forwardRef<unknown, ItemSlotProps>(
       );
    },
 );
+
+ItemSlot.displayName = 'ItemSlot';
 
 interface StyleProps {
    canBeHovered?: boolean;

@@ -1,7 +1,10 @@
-import { BoxProps, styled } from '@mui/material';
+import type { BoxProps } from '@mui/material';
+
+import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
+
 import { useStore } from '../../store';
 import { Character } from '../hud/Character';
 import { Chatbox } from '../hud/Chatbox';
@@ -27,6 +30,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
    return (
       <Box
          ref={gameLayoutRef}
+         id="game-layout"
          sx={{
             display: 'flex',
             justifyContent: 'center',
@@ -34,10 +38,10 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
             width: '100vw',
             height: '100vh',
          }}
-         id="game-layout"
          onClick={async (event) => {
             if (event.target === gameLayoutRef.current) {
                const scene = await gameStore.getCurrentScene();
+
                scene.input.emit(
                   Phaser.Input.Events.POINTER_DOWN,
                   scene.input.activePointer,
@@ -45,22 +49,10 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
                );
             }
          }}
-         onWheel={async (event) => {
-            if (event.target === gameLayoutRef.current) {
-               const scene = await gameStore.getCurrentScene();
-               scene.input.emit(
-                  Phaser.Input.Events.POINTER_WHEEL,
-                  scene.input.activePointer,
-                  [],
-                  event.deltaX,
-                  event.deltaY,
-                  event.deltaZ,
-               );
-            }
-         }}
          onMouseMove={async (event) => {
             if (event.target === gameLayoutRef.current) {
                const scene = await gameStore.getCurrentScene();
+
                scene.input.manager.transformPointer(
                   scene.input.activePointer,
                   event.pageX,
@@ -74,9 +66,23 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
                );
             }
          }}
+         onWheel={async (event) => {
+            if (event.target === gameLayoutRef.current) {
+               const scene = await gameStore.getCurrentScene();
+
+               scene.input.emit(
+                  Phaser.Input.Events.POINTER_WHEEL,
+                  scene.input.activePointer,
+                  [],
+                  event.deltaX,
+                  event.deltaY,
+                  event.deltaZ,
+               );
+            }
+         }}
          {...rest}
       >
-         <StyledBox id="game-layout-box" height={`${hudStore.chatboxHeight}vh`}>
+         <StyledBox height={`${hudStore.chatboxHeight}vh`} id="game-layout-box">
             {hudStore.isChatboxVisible && <Chatbox />}
             {hudStore.isCharacterVisible && <Character />}
             {hudStore.isMenuVisible && <Menu />}

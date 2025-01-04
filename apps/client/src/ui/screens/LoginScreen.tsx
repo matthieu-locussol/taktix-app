@@ -1,3 +1,5 @@
+import type { AuthRoomUserData } from 'shared/src/rooms/AuthRoom';
+
 import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -16,7 +18,7 @@ import Typography from '@mui/material/Typography';
 import { listen } from '@tauri-apps/api/event';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { AuthRoomUserData } from 'shared/src/rooms/AuthRoom';
+
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
 import { isTauri } from '../../utils/tauri';
@@ -66,6 +68,7 @@ export const LoginScreen = observer(() => {
       e.preventDefault();
 
       const { username, password } = loginStore;
+
       loginStore.setLoading(true);
 
       colyseusStore
@@ -91,9 +94,8 @@ export const LoginScreen = observer(() => {
 
    return (
       <Box
-         component="form"
-         onSubmit={onSubmit}
          noValidate
+         component="form"
          sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -105,10 +107,11 @@ export const LoginScreen = observer(() => {
                zIndex: 1,
             },
          }}
+         onSubmit={onSubmit}
       >
-         <Card variant="outlined" sx={{ display: 'flex' }}>
+         <Card sx={{ display: 'flex' }} variant="outlined">
             <CardContent>
-               <Box display="flex" justifyContent="space-between" alignItems="start" mb={4}>
+               <Box alignItems="start" display="flex" justifyContent="space-between" mb={4}>
                   <Box
                      sx={{
                         display: 'flex',
@@ -119,21 +122,21 @@ export const LoginScreen = observer(() => {
                      <Typography variant="h1">Taktix</Typography>
                      <Typography
                         color="white"
-                        fontWeight="bold"
                         fontFamily="Orbitron"
-                        variant="overline"
+                        fontWeight="bold"
                         sx={{ mt: 'auto', mb: -0.5, ml: 1 }}
+                        variant="overline"
                      >
                         {getVersion()}
                      </Typography>
                   </Box>
                   <LanguageSelector
+                     sx={{ my: 'auto' }}
                      variant="outlined"
                      onChange={(e) => {
                         settingsMenuStore.setLanguage(e.target.value);
                         settingsMenuStore.saveChanges();
                      }}
-                     sx={{ my: 'auto' }}
                   />
                </Box>
                <Changelog />
@@ -142,7 +145,7 @@ export const LoginScreen = observer(() => {
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
             {updaterStore.shouldUpdate === undefined && (
                <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography variant="h1" align="center">
+                  <Typography align="center" variant="h1">
                      {t('accessUniverse')}
                   </Typography>
                   <CircularProgress size={64} sx={{ mt: 8 }} />
@@ -150,11 +153,11 @@ export const LoginScreen = observer(() => {
             )}
             {updaterStore.shouldUpdate === false && (
                <CardContent>
-                  <Typography variant="h1" align="center" gutterBottom>
+                  <Typography gutterBottom align="center" variant="h1">
                      {t('accessUniverse')}
                   </Typography>
                   {loginStore.errorMessage && (
-                     <Typography variant="body1" align="center" color="error">
+                     <Typography align="center" color="error" variant="body1">
                         {newsStore.status === 'maintenance'
                            ? t('serverInMaintenance')
                            : t(loginStore.errorMessage, loginStore.errorMessageOptions)}
@@ -162,28 +165,28 @@ export const LoginScreen = observer(() => {
                   )}
                   {loginStore.successMessage && (
                      <Typography
-                        variant="body1"
                         align="center"
                         sx={(theme) => ({ color: theme.palette.success.main })}
+                        variant="body1"
                      >
                         {t(loginStore.successMessage, loginStore.successMessageOptions)}
                      </Typography>
                   )}
                   <TextField
-                     type="text"
-                     placeholder={t('username')}
                      autoComplete="username"
+                     placeholder={t('username')}
+                     sx={{ mt: 2 }}
+                     type="text"
                      value={loginStore.username}
                      onChange={(e) => loginStore.setUsername(e.target.value)}
-                     sx={{ mt: 2 }}
                   />
                   <TextField
-                     type="password"
-                     placeholder={t('password')}
                      autoComplete="current-password"
+                     placeholder={t('password')}
+                     sx={{ mt: 2 }}
+                     type="password"
                      value={loginStore.password}
                      onChange={(e) => loginStore.setPassword(e.target.value)}
-                     sx={{ mt: 2 }}
                   />
                   <FormControlLabel
                      control={
@@ -196,14 +199,14 @@ export const LoginScreen = observer(() => {
                      sx={{ mt: 2 }}
                   />
                   <Button
+                     color="primary"
                      disabled={!loginStore.canSubmit}
+                     sx={{ my: 2 }}
                      type="submit"
                      variant="contained"
-                     color="primary"
-                     sx={{ my: 2 }}
                   >
                      {loginStore.loading ? (
-                        <CircularProgress size={24} color="inherit" />
+                        <CircularProgress color="inherit" size={24} />
                      ) : (
                         t(screenStore.screen)
                      )}
@@ -213,7 +216,7 @@ export const LoginScreen = observer(() => {
             )}
             {updaterStore.shouldUpdate && (
                <CardContent>
-                  <Typography variant="h1" align="center">
+                  <Typography align="center" variant="h1">
                      {t('accessUniverse')}
                   </Typography>
                   <Typography sx={{ mt: 4 }}>
@@ -223,16 +226,16 @@ export const LoginScreen = observer(() => {
                   {updaterStore.updating ? (
                      <ProgressBar
                         label={`${updaterStore.progress.toFixed(2)}%`}
-                        value={updaterStore.progress}
                         sx={{ mt: 2 }}
+                        value={updaterStore.progress}
                      />
                   ) : (
                      <Button
-                        disabled={updaterStore.updating}
-                        variant="contained"
                         color="primary"
-                        onClick={() => updaterStore.update()}
+                        disabled={updaterStore.updating}
                         sx={{ mt: 2 }}
+                        variant="contained"
+                        onClick={() => updaterStore.update()}
                      >
                         {t('update')}
                      </Button>

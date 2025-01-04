@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { Store } from './Store';
 import { TalentsMenuStore } from './TalentsMenuStore';
 
@@ -142,6 +143,7 @@ describe('TalentsMenuStore', () => {
 
    it('can toggle a talent', () => {
       const store = new TalentsMenuStore(new Store());
+
       store.setTalentsPoints(1);
 
       store.toggleNode(1);

@@ -1,4 +1,5 @@
 import { TILE_SIZE } from 'shared/src/config';
+
 import { SCALE_FACTOR, type Scene } from '../Scene';
 
 export const makeMarker = (scene: Scene) => {

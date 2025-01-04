@@ -1,6 +1,7 @@
+import type { TranslationKey } from 'shared/src/data/translations';
+
 import { useCallback } from 'react';
 import { useTranslation as useTranslationOriginal } from 'react-i18next';
-import { TranslationKey } from 'shared/src/data/translations';
 
 declare module 'i18next' {
    interface TFunction {
@@ -18,8 +19,10 @@ export const useTranslation = (): UseTranslationResponse => {
    const { t } = useTranslationOriginal();
 
    const customTFunction = useCallback(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (key: TranslationKey, options: unknown) => t(key as any, options as any) as any,
       [t],
    );
+
    return { t: customTFunction };
 };

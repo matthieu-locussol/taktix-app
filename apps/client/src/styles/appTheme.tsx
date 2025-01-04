@@ -1,9 +1,10 @@
+import type { ItemRarity } from 'shared/src/types/Item';
+import type { MonsterType } from 'shared/src/types/Monster';
+import type { RealStatistic, Statistic } from 'shared/src/types/Statistic';
+
 import { buttonClasses, menuItemClasses, toggleButtonClasses } from '@mui/material';
 import { createTheme, darken } from '@mui/material/styles';
 import { Channel } from 'shared/src/types/Channel';
-import { ItemRarity } from 'shared/src/types/Item';
-import { MonsterType } from 'shared/src/types/Monster';
-import { RealStatistic, Statistic } from 'shared/src/types/Statistic';
 
 export const STATS_COLORS = {
    vitality: '#ef4444',

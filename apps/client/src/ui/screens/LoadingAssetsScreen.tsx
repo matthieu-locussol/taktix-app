@@ -4,6 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../store';
 
 export const LoadingAssetsScreen = observer(() => {
@@ -13,10 +14,10 @@ export const LoadingAssetsScreen = observer(() => {
 
    return (
       <Wrapper>
-         <Box position="relative" mb={2}>
-            <CircularProgress size={80} variant="determinate" value={progress} />
+         <Box mb={2} position="relative">
+            <CircularProgress size={80} value={progress} variant="determinate" />
             <ProgressValueWrapper>
-               <Typography fontWeight="bold" color="white">
+               <Typography color="white" fontWeight="bold">
                   {progress}%
                </Typography>
             </ProgressValueWrapper>

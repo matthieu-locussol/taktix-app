@@ -1,5 +1,6 @@
 import { Paper, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 
@@ -20,7 +21,7 @@ export const PvEFightTurn = observer(() => {
                px: 4,
             }}
          >
-            <Typography variant="h6" fontFamily="Orbitron" lineHeight={0.6}>
+            <Typography fontFamily="Orbitron" lineHeight={0.6} variant="h6">
                {t('turn', { count: pveFightStore.currentTurn })}
             </Typography>
          </Paper>

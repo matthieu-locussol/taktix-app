@@ -9,8 +9,10 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 import { channelsInformations } from 'shared/src/data/channelsInformations';
 import { Channel } from 'shared/src/types/Channel';
+
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
+
 import { ChannelsSelector } from './components/ChannelsSelector';
 import { CurrentChannelSelector } from './components/CurrentChannelSelector';
 import { SmallButton } from './components/SmallButton';
@@ -48,7 +50,7 @@ export const Chatbox = observer(() => {
    }
 
    return (
-      <Root component="form" onSubmit={sendMessage} widthPercent={hudStore.chatboxWidth}>
+      <Root component="form" widthPercent={hudStore.chatboxWidth} onSubmit={sendMessage}>
          <Wrapper widthPercent={hudStore.chatboxWidth}>
             <Chat
                ref={chatboxRef}
@@ -59,20 +61,20 @@ export const Chatbox = observer(() => {
                   chatStore.isSystemChannel(channel) ? (
                      <Typography
                         key={idx}
-                        fontStyle="italic"
-                        fontSize="min(1vw, 1.5vh)"
-                        lineHeight="2vh"
                         color={theme.palette.channels[channel]}
+                        fontSize="min(1vw, 1.5vh)"
+                        fontStyle="italic"
+                        lineHeight="2vh"
                      >
                         [{t(channelsInformations[channel].name)}] {content}
                      </Typography>
                   ) : (
                      <Typography
                         key={idx}
+                        color={theme.palette.channels[channel]}
                         fontSize="min(1vw, 1.5vh)"
                         fontStyle={channel === Channel.PRIVATE ? 'italic' : 'normal'}
                         lineHeight="2vh"
-                        color={theme.palette.channels[channel]}
                      >
                         [{t(channelsInformations[channel].name)}] <b>{author}</b>: {content}
                      </Typography>
@@ -82,7 +84,12 @@ export const Chatbox = observer(() => {
             <Box>
                <ChatInput
                   ref={inputRef}
+                  inputHeight={hudStore.chatboxInputHeight}
+                  maxLength={160}
                   value={chatStore.input}
+                  widthPercent={hudStore.chatboxWidth}
+                  onBlur={() => gameStore.enableKeyboard(true)}
+                  onChange={(e) => chatStore.setInput(e.target.value)}
                   onFocus={(e) => {
                      gameStore.enableKeyboard(false);
                      e.currentTarget.setSelectionRange(
@@ -90,21 +97,16 @@ export const Chatbox = observer(() => {
                         e.currentTarget.value.length,
                      );
                   }}
-                  onBlur={() => gameStore.enableKeyboard(true)}
-                  onChange={(e) => chatStore.setInput(e.target.value)}
-                  maxLength={160}
-                  widthPercent={hudStore.chatboxWidth}
-                  inputHeight={hudStore.chatboxInputHeight}
                />
                <ChannelSelectorButton
-                  currentChannel={chatStore.currentChannel}
-                  chatboxInputHeight={hudStore.chatboxInputHeight}
-                  id="open-channel-selector"
                   aria-controls={
                      chatStore.isCurrentChannelSelectorOpened ? 'open-channel-selector' : undefined
                   }
-                  aria-haspopup="true"
                   aria-expanded={chatStore.isCurrentChannelSelectorOpened ? 'true' : undefined}
+                  aria-haspopup="true"
+                  chatboxInputHeight={hudStore.chatboxInputHeight}
+                  currentChannel={chatStore.currentChannel}
+                  id="open-channel-selector"
                   onClick={(e) => {
                      setCurrentChannelAnchor(e.currentTarget);
                      chatStore.openCurrentChannelSelectorModal();
@@ -112,11 +114,11 @@ export const Chatbox = observer(() => {
                />
                <CurrentChannelSelector
                   anchorEl={currentChannelAnchor}
-                  open={chatStore.isCurrentChannelSelectorOpened}
                   handleClose={() => {
                      setCurrentChannelAnchor(null);
                      chatStore.closeCurrentChannelSelectorModal();
                   }}
+                  open={chatStore.isCurrentChannelSelectorOpened}
                />
             </Box>
          </Wrapper>
@@ -134,12 +136,12 @@ export const Chatbox = observer(() => {
                <MinusIcon fontSize="inherit" />
             </SmallButton>
             <SmallButton
-               id="open-channels-selector"
                aria-controls={
                   chatStore.isChannelsSelectorOpened ? 'open-channels-selector' : undefined
                }
-               aria-haspopup="true"
                aria-expanded={chatStore.isChannelsSelectorOpened ? 'true' : undefined}
+               aria-haspopup="true"
+               id="open-channels-selector"
                onClick={(e) => {
                   setChannelSelectorAnchor(e.currentTarget);
                   chatStore.openChannelsSelectorModal();
@@ -149,11 +151,11 @@ export const Chatbox = observer(() => {
             </SmallButton>
             <ChannelsSelector
                anchorEl={channelSelectorAnchor}
-               open={chatStore.isChannelsSelectorOpened}
                handleClose={() => {
                   setChannelSelectorAnchor(null);
                   chatStore.closeChannelsSelectorModal();
                }}
+               open={chatStore.isChannelsSelectorOpened}
             />
          </ChatSettings>
       </Root>

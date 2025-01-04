@@ -1,7 +1,10 @@
+import type { EdgeProps } from 'reactflow';
+
 import { useTheme } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useCallback } from 'react';
-import { EdgeProps, getStraightPath, useStore as useReactflowStore } from 'reactflow';
+import { getStraightPath, useStore as useReactflowStore } from 'reactflow';
+
 import { useStore } from '../../store';
 import { getEdgeParams } from '../../utils/graph';
 
@@ -30,9 +33,9 @@ export const CustomEdge = observer(({ id, source, target, style }: EdgeProps) =>
 
    return (
       <path
-         id={id}
          className="react-flow__edge-path"
          d={edgePath}
+         id={id}
          style={{
             ...style,
             stroke:

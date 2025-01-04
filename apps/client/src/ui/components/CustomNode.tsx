@@ -1,7 +1,11 @@
-import { Theme, keyframes, styled } from '@mui/material';
+import type { Theme } from '@mui/material';
+import type { NodeProps } from 'reactflow';
+
+import { keyframes, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { Handle, Position } from 'reactflow';
+
 import { useStore } from '../../store';
 
 export const CustomNode = observer(({ data, selected, ...rest }: NodeProps) => {
@@ -12,6 +16,7 @@ export const CustomNode = observer(({ data, selected, ...rest }: NodeProps) => {
    useEffect(() => {
       if (ref.current) {
          ref.current.style.animation = 'none';
+         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
          ref.current.offsetHeight;
          ref.current.style.animation = '';
       }
@@ -22,8 +27,9 @@ export const CustomNode = observer(({ data, selected, ...rest }: NodeProps) => {
          <StyledNode
             ref={ref}
             adjacent={talentsMenuStore.shouldBlink(id)}
-            selected={selected}
+            data={data}
             hovered={talentsMenuStore.hoveredTalent === id || talentsMenuStore.talentsMap[id]}
+            selected={selected}
             onMouseEnter={() => {
                if (talentsMenuStore.hoveredTalent !== id) {
                   talentsMenuStore.setHoveredTalent(id);
@@ -32,12 +38,11 @@ export const CustomNode = observer(({ data, selected, ...rest }: NodeProps) => {
             onMouseLeave={() => {
                talentsMenuStore.setHoveredTalent(null);
             }}
-            data={data}
             {...rest}
          >
-            <Handle type="target" position={Position.Left} />
+            <Handle position={Position.Left} type="target" />
             {data.label}
-            <Handle type="source" position={Position.Right} />
+            <Handle position={Position.Right} type="source" />
          </StyledNode>
       </>
    );

@@ -1,13 +1,14 @@
 import CurrentIcon from '@mui/icons-material/ArrowRightRounded';
 import { Box, darken, keyframes, styled } from '@mui/material';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../../store';
 
 export const DialogChoices = observer(() => {
    const { dialogMenuStore, hudStore } = useStore();
 
    return (
-      <Root offsetY={hudStore.menuHeight} dialogHeight={dialogMenuStore.dialogHeight}>
+      <Root dialogHeight={dialogMenuStore.dialogHeight} offsetY={hudStore.menuHeight}>
          {dialogMenuStore.currentChoices.map(({ text, disabled }, idx) => (
             <Choice
                key={`choice-${idx}`}

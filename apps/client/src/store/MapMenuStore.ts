@@ -1,8 +1,10 @@
+import type { Room } from 'shared/src/types/Room';
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
 import { TELEPORTATION_PLACES } from 'shared/src/data/teleportationPlaces';
-import { Room, zRoom } from 'shared/src/types/Room';
+import { zRoom } from 'shared/src/types/Room';
 import { ArrayMgt } from 'shared/src/utils/arrayMgt';
-import { Store } from './Store';
 
 export class MapMenuStore {
    private _store: Store;
@@ -75,6 +77,7 @@ export class MapMenuStore {
          Object.entries(TELEPORTATION_PLACES)
             .filter(([roomString]) => {
                const room = zRoom.parse(roomString);
+
                return this._store.characterStore.teleporters.includes(room);
             })
             .map(([roomString, place]) => {
@@ -101,6 +104,7 @@ export class MapMenuStore {
 
    public hasEnoughMoneyForRoom(room: Room): boolean {
       const place = TELEPORTATION_PLACES[room];
+
       if (place === null) {
          return false;
       }

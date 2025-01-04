@@ -1,15 +1,17 @@
-import i18next from 'i18next';
+import type { TranslationKey } from 'shared/src/data/translations';
+import type { InteractiveObjectPhaser } from '../game/Scene';
+import type { Store } from './Store';
+
+import { t } from 'i18next';
 import { makeAutoObservable } from 'mobx';
 import { INTERACTION_DRINK_WINE_COST } from 'shared/src/config';
 import { NPCS, isNPC, zNPC } from 'shared/src/data/npcs';
-import { TranslationKey } from 'shared/src/data/translations';
 import { Channel } from 'shared/src/types/Channel';
 import { zInteractiveObject } from 'shared/src/types/InteractiveObject';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
-import { InteractiveObjectPhaser } from '../game/Scene';
+
 import { npcsDialogs } from '../utils/npcsDialogs';
 import { EntityType, moveToShape } from '../utils/phaser';
-import { Store } from './Store';
 
 interface MenuItem {
    text: string;
@@ -103,7 +105,7 @@ export class ContextMenuStore {
       }[type];
 
       return {
-         text: i18next.t(sprite.name),
+         text: t(sprite.name),
          subMenu,
       };
    }
@@ -121,7 +123,7 @@ export class ContextMenuStore {
       }[type];
 
       return {
-         text: i18next.t(type satisfies TranslationKey),
+         text: t(type satisfies TranslationKey),
          subMenu,
       };
    }
@@ -129,7 +131,7 @@ export class ContextMenuStore {
    private _makeTeleporterMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
       return [
          {
-            text: i18next.t('save' satisfies TranslationKey),
+            text: t('save' satisfies TranslationKey),
             callback: () => {
                moveToShape(this._store, polygon, () => {
                   this._store.colyseusStore.interact('SaveTeleporter');
@@ -140,7 +142,7 @@ export class ContextMenuStore {
             ),
          },
          {
-            text: i18next.t('use' satisfies TranslationKey),
+            text: t('use' satisfies TranslationKey),
             callback: () => {
                moveToShape(this._store, polygon, () => {
                   this._store.mapMenuStore.open();
@@ -153,7 +155,7 @@ export class ContextMenuStore {
    private _makeBedMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
       return [
          {
-            text: i18next.t('sleep' satisfies TranslationKey),
+            text: t('sleep' satisfies TranslationKey),
             callback: () => {
                moveToShape(this._store, polygon, () => {
                   this._store.colyseusStore.interact('Sleep');
@@ -166,7 +168,7 @@ export class ContextMenuStore {
    private _makeWellMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
       return [
          {
-            text: i18next.t('gamble' satisfies TranslationKey),
+            text: t('gamble' satisfies TranslationKey),
             callback: () => {
                moveToShape(this._store, polygon, () => {
                   this._store.gatchaMenuStore.open();
@@ -179,9 +181,9 @@ export class ContextMenuStore {
    private _makeWineBottleMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
       return [
          {
-            text: i18next.t('drinkWine' satisfies TranslationKey, {
+            text: t('drinkWine' satisfies TranslationKey, {
                value: INTERACTION_DRINK_WINE_COST,
-               type: i18next.t('credits' satisfies TranslationKey).toLocaleLowerCase(),
+               type: t('credits' satisfies TranslationKey).toLocaleLowerCase(),
             }),
             callback: () => {
                moveToShape(this._store, polygon, () => {
@@ -195,13 +197,13 @@ export class ContextMenuStore {
    private _makeGraveyardLadderMenu(polygon: Phaser.GameObjects.Polygon): SubMenuItem[] {
       return [
          {
-            text: i18next.t('use' satisfies TranslationKey),
+            text: t('use' satisfies TranslationKey),
             callback: () => {
                moveToShape(this._store, polygon, () => {
                   this._store.dialogMenuStore.openDialog([
                      {
-                        name: i18next.t('developer' satisfies TranslationKey),
-                        content: i18next.t('graveyardLadder_dialog' satisfies TranslationKey),
+                        name: t('developer' satisfies TranslationKey),
+                        content: t('graveyardLadder_dialog' satisfies TranslationKey),
                      },
                   ]);
                });
@@ -216,13 +218,13 @@ export class ContextMenuStore {
       return [
          {
             text: isCurrentCharacter
-               ? i18next.t('slap' satisfies TranslationKey)
-               : i18next.t('sendMessage' satisfies TranslationKey),
+               ? t('slap' satisfies TranslationKey)
+               : t('sendMessage' satisfies TranslationKey),
             callback: () => {
                if (isCurrentCharacter) {
                   this._store.colyseusStore.sendMessage(
                      Channel.GENERAL,
-                     i18next.t('ouch' satisfies TranslationKey),
+                     t('ouch' satisfies TranslationKey),
                   );
                   this._store.chatStore.setInput('');
                } else {
@@ -251,10 +253,10 @@ export class ContextMenuStore {
       if (name === 'Nono') {
          return [
             {
-               text: i18next.t('talk' satisfies TranslationKey),
+               text: t('talk' satisfies TranslationKey),
                callback: () => {
                   this._store.dialogMenuStore.openDialog(
-                     npcsDialogs[parsedNpcName](npcInfos, this._store, i18next.t),
+                     npcsDialogs[parsedNpcName](npcInfos, this._store, t),
                   );
                },
             },
@@ -270,7 +272,7 @@ export class ContextMenuStore {
 
       return [
          {
-            text: i18next.t('fight' satisfies TranslationKey),
+            text: t('fight' satisfies TranslationKey),
             callback: () => {
                moveToShape(this._store, sprite, () => {
                   this._store.colyseusStore.fightPvE(id, fightId);

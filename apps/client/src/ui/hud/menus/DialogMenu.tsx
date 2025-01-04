@@ -3,6 +3,7 @@ import { Backdrop, Grow, Typography, darken, keyframes, styled } from '@mui/mate
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
+
 import { useStore } from '../../../store';
 import { DialogChoices } from '../components/DialogChoices';
 
@@ -23,13 +24,13 @@ export const DialogMenu = observer(() => {
    };
 
    return (
-      <Grow in={dialogMenuStore.isOpened} unmountOnExit>
+      <Grow unmountOnExit in={dialogMenuStore.isOpened}>
          <Backdrop open sx={{ backgroundColor: 'transparent' }}>
-            <DialogRoot offsetY={hudStore.menuHeight} ref={dialogRef}>
+            <DialogRoot ref={dialogRef} offsetY={hudStore.menuHeight}>
                {dialogMenuStore.currentItem?.avatar && (
                   <Avatar
-                     src={`/assets/npcs/${dialogMenuStore.currentItem?.avatar}`}
                      alt={dialogMenuStore.currentItem?.name}
+                     src={`/assets/npcs/${dialogMenuStore.currentItem?.avatar}`}
                   />
                )}
                <Name>{dialogMenuStore.currentItem?.name}</Name>

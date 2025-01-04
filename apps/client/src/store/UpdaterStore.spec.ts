@@ -1,10 +1,12 @@
 import { when } from 'mobx';
 import { describe, expect, it, vi } from 'vitest';
+
 import { Store } from './Store';
 import { UpdaterStore } from './UpdaterStore';
 
 vi.mock('./Store', () => {
    const MockedStore = vi.fn();
+
    return { Store: MockedStore };
 });
 
@@ -43,6 +45,7 @@ describe('UpdaterStore', () => {
       mocks.isTauri.mockReturnValue(false);
 
       const store = new UpdaterStore(new Store());
+
       await store.checkUpdate();
       expect(store.shouldUpdate).toEqual(false);
    });
@@ -55,6 +58,7 @@ describe('UpdaterStore', () => {
       });
 
       const store = new UpdaterStore(new Store());
+
       await store.checkUpdate();
 
       when(
@@ -73,6 +77,7 @@ describe('UpdaterStore', () => {
       });
 
       const store = new UpdaterStore(new Store());
+
       await store.checkUpdate();
 
       when(
@@ -87,6 +92,7 @@ describe('UpdaterStore', () => {
       mocks.installUpdate.mockResolvedValue(undefined);
 
       const store = new UpdaterStore(new Store());
+
       await store.update();
 
       expect(store.updating).toEqual(false);
@@ -97,6 +103,7 @@ describe('UpdaterStore', () => {
       mocks.relaunch.mockResolvedValue(undefined);
 
       const store = new UpdaterStore(new Store());
+
       store.restart();
 
       expect(store.openUpdateModal).toEqual(false);

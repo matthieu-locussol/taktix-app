@@ -1,22 +1,14 @@
+import type { MenuProps } from '@mui/material/Menu';
+
 import { Radio } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Menu, { MenuProps } from '@mui/material/Menu';
+import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
-
-export const sortOptions = [
-   'typeAsc',
-   'typeDesc',
-   'rarityAsc',
-   'rarityDesc',
-   'levelAsc',
-   'levelDesc',
-   'noSort',
-] as const;
-
-export type SortOption = (typeof sortOptions)[number];
+import { sortOptions } from '../../../utils/sort';
 
 interface ItemsSortSelectorProps extends MenuProps {
    handleClose: () => void;
@@ -28,6 +20,15 @@ export const ItemsSortSelector = observer(({ handleClose, ...rest }: ItemsSortSe
 
    return (
       <Menu
+         MenuListProps={{
+            'aria-labelledby': 'items-sort-selector',
+            dense: true,
+            sx: { padding: 0 },
+         }}
+         anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+         }}
          id="items-sort-selector"
          slotProps={{
             root: {},
@@ -36,36 +37,27 @@ export const ItemsSortSelector = observer(({ handleClose, ...rest }: ItemsSortSe
                elevation: 0,
             },
          }}
-         MenuListProps={{
-            'aria-labelledby': 'items-sort-selector',
-            dense: true,
-            sx: { padding: 0 },
-         }}
-         onClose={handleClose}
-         anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-         }}
          transformOrigin={{
             vertical: 'bottom',
             horizontal: 'right',
          }}
+         onClose={handleClose}
          {...rest}
       >
          {sortOptions.map((sortOption) => (
-            <MenuItem dense disableRipple key={sortOption}>
+            <MenuItem key={sortOption} dense disableRipple>
                <FormControlLabel
                   control={
                      <Radio
-                        size="small"
-                        value={sortOption}
                         checked={inventoryMenuStore.sortOption === sortOption}
+                        size="small"
+                        sx={{
+                           p: 'min(0.5vw, 0.75vh)',
+                        }}
+                        value={sortOption}
                         onChange={() => {
                            inventoryMenuStore.sortBy(sortOption);
                            handleClose();
-                        }}
-                        sx={{
-                           p: 'min(0.5vw, 0.75vh)',
                         }}
                      />
                   }

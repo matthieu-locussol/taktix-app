@@ -1,3 +1,5 @@
+import type { TFunctionWrapper } from '../../../types/react-i18next';
+
 import MessageIcon from '@mui/icons-material/ChatBubbleRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
 import FullscreenOffIcon from '@mui/icons-material/FullscreenExitRounded';
@@ -25,8 +27,9 @@ import { Trans } from 'react-i18next';
 import { zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { zProfessionType } from 'shared/src/types/Profession';
 import { isRoom } from 'shared/src/types/Room';
+
 import { useStore } from '../../../store';
-import { TFunctionWrapper, useTranslation } from '../../../types/react-i18next';
+import { useTranslation } from '../../../types/react-i18next';
 import { StatusBadge } from '../../components/StatusBadge';
 import { CharacterSpriteStatic } from '../components/CharacterSpriteStatic';
 
@@ -44,8 +47,8 @@ const columns: Column[] = [
       label: () => '',
       format: (value) => (
          <CharacterSpriteStatic
-            sprite={zCharacterSprite.parse(value)}
             scale={1.5}
+            sprite={zCharacterSprite.parse(value)}
             sx={{ mb: 1.5 }}
          />
       ),
@@ -86,30 +89,30 @@ export const CommunityMenu = observer(() => {
       <Draggable handle=".community-menu-handle" nodeRef={nodeRef}>
          <StyledDialog
             ref={nodeRef}
-            hideBackdrop
             disableEnforceFocus
-            onClose={() => communityMenuStore.close()}
-            open={communityMenuStore.isOpened}
-            fullScreen={settingsMenuStore.fullScreenMenus.community}
+            hideBackdrop
             PaperProps={{
                sx: (theme) => ({
                   borderRadius: theme.spacing(0.5),
                   transition: 'all 0.3s',
                }),
             }}
+            fullScreen={settingsMenuStore.fullScreenMenus.community}
+            open={communityMenuStore.isOpened}
+            onClose={() => communityMenuStore.close()}
          >
             <StyledDialogTitle className="community-menu-handle">
                {t('community')}
             </StyledDialogTitle>
             <IconButton
                aria-label="fullscreen"
-               onClick={() => settingsMenuStore.toggleFullScreenMenu('community')}
                sx={{
                   position: 'absolute',
                   right: 48,
                   top: 12,
                   color: (theme) => theme.palette.text.primary,
                }}
+               onClick={() => settingsMenuStore.toggleFullScreenMenu('community')}
             >
                {settingsMenuStore.fullScreenMenus.community ? (
                   <FullscreenOffIcon />
@@ -119,13 +122,13 @@ export const CommunityMenu = observer(() => {
             </IconButton>
             <IconButton
                aria-label="close"
-               onClick={() => communityMenuStore.close()}
                sx={{
                   position: 'absolute',
                   right: 8,
                   top: 12,
                   color: (theme) => theme.palette.text.primary,
                }}
+               onClick={() => communityMenuStore.close()}
             >
                <CloseIcon />
             </IconButton>
@@ -154,9 +157,10 @@ export const CommunityMenu = observer(() => {
                            </TableRow>
                         ) : (
                            communityMenuStore.sortedPlayers.map((row) => (
-                              <TableRow hover tabIndex={-1} key={`community-value-${row.player}`}>
+                              <TableRow key={`community-value-${row.player}`} hover tabIndex={-1}>
                                  {columns.map((column) => {
                                     const value = row[column.id];
+
                                     return (
                                        <StyledTableCell
                                           key={`community-value-${column.id}-${row.player}`}
@@ -174,12 +178,12 @@ export const CommunityMenu = observer(() => {
                                  })}
                                  <StyledTableCell>
                                     <IconButton
-                                       size="small"
                                        color="inherit"
+                                       disabled={row.player === characterStore.name}
+                                       size="small"
                                        onClick={() =>
                                           communityMenuStore.sendPrivateMessage(row.player)
                                        }
-                                       disabled={row.player === characterStore.name}
                                     >
                                        <MessageIcon />
                                     </IconButton>
@@ -192,13 +196,13 @@ export const CommunityMenu = observer(() => {
                </TableContainer>
             </StyledDialogContent>
             <StyledDialogActions>
-               <Box display="flex" alignItems="center" gap={1}>
+               <Box alignItems="center" display="flex" gap={1}>
                   <StatusBadge status="online" />
-                  <Typography display="flex" alignItems="center" gap={1}>
+                  <Typography alignItems="center" display="flex" gap={1}>
                      <Trans
+                        components={{ b: <b /> }}
                         i18nKey="onlinePlayers"
                         values={{ count: communityMenuStore.playerCount }}
-                        components={{ b: <b /> }}
                      />
                   </Typography>
                </Box>

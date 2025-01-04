@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { RegisterStore } from './RegisterStore';
 
 describe('RegisterStore', () => {
@@ -15,30 +16,35 @@ describe('RegisterStore', () => {
 
    it('should set the email', () => {
       const store = new RegisterStore();
+
       store.setEmail('email');
       expect(store.email).toBe('email');
    });
 
    it('should set the username', () => {
       const store = new RegisterStore();
+
       store.setUsername('username');
       expect(store.username).toBe('username');
    });
 
    it('should set the password', () => {
       const store = new RegisterStore();
+
       store.setPassword('password');
       expect(store.password).toBe('password');
    });
 
    it('should set the error message', () => {
       const store = new RegisterStore();
+
       store.setErrorMessage('incorrectCredentials', { username: 'username' });
       expect(store.errorMessage).toBe('incorrectCredentials');
    });
 
    it('should set the loading', () => {
       const store = new RegisterStore();
+
       store.setLoading(true);
       expect(store.loading).toBe(true);
    });

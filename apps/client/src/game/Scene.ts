@@ -1,24 +1,24 @@
-import {
-   Direction,
-   GridEngine,
-   NoPathFoundStrategy,
-   PathBlockedStrategy,
-   Position,
-} from 'grid-engine';
+import type { GridEngine, Position } from 'grid-engine';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+import type { MonsterSprite } from 'shared/src/data/monstersSprites';
+import type { Room } from 'shared/src/types/Room';
+import type { SceneData } from 'shared/src/types/SceneData';
+
+import { Direction, NoPathFoundStrategy, PathBlockedStrategy } from 'grid-engine';
 import { TILE_SIZE } from 'shared/src/config';
-import { CharacterSprite, zCharacterSprite } from 'shared/src/data/charactersSprites';
-import { MonsterSprite, zMonsterSprite } from 'shared/src/data/monstersSprites';
+import { zCharacterSprite } from 'shared/src/data/charactersSprites';
+import { zMonsterSprite } from 'shared/src/data/monstersSprites';
 import { NPC_SPOTS } from 'shared/src/data/npcSpots';
 import { NPCS } from 'shared/src/data/npcs';
 import { isInteractiveObject } from 'shared/src/types/InteractiveObject';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { Room } from 'shared/src/types/Room';
-import { SceneData } from 'shared/src/types/SceneData';
 import { _assert } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
+
 import { AnimatedTiles } from '../plugins/AnimatedTiles';
 import { store } from '../store';
 import { isObjectProperties } from '../utils/phaser';
+
 import { makeCharacter } from './utils/makeCharacter';
 import { makeGrid } from './utils/makeGrid';
 import { makeInteractiveObject } from './utils/makeInteractiveObject';
@@ -174,6 +174,7 @@ export abstract class Scene extends Phaser.Scene {
       }
 
       const layer = this.tilemap.getObjectLayer('Interactive');
+
       if (layer === null) {
          return;
       }
@@ -184,6 +185,7 @@ export abstract class Scene extends Phaser.Scene {
 
             if (idProperty !== undefined && isInteractiveObject(idProperty.value)) {
                const interactiveObject = makeInteractiveObject(this, idProperty.value, object);
+
                this.interactiveObjects.push(interactiveObject);
             }
          }
@@ -253,6 +255,7 @@ export abstract class Scene extends Phaser.Scene {
             spritesheet,
             characterType: 'npc',
          });
+
          _assert(npc, 'npc should be defined');
          const { sprite, wrapper } = npc;
 
@@ -367,6 +370,7 @@ export abstract class Scene extends Phaser.Scene {
    private handlePointerWheel(deltaY: number): void {
       const currentZoom = this.cameras.main.zoom;
       const newZoom = NumberMgt.clamp(currentZoom - deltaY * ZOOM_STEP, ZOOM_MIN, ZOOM_MAX);
+
       this.cameras.main.zoomTo(newZoom, 100);
       store.gameStore.setZoom(newZoom);
    }
@@ -377,6 +381,7 @@ export abstract class Scene extends Phaser.Scene {
       return this.tilemap.layers.some((layer) => {
          _assert(this.tilemap, 'tilemap should be defined');
          const tile = this.tilemap.getTileAt(position.x, position.y, undefined, layer.name);
+
          return tile !== null;
       });
    }
@@ -390,6 +395,7 @@ export abstract class Scene extends Phaser.Scene {
 
       const tile = this.tilemap.layers.some((layer) => {
          _assert(this.tilemap, 'tilemap should be defined');
+
          return this.tilemap.getTileAt(x, y, undefined, layer.name);
       });
 
@@ -417,6 +423,7 @@ export abstract class Scene extends Phaser.Scene {
 
       if (character !== null) {
          const { sprite, wrapper } = character;
+
          this.playersWrappers.set(INTERNAL_PLAYER_NAME, wrapper);
 
          this.gridEngine.addCharacter({
@@ -432,6 +439,7 @@ export abstract class Scene extends Phaser.Scene {
          this.gridEngine.positionChangeStarted().subscribe((entity) => {
             if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
                const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
+
                store.characterStore.setPosition(position);
             }
          });
@@ -439,6 +447,7 @@ export abstract class Scene extends Phaser.Scene {
          this.gridEngine.movementStopped().subscribe((entity) => {
             if (this.sys.isVisible() && entity.charId === INTERNAL_PLAYER_NAME) {
                const position = this.gridEngine.getPosition(INTERNAL_PLAYER_NAME);
+
                store.colyseusStore.stopMoving(entity.direction, position);
                store.characterStore.setPosition(position);
             }
@@ -506,6 +515,7 @@ export abstract class Scene extends Phaser.Scene {
       }
 
       const lightsLayer = this.tilemap.getObjectLayer('Lights');
+
       if (lightsLayer !== null) {
          for (const object of lightsLayer.objects) {
             makeLight(this, object);
@@ -601,6 +611,7 @@ export abstract class Scene extends Phaser.Scene {
          try {
             if (this.gridEngine.hasCharacter(name)) {
                const characterSprite = this.gridEngine.getSprite(name);
+
                if (characterSprite !== undefined) {
                   const { name: characterName, square } = wrapper;
 
@@ -712,6 +723,7 @@ export abstract class Scene extends Phaser.Scene {
 
       if (character !== null) {
          const { sprite, wrapper } = character;
+
          this.playersWrappers.set(name, wrapper);
 
          this.gridEngine.addCharacter({
@@ -739,12 +751,14 @@ export abstract class Scene extends Phaser.Scene {
       }
 
       const sprite = this.playersSprites.get(name);
+
       if (sprite !== undefined) {
          sprite.destroy();
          this.playersSprites.delete(name);
       }
 
       const wrapper = this.playersWrappers.get(name);
+
       if (wrapper !== undefined) {
          wrapper.name.destroy();
          wrapper.square.destroy();
@@ -752,6 +766,7 @@ export abstract class Scene extends Phaser.Scene {
       }
 
       const fightIcon = this.fightIcons[name];
+
       if (fightIcon !== undefined) {
          fightIcon.destroy();
          delete this.fightIcons[name];
@@ -766,6 +781,7 @@ export abstract class Scene extends Phaser.Scene {
       }
 
       const sprite = this.monstersSpritesMap.get(id);
+
       if (sprite !== undefined) {
          sprite.destroy();
          this.monstersSpritesMap.delete(id);
@@ -834,6 +850,7 @@ export abstract class Scene extends Phaser.Scene {
          });
       } else if (characterSprite !== undefined) {
          const fightIconSprite = this.fightIcons[spriteName];
+
          if (fightIconSprite !== undefined) {
             fightIconSprite.destroy();
             delete this.fightIcons[spriteName];

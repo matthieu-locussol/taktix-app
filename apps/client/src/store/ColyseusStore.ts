@@ -1,21 +1,27 @@
-import { Client, Room } from 'colyseus.js';
-import i18next from 'i18next';
+import type { Room } from 'colyseus.js';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+import type { TranslationKey } from 'shared/src/data/translations';
+import type { AuthRoomResponse } from 'shared/src/rooms/AuthRoom';
+import type { ChatRoomResponse } from 'shared/src/rooms/ChatRoom';
+import type { MapRoomResponse } from 'shared/src/rooms/MapRoom';
+import type { MapState } from 'shared/src/states/MapState';
+import type { Interaction } from 'shared/src/types/Interaction';
+import type { ProfessionType } from 'shared/src/types/Profession';
+import type { Room as TRoom } from 'shared/src/types/Room';
+import type { Direction, Position, SceneData } from 'shared/src/types/SceneData';
+import type { Statistics } from 'shared/src/types/Statistic';
+import type { Store } from './Store';
+
+import { Client } from 'colyseus.js';
+import { t } from 'i18next';
 import { makeAutoObservable } from 'mobx';
 import { INTERACTION_DRINK_WINE_COST } from 'shared/src/config';
-import { CharacterSprite } from 'shared/src/data/charactersSprites';
-import { TranslationKey } from 'shared/src/data/translations';
-import { AuthRoomResponse, isAuthRoomResponse } from 'shared/src/rooms/AuthRoom';
-import { ChatRoomResponse, isChatRoomResponse } from 'shared/src/rooms/ChatRoom';
-import { MapRoomResponse, isMapRoomResponse } from 'shared/src/rooms/MapRoom';
-import { MapState } from 'shared/src/states/MapState';
+import { isAuthRoomResponse } from 'shared/src/rooms/AuthRoom';
+import { isChatRoomResponse } from 'shared/src/rooms/ChatRoom';
+import { isMapRoomResponse } from 'shared/src/rooms/MapRoom';
 import { Channel } from 'shared/src/types/Channel';
 import { CustomProtocol, Protocol } from 'shared/src/types/Colyseus';
-import { Interaction } from 'shared/src/types/Interaction';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { ProfessionType } from 'shared/src/types/Profession';
-import { Room as TRoom } from 'shared/src/types/Room';
-import { Direction, Position, SceneData } from 'shared/src/types/SceneData';
-import { Statistics } from 'shared/src/types/Statistic';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
@@ -24,7 +30,6 @@ import { StringMgt } from 'shared/src/utils/stringMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { match } from 'ts-pattern';
-import { Store } from './Store';
 
 const CHECK_INTERVAL = 10;
 const MAX_CHECK_ATTEMPTS = 1_000;
@@ -98,11 +103,13 @@ export class ColyseusStore {
 
    private get gameRoom() {
       _assert(this._gameRoom, 'GameRoom should be defined');
+
       return this._gameRoom;
    }
 
    private get uuid() {
       _assert(this._uuid, 'uuid should be defined');
+
       return this._uuid;
    }
 
@@ -161,6 +168,7 @@ export class ColyseusStore {
       }
 
       const chatRoom = await this._client.joinOrCreate('ChatRoom', { uuid: this.uuid });
+
       this.setChatRoom(chatRoom);
    }
 
@@ -449,6 +457,7 @@ export class ColyseusStore {
       this._store.gameStore.enableKeyboard(false);
 
       const scene = await this._store.gameStore.getCurrentScene();
+
       scene.fadeOut((_, progress) => {
          if (progress === 1) {
             this.setChangingMap(true);
@@ -457,11 +466,13 @@ export class ColyseusStore {
                entrancePosition: { x, y },
                entranceDirection: direction as Direction,
             };
+
             scene.scene.start(map, sceneData);
          }
       }, true);
 
       let attempts = 0;
+
       while (attempts < MAX_CHECK_ATTEMPTS) {
          attempts += 1;
 
@@ -490,6 +501,7 @@ export class ColyseusStore {
       alliesMoney,
    }: Extract<MapRoomResponse, { type: 'fightPvE' }>['message']) {
       const scene = await this._store.gameStore.getCurrentScene();
+
       scene.fadeOut((_, progress) => {
          if (progress === 1) {
             this._store.pveFightStore.setFightResults(results);
@@ -506,8 +518,8 @@ export class ColyseusStore {
       if (!success) {
          this._store.chatStore.addMessage({
             channel: Channel.SERVER,
-            content: i18next.t('itemNotEquipped'),
-            author: i18next.t('Server' satisfies TranslationKey),
+            content: t('itemNotEquipped'),
+            author: t('Server' satisfies TranslationKey),
          });
       }
    }
@@ -518,8 +530,8 @@ export class ColyseusStore {
       if (!success) {
          this._store.chatStore.addMessage({
             channel: Channel.SERVER,
-            content: i18next.t('itemNotUnequipped'),
-            author: i18next.t('Server' satisfies TranslationKey),
+            content: t('itemNotUnequipped'),
+            author: t('Server' satisfies TranslationKey),
          });
       }
    }
@@ -531,8 +543,8 @@ export class ColyseusStore {
       if (!success) {
          this._store.chatStore.addMessage({
             channel: Channel.SERVER,
-            content: i18next.t('interactionImpossible'),
-            author: i18next.t('Server' satisfies TranslationKey),
+            content: t('interactionImpossible'),
+            author: t('Server' satisfies TranslationKey),
          });
       } else {
          switch (id) {
@@ -553,7 +565,7 @@ export class ColyseusStore {
 
                   this._store.chatStore.addMessage({
                      channel: Channel.SERVER,
-                     content: i18next.t('teleporterSaved' satisfies TranslationKey),
+                     content: t('teleporterSaved' satisfies TranslationKey),
                      author: 'Server',
                   });
                }
@@ -590,8 +602,8 @@ export class ColyseusStore {
       } else {
          this._store.chatStore.addMessage({
             channel: Channel.SERVER,
-            content: i18next.t('recycleImpossible'),
-            author: i18next.t('Server' satisfies TranslationKey),
+            content: t('recycleImpossible'),
+            author: t('Server' satisfies TranslationKey),
          });
       }
    }
@@ -615,8 +627,8 @@ export class ColyseusStore {
       } else {
          this._store.chatStore.addMessage({
             channel: Channel.SERVER,
-            content: i18next.t('spinWheelImpossible'),
-            author: i18next.t('Server' satisfies TranslationKey),
+            content: t('spinWheelImpossible'),
+            author: t('Server' satisfies TranslationKey),
          });
       }
    }

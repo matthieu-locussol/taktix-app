@@ -1,9 +1,9 @@
-import { PaletteColor } from '@mui/material/styles';
-import { Channel } from 'shared/src/types/Channel';
-import { ItemRarity } from 'shared/src/types/Item';
-import { MonsterType } from 'shared/src/types/Monster';
-import { RealStatistic } from 'shared/src/types/Statistic';
-import { WeaponDamagesType } from 'shared/src/types/Weapon';
+import type { PaletteColor } from '@mui/material/styles';
+import type { Channel } from 'shared/src/types/Channel';
+import type { ItemRarity } from 'shared/src/types/Item';
+import type { MonsterType } from 'shared/src/types/Monster';
+import type { RealStatistic } from 'shared/src/types/Statistic';
+import type { WeaponDamagesType } from 'shared/src/types/Weapon';
 
 interface CustomPalette {
    chalk: PaletteColor;

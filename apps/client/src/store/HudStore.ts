@@ -1,5 +1,6 @@
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
-import { Store } from './Store';
 
 const CHATBOX_HEIGHT_STEPS = [15, 30, 100];
 
@@ -48,6 +49,7 @@ export class HudStore {
       this._store.soundsStore.play('check');
 
       const scene = await this._store.gameStore.getCurrentScene();
+
       scene.setGridVisibility(this.isGridVisible);
    }
 
@@ -56,6 +58,7 @@ export class HudStore {
       this._store.soundsStore.play('check');
 
       const scene = await this._store.gameStore.getCurrentScene();
+
       scene.setMinimapVisibility(this.isMinimapVisible);
    }
 

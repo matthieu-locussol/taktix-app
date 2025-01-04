@@ -1,5 +1,8 @@
-import { Node, Position } from 'reactflow';
+import type { Node } from 'reactflow';
+
+import { Position } from 'reactflow';
 import { describe, expect, it } from 'vitest';
+
 import { getEdgeParams } from './graph';
 
 const createMockNode = (overrides = {}): Node => ({

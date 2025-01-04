@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { HudStore } from './HudStore';
 import { Store } from './Store';
 
@@ -67,12 +68,14 @@ describe('HudStore', () => {
 
    it('setChatboxWidth', () => {
       const store = new HudStore(new Store());
+
       store.setChatboxWidth(50);
       expect(store.chatboxWidth).toBe(50);
    });
 
    it('setChatboxHeight', () => {
       const store = new HudStore(new Store());
+
       store.setChatboxHeight(50);
       expect(store.chatboxHeight).toBe(50);
    });
@@ -121,48 +124,56 @@ describe('HudStore', () => {
 
    it('setChatboxInputHeight', () => {
       const store = new HudStore(new Store());
+
       store.setChatboxInputHeight(50);
       expect(store.chatboxInputHeight).toBe(50);
    });
 
    it('toggleChatbox', () => {
       const store = new HudStore(new Store());
+
       store.toggleChatbox();
       expect(store.isChatboxVisible).toBe(false);
    });
 
    it('setCharacterWidth', () => {
       const store = new HudStore(new Store());
+
       store.setCharacterWidth(50);
       expect(store.characterWidth).toBe(50);
    });
 
    it('setCharacterHeight', () => {
       const store = new HudStore(new Store());
+
       store.setCharacterHeight(50);
       expect(store.characterHeight).toBe(50);
    });
 
    it('toggleCharacter', () => {
       const store = new HudStore(new Store());
+
       store.toggleCharacter();
       expect(store.isCharacterVisible).toBe(false);
    });
 
    it('setMenuWidth', () => {
       const store = new HudStore(new Store());
+
       store.setMenuWidth(50);
       expect(store.menuWidth).toBe(50);
    });
 
    it('setMenuHeight', () => {
       const store = new HudStore(new Store());
+
       store.setMenuHeight(50);
       expect(store.menuHeight).toBe(50);
    });
 
    it('toggleMenu', () => {
       const store = new HudStore(new Store());
+
       store.toggleMenu();
       expect(store.isMenuVisible).toBe(false);
    });

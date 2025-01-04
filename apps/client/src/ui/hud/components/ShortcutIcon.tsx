@@ -1,6 +1,9 @@
+import type { IconButtonProps } from '@mui/material/IconButton';
+
 import { Badge, darken, svgIconClasses } from '@mui/material';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
 import { forwardRef } from 'react';
+
 import { Tooltip } from './Tooltip';
 
 export interface ShortcutIconProps extends IconButtonProps {
@@ -12,7 +15,7 @@ export interface ShortcutIconProps extends IconButtonProps {
 
 export const ShortcutIcon = forwardRef<HTMLButtonElement, ShortcutIconProps>(
    ({ icon, active, title, count, ...rest }, ref) => (
-      <Tooltip title={title} placement="top">
+      <Tooltip placement="top" title={title}>
          <IconButton
             ref={ref}
             centerRipple={false}
@@ -32,10 +35,12 @@ export const ShortcutIcon = forwardRef<HTMLButtonElement, ShortcutIconProps>(
             })}
             {...rest}
          >
-            <Badge color="error" badgeContent={count}>
+            <Badge badgeContent={count} color="error">
                {icon}
             </Badge>
          </IconButton>
       </Tooltip>
    ),
 );
+
+ShortcutIcon.displayName = 'ShortcutIcon';

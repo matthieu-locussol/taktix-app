@@ -1,5 +1,6 @@
 import { ProfessionType } from 'shared/src/types/Profession';
 import { describe, expect, it } from 'vitest';
+
 import { CharacterCreationStore } from './CharacterCreationStore';
 
 describe('CharacterCreationStore', () => {
@@ -15,24 +16,28 @@ describe('CharacterCreationStore', () => {
 
    it('should set the name', () => {
       const store = new CharacterCreationStore();
+
       store.setName('John');
       expect(store.name).toBe('John');
    });
 
    it('should set the profession', () => {
       const store = new CharacterCreationStore();
+
       store.setProfession(ProfessionType.Mage);
       expect(store.profession).toBe(ProfessionType.Mage);
    });
 
    it('should set the loading', () => {
       const store = new CharacterCreationStore();
+
       store.setLoading(true);
       expect(store.loading).toBe(true);
    });
 
    it('should set the error message', () => {
       const store = new CharacterCreationStore();
+
       store.setErrorMessage('invalidPassword');
       expect(store.errorMessage).toBe('invalidPassword');
    });

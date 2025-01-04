@@ -1,7 +1,9 @@
+import type { CommunitySchema } from 'shared/src/schemas/CommunitySchema';
+import type { Store } from './Store';
+
 import { makeAutoObservable, runInAction } from 'mobx';
-import { CommunitySchema, zCommunitySchema } from 'shared/src/schemas/CommunitySchema';
+import { zCommunitySchema } from 'shared/src/schemas/CommunitySchema';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
-import { Store } from './Store';
 
 export class CommunityMenuStore {
    private _store: Store;
@@ -32,7 +34,9 @@ export class CommunityMenuStore {
             this.players = players;
             this.loading = false;
          });
-      } catch (_error) {
+      } catch (error) {
+         console.error(error);
+
          runInAction(() => {
             this.players = [];
             this.loading = false;

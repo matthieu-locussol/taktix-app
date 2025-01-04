@@ -1,7 +1,8 @@
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
 import { ZodMgt } from 'shared/src/utils/zodMgt';
 import { z } from 'zod';
-import { Store } from './Store';
 
 const sounds = ['attack', 'check', 'death', 'evade', 'sleep', 'teleport'] as const;
 
@@ -29,6 +30,7 @@ export class SoundsStore {
    adjustSoundsVolume(volume: number): void {
       for (const sound of sounds) {
          const soundObject = this._sounds.get(sound);
+
          if (soundObject !== undefined) {
             soundObject.volume = volume;
          }
@@ -40,6 +42,7 @@ export class SoundsStore {
 
       if (soundObject !== undefined) {
          const clonedSoundObject = soundObject.cloneNode(false) as HTMLAudioElement;
+
          clonedSoundObject.volume = soundObject.volume;
          clonedSoundObject.play();
       }

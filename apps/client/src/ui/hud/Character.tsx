@@ -2,8 +2,10 @@ import { darken, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
+
 import { ExperienceBar } from './components/ExperienceBar';
 import { HealthBar } from './components/HealthBar';
 
@@ -13,26 +15,26 @@ export const Character = observer(() => {
 
    return (
       <Root
-         widthPercent={hudStore.characterWidth}
-         heightPercent={hudStore.characterHeight}
          chatboxWidth={hudStore.chatboxWidth}
+         heightPercent={hudStore.characterHeight}
+         widthPercent={hudStore.characterWidth}
       >
          <Informations>
             <Typography
                align="right"
                color="text.primary"
-               variant="body2"
                fontSize="1vw"
                lineHeight="2.5vh"
+               variant="body2"
             >
                <b>{characterStore.name}</b> - {t('level', { level: characterStore.level })}
             </Typography>
             <Typography
                align="right"
                color="text.secondary"
-               variant="body2"
                fontSize="1vw"
                lineHeight="2.5vh"
+               variant="body2"
             >
                {t(characterStore.map)} - [{characterStore.position.x}, {characterStore.position.y}]
             </Typography>

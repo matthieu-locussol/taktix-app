@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { getVersion } from './version';
 
 vi.mock('../../package.json', () => ({

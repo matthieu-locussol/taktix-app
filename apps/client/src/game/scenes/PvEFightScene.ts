@@ -1,15 +1,17 @@
-import i18next from 'i18next';
+import type { MonsterType } from 'shared/src/types/Monster';
+import type { PvEFightMove } from 'shared/src/types/PvEFight';
+import type { Room } from 'shared/src/types/Room';
+import type { Position } from 'shared/src/types/SceneData';
+import type { WeaponDamagesType } from 'shared/src/types/Weapon';
+
+import { t } from 'i18next';
 import { animationFilesData, animationsData } from 'shared/src/data/animations';
 import { monstersSpritesData } from 'shared/src/data/monstersSprites';
 import { ANIMATION_TO_FILE } from 'shared/src/types/Animation';
-import { MonsterType } from 'shared/src/types/Monster';
-import { PvEFightMove } from 'shared/src/types/PvEFight';
-import { Room } from 'shared/src/types/Room';
-import { Position } from 'shared/src/types/SceneData';
-import { WeaponDamagesType } from 'shared/src/types/Weapon';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
+
 import { store } from '../../store';
 import { MONSTER_TYPE_COLORS, STATS_COLORS } from '../../styles/appTheme';
 import { CHARACTER_HEIGHT, FADE_IN_DURATION, FADE_OUT_DURATION, SCALE_FACTOR } from '../Scene';
@@ -66,6 +68,7 @@ export class PvEFightScene extends Phaser.Scene {
 
       store.pveFightStore.uniqueAnimationFiles.forEach((animationFile) => {
          const { frameHeight, frameWidth, path, id } = animationFilesData[animationFile];
+
          this.load.spritesheet(id, path, { frameWidth, frameHeight });
       });
    }
@@ -119,6 +122,7 @@ export class PvEFightScene extends Phaser.Scene {
 
       store.pveFightStore.fightResults.allies.forEach(({ id, spritesheet }, idx) => {
          const playerSprite = this.add.sprite(0, 0, spritesheet);
+
          playerSprite.anims.create({
             key: 'idle',
             frames: playerSprite.anims.generateFrameNumbers(spritesheet, {
@@ -132,6 +136,7 @@ export class PvEFightScene extends Phaser.Scene {
          playerSprite.setName('sprite');
 
          const container = this.add.container(0, 0, [playerSprite]);
+
          container.setPosition(
             this.getAllyPosition(playerSprite, idx, alliesCount).x,
             this.getAllyPosition(playerSprite, idx, alliesCount).y,
@@ -149,6 +154,7 @@ export class PvEFightScene extends Phaser.Scene {
 
       store.pveFightStore.fightResults.monsters.forEach(({ id, monsterType, spritesheet }, idx) => {
          const monsterSprite = this.add.sprite(0, 0, spritesheet);
+
          monsterSprite.anims.create({
             key: 'idle',
             frames: monsterSprite.anims.generateFrameNumbers(spritesheet, {
@@ -162,6 +168,7 @@ export class PvEFightScene extends Phaser.Scene {
          monsterSprite.setName('sprite');
 
          const container = this.add.container(0, 0, [monsterSprite]);
+
          container.setPosition(
             this.getMonsterPosition(monsterSprite, idx, monstersCount).x,
             this.getMonsterPosition(monsterSprite, idx, monstersCount).y,
@@ -188,6 +195,7 @@ export class PvEFightScene extends Phaser.Scene {
 
          for (let moveIdx = 0; moveIdx < moves.length; moveIdx++) {
             const move = moves[moveIdx];
+
             this.movesQueue.push({
                move,
                turnId: idx,
@@ -198,6 +206,7 @@ export class PvEFightScene extends Phaser.Scene {
 
       while (this.movesQueue.length > 0) {
          const move = this.movesQueue.shift();
+
          _assert(move, 'move must be set');
          await this.executeMove(move.move, move.turnId, move.moveId);
       }
@@ -225,6 +234,7 @@ export class PvEFightScene extends Phaser.Scene {
          ({ name }) => name === store.characterStore.name,
       );
       const items = store.pveFightStore.fightResults.loots[playerIdx];
+
       store.characterStore.addItems(items);
 
       this.fadeOut(async (_, progress) => {
@@ -247,6 +257,7 @@ export class PvEFightScene extends Phaser.Scene {
 
       if (this.animationRunning) {
          await TimeMgt.wait(200 / store.settingsMenuStore.speedFactor);
+
          return this.executeMove(move, turnId, moveId);
       }
 
@@ -261,6 +272,7 @@ export class PvEFightScene extends Phaser.Scene {
       const fighterSprite = container.getByName('sprite') as Phaser.GameObjects.Sprite;
 
       const healthBgSprite = this.add.graphics();
+
       healthBgSprite.fillStyle(0x111827, 0.3);
       healthBgSprite.fillRoundedRect(
          fighterSprite.x - 40,
@@ -281,6 +293,7 @@ export class PvEFightScene extends Phaser.Scene {
       healthBgSprite.setName('healthBg');
 
       const healthSprite = this.add.graphics();
+
       healthSprite.fillStyle(NumberMgt.hexStringToNumber(STATS_COLORS.vitality));
       healthSprite.fillRoundedRect(
          fighterSprite.x - 40 + 1,
@@ -301,6 +314,7 @@ export class PvEFightScene extends Phaser.Scene {
       const fighterSprite = container.getByName('sprite') as Phaser.GameObjects.Sprite;
 
       const magicShieldBgSprite = this.add.graphics();
+
       magicShieldBgSprite.fillStyle(0x111827, 0.3);
       magicShieldBgSprite.fillRoundedRect(
          fighterSprite.x - 40,
@@ -321,6 +335,7 @@ export class PvEFightScene extends Phaser.Scene {
       magicShieldBgSprite.setName('magicShieldBg');
 
       const magicShieldSprite = this.add.graphics();
+
       magicShieldSprite.fillStyle(NumberMgt.hexStringToNumber(STATS_COLORS.magicShield));
       magicShieldSprite.fillRoundedRect(
          fighterSprite.x - 40 + 1,
@@ -350,7 +365,7 @@ export class PvEFightScene extends Phaser.Scene {
       const { name, level } = fighterInfos;
       const characterName = makeCharacterName(
          this,
-         `${i18next.t(name)} - ${level}`,
+         `${t(name)} - ${level}`,
          monsterType !== undefined ? MONSTER_TYPE_COLORS[monsterType] : '#ffffff',
       )
          .setY(fighterSprite.y - MAGICSHIELD_HEIGHT - CHARACTER_HEIGHT / 2 - NAME_MARGIN + 2)
@@ -387,6 +402,7 @@ export class PvEFightScene extends Phaser.Scene {
 
          healthSprite.setScale(health / maxHealth, 1);
          const emptySpace = HEALTH_WIDTH - (health / maxHealth) * HEALTH_WIDTH;
+
          healthSprite.setX(healthBgSprite.x - emptySpace / 2);
       }
    }
@@ -404,6 +420,7 @@ export class PvEFightScene extends Phaser.Scene {
 
          magicShieldSprite.setScale(magicShield / maxMagicShield, 1);
          const emptySpace = MAGICSHIELD_WIDTH - (magicShield / maxMagicShield) * MAGICSHIELD_WIDTH;
+
          magicShieldSprite.setX(magicShieldBgSprite.x - emptySpace / 2);
       }
    }
@@ -622,6 +639,7 @@ export class PvEFightScene extends Phaser.Scene {
                         (targetContainer.scaleX * scale) / 2,
                         (targetContainer.scaleY * scale) / 2,
                      );
+
                   hitAnimation.postFX.addGlow(0x111827, 16, 0, false, 1, 10);
                   hitAnimation.play(animationId);
                   store.soundsStore.play('attack');
@@ -648,9 +666,11 @@ export class PvEFightScene extends Phaser.Scene {
                            dodgeAnimation.destroy();
                         },
                      });
+
                      dodgeAnimation.play();
                      store.soundsStore.play('evade');
                      this.displayDodge(targetContainer);
+
                      return;
                   }
 
@@ -758,7 +778,9 @@ export class PvEFightScene extends Phaser.Scene {
             .setAlpha(0)
             .setDepth(1)
             .setScale(0.5, 0.5);
+
          sprite.postFX.addGlow(isCriticalStrike ? 0xfbbf24 : 0x111827, 4, 0, false, 0.3, 10);
+
          return sprite;
       });
 
@@ -836,6 +858,7 @@ export class PvEFightScene extends Phaser.Scene {
          .setAlpha(0)
          .setDepth(1)
          .setScale(0.5, 0.5);
+
       lifeStolenSprite.postFX.addGlow(0x111827, 4, 0, false, 0.3, 10);
 
       this.tweens.add({
@@ -878,6 +901,7 @@ export class PvEFightScene extends Phaser.Scene {
             .setAlpha(0)
             .setDepth(1)
             .setScale(0.5, 0.5);
+
          physicalSprite.postFX.addGlow(0x111827, 4, 0, false, 0.3, 10);
 
          this.tweens.add({
@@ -915,6 +939,7 @@ export class PvEFightScene extends Phaser.Scene {
             .setAlpha(0)
             .setDepth(1)
             .setScale(0.5, 0.5);
+
          magicalSprite.postFX.addGlow(0x111827, 4, 0, false, 0.3, 10);
 
          this.tweens.add({
@@ -974,6 +999,7 @@ export class PvEFightScene extends Phaser.Scene {
 
    private getHeightOffset(): number {
       const gameLayoutBoxHeight = document.getElementById('game-layout-box')?.offsetHeight ?? 0;
+
       return gameLayoutBoxHeight - 8;
    }
 

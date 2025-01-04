@@ -1,6 +1,8 @@
+import type { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+
 import { keyframes, styled } from '@mui/material';
-import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
-import { CharacterSprite } from 'shared/src/data/charactersSprites';
+
 import { CHARACTER_HEIGHT, CHARACTER_WIDTH } from '../../../game/Scene';
 
 interface CharacterSpriteRendererProps
@@ -8,7 +10,7 @@ interface CharacterSpriteRendererProps
       StyleProps {}
 
 export const CharacterSpriteRenderer = ({ sprite, ...rest }: CharacterSpriteRendererProps) => {
-   return <StyledImg sprite={sprite} alt={sprite} {...rest} />;
+   return <StyledImg alt={sprite} sprite={sprite} {...rest} />;
 };
 
 interface StyleProps {

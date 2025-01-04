@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@mui/material';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import './game/PhaserGame';
 import { appTheme } from './styles/appTheme';
 import './styles/globals.css';

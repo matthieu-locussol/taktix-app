@@ -1,10 +1,13 @@
-import { Box, Divider, TooltipProps, Typography, darken } from '@mui/material';
+import type { TooltipProps } from '@mui/material';
+import type { Affix, Item } from 'shared/src/types/Item';
+import type { WeaponDamages } from 'shared/src/types/Weapon';
+
+import { Box, Divider, Typography, darken } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
-import { Affix, Item } from 'shared/src/types/Item';
 import { zStatistic } from 'shared/src/types/Statistic';
-import { WeaponDamages } from 'shared/src/types/Weapon';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
+
 import { useStore } from '../../../store';
 import {
    ITEM_RARITY_COLORS,
@@ -12,6 +15,7 @@ import {
 } from '../../../styles/appTheme';
 import { useTranslation } from '../../../types/react-i18next';
 import { StatisticIcon } from '../../components/StatisticIcon';
+
 import { Tooltip } from './Tooltip';
 
 interface ItemTooltipProps extends Omit<TooltipProps, 'title'> {
@@ -29,6 +33,7 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
       return Object.entries(statistics)
          .map<React.ReactNode>(([statisticStr, value], idx) => {
             const statistic = zStatistic.parse(statisticStr);
+
             return (
                <Box
                   key={`${statistic}-${tier}-${type}-${item.id}-${idx}`}
@@ -47,21 +52,21 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
                      }}
                   />
                   <Typography
-                     variant="body2"
                      sx={(theme) => ({
                         color: theme.palette.statisticsColors[
                            RAW_STATISTIC_TO_REAL_STATISTIC_COLORS[statistic]
                         ],
                      })}
+                     variant="body2"
                   >
                      {`${t(`${statistic}_value`, { value })}`}
                   </Typography>
                   <Typography
-                     variant="body2"
+                     color="gray"
                      fontStyle="italic"
                      fontWeight="bold"
-                     color="gray"
                      sx={{ ml: 'auto', pl: 'min(0.5vw, 1vh)' }}
+                     variant="body2"
                   >
                      {type}
                      {tier}
@@ -84,12 +89,12 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
             }}
          >
             <Typography
-               variant="overline"
                fontWeight="bold"
                lineHeight={1.5}
                sx={(theme) => ({
                   color: theme.palette.damages[type],
                })}
+               variant="overline"
             >
                {t(`${type}DamagesRange`, { min, max })}
             </Typography>
@@ -131,27 +136,27 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
             })}
          >
             <Typography
-               variant="body1"
+               gutterBottom
                fontWeight="bold"
                lineHeight={1.2}
                sx={{ px: 'min(1vw, 2vh)', pt: 'min(0.5vw, 1vh)' }}
-               gutterBottom
+               variant="body1"
             >
                {name}
             </Typography>
             <Box sx={{ display: 'flex', width: '100%', px: 'min(1vw, 2vh)' }}>
-               <Typography variant="caption" color="lightgrey">
+               <Typography color="lightgrey" variant="caption">
                   {t(itemToRender.type)}
                </Typography>
                <Typography
-                  variant="caption"
-                  fontWeight="bold"
                   color={ITEM_RARITY_COLORS[rarity]}
+                  fontWeight="bold"
                   sx={{
                      ml: 'auto',
                      px: 'min(1vw, 2vh)',
                      mr: 'min(1vw, 2vh)',
                   }}
+                  variant="caption"
                >
                   {t(rarity)}
                </Typography>
@@ -164,16 +169,16 @@ export const ItemTooltip = observer(({ item, equippedItem, ...rest }: ItemToolti
                   pb: hasAffixes ? 'min(0.5vw, 1vh)' : 0,
                }}
             >
-               <Typography variant="caption" color={hasRequiredLevel ? 'green' : 'red'}>
+               <Typography color={hasRequiredLevel ? 'green' : 'red'} variant="caption">
                   {t('requiredLevel', { level: itemToRender.requiredLevel })}
                </Typography>
                <Typography
-                  variant="caption"
                   sx={{
                      ml: 'auto',
                      px: 'min(1vw, 2vh)',
                      mr: 'min(1vw, 2vh)',
                   }}
+                  variant="caption"
                >
                   {t('level', { level: itemToRender.level })}
                </Typography>

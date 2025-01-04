@@ -1,8 +1,9 @@
-import i18next from 'i18next';
+import type { TranslationKey } from 'shared/src/data/translations';
+import type { Store } from './Store';
+
+import { t } from 'i18next';
 import { makeAutoObservable } from 'mobx';
-import { TranslationKey } from 'shared/src/data/translations';
 import { Channel } from 'shared/src/types/Channel';
-import { Store } from './Store';
 
 interface ChatMessage {
    author: string;
@@ -57,8 +58,8 @@ export class ChatStore {
             this.formatMessage({
                author:
                   author === this._store.characterStore.name
-                     ? i18next.t('to' satisfies TranslationKey, { name: target })
-                     : i18next.t('from' satisfies TranslationKey, { name: author }),
+                     ? t('to' satisfies TranslationKey, { name: target })
+                     : t('from' satisfies TranslationKey, { name: author }),
                content,
                channel: Channel.PRIVATE,
             }),

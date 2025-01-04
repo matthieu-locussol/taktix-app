@@ -1,8 +1,9 @@
-import { makeAutoObservable } from 'mobx';
-import { Item, ItemType } from 'shared/src/types/Item';
+import type { Item, ItemType } from 'shared/src/types/Item';
+import type { SortOption } from '../ui/hud/components/ItemsSortSelector';
+import type { Store } from './Store';
+
 import { ItemMgt } from 'shared/src/utils/itemMgt';
-import { SortOption } from '../ui/hud/components/ItemsSortSelector';
-import { Store } from './Store';
+import { makeAutoObservable } from 'mobx';
 
 type InventoryMode = 'normal' | 'recycle';
 

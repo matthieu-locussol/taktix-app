@@ -1,7 +1,9 @@
+import type { ChangelogSchema } from 'shared/src/schemas/ChangelogSchema';
+import type { StatusSchema } from 'shared/src/schemas/StatusSchema';
+import type { Store } from './Store';
+
 import { makeAutoObservable, runInAction } from 'mobx';
-import { ChangelogSchema, zChangelogSchema } from 'shared/src/schemas/ChangelogSchema';
-import { StatusSchema } from 'shared/src/schemas/StatusSchema';
-import { Store } from './Store';
+import { zChangelogSchema } from 'shared/src/schemas/ChangelogSchema';
 
 export class NewsStore {
    private _store: Store;
@@ -32,7 +34,9 @@ export class NewsStore {
             this.changelogs = changelogs;
             this.loading = false;
          });
-      } catch (_error) {
+      } catch (error) {
+         console.error(error);
+
          runInAction(() => {
             this.changelogs = [];
             this.loading = false;

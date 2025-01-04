@@ -1,14 +1,17 @@
-import { Position } from 'grid-engine';
+import type { Position } from 'grid-engine';
+import type { FightState } from 'shared/src/states/FightState';
+import type { PlayerState } from 'shared/src/states/PlayerState';
+import type { SceneData } from 'shared/src/types/SceneData';
+import type { Scene } from '../game/Scene';
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
-import { FightState } from 'shared/src/states/FightState';
-import { PlayerState } from 'shared/src/states/PlayerState';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { SceneData } from 'shared/src/types/SceneData';
 import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
-import { PLAYER_GE_LAYER, Scene, ZOOM_MAX, ZOOM_MIN } from '../game/Scene';
-import { Store } from './Store';
+
+import { PLAYER_GE_LAYER, ZOOM_MAX, ZOOM_MIN } from '../game/Scene';
 
 const CHECK_INTERVAL = 10;
 const MAX_CHECK_ATTEMPTS = 1_000;
@@ -50,6 +53,7 @@ export class GameStore {
 
    addPlayerToQueue(player: PlayerState) {
       const isPlayer = player.name === this._store.characterStore.name;
+
       if (!isPlayer) {
          this.playersToAddQueue.push(player);
       }
@@ -57,6 +61,7 @@ export class GameStore {
 
    removePlayerFromQueue(player: PlayerState) {
       const isPlayer = player.name === this._store.characterStore.name;
+
       if (!isPlayer) {
          this.playersToAddQueue = this.playersToAddQueue.filter(({ name }) => name !== player.name);
          this.playersToRemoveQueue.push(player);
@@ -73,12 +78,14 @@ export class GameStore {
 
    get game() {
       _assert(this._game);
+
       return this._game;
    }
 
    get currentScene() {
       const { scenes } = this.game.scene;
       const activeScenes = scenes.filter(({ scene }) => this.game.scene.isActive(scene.key));
+
       _assertTrue(activeScenes.length <= 1, 'There should be only one active scene at a time.');
 
       return activeScenes[0] as Scene;
@@ -86,10 +93,12 @@ export class GameStore {
 
    async getCurrentScene() {
       let attempts = 0;
+
       while (attempts < MAX_CHECK_ATTEMPTS) {
          attempts += 1;
 
          const { currentScene } = this;
+
          if (currentScene !== undefined) {
             return currentScene;
          }
@@ -102,9 +111,11 @@ export class GameStore {
 
    async teleportPlayer(position: Position) {
       const scene = await this.getCurrentScene();
+
       scene.gridEngine.setPosition(INTERNAL_PLAYER_NAME, position, PLAYER_GE_LAYER);
 
       const { characterStore } = this._store;
+
       characterStore.setPosition(position);
    }
 
@@ -113,6 +124,7 @@ export class GameStore {
       const returnedScene = scene.scene.start(map, data).scene;
 
       const { characterStore } = this._store;
+
       _assert(data.entrancePosition);
       characterStore.setPosition(data.entrancePosition);
 

@@ -1,8 +1,11 @@
+import type { UpdateManifest } from '@tauri-apps/api/updater';
+import type { Store } from './Store';
+
 import { relaunch } from '@tauri-apps/api/process';
-import { UpdateManifest, checkUpdate, installUpdate } from '@tauri-apps/api/updater';
+import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
 import { makeAutoObservable, runInAction } from 'mobx';
+
 import { isTauri } from '../utils/tauri';
-import { Store } from './Store';
 
 export class UpdaterStore {
    private _store: Store;
@@ -52,7 +55,9 @@ export class UpdaterStore {
             this.updating = false;
             this.openUpdateModal = true;
          });
-      } catch (_e) {
+      } catch (error) {
+         console.error(error);
+
          runInAction(() => {
             this._store.loginStore.setErrorMessage('updateError');
          });
@@ -66,7 +71,9 @@ export class UpdaterStore {
          runInAction(() => {
             this.openUpdateModal = false;
          });
-      } catch (_e) {
+      } catch (error) {
+         console.error(error);
+
          runInAction(() => {
             this._store.loginStore.setErrorMessage('restartError');
          });

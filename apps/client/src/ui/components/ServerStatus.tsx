@@ -1,12 +1,16 @@
-import { BoxProps, styled } from '@mui/material';
+import type { BoxProps } from '@mui/material';
+
+import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { Trans } from 'react-i18next';
 import { zStatusSchema } from 'shared/src/schemas/StatusSchema';
+
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
+
 import { StatusBadge } from './StatusBadge';
 
 const REFRESH_INTERVAL = 5_000;
@@ -27,7 +31,9 @@ export const ServerStatus = observer((props: BoxProps) => {
             const { status } = zStatusSchema.parse(json);
 
             newsStore.setStatus(status);
-         } catch (_e) {
+         } catch (error) {
+            console.error(error);
+
             newsStore.setStatus('offline');
          }
       };
@@ -47,9 +53,9 @@ export const ServerStatus = observer((props: BoxProps) => {
       <StyledBox {...props}>
          <Typography sx={{ m: 0 }}>
             <Trans
+               components={{ b: <b /> }}
                i18nKey="serverStatus"
                values={{ status: t(newsStore.status) }}
-               components={{ b: <b /> }}
             />
          </Typography>
          <StatusBadge status={newsStore.status} />

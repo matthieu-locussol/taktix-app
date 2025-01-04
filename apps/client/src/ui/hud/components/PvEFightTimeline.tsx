@@ -1,11 +1,14 @@
+import type { TranslationKey } from 'shared/src/data/translations';
+
 import PlayingIcon from '@mui/icons-material/ArrowDropUpRounded';
 import { Box, Paper } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { zCharacterSprite } from 'shared/src/data/charactersSprites';
 import { zMonsterSprite } from 'shared/src/data/monstersSprites';
-import { TranslationKey } from 'shared/src/data/translations';
+
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
+
 import { CharacterSpriteStatic } from './CharacterSpriteStatic';
 import { MonsterSpriteStatic } from './MonsterSpriteStatic';
 import { Tooltip } from './Tooltip';
@@ -24,8 +27,8 @@ export const PvEFightTimeline = observer(() => {
          {pveFightStore.fightersOrder.map((fighter) => (
             <Tooltip
                key={`${fighter.id}-${pveFightStore.currentTurn}-${pveFightStore.currentFighter}`}
-               title={t(fighter.name as TranslationKey)}
                placement="top"
+               title={t(fighter.name as TranslationKey)}
             >
                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <Paper
@@ -45,8 +48,8 @@ export const PvEFightTimeline = observer(() => {
                   >
                      {fighter.type === 'ally' ? (
                         <CharacterSpriteStatic
-                           sprite={zCharacterSprite.parse(fighter.spritesheet)}
                            scale={1.375}
+                           sprite={zCharacterSprite.parse(fighter.spritesheet)}
                            sx={{ pb: 0.5, mt: -0.5 }}
                         />
                      ) : (

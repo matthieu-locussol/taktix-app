@@ -1,8 +1,10 @@
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
+
 import { LauncherLinks } from './LauncherLinks';
 
 export const LauncherFormFooter = observer(() => {

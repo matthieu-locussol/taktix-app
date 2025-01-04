@@ -1,9 +1,12 @@
 import type { BoxProps, Theme } from '@mui/material';
+import type { Item } from 'shared/src/types/Item';
+
 import { forwardRef, useMemo } from 'react';
-import { Item } from 'shared/src/types/Item';
 import { ItemMgt } from 'shared/src/utils/itemMgt';
+
 import { ITEM_RARITY_COLORS } from '../../../styles/appTheme';
 import { ItemBaseIcon } from '../../components/items/ItemBaseIcon';
+
 import { ItemSlot } from './ItemSlot';
 import { ItemTooltip } from './ItemTooltip';
 
@@ -37,32 +40,32 @@ export const EquipmentSlot = forwardRef<HTMLDivElement, EquipmentSlotProps>(
                ref={ref}
                canBeHovered={canBeHovered}
                {...rest}
-               width={width}
                height={height}
+               width={width}
             />
          );
       }
 
       return (
          <ItemTooltip
-            item={item}
-            equippedItem={equippedItem}
-            placement="top"
+            disableInteractive
             enterDelay={300}
             enterNextDelay={300}
-            disableInteractive
+            equippedItem={equippedItem}
+            item={item}
+            placement="top"
          >
             <ItemSlot
                ref={ref}
                canBeHovered={canBeHovered}
                highlightColor={() => ITEM_RARITY_COLORS[rarity!]}
                {...rest}
-               width={width}
                height={height}
+               width={width}
             >
                <ItemBaseIcon
-                  path={item.type}
                   color={rarity}
+                  path={item.type}
                   sx={{
                      width: `calc(${width} / 1.5)`,
                      height: `calc(${height} / 1.5)`,
@@ -73,3 +76,5 @@ export const EquipmentSlot = forwardRef<HTMLDivElement, EquipmentSlotProps>(
       );
    },
 );
+
+EquipmentSlot.displayName = 'EquipmentSlot';

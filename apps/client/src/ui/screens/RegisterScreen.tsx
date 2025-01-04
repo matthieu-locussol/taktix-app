@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
+
 import { useStore } from '../../store';
 import { useTranslation } from '../../types/react-i18next';
 import { getVersion } from '../../utils/version';
@@ -57,9 +58,8 @@ export const RegisterScreen = observer(() => {
 
    return (
       <Box
-         component="form"
-         onSubmit={onSubmit}
          noValidate
+         component="form"
          sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -71,10 +71,11 @@ export const RegisterScreen = observer(() => {
                zIndex: 1,
             },
          }}
+         onSubmit={onSubmit}
       >
-         <Card variant="outlined" sx={{ display: 'flex' }}>
+         <Card sx={{ display: 'flex' }} variant="outlined">
             <CardContent>
-               <Box display="flex" justifyContent="space-between" alignItems="start" mb={4}>
+               <Box alignItems="start" display="flex" justifyContent="space-between" mb={4}>
                   <Box
                      sx={{
                         display: 'flex',
@@ -85,21 +86,21 @@ export const RegisterScreen = observer(() => {
                      <Typography variant="h1">Taktix</Typography>
                      <Typography
                         color="white"
-                        fontWeight="bold"
                         fontFamily="Orbitron"
-                        variant="overline"
+                        fontWeight="bold"
                         sx={{ mt: 'auto', mb: -0.5, ml: 1 }}
+                        variant="overline"
                      >
                         {getVersion()}
                      </Typography>
                   </Box>
                   <LanguageSelector
+                     sx={{ my: 'auto' }}
                      variant="outlined"
                      onChange={(e) => {
                         settingsMenuStore.setLanguage(e.target.value);
                         settingsMenuStore.saveChanges();
                      }}
-                     sx={{ my: 'auto' }}
                   />
                </Box>
                <Changelog />
@@ -108,7 +109,7 @@ export const RegisterScreen = observer(() => {
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
             {updaterStore.shouldUpdate === undefined && (
                <CardContent>
-                  <Typography variant="h1" align="center">
+                  <Typography align="center" variant="h1">
                      {t('accessUniverse')}
                   </Typography>
                   <CircularProgress />
@@ -116,49 +117,49 @@ export const RegisterScreen = observer(() => {
             )}
             {updaterStore.shouldUpdate === false && (
                <CardContent>
-                  <Typography variant="h1" align="center" gutterBottom>
+                  <Typography gutterBottom align="center" variant="h1">
                      {t('accessUniverse')}
                   </Typography>
                   {registerStore.errorMessage && (
-                     <Typography variant="body1" align="center" color="error">
+                     <Typography align="center" color="error" variant="body1">
                         {newsStore.status === 'maintenance'
                            ? t('serverInMaintenance')
                            : t(registerStore.errorMessage, registerStore.errorMessageOptions)}
                      </Typography>
                   )}
                   <TextField
-                     type="email"
-                     placeholder={t('emailAddress')}
                      autoComplete="email"
+                     placeholder={t('emailAddress')}
+                     sx={{ mt: 2 }}
+                     type="email"
                      value={registerStore.email}
                      onChange={(e) => registerStore.setEmail(e.target.value)}
-                     sx={{ mt: 2 }}
                   />
                   <TextField
-                     type="text"
-                     placeholder={t('username')}
                      autoComplete="username"
+                     placeholder={t('username')}
+                     sx={{ mt: 2 }}
+                     type="text"
                      value={registerStore.username}
                      onChange={(e) => registerStore.setUsername(e.target.value)}
-                     sx={{ mt: 2 }}
                   />
                   <TextField
-                     type="password"
-                     placeholder={t('password')}
                      autoComplete="new-password"
+                     placeholder={t('password')}
+                     sx={{ mt: 2 }}
+                     type="password"
                      value={registerStore.password}
                      onChange={(e) => registerStore.setPassword(e.target.value)}
-                     sx={{ mt: 2 }}
                   />
                   <Button
+                     color="primary"
                      disabled={!registerStore.canSubmit}
+                     sx={{ my: 2 }}
                      type="submit"
                      variant="contained"
-                     color="primary"
-                     sx={{ my: 2 }}
                   >
                      {registerStore.loading ? (
-                        <CircularProgress size={24} color="inherit" />
+                        <CircularProgress color="inherit" size={24} />
                      ) : (
                         t(screenStore.screen)
                      )}
@@ -168,7 +169,7 @@ export const RegisterScreen = observer(() => {
             )}
             {updaterStore.shouldUpdate && (
                <CardContent>
-                  <Typography variant="h1" align="center">
+                  <Typography align="center" variant="h1">
                      {t('accessUniverse')}
                   </Typography>
                   <Typography sx={{ mt: 4 }}>
@@ -178,16 +179,16 @@ export const RegisterScreen = observer(() => {
                   {updaterStore.updating ? (
                      <ProgressBar
                         label={`${updaterStore.progress.toFixed(2)}%`}
-                        value={updaterStore.progress}
                         sx={{ mt: 2 }}
+                        value={updaterStore.progress}
                      />
                   ) : (
                      <Button
-                        disabled={updaterStore.updating}
-                        variant="contained"
                         color="primary"
-                        onClick={() => updaterStore.update()}
+                        disabled={updaterStore.updating}
                         sx={{ mt: 2 }}
+                        variant="contained"
+                        onClick={() => updaterStore.update()}
                      >
                         {t('update')}
                      </Button>

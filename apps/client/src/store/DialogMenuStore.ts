@@ -1,5 +1,6 @@
+import type { Store } from './Store';
+
 import { makeAutoObservable } from 'mobx';
-import { Store } from './Store';
 
 export interface ChoiceItem {
    text: string;
@@ -61,6 +62,7 @@ export class DialogMenuStore {
 
       if (this.hoveredItem === -1) {
          this.setHoveredItem(0);
+
          return;
       }
 
@@ -74,6 +76,7 @@ export class DialogMenuStore {
 
       if (this.hoveredItem === -1) {
          this.setHoveredItem(0);
+
          return;
       }
 

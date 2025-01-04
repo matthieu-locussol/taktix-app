@@ -1,4 +1,4 @@
-import { AnimatedTiles } from '../plugins/AnimatedTiles';
+import type { AnimatedTiles } from '../plugins/AnimatedTiles';
 
 declare module 'phaser' {
    namespace Scenes {

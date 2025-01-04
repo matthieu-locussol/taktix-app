@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+
 import { CharacterCreationStore } from './CharacterCreationStore';
 import { CharacterSelectionStore } from './CharacterSelectionStore';
 import { CharacterStore } from './CharacterStore';

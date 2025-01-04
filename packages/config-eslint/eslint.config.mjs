@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
 export const config = [
-   { ignores: ['**/.next/**', '**/dist/**', '**/node_modules/**'] },
+   { ignores: ['**/.next/**', '**/dist/**', '**/node_modules/**', '**/src-tauri/target/**'] },
    { files: ['**/*.{js,mjs,cjs,ts,mts,jsx,tsx}'] },
    {
       languageOptions: {
@@ -29,6 +29,7 @@ export const config = [
          'import/no-unresolved': 'off',
          // 'import/extensions': ['.ts', '.tsx'],
 
+         'import/named': ['error', { commonjs: true }],
          'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 0, maxBOF: 0 }],
          '@typescript-eslint/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
          'no-console': 'off',

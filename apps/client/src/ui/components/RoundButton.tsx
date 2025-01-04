@@ -1,7 +1,9 @@
-import { Button, ButtonProps, styled } from '@mui/material';
+import type { ButtonProps } from '@mui/material';
+
+import { Button, styled } from '@mui/material';
 
 export const RoundButton = (props: ButtonProps) => {
-   return <StyledButton variant="outlined" color="inherit" {...props} />;
+   return <StyledButton color="inherit" variant="outlined" {...props} />;
 };
 
 const StyledButton = styled(Button)(() => ({

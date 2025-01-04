@@ -8,6 +8,7 @@ import ToggleButtonGroup, { toggleButtonGroupClasses } from '@mui/material/Toggl
 import { styled } from '@mui/material/styles';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
+
 import { useStore } from '../../../store';
 
 export const PvEFightSpeedSelector = observer(() => {
@@ -30,12 +31,12 @@ export const PvEFightSpeedSelector = observer(() => {
             }}
          >
             <StyledToggleButtonGroup
+               exclusive
                size="small"
                value={settingsMenuStore.speedFactor}
-               exclusive
                onChange={handleSpeedChange}
             >
-               <ToggleButton value={0} disabled>
+               <ToggleButton disabled value={0}>
                   <SpeedFactorIcon color="primary" />
                </ToggleButton>
                <ToggleButton value={1}>

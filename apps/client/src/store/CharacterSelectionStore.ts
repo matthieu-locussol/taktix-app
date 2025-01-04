@@ -1,6 +1,7 @@
+import type { AuthRoomUserData } from 'shared';
+import type { TranslationKey } from 'shared/src/data/translations';
+
 import { makeAutoObservable } from 'mobx';
-import { AuthRoomUserData } from 'shared';
-import { TranslationKey } from 'shared/src/data/translations';
 
 export class CharacterSelectionStore {
    public password: string = '';

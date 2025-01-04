@@ -1,4 +1,6 @@
-import { LinearProgressProps, styled } from '@mui/material';
+import type { LinearProgressProps } from '@mui/material';
+
+import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import Typography from '@mui/material/Typography';
@@ -8,11 +10,11 @@ interface ProgressBarProps extends LinearProgressProps {
 }
 
 export const ProgressBar = ({ label, ...rest }: ProgressBarProps) => (
-   <Box display="flex" justifyContent="center" alignItems="center">
+   <Box alignItems="center" display="flex" justifyContent="center">
       <Box width="100%">
          <StyledLinearProgress variant="determinate" {...rest} />
       </Box>
-      <StyledTypography variant="body2" color="textSecondary">
+      <StyledTypography color="textSecondary" variant="body2">
          {label}
       </StyledTypography>
    </Box>

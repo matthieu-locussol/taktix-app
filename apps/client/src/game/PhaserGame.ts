@@ -1,7 +1,8 @@
 import { GridEngine } from 'grid-engine';
-import Phaser from 'phaser';
+
 import { store } from '../store';
 import { getVersion } from '../utils/version';
+
 import { mapsScenes } from './mapsScenes';
 import { PvEFightScene } from './scenes/PvEFightScene';
 

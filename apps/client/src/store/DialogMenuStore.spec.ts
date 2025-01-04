@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+
 import { DialogMenuStore } from './DialogMenuStore';
 import { Store } from './Store';
 
@@ -30,6 +31,7 @@ describe('DialogMenuStore', () => {
 
    it('should open dialog', () => {
       const store = new DialogMenuStore(new Store());
+
       store.openDialog([]);
 
       expect(store.items).toEqual([]);

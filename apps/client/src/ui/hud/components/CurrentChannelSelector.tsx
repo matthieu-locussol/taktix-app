@@ -1,13 +1,16 @@
+import type { MenuProps } from '@mui/material/Menu';
+
 import { svgIconClasses, useTheme } from '@mui/material';
 import { checkboxClasses } from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Menu, { MenuProps } from '@mui/material/Menu';
+import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { observer } from 'mobx-react-lite';
 import { channelsInformations } from 'shared/src/data/channelsInformations';
 import { Channel } from 'shared/src/types/Channel';
+
 import { useStore } from '../../../store';
 import { useTranslation } from '../../../types/react-i18next';
 
@@ -23,6 +26,15 @@ export const CurrentChannelSelector = observer(
 
       return (
          <Menu
+            MenuListProps={{
+               'aria-labelledby': 'open-channel-selector',
+               dense: true,
+               sx: { padding: 0 },
+            }}
+            anchorOrigin={{
+               vertical: 'top',
+               horizontal: 'right',
+            }}
             id="open-channel-selector"
             slotProps={{
                paper: {
@@ -30,20 +42,11 @@ export const CurrentChannelSelector = observer(
                   elevation: 0,
                },
             }}
-            MenuListProps={{
-               'aria-labelledby': 'open-channel-selector',
-               dense: true,
-               sx: { padding: 0 },
-            }}
-            onClose={handleClose}
-            anchorOrigin={{
-               vertical: 'top',
-               horizontal: 'right',
-            }}
             transformOrigin={{
                vertical: 'bottom',
                horizontal: 'right',
             }}
+            onClose={handleClose}
             {...rest}
          >
             <RadioGroup value={chatStore.currentChannel}>
@@ -52,16 +55,11 @@ export const CurrentChannelSelector = observer(
                   .filter((channelId) => !chatStore.isSystemChannel(channelId))
                   .filter((channelId) => channelId !== Channel.PRIVATE)
                   .map((channelId) => (
-                     <MenuItem disableRipple key={channelId}>
+                     <MenuItem key={channelId} disableRipple>
                         <FormControlLabel
                            control={
                               <Radio
                                  size="small"
-                                 value={channelId}
-                                 onChange={() => {
-                                    chatStore.setCurrentChannel(channelId);
-                                    handleClose();
-                                 }}
                                  sx={{
                                     p: 'min(0.5vw, 0.75vh)',
                                     color: theme.palette.channels[channelId],
@@ -71,6 +69,11 @@ export const CurrentChannelSelector = observer(
                                     [`& .${svgIconClasses.root}`]: {
                                        fontSize: 'min(1.5vw, 2.25vh)',
                                     },
+                                 }}
+                                 value={channelId}
+                                 onChange={() => {
+                                    chatStore.setCurrentChannel(channelId);
+                                    handleClose();
                                  }}
                               />
                            }
