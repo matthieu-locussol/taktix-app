@@ -1,6 +1,6 @@
 import type { RequestHandler } from 'express';
 
-import { zRegisterSchema } from 'shared';
+import { zRegisterSchema } from 'shared/src/schemas/RegisterSchema.ts';
 
 import { hashPassword } from '../utils/hashPassword.ts';
 import { prisma } from '../utils/prisma.ts';

@@ -1,6 +1,8 @@
-import type { Item } from 'shared';
+import type { Item } from 'shared/src/types/Item.ts';
 
-import { ItemMgt, NumberMgt, rarities } from 'shared';
+import { rarities } from 'shared/src/types/Item.ts';
+import { ItemMgt } from 'shared/src/utils/itemMgt.ts';
+import { NumberMgt } from 'shared/src/utils/numberMgt.ts';
 
 const generateItem = () => {
    const ITEMS: Item[] = [];

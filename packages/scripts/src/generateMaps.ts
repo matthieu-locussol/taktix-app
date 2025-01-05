@@ -1,20 +1,22 @@
-import type {
-   Direction,
-   InteractiveObject,
-   InteractiveObjectData,
-   MapFightData,
-   NPC,
-   NPCSpot,
-   Room,
-   TeleportationPlace,
-   TeleportationSpot,
-} from 'shared';
+import type { NPC } from 'shared/src/data/npcs.ts';
+import type { MapFightData } from 'shared/src/types/MapFight.ts';
+import type { NPCSpot } from 'shared/src/types/NPCSpot.ts';
+import type { Room } from 'shared/src/types/Room.ts';
+import type { TeleportationPlace } from 'shared/src/types/TeleportationPlace.ts';
+import type { TeleportationSpot } from 'shared/src/types/TeleportationSpot.ts';
 
 import assert from 'assert';
 import { existsSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
-import { _assertTrue, interactiveObjectsKeys, isMonsterName, zDirection } from 'shared';
+import { isMonsterName } from 'shared/src/data/monsters.ts';
+import {
+   interactiveObjectsKeys,
+   type InteractiveObject,
+   type InteractiveObjectData,
+} from 'shared/src/types/InteractiveObject.ts';
+import { zDirection, type Direction } from 'shared/src/types/SceneData.ts';
+import { _assertTrue } from 'shared/src/utils/_assert.ts';
 
 interface TiledMapJson {
    name: string;

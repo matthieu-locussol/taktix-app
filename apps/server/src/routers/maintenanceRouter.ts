@@ -1,6 +1,6 @@
 import type { RequestHandler } from 'express';
 
-import { zMaintenanceSchema } from 'shared';
+import { zMaintenanceSchema } from 'shared/src/schemas/MaintenanceSchema.ts';
 
 import { notifyMaintenance } from '../rooms/ChatRoom.ts';
 import { prisma } from '../utils/prisma.ts';

@@ -1,13 +1,16 @@
 import type { Client as ColyseusClient } from '@colyseus/core';
-import type {
-   ChatRoomMessage,
-   ChatRoomResponse,
-   ChatRoomOptions as Options,
-   ChatRoomUserData as UserData,
-} from 'shared';
 
 import { Room, logger } from '@colyseus/core';
-import { Channel, ChannelMgt, _assert, isChatRoomMessage } from 'shared';
+import {
+   isChatRoomMessage,
+   type ChatRoomMessage,
+   type ChatRoomResponse,
+   type ChatRoomOptions as Options,
+   type ChatRoomUserData as UserData,
+} from 'shared/src/rooms/ChatRoom.ts';
+import { Channel } from 'shared/src/types/Channel.ts';
+import { _assert } from 'shared/src/utils/_assert.ts';
+import { ChannelMgt } from 'shared/src/utils/channelMgt.ts';
 import { match } from 'ts-pattern';
 
 import { removeDanglingUsers, usersMap } from './utils/usersMap.ts';

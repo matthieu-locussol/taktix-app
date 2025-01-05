@@ -1,8 +1,8 @@
 import type { RequestHandler } from 'express';
-import type { ChangelogSchema } from 'shared';
+import type { ChangelogSchema } from 'shared/src/schemas/ChangelogSchema.ts';
 
 import { logger } from '@colyseus/core';
-import { fetchGitHubReleases } from 'shared';
+import { fetchGitHubReleases } from 'shared/src/data/githubReleases.ts';
 
 const CHANGELOG_DEFAULT_MESSAGE = 'See the assets to download this version and install it.';
 

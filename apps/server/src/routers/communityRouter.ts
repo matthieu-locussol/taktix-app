@@ -1,7 +1,9 @@
 import type { RequestHandler } from 'express';
-import type { CommunitySchema } from 'shared';
+import type { CommunitySchema } from 'shared/src/schemas/CommunitySchema.ts';
 
-import { LevelMgt, zCharacterSprite, zProfessionType } from 'shared';
+import { zCharacterSprite } from 'shared/src/data/charactersSprites.ts';
+import { zProfessionType } from 'shared/src/types/Profession.ts';
+import { LevelMgt } from 'shared/src/utils/levelMgt.ts';
 
 import { usersMap } from '../rooms/utils/usersMap.ts';
 import { prisma } from '../utils/prisma.ts';

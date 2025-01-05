@@ -1,5 +1,5 @@
 import type { RequestHandler } from 'express';
-import type { StatusSchema } from 'shared';
+import type { StatusSchema } from 'shared/src/schemas/StatusSchema.ts';
 
 import { prisma } from '../utils/prisma.ts';
 

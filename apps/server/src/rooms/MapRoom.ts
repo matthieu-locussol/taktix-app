@@ -1,37 +1,34 @@
 import type { Client as ColyseusClient } from '@colyseus/core';
 import type { Prisma } from '@prisma/client';
-import type {
-   MapRoomMessage,
-   MapRoomResponse,
-   MapRoomOptions as Options,
-   PlayerState,
-   PvEFightParameters,
-   Room as TRoom,
-   MapRoomUserData as UserData,
-   WeaponDamages,
-} from 'shared';
+import type { PlayerState } from 'shared/src/states/PlayerState.ts';
+import type { PvEFightParameters } from 'shared/src/types/PvEFight.ts';
+import type { Room as TRoom } from 'shared/src/types/Room.ts';
+import type { WeaponDamages } from 'shared/src/types/Weapon.ts';
 
 import { Room, logger } from '@colyseus/core';
+import { MINIMUM_TURN_TIME } from 'shared/src/config.ts';
+import { zCharacterSprite } from 'shared/src/data/charactersSprites.ts';
+import { getMonstersInformations } from 'shared/src/data/fights.ts';
+import { INTERACTIVE_OBJECTS_MAP } from 'shared/src/data/interactiveObjects.ts';
+import { TELEPORTATION_PLACES } from 'shared/src/data/teleportationPlaces.ts';
+import { TELEPORTATION_SPOTS } from 'shared/src/data/teleportationSpots.ts';
 import {
-   FightMgt,
-   INTERACTIVE_OBJECTS_MAP,
-   ItemMgt,
-   ItemPosition,
-   LootMgt,
-   MINIMUM_TURN_TIME,
-   MapState,
-   NumberMgt,
-   StatisticMgt,
-   StringMgt,
-   TELEPORTATION_PLACES,
-   TELEPORTATION_SPOTS,
-   TalentMgt,
-   _assert,
-   getMonstersInformations,
    isMapRoomMessage,
-   zCharacterSprite,
-   zItemType,
-} from 'shared';
+   type MapRoomMessage,
+   type MapRoomResponse,
+   type MapRoomOptions as Options,
+   type MapRoomUserData as UserData,
+} from 'shared/src/rooms/MapRoom.ts';
+import { MapState } from 'shared/src/states/MapState.ts';
+import { ItemPosition, zItemType } from 'shared/src/types/Item.ts';
+import { _assert } from 'shared/src/utils/_assert.ts';
+import { FightMgt } from 'shared/src/utils/fightMgt.ts';
+import { ItemMgt } from 'shared/src/utils/itemMgt.ts';
+import { LootMgt } from 'shared/src/utils/lootMgt.ts';
+import { NumberMgt } from 'shared/src/utils/numberMgt.ts';
+import { StatisticMgt } from 'shared/src/utils/statisticMgt.ts';
+import { StringMgt } from 'shared/src/utils/stringMgt.ts';
+import { TalentMgt } from 'shared/src/utils/talentMgt.ts';
 import { match } from 'ts-pattern';
 
 import { prisma } from '../utils/prisma.ts';

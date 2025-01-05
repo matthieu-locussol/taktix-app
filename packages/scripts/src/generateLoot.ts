@@ -1,4 +1,6 @@
-import { LootMgt, NumberMgt, monsters } from 'shared';
+import { monsters } from 'shared/src/data/monsters.ts';
+import { LootMgt } from 'shared/src/utils/lootMgt.ts';
+import { NumberMgt } from 'shared/src/utils/numberMgt.ts';
 
 const AREA_BONUS = 100;
 const MONSTER_NAME = 'enemy-green-slime';
