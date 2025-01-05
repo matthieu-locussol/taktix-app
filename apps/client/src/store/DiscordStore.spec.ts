@@ -40,9 +40,7 @@ vi.mock('../utils/version', () => ({
 }));
 
 vi.mock('i18next', () => ({
-   default: {
-      t: (str: string) => str,
-   },
+   t: (str: string) => str,
 }));
 
 describe('DiscordStore', () => {

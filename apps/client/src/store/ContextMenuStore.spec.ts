@@ -26,9 +26,7 @@ vi.mock('./Store', () => {
 });
 
 vi.mock('i18next', () => ({
-   default: {
-      t: (str: string) => str,
-   },
+   t: (str: string) => str,
 }));
 
 vi.mock('../utils/phaser', () => {
