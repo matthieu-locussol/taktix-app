@@ -24,9 +24,7 @@ export const config = [
    pluginReactRefresh.configs.recommended,
    {
       rules: {
-         // TODO: remove these rules one by one
          '@typescript-eslint/no-namespace': 'off',
-
          'import/no-unresolved': [
             'error',
             { caseSensitive: true, ignore: ['@prisma/extension-accelerate'] },
