@@ -4,7 +4,7 @@
    "scripts": {
       "build": "tsc && vite build",
       "build:noci": "tsc && vite build",
-      "build:app": "TAURI_PRIVATE_KEY=~/.tauri/taktix-app.key tauri build",
+      "build:app": "TAURI_SIGNING_PRIVATE_KEY=~/.tauri/taktix-app.key tauri build",
       "lint": "eslint",
       "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm -rf src-tauri/target",
       "dev:client": "vite --host",
@@ -19,7 +19,9 @@
       "@emotion/styled": "^11.11.5",
       "@mui/icons-material": "^5.15.19",
       "@mui/material": "^5.15.19",
-      "@tauri-apps/api": "^1.5.6",
+      "@tauri-apps/api": "^2.2.0",
+      "@tauri-apps/plugin-process": "^2.2.0",
+      "@tauri-apps/plugin-updater": "^2.3.0",
       "@vitejs/plugin-react": "^4.3.0",
       "colyseus.js": "^0.15.20",
       "grid-engine": "^2.45.0",
@@ -42,7 +44,7 @@
    "devDependencies": {
       "@babel/core": "^7.24.6",
       "@packages/config-eslint": "workspace:^",
-      "@tauri-apps/cli": "^1.5.14",
+      "@tauri-apps/cli": "^2.2.2",
       "@types/react": "^18.3.3",
       "@types/react-dom": "^18.3.0",
       "config-typescript": "workspace:^",

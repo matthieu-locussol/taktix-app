@@ -2,6 +2,12 @@ import { describe, expect, it } from 'vitest';
 
 import { isTauri } from './tauri.ts';
 
+declare global {
+   interface Window {
+      __TAURI__: unknown;
+   }
+}
+
 describe('tauri', () => {
    describe('isTauri', () => {
       it('should be false', () => {

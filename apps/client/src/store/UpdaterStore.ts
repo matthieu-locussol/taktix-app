@@ -1,8 +1,8 @@
-import type { UpdateManifest } from '@tauri-apps/api/updater';
+import type { Update } from '@tauri-apps/plugin-updater';
 import type { Store } from './Store.ts';
 
-import { relaunch } from '@tauri-apps/api/process';
-import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
+import { relaunch } from '@tauri-apps/plugin-process';
+import { check } from '@tauri-apps/plugin-updater';
 import { makeAutoObservable, runInAction } from 'mobx';
 
 import { isTauri } from '../utils/tauri.ts';
@@ -12,7 +12,7 @@ export class UpdaterStore {
 
    public shouldUpdate: boolean | undefined = undefined;
 
-   public updateManifest: UpdateManifest | undefined = undefined;
+   public updateManifest: Update | undefined = undefined;
 
    public updating: boolean = false;
 
@@ -29,11 +29,13 @@ export class UpdaterStore {
    async checkUpdate() {
       if (isTauri()) {
          (async () => {
-            const updateResult = await checkUpdate();
+            const updateManifest = await check();
 
             runInAction(() => {
-               this.shouldUpdate = updateResult.shouldUpdate;
-               this.updateManifest = updateResult.manifest;
+               if (updateManifest !== null) {
+                  this.shouldUpdate = updateManifest.available;
+                  this.updateManifest = updateManifest;
+               }
             });
          })();
       } else {
@@ -49,7 +51,9 @@ export class UpdaterStore {
             this.updating = true;
          });
 
-         await installUpdate();
+         if (this.updateManifest !== undefined) {
+            await this.updateManifest.downloadAndInstall();
+         }
 
          runInAction(() => {
             this.updating = false;

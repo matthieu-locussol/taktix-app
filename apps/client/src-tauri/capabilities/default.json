@@ -1,0 +1,15 @@
+{
+   "$schema": "../gen/schemas/desktop-schema.json",
+   "identifier": "default",
+   "description": "Capability for the all window",
+   "local": true,
+   "windows": ["*"],
+   "permissions": [
+      "core:default",
+      "core:window:default",
+      "core:window:allow-set-fullscreen",
+      "process:allow-restart",
+      "shell:allow-open",
+      "updater:default"
+   ]
+}

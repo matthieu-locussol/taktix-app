@@ -12,8 +12,7 @@ vi.mock('./Store', () => {
 
 const mocks = vi.hoisted(() => ({
    isTauri: vi.fn(),
-   checkUpdate: vi.fn(),
-   installUpdate: vi.fn(),
+   check: vi.fn(),
    relaunch: vi.fn(),
 }));
 
@@ -22,8 +21,7 @@ vi.mock('../utils/tauri', () => ({
 }));
 
 vi.mock('@tauri-apps/api/updater', () => ({
-   checkUpdate: mocks.checkUpdate,
-   installUpdate: mocks.installUpdate,
+   check: mocks.check,
 }));
 
 vi.mock('@tauri-apps/api/process', () => ({
@@ -52,9 +50,9 @@ describe('UpdaterStore', () => {
 
    it('should check for updates on tauri (update not needed)', async () => {
       mocks.isTauri.mockReturnValue(true);
-      mocks.checkUpdate.mockResolvedValue({
-         shouldUpdate: false,
-         manifest: {},
+      mocks.check.mockResolvedValue({
+         available: false,
+         downloadAndInstall: vi.fn().mockResolvedValue(undefined),
       });
 
       const store = new UpdaterStore(new Store());
@@ -71,9 +69,9 @@ describe('UpdaterStore', () => {
 
    it('should check for updates on tauri (update needed)', async () => {
       mocks.isTauri.mockReturnValue(true);
-      mocks.checkUpdate.mockResolvedValue({
-         shouldUpdate: true,
-         manifest: {},
+      mocks.check.mockResolvedValue({
+         available: true,
+         downloadAndInstall: vi.fn().mockResolvedValue(undefined),
       });
 
       const store = new UpdaterStore(new Store());
@@ -89,8 +87,6 @@ describe('UpdaterStore', () => {
    });
 
    it('should update', async () => {
-      mocks.installUpdate.mockResolvedValue(undefined);
-
       const store = new UpdaterStore(new Store());
 
       await store.update();

@@ -1,78 +1,56 @@
 {
-   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
    "build": {
       "beforeBuildCommand": "pnpm build",
       "beforeDevCommand": "pnpm dev:client",
-      "devPath": "http://localhost:5173",
-      "distDir": "../dist"
+      "frontendDist": "../dist",
+      "devUrl": "http://localhost:5173"
    },
-   "package": {
-      "productName": "taktix",
-      "version": "1.57.2"
-   },
-   "tauri": {
-      "allowlist": {
-         "all": false,
-         "process": {
-            "all": false,
-            "exit": false,
-            "relaunch": true,
-            "relaunchDangerousAllowSymlinkMacos": false
-         },
-         "window": {
-            "setFullscreen": true
-         },
-         "shell": {
-            "all": false,
-            "execute": false,
-            "open": true,
-            "scope": [],
-            "sidecar": false
-         }
+   "bundle": {
+      "active": true,
+      "category": "RolePlayingGame",
+      "copyright": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
+      "targets": "all",
+      "externalBin": [],
+      "icon": [
+         "icons/32x32.png",
+         "icons/128x128.png",
+         "icons/128x128@2x.png",
+         "icons/icon.icns",
+         "icons/icon.ico"
+      ],
+      "windows": {
+         "certificateThumbprint": null,
+         "digestAlgorithm": "sha256"
       },
-      "bundle": {
-         "active": true,
-         "category": "RolePlayingGame",
-         "copyright": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
+      "longDescription": "The crapiest MMORPG ever.",
+      "macOS": {
+         "entitlements": null,
+         "exceptionDomain": "static.130.201.12.49.clients.your-server.de",
+         "frameworks": [],
+         "providerShortName": null,
+         "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "The crapiest MMORPG ever.",
+      "linux": {
          "deb": {
             "depends": []
-         },
-         "externalBin": [],
-         "icon": [
-            "icons/32x32.png",
-            "icons/128x128.png",
-            "icons/128x128@2x.png",
-            "icons/icon.icns",
-            "icons/icon.ico"
-         ],
-         "identifier": "com.taktix.app",
-         "longDescription": "The crapiest MMORPG ever.",
-         "macOS": {
-            "entitlements": null,
-            "exceptionDomain": "static.130.201.12.49.clients.your-server.de",
-            "frameworks": [],
-            "providerShortName": null,
-            "signingIdentity": null
-         },
-         "resources": [],
-         "shortDescription": "The crapiest MMORPG ever.",
-         "targets": "all",
-         "windows": {
-            "certificateThumbprint": null,
-            "digestAlgorithm": "sha256"
          }
       },
-      "macOSPrivateApi": true,
-      "security": {
-         "csp": null,
-         "dangerousUseHttpScheme": true
-      },
+      "createUpdaterArtifacts": "v1Compatible"
+   },
+   "productName": "taktix",
+   "mainBinaryName": "taktix",
+   "version": "1.57.2",
+   "identifier": "com.taktix.app",
+   "plugins": {
       "updater": {
-         "active": true,
-         "endpoints": ["https://taktix.vercel.app/api/version"],
-         "dialog": false,
-         "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE3NjhGREQ0Rjg0RjhERQpSV1RlK0lSUDNZOTJBVDh6bURQZ0dWckZSbTljcmtWSG1Oc2x1RmNzZzdhZlNCZC8vdllrd3VDRAo="
-      },
+         "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE3NjhGREQ0Rjg0RjhERQpSV1RlK0lSUDNZOTJBVDh6bURQZ0dWckZSbTljcmtWSG1Oc2x1RmNzZzdhZlNCZC8vdllrd3VDRAo=",
+         "endpoints": ["https://taktix.vercel.app/api/version"]
+      }
+   },
+   "app": {
       "windows": [
          {
             "title": "Taktix",
@@ -83,8 +61,14 @@
             "resizable": true,
             "fullscreen": false,
             "minWidth": 1028,
-            "minHeight": 540
+            "minHeight": 540,
+            "useHttpsScheme": false
          }
-      ]
+      ],
+      "security": {
+         "csp": null
+      },
+      "macOSPrivateApi": true,
+      "withGlobalTauri": true
    }
 }

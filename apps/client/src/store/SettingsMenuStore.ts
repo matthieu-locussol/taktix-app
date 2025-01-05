@@ -1,7 +1,7 @@
 import type { TranslationKey } from 'shared/src/data/translations.ts';
 import type { Store } from './Store.ts';
 
-import { appWindow } from '@tauri-apps/api/window';
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { changeLanguage, use } from 'i18next';
 import { makeAutoObservable } from 'mobx';
 import { initReactI18next } from 'react-i18next';
@@ -10,6 +10,7 @@ import { isLanguage, zLanguage } from 'shared/src/types/Language.ts';
 import { z } from 'zod';
 
 import { isTauri } from '../utils/tauri.ts';
+const appWindow = getCurrentWebviewWindow();
 
 export const keyboardLayouts: {
    value: string;
