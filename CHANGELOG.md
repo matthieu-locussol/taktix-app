@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.58.1](https://github.com/matthieu-locussol/taktix-app/compare/v1.58.0...v1.58.1) (2025-01-06)
+
 ## 1.58.0 (2025-01-05)
 
 
