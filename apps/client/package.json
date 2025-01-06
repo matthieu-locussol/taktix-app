@@ -1,6 +1,6 @@
 {
    "name": "client",
-   "version": "1.58.13",
+   "version": "1.58.14",
    "scripts": {
       "build": "tsc && vite build",
       "build:noci": "tsc && vite build",
