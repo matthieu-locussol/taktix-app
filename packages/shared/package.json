@@ -1,6 +1,6 @@
 {
    "name": "shared",
-   "version": "1.58.17",
+   "version": "1.58.18",
    "main": "./dist/index.js",
    "types": "./dist/index.d.ts",
    "scripts": {
