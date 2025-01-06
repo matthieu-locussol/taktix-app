@@ -18,6 +18,8 @@ export class UpdaterStore {
 
    private _progress: number = 0;
 
+   private _totalLength: number = 0;
+
    public openUpdateModal: boolean = false;
 
    constructor(store: Store) {
@@ -52,7 +54,18 @@ export class UpdaterStore {
          });
 
          if (this.updateManifest !== undefined) {
-            await this.updateManifest.downloadAndInstall();
+            await this.updateManifest.downloadAndInstall((event) => {
+               switch (event.event) {
+                  case 'Started':
+                     this._totalLength = event.data.contentLength || 0;
+                     break;
+                  case 'Progress':
+                     this.updateProgress(event.data.chunkLength);
+                     break;
+                  case 'Finished':
+                     break;
+               }
+            });
          }
 
          runInAction(() => {
@@ -87,12 +100,22 @@ export class UpdaterStore {
    updateProgress(delta: number) {
       this._progress += delta;
 
-      if (this._progress > 1) {
-         this._progress = 1;
+      if (this._progress > this._totalLength) {
+         this._progress = this._totalLength;
       }
    }
 
    get progress() {
-      return this._progress * 100;
+      const progress = (this._progress / this._totalLength) * 100;
+
+      if (!progress || isNaN(progress)) {
+         return 0;
+      }
+
+      if (progress < 0.1) {
+         return 0.1;
+      }
+
+      return progress;
    }
 }

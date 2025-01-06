@@ -9,7 +9,11 @@
       "core:window:default",
       "core:window:allow-set-fullscreen",
       "process:allow-restart",
+      "process:allow-exit",
       "shell:allow-open",
-      "updater:default"
+      "updater:allow-check",
+      "updater:allow-download",
+      "updater:allow-download-and-install",
+      "updater:allow-install"
    ]
 }
