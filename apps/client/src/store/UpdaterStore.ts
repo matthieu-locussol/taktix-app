@@ -10,7 +10,7 @@ import { isTauri } from '../utils/tauri';
 export class UpdaterStore {
    private _store: Store;
 
-   public shouldUpdate: boolean | undefined = undefined;
+   public shouldUpdate: boolean | null = null;
 
    public updateManifest: Update | undefined = undefined;
 

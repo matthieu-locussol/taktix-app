@@ -143,7 +143,7 @@ export const LoginScreen = observer(() => {
                <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
-            {updaterStore.shouldUpdate === undefined && (
+            {updaterStore.shouldUpdate === null && (
                <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography align="center" variant="h1">
                      {t('accessUniverse')}

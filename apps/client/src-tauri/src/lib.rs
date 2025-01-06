@@ -24,29 +24,5 @@ pub fn run() {
          _ => {}
       }
    });
-
-   // app.run(|app_handle, event| {
-   //    match event {
-   //       tauri::RunEvent::Updater(updater_event) => {
-   //          let main_window = app_handle.get_webview_window("main");
-
-   //          match updater_event {
-   //             tauri::UpdaterEvent::DownloadProgress { chunk_length, content_length } => {
-   //                if let Some(window) = main_window {
-   //                   if let Some(content_length) = content_length {
-   //                      if content_length > 0 {
-   //                         let progress = (chunk_length as f32) / (content_length as f32);
-   //                         if let Err(err) = window.emit("updateProgress", progress) {
-   //                            println!("{}", err);
-   //                         }
-   //                      }
-   //                   }
-   //                }
-   //             }
-   //             _ => {}
-   //          }
-   //       }
-   //       _ => {}
-   //    }
-   // });
+   g
 }
