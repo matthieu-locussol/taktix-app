@@ -32,7 +32,7 @@ describe('UpdaterStore', () => {
    it('should be initialized', () => {
       const store = new UpdaterStore(new Store());
 
-      expect(store.shouldUpdate).toEqual(undefined);
+      expect(store.shouldUpdate).toEqual(null);
       expect(store.updateManifest).toEqual(undefined);
       expect(store.updating).toEqual(false);
       expect(store.progress).toEqual(0);
@@ -60,7 +60,7 @@ describe('UpdaterStore', () => {
       await store.checkUpdate();
 
       when(
-         () => store.shouldUpdate !== undefined,
+         () => store.shouldUpdate !== null,
          () => {
             expect(store.shouldUpdate).toEqual(false);
          },
@@ -79,7 +79,7 @@ describe('UpdaterStore', () => {
       await store.checkUpdate();
 
       when(
-         () => store.shouldUpdate !== undefined,
+         () => store.shouldUpdate !== null,
          () => {
             expect(store.shouldUpdate).toEqual(true);
          },
