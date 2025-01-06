@@ -107,7 +107,7 @@ export const RegisterScreen = observer(() => {
                <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
-            {updaterStore.shouldUpdate === undefined && (
+            {updaterStore.isCheckingUpdate && (
                <CardContent>
                   <Typography align="center" variant="h1">
                      {t('accessUniverse')}
@@ -115,7 +115,7 @@ export const RegisterScreen = observer(() => {
                   <CircularProgress />
                </CardContent>
             )}
-            {updaterStore.shouldUpdate === false && (
+            {!updaterStore.isCheckingUpdate && updaterStore.shouldUpdate === false && (
                <CardContent>
                   <Typography gutterBottom align="center" variant="h1">
                      {t('accessUniverse')}
@@ -167,7 +167,7 @@ export const RegisterScreen = observer(() => {
                   <LauncherFormFooter />
                </CardContent>
             )}
-            {updaterStore.shouldUpdate && (
+            {!updaterStore.isCheckingUpdate && updaterStore.shouldUpdate && (
                <CardContent>
                   <Typography align="center" variant="h1">
                      {t('accessUniverse')}

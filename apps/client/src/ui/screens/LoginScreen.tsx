@@ -143,7 +143,7 @@ export const LoginScreen = observer(() => {
                <ServerStatus sx={{ mt: 'auto', pt: 4 }} />
             </CardContent>
             <Divider orientation="vertical" sx={{ borderColor: 'rgba(55, 65, 81)' }} />
-            {updaterStore.shouldUpdate === null && (
+            {updaterStore.isCheckingUpdate && (
                <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
                   <Typography align="center" variant="h1">
                      {t('accessUniverse')}
@@ -151,7 +151,7 @@ export const LoginScreen = observer(() => {
                   <CircularProgress size={64} sx={{ mt: 8 }} />
                </CardContent>
             )}
-            {updaterStore.shouldUpdate === false && (
+            {!updaterStore.isCheckingUpdate && !updaterStore.shouldUpdate && (
                <CardContent>
                   <Typography gutterBottom align="center" variant="h1">
                      {t('accessUniverse')}
@@ -214,7 +214,7 @@ export const LoginScreen = observer(() => {
                   <LauncherFormFooter />
                </CardContent>
             )}
-            {updaterStore.shouldUpdate && (
+            {!updaterStore.isCheckingUpdate && updaterStore.shouldUpdate && (
                <CardContent>
                   <Typography align="center" variant="h1">
                      {t('accessUniverse')}

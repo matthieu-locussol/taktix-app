@@ -20,6 +20,8 @@ export class UpdaterStore {
 
    private _totalLength: number = 1;
 
+   public isCheckingUpdate: boolean = true;
+
    public openUpdateModal: boolean = false;
 
    constructor(store: Store) {
@@ -38,11 +40,15 @@ export class UpdaterStore {
                   this.shouldUpdate = updateManifest.available;
                   this.updateManifest = updateManifest;
                }
+
+               this.isCheckingUpdate = false;
             });
          })();
       } else {
          runInAction(() => {
             this.shouldUpdate = false;
+
+            this.isCheckingUpdate = false;
          });
       }
    }
