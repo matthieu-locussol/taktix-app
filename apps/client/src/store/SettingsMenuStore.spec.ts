@@ -33,6 +33,10 @@ vi.mock('./Store', () => {
    return { Store: MockedStore };
 });
 
+vi.mock('@tauri-apps/api/webviewWindow', () => ({
+   getCurrentWebviewWindow: vi.fn(),
+}));
+
 describe('SettingsMenuStore', () => {
    it('should be initialized', () => {
       const store = new SettingsMenuStore(new Store());

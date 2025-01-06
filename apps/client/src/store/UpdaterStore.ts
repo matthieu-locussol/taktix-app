@@ -18,7 +18,7 @@ export class UpdaterStore {
 
    private _progress: number = 0;
 
-   private _totalLength: number = 0;
+   private _totalLength: number = 1;
 
    public openUpdateModal: boolean = false;
 

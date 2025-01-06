@@ -20,11 +20,11 @@ vi.mock('../utils/tauri', () => ({
    isTauri: mocks.isTauri,
 }));
 
-vi.mock('@tauri-apps/api/updater', () => ({
+vi.mock('@tauri-apps/plugin-updater', () => ({
    check: mocks.check,
 }));
 
-vi.mock('@tauri-apps/api/process', () => ({
+vi.mock('@tauri-apps/plugin-process', () => ({
    relaunch: mocks.relaunch,
 }));
 
