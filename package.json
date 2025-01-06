@@ -1,6 +1,6 @@
 {
    "name": "taktix-app",
-   "version": "1.58.3",
+   "version": "1.58.4",
    "description": "The crapiest MMORPG ever.",
    "repository": "git@github.com:matthieu-locussol/taktix-app.git",
    "scripts": {
@@ -24,7 +24,7 @@
       "lint": "turbo run lint",
       "lint:shared": "turbo run lint --filter=shared",
       "format": "lint-staged",
-      "release": "standard-version -a --skip-tag && turbo run bumpversion && git tag v$(node -p \"require('./package.json').version\")",
+      "release": "standard-version -a && turbo run bumpversion && git tag v$(node -p \"require('./package.json').version\")",
       "studio": "turbo run studio",
       "generate_item": "turbo run generate_item",
       "generate_loot": "turbo run generate_loot",
@@ -32,6 +32,12 @@
    },
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
+   "standard-version": {
+      "skip": {
+         "commit": true,
+         "tag": true
+      }
+   },
    "devDependencies": {
       "@commitlint/cli": "^19.3.0",
       "@commitlint/config-conventional": "^19.2.2",
