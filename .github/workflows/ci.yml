@@ -51,7 +51,7 @@ jobs:
                  -H 'Connection: keep-alive' \
                  -H 'Content-Type: application/json' \
                  --data-raw '{"type":"start","token":"${{ secrets.MAINTENANCE_TOKEN }}"}' \
-                 --compressed
+                 --compressed || if [ $? -eq 56 ]; then exit 0; else exit 1; fi
 
    deploy:
       name: Update Server
