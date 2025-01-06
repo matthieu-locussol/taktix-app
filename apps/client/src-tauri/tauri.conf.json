@@ -42,7 +42,7 @@
    },
    "productName": "taktix",
    "mainBinaryName": "taktix",
-   "version": "1.58.2",
+   "version": "1.58.3",
    "identifier": "com.taktix.app",
    "plugins": {
       "updater": {
