@@ -1,6 +1,6 @@
 {
    "name": "server",
-   "version": "1.58.15",
+   "version": "1.58.17",
    "scripts": {
       "postinstall": "prisma generate --accelerate",
       "build": "prisma generate --accelerate && tsc",

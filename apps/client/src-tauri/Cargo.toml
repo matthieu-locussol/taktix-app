@@ -1,6 +1,6 @@
 [package]
 name = "taktix"
-version = "1.58.15"
+version = "1.58.17"
 description = "The crapiest MMORPG ever."
 authors = ["Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)"]
 license = "MIT"
