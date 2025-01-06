@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.58.19](https://github.com/matthieu-locussol/taktix-app/compare/v1.58.18...v1.58.19) (2025-01-06)
+
+
+### Bug Fixes
+
+* second attempt to fix infinite loading ([755d18a](https://github.com/matthieu-locussol/taktix-app/commit/755d18a656ff0284367a618d7da2b05d06d66f8c))
+
 ### [1.58.18](https://github.com/matthieu-locussol/taktix-app/compare/v1.58.17...v1.58.18) (2025-01-06)
 
 ### [1.58.17](https://github.com/matthieu-locussol/taktix-app/compare/v1.58.16...v1.58.17) (2025-01-06)
