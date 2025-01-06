@@ -1,6 +1,6 @@
 {
    "name": "shared",
-   "version": "1.58.5",
+   "version": "1.58.6",
    "scripts": {
       "build": "tsc",
       "build:noci": "tsc",

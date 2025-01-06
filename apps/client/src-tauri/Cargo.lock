@@ -3694,7 +3694,7 @@ dependencies = [
 
 [[package]]
 name = "taktix"
-version = "1.58.5"
+version = "1.58.6"
 dependencies = [
  "discord-rich-presence",
  "serde",
