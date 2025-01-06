@@ -16,26 +16,6 @@ jobs:
            env:
               GITHUB_CONTEXT: ${{ toJson(github) }}
            run: echo "$GITHUB_CONTEXT"
-         - name: Dump job context
-           env:
-              JOB_CONTEXT: ${{ toJson(job) }}
-           run: echo "$JOB_CONTEXT"
-         - name: Dump steps context
-           env:
-              STEPS_CONTEXT: ${{ toJson(steps) }}
-           run: echo "$STEPS_CONTEXT"
-         - name: Dump runner context
-           env:
-              RUNNER_CONTEXT: ${{ toJson(runner) }}
-           run: echo "$RUNNER_CONTEXT"
-         - name: Dump strategy context
-           env:
-              STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-           run: echo "$STRATEGY_CONTEXT"
-         - name: Dump matrix context
-           env:
-              MATRIX_CONTEXT: ${{ toJson(matrix) }}
-           run: echo "$MATRIX_CONTEXT"
 
    build:
       name: Build
@@ -139,7 +119,7 @@ jobs:
                  args: '--target aarch64-apple-darwin'
                - platform: 'macos-latest' # for Intel based macs.
                  args: '--target x86_64-apple-darwin'
-               - platform: 'ubuntu-22.04'
+               - platform: 'ubuntu-latest'
                  args: ''
                - platform: 'windows-latest'
                  args: ''
@@ -168,7 +148,7 @@ jobs:
          - name: install Rust stable
            uses: dtolnay/rust-toolchain@stable
          - name: install dependencies (ubuntu only)
-           if: matrix.platform == 'ubuntu-22.04'
+           if: matrix.platform == 'ubuntu-latest'
            run: |
               sudo apt-get update
               sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
