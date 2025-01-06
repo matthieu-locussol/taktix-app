@@ -1,4 +1,4 @@
-import type { Scene } from '../Scene.ts';
+import type { Scene } from '../Scene';
 
 export const MINIMAP_SIZE = 200;
 export const MINIMAP_ZOOM = 0.15;

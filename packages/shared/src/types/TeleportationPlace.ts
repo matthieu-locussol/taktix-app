@@ -1,4 +1,4 @@
-import type { Direction } from './SceneData.ts';
+import type { Direction } from './SceneData';
 
 export interface TeleportationPlace {
    x: number;

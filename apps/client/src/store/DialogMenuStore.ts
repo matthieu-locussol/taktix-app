@@ -1,4 +1,4 @@
-import type { Store } from './Store.ts';
+import type { Store } from './Store';
 
 import { makeAutoObservable } from 'mobx';
 

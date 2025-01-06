@@ -1,5 +1,5 @@
 import type { MenuProps } from '@mui/material/Menu';
-import type { Channel } from 'shared/src/types/Channel.ts';
+import type { Channel } from 'shared/src/types/Channel';
 
 import { svgIconClasses, useTheme } from '@mui/material';
 import Checkbox, { checkboxClasses } from '@mui/material/Checkbox';
@@ -7,10 +7,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { observer } from 'mobx-react-lite';
-import { channelsInformations } from 'shared/src/data/channelsInformations.ts';
+import { channelsInformations } from 'shared/src/data/channelsInformations';
 
-import { useStore } from '../../../store/index.tsx';
-import { useTranslation } from '../../../types/react-i18next.ts';
+import { useStore } from '../../../store';
+import { useTranslation } from '../../../types/react-i18next';
 
 interface ChannelsSelectorProps extends MenuProps {
    handleClose: () => void;

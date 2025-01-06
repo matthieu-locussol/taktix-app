@@ -1,12 +1,12 @@
-import type { Language } from '../types/Language.ts';
+import type { Language } from '../types/Language';
 
 import { z } from 'zod';
 
-import { ZodMgt } from '../utils/zodMgt.ts';
+import { ZodMgt } from '../utils/zodMgt';
 
-import { translationsEn } from './translations/en.ts';
-import { translationsFr } from './translations/fr.ts';
-import { translationsJa } from './translations/ja.ts';
+import { translationsEn } from './translations/en';
+import { translationsFr } from './translations/fr';
+import { translationsJa } from './translations/ja';
 
 type BaseKey<T extends string> = T extends `${infer Base}_${'one' | 'other'}` ? Base : never;
 export type TranslationKey = TranslationKeyInternal | BaseKey<TranslationKeyInternal>;

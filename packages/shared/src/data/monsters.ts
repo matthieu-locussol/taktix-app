@@ -1,13 +1,13 @@
-import type { MonsterType } from '../types/Monster.ts';
-import type { PvEFighterInformations } from '../types/PvEFight.ts';
-import type { WeaponDamages } from '../types/Weapon.ts';
-import type { MonsterSprite } from './monstersSprites.ts';
-import type { TranslationKey } from './translations.ts';
+import type { MonsterType } from '../types/Monster';
+import type { PvEFighterInformations } from '../types/PvEFight';
+import type { WeaponDamages } from '../types/Weapon';
+import type { MonsterSprite } from './monstersSprites';
+import type { TranslationKey } from './translations';
 
-import { Animation } from '../types/Animation.ts';
-import { zMonsterType } from '../types/Monster.ts';
-import { MonsterMgt } from '../utils/monsterMgt.ts';
-import { StatisticMgt } from '../utils/statisticMgt.ts';
+import { Animation } from '../types/Animation';
+import { zMonsterType } from '../types/Monster';
+import { MonsterMgt } from '../utils/monsterMgt';
+import { StatisticMgt } from '../utils/statisticMgt';
 
 type FilterEnemy<T> = T extends `enemy-${infer EnemyName}` ? `enemy-${EnemyName}` : never;
 export type MonsterName = FilterEnemy<TranslationKey>;

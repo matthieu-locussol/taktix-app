@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { Trans } from 'react-i18next';
-import { zStatusSchema } from 'shared/src/schemas/StatusSchema.ts';
+import { zStatusSchema } from 'shared/src/schemas/StatusSchema';
 
-import { useStore } from '../../store/index.tsx';
-import { useTranslation } from '../../types/react-i18next.ts';
+import { useStore } from '../../store';
+import { useTranslation } from '../../types/react-i18next';
 
-import { StatusBadge } from './StatusBadge.tsx';
+import { StatusBadge } from './StatusBadge';
 
 const REFRESH_INTERVAL = 5_000;
 

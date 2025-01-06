@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { ItemMgt } from './itemMgt.ts';
+import { ItemMgt } from './itemMgt';
 
 describe('ItemMgt', () => {
    describe('RARITY_ORDER', () => {

@@ -1,5 +1,5 @@
-import type { ItemType } from '../types/Item.ts';
-import type { AffixTemplate, ItemTemplate } from '../types/ItemTemplate.ts';
+import type { ItemType } from '../types/Item';
+import type { AffixTemplate, ItemTemplate } from '../types/ItemTemplate';
 
 const genericAffixes: Record<string, AffixTemplate[]> = {
    'iceResistance_+%': [

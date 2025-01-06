@@ -1,8 +1,17 @@
 import type { Client as ColyseusClient } from '@colyseus/core';
-import type { WeaponType } from 'shared/src/types/Weapon.ts';
+import type {
+   AuthRoomMessage,
+   AuthRoomResponse,
+   AuthRoomOptions as Options,
+   AuthRoomUserData as UserData,
+   WeaponType,
+} from 'shared';
 
-import { Room, logger } from '@colyseus/core';
+import { logger, Room } from '@colyseus/core';
 import {
+   _assert,
+   _assertTrue,
+   CustomProtocol,
    DEFAULT_BASE_STATISTICS,
    DEFAULT_BASE_STATISTICS_POINTS,
    DEFAULT_DIRECTION,
@@ -16,33 +25,27 @@ import {
    DEFAULT_TELEPORTERS,
    DEFAULT_X,
    DEFAULT_Y,
-   MAX_CHARACTERS_PER_ACCOUNT,
-} from 'shared/src/config.ts';
-import { zCharacterSprite } from 'shared/src/data/charactersSprites.ts';
-import {
    isAuthRoomMessage,
-   type AuthRoomMessage,
-   type AuthRoomResponse,
-   type AuthRoomOptions as Options,
-   type AuthRoomUserData as UserData,
-} from 'shared/src/rooms/AuthRoom.ts';
-import { CustomProtocol } from 'shared/src/types/Colyseus.ts';
-import { ItemPosition } from 'shared/src/types/Item.ts';
-import { ProfessionType, zProfessionType } from 'shared/src/types/Profession.ts';
-import { weaponDamagesTypes, zWeaponType } from 'shared/src/types/Weapon.ts';
-import { _assert, _assertTrue } from 'shared/src/utils/_assert.ts';
-import { ItemMgt } from 'shared/src/utils/itemMgt.ts';
-import { NumberMgt } from 'shared/src/utils/numberMgt.ts';
-import { StatisticMgt } from 'shared/src/utils/statisticMgt.ts';
-import { StringMgt } from 'shared/src/utils/stringMgt.ts';
-import { TalentMgt } from 'shared/src/utils/talentMgt.ts';
+   ItemMgt,
+   ItemPosition,
+   MAX_CHARACTERS_PER_ACCOUNT,
+   NumberMgt,
+   ProfessionType,
+   StatisticMgt,
+   StringMgt,
+   TalentMgt,
+   weaponDamagesTypes,
+   zCharacterSprite,
+   zProfessionType,
+   zWeaponType,
+} from 'shared';
 import { match } from 'ts-pattern';
 import { v4 as uuidv4 } from 'uuid';
 
-import { hashPassword } from '../utils/hashPassword.ts';
-import { prisma } from '../utils/prisma.ts';
+import { hashPassword } from '../utils/hashPassword';
+import { prisma } from '../utils/prisma';
 
-import { removeDanglingUsers, usersMap } from './utils/usersMap.ts';
+import { removeDanglingUsers, usersMap } from './utils/usersMap';
 
 type Client = ColyseusClient<UserData, unknown>;
 

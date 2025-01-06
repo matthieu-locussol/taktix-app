@@ -7,15 +7,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
-import { channelsInformations } from 'shared/src/data/channelsInformations.ts';
-import { Channel } from 'shared/src/types/Channel.ts';
+import { channelsInformations } from 'shared/src/data/channelsInformations';
+import { Channel } from 'shared/src/types/Channel';
 
-import { useStore } from '../../store/index.tsx';
-import { useTranslation } from '../../types/react-i18next.ts';
+import { useStore } from '../../store/index';
+import { useTranslation } from '../../types/react-i18next';
 
-import { ChannelsSelector } from './components/ChannelsSelector.tsx';
-import { CurrentChannelSelector } from './components/CurrentChannelSelector.tsx';
-import { SmallButton } from './components/SmallButton.tsx';
+import { ChannelsSelector } from './components/ChannelsSelector';
+import { CurrentChannelSelector } from './components/CurrentChannelSelector';
+import { SmallButton } from './components/SmallButton';
 
 export const Chatbox = observer(() => {
    const theme = useTheme();

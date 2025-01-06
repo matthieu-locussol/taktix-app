@@ -1,4 +1,4 @@
-import { EntityType } from '../../utils/phaser.ts';
+import { EntityType } from '../../utils/phaser';
 
 export const registerSpriteEvents = (sprite: Phaser.GameObjects.Sprite) => {
    if (sprite.getData('type') === EntityType.Character) {

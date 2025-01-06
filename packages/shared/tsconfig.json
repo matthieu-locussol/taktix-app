@@ -5,8 +5,7 @@
       "module": "CommonJS",
       "outDir": "./dist",
       "rootDir": "./src",
-      "downlevelIteration": true,
-      "noEmit": true
+      "downlevelIteration": true
    },
    "include": ["src"]
 }

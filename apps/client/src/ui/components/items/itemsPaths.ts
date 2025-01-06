@@ -1,4 +1,4 @@
-import type { ItemType } from 'shared/src/types/Item.ts';
+import type { ItemType } from 'shared/src/types/Item';
 
 export const itemsPaths: Record<ItemType, string> = {
    sword1H:

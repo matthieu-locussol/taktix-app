@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { SettingsMenuStore } from './SettingsMenuStore.ts';
-import { Store } from './Store.ts';
+import { SettingsMenuStore } from './SettingsMenuStore';
+import { Store } from './Store';
 
 vi.mock('./Store', () => {
    const gameStoreMock = {

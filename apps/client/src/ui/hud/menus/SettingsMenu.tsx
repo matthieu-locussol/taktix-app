@@ -21,10 +21,10 @@ import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
 
-import { useStore } from '../../../store/index.tsx';
-import { keyboardLayouts } from '../../../store/SettingsMenuStore.ts';
-import { useTranslation } from '../../../types/react-i18next.ts';
-import { LanguageSelector } from '../../components/LanguageSelector.tsx';
+import { useStore } from '../../../store';
+import { keyboardLayouts } from '../../../store/SettingsMenuStore';
+import { useTranslation } from '../../../types/react-i18next';
+import { LanguageSelector } from '../../components/LanguageSelector';
 
 export const SettingsMenu = observer(() => {
    const nodeRef = useRef(null);

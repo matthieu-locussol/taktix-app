@@ -1,4 +1,4 @@
-import type { AuthRoomUserData } from 'shared/src/rooms/AuthRoom.ts';
+import type { AuthRoomUserData } from 'shared/src/rooms/AuthRoom';
 
 import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -19,15 +19,15 @@ import { listen } from '@tauri-apps/api/event';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 
-import { useStore } from '../../store/index.tsx';
-import { useTranslation } from '../../types/react-i18next.ts';
-import { isTauri } from '../../utils/tauri.ts';
-import { getVersion } from '../../utils/version.ts';
-import { LanguageSelector } from '../components/LanguageSelector.tsx';
-import { LauncherFormFooter } from '../components/LauncherFormFooter.tsx';
-import { ServerStatus } from '../components/ServerStatus.tsx';
-import { Changelog } from '../hud/components/Changelog.tsx';
-import { ProgressBar } from '../hud/components/ProgressBar.tsx';
+import { useStore } from '../../store';
+import { useTranslation } from '../../types/react-i18next';
+import { isTauri } from '../../utils/tauri';
+import { getVersion } from '../../utils/version';
+import { LanguageSelector } from '../components/LanguageSelector';
+import { LauncherFormFooter } from '../components/LauncherFormFooter';
+import { ServerStatus } from '../components/ServerStatus';
+import { Changelog } from '../hud/components/Changelog';
+import { ProgressBar } from '../hud/components/ProgressBar';
 
 export const LoginScreen = observer(() => {
    const store = useStore();

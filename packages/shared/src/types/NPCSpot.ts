@@ -1,6 +1,6 @@
-import type { NPC } from '../data/npcs.ts';
-import type { Room } from './Room.ts';
-import type { Direction } from './SceneData.ts';
+import type { NPC } from '../data/npcs';
+import type { Room } from './Room';
+import type { Direction } from './SceneData';
 
 export interface NPCSpot {
    x: number;

@@ -1,9 +1,9 @@
 import type { RequestHandler } from 'express';
 
-import { zMaintenanceSchema } from 'shared/src/schemas/MaintenanceSchema.ts';
+import { zMaintenanceSchema } from 'shared';
 
-import { notifyMaintenance } from '../rooms/ChatRoom.ts';
-import { prisma } from '../utils/prisma.ts';
+import { notifyMaintenance } from '../rooms/ChatRoom';
+import { prisma } from '../utils/prisma';
 
 export const maintenanceRouter: RequestHandler = async (req, res) => {
    const { type, token } = zMaintenanceSchema.parse(req.body);

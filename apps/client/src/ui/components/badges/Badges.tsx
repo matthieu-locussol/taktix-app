@@ -1,8 +1,8 @@
-import { DamagesBadge } from './DamagesBadge.tsx';
-import { MoreBadge } from './MoreBadge.tsx';
-import { PercentBadge } from './PercentBadge.tsx';
-import { PlusBadge } from './PlusBadge.tsx';
-import { ResistanceBadge } from './ResistanceBadge.tsx';
+import { DamagesBadge } from './DamagesBadge';
+import { MoreBadge } from './MoreBadge';
+import { PercentBadge } from './PercentBadge';
+import { PlusBadge } from './PlusBadge';
+import { ResistanceBadge } from './ResistanceBadge';
 
 export type Badge = 'plus' | 'percent' | 'more' | 'damages' | 'resistances';
 

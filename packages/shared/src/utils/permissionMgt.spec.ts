@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { PermissionMgt } from './permissionMgt.ts';
+import { PermissionMgt } from './permissionMgt';
 
 describe('permissionMgt', () => {
    describe('hasPermissions', () => {

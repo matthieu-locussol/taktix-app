@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { EXPERIENCE_TABLE } from './levels.ts';
+import { EXPERIENCE_TABLE } from './levels';
 
 describe('levels', () => {
    it('levels should start at 1 in ascending order', () => {

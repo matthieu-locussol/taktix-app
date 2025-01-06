@@ -1,8 +1,8 @@
 import type { Scene } from 'phaser';
 
-import { charactersSprites } from 'shared/src/data/charactersSprites.ts';
+import { charactersSprites } from 'shared/src/data/charactersSprites';
 
-import { CHARACTER_HEIGHT, CHARACTER_WIDTH } from '../Scene.ts';
+import { CHARACTER_HEIGHT, CHARACTER_WIDTH } from '../Scene';
 
 export const loadCharactersAssets = async (scene: Scene) => {
    charactersSprites.forEach((name) => {

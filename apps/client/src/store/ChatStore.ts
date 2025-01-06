@@ -1,9 +1,9 @@
-import type { TranslationKey } from 'shared/src/data/translations.ts';
-import type { Store } from './Store.ts';
+import type { TranslationKey } from 'shared/src/data/translations';
+import type { Store } from './Store';
 
 import { t } from 'i18next';
 import { makeAutoObservable } from 'mobx';
-import { Channel } from 'shared/src/types/Channel.ts';
+import { Channel } from 'shared/src/types/Channel';
 
 interface ChatMessage {
    author: string;

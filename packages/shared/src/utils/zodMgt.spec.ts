@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
-import { ZodMgt } from './zodMgt.ts';
+import { ZodMgt } from './zodMgt';
 
 describe('ZodMgt', () => {
    describe('isValidZodLiteralUnion', () => {

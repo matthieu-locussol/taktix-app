@@ -5,21 +5,21 @@ import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 
-import { useStore } from '../../store/index.tsx';
-import { Character } from '../hud/Character.tsx';
-import { Chatbox } from '../hud/Chatbox.tsx';
-import { ContextMenu } from '../hud/ContextMenu.tsx';
-import { Menu } from '../hud/Menu.tsx';
-import { CommunityMenu } from '../hud/menus/CommunityMenu.tsx';
-import { DialogMenu } from '../hud/menus/DialogMenu.tsx';
-import { FightOverlay } from '../hud/menus/FightOverlay.tsx';
-import { FightResultsMenu } from '../hud/menus/FightResultsMenu.tsx';
-import { GatchaMenu } from '../hud/menus/GatchaMenu.tsx';
-import { InventoryMenu } from '../hud/menus/InventoryMenu.tsx';
-import { MapMenu } from '../hud/menus/MapMenu.tsx';
-import { SettingsMenu } from '../hud/menus/SettingsMenu.tsx';
-import { StatisticsMenu } from '../hud/menus/StatisticsMenu.tsx';
-import { TalentsMenu } from '../hud/menus/TalentsMenu.tsx';
+import { useStore } from '../../store';
+import { Character } from '../hud/Character';
+import { Chatbox } from '../hud/Chatbox';
+import { ContextMenu } from '../hud/ContextMenu';
+import { Menu } from '../hud/Menu';
+import { CommunityMenu } from '../hud/menus/CommunityMenu';
+import { DialogMenu } from '../hud/menus/DialogMenu';
+import { FightOverlay } from '../hud/menus/FightOverlay';
+import { FightResultsMenu } from '../hud/menus/FightResultsMenu';
+import { GatchaMenu } from '../hud/menus/GatchaMenu';
+import { InventoryMenu } from '../hud/menus/InventoryMenu';
+import { MapMenu } from '../hud/menus/MapMenu';
+import { SettingsMenu } from '../hud/menus/SettingsMenu';
+import { StatisticsMenu } from '../hud/menus/StatisticsMenu';
+import { TalentsMenu } from '../hud/menus/TalentsMenu';
 
 interface GameLayoutProps extends BoxProps {}
 

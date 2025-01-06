@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { setDiscordRichPresence } from './discord.ts';
+import { setDiscordRichPresence } from './discord';
 
 const mocks = vi.hoisted(() => ({
    invoke: vi.fn(),

@@ -1,5 +1,5 @@
-import type { TranslationKey } from 'shared/src/data/translations.ts';
-import type { AuthRoomUserData } from 'shared/src/rooms/AuthRoom.ts';
+import type { TranslationKey } from 'shared/src/data/translations';
+import type { AuthRoomUserData } from 'shared/src/rooms/AuthRoom';
 
 import { makeAutoObservable } from 'mobx';
 

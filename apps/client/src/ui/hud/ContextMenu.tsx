@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 
-import { useStore } from '../../store/index.tsx';
+import { useStore } from '../../store';
 
 export const ContextMenu = observer(() => {
    const { contextMenuStore } = useStore();

@@ -1,9 +1,9 @@
-import type { TranslationKey } from 'shared/src/data/translations.ts';
-import type { Statistic, Statistics } from 'shared/src/types/Statistic.ts';
-import type { Store } from './Store.ts';
+import type { TranslationKey } from 'shared/src/data/translations';
+import type { Statistic, Statistics } from 'shared/src/types/Statistic';
+import type { Store } from './Store';
 
 import { makeAutoObservable } from 'mobx';
-import { StatisticMgt } from 'shared/src/utils/statisticMgt.ts';
+import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 
 export class StatisticsMenuStore {
    private _boostableStatistics = [

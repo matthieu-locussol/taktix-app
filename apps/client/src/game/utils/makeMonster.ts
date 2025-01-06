@@ -1,9 +1,9 @@
 import type { MonsterSprite } from 'shared/src/data/monstersSprites';
 
-import { EntityType } from '../../utils/phaser.ts';
-import { SCALE_FACTOR, type Scene } from '../Scene.ts';
+import { EntityType } from '../../utils/phaser';
+import { SCALE_FACTOR, type Scene } from '../Scene';
 
-import { registerSpriteEvents } from './registerSpriteEvents.ts';
+import { registerSpriteEvents } from './registerSpriteEvents';
 
 interface MakeMonsterProps {
    scene: Scene;

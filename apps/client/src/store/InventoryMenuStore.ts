@@ -1,9 +1,9 @@
-import type { Item, ItemType } from 'shared/src/types/Item.ts';
-import type { SortOption } from '../utils/sort.ts';
-import type { Store } from './Store.ts';
+import type { Item, ItemType } from 'shared/src/types/Item';
+import type { SortOption } from '../utils/sort';
+import type { Store } from './Store';
 
 import { makeAutoObservable } from 'mobx';
-import { ItemMgt } from 'shared/src/utils/itemMgt.ts';
+import { ItemMgt } from 'shared/src/utils/itemMgt';
 
 type InventoryMode = 'normal' | 'recycle';
 

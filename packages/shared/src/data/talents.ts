@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { zStatistics } from '../types/Statistic.ts';
-import { StatisticMgt } from '../utils/statisticMgt.ts';
+import { zStatistics } from '../types/Statistic';
+import { StatisticMgt } from '../utils/statisticMgt';
 
-import { zTranslationKey } from './translations.ts';
+import { zTranslationKey } from './translations';
 
 export const zTalent = z.object({
    id: z.number(),

@@ -1,4 +1,4 @@
-import type { TFunctionWrapper } from '../../../types/react-i18next.ts';
+import type { TFunctionWrapper } from '../../../types/react-i18next';
 
 import MessageIcon from '@mui/icons-material/ChatBubbleRounded';
 import CloseIcon from '@mui/icons-material/CloseRounded';
@@ -24,14 +24,14 @@ import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
-import { zCharacterSprite } from 'shared/src/data/charactersSprites.ts';
-import { zProfessionType } from 'shared/src/types/Profession.ts';
-import { isRoom } from 'shared/src/types/Room.ts';
+import { zCharacterSprite } from 'shared/src/data/charactersSprites';
+import { zProfessionType } from 'shared/src/types/Profession';
+import { isRoom } from 'shared/src/types/Room';
 
-import { useStore } from '../../../store/index.tsx';
-import { useTranslation } from '../../../types/react-i18next.ts';
-import { StatusBadge } from '../../components/StatusBadge.tsx';
-import { CharacterSpriteStatic } from '../components/CharacterSpriteStatic.tsx';
+import { useStore } from '../../../store';
+import { useTranslation } from '../../../types/react-i18next';
+import { StatusBadge } from '../../components/StatusBadge';
+import { CharacterSpriteStatic } from '../components/CharacterSpriteStatic';
 
 interface Column {
    id: 'spritesheet' | 'player' | 'map' | 'level' | 'profession';

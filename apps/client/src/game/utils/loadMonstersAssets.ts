@@ -1,6 +1,6 @@
 import type { Scene } from 'phaser';
 
-import { monstersSprites, monstersSpritesData } from 'shared/src/data/monstersSprites.ts';
+import { monstersSprites, monstersSpritesData } from 'shared/src/data/monstersSprites';
 
 export const loadMonstersAssets = async (scene: Scene) => {
    monstersSprites.forEach((name) => {

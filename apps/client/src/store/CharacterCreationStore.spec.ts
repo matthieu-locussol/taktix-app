@@ -1,7 +1,7 @@
-import { ProfessionType } from 'shared/src/types/Profession.ts';
+import { ProfessionType } from 'shared/src/types/Profession';
 import { describe, expect, it } from 'vitest';
 
-import { CharacterCreationStore } from './CharacterCreationStore.ts';
+import { CharacterCreationStore } from './CharacterCreationStore';
 
 describe('CharacterCreationStore', () => {
    it('should be initialized', () => {

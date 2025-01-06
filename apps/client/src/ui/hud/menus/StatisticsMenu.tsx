@@ -18,12 +18,12 @@ import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
 
-import { useStore } from '../../../store/index.tsx';
-import { useTranslation } from '../../../types/react-i18next.ts';
-import { StatisticIcon } from '../../components/StatisticIcon.tsx';
-import { ExperienceBar } from '../components/ExperienceBar.tsx';
-import { HealthBar } from '../components/HealthBar.tsx';
-import { Statistic } from '../components/Statistic.tsx';
+import { useStore } from '../../../store';
+import { useTranslation } from '../../../types/react-i18next';
+import { StatisticIcon } from '../../components/StatisticIcon';
+import { ExperienceBar } from '../components/ExperienceBar';
+import { HealthBar } from '../components/HealthBar';
+import { Statistic } from '../components/Statistic';
 
 export const StatisticsMenu = observer(() => {
    const nodeRef = useRef(null);

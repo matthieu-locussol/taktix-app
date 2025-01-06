@@ -1,4 +1,4 @@
-import type { Statistic } from './Statistic.ts';
+import type { Statistic } from './Statistic';
 
 import { z } from 'zod';
 

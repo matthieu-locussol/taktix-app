@@ -1,7 +1,7 @@
-import { charactersSprites } from 'shared/src/data/charactersSprites.ts';
+import { charactersSprites } from 'shared/src/data/charactersSprites';
 import { describe, expect, it } from 'vitest';
 
-import { CharacterSelectionStore } from './CharacterSelectionStore.ts';
+import { CharacterSelectionStore } from './CharacterSelectionStore';
 
 describe('CharacterSelectionStore', () => {
    it('should be initialized', () => {

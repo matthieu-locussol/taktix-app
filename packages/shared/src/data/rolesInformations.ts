@@ -1,7 +1,7 @@
-import type { TranslationKey } from './translations.ts';
+import type { TranslationKey } from './translations';
 
-import { Role } from '../types/Role.ts';
-import { PermissionMgt } from '../utils/permissionMgt.ts';
+import { Role } from '../types/Role';
+import { PermissionMgt } from '../utils/permissionMgt';
 
 interface RoleInformations {
    name: TranslationKey;

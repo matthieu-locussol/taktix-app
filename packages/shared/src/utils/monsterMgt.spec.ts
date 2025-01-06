@@ -1,8 +1,8 @@
-import type { MonsterType } from '../types/Monster.ts';
+import type { MonsterType } from '../types/Monster';
 
 import { describe, expect, it } from 'vitest';
 
-import { MonsterMgt } from './monsterMgt.ts';
+import { MonsterMgt } from './monsterMgt';
 
 describe('MonsterMgt', () => {
    describe('scaleMonsterLife', () => {

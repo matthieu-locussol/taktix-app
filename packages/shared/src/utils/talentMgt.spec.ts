@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { TalentMgt } from './talentMgt.ts';
+import { TalentMgt } from './talentMgt';
 
 /**
  *   Graph structure:

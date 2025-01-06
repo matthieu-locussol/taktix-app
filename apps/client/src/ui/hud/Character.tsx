@@ -3,11 +3,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../store/index.tsx';
-import { useTranslation } from '../../types/react-i18next.ts';
+import { useStore } from '../../store/index';
+import { useTranslation } from '../../types/react-i18next';
 
-import { ExperienceBar } from './components/ExperienceBar.tsx';
-import { HealthBar } from './components/HealthBar.tsx';
+import { ExperienceBar } from './components/ExperienceBar';
+import { HealthBar } from './components/HealthBar';
 
 export const Character = observer(() => {
    const { characterStore, hudStore } = useStore();

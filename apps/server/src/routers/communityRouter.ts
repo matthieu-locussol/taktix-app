@@ -1,12 +1,10 @@
 import type { RequestHandler } from 'express';
-import type { CommunitySchema } from 'shared/src/schemas/CommunitySchema.ts';
+import type { CommunitySchema } from 'shared';
 
-import { zCharacterSprite } from 'shared/src/data/charactersSprites.ts';
-import { zProfessionType } from 'shared/src/types/Profession.ts';
-import { LevelMgt } from 'shared/src/utils/levelMgt.ts';
+import { LevelMgt, zCharacterSprite, zProfessionType } from 'shared';
 
-import { usersMap } from '../rooms/utils/usersMap.ts';
-import { prisma } from '../utils/prisma.ts';
+import { usersMap } from '../rooms/utils/usersMap';
+import { prisma } from '../utils/prisma';
 
 export const communityRouter: RequestHandler = async (_, res) => {
    const usersInformations = await prisma.character.findMany({

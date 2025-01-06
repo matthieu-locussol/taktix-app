@@ -1,5 +1,5 @@
-import type { MonsterName } from '../data/monsters.ts';
-import type { Item } from '../types/Item.ts';
+import type { MonsterName } from '../data/monsters';
+import type { Item } from '../types/Item';
 import type {
    PvEFightMove,
    PvEFightParameters,
@@ -7,17 +7,17 @@ import type {
    PvEFightTurn,
    PvEFighter,
    PvEInitialConditions,
-} from '../types/PvEFight.ts';
-import type { WeaponDamagesType } from '../types/Weapon.ts';
+} from '../types/PvEFight';
+import type { WeaponDamagesType } from '../types/Weapon';
 
-import { isCharacterSprite } from '../data/charactersSprites.ts';
-import { isMonsterSprite } from '../data/monstersSprites.ts';
-import { _assert, _assertTrue } from '../utils/_assert.ts';
-import { ArrayMgt } from '../utils/arrayMgt.ts';
-import { LevelMgt } from '../utils/levelMgt.ts';
-import { LootMgt } from '../utils/lootMgt.ts';
-import { NumberMgt } from '../utils/numberMgt.ts';
-import { StatisticMgt } from '../utils/statisticMgt.ts';
+import { isCharacterSprite } from '../data/charactersSprites';
+import { isMonsterSprite } from '../data/monstersSprites';
+import { _assert, _assertTrue } from '../utils/_assert';
+import { ArrayMgt } from '../utils/arrayMgt';
+import { LevelMgt } from '../utils/levelMgt';
+import { LootMgt } from '../utils/lootMgt';
+import { NumberMgt } from '../utils/numberMgt';
+import { StatisticMgt } from '../utils/statisticMgt';
 
 export class PvEFight {
    private static MAX_TURNS = 100;

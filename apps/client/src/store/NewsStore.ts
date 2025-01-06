@@ -1,9 +1,9 @@
-import type { ChangelogSchema } from 'shared/src/schemas/ChangelogSchema.ts';
-import type { StatusSchema } from 'shared/src/schemas/StatusSchema.ts';
-import type { Store } from './Store.ts';
+import type { ChangelogSchema } from 'shared/src/schemas/ChangelogSchema';
+import type { StatusSchema } from 'shared/src/schemas/StatusSchema';
+import type { Store } from './Store';
 
 import { makeAutoObservable, runInAction } from 'mobx';
-import { zChangelogSchema } from 'shared/src/schemas/ChangelogSchema.ts';
+import { zChangelogSchema } from 'shared/src/schemas/ChangelogSchema';
 
 export class NewsStore {
    private _store: Store;

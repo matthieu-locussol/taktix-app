@@ -1,9 +1,9 @@
-import type { CharacterSprite } from 'shared/src/data/charactersSprites.ts';
-import type { TranslationKey } from 'shared/src/data/translations.ts';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+import type { TranslationKey } from 'shared/src/data/translations';
 
 import { makeAutoObservable } from 'mobx';
-import { charactersSprites } from 'shared/src/data/charactersSprites.ts';
-import { ProfessionType } from 'shared/src/types/Profession.ts';
+import { charactersSprites } from 'shared/src/data/charactersSprites';
+import { ProfessionType } from 'shared/src/types/Profession';
 
 export class CharacterCreationStore {
    public errorMessage: TranslationKey | '' = '';

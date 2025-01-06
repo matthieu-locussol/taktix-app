@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { isTauri } from './tauri.ts';
+import { isTauri } from './tauri';
 
 declare global {
    interface Window {

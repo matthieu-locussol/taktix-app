@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { getVersion } from './version.ts';
+import { getVersion } from './version';
 
 vi.mock('../../package.json', () => ({
    default: { version: '1.0.0' },

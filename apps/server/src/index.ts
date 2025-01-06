@@ -8,14 +8,14 @@ import cors from 'cors';
 import express, { json } from 'express';
 import basicAuth from 'express-basic-auth';
 
-import { AuthRoom } from './rooms/AuthRoom.ts';
-import { ChatRoom } from './rooms/ChatRoom.ts';
-import { defineMapsRooms } from './rooms/utils/defineMapsRooms.ts';
-import { changelogRouter } from './routers/changelogRouter.ts';
-import { communityRouter } from './routers/communityRouter.ts';
-import { maintenanceRouter } from './routers/maintenanceRouter.ts';
-import { registerRouter } from './routers/registerRouter.ts';
-import { statusRouter } from './routers/statusRouter.ts';
+import { AuthRoom } from './rooms/AuthRoom';
+import { ChatRoom } from './rooms/ChatRoom';
+import { defineMapsRooms } from './rooms/utils/defineMapsRooms';
+import { changelogRouter } from './routers/changelogRouter';
+import { communityRouter } from './routers/communityRouter';
+import { maintenanceRouter } from './routers/maintenanceRouter';
+import { registerRouter } from './routers/registerRouter';
+import { statusRouter } from './routers/statusRouter';
 
 const app = express();
 const auth = basicAuth({

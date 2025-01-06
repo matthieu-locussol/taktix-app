@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { HudStore } from './HudStore.ts';
-import { Store } from './Store.ts';
+import { HudStore } from './HudStore';
+import { Store } from './Store';
 
 const mocks = vi.hoisted(() => ({
    setGridVisibility: vi.fn(),

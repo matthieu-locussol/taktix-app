@@ -1,18 +1,18 @@
 import type { Position } from 'grid-engine';
-import type { CharacterSprite } from 'shared/src/data/charactersSprites.ts';
-import type { Item } from 'shared/src/types/Item.ts';
-import type { Room } from 'shared/src/types/Room.ts';
-import type { Statistics } from 'shared/src/types/Statistic.ts';
-import type { Store } from './Store.ts';
+import type { CharacterSprite } from 'shared/src/data/charactersSprites';
+import type { Item } from 'shared/src/types/Item';
+import type { Room } from 'shared/src/types/Room';
+import type { Statistics } from 'shared/src/types/Statistic';
+import type { Store } from './Store';
 
 import { makeAutoObservable } from 'mobx';
-import { charactersSprites } from 'shared/src/data/charactersSprites.ts';
-import { LEVEL_TO_EXPERIENCE } from 'shared/src/data/levels.ts';
-import { ItemPosition } from 'shared/src/types/Item.ts';
-import { ProfessionType } from 'shared/src/types/Profession.ts';
-import { ItemMgt } from 'shared/src/utils/itemMgt.ts';
-import { LevelMgt } from 'shared/src/utils/levelMgt.ts';
-import { StatisticMgt } from 'shared/src/utils/statisticMgt.ts';
+import { charactersSprites } from 'shared/src/data/charactersSprites';
+import { LEVEL_TO_EXPERIENCE } from 'shared/src/data/levels';
+import { ItemPosition } from 'shared/src/types/Item';
+import { ProfessionType } from 'shared/src/types/Profession';
+import { ItemMgt } from 'shared/src/utils/itemMgt';
+import { LevelMgt } from 'shared/src/utils/levelMgt';
+import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 
 export class CharacterStore {
    private _store: Store;

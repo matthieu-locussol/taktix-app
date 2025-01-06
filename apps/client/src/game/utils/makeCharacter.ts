@@ -1,12 +1,12 @@
 import type { CharacterSprite } from 'shared/src/data/charactersSprites';
 
-import { TILE_SIZE } from 'shared/src/config.ts';
+import { TILE_SIZE } from 'shared/src/config';
 
-import { EntityType } from '../../utils/phaser.ts';
-import { SCALE_FACTOR, type Scene } from '../Scene.ts';
+import { EntityType } from '../../utils/phaser';
+import { SCALE_FACTOR, type Scene } from '../Scene';
 
-import { makeCharacterName } from './makeCharacterName.ts';
-import { registerSpriteEvents } from './registerSpriteEvents.ts';
+import { makeCharacterName } from './makeCharacterName';
+import { registerSpriteEvents } from './registerSpriteEvents';
 
 type CharacterType = 'player' | 'externalPlayer' | 'npc';
 interface MakeCharacterProps {

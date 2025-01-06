@@ -1,5 +1,5 @@
-import type { Room } from './Room.ts';
-import type { SceneData } from './SceneData.ts';
+import type { Room } from './Room';
+import type { SceneData } from './SceneData';
 
 export interface TeleportationSpot {
    x: number;

@@ -1,8 +1,8 @@
 import { when } from 'mobx';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Store } from './Store.ts';
-import { UpdaterStore } from './UpdaterStore.ts';
+import { Store } from './Store';
+import { UpdaterStore } from './UpdaterStore';
 
 vi.mock('./Store', () => {
    const MockedStore = vi.fn();

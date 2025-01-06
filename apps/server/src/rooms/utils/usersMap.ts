@@ -1,7 +1,7 @@
 import type { Client } from '@colyseus/core';
-import type { Role } from 'shared/src/types/Role.ts';
+import type { Role } from 'shared';
 
-import { ReadyState } from 'shared/src/types/Colyseus.ts';
+import { ReadyState } from 'shared';
 
 interface User {
    role: Role;

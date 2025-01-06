@@ -3,7 +3,7 @@ import WebsiteIcon from '@mui/icons-material/LanguageRounded';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 
-import { DiscordIcon } from './DiscordIcon.tsx';
+import { DiscordIcon } from './DiscordIcon';
 
 const LINKS = [
    {

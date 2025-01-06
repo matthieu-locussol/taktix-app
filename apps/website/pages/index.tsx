@@ -1,6 +1,6 @@
 import type { GetServerSideProps } from 'next';
-import type { OsIconType } from '../components/OsIcon.tsx';
-import type { Version } from './api/version.tsx';
+import type { OsIconType } from '../components/OsIcon';
+import type { Version } from './api/version';
 
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Box from '@mui/material/Box';
@@ -10,11 +10,11 @@ import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { ConditionalWrapper } from '../components/ConditionalWrapper.tsx';
-import { CustomButton } from '../components/CustomButton.tsx';
-import { StyledTab, StyledTabs } from '../components/CustomTabs.tsx';
-import { DiscordIcon } from '../components/DiscordIcon.tsx';
-import { OsIcons } from '../components/OsIcon.tsx';
+import { ConditionalWrapper } from '../components/ConditionalWrapper';
+import { CustomButton } from '../components/CustomButton';
+import { StyledTab, StyledTabs } from '../components/CustomTabs';
+import { DiscordIcon } from '../components/DiscordIcon';
+import { OsIcons } from '../components/OsIcon';
 
 const features = [
    'Launcher with auto-update',

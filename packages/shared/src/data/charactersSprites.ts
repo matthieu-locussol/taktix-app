@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { ZodMgt } from '../utils/zodMgt.ts';
+import { ZodMgt } from '../utils/zodMgt';
 
 export const charactersSprites = [
    'Character_001',

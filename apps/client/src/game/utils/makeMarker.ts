@@ -1,6 +1,6 @@
-import { TILE_SIZE } from 'shared/src/config.ts';
+import { TILE_SIZE } from 'shared/src/config';
 
-import { SCALE_FACTOR, type Scene } from '../Scene.ts';
+import { SCALE_FACTOR, type Scene } from '../Scene';
 
 export const makeMarker = (scene: Scene) => {
    const marker = scene.add

@@ -20,10 +20,10 @@ import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
-import { TELEPORTATION_PLACES } from 'shared/src/data/teleportationPlaces.ts';
+import { TELEPORTATION_PLACES } from 'shared/src/data/teleportationPlaces';
 
-import { useStore } from '../../../store/index.tsx';
-import { useTranslation } from '../../../types/react-i18next.ts';
+import { useStore } from '../../../store';
+import { useTranslation } from '../../../types/react-i18next';
 
 export const MapMenu = observer(() => {
    const nodeRef = useRef(null);

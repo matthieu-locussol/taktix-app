@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { ArrayMgt } from './arrayMgt.ts';
+import { ArrayMgt } from './arrayMgt';
 
 describe('ArrayMgt', () => {
    describe('areEquals', () => {

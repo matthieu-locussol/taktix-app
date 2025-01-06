@@ -1,9 +1,9 @@
 // This file has been automatically generated. DO NOT edit it manually.
 
-import type { Room } from '../types/Room.ts';
-import type { TeleportationPlace } from '../types/TeleportationPlace.ts';
+import type { Room } from '../types/Room';
+import type { TeleportationPlace } from '../types/TeleportationPlace';
 
-import { Direction } from '../types/SceneData.ts';
+import { Direction } from '../types/SceneData';
 
 export const TELEPORTATION_PLACES: Record<Room, TeleportationPlace | null> = {
    AAA_InitialRoom: null,

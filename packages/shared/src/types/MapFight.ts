@@ -1,4 +1,4 @@
-import type { MonsterName } from '../data/monsters.ts';
+import type { MonsterName } from '../data/monsters';
 
 export interface MapFightData {
    fights: {

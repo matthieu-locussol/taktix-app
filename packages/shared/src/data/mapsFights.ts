@@ -1,7 +1,7 @@
 // This file has been automatically generated. DO NOT edit it manually.
 
-import type { MapFightData } from '../types/MapFight.ts';
-import type { Room } from '../types/Room.ts';
+import type { MapFightData } from '../types/MapFight';
+import type { Room } from '../types/Room';
 
 export const mapsFights: Record<Room, MapFightData | null> = {
    AAA_InitialRoom: null,

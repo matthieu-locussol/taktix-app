@@ -1,7 +1,7 @@
-import type { PermissionMgt } from '../utils/permissionMgt.ts';
-import type { TranslationKey } from './translations.ts';
+import type { PermissionMgt } from '../utils/permissionMgt';
+import type { TranslationKey } from './translations';
 
-import { Channel } from '../types/Channel.ts';
+import { Channel } from '../types/Channel';
 
 interface ChannelInformations {
    name: TranslationKey;

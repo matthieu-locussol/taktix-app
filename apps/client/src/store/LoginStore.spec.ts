@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { LoginStore } from './LoginStore.ts';
+import { LoginStore } from './LoginStore';
 
 describe('LoginStore', () => {
    const getItemSpy = vi.spyOn(localStorage, 'getItem');

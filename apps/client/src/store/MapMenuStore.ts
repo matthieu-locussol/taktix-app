@@ -1,10 +1,10 @@
-import type { Room } from 'shared/src/types/Room.ts';
-import type { Store } from './Store.ts';
+import type { Room } from 'shared/src/types/Room';
+import type { Store } from './Store';
 
 import { makeAutoObservable } from 'mobx';
-import { TELEPORTATION_PLACES } from 'shared/src/data/teleportationPlaces.ts';
-import { zRoom } from 'shared/src/types/Room.ts';
-import { ArrayMgt } from 'shared/src/utils/arrayMgt.ts';
+import { TELEPORTATION_PLACES } from 'shared/src/data/teleportationPlaces';
+import { zRoom } from 'shared/src/types/Room';
+import { ArrayMgt } from 'shared/src/utils/arrayMgt';
 
 export class MapMenuStore {
    private _store: Store;

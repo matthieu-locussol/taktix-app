@@ -16,9 +16,7 @@
       "preserveWatchOutput": true,
       "skipLibCheck": true,
       "strict": true,
-      "experimentalDecorators": true,
-      "allowImportingTsExtensions": true,
-      "noEmit": true
+      "experimentalDecorators": true
    },
    "exclude": ["node_modules"]
 }

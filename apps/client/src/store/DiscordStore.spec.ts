@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { DiscordStore } from './DiscordStore.ts';
-import { Store } from './Store.ts';
+import { DiscordStore } from './DiscordStore';
+import { Store } from './Store';
 
 const mocks = vi.hoisted(() => ({
    setDiscordRichPresence: vi.fn(),

@@ -1,9 +1,9 @@
-import { charactersSprites } from 'shared/src/data/charactersSprites.ts';
-import { ProfessionType } from 'shared/src/types/Profession.ts';
+import { charactersSprites } from 'shared/src/data/charactersSprites';
+import { ProfessionType } from 'shared/src/types/Profession';
 import { describe, expect, it, vi } from 'vitest';
 
-import { CommunityMenuStore } from './CommunityMenuStore.ts';
-import { Store } from './Store.ts';
+import { CommunityMenuStore } from './CommunityMenuStore';
+import { Store } from './Store';
 
 vi.mock('./Store', () => {
    const soundsStoreMock = {

@@ -2,9 +2,9 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
-import { TimeMgt } from 'shared/src/utils/timeMgt.ts';
+import { TimeMgt } from 'shared/src/utils/timeMgt';
 
-import { useStore } from '../../../store/index.tsx';
+import { useStore } from '../../../store';
 
 const NEWS_HEIGHT = 240;
 

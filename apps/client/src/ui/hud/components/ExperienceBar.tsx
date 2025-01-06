@@ -5,9 +5,9 @@ import { LinearProgress, Typography, linearProgressClasses, styled } from '@mui/
 import { observer } from 'mobx-react-lite';
 import { forwardRef } from 'react';
 
-import { useStore } from '../../../store/index.tsx';
+import { useStore } from '../../../store';
 
-import { Tooltip } from './Tooltip.tsx';
+import { Tooltip } from './Tooltip';
 
 interface ExperienceBarProps {
    placement?: TooltipProps['placement'];

@@ -1,4 +1,4 @@
-import { _assertTrue } from './_assert.ts';
+import { _assertTrue } from './_assert';
 
 export namespace NumberMgt {
    export const clamp = (value: number, min: number, max: number) =>

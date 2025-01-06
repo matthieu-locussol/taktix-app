@@ -1,9 +1,9 @@
-import { ProfessionType } from 'shared/src/types/Profession.ts';
-import { StatisticMgt } from 'shared/src/utils/statisticMgt.ts';
+import { ProfessionType } from 'shared/src/types/Profession';
+import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { describe, expect, it, vi } from 'vitest';
 
-import { CharacterStore } from './CharacterStore.ts';
-import { Store } from './Store.ts';
+import { CharacterStore } from './CharacterStore';
+import { Store } from './Store';
 
 vi.mock('./Store', () => {
    const MockedStore = vi.fn().mockImplementation(() => ({}));

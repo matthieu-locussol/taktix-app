@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../store/index.tsx';
+import { useStore } from '../../store';
 
 export const LoadingAssetsScreen = observer(() => {
    const {

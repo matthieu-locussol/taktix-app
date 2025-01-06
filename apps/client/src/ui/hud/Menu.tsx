@@ -14,9 +14,9 @@ import { darken, styled } from '@mui/material';
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../../store/index.tsx';
+import { useStore } from '../../store';
 
-import { ShortcutIcon } from './components/ShortcutIcon.tsx';
+import { ShortcutIcon } from './components/ShortcutIcon';
 
 export const Menu = observer(() => {
    const {

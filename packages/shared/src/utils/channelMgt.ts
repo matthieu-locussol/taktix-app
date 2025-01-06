@@ -1,10 +1,10 @@
-import type { Role } from '../types/Role.ts';
+import type { Role } from '../types/Role';
 
-import { channelsInformations } from '../data/channelsInformations.ts';
-import { rolesInformations } from '../data/rolesInformations.ts';
-import { Channel } from '../types/Channel.ts';
+import { channelsInformations } from '../data/channelsInformations';
+import { rolesInformations } from '../data/rolesInformations';
+import { Channel } from '../types/Channel';
 
-import { PermissionMgt } from './permissionMgt.ts';
+import { PermissionMgt } from './permissionMgt';
 
 export namespace ChannelMgt {
    export const getPrefixedChannelNameAndContent = (message: string, currentChannel: Channel) => {

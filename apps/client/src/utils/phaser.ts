@@ -1,12 +1,12 @@
-import type { Position } from 'shared/src/types/SceneData.ts';
-import type { Store } from '../store/Store.ts';
+import type { Position } from 'shared/src/types/SceneData';
+import type { Store } from '../store/Store';
 
 import { MoveToResult, NoPathFoundStrategy, PathBlockedStrategy } from 'grid-engine';
-import { TILE_SIZE } from 'shared/src/config.ts';
-import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player.ts';
+import { TILE_SIZE } from 'shared/src/config';
+import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
 import { z } from 'zod';
 
-import { SCALE_FACTOR } from '../game/Scene.ts';
+import { SCALE_FACTOR } from '../game/Scene';
 
 export enum EntityType {
    Character = 'Character',

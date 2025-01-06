@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { TimeMgt } from './timeMgt.ts';
+import { TimeMgt } from './timeMgt';
 
 describe('TimeMgt', () => {
    describe('wait', () => {

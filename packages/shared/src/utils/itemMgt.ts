@@ -1,9 +1,9 @@
-import type { MonsterName } from '../data/monsters.ts';
+import type { MonsterName } from '../data/monsters';
 
 import { z } from 'zod';
 
-import { affixes } from '../data/affixes.ts';
-import { baseAffixes } from '../data/baseAffixes.ts';
+import { affixes } from '../data/affixes';
+import { baseAffixes } from '../data/baseAffixes';
 import {
    type Affix,
    type Item,
@@ -18,8 +18,8 @@ import {
    zAffix,
    zItemPosition,
    zItemType,
-} from '../types/Item.ts';
-import { type Statistic, zStatistic } from '../types/Statistic.ts';
+} from '../types/Item';
+import { type Statistic, zStatistic } from '../types/Statistic';
 import {
    type WeaponDamages,
    isWeapon1HType,
@@ -28,12 +28,12 @@ import {
    weaponDamagesTypes,
    zWeaponDamages,
    zWeaponType,
-} from '../types/Weapon.ts';
+} from '../types/Weapon';
 
-import { _assert, _assertTrue } from './_assert.ts';
-import { NumberMgt } from './numberMgt.ts';
-import { StatisticMgt } from './statisticMgt.ts';
-import { StringMgt } from './stringMgt.ts';
+import { _assert, _assertTrue } from './_assert';
+import { NumberMgt } from './numberMgt';
+import { StatisticMgt } from './statisticMgt';
+import { StringMgt } from './stringMgt';
 
 export namespace ItemMgt {
    interface GenerateItemProps {

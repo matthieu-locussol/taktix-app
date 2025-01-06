@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { DialogMenuStore } from './DialogMenuStore.ts';
-import { Store } from './Store.ts';
+import { DialogMenuStore } from './DialogMenuStore';
+import { Store } from './Store';
 
 const mocks = vi.hoisted(() => ({
    enableKeyboard: vi.fn(),

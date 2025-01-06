@@ -2,7 +2,7 @@ import type { SvgIconProps } from '@mui/material';
 
 import DefaultIcon from '@mui/icons-material/AddRounded';
 
-import { StatisticBaseIcon } from './statistics/StatisticBaseIcon.tsx';
+import { StatisticBaseIcon } from './statistics/StatisticBaseIcon';
 
 interface TalentIconProps extends Omit<SvgIconProps, 'type'> {
    id: string;

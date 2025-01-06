@@ -23,14 +23,14 @@ import { observer } from 'mobx-react-lite';
 import { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
-import { ItemMgt } from 'shared/src/utils/itemMgt.ts';
+import { ItemMgt } from 'shared/src/utils/itemMgt';
 
-import { useStore } from '../../../store/index.tsx';
-import { ITEM_RARITY_COLORS } from '../../../styles/appTheme.tsx';
-import { useTranslation } from '../../../types/react-i18next.ts';
-import { EquipmentSlot } from '../components/EquipmentSlot.tsx';
-import { ItemsSortSelector } from '../components/ItemsSortSelector.tsx';
-import { Tooltip } from '../components/Tooltip.tsx';
+import { useStore } from '../../../store';
+import { ITEM_RARITY_COLORS } from '../../../styles/appTheme';
+import { useTranslation } from '../../../types/react-i18next';
+import { EquipmentSlot } from '../components/EquipmentSlot';
+import { ItemsSortSelector } from '../components/ItemsSortSelector';
+import { Tooltip } from '../components/Tooltip';
 
 export const InventoryMenu = observer(() => {
    const nodeRef = useRef(null);

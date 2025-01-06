@@ -1,12 +1,12 @@
 import type { SelectProps } from '@mui/material/Select';
-import type { Language } from 'shared/src/types/Language.ts';
+import type { Language } from 'shared/src/types/Language';
 
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { observer } from 'mobx-react-lite';
-import { LANGUAGES_NAMES } from 'shared/src/data/translations.ts';
+import { LANGUAGES_NAMES } from 'shared/src/data/translations';
 
-import { useStore } from '../../store/index.tsx';
+import { useStore } from '../../store';
 
 export const LanguageSelector = observer((props: SelectProps<Language>) => {
    const { settingsMenuStore } = useStore();

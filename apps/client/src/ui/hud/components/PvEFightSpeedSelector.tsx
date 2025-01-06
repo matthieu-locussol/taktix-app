@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { observer } from 'mobx-react-lite';
 import * as React from 'react';
 
-import { useStore } from '../../../store/index.tsx';
+import { useStore } from '../../../store';
 
 export const PvEFightSpeedSelector = observer(() => {
    const { settingsMenuStore } = useStore();

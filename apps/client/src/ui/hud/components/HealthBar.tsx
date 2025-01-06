@@ -4,10 +4,10 @@ import { LinearProgress, Typography, linearProgressClasses, styled } from '@mui/
 import { observer } from 'mobx-react-lite';
 import { forwardRef } from 'react';
 
-import { useStore } from '../../../store/index.tsx';
-import { StatisticIcon } from '../../components/StatisticIcon.tsx';
+import { useStore } from '../../../store';
+import { StatisticIcon } from '../../components/StatisticIcon';
 
-import { Tooltip } from './Tooltip.tsx';
+import { Tooltip } from './Tooltip';
 
 interface HealthBarProps {
    placement?: TooltipProps['placement'];

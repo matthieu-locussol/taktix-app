@@ -1,12 +1,12 @@
-import type { Talent } from 'shared/src/data/talents.ts';
-import type { Statistic } from 'shared/src/types/Statistic.ts';
-import type { Store } from './Store.ts';
+import type { Talent } from 'shared/src/data/talents';
+import type { Statistic } from 'shared/src/types/Statistic';
+import type { Store } from './Store';
 
 import { makeAutoObservable } from 'mobx';
-import { UNKNOWN_TALENT, getTalents } from 'shared/src/data/talents.ts';
-import { zStatistic } from 'shared/src/types/Statistic.ts';
-import { ArrayMgt } from 'shared/src/utils/arrayMgt.ts';
-import { TalentMgt } from 'shared/src/utils/talentMgt.ts';
+import { UNKNOWN_TALENT, getTalents } from 'shared/src/data/talents';
+import { zStatistic } from 'shared/src/types/Statistic';
+import { ArrayMgt } from 'shared/src/utils/arrayMgt';
+import { TalentMgt } from 'shared/src/utils/talentMgt';
 
 export class TalentsMenuStore {
    private _store: Store;

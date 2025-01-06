@@ -10,7 +10,6 @@
       "editor.guides.bracketPairs": true,
       "editor.bracketPairColorization.enabled": true,
       "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "typescript.preferences.importModuleSpecifierEnding": "js",
       "editor.codeActionsOnSave": {
          "source.fixAll": "explicit",
          "source.organizeImports": "explicit",

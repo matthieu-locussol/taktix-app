@@ -1,5 +1,5 @@
 import { Plugins } from 'phaser';
-import { _assert } from 'shared/src/utils/_assert.ts';
+import { _assert } from 'shared/src/utils/_assert';
 
 export interface AnimationTileDataFrame {
    tileid: number;

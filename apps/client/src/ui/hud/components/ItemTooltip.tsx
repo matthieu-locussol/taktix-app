@@ -1,22 +1,22 @@
 import type { TooltipProps } from '@mui/material';
-import type { Affix, Item } from 'shared/src/types/Item.tsx';
-import type { WeaponDamages } from 'shared/src/types/Weapon.tsx';
+import type { Affix, Item } from 'shared/src/types/Item';
+import type { WeaponDamages } from 'shared/src/types/Weapon';
 
 import { Box, Divider, Typography, darken } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useMemo } from 'react';
-import { zStatistic } from 'shared/src/types/Statistic.ts';
-import { ItemMgt } from 'shared/src/utils/itemMgt.ts';
+import { zStatistic } from 'shared/src/types/Statistic';
+import { ItemMgt } from 'shared/src/utils/itemMgt';
 
-import { useStore } from '../../../store/index.tsx';
+import { useStore } from '../../../store';
 import {
    ITEM_RARITY_COLORS,
    RAW_STATISTIC_TO_REAL_STATISTIC_COLORS,
-} from '../../../styles/appTheme.tsx';
-import { useTranslation } from '../../../types/react-i18next.ts';
-import { StatisticIcon } from '../../components/StatisticIcon.tsx';
+} from '../../../styles/appTheme';
+import { useTranslation } from '../../../types/react-i18next';
+import { StatisticIcon } from '../../components/StatisticIcon';
 
-import { Tooltip } from './Tooltip.tsx';
+import { Tooltip } from './Tooltip';
 
 interface ItemTooltipProps extends Omit<TooltipProps, 'title'> {
    item: Item;

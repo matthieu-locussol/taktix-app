@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { hashPassword } from './hashPassword.ts';
+import { hashPassword } from './hashPassword';
 
 describe('hashPassword', () => {
    it('should hash the password', async () => {

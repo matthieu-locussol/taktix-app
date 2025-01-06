@@ -1,7 +1,7 @@
-import type { AnimationData, AnimationFileData } from '../types/Animation.ts';
-import type { WeaponType } from '../types/Weapon.ts';
+import type { AnimationData, AnimationFileData } from '../types/Animation';
+import type { WeaponType } from '../types/Weapon';
 
-import { Animation, AnimationFile } from '../types/Animation.ts';
+import { Animation, AnimationFile } from '../types/Animation';
 
 export const weaponsAnimations: Record<WeaponType, Animation> = {
    axe1H: Animation.Explosion,

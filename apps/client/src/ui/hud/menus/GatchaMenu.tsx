@@ -22,9 +22,9 @@ import { Wheel } from 'react-custom-roulette';
 import Draggable from 'react-draggable';
 import { Trans } from 'react-i18next';
 
-import { useStore } from '../../../store/index.tsx';
-import { useTranslation } from '../../../types/react-i18next.ts';
-import { EquipmentSlot } from '../components/EquipmentSlot.tsx';
+import { useStore } from '../../../store';
+import { useTranslation } from '../../../types/react-i18next';
+import { EquipmentSlot } from '../components/EquipmentSlot';
 
 export const GatchaMenu = observer(() => {
    const theme = useTheme();

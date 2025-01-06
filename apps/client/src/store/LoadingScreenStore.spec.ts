@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { LoadingScreenStore } from './LoadingScreenStore.ts';
+import { LoadingScreenStore } from './LoadingScreenStore';
 
 describe('LoadingScreenStore', () => {
    it('should be initialized', () => {

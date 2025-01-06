@@ -1,6 +1,6 @@
-import type { LanguageTranslations } from '../translations.ts';
+import type { LanguageTranslations } from '../translations';
 
-import { translationsEn } from './en.ts';
+import { translationsEn } from './en';
 
 export const translationsFr: LanguageTranslations = {
    ...translationsEn,

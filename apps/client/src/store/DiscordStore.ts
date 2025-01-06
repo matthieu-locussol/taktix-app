@@ -1,13 +1,13 @@
-import type { TranslationKey } from 'shared/src/data/translations.ts';
-import type { Store } from './Store.ts';
+import type { TranslationKey } from 'shared/src/data/translations';
+import type { Store } from './Store';
 
 import { t } from 'i18next';
 import { makeAutoObservable } from 'mobx';
-import { LevelMgt } from 'shared/src/utils/levelMgt.ts';
+import { LevelMgt } from 'shared/src/utils/levelMgt';
 
-import { setDiscordRichPresence } from '../utils/discord.ts';
-import { isTauri } from '../utils/tauri.ts';
-import { getVersion } from '../utils/version.ts';
+import { setDiscordRichPresence } from '../utils/discord';
+import { isTauri } from '../utils/tauri';
+import { getVersion } from '../utils/version';
 
 export class DiscordStore {
    private _store: Store;

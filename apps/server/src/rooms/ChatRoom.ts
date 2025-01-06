@@ -2,18 +2,18 @@ import type { Client as ColyseusClient } from '@colyseus/core';
 
 import { Room, logger } from '@colyseus/core';
 import {
+   Channel,
+   ChannelMgt,
+   _assert,
    isChatRoomMessage,
    type ChatRoomMessage,
    type ChatRoomResponse,
    type ChatRoomOptions as Options,
    type ChatRoomUserData as UserData,
-} from 'shared/src/rooms/ChatRoom.ts';
-import { Channel } from 'shared/src/types/Channel.ts';
-import { _assert } from 'shared/src/utils/_assert.ts';
-import { ChannelMgt } from 'shared/src/utils/channelMgt.ts';
+} from 'shared';
 import { match } from 'ts-pattern';
 
-import { removeDanglingUsers, usersMap } from './utils/usersMap.ts';
+import { removeDanglingUsers, usersMap } from './utils/usersMap';
 
 export let notifyMaintenance: (() => void) | null = null;
 

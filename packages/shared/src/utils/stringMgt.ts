@@ -1,7 +1,7 @@
-import type { Room } from '../types/Room.ts';
+import type { Room } from '../types/Room';
 
-import { INTERNAL_PLAYER_NAME } from '../types/Player.ts';
-import { zRoom } from '../types/Room.ts';
+import { INTERNAL_PLAYER_NAME } from '../types/Player';
+import { zRoom } from '../types/Room';
 
 export namespace StringMgt {
    export const isCharacterNameValid = (characterName: string): boolean =>

@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server';
-import type { ARCHITECTURES } from '../../types/architectures.ts';
+import type { ARCHITECTURES } from '../../types/architectures';
 
-import { fetchLatestGitHubRelease } from 'shared/src/data/githubReleases.ts';
+import { fetchLatestGitHubRelease } from 'shared/src/data/githubReleases';
 
 export const config = {
    runtime: 'edge',

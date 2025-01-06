@@ -1,7 +1,7 @@
-import type { Room } from './types/Room.ts';
-import type { Statistics } from './types/Statistic.ts';
+import type { Room } from './types/Room';
+import type { Statistics } from './types/Statistic';
 
-import { Direction } from './types/SceneData.ts';
+import { Direction } from './types/SceneData';
 
 export const MAX_CHARACTERS_PER_ACCOUNT = 3;
 export const DEFAULT_MAP: Room = 'MoonshadowHotelRoom';
