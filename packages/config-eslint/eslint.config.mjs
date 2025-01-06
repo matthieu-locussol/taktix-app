@@ -23,6 +23,11 @@ export const config = [
    pluginImport.flatConfigs.recommended,
    pluginReactRefresh.configs.recommended,
    {
+      settings: {
+         react: {
+            version: 'detect',
+         },
+      },
       rules: {
          '@typescript-eslint/no-namespace': 'off',
          'import/no-unresolved': [
