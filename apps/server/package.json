@@ -26,7 +26,7 @@
       "express": "^4.19.2",
       "express-basic-auth": "^1.2.1",
       "mobx": "^6.12.3",
-      "prisma": "^5.14.0",
+      "prisma": "^6.1.0",
       "shared": "workspace:^",
       "ts-pattern": "^5.1.2",
       "uuid": "^9.0.1",
