@@ -10,7 +10,7 @@ import { isLanguage, zLanguage } from 'shared/src/types/Language';
 import { z } from 'zod';
 
 import { isTauri } from '../utils/tauri';
-const appWindow = getCurrentWebviewWindow();
+const appWindow = isTauri() ? getCurrentWebviewWindow() : null;
 
 export const keyboardLayouts: {
    value: string;
@@ -143,7 +143,7 @@ export class SettingsMenuStore {
    public async setFullScreen(fullScreen: boolean): Promise<void> {
       this.fullScreen = fullScreen;
 
-      if (isTauri()) {
+      if (appWindow !== null) {
          const isTauriFullscreen = await appWindow.isFullscreen();
 
          if (fullScreen !== isTauriFullscreen) {
