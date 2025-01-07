@@ -4,14 +4,15 @@ import { store } from '../store';
 import { getVersion } from '../utils/version';
 
 import { mapsScenes } from './mapsScenes';
-import { PvEFightScene } from './scenes/PvEFightScene';
+import { Boot } from './scenes/special/Boot';
+import { PvEFightScene } from './scenes/special/PvEFightScene';
 
 export const config: Phaser.Types.Core.GameConfig = {
    type: Phaser.AUTO,
    backgroundColor: '#1f2937',
    parent: 'root-game',
    fullscreenTarget: 'root-game',
-   scene: [...mapsScenes, PvEFightScene],
+   scene: [Boot, ...mapsScenes, PvEFightScene],
    pixelArt: true,
    banner: {
       hidePhaser: process.env.NODE_ENV === 'production',

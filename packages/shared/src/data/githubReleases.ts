@@ -1,3 +1,4 @@
+import { logger } from '@colyseus/core';
 import { z } from 'zod';
 
 export const GITHUB_RELEASES_ENDPOINT =
@@ -25,6 +26,12 @@ export type GitHubRelease = z.infer<typeof zGitHubRelease>;
 export const fetchGitHubReleases = async () => {
    const response = await fetch(GITHUB_RELEASES_ENDPOINT);
    const json = await response.json();
+
+   if (json !== null && typeof json === 'object' && 'message' in json) {
+      logger.error(json.message);
+
+      return [];
+   }
 
    return z.array(zGitHubRelease).parse(json);
 };

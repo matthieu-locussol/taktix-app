@@ -156,23 +156,12 @@ const generateClientMapsScenes = (maps: string[]) => {
          __dirname,
          `../../../apps/client/src/game/scenes/${map}Scene.ts`,
       );
-      const mapSceneBlob = `import { Scene } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
-import { loadMonstersAssets } from '../utils/loadMonstersAssets';
+      const mapSceneBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
+import { Scene } from '../Scene';
 
 export class ${map}Scene extends Scene {
    constructor() {
       super('${map}Room');
-   }
-
-   public loadAssets(): void {
-      this.load.audio('${map}_music', '/assets/musics/${map}.mp3');
-      ${tiledMapTilesets
-         .map((tileset) => `this.load.image('${tileset.name}_tileset', '${tileset.image}');`)
-         .join('\n      ')}
-      this.load.tilemapTiledJSON('${map}_tiledmap', '/assets/maps/${map}.json');
-      loadCharactersAssets(this);
-      loadMonstersAssets(this);
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
@@ -202,8 +191,8 @@ export class ${map}Scene extends Scene {
 
    const mapsScenesFilePath = resolve(__dirname, '../../../apps/client/src/game/mapsScenes.ts');
    const mapsScenesBlob = `// This file has been automatically generated. DO NOT edit it manually.\n
-import { AAA_InitialScene } from './scenes/AAA_InitialScene';
 ${maps.map((map) => `import { ${map}Scene } from './scenes/${map}Scene';`).join('\n')}
+import { AAA_InitialScene } from './scenes/special/AAA_InitialScene';
 
 export const mapsScenes: Phaser.Types.Scenes.SceneType[] = [
    AAA_InitialScene,

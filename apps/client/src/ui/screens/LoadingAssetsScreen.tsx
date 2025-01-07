@@ -15,10 +15,10 @@ export const LoadingAssetsScreen = observer(() => {
    return (
       <Wrapper>
          <Box mb={2} position="relative">
-            <CircularProgress size={80} value={progress} variant="determinate" />
+            <CircularProgress size={128} value={progress} variant="determinate" />
             <ProgressValueWrapper>
                <Typography color="white" fontWeight="bold">
-                  {progress}%
+                  {progress.toFixed(2)}%
                </Typography>
             </ProgressValueWrapper>
          </Box>

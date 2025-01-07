@@ -12,12 +12,10 @@ import { _assert, _assertTrue } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
 import { TimeMgt } from 'shared/src/utils/timeMgt';
 
-import { store } from '../../store';
-import { MONSTER_TYPE_COLORS, STATS_COLORS } from '../../styles/appTheme';
-import { CHARACTER_HEIGHT, FADE_IN_DURATION, FADE_OUT_DURATION, SCALE_FACTOR } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
-import { loadMonstersAssets } from '../utils/loadMonstersAssets';
-import { makeCharacterName } from '../utils/makeCharacterName';
+import { store } from '../../../store';
+import { MONSTER_TYPE_COLORS, STATS_COLORS } from '../../../styles/appTheme';
+import { CHARACTER_HEIGHT, FADE_IN_DURATION, FADE_OUT_DURATION, SCALE_FACTOR } from '../../Scene';
+import { makeCharacterName } from '../../utils/makeCharacterName';
 
 const HEALTH_MARGIN = 10;
 const HEALTH_HEIGHT = 8;
@@ -56,22 +54,7 @@ export class PvEFightScene extends Phaser.Scene {
       super('PvEFightScene');
    }
 
-   public preload(): void {
-      this.load.audio('PvEFight', '/assets/musics/PvEFight.mp3');
-      this.load.image('background', '/assets/fights/mountains/background.png');
-      this.load.image('foreground-trees', '/assets/fights/mountains/foreground-trees.png');
-      this.load.image('mountain-far', '/assets/fights/mountains/mountain-far.png');
-      this.load.image('mountains', '/assets/fights/mountains/mountains.png');
-      this.load.image('trees', '/assets/fights/mountains/trees.png');
-      loadCharactersAssets(this);
-      loadMonstersAssets(this);
-
-      store.pveFightStore.uniqueAnimationFiles.forEach((animationFile) => {
-         const { frameHeight, frameWidth, path, id } = animationFilesData[animationFile];
-
-         this.load.spritesheet(id, path, { frameWidth, frameHeight });
-      });
-   }
+   public preload(): void {}
 
    public create(): void {
       _assert(store.pveFightStore.fightResults, 'fightResults must be set!');

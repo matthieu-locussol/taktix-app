@@ -1,19 +1,10 @@
+// This file has been automatically generated. DO NOT edit it manually.
+
 import { Scene } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
-import { loadMonstersAssets } from '../utils/loadMonstersAssets';
 
 export class GraveyardScene extends Scene {
    constructor() {
       super('GraveyardRoom');
-   }
-
-   public loadAssets(): void {
-      this.load.audio('Graveyard_music', '/assets/musics/Graveyard.mp3');
-      this.load.image('RW_Graveyard_tileset', '/assets/tilesets/RW_Graveyard.png');
-      this.load.image('KE_Ground_Tiles_tileset', '/assets/tilesets/KE_Ground_Tiles.png');
-      this.load.tilemapTiledJSON('Graveyard_tiledmap', '/assets/maps/Graveyard.json');
-      loadCharactersAssets(this);
-      loadMonstersAssets(this);
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

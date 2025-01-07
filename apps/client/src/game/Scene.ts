@@ -128,12 +128,8 @@ export abstract class Scene extends Phaser.Scene {
          loadingScreenStore.setLoadingAssets(false);
       });
 
-      this.loadAssets();
-      this.load.image('FightIcon', 'assets/fights/fight.png');
       this.load.scenePlugin('animatedTiles', AnimatedTiles, 'animatedTiles', 'animatedTiles');
    }
-
-   public abstract loadAssets(): void;
 
    public create(): void {
       this.sys.setVisible(store.loadingScreenStore.sceneVisible);

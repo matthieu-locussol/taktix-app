@@ -1,18 +1,10 @@
+// This file has been automatically generated. DO NOT edit it manually.
+
 import { Scene } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
-import { loadMonstersAssets } from '../utils/loadMonstersAssets';
 
 export class MoonshadowHotelScene extends Scene {
    constructor() {
       super('MoonshadowHotelRoom');
-   }
-
-   public loadAssets(): void {
-      this.load.audio('MoonshadowHotel_music', '/assets/musics/MoonshadowHotel.mp3');
-      this.load.image('FDR_Interior_tileset', '/assets/tilesets/FDR_Interior.png');
-      this.load.tilemapTiledJSON('MoonshadowHotel_tiledmap', '/assets/maps/MoonshadowHotel.json');
-      loadCharactersAssets(this);
-      loadMonstersAssets(this);
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

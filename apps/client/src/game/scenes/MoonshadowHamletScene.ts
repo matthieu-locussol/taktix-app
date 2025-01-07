@@ -1,23 +1,10 @@
+// This file has been automatically generated. DO NOT edit it manually.
+
 import { Scene } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
-import { loadMonstersAssets } from '../utils/loadMonstersAssets';
 
 export class MoonshadowHamletScene extends Scene {
    constructor() {
       super('MoonshadowHamletRoom');
-   }
-
-   public loadAssets(): void {
-      this.load.audio('MoonshadowHamlet_music', '/assets/musics/MoonshadowHamlet.mp3');
-      this.load.image('KE_Ground_Tiles_tileset', '/assets/tilesets/KE_Ground_Tiles.png');
-      this.load.image('KE_Town_tileset', '/assets/tilesets/KE_Town.png');
-      this.load.image('RW_Forest_tileset', '/assets/tilesets/RW_Forest.png');
-      this.load.image('RW_Plains_tileset', '/assets/tilesets/RW_Plains.png');
-      this.load.image('KE_Water_Tiles_tileset', '/assets/tilesets/KE_Water_Tiles.png');
-      this.load.image('RW_Graveyard_tileset', '/assets/tilesets/RW_Graveyard.png');
-      this.load.tilemapTiledJSON('MoonshadowHamlet_tiledmap', '/assets/maps/MoonshadowHamlet.json');
-      loadCharactersAssets(this);
-      loadMonstersAssets(this);
    }
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {

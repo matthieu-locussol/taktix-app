@@ -1,15 +1,11 @@
-import { Scene } from '../Scene';
-import { loadCharactersAssets } from '../utils/loadCharactersAssets';
+import { Scene } from '../../Scene';
 
 export class AAA_InitialScene extends Scene {
    constructor() {
       super('AAA_InitialRoom');
    }
 
-   public loadAssets(): void {
-      this.load.audio('AAA_Initial_music', '/assets/musics/Menu.mp3');
-      loadCharactersAssets(this);
-   }
+   public loadAssets(): void {}
 
    public createTilemap(): Phaser.Tilemaps.Tilemap {
       this.sound.stopAll();
