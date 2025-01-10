@@ -1,16 +1,22 @@
 import type { NextRequest } from 'next/server';
-import type { ARCHITECTURES } from '../../types/architectures';
 
-import { fetchLatestGitHubRelease } from 'shared/src/data/githubReleases';
+import { fetchLatestGitHubRelease } from 'shared';
+
+import {
+   EXTENSIONS,
+   type ArchitectureExtension,
+   type ARCHITECTURES,
+} from '../../types/architectures';
 
 export const config = {
    runtime: 'edge',
 };
 
-const ARCHITECTURES_EXTENSION = {
-   '.app.tar.gz': ['darwin-aarch64', 'darwin-x86_64'],
+const ARCHITECTURES_EXTENSION: Record<ArchitectureExtension, (typeof ARCHITECTURES)[number][]> = {
+   '_x64.app.tar.gz': ['darwin-x86_64'],
    '.AppImage.tar.gz': ['linux-x86_64'],
    '.msi.zip': ['windows-x86_64'],
+   '_aarch64.app.tar.gz': ['darwin-aarch64'],
 };
 
 export interface Version {
@@ -45,17 +51,13 @@ const handler = async (_: NextRequest) => {
             platforms: (
                await Promise.all(
                   assets
-                     .filter(({ name }) =>
-                        ['.AppImage.tar.gz', '.app.tar.gz', '.msi.zip'].some((extension) =>
-                           name.endsWith(extension),
-                        ),
-                     )
+                     .filter(({ name }) => EXTENSIONS.some((extension) => name.endsWith(extension)))
                      .map(async ({ name, browser_download_url }) => ({
                         signature: await computeSignature(`${browser_download_url}.sig`),
                         url: browser_download_url,
-                        extension: ['.AppImage.tar.gz', '.app.tar.gz', '.msi.zip'].find(
-                           (extension) => name.endsWith(extension),
-                        ) as '.AppImage.tar.gz' | '.app.tar.gz' | '.msi.zip',
+                        extension: EXTENSIONS.find((extension) =>
+                           name.endsWith(extension),
+                        ) as ArchitectureExtension,
                      })),
                )
             ).reduce(

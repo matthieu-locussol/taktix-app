@@ -2,6 +2,7 @@ import type { GetServerSideProps } from 'next';
 import type { OsIconType } from '../components/OsIcon';
 import type { Version } from './api/version';
 
+import DownloadsIcon from '@mui/icons-material/CloudDownloadRounded';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -130,6 +131,8 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
       setValue(newValue);
    };
 
+   const atLeastOneIsUpdating = platforms.some((platform) => platform.updating);
+
    return (
       <Box>
          <Box
@@ -175,7 +178,7 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                <Box
                   display="grid"
                   gap={4}
-                  gridTemplateColumns={{ md: '1fr 1fr 1fr', sm: '1fr' }}
+                  gridTemplateColumns={{ md: '1fr 1fr', sm: '1fr' }}
                   justifyItems="center"
                >
                   {platforms.map(
@@ -194,6 +197,7 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                               disabled={updating}
                               size="large"
                               startIcon={OsIcons[name]}
+                              sx={{ minWidth: 350 }}
                               variant="contained"
                            >
                               <Typography fontStyle={updating ? 'italic' : 'normal'}>
@@ -203,6 +207,36 @@ const IndexPage = ({ version, date, platforms }: IndexPageProps) => {
                         </ConditionalWrapper>
                      ),
                   )}
+                  <ConditionalWrapper
+                     condition={!atLeastOneIsUpdating}
+                     wrapper={(children) => (
+                        <Link
+                           href="https://github.com/matthieu-locussol/taktix-app/releases/latest"
+                           rel="noreferrer"
+                           sx={{
+                              textDecoration: 'none',
+                              width: '100%',
+                              gridColumn: { md: 'span 2', sm: 'span 1' },
+                           }}
+                           target="_blank"
+                        >
+                           {children}
+                        </Link>
+                     )}
+                  >
+                     <CustomButton
+                        fullWidth
+                        color="inherit"
+                        disabled={atLeastOneIsUpdating}
+                        size="large"
+                        startIcon={<DownloadsIcon sx={{ fontSize: 20, mr: 1 }} />}
+                        variant="contained"
+                     >
+                        <Typography fontStyle={atLeastOneIsUpdating ? 'italic' : 'normal'}>
+                           Other downloads
+                        </Typography>
+                     </CustomButton>
+                  </ConditionalWrapper>
                </Box>
                <Box
                   display="grid"
@@ -495,10 +529,22 @@ export const getServerSideProps: GetServerSideProps<IndexPageProps> = async () =
             {
                name: 'MacOS',
                url:
+                  version?.platforms?.['windows-x86_64']?.url.replace(
+                     '_x64_en-US.msi.zip',
+                     '_aarch64.dmg',
+                  ) || '',
+               availableText: 'Download for Mac OS - M1',
+               updatingText: 'Updating for Mac OS - M1...',
+               updating: typeof version?.platforms?.['darwin-aarch64']?.url !== 'string',
+               extension: '.app',
+            },
+            {
+               name: 'MacOS',
+               url:
                   version?.platforms?.['windows-x86_64']?.url.replace('_en-US.msi.zip', '.dmg') ||
                   '',
-               availableText: 'Download for Mac OS',
-               updatingText: 'Updating for Mac OS...',
+               availableText: 'Download for Mac OS - Intel',
+               updatingText: 'Updating for Mac OS - Intel...',
                updating: typeof version?.platforms?.['darwin-x86_64']?.url !== 'string',
                extension: '.app',
             },

@@ -1,4 +1,3 @@
-import { logger } from '@colyseus/core';
 import { z } from 'zod';
 
 export const GITHUB_RELEASES_ENDPOINT =
@@ -28,7 +27,7 @@ export const fetchGitHubReleases = async () => {
    const json = await response.json();
 
    if (json !== null && typeof json === 'object' && 'message' in json) {
-      logger.error(json.message);
+      console.error(json.message);
 
       return [];
    }
