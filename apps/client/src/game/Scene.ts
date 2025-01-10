@@ -19,6 +19,7 @@ import { AnimatedTiles } from '../plugins/AnimatedTiles';
 import { store } from '../store';
 import { isObjectProperties } from '../utils/phaser';
 
+import { EventBus } from './EventBus';
 import { makeCharacter } from './utils/makeCharacter';
 import { makeGrid } from './utils/makeGrid';
 import { makeInteractiveObject } from './utils/makeInteractiveObject';
@@ -37,8 +38,8 @@ export const CHARACTER_LETTER_WIDTH = 8;
 export const ZOOM_MIN = 1.3;
 export const ZOOM_MAX = 2;
 export const ZOOM_STEP = 0.1;
-export const FADE_IN_DURATION = 1000;
-export const FADE_OUT_DURATION = 300;
+export const FADE_IN_DURATION = 600;
+export const FADE_OUT_DURATION = 400;
 export const INTERACTIVE_OBJECT_DEPTH = 999;
 
 export interface InteractiveObjectPhaser {
@@ -46,7 +47,7 @@ export interface InteractiveObjectPhaser {
    geometry: Phaser.Geom.Polygon;
 }
 
-interface PlayerWrappers {
+interface PlayerWrapper {
    square: Phaser.GameObjects.Rectangle;
    name: Phaser.GameObjects.Text;
 }
@@ -66,7 +67,7 @@ export abstract class Scene extends Phaser.Scene {
 
    public playersSprites = new Map<string, Phaser.GameObjects.Sprite>();
 
-   public playersWrappers = new Map<string, PlayerWrappers>();
+   public playersWrappers = new Map<string, PlayerWrapper>();
 
    public nextPositions = new Map<string, Position>();
 
@@ -149,6 +150,13 @@ export abstract class Scene extends Phaser.Scene {
       this.initializeMarker();
       this.initializeNPCs();
       this.initializeSceneState();
+
+      EventBus.emit('current-scene-ready', this);
+
+      this.events.on('resume', () => {
+         this.fadeIn();
+         EventBus.emit('current-scene-ready', this);
+      });
    }
 
    private initializePlugins() {

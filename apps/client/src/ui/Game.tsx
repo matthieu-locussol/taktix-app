@@ -1,10 +1,13 @@
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import type { Scene } from '../game/Scene';
+
+import { CircularProgress } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 
+import { EventBus } from '../game/EventBus';
 import { useStore } from '../store/index';
 
+import { GameContainer } from './GameContainer';
 import { GameLayout } from './layouts/GameLayout';
 import { CharacterCreationScreen } from './screens/CharacterCreationScreen';
 import { CharacterSelectionScreen } from './screens/CharacterSelectionScreen';
@@ -16,6 +19,7 @@ export const Game = observer(() => {
    const {
       colyseusStore,
       discordStore,
+      gameStore,
       screenStore,
       loadingScreenStore: { loadingAssets, sceneVisible },
       updaterStore,
@@ -24,6 +28,10 @@ export const Game = observer(() => {
    useEffect(() => {
       updaterStore.checkUpdate();
       discordStore.updateDiscordRichPresence();
+
+      EventBus.on('current-scene-ready', (sceneInstance: Scene) => {
+         gameStore.setCurrentScene(sceneInstance);
+      });
    }, []);
 
    if (colyseusStore.changingMap) {
@@ -43,5 +51,5 @@ export const Game = observer(() => {
       }[screenStore.screen];
    }
 
-   return <GameLayout>{!sceneVisible ? <CircularProgress /> : <Box id="root-game" />}</GameLayout>;
+   return <GameLayout>{!sceneVisible ? <CircularProgress /> : <GameContainer />}</GameLayout>;
 });

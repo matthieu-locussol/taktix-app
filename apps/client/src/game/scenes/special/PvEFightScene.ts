@@ -14,6 +14,7 @@ import { TimeMgt } from 'shared/src/utils/timeMgt';
 
 import { store } from '../../../store';
 import { MONSTER_TYPE_COLORS, STATS_COLORS } from '../../../styles/appTheme';
+import { EventBus } from '../../EventBus';
 import { CHARACTER_HEIGHT, FADE_IN_DURATION, FADE_OUT_DURATION, SCALE_FACTOR } from '../../Scene';
 import { makeCharacterName } from '../../utils/makeCharacterName';
 
@@ -54,8 +55,6 @@ export class PvEFightScene extends Phaser.Scene {
       super('PvEFightScene');
    }
 
-   public preload(): void {}
-
    public create(): void {
       _assert(store.pveFightStore.fightResults, 'fightResults must be set!');
 
@@ -92,6 +91,8 @@ export class PvEFightScene extends Phaser.Scene {
 
       this.initializeHandlers();
       this.initializeFight();
+
+      EventBus.emit('current-scene-ready', this);
 
       window.setTimeout(() => {
          this.run();
@@ -223,13 +224,11 @@ export class PvEFightScene extends Phaser.Scene {
       this.fadeOut(async (_, progress) => {
          if (progress === 1) {
             store.pveFightStore.endFight();
+
             this.scene.resume(store.characterStore.map);
             this.scene.stop(this.scene.key);
 
             store.colyseusStore.stopFighting();
-
-            await TimeMgt.wait(300);
-            store.gameStore.currentScene.fadeIn();
          }
       });
    }

@@ -28,11 +28,7 @@ import { ItemMgt } from 'shared/src/utils/itemMgt';
 import { StatisticMgt } from 'shared/src/utils/statisticMgt';
 import { StringMgt } from 'shared/src/utils/stringMgt';
 import { TalentMgt } from 'shared/src/utils/talentMgt';
-import { TimeMgt } from 'shared/src/utils/timeMgt';
 import { match } from 'ts-pattern';
-
-const CHECK_INTERVAL = 10;
-const MAX_CHECK_ATTEMPTS = 1_000;
 
 export class ColyseusStore {
    private _client: Client;
@@ -456,7 +452,7 @@ export class ColyseusStore {
    }: Extract<MapRoomResponse, { type: 'changeMap' }>['message']) {
       this._store.gameStore.enableKeyboard(false);
 
-      const scene = await this._store.gameStore.getCurrentScene();
+      const scene = this._store.gameStore.currentScene;
 
       scene.fadeOut((_, progress) => {
          if (progress === 1) {
@@ -470,18 +466,6 @@ export class ColyseusStore {
             scene.scene.start(map, sceneData);
          }
       }, true);
-
-      let attempts = 0;
-
-      while (attempts < MAX_CHECK_ATTEMPTS) {
-         attempts += 1;
-
-         if (this._store.gameStore.game.scene.isActive(map)) {
-            break;
-         }
-
-         await TimeMgt.wait(CHECK_INTERVAL);
-      }
 
       await this.joinRoom(map, { x, y }, direction as Direction);
 
@@ -500,14 +484,12 @@ export class ColyseusStore {
       results,
       alliesMoney,
    }: Extract<MapRoomResponse, { type: 'fightPvE' }>['message']) {
-      const scene = await this._store.gameStore.getCurrentScene();
-
-      scene.fadeOut((_, progress) => {
+      this._store.gameStore.currentScene.fadeOut((_, progress) => {
          if (progress === 1) {
             this._store.pveFightStore.setFightResults(results);
             this._store.pveFightStore.setAlliesMoney(alliesMoney);
-            scene.scene.pause(this._store.characterStore.map);
-            scene.scene.launch('PvEFightScene');
+            this._store.gameStore.currentScene.scene.pause(this._store.characterStore.map);
+            this._store.gameStore.currentScene.scene.launch('PvEFightScene');
          }
       });
    }

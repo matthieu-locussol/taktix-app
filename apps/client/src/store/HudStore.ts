@@ -44,20 +44,20 @@ export class HudStore {
       this._store = store;
    }
 
-   public async toggleGrid(): Promise<void> {
+   public toggleGrid(): void {
       this.isGridVisible = !this.isGridVisible;
       this._store.soundsStore.play('check');
 
-      const scene = await this._store.gameStore.getCurrentScene();
+      const scene = this._store.gameStore.currentScene;
 
       scene.setGridVisibility(this.isGridVisible);
    }
 
-   public async toggleMinimap(): Promise<void> {
+   public toggleMinimap(): void {
       this.isMinimapVisible = !this.isMinimapVisible;
       this._store.soundsStore.play('check');
 
-      const scene = await this._store.gameStore.getCurrentScene();
+      const scene = this._store.gameStore.currentScene;
 
       scene.setMinimapVisibility(this.isMinimapVisible);
    }

@@ -1,12 +1,12 @@
-import { Scene } from 'phaser';
 import { animationFilesData } from 'shared/src/data/animations';
 import { AnimationFile } from 'shared/src/types/Animation';
 
 import { store } from '../../../store';
+import { EventBus } from '../../EventBus';
 import { loadCharactersAssets } from '../../utils/loadCharactersAssets';
 import { loadMonstersAssets } from '../../utils/loadMonstersAssets';
 
-export class Boot extends Scene {
+export class Boot extends Phaser.Scene {
    constructor() {
       super('Boot');
    }
@@ -72,6 +72,8 @@ export class Boot extends Scene {
    }
 
    create() {
+      EventBus.emit('current-scene-ready', this);
+
       this.scene.start('AAA_InitialRoom');
    }
 }

@@ -7,16 +7,14 @@ import type { Store } from './Store';
 
 import { makeAutoObservable } from 'mobx';
 import { INTERNAL_PLAYER_NAME } from 'shared/src/types/Player';
-import { _assert, _assertTrue } from 'shared/src/utils/_assert';
+import { _assert } from 'shared/src/utils/_assert';
 import { NumberMgt } from 'shared/src/utils/numberMgt';
-import { TimeMgt } from 'shared/src/utils/timeMgt';
 
 import { PLAYER_GE_LAYER, ZOOM_MAX, ZOOM_MIN } from '../game/Scene';
 
-const CHECK_INTERVAL = 10;
-const MAX_CHECK_ATTEMPTS = 1_000;
-
 export class GameStore {
+   private _currentScene: Scene | null;
+
    private _game: Phaser.Game | null;
 
    private _store: Store;
@@ -34,12 +32,17 @@ export class GameStore {
    constructor(store: Store) {
       makeAutoObservable(this);
 
+      this._currentScene = null;
       this._game = null;
       this._store = store;
    }
 
    initialize(game: Phaser.Game) {
       this._game = game;
+   }
+
+   setCurrentScene(scene: Scene) {
+      this._currentScene = scene;
    }
 
    addFightToQueue(fight: FightState) {
@@ -76,43 +79,20 @@ export class GameStore {
       return this.playersToAddQueue.length > 0 || this.playersToRemoveQueue.length > 0;
    }
 
+   get currentScene() {
+      _assert(this._currentScene);
+
+      return this._currentScene;
+   }
+
    get game() {
       _assert(this._game);
 
       return this._game;
    }
 
-   get currentScene() {
-      const { scenes } = this.game.scene;
-      const activeScenes = scenes.filter(({ scene }) => this.game.scene.isActive(scene.key));
-
-      _assertTrue(activeScenes.length <= 1, 'There should be only one active scene at a time.');
-
-      return activeScenes[0] as Scene;
-   }
-
-   async getCurrentScene() {
-      let attempts = 0;
-
-      while (attempts < MAX_CHECK_ATTEMPTS) {
-         attempts += 1;
-
-         const { currentScene } = this;
-
-         if (currentScene !== undefined) {
-            return currentScene;
-         }
-
-         await TimeMgt.wait(CHECK_INTERVAL);
-      }
-
-      throw new Error('Could not find the current scene.');
-   }
-
    async teleportPlayer(position: Position) {
-      const scene = await this.getCurrentScene();
-
-      scene.gridEngine.setPosition(INTERNAL_PLAYER_NAME, position, PLAYER_GE_LAYER);
+      this.currentScene.gridEngine.setPosition(INTERNAL_PLAYER_NAME, position, PLAYER_GE_LAYER);
 
       const { characterStore } = this._store;
 
@@ -120,8 +100,7 @@ export class GameStore {
    }
 
    async changeMapPlayer(map: string, data: SceneData) {
-      const scene = await this.getCurrentScene();
-      const returnedScene = scene.scene.start(map, data).scene;
+      const returnedScene = this.currentScene.scene.start(map, data).scene;
 
       const { characterStore } = this._store;
 

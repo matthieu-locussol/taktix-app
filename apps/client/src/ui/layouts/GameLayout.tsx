@@ -40,7 +40,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          }}
          onClick={async (event) => {
             if (event.target === gameLayoutRef.current) {
-               const scene = await gameStore.getCurrentScene();
+               const scene = gameStore.currentScene;
 
                scene.input.emit(
                   Phaser.Input.Events.POINTER_DOWN,
@@ -51,7 +51,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          }}
          onMouseMove={async (event) => {
             if (event.target === gameLayoutRef.current) {
-               const scene = await gameStore.getCurrentScene();
+               const scene = gameStore.currentScene;
 
                scene.input.manager.transformPointer(
                   scene.input.activePointer,
@@ -68,7 +68,7 @@ export const GameLayout = observer(({ children, ...rest }: GameLayoutProps) => {
          }}
          onWheel={async (event) => {
             if (event.target === gameLayoutRef.current) {
-               const scene = await gameStore.getCurrentScene();
+               const scene = gameStore.currentScene;
 
                scene.input.emit(
                   Phaser.Input.Events.POINTER_WHEEL,
