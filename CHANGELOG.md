@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.59.0](https://github.com/matthieu-locussol/taktix-app/compare/v1.58.19...v1.59.0) (2025-01-11)
+
+
+### Features
+
+* added apple M1 & other downloads on the website ([2a8d209](https://github.com/matthieu-locussol/taktix-app/commit/2a8d2091d67f5db4f018877ca4d2c6297f3601d5))
+
+
+### Bug Fixes
+
+* improved map change actions ([33c79c2](https://github.com/matthieu-locussol/taktix-app/commit/33c79c216adfedd152b129b7ce56a5b537908559))
+
 ### [1.58.19](https://github.com/matthieu-locussol/taktix-app/compare/v1.58.18...v1.58.19) (2025-01-06)
 
 
