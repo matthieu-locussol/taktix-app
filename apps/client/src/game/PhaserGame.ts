@@ -28,6 +28,7 @@ export const config: Phaser.Types.Core.GameConfig = {
       noAudio: process.env.NODE_ENV === 'development',
    },
    fps: {
+      limit: 120,
       smoothStep: true,
    },
    disableContextMenu: true,
@@ -46,6 +47,7 @@ export const config: Phaser.Types.Core.GameConfig = {
    canvasStyle: `border: 1px solid #374151;`,
    render: {
       powerPreference: 'high-performance',
+      preserveDrawingBuffer: true,
    },
 };
 

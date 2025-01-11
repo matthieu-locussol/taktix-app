@@ -115,7 +115,7 @@ export const RegisterScreen = observer(() => {
                   <CircularProgress />
                </CardContent>
             )}
-            {!updaterStore.isCheckingUpdate && updaterStore.shouldUpdate === false && (
+            {!updaterStore.isCheckingUpdate && !updaterStore.shouldUpdate && (
                <CardContent>
                   <Typography gutterBottom align="center" variant="h1">
                      {t('accessUniverse')}
