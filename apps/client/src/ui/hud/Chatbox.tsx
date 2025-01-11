@@ -1,3 +1,5 @@
+import type { FormEventHandler } from 'react';
+
 import PlusIcon from '@mui/icons-material/AddRounded';
 import DotIcon from '@mui/icons-material/FiberManualRecord';
 import MinusIcon from '@mui/icons-material/RemoveRounded';
@@ -38,7 +40,7 @@ export const Chatbox = observer(() => {
       }
    }, [chatStore.messages.length, chatStore.displayedChannels.length, hudStore.chatboxHeight]);
 
-   const sendMessage = (event: React.FormEvent<HTMLDivElement>) => {
+   const sendMessage: FormEventHandler<HTMLFormElement> = (event) => {
       event.preventDefault();
 
       colyseusStore.sendMessage(chatStore.currentChannel, chatStore.input);
@@ -50,7 +52,7 @@ export const Chatbox = observer(() => {
    }
 
    return (
-      <Root component="form" widthPercent={hudStore.chatboxWidth} onSubmit={sendMessage}>
+      <Root widthPercent={hudStore.chatboxWidth} onSubmit={sendMessage}>
          <Wrapper widthPercent={hudStore.chatboxWidth}>
             <Chat
                ref={chatboxRef}
@@ -176,7 +178,7 @@ interface ChatSettingsProps {
    heightPercent: number;
 }
 
-const Root = styled(Box, { shouldForwardProp: (prop) => prop !== 'widthPercent' })<StyleProps>(
+const Root = styled('form', { shouldForwardProp: (prop) => prop !== 'widthPercent' })<StyleProps>(
    ({ widthPercent }) => ({
       position: 'fixed',
       left: 8,
