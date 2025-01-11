@@ -11,10 +11,10 @@ const mocks = vi.hoisted(() => ({
 
 vi.mock('./Store', () => {
    const gameStoreMock = {
-      getCurrentScene: vi.fn().mockResolvedValue({
+      currentScene: {
          setGridVisibility: mocks.setGridVisibility,
          setMinimapVisibility: mocks.setMinimapVisibility,
-      }),
+      },
    };
 
    const soundsStoreMock = {
