@@ -14,14 +14,14 @@
    "author": "Matthieu Locussol <dev.matthieu.locussol@gmail.com> (https://www.matthieu-locussol.com)",
    "license": "MIT",
    "dependencies": {
-      "@colyseus/core": "^0.15.39",
-      "@colyseus/schema": "^2.0.32",
-      "vitest": "^1.6.0",
-      "zod": "^3.23.8"
+      "@colyseus/core": "^0.15.57",
+      "@colyseus/schema": "^2.0.36",
+      "vitest": "^2.1.8",
+      "zod": "^3.24.1"
    },
    "devDependencies": {
       "@packages/config-eslint": "workspace:^",
       "config-typescript": "workspace:^",
-      "typescript": "^5.4.5"
+      "typescript": "^5.7.3"
    }
 }
